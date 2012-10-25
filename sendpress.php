@@ -344,7 +344,7 @@ class SendPress{
 		        /* Check that the user hasn't already clicked to ignore the message */
 		    if ( ! SendPress_Option::get('sendpress_ignore_087') ) {
 		        echo '<div class="updated"><p>';
-		        printf(__('<b>SendPress</b>: We have upgraded your lists to a new format. Please check your <a href="%1$s">widget settings</a>. | <a href="%2$s">Hide Notice</a>'), admin_url('widgets.php'),'?sendpress_ignore_087=0');
+		        printf(__('<b>SendPress</b>: We have upgraded your lists to a new format. Please check your <a href="%1$s">widget settings</a> to re-enable your list(s). | <a href="%2$s">Hide Notice</a>'), admin_url('widgets.php'),'?sendpress_ignore_087=0');
 		        echo "</p></div>";
 		    }
 		}
