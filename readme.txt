@@ -1,6 +1,5 @@
 === Plugin Name ===
 Contributors: brewlabs
-Donate link: http://sendpress.com/donate
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid,
 Requires at least: 3.3
 Tested up to: 3.4.1
@@ -8,22 +7,27 @@ Stable tag: 0.8.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily create, send, manage and track your newsletters right from WordPress.
+Easily create, send, manage and track your newsletters and emails right from WordPress.
 
 == Description ==
 
-SendPress is designed to be lightweight and user friendly newsletter and email system for WordPress. Quickly create, design and edit emails to send to your subscribers.
 
-= Features =
+Sending great emails and newsletters is something that should be easy and not require a third party system. This plugin aims to fix that and allow you to manage newsletters and emails with easy within WordPress. Instead of focusing on providing every single feature under the sun, SendPress tries to provide only the ones that you really need. It aims to make email marketing through WordPress easy, complete and extensible.
+
+**Follow this plugin on [Git Hub](https://github.com/brewlabs/sendpress)**
+
+Features of the plugin include:
 
 * Simple editor. With an html-free experience
-* Easy to use theme styler
-* Get stats for each newsletter: opens, clicks, unsubscribes
+* Easy to use theme styler with ability to create a default style
+* Stat tracking for each email: clicks, opens and unsubscribes. Bounces and report details will be available as [add-ons](http://sendpress.com/) soon.
 * Add a subscription form as a sidebar widget or in your pages
-* Your newsletters will look great on the iPhone, in Gmail, Android, Yahoo, Hotmail, etc.
-* Send with your web host or Gmail
+* Send with your web host or Gmail with more to come.
+* Extensible with many [add-ons](http://sendpress.com/). Coming Soon.
+* Developer friendly with dozens of actions and filters
 
-Find out more at [SendPress.com](http://sendpress.com/ "Email Marketing and Newsletters for WordPress") 
+More information at [SendPress.com](http://sendpress.com/).
+
 
 = Support =
 
@@ -54,13 +58,21 @@ Please check out our support site [http://sendpress.zendesk.com](http://sendpres
 
 == Frequently Asked Questions ==
 
+= Getting a 404 error? =
+
+To get rid of the 404 error when viewing an email, you need to resave your permalink structure. Go to Settings > Permalinks and click "Save Changes".
+
+= How do I test Beta releases? =
+
+We only recommend you do this only in a test enviroment. You can get the [SendPress Beta Tester Plugin](https://github.com/brewlabs/sendpress-beta-tester) from GitHub. This will pull the most recent code from github using the WordPress updater.
+
+
 = How do you contact us? =
 
 Main Site: [http://sendpress.com](http://sendpress.com)
 
 Twitter: [@sendpress](http://twitter.com/sendpress)
 
-Email: help@sendpress.com
 
 
 
@@ -77,6 +89,20 @@ Email: help@sendpress.com
 
 
 == Changelog ==
+
+= 0.8.7 =
+* Added Permisions settings for WordPress Roles
+* Implimented SendPress View class
+* Updated link tracking to use a single token
+* Fixed issue with facebook plugin posting emails to facebook
+* Styler bugs fixed - text color, border and links
+* Convert Lists to Custom Post Type
+* Added more fields to email personalize screen
+* Updated Open and Click tracking to be more accurate
+* Fixed image alignment when sending emails with images
+* Added filters and hooks to reports section
+* Added List Settings button on subscribers page
+* Code cleanup and refactoring.
 
 = 0.8.6 =
 * SP button added to editor 
@@ -123,6 +149,9 @@ Email: help@sendpress.com
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.8.7 =
+Link tracking security update and multiple bug fixes.
 
 = 0.8.6 =
 New Insert Post into email + multiple bug fixes
