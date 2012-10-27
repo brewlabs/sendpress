@@ -1,10 +1,10 @@
-=== SendPress ===
+=== SendPress: Email Marketing and Newsletters ===
 Plugin URI: http://sendpress.com
 Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid,
 Requires at least: 3.3
 Tested up to: 3.4.1
-Stable tag: 0.8.6
+Stable tag: 0.8.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -106,8 +106,8 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 = 0.8.6 =
 * SP button added to editor 
-* - Added Ability to insert post into email
-* - Added Ability to insert subscriber info into email
+* -Added Ability to insert post into email
+* -Added Ability to insert subscriber info into email
 * Social Media added to template
 * Ability to use Custom CSS 
 * Shortcode Documentation added to settings page
