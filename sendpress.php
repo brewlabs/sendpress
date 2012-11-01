@@ -1627,7 +1627,7 @@ If you do not want to confirm, simply ignore this message.";
 		$from_email = SendPress_Option::get('fromemail');
 		$phpmailer->From = $from_email;
 		$phpmailer->FromName = SendPress_Option::get('fromname');
-		
+		$phpmailer->Sender = SendPress_Option::get('fromname');
 		$sending_method  = SendPress_Option::get('sendmethod');
 			
 		$phpmailer = apply_filters('sendpress_sending_method_'. $sending_method, $phpmailer );
