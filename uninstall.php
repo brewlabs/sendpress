@@ -18,5 +18,5 @@ delete_option('sendpress_db_version');
 
 //Drop All DB tables 
 //This could use an updated for Multisite
-require_once( plugin_dir_path(__FILE__)  . 'inc/classes/class-sp-table-manager.php' );
-SendPress_Table_Manager::remove_all_data();
+require_once( plugin_dir_path(__FILE__)  . 'classes/class-sendpress-tables.php' );
+SendPress_DB_Tables::remove_all_data();

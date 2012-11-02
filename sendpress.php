@@ -119,7 +119,7 @@ class SendPress{
 	function sendpress_notices(){
 		if( in_array('settings', $this->_messages) ){
 		echo '<div class="alert alert-error">';
-			printf(__('<b>Warning!</b> Before sending any emails please setup your <a href="%1s">information</a>.','sendpress'), admin_url("admin.php?page=sp-templates&view=information") );
+			printf(__('<b>Warning!</b> Before sending any emails please setup your <a href="%1s">information</a>.','sendpress'), SendPress_View_Settings::link() );
 	    echo '</div>';
 		}
 	}
@@ -796,6 +796,7 @@ class SendPress{
 
 		if(version_compare( $current_version, '0.8.6.7', '<' )){
 			require_once(SENDPRESS_PATH . 'inc/db/alter-tracking.php');
+			SendPress_Option::set('sendpress_ignore_087', 'false');
 		}
 
 		if(version_compare( $current_version, '0.8.8', '<' )){
@@ -1344,7 +1345,7 @@ If you do not want to confirm, simply ignore this message.";
 	    	wp_die( sprintf( __('SendPress requires WordPress version %s or later.', 'sendpress'), SENDPRESS_MINIMUM_WP_VERSION) );
 		} else {
 		    if( SendPress_Option::get('version','0') == '0' ){
-
+		    	SendPress_Option::set('sendpress_ignore_087', 'true');
 		    	require_once(SENDPRESS_PATH .'inc/db/tables.php');
 		    	require_once(SENDPRESS_PATH .'inc/db/status.table.php');
 		    	require_once(SENDPRESS_PATH .'inc/db/open.click.table.php');
