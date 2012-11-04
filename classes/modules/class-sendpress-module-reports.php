@@ -11,8 +11,6 @@ class SendPress_Module_Reports extends SendPress_Module{
 		if( $this->is_pro_active() ){
 			$plugin_path = 'sendpress-pro/sendpress-advanced-reports/sendpress-advanced-reports.php';
 		}
-
-		echo $plugin_path;
 	?>
 		<h4>Advanced Reports</h4>
 		<form method="post" id="post">

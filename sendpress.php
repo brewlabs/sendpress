@@ -109,6 +109,7 @@ class SendPress{
 			 flush_rewrite_rules( false );
 			 SendPress_Option::set('permalink_rebuild',false);
 		}
+		
 	}
 
 	function admin_notice(){

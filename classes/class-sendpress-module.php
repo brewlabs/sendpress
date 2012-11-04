@@ -76,8 +76,6 @@ class SendPress_Module {
 		if( $from_pro ){
 			$pro_options = SendPress_Option::get('pro_plugins');
 			$reg_plugin = substr($path, 14, strlen($path));
-
-			print_r($pro_options);
 			
 			if( file_exists(WP_PLUGIN_DIR.'/'.$reg_plugin) && is_plugin_active($reg_plugin) ){
 				deactivate_plugins($reg_plugin); //deactivate seperate plugin
@@ -88,7 +86,7 @@ class SendPress_Module {
 
 			if( !$pro_options[$path] ){
 				$button['class'] = 'module-activate-plugin btn-success btn-activate btn';
-				$button['id'] = 'module-activate-plugin';
+				//$button['id'] = 'module-activate-plugin';
 				$button['text'] = 'Activate';
 			}else{
 				$button['text'] = 'Deactivate';
@@ -100,19 +98,13 @@ class SendPress_Module {
 				$button['href'] = 'http://sendpress.com';
 				$button['target'] = '_blank';
 				$button['text'] = 'Buy Now';
-				$button['id'] = '';
-
-
-				//return '<a class="btn btn-primary btn-buy" href="http://sendpress.com" target="_blank">Buy Now</a>';
+				//$button['id'] = '';
 			}elseif( !is_plugin_active($path) ){
-				$button['class'] = 'btn-success btn-activate btn';
-				$button['id'] = 'module-activate-plugin';
+				$button['class'] = 'module-activate-plugin btn-success btn-activate btn';
+				//$button['id'] = 'module-activate-plugin';
 				$button['text'] = 'Activate';
-
-				//return '<a id="module-activate-plugin" class="btn btn-success btn-activate" href="#">Activate</a>';
 			}else{
 				$button['text'] = 'Deactivate';
-				//return '<a id="module-deactivate-plugin" class="btn" href="#">Deactivate</a>';
 			}
 		}
 

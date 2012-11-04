@@ -465,12 +465,12 @@ switch ( $this->_current_action ) {
             if( preg_match('/sendpress-pro/i',$path) ){
                 //make sure the plugin loads from sendpress pro
                 $pro_options[$path] = true;
-                SendPress_Option::set($pro_options); 
+                SendPress_Option::set('pro_plugins',$pro_options); 
 
-                
+                error_log('activated from send press pro');
             }
         }
-
+        error_log('running activate plugin');
         activate_plugin($path);
         
     break;
@@ -488,7 +488,7 @@ switch ( $this->_current_action ) {
 
                 //var_dump($pro_options);
 
-                SendPress_Option::set($pro_options); 
+                SendPress_Option::set('pro_plugins',$pro_options); 
 
                 $pro_options = SendPress_Option::get('pro_plugins');
                 //wp_die( var_dump($pro_options) );
