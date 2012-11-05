@@ -466,11 +466,10 @@ switch ( $this->_current_action ) {
                 //make sure the plugin loads from sendpress pro
                 $pro_options[$path] = true;
                 SendPress_Option::set('pro_plugins',$pro_options); 
-
-                error_log('activated from send press pro');
+                break;
             }
         }
-        error_log('running activate plugin');
+        
         activate_plugin($path);
         
     break;
@@ -486,13 +485,8 @@ switch ( $this->_current_action ) {
                 //make sure the plugin loads from sendpress pro
                 $pro_options[$path] = false;
 
-                //var_dump($pro_options);
-
                 SendPress_Option::set('pro_plugins',$pro_options); 
-
-                $pro_options = SendPress_Option::get('pro_plugins');
-                //wp_die( var_dump($pro_options) );
-
+                break;
                 
             }
         }
