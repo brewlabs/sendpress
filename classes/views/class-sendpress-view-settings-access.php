@@ -12,67 +12,67 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 		foreach ($this->get_editable_roles() as $role) 
 		{
 			$sp_view = false;
-			$k = $this->get_role( strtolower( $role ) );
+			$saverole= get_role( strtolower( $role)   );
 			$role = strtolower($role );
 			if( isset($_POST[$role . "_edit"] )){
 				$sp_view = true;
-				$k->add_cap( 'sendpress_email');
+				$saverole->add_cap( 'sendpress_email');
 			} else {
-				$k->remove_cap('sendpress_email');
+				$saverole->remove_cap('sendpress_email');
 			}
 
 			if( isset($_POST[$role . "_send"] )){
 				$sp_view = true;
-				$k->add_cap('sendpress_email_send');
+				$saverole->add_cap('sendpress_email_send');
 			} else {
-				$k->remove_cap('sendpress_email_send');
+				$saverole->remove_cap('sendpress_email_send');
 			}
 
 			if( isset($_POST[$role . "_reports"] )){
 				$sp_view = true;
-				$k->add_cap('sendpress_reports');
+				$saverole->add_cap('sendpress_reports');
 			} else {
-				$k->remove_cap('sendpress_reports');
+				$saverole->remove_cap('sendpress_reports');
 			}
 
 			if( isset($_POST[$role . "_subscribers"] )){
 				$sp_view = true;
-				$k->add_cap('sendpress_subscribers');
+				$saverole->add_cap('sendpress_subscribers');
 			} else {
-				$k->remove_cap('sendpress_subscribers');
+				$saverole->remove_cap('sendpress_subscribers');
 			}
 
 			if( isset($_POST[$role . "_settings"] )){
 				$sp_view = true;
-				$k->add_cap('sendpress_settings');
+				$saverole->add_cap('sendpress_settings');
 			} else {
-				$k->remove_cap('sendpress_settings');
+				$saverole->remove_cap('sendpress_settings');
 			}
 
 			if( isset($_POST[$role . "_settings_access"] )){
 				$sp_view = true;
-				$k->add_cap('sendpress_settings_access');
+				$saverole->add_cap('sendpress_settings_access');
 			} else {
-				$k->remove_cap('sendpress_settings_access');
+				$saverole->remove_cap('sendpress_settings_access');
 			}
 
 			if( isset($_POST[$role . "_addons"] )){
 				$sp_view = true;
-				$k->add_cap('sendpress_addons');
+				$saverole->add_cap('sendpress_addons');
 			} else {
-				$k->remove_cap('sendpress_addons');
+				$saverole->remove_cap('sendpress_addons');
 			}
 			if( isset($_POST[$role . "_queue"] )){
 				$sp_view = true;
-				$k->add_cap('sendpress_queue');
+				$saverole->add_cap('sendpress_queue');
 			} else {
-				$k->remove_cap('sendpress_queue');
+				$saverole->remove_cap('sendpress_queue');
 			}
 
 			if($sp_view == true){
-				$k->add_cap('sendpress_view');
+				$saverole->add_cap('sendpress_view');
 			}else{
-				$k->remove_cap('sendpress_view');
+				$saverole->remove_cap('sendpress_view');
 			}
 
 			
@@ -113,49 +113,50 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 			if($role != 'Administrator' && $role != 'Subscriber'){
 				echo "<tr>";
 				echo "<td>". $role . "</td>";
-				
-				$k = $this->get_role( strtolower( $role ) );
+				echo $role;
+				$listrole = get_role( strtolower( $role)   );
 				$role =  strtolower( $role );
 				$checked = '';
-				if( $k->has_cap('sendpress_email')) {
+				
+				if( $listrole->has_cap('sendpress_email')) {
 					$checked = 'checked';
 				}
 				echo "<td><input $checked type='checkbox' name='". $role . "_edit'  > ".__('Create/Edit/Delete','sendpress') . "&nbsp;&nbsp;&nbsp;&nbsp;";
 				$checked = '';
-				if( $k->has_cap('sendpress_email_send')) {
+				if( $listrole->has_cap('sendpress_email_send')) {
 					$checked = 'checked';
 				}
 				echo "<input $checked name='". $role . "_send' type='checkbox' >&nbsp;".__('Send','sendpress') ."</td>";
 				$checked = '';
-				if( $k->has_cap('sendpress_reports')) {
+				if( $listrole->has_cap('sendpress_reports')) {
 					$checked = 'checked';
 				}
 				echo "<td><input $checked type='checkbox' name='". $role . "_reports' > ". __('Full Access','sendpress') ."</td>";
 				$checked = '';
-				if( $k->has_cap('sendpress_subscribers')) {
+				if( $listrole->has_cap('sendpress_subscribers')) {
 					$checked = 'checked';
 				}
 				echo "<td><input $checked type='checkbox' name='". $role . "_subscribers' > ".__('Full Access','sendpress') ."</td>";
 				$checked = '';
-				if( $k->has_cap('sendpress_settings')) {
+				if( $listrole->has_cap('sendpress_settings')) {
 					$checked = 'checked';
 				}
 				echo "<td><input $checked type='checkbox' name='". $role . "_settings'  > ".__('Full Access (<small>No Permissions Access</small>)','sendpress') ." ";
 				/*
 				$checked = '';
-				if( $k->has_cap('sendpress_settings_access')) {
+				if( $listrole->has_cap('sendpress_settings_access')) {
 					$checked = 'checked';
 				}
 				echo "<input $checked name='". $role . "_settings_access' type='checkbox' >&nbsp;Access Controls</td>";
 				*/
 				$checked = '';
-				if( $k->has_cap('sendpress_queue')) {
+				if( $listrole->has_cap('sendpress_queue')) {
 					$checked = 'checked';
 				}
 				echo "<td><input $checked type='checkbox' name='". $role . "_queue'  > ". __('Full Access','sendpress') ."</td>";
 			
 				$checked = '';
-				if( $k->has_cap('sendpress_addons')) {
+				if( $listrole->has_cap('sendpress_addons')) {
 					$checked = 'checked';
 				}
 				echo "<td><input $checked type='checkbox' name='". $role . "_addons'  > ".__('Full Access','sendpress') ."</td>";
@@ -181,7 +182,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 	}
 
 	function get_role($role){
-		  global $wp_roles;
+		global $wp_roles;
 
 	    if ( ! isset( $wp_roles ) )
     		$wp_roles = new WP_Roles();
@@ -198,7 +199,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 	    $all_roles = $wp_roles->get_names();
 	    $editable_roles = apply_filters('editable_roles', $all_roles);
 
-	    return $editable_roles;
+	    return $all_roles;
 	}
 }
 
