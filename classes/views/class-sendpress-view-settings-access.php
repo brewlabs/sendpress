@@ -113,7 +113,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 			if($role != 'Administrator' && $role != 'Subscriber'){
 				echo "<tr>";
 				echo "<td>". $role . "</td>";
-				echo $role;
+				
 				$listrole = get_role( strtolower( $role)   );
 				$role =  strtolower( $role );
 				$checked = '';
