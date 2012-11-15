@@ -354,7 +354,11 @@ class SendPress{
 
 
 	function add_caps() {
-		$role = get_role( 'administrator' ); // gets the author role
+		global $wp_roles;
+
+	    if ( ! isset( $wp_roles ) )
+    		$wp_roles = new WP_Roles();
+		$role = $wp_roles->get_role( 'administrator' ); // gets the author role
 	 	$role->add_cap( 'manage_sendpress' ); // would allow the author to edit others' posts for current theme only
 	}
 
@@ -391,6 +395,11 @@ class SendPress{
 		    SendPress_Option::set('sendpress_ignore_087', 'true');
 		}
 		add_action('admin_notices', array($this,'sendpress_ignore_087'));
+
+		if( SendPress_Option::get('sendmethod') == false ){
+			SendPress_Option::set('sendmethod','website');
+		}
+
 
 		//wp_clear_scheduled_hook( 'sendpress_cron_action' );
 		// Schedule an action if it's not already scheduled
@@ -1649,7 +1658,7 @@ If you do not want to confirm, simply ignore this message.";
 		$from_email = SendPress_Option::get('fromemail');
 		$phpmailer->From = $from_email;
 		$phpmailer->FromName = SendPress_Option::get('fromname');
-		$phpmailer->Sender = SendPress_Option::get('fromname');
+		$phpmailer->Sender = SendPress_Option::get('fromemail');
 		$sending_method  = SendPress_Option::get('sendmethod');
 			
 		$phpmailer = apply_filters('sendpress_sending_method_'. $sending_method, $phpmailer );
