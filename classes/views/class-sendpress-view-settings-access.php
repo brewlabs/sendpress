@@ -11,6 +11,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 		  
 		foreach ($this->get_editable_roles() as $role) 
 		{
+			if($role == 'Editor' || $role == 'Contributor' || $role == 'Author'){
 			$sp_view = false;
 			$saverole= get_role( strtolower( $role)   );
 			$role = strtolower($role );
@@ -74,7 +75,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 			}else{
 				$saverole->remove_cap('sendpress_view');
 			}
-
+		}
 			
 		}	
 
@@ -110,7 +111,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 		<?php
 		foreach ($this->get_editable_roles() as $role) 
 		{
-			if($role != 'Administrator' && $role != 'Subscriber'){
+			if($role == 'Editor' || $role == 'Contributor' || $role == 'Author'){
 				echo "<tr>";
 				echo "<td>". $role . "</td>";
 				
