@@ -110,7 +110,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 		<?php
 		foreach ($this->get_editable_roles() as $role) 
 		{
-			if($role != 'Administrator'){
+			if($role != 'Administrator' && $role != 'Subscriber'){
 				echo "<tr>";
 				echo "<td>". $role . "</td>";
 				
