@@ -93,7 +93,7 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 = 0.8.7.1 =
 * Stopped plugin from creating multiple cron calls
 * Fixed link for setup notice
-* Removed CAN-SPAM as requried
+* Removed CAN-SPAM as required
 
 = 0.8.7 =
 * Added Permisions settings for WordPress Roles

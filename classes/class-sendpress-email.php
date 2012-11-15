@@ -147,8 +147,11 @@ class SendPress_Email {
 				"action"=>"unsubscribe"
 			);
 			$x = SendPress_Data::encrypt( $link );
+			$start_text = __("Not interested anymore?","sendpress");
+			$unsubscribe = __("Unsubscribe","sendpress");
+			$instantly = __("Instantly","sendpress");
 
-			$remove_me = 'Not interested anymore? <a href="'.site_url().'?sendpress='.$x.'"  style="color: '.$body_link.';" >Unsubscribe</a> Instantly.';
+			$remove_me = $start_text.' <a href="'.site_url().'?sendpress='.$x.'"  style="color: '.$body_link.';" >'.$unsubscribe.'</a> '.$instantly.'.';
 			$subscriber = SendPress_Data::get_subscriber($this->subscriber_id());
 			
 			$body_html = str_replace("*|SP:UNSUBSCRIBE|*", $remove_me , $body_html );

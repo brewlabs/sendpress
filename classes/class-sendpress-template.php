@@ -240,15 +240,19 @@ class SendPress_Template {
 			$HtmlCode = $cssToInlineStyles->convert();
 
 			*/
-			
+			$display_correct = __("Is this email not displaying correctly?","sendpress");
+			$view = __("View it in your browser","sendpress");
+			$start_text = __("Not interested anymore?","sendpress");
+			$unsubscribe = __("Unsubscribe","sendpress");
+			$instantly = __("Instantly","sendpress");
 			if($render){
 				//RENDER IN BROWSER
 
 				if($inline){
 					$link = get_permalink(  $post->ID );
-					$browser = 'Is this email not displaying correctly? <a style="color: '.$body_link.';" href="'.$link.'">View it in your browser</a>.';
+					$browser = $display_correct.' <a style="color: '.$body_link.';" href="'.$link.'">'.$view.'</a>.';
 					$HtmlCode =str_replace("*|SP:BROWSER|*",$browser ,$HtmlCode);
-					$remove_me = 'Not interested anymore? <a href="#"  style="color: '.$body_link.';" >Unsubscribe</a> Instantly.';
+					$remove_me = $start_text . ' <a href="#"  style="color: '.$body_link.';" >'.$unsubscribe.'</a> '.$instantly.'.';
 			
 					$HtmlCode =str_replace("*|SP:UNSUBSCRIBE|*",$remove_me ,$HtmlCode);
 			
@@ -261,7 +265,7 @@ class SendPress_Template {
 				//PREP FOR SENDING
 				if($no_links == false){
 				$link = get_permalink(  $post->ID );
-				$browser = 'Is this email not displaying correctly? <a style="color: '.$body_link.';" href="'.$link.'">View it in your browser</a>.';
+				$browser = $display_correct.' <a style="color: '.$body_link.';" href="'.$link.'">'.$view.'</a>.';
 				$HtmlCode =str_replace("*|SP:BROWSER|*",$browser ,$HtmlCode);
 				
 				}else {

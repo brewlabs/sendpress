@@ -8,60 +8,61 @@ if( !class_exists('SendPress_View_Settings_Access') ){
 class SendPress_View_Settings_Access extends SendPress_View_Settings {
 
 	function save() {
-		
+		  
 		foreach ($this->get_editable_roles() as $role) 
 		{
 			$sp_view = false;
-			$k = get_role( strtolower($role['name']) );
-			if( isset($_POST[$role['name'] . "_edit"] )){
+			$k = $this->get_role( strtolower( $role ) );
+			$role = strtolower($role );
+			if( isset($_POST[$role . "_edit"] )){
 				$sp_view = true;
-				$k->add_cap('sendpress_email');
+				$k->add_cap( 'sendpress_email');
 			} else {
 				$k->remove_cap('sendpress_email');
 			}
 
-			if( isset($_POST[$role['name'] . "_send"] )){
+			if( isset($_POST[$role . "_send"] )){
 				$sp_view = true;
 				$k->add_cap('sendpress_email_send');
 			} else {
 				$k->remove_cap('sendpress_email_send');
 			}
 
-			if( isset($_POST[$role['name'] . "_reports"] )){
+			if( isset($_POST[$role . "_reports"] )){
 				$sp_view = true;
 				$k->add_cap('sendpress_reports');
 			} else {
 				$k->remove_cap('sendpress_reports');
 			}
 
-			if( isset($_POST[$role['name'] . "_subscribers"] )){
+			if( isset($_POST[$role . "_subscribers"] )){
 				$sp_view = true;
 				$k->add_cap('sendpress_subscribers');
 			} else {
 				$k->remove_cap('sendpress_subscribers');
 			}
 
-			if( isset($_POST[$role['name'] . "_settings"] )){
+			if( isset($_POST[$role . "_settings"] )){
 				$sp_view = true;
 				$k->add_cap('sendpress_settings');
 			} else {
 				$k->remove_cap('sendpress_settings');
 			}
 
-			if( isset($_POST[$role['name'] . "_settings_access"] )){
+			if( isset($_POST[$role . "_settings_access"] )){
 				$sp_view = true;
 				$k->add_cap('sendpress_settings_access');
 			} else {
 				$k->remove_cap('sendpress_settings_access');
 			}
 
-			if( isset($_POST[$role['name'] . "_addons"] )){
+			if( isset($_POST[$role . "_addons"] )){
 				$sp_view = true;
 				$k->add_cap('sendpress_addons');
 			} else {
 				$k->remove_cap('sendpress_addons');
 			}
-			if( isset($_POST[$role['name'] . "_queue"] )){
+			if( isset($_POST[$role . "_queue"] )){
 				$sp_view = true;
 				$k->add_cap('sendpress_queue');
 			} else {
@@ -109,54 +110,55 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 		<?php
 		foreach ($this->get_editable_roles() as $role) 
 		{
-			if($role['name'] != 'Administrator' && isset($role['capabilities']['edit_posts'])){
+			if($role != 'Administrator'){
 				echo "<tr>";
-				echo "<td>". $role['name'] . "</td>";
+				echo "<td>". $role . "</td>";
 				
-				$k = get_role( strtolower($role['name']) );
+				$k = $this->get_role( strtolower( $role ) );
+				$role =  strtolower( $role );
 				$checked = '';
 				if( $k->has_cap('sendpress_email')) {
 					$checked = 'checked';
 				}
-				echo "<td><input $checked type='checkbox' name='". $role['name'] . "_edit'  > ".__('Create/Edit/Delete','sendpress') . "&nbsp;&nbsp;&nbsp;&nbsp;";
+				echo "<td><input $checked type='checkbox' name='". $role . "_edit'  > ".__('Create/Edit/Delete','sendpress') . "&nbsp;&nbsp;&nbsp;&nbsp;";
 				$checked = '';
 				if( $k->has_cap('sendpress_email_send')) {
 					$checked = 'checked';
 				}
-				echo "<input $checked name='". $role['name'] . "_send' type='checkbox' >&nbsp;".__('Send','sendpress') ."</td>";
+				echo "<input $checked name='". $role . "_send' type='checkbox' >&nbsp;".__('Send','sendpress') ."</td>";
 				$checked = '';
 				if( $k->has_cap('sendpress_reports')) {
 					$checked = 'checked';
 				}
-				echo "<td><input $checked type='checkbox' name='". $role['name'] . "_reports' > ". __('Full Access','sendpress') ."</td>";
+				echo "<td><input $checked type='checkbox' name='". $role . "_reports' > ". __('Full Access','sendpress') ."</td>";
 				$checked = '';
 				if( $k->has_cap('sendpress_subscribers')) {
 					$checked = 'checked';
 				}
-				echo "<td><input $checked type='checkbox' name='". $role['name'] . "_subscribers' > ".__('Full Access','sendpress') ."</td>";
+				echo "<td><input $checked type='checkbox' name='". $role . "_subscribers' > ".__('Full Access','sendpress') ."</td>";
 				$checked = '';
 				if( $k->has_cap('sendpress_settings')) {
 					$checked = 'checked';
 				}
-				echo "<td><input $checked type='checkbox' name='". $role['name'] . "_settings'  > ".__('Full Access (<small>No Permissions Access</small>)','sendpress') ." ";
+				echo "<td><input $checked type='checkbox' name='". $role . "_settings'  > ".__('Full Access (<small>No Permissions Access</small>)','sendpress') ." ";
 				/*
 				$checked = '';
 				if( $k->has_cap('sendpress_settings_access')) {
 					$checked = 'checked';
 				}
-				echo "<input $checked name='". $role['name'] . "_settings_access' type='checkbox' >&nbsp;Access Controls</td>";
+				echo "<input $checked name='". $role . "_settings_access' type='checkbox' >&nbsp;Access Controls</td>";
 				*/
 				$checked = '';
 				if( $k->has_cap('sendpress_queue')) {
 					$checked = 'checked';
 				}
-				echo "<td><input $checked type='checkbox' name='". $role['name'] . "_queue'  > ". __('Full Access','sendpress') ."</td>";
+				echo "<td><input $checked type='checkbox' name='". $role . "_queue'  > ". __('Full Access','sendpress') ."</td>";
 			
 				$checked = '';
 				if( $k->has_cap('sendpress_addons')) {
 					$checked = 'checked';
 				}
-				echo "<td><input $checked type='checkbox' name='". $role['name'] . "_addons'  > ".__('Full Access','sendpress') ."</td>";
+				echo "<td><input $checked type='checkbox' name='". $role . "_addons'  > ".__('Full Access','sendpress') ."</td>";
 				echo "</tr>";
 				//print_r($role);
 			}
@@ -178,10 +180,22 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 		<?php
 	}
 
+	function get_role($role){
+		  global $wp_roles;
+
+	    if ( ! isset( $wp_roles ) )
+    		$wp_roles = new WP_Roles();
+
+    	return $wp_roles->get_role( $role );
+	}
+
 	function get_editable_roles() {
 	    global $wp_roles;
 
-	    $all_roles = $wp_roles->roles;
+	    if ( ! isset( $wp_roles ) )
+    		$wp_roles = new WP_Roles();
+
+	    $all_roles = $wp_roles->get_names();
 	    $editable_roles = apply_filters('editable_roles', $all_roles);
 
 	    return $editable_roles;
