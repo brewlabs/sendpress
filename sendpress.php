@@ -400,6 +400,11 @@ class SendPress{
 			SendPress_Option::set('sendmethod','website');
 		}
 
+		if( SendPress_Option::get('send_optin_email') == false ){
+			SendPress_Option::set('send_optin_email','yes');
+		}
+
+
 
 		//wp_clear_scheduled_hook( 'sendpress_cron_action' );
 		// Schedule an action if it's not already scheduled
@@ -1219,6 +1224,9 @@ If you want *|SITE:TITLE|* content delivered by email, all you have to do is cli
 	}
 
 	function is_double_optin(){
+		if( SendPress_Option::get('send_optin_email') == 'yes' ){
+			return true;			
+		}
 		return false;
 	}
 

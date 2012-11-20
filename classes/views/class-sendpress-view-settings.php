@@ -17,7 +17,7 @@ class SendPress_View_Settings extends SendPress_View {
 		  <li <?php if($sp->_current_view == 'styles'){ ?>class="active"<?php } ?> >
 		    <a href="<?php echo SendPress_View_Settings_Styles::link(); ?>"><i class="icon-pencil"></i> <?php _e('Template Styles','sendpress'); ?></a>
 		  </li>
-		  <li <?php if($sp->_current_view == 'activation'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Activation::link(); ?>"><i class="icon-user"></i> <?php _e('Activation Email','sendpress'); ?></a></li>
+		  <li <?php if($sp->_current_view == 'activation'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Activation::link(); ?>"><i class="icon-user"></i> <?php _e('Double Opt-in Email','sendpress'); ?></a></li>
 		
 		  <li <?php if($sp->_current_view == 'account'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Account::link(); ?>"><i class="icon-user"></i> <?php _e('Sending Account','sendpress'); ?></a></li>
 			 <li <?php if($sp->_current_view == 'feedback'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Feedback::link();  ?>"><i class="icon-wrench"></i> <?php _e('Feedback','sendpress'); ?></a></li>	

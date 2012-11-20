@@ -33,7 +33,7 @@ class SendPress_Option {
 	function get( $name, $default = false ) {
 		$options = get_option( self::$key );
 		if ( is_array( $options ) && isset( $options[$name] ) ) {
-			return $options[$name];
+			return stripslashes( $options[$name] );
 		}
 		return $default;
 	}	
