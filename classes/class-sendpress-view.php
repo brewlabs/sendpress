@@ -121,12 +121,13 @@ class SendPress_View {
 		}
 		
 		//Admin
-		if( current_user_can(self::$_admin_cap) )
+		if( current_user_can(self::$_admin_cap) || is_super_admin() || current_user_can('delete_users') ){
 			return true;
+		}
 		
 		//View Specific
 		if( current_user_can( self::view_cap($class) ) ){
-				return true;	
+			return true;	
 		}
 		
 		//You can't see me

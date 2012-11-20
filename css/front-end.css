@@ -17,11 +17,10 @@
 	}
 	/* input fields in sign up form */
 	.sendpress-signup-form input{
-		max-width:80%;
+	
 	}
 	/* submit button */
 	.sendpress-signup-form .submit{
-		max-width:80%;
 	}
 	/* element where error messages are displayed */
 	.sendpress-signup-form #error{
