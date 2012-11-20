@@ -833,12 +833,15 @@ width: 150px;
 
     .sendpress-module.pro-module{
         width:790px;
-        height:75px;
+        height:150px;
     }
     .sendpress-module h4{
         margin:0px 0px 5px;
         font-size:15px;
         font-weight: normal;
+    }
+    .sendpress-module h5{
+        margin:10px 0px 5px 0px;
     }
     .sendpress-module .inline-buttons{
         position:absolute;
@@ -848,6 +851,8 @@ width: 150px;
         .sendpress-module.pro-module .inline-buttons{
             right:15px;
             left:auto;
+            bottom:auto;
+            top:15px;
         }
 
 
