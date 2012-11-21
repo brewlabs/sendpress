@@ -26,9 +26,11 @@ if(!class_exists('WP_List_Table')){
 }
 
 require_once( SENDPRESS_PATH . 'inc/functions.php' );
+/*
 require_once( SENDPRESS_PATH . 'classes/class-file-loader.php' );
 $sp_loader = new File_Loader('SendPress Required Class');
-
+*/
+require_once( SENDPRESS_PATH . 'classes/selective-loader.php' );
 class SendPress{
 
 	var $prefix = 'sendpress_';
@@ -91,11 +93,7 @@ class SendPress{
 		
 			load_plugin_textdomain( 'sendpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 			$this->add_custom_post();
-			$this->maybe_upgrade();
-			$this->ready_for_sending();
-			add_action( 'admin_print_scripts', array($this,'editor_insidepopup') );
-			add_filter( 'gettext', array($this, 'change_button_text'), null, 2 );
-
+			
 			if(SendPress_Option::get('permalink_rebuild')){
 				 flush_rewrite_rules( false );
 				 SendPress_Option::set('permalink_rebuild',false);
@@ -103,11 +101,21 @@ class SendPress{
 
 			add_filter( 'query_vars', array( $this, 'add_vars' ) );
 			//add_filter( 'cron_schedules', array($this,'cron_schedule' ));
-			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-			add_action( 'admin_init', array( $this, 'admin_init' ) );
-			add_action( 'admin_head', array( $this, 'admin_head' ) );
-			add_action( 'admin_notices', array( $this,'admin_notice') );
-			add_action( 'sendpress_notices', array( $this,'sendpress_notices') );
+			
+			if( is_admin() ){
+				$this->maybe_upgrade();
+				$this->ready_for_sending();
+			
+				add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+				add_action( 'admin_init', array( $this, 'admin_init' ) );
+				add_action( 'admin_head', array( $this, 'admin_head' ) );
+				add_action( 'admin_notices', array( $this,'admin_notice') );
+				add_action( 'admin_print_scripts', array($this,'editor_insidepopup') );
+				add_filter( 'gettext', array($this, 'change_button_text'), null, 2 );
+				add_action( 'sendpress_notices', array( $this,'sendpress_notices') );
+			}
+
+			
 			add_filter( 'template_include', array( $this, 'template_include' ) );
 			add_action( 'sendpress_cron_action', array( $this,'sendpress_cron_action_run') );
 			if ( !wp_next_scheduled( 'sendpress_cron_action' ) ) {
@@ -861,9 +869,23 @@ class SendPress{
 		if($optin->post_content == ""){
 			$optin->post_content = "Howdy.
 
-			We're ready to send you emails from *|SITE:TITLE|*, but first we need you to confirm that this is what you really want.
+We're ready to send you emails from *|SITE:TITLE|*, but first we need you to confirm that this is what you really want.
 
-If you want *|SITE:TITLE|* content delivered by email, all you have to do is click the link below. Thanks!";
+If you want *|SITE:TITLE|* content delivered by email, all you have to do is click the link below. Thanks!
+
+-----------------------------------------------------------
+CONFIRM BY VISITING THE LINK BELOW:
+
+*|SP:CONFIRMLINK|*
+
+Click the link above to give us permission to send you
+information.  It's fast and easy!  If you cannot click the
+full URL above, please copy and paste it into your web
+browser.
+
+-----------------------------------------------------------
+If you do not want to confirm, simply ignore this message.
+";
 
 			$update_optin = true;
 		}
@@ -1236,18 +1258,7 @@ If you want *|SITE:TITLE|* content delivered by email, all you have to do is cli
 		global $post;
 		$optin = SendPress_Data::get_template_id_by_slug('double-optin');	
 		if ( $post->post_type == 'sptemplates' && $post->ID == $optin ) {
-			$content .= "<p>-----------------------------------------------------------</p>
-<p>CONFIRM BY VISITING THE LINK BELOW:</p>
-
-*|SP:CONFIRMLINK|*
-
-<p>Click the link above to give us permission to send you
-information.  It's fast and easy!  If you cannot click the
-full URL above, please copy and paste it into your web
-browser.</p>
-
-<p>-----------------------------------------------------------</p>
-If you do not want to confirm, simply ignore this message.";
+			$content .= "";
 
 			
 		}

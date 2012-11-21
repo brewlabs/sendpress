@@ -257,33 +257,10 @@ function sp_public_sort($a,$b){
     return strlen($a)-strlen($b);
 }
 
-
-
-
-
-
-$_foo = SENDPRESS_PUBLIC_CLASSES;
-
-function sp_pubilc_glob($dir){
-$files = array();
-if(is_dir($dir)){
-    if($dh=opendir($dir)){
-    while(($file = readdir($dh)) !== false){
-    	if( end(explode('.',basename($file))) == 'php' ){
-        	$files[]=$dir.$file;
-    	}
-    }}
-}
-return $files;
-}
-$phpfiles = sp_pubilc_glob($_foo);
-usort($phpfiles,'sp_public_sort');
-foreach ( $phpfiles as $file )
-{	
-	require_once $file;
-}
-
-
+require_once ( SENDPRESS_PUBLIC_CLASSES. '/class-sendpress-public-view-confirm.php' );
+require_once ( SENDPRESS_PUBLIC_CLASSES. '/class-sendpress-public-view-link.php' );
+require_once ( SENDPRESS_PUBLIC_CLASSES. '/class-sendpress-public-view-manage.php' );
+require_once ( SENDPRESS_PUBLIC_CLASSES. '/class-sendpress-public-view-open.php' );
 
 do_action('sendpress_public_view_class_loaded');
 

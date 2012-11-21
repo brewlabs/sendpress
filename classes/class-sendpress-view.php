@@ -237,13 +237,46 @@ class SendPress_View {
 
 }
 
-$_foo = SENDPRESS_CLASSES_VIEWS;
+if( is_admin() ){
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-queue.php');
 
-$phpfiles = sp_glob($_foo);
-usort($phpfiles,'sp_sort');
-foreach ( $phpfiles as $file ){
-	require_once $file;
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-emails.php');
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-emails-send.php');
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-emails-send-confirm.php');
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-emails-style.php');
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-emails-create.php');
+
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-overview.php');
+
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-pro.php');
+
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-reports.php');
+
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-settings.php');
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-settings-access.php');
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-settings-account.php');
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-settings-activation.php');
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-settings-feedback.php');
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-settings-styles.php');
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-settings-widget.php');
+
+
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-subscribers.php');
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-subscribers-add.php');
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-subscribers-listcreate.php');
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-subscribers-listedit.php');
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-subscribers-subscriber.php');
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-subscribers-subscribers.php');
+
+	/*
+	$_foo = SENDPRESS_CLASSES_VIEWS;
+
+
+	$phpfiles = sp_glob($_foo);
+	usort($phpfiles,'sp_sort');
+	foreach ( $phpfiles as $file ){
+		require_once $file;
+	}
+	*/
+	do_action('sendpress_view_class_loaded');
 }
-
-do_action('sendpress_view_class_loaded');
-

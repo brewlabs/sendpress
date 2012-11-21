@@ -163,12 +163,8 @@ class SdndPress_Plugin_State{
 
 }
 
-$_foo = SENDPRESS_CLASSES_MODULES;
-
-$phpfiles = sp_glob($_foo);
-usort($phpfiles,'sp_sort');
-foreach ( $phpfiles as $file ){
-	require_once $file;
+if( is_admin() ){
+	require_once(SENDPRESS_CLASSES_MODULES.'class-sendpress-module-pro.php');
+	require_once(SENDPRESS_CLASSES_MODULES.'class-sendpress-module-reports.php');
+	do_action('sendpress_module_class_loaded');
 }
-
-do_action('sendpress_module_class_loaded');
