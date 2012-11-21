@@ -18,6 +18,19 @@ class SendPress_Module_Pro extends SendPress_Module{
 			<?php wp_nonce_field($sp->_nonce_value); ?>
 		</form>
 
+		<form method="post" id="post">
+			
+			<h5>Enable Updates and Support</h5>
+			<label for="api_key"><?php _e('API Key','sendpress'); ?></label>
+			<input name="api_key" type="text" id="api_key" value="<?php echo SendPress_Option::get('api_key'); ?>" class="regular-text">
+			<a href="#" class="save-api-key btn-primary btn-small btn">Save</a>
+			<div class="description">
+				Enter your API key to enable premium support and Pro updates. get your API key <a href="#">here</a>.
+			</div>
+			<input class="action" type="hidden" name="action" value="module-save-api-key" />
+			<?php wp_nonce_field($sp->_nonce_value); ?>
+		</form>
+
 	<?php
 	}
 

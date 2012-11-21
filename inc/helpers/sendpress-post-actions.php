@@ -494,6 +494,11 @@ switch ( $this->_current_action ) {
         deactivate_plugins($path);
     break;
 
+    case 'module-save-api-key':
+        SendPress_Option::set('api_key',$_POST['api_key']);
+        
+    break;
+
 }
 
 
