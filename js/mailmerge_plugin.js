@@ -1,27 +1,25 @@
-(function($) {
-	tinymce.create('tinymce.plugins.MailMerge', {
+(function() {
+	tinymce.create('tinymce.plugins.SendPress', {
 		init : function(ed, url) {
 			spadmin.current_ed = ed;
-			ed.addButton('mailmerge', {
+			// Register the command so that it can be invoked by using tinyMCE.activeEditor.execCommand('mceExample');
+			ed.addCommand('WP_SP', function() {
+				jQuery('#sendpress-helper').modal('show');
+				}, {
+					plugin_url : url // Plugin absolute URL
+				});
+		
+
+			ed.addButton('sendpress', {
 				title : 'SendPress',
-				image : url+'/icon.png',
-				onclick : function() {
-					idPattern = /(?:(?:[^v]+)+v.)?([^&=]{11})(?=&|$)/;
-					//var vidId = prompt("YouTube Video", "Enter the id or url for your video");
-					//var m = idPattern.exec(vidId);
-					//if (m != null && m != 'undefined')
-					
-					$('#sendpress-helper').modal('show');
-						//ed.execCommand('mceInsertContent', false, '[youtube id=""]');
-				}
+				image : url + '/icon.png',
+				cmd : 'WP_SP'
 			});
 		},
-		createControl : function(n, cm) {
-			return null;
-		},
+		
 		getInfo : function() {
 			return {
-				longname : "MailMerge Shortcodes",
+				longname : "SendPressShortcodes",
 				author : 'Josh Lyford',
 				authorurl : 'http://sendpress.com/',
 				infourl : 'http://sendpress.com/',
@@ -29,5 +27,5 @@
 			};
 		}
 	});
-	tinymce.PluginManager.add('mailmerge', tinymce.plugins.MailMerge);
-})(jQuery);
+	tinymce.PluginManager.add('sendpress', tinymce.plugins.SendPress);
+})();

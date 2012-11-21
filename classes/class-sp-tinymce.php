@@ -20,18 +20,18 @@ class SendPress_TinyMCE {
 	   // Add only in Rich Editor mode
 		if ( get_user_option('rich_editing') == 'true') {
 	     	add_filter("mce_external_plugins", array(&$this, "add_tinymce_plugin") );
-	     	add_filter('mce_buttons', array(&$this,'register_button') );
+	     	add_filter('mce_buttons', array(&$this,'register_button')  );
 	   	}
 	}
 
 	function register_button($buttons) {
-	   	array_push($buttons, "|", "mailmerge");
+	   	array_push($buttons, "|", "sendpress");
 	   	return $buttons;
 	}
 	 
 	// Load the TinyMCE plugin : editor_plugin.js (wp2.5)
 	function add_tinymce_plugin($plugin_array) {
-	  	$plugin_array['mailmerge'] = SENDPRESS_URL.'js/mailmerge_plugin.js';
+	  	$plugin_array['sendpress'] = SENDPRESS_URL.'js/mailmerge_plugin.js';
 	   	return $plugin_array;
 	}
 

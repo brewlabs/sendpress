@@ -35,6 +35,11 @@
     outline: none;
 }
 
+.split .wp-editor-container textarea.wp-editor-area{
+    width: 98%;
+}
+
+
 .widerightcol input[type="text"],.widerightcol input[type="password"] {
     border-color: #CCC;
     padding: 3px 8px;
