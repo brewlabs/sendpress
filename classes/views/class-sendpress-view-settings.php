@@ -12,10 +12,11 @@ class SendPress_View_Settings extends SendPress_View {
 
 	<div class="subnav">
 		<ul class="nav nav-pills">
+			<!--
 		  <li <?php if($sp->_current_view == ''){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings::link();; ?>"><i class="icon-envelope"></i> <?php _e('Basic Setup','sendpress'); ?></a></li>
-		 
+		 -->
 		  <li <?php if($sp->_current_view == 'styles'){ ?>class="active"<?php } ?> >
-		    <a href="<?php echo SendPress_View_Settings_Styles::link(); ?>"><i class="icon-pencil"></i> <?php _e('Template Styles','sendpress'); ?></a>
+		    <a href="<?php echo SendPress_View_Settings_Styles::link(); ?>"><i class="icon-envelope"></i> <?php _e('Basic Settings & Styles','sendpress'); ?></a>
 		  </li>
 		  <!--
 		  <li <?php if($sp->_current_view == 'activation'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Activation::link(); ?>"><i class="icon-user"></i> <?php _e('Double Opt-in Email','sendpress'); ?></a></li>
@@ -30,6 +31,8 @@ class SendPress_View_Settings extends SendPress_View {
 	<?php
 	}
 	function html($sp) {
+		SendPress_View_Settings_Styles::redirect();
+
 		$default_styles_id = SendPress_Data::get_template_id_by_slug('user-style');
 $post =  get_post( $default_styles_id );
 ?>
@@ -64,6 +67,7 @@ $post =  get_post( $default_styles_id );
 <?php _e('This is dictated under the <a href="http://business.ftc.gov/documents/bus61-can-spam-act-compliance-guide-business" target="_blank">Federal CAN-SPAM Act of 2003</a>.','sendpress'); ?>
 					</p>
 </div></div>
+
 <?php wp_nonce_field($sp->_nonce_value); ?>
 </form>
 <?php

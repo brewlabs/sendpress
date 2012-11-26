@@ -34,6 +34,15 @@
     width: 100%;
     outline: none;
 }
+.nomargin{
+    margin: 0;
+}
+
+.widerightcol input[type="text"].sp-text, .widerightcol input[type="password"].sp-text,input.sp-text{
+    padding: 8px;
+    width: 98%;
+    font-size: 14px;
+}
 
 .split .wp-editor-container textarea.wp-editor-area{
     width: 98%;

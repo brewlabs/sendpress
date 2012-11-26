@@ -4,6 +4,102 @@
 defined( 'ABSPATH' ) || exit;
 
 class SendPress_View_Settings_Styles extends SendPress_View_Settings {
+
+	function save($data,$sp){
+		$saveid = $_POST['post_ID'];
+        $bodybg = $_POST['body_bg'];
+        $bodytext = $_POST['body_text'];
+        $bodylink = $_POST['body_link'];
+        $contentbg = $_POST['content_bg'];
+        $contenttext = $_POST['content_text'];
+        $contentlink = $_POST['sp_content_link_color'];
+        $contentborder = $_POST['content_border'];
+        $upload_image = $_POST['upload_image'];
+
+        
+        $headerbg = $_POST['header_bg'];
+        $headertextcolor = $_POST['header_text_color'];
+        $headertext = $_POST['header_text'];
+        $headerlink = $_POST['header_link'];
+        $imageheaderurl = $_POST['image_header_url'];
+        
+        $subheadertext = $_POST['sub_header_text'];
+
+        $activeHeader = $_POST['active_header'];
+
+                      update_post_meta($saveid ,'upload_image', $upload_image );
+
+        update_post_meta($saveid ,'body_bg', $bodybg);
+        update_post_meta($saveid ,'body_text', $bodytext );
+        update_post_meta($saveid ,'body_link', $bodylink );
+        update_post_meta($saveid ,'content_bg', $contentbg );
+        update_post_meta($saveid ,'content_text', $contenttext );
+        update_post_meta($saveid ,'sp_content_link_color', $contentlink );
+        update_post_meta($saveid ,'content_border', $contentborder );
+
+
+
+
+        update_post_meta($saveid ,'header_bg', $headerbg );
+        update_post_meta($saveid ,'header_text_color', $headertextcolor );
+        update_post_meta($saveid ,'header_text', $headertext );
+        update_post_meta($saveid ,'header_link', $headerlink );
+        update_post_meta($saveid ,'image_header_url', $imageheaderurl );
+        update_post_meta($saveid ,'sub_header_text', $subheadertext );
+
+        update_post_meta($saveid ,'active_header', $activeHeader );
+
+       	$canspam= $_POST['can-spam'];
+        $linkedin = '';
+        if(isset($_POST['linkedin'])){
+            $linkedin= $_POST['linkedin'];
+        } 
+
+        $twitter = '';
+        if(isset($_POST['twitter'])){
+            $twitter= $_POST['twitter'];
+        }
+
+        $facebook = '';
+        if(isset($_POST['facebook'])){
+            $facebook= $_POST['facebook'];
+        }
+
+        if(isset($_POST['fromname'])){
+            $fromname= $_POST['fromname'];
+        }
+
+        // From email and name
+        // If we don't have a name from the input headers
+        if ( !isset( $fromname ) || $fromname == '' ){
+            $fromname = get_bloginfo('name'); 
+        }
+        
+        if(isset($_POST['fromemail'])){
+            $fromemail= $_POST['fromemail'];
+        }
+
+
+        if ( !isset( $fromemail )  || $fromemail == '') {
+            // Get the site domain and get rid of www.
+            $sitename = strtolower( $_SERVER['SERVER_NAME'] );
+            if ( substr( $sitename, 0, 4 ) == 'www.' ) {
+                $sitename = substr( $sitename, 4 );
+            }
+
+            $fromemail = 'wordpress@' . $sitename;
+        }
+
+        SendPress_Option::set('canspam', $canspam);
+        SendPress_Option::set('linkedin', $linkedin);
+        SendPress_Option::set('facebook', $facebook);
+        SendPress_Option::set('twitter', $twitter);
+        SendPress_Option::set('fromemail', $fromemail );
+        SendPress_Option::set('fromname', $fromname );
+
+
+        self::redirect();
+	}
 	
 	function html($sp) {
 		global $post_ID, $post;
@@ -18,21 +114,84 @@ class SendPress_View_Settings_Styles extends SendPress_View_Settings {
 			$post_ID = $post->ID;
 		}
 	
-
-
+$fe = _('From Email','sendpress'); 
+$fn = _('From Name','sendpress'); 
 		?>
-		<form action="admin.php?page=<?php echo $sp->_page; ?>" method="POST" name="post" id="post">
 		<form method="post" id="post">
 	<br class="clear">
 <div style="float:right;" >
-	<a href="?page=sp-templates" class="btn btn-large" ><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e('Save','sendpress'); ?></a>
+	<a href="<?php echo self::link(); ?>" class="btn btn-large" ><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e('Save','sendpress'); ?></a>
 </div>
 <br class="clear">
+<h3>Requried Settings</h3>
+<div class="boxer form-box">
+<div style="float: right; width: 45%;">
+	<h4 class="nomargin"><?php _e('From Email','sendpress'); ?></h4>
+	<input name="fromemail" type="text" id="fromemail" value="<?php echo SendPress_Option::get('fromemail'); ?>" class="regular-text sp-text">
+
+</div>	
+<div style="width: 45%; margin-right: 10%">
+	<h4 class="nomargin"><?php _e('From Name','sendpress'); ?></h4>
+	<input name="fromname" type="text" id="fromname" value="<?php echo SendPress_Option::get('fromname'); ?>" class="regular-text sp-text">
+
+</div>
+</div>
+
+
+
+
+
+<br class="clear">
+<h3>Optional Settings</h3>
 		<?php require_once( SENDPRESS_PATH. 'inc/forms/email-style.2.0.php' ); ?>
-		<input type="hidden" name="action" value="template-default-style" />
+		
+
+<br class="clear">
+<h3>Template Text Settings</h3>
+<div class="boxer form-box">
+</div>
+
+
+
+
 <?php wp_nonce_field($sp->_nonce_value); ?>
 		</form>
 	<?php
 	}
+
+
+
+	function text_settings(){
+		?>
+
+<br>
+<div class="well">
+<div style="float: right; width: 45%;">
+	<h4 class="nomargin">Socail Media</h4>
+	<p>These items only show on the tempalte if a url is entered.</p>
+	<p><label><?php _e('Twitter URL','sendpress'); ?>:</label>
+	<input name="twitter" type="text" id="twitter" value="<?php echo SendPress_Option::get('twitter'); ?>" class="regular-text sp-text"></p>
+<p><label><?php _e('Facebook URL','sendpress'); ?>:</label>
+<input name="facebook" type="text" id="facebook" value="<?php echo SendPress_Option::get('facebook'); ?>" class="regular-text sp-text" ></p>
+<p><label><?php _e('LinkedIn URL','sendpress'); ?>:</label>
+<input name="linkedin" type="text" id="linkedin" value="<?php echo SendPress_Option::get('linkedin'); ?>" class="regular-text sp-text"></p>
+	<p class="alert alert-info">Make sure you include http:// in your links</p>
+</div>	
+<div style="width: 45%; margin-right: 10%">
+<h4 class="nomargin"><?php _e('CAN-SPAM','sendpress'); ?>: <small><?php _e('required in the US.','sendpress'); ?></small></h4>
+<textarea cols="20" rows="10" class="large-text code" name="can-spam"><?php echo SendPress_Option::get('canspam'); ?></textarea>
+<p><?php _e('<b>Tell recipients where you’re located.</b> Your message must include your valid physical postal address. This can be your current street address, a post office box you’ve registered with the U.S. Postal Service, or a private mailbox you’ve registered with a commercial mail receiving agency established under Postal Service regulations.','sendpress'); ?></p>
+<?php _e('This is dictated under the <a href="http://business.ftc.gov/documents/bus61-can-spam-act-compliance-guide-business" target="_blank">Federal CAN-SPAM Act of 2003</a>.','sendpress'); ?>
+					</p>
+</div>
+</div>
+
+
+
+
+		<?php
+	}
+
+
 
 }

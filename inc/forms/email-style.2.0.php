@@ -339,9 +339,16 @@ if(strlen($active_header['value']) > 0){
                                 Not interested anymore? <a href="#" >Unsubscribe</a> Instantly.
 				</div>
 		  </div>
+
 		</div>
+		<?php if( method_exists($this,'text_settings')){
+			$this->text_settings();
+		}; ?>
 	</div>
+
 	<br class='clear'>
+
+
 </div>
 </div>
 
