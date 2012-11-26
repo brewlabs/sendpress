@@ -14,6 +14,7 @@ require_once ('class-signup-shortcode.php');
 require_once ('class-unsubscribe-shortcode.php');
 require_once ('class-widget-signup.php');
 require_once ('Mobile_Detect.php');
+require_once ('class-smtp-api-sendgrid.php');
 
 if( is_admin() ){
 

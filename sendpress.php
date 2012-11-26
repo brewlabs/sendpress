@@ -1246,9 +1246,11 @@ If you do not want to confirm, simply ignore this message.
 	}
 
 	function is_double_optin(){
-		if( SendPress_Option::get('send_optin_email') == 'yes' ){
+		/*
+		if( SendPress_Option::get('send_optin_email') == 'yes'){
 			return true;			
 		}
+		*/
 		return false;
 	}
 
@@ -1744,6 +1746,7 @@ If you do not want to confirm, simply ignore this message.
 			SendPress_Option::set('phpmailer_error', $phpmailer->ErrorInfo);
 			SendPress_Option::set('last_test_debug', $smtp_debug);
 			$this->last_send_smtp_debug = $smtp_debug;
+			print_r($smtp_debug);
 		}
 
 		if ( ( $result != true  ) ) {
