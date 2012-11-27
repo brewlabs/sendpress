@@ -40,7 +40,7 @@ class SendPress_View {
      * @return mixed Value.
      */
 	static function redirect( $params = array() ){
-		wp_redirect( self::link( $params ) );
+		wp_redirect( self::link( $params ) ); exit;
 	}
 
     /**

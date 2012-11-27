@@ -114,8 +114,8 @@ class SendPress_View_Settings_Styles extends SendPress_View_Settings {
 			$post_ID = $post->ID;
 		}
 	
-$fe = _('From Email','sendpress'); 
-$fn = _('From Name','sendpress'); 
+$fe = __('From Email','sendpress'); 
+$fn = __('From Name','sendpress'); 
 		?>
 		<form method="post" id="post">
 	<br class="clear">

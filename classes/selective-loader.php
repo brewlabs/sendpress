@@ -1,6 +1,6 @@
 <?php
 require_once ('class-sendpress-helper.php');
-
+require_once ('class-sendpress-email.php');
 require_once ('class-sendpress-tables.php');
 require_once ('class-sendpress-database.php');
 require_once ( 'class-ajax-loader.php' );

@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || exit;
 // Plugin paths, for including files
 
-if(class_exists('SendPress_Email')){ return; }
+if( ! class_exists('SendPress_Email')){ 
 
 
 /**
@@ -183,5 +183,5 @@ class SendPress_Email {
 
 
 }
-
+}
 
