@@ -32,7 +32,7 @@ class SendPress_View_Settings extends SendPress_View {
 	}
 	function html($sp) {
 		SendPress_View_Settings_Styles::redirect();
-
+/*
 		$default_styles_id = SendPress_Data::get_template_id_by_slug('user-style');
 $post =  get_post( $default_styles_id );
 ?>
@@ -71,6 +71,7 @@ $post =  get_post( $default_styles_id );
 <?php wp_nonce_field($sp->_nonce_value); ?>
 </form>
 <?php
+*/
 	}
 
 }
