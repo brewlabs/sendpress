@@ -497,6 +497,14 @@ class SendPress{
 
 		    	$this->_current_action = $_GET['action'];
 		    	$this->_current_action = ( isset( $_GET['action2'] ) && $_GET['action2'] !== '-1')  ? $_GET['action2'] : $this->_current_action ;
+		    	
+	    		if( method_exists( $view_class , $this->_current_action ) ){
+	    			$save_class = new $view_class;
+	    			call_user_func(array($view_class, $this->_current_action ),$_GET,$this);
+	    		}
+
+	    	}	
+
 		    	require_once( SENDPRESS_PATH . 'inc/helpers/sendpress-get-actions.php' );
 	    	}
 		}
