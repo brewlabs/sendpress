@@ -503,7 +503,7 @@ class SendPress{
 	    			call_user_func(array($view_class, $this->_current_action ),$_GET,$this);
 	    		}
 
-	    	}	
+	    		
 
 		    	require_once( SENDPRESS_PATH . 'inc/helpers/sendpress-get-actions.php' );
 	    	}
