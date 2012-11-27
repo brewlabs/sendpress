@@ -3,8 +3,8 @@ Plugin URI: http://sendpress.com
 Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid,
 Requires at least: 3.3
-Tested up to: 3.4.1
-Stable tag: 0.8.7.1
+Tested up to: 3.4.2
+Stable tag: 0.8.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,7 +31,7 @@ More information at [SendPress.com](http://sendpress.com/).
 
 = Support =
 
-Please check out our support site [http://sendpress.zendesk.com](http://sendpress.zendesk.com) if you need help with anything.
+Please check out our support site [http://sendpress.com/support/knowledgebase/](http://sendpress.com/support/) if you need help with anything.
 
 
 == Installation ==
@@ -89,6 +89,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 
 == Changelog ==
+
+= 0.8.7.2 =
+* Fixed extra \ showing in some settings
+* added email template text to translation code
+* optimized plugin load and resource usage
 
 = 0.8.7.1 =
 * Stopped plugin from creating multiple cron calls
@@ -154,6 +159,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.8.7.2 =
+Minor bug fixes and performence updates.
 
 = 0.8.7.1 =
 Stopped SendPress from creating multiple crons.
