@@ -30,8 +30,13 @@ class SendPress_View_Settings extends SendPress_View {
 
 	<?php
 	}
+	function prerender($sp){
+		if(  $sp->_current_view == '' ){
+			SendPress_View_Settings_Styles::redirect();
+		}
+	}
 	function html($sp) {
-		SendPress_View_Settings_Styles::redirect();
+		
 /*
 		$default_styles_id = SendPress_Data::get_template_id_by_slug('user-style');
 $post =  get_post( $default_styles_id );

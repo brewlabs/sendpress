@@ -688,7 +688,7 @@ class SendPress{
 		if( defined('WP_DEBUG') && WP_DEBUG ){
 			$view_class->add_tab( __('Add-ons','sendpress'), 'sp-pro', ($this->_page === 'sp-pro') );
 		}
-
+		$view_class->prerender( $this );
 		$view_class->render( $this );
 	}
 

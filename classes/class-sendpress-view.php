@@ -150,12 +150,12 @@ class SendPress_View {
 	}
 
 
-	function prerender() {}
+	function prerender( $sp = false )  {}
 
 	/**
 	 * Renders the view.
 	 */
-	function render($sp) {
+	function render($sp = false) {
 		$this->page_start();
 		$this->sub_menu($sp);
 		if( self::access( $this ) ){
@@ -166,7 +166,7 @@ class SendPress_View {
 		$this->page_end();
 	}
 
-	function sub_menu($sp){}
+	function sub_menu($sp = false){}
 
 	function tabs(){
 		?>
