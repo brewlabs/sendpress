@@ -1,7 +1,7 @@
 <?php 
 /*
 Plugin Name: SendPress: Email Marketing and Newsletters
-Version: 0.8.7.2
+Version: 0.8.7.3
 Plugin URI: http://sendpress.com
 Description: Easy to manage Email Markteing and Newsletter plugin for WordPress. 
 Author: SendPress
@@ -11,7 +11,7 @@ Author URI: http://sendpress.com/
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'https://api.sendpres.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.2' );
-define( 'SENDPRESS_VERSION', '0.8.7.2' );
+define( 'SENDPRESS_VERSION', '0.8.7.3' );
 define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -431,7 +431,7 @@ class SendPress{
 		*/
 
 		if( ( isset($_GET['page']) && $_GET['page'] == 'sp-templates' ) || (isset( $_GET['view'] ) && $_GET['view'] == 'style-email' )) {
-			wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' );
+			wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' ,'', SENDPRESS_VERSION);
 			wp_enqueue_script('sendpress_js_styler');
 		}
 
@@ -460,23 +460,24 @@ class SendPress{
 			wp_enqueue_script( 'spfarb' );
 			wp_register_script('sendpress-admin-js', SENDPRESS_URL .'js/sendpress.js','', SENDPRESS_VERSION );
 			wp_enqueue_script('sendpress-admin-js');
-			wp_register_script('sendpress_bootstrap', SENDPRESS_URL .'bootstrap/js/bootstrap.min.js' );
+			wp_register_script('sendpress_bootstrap', SENDPRESS_URL .'bootstrap/js/bootstrap.min.js' ,'',SENDPRESS_VERSION);
 			wp_enqueue_script('sendpress_bootstrap');
-			wp_register_style( 'sendpress_bootstrap_css', SENDPRESS_URL . 'bootstrap/css/bootstrap.css', false, '1.0.0' );
+			wp_register_style( 'sendpress_bootstrap_css', SENDPRESS_URL . 'bootstrap/css/bootstrap.css', '', SENDPRESS_VERSION );
     		wp_enqueue_style( 'sendpress_bootstrap_css' );
 
     		wp_register_script('sendpress_ls', SENDPRESS_URL .'js/jquery.autocomplete.js' ,'', SENDPRESS_VERSION );
 			wp_enqueue_script('sendpress_ls');
 			//wp_localize_script( 'sendpress_js', 'sendpress', array( 'ajaxurl' => admin_url( 'admin-ajax.php', 'http' ) ) );
 
-			wp_register_style( 'sendpress_css_base', SENDPRESS_URL . 'css/style.css', false, '1.0.0' );
+			wp_register_style( 'sendpress_css_base', SENDPRESS_URL . 'css/style.css', false, SENDPRESS_VERSION );
     		wp_enqueue_style( 'sendpress_css_base' );
 
 	    	do_action('sendpress_admin_scripts');
 
+	    	$view_class = $this->get_view_class($this->_page, $this->_current_view);
+	    		
 	    	if ( !empty($_POST) && check_admin_referer($this->_nonce_value) ){
 
-	    		$view_class = $this->get_view_class($this->_page, $this->_current_view);
 	    		
 	    		if( method_exists( $view_class , 'save' ) ){
 	    			//$view_class::save($this);
@@ -497,10 +498,12 @@ class SendPress{
 
 		    	$this->_current_action = $_GET['action'];
 		    	$this->_current_action = ( isset( $_GET['action2'] ) && $_GET['action2'] !== '-1')  ? $_GET['action2'] : $this->_current_action ;
-		    	
-	    		if( method_exists( $view_class , $this->_current_action ) ){
+		    	$method = str_replace("-","_", $this->_current_action);
+	    			$method = str_replace(" ","_",$method);
+	    		if( method_exists( $view_class , $method ) ){
 	    			$save_class = new $view_class;
-	    			call_user_func(array($view_class, $this->_current_action ),$_GET,$this);
+
+	    			call_user_func(array($view_class, $method ),$_GET,$this);
 	    		}
 
 	    		

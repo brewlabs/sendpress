@@ -20,6 +20,20 @@ class SendPress_Data extends SendPress_DB_Tables {
 	
 	/********************* BASE FUNCTIONS **************************/
 
+	/********************* QUEUE FUNCTIONS **************************/
+
+	function delete_queue_emails(){
+		$table = self::queue_table();
+		self::wpdbQuery("DELETE FROM $table", 'query');
+	}
+
+
+	/********************* QUEUE FUNCTIONS **************************/
+
+
+
+
+
 	/********************* REPORTS FUNCTIONS **************************/	
 
     /**
@@ -233,7 +247,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$encstring = '';
 		$keylength = strlen($key);
 		$messagelength = strlen($message);
-		
+		/*
 		for($i=0;$i<=$messagelength - 1;$i++)
 		{
 			$msgord = ord(substr($message,$i,1));
@@ -242,6 +256,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 			if ($msgord + $keyord <= 255){$encstring .= chr($msgord + $keyord);}
 			if ($msgord + $keyord > 255){$encstring .= chr(($msgord + $keyord)-256);}
 		}
+		*/
 		return urlencode(base64_encode($encstring));
 	}
 
@@ -250,16 +265,23 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$decstring ='';
 		$keylength = strlen($key);
 		$message = base64_decode($message);
-		$messagelength = strlen($message);
-		for($i=0;$i<=$messagelength - 1;$i++)
-		{
-			$msgord = ord(substr($message,$i,1));
-			$keyord = ord(substr($key,$i % $keylength,1));
 
-			if ($msgord - $keyord >= 0){$decstring .= chr($msgord - $keyord);}
-			if ($msgord + $keyord < 0){$decstring .= chr(($msgord - $keyord)+256);}
+		$json = json_decode($message);
+
+		if( is_object($json) && !is_null($json) ){
+			return $json;
+		} else {
+			$messagelength = strlen($message);
+			for($i=0;$i<=$messagelength - 1;$i++)
+			{
+				$msgord = ord(substr($message,$i,1));
+				$keyord = ord(substr($key,$i % $keylength,1));
+
+				if ($msgord - $keyord >= 0){$decstring .= chr($msgord - $keyord);}
+				if ($msgord + $keyord < 0){$decstring .= chr(($msgord - $keyord)+256);}
+			}
+			return json_decode($decstring);
 		}
-		return json_decode($decstring);
 	}
 
 

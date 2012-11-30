@@ -11,6 +11,11 @@ defined( 'ABSPATH' ) || exit;
 */
 class SendPress_View_Queue extends SendPress_View {
 	
+	function empty_queue( $get, $sp ){
+		SendPress_Data::delete_queue_emails();
+		self::redirect();
+	}
+
 	function html($sp) {
 		//Create an instance of our package class...
 	$testListTable = new SendPress_Queue_Table();
@@ -44,6 +49,7 @@ class SendPress_View_Queue extends SendPress_View {
 
 	?>
 
+
 	<div id="taskbar" class="lists-dashboard rounded group"> 
 
 	<div id="button-area">  
@@ -61,6 +67,28 @@ class SendPress_View_Queue extends SendPress_View {
 	    <?php $testListTable->display() ?>
 	    <?php wp_nonce_field($sp->_nonce_value); ?>
 	</form>
+	<br>
+	<form  method='get'>
+		<input type='hidden' value="<?php echo $_GET['page']; ?>" name="page" />
+		
+		<input type='hidden' value="empty-queue" name="action" />
+		<a class="btn btn-large " data-toggle="modal" href="#sendpress-empty-queue" ><i class="icon-warning-sign "></i> <?php _e('Delete All Emails in the Queue','sendpress'); ?></a>
+		<?php wp_nonce_field($sp->_nonce_value); ?>
+	</form>
+<div class="modal hide fade" id="sendpress-empty-queue">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3><?php _e('Really? Delete All Emails in the Queue.','sendpress');?></h3>
+	</div>
+	<div class="modal-body">
+		<p><?php _e('This will remove all emails from the queue without attempting to send them','sendpress');?>.</p>
+	</div>
+	<div class="modal-footer">
+	<a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('No! I was Joking','sendpress');?></a><a href="<?php echo self::link(); ?>&action=empty-queue" id="confirm-delete" class="btn btn-danger" ><?php _e('Yes! Delete All Emails','sendpress');?></a>
+	</div>
+</div>
+
+
 	<div class="modal hide fade" id="sendpress-sending">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">×</button>

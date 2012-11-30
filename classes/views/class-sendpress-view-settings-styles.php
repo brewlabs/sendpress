@@ -147,9 +147,7 @@ $fn = __('From Name','sendpress');
 		
 
 <br class="clear">
-<h3>Template Text Settings</h3>
-<div class="boxer form-box">
-</div>
+
 
 
 

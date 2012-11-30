@@ -1,4 +1,8 @@
 
+
+a.btn:focus{
+    color: inherit;
+}
 #poststuff h2{
     margin: 0 ;
 }
@@ -25,7 +29,9 @@
     display: block;
     margin: 0 auto;
 }
-
+table {
+border-collapse: separate;
+}
 #email-subject {
     border-color: #CCC;
     padding: 3px 8px;
