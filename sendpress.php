@@ -1289,13 +1289,12 @@ If you do not want to confirm, simply ignore this message.
 					$l .= $list->post_title ." <br>";
 				}
 			}
-			add_filter( 'the_content', array( $this, 'the_content') );	
+		//	add_filter( 'the_content', array( $this, 'the_content') );	
 			$optin = SendPress_Data::get_template_id_by_slug('double-optin');
 			$user = SendPress_Data::get_template_id_by_slug('user-style');
 			SendPress_Posts::copy_meta_info($optin,$user);
 
-
-
+			
 
 			$message = new SendPress_Email();
 			$message->id($optin);

@@ -158,8 +158,20 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if ( $slug ) {
 			// Tell the function what to look for in a post.
 			$_args = array('post_parent' => '0', 'post_type' => 'sptemplates', 'name' => 'sp-template-' . $slug, 'post_status' => 'draft', 'comment_status' => 'closed', 'ping_status' => 'closed' );
+
+
+
+			 $querystr = "
+			    SELECT $wpdb->posts.* 
+			    FROM $wpdb->posts 
+			    WHERE $wpdb->posts.post_name = 'sp-template-$slug'
+			    ORDER BY $wpdb->posts.post_date DESC
+			 ";
+
+ 			$_posts = $wpdb->get_results($querystr, OBJECT);
+ 			//print_r($_posts);
 			// look in the database for a "silent" post that meets our criteria.
-			$_posts = get_posts( $_args );
+			//$_posts = get_posts( $_args );
 			// If we've got a post, loop through and get it's ID.
 			if ( count( $_posts ) ) {
 				$_id = $_posts[0]->ID;
@@ -199,7 +211,15 @@ class SendPress_Data extends SendPress_DB_Tables {
 			// Tell the function what to look for in a post.
 			$_args = array('post_parent' => '0', 'post_type' => 'sptemplates', 'name' => 'sp-template-' . $slug, 'post_status' => 'draft', 'comment_status' => 'closed', 'ping_status' => 'closed' );
 			// look in the database for a "silent" post that meets our criteria.
-			$_posts = get_posts( $_args );
+			//$_posts = get_posts( $_args );
+			 $querystr = "
+			    SELECT $wpdb->posts.* 
+			    FROM $wpdb->posts 
+			    WHERE $wpdb->posts.post_name = 'sp-template-$slug'
+			    ORDER BY $wpdb->posts.post_date DESC
+			 ";
+
+ 			$_posts = $wpdb->get_results($querystr, OBJECT);
 			// If we've got a post, loop through and get it's ID.
 			if ( count( $_posts ) ) {
 				$_id = $_posts[0]->ID;
