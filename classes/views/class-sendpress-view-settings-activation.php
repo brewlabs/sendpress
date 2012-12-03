@@ -47,12 +47,12 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		
 		
 <div class="boxer form-box">
-	<div style="float: right; width: 45%;">
-		<p>Subject</p>
-		<input type="text" name="subject" class="regular-text" style="width: 100%;" value="<?php echo  stripcslashes($dpost->post_title); ?>"/>
-		<p>Body</p>
+	<div style="float: right; width: 45%;"><br>
+		<b>Subject</b><br>
+		<input type="text" name="subject" class="regular-text sp-text" style="width: 100%;" value="<?php echo  stripcslashes($dpost->post_title); ?>"/>
+		<br><br><b>Body</b><br>
 		<?php if(strpos($dpost->post_content,'*|SP:CONFIRMLINK|*'  )  == false){ echo "<div class='alert alert-error'>Missing <b>*|SP:CONFIRMLINK|*</b> in body content.</div>";} ?>
-		<textarea style="width:100%;" rows="22" name="body"><?php 
+		<textarea style="width:100%; padding: 8px;" rows="21" name="body"><?php 
 		remove_filter( 'the_content', 'wpautop' );
 		$content = apply_filters('the_content', $dpost->post_content);
 									$content = str_replace(']]>', ']]&gt;', $content);
@@ -60,9 +60,9 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 
 	</div>	
 	<div style="width: 45%; margin-right: 10%">
-		<p><b>Send Double Opt-in Email:&nbsp;&nbsp;&nbsp;<input type="radio" value="yes" <?php if(SendPress_Option::get('send_optin_email')=='yes'){ echo "checked='checked'"; } ?> name="optin"> Yes&nbsp;&nbsp;&nbsp;<input type="radio" value="no" <?php if(SendPress_Option::get('send_optin_email')=='no'){ echo "checked='checked'"; } ?> name="optin"> No</b>
-			<br>Keep the spammers, robots and other riff-raff off your list. <br>Read more about why to use double opt-in on out support site.</p>
-			<br>
+		<br><b>Send Double Opt-in Email:&nbsp;&nbsp;&nbsp;<input type="radio" value="yes" <?php if(SendPress_Option::get('send_optin_email')=='yes'){ echo "checked='checked'"; } ?> name="optin"> Yes&nbsp;&nbsp;&nbsp;<input type="radio" value="no" <?php if(SendPress_Option::get('send_optin_email')=='no'){ echo "checked='checked'"; } ?> name="optin"> No</b>
+			<br>Keep the spammers, robots and other riff-raff off your list. <br>Read more about why to use double opt-in on out support site.
+			<br><br><br>
 			<b>Confirmation Page</b><br>
 			<div class='well'>
 			Select the page a new subcriber will be redirected to after they click the confirmation link in the Double Opt-in Email.<br><br>
