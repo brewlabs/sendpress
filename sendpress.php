@@ -1259,11 +1259,9 @@ If you do not want to confirm, simply ignore this message.
 	}
 
 	function is_double_optin(){
-		/*
 		if( SendPress_Option::get('send_optin_email') == 'yes'){
 			return true;			
 		}
-		*/
 		return false;
 	}
 
