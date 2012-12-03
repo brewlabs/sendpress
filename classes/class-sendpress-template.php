@@ -259,6 +259,7 @@ class SendPress_Template {
 				} else {
 					$HtmlCode =str_replace("*|SP:BROWSER|*",'' ,$HtmlCode);
 					$HtmlCode =str_replace("*|SP:UNSUBSCRIBE|*",'' ,$HtmlCode);
+					$HtmlCode =str_replace("*|ID|*",'' ,$HtmlCode);
 				}
 				echo $HtmlCode;
 			} else {
