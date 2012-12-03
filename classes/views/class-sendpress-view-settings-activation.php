@@ -6,6 +6,7 @@ defined( 'ABSPATH' ) || exit;
 if( !class_exists('SendPress_View_Settings_Activation') ){
 
 class SendPress_View_Settings_Activation extends SendPress_View_Settings {
+	private $error_body = false;
 
 	function save() {
 		SendPress_Option::set('send_optin_email', $_POST['optin']);
@@ -17,6 +18,9 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		$optin = SendPress_Data::get_template_id_by_slug('double-optin');
 		$dpost = get_post($optin);
 		$dpost->post_content = $_POST['body'];
+		
+			
+		
 		wp_update_post($dpost);
 
 		//SendPress_Option::set('optin_body', $_POST['body']);
@@ -25,7 +29,7 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		//print_r(get_class( $this ));
 		//self::n();
 		//echo "asdf";
-		self::redirect();
+		self::redirect(arrat);
 	}
 	
 	function html($sp) {
@@ -47,7 +51,8 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		<p>Subject</p>
 		<input type="text" name="subject" class="regular-text" style="width: 100%;" value="<?php echo  stripcslashes($dpost->post_title); ?>"/>
 		<p>Body</p>
-		<textarea style="width:100%;" rows="15" name="body"><?php 
+		<?php if(strpos($dpost->post_content,'*|SP:CONFIRMLINK|*'  )  == false){ echo "<div class='alert alert-error'>Missing <b>*|SP:CONFIRMLINK|*</b> in body content.</div>";} ?>
+		<textarea style="width:100%;" rows="22" name="body"><?php 
 		remove_filter( 'the_content', 'wpautop' );
 		$content = apply_filters('the_content', $dpost->post_content);
 									$content = str_replace(']]>', ']]&gt;', $content);
