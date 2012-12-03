@@ -63,9 +63,9 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		<p><b>Send Double Opt-in Email:&nbsp;&nbsp;&nbsp;<input type="radio" value="yes" <?php if(SendPress_Option::get('send_optin_email')=='yes'){ echo "checked='checked'"; } ?> name="optin"> Yes&nbsp;&nbsp;&nbsp;<input type="radio" value="no" <?php if(SendPress_Option::get('send_optin_email')=='no'){ echo "checked='checked'"; } ?> name="optin"> No</b>
 			<br>Keep the spammers, robots and other riff-raff off your list. <br>Read more about why to use double opt-in on out support site.</p>
 			<br>
-			<b>Confirmation Page</b>
-			<p>Select the page a subcriber will be redirected to after they click the confirmation link.</p>
+			<b>Confirmation Page</b><br>
 			<div class='well'>
+			Select the page a new subcriber will be redirected to after they click the confirmation link in the Double Opt-in Email.<br><br>
 			<?php $ctype = SendPress_Option::get('confirm-page'); ?>
 			<input type="radio" name="confirm-page" value="default" <?php if($ctype=='default'){echo "checked='checked'"; } ?> /> Use Default SendPress Page<br><br>
 			<input type="radio" name="confirm-page" value="custom"  <?php if($ctype=='custom'){echo "checked='checked'";} ?>/> Redirect to <select name="confirm-page-id"> 
@@ -87,7 +87,7 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 </div>
 
 
-			<br><br><br>
+			<br>
 			<b>Quick Tags</b>: work in both subject and body.
 			<div class='well'>
 				<b>*|SP:CONFIRMLINK|*</b> This is required to be in the body of the email.
