@@ -158,6 +158,7 @@ class SendPress_Email {
 			$body_html = str_replace("*|FNAME|*", $subscriber->firstname , $body_html );
 			$body_html = str_replace("*|LNAME|*", $subscriber->lastname , $body_html );
 			$body_html = str_replace("*|EMAIL|*", $subscriber->email , $body_html );
+			$body_html = str_replace("*|ID|*", $subscriber->subscriberID , $body_html );
 				
 			//echo  $body_html;
 
@@ -178,6 +179,9 @@ class SendPress_Email {
 				set_transient( 'sendpress_report_subject_'. $this->id(), $email_subject );
 			    // Get any existing copy of our transient data
 			}
+			$subscriber = SendPress_Data::get_subscriber($this->subscriber_id());
+			$email_subject = str_replace("*|ID|*", $subscriber->subscriberID , $body_html );
+
 			return $email_subject;
 	}
 

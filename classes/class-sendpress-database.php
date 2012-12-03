@@ -27,6 +27,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 		self::wpdbQuery("DELETE FROM $table", 'query');
 	}
 
+	function queue_email_process($id){
+		$table = self::queue_table();
+		global $wpdb;
+		$result = $wpdb->update( $table ,array('inprocess'=>'1','last_attempt'=>date('Y-m-d H:i:s')), array('id'=> $id) );
+
+	}
+
 
 	/********************* QUEUE FUNCTIONS **************************/
 
@@ -257,7 +264,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 			if ($msgord + $keyord > 255){$encstring .= chr(($msgord + $keyord)-256);}
 		}
 		*/
-		return urlencode(base64_encode($encstring));
+		return urlencode(base64_encode($message));
 	}
 
 	function decrypt($message) {

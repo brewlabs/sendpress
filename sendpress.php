@@ -1,7 +1,7 @@
 <?php 
 /*
 Plugin Name: SendPress: Email Marketing and Newsletters
-Version: 0.8.7.2
+Version: 0.8.7.3.1
 Plugin URI: http://sendpress.com
 Description: Easy to manage Email Markteing and Newsletter plugin for WordPress. 
 Author: SendPress
@@ -11,7 +11,7 @@ Author URI: http://sendpress.com/
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'https://api.sendpres.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.2' );
-define( 'SENDPRESS_VERSION', '0.8.7.3' );
+define( 'SENDPRESS_VERSION', '0.8.7.3.1' );
 define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -412,7 +412,9 @@ class SendPress{
 			SendPress_Option::set('send_optin_email','yes');
 		}
 
-
+		if( SendPress_Option::get('cron_send_count') == false ){
+			SendPress_Option::set('cron_send_count','100');
+		}
 
 		//wp_clear_scheduled_hook( 'sendpress_cron_action' );
 		// Schedule an action if it's not already scheduled
@@ -1069,7 +1071,7 @@ If you do not want to confirm, simply ignore this message.
 
 		$table = $this->queue_table();
 
-		$result = $wpdb->update($table,array('attempts'=>0 ), array('id'=> $emailid) );
+		$result = $wpdb->update($table,array('attempts'=>0 ,'inprocess'=>0), array('id'=> $emailid) );
 	
 	}
 
@@ -1809,9 +1811,42 @@ If you do not want to confirm, simply ignore this message.
 
 	function fetch_mail_from_queue(){
 		global $wpdb;
+		$count = SendPress_Option::get('cron_send_count');
+		for ($i=0; $i < $count ; $i++) { 
+			if($this->cron_stop() == false ){
+			$email = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 LIMIT 1","get_row");
+			SendPress_Data::queue_email_process( $email->id );
+				$result = $this->sp_mail_it( $email_single );
+				if ($result) {
+					$table = $this->queue_table();
+					$wpdb->query( 
+						$wpdb->prepare( 
+							"DELETE FROM $table WHERE id = %d",
+						    $email_single->id  
+					    )
+					);
+					$senddata = array(
+						'sendat' => date('Y-m-d H:i:s'),
+						'reportID' => $email_single->emailID,
+						'subscriberID' => $email_single->subscriberID
+					);
 
-		$emails = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE success = 0 AND max_attempts != attempts LIMIT 100","get_results");
-		
+					$wpdb->insert( $this->subscriber_open_table(),  $senddata);
+					
+				} else {
+					$wpdb->update( $this->queue_table() , array('attempts'=>$email_single->attempts+1,'inprocess'=>'0','last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email_single->id ));
+				}
+
+			} else{
+				break;
+			}
+
+		}
+
+
+
+
+		/*
 		foreach($emails as $email_single ){
 			//error_log(' Send via cron ');
 			if($this->cron_stop() == false ){
@@ -1841,6 +1876,7 @@ If you do not want to confirm, simply ignore this message.
 				break;
 			}	
 		}
+		*/
 	}
 
 	function send_single_from_queue(){

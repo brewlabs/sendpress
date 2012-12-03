@@ -17,6 +17,11 @@ class SendPress_View_Queue extends SendPress_View {
 	}
 
 	function html($sp) {
+
+	if(isset($_GET['cron'])){
+		$sp->fetch_mail_from_queue();
+	}	
+
 		//Create an instance of our package class...
 	$testListTable = new SendPress_Queue_Table();
 	//Fetch, prepare, sort, and filter our data...
