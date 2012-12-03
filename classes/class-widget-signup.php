@@ -140,7 +140,7 @@ class SendPress_Widget_Signup extends WP_Widget {
 			'email_label' => __('E-Mail', 'sendpress'), 
 			'desc' => __('', 'sendpress'), 
 			'button_text' => __('Submit', 'sendpress'),
-			'thank_you' => __('Thank you for subscribing!', 'sendpress')
+			'thank_you' => __('Check your inbox now to confirm your subscription.', 'sendpress')
 		);
 
 		$args = array( 'post_type' => 'sendpress_list','numberposts'     => -1,
