@@ -20,6 +20,19 @@ class SendPress_Public_View_Confirm extends SendPress_Public_View{
 			}
 		}
 
+		if(SendPress_Option::get('confirm-page') == 'custom' ){
+			$page = SendPress_Option::get('confirm-page-id');
+			if($page != false){
+				$plink = get_page_link($page);
+				if($plink != ""){
+					wp_redirect($plink);
+				}
+
+			}
+
+
+		}
+
 		?>
 			<div class="span12">
 				<div class='area'>

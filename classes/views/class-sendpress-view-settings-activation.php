@@ -11,6 +11,9 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		SendPress_Option::set('send_optin_email', $_POST['optin']);
 
 		SendPress_Option::set('optin_subject', $_POST['subject']);
+		SendPress_Option::set('confirm-page', $_POST['confirm-page']);
+		SendPress_Option::set('confirm-page-id',$_POST['confirm-page-id']);
+
 		$optin = SendPress_Data::get_template_id_by_slug('double-optin');
 		$dpost = get_post($optin);
 		$dpost->post_content = $_POST['body'];
@@ -55,6 +58,31 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		<p><b>Send Double Opt-in Email:&nbsp;&nbsp;&nbsp;<input type="radio" value="yes" <?php if(SendPress_Option::get('send_optin_email')=='yes'){ echo "checked='checked'"; } ?> name="optin"> Yes&nbsp;&nbsp;&nbsp;<input type="radio" value="no" <?php if(SendPress_Option::get('send_optin_email')=='no'){ echo "checked='checked'"; } ?> name="optin"> No</b>
 			<br>Keep the spammers, robots and other riff-raff off your list. <br>Read more about why to use double opt-in on out support site.</p>
 			<br>
+			<b>Confirmation Page</b>
+			<p>Select the page a subcriber will be redirected to after they click the confirmation link.</p>
+			<div class='well'>
+			<?php $ctype = SendPress_Option::get('confirm-page'); ?>
+			<input type="radio" name="confirm-page" value="default" <?php if($ctype=='default'){echo "checked='checked'"; } ?> /> Use Default SendPress Page<br><br>
+			<input type="radio" name="confirm-page" value="custom"  <?php if($ctype=='custom'){echo "checked='checked'";} ?>/> Redirect to <select name="confirm-page-id"> 
+ <option value="">
+ 	<?php $cpageid = SendPress_Option::get('confirm-page-id');?>
+<?php echo esc_attr( __( 'Select page' ) ); ?></option> 
+ <?php 
+  $pages = get_pages(); 
+  foreach ( $pages as $page ) {
+  	$s ='';
+  	if($cpageid == $page->ID){ $s =  "selected"; }
+  	$option = '<option value="' . $page->ID .'" ' .$s. '>';
+	$option .= $page->post_title;
+	$option .= '</option>';
+	echo $option;
+  }
+ ?>
+</select>
+</div>
+
+
+			<br><br><br>
 			<b>Quick Tags</b>: work in both subject and body.
 			<div class='well'>
 				<b>*|SP:CONFIRMLINK|*</b> This is required to be in the body of the email.
