@@ -180,7 +180,10 @@ class SendPress_Email {
 			    // Get any existing copy of our transient data
 			}
 			$subscriber = SendPress_Data::get_subscriber($this->subscriber_id());
-			$email_subject = str_replace("*|ID|*", $subscriber->subscriberID , $body_html );
+			$email_subject = str_replace("*|FNAME|*", $subscriber->firstname , $email_subject );
+			$email_subject = str_replace("*|LNAME|*", $subscriber->lastname , $email_subject );
+			$email_subject = str_replace("*|EMAIL|*", $subscriber->email , $email_subject );
+			$email_subject = str_replace("*|ID|*", $subscriber->subscriberID , $email_subject );
 
 			return $email_subject;
 	}

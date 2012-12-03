@@ -1814,30 +1814,33 @@ If you do not want to confirm, simply ignore this message.
 		$count = SendPress_Option::get('cron_send_count');
 		for ($i=0; $i < $count ; $i++) { 
 			if($this->cron_stop() == false ){
-			$email = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 LIMIT 1","get_row");
-			SendPress_Data::queue_email_process( $email->id );
-				$result = $this->sp_mail_it( $email_single );
-				if ($result) {
-					$table = $this->queue_table();
-					$wpdb->query( 
-						$wpdb->prepare( 
-							"DELETE FROM $table WHERE id = %d",
-						    $email_single->id  
-					    )
-					);
-					$senddata = array(
-						'sendat' => date('Y-m-d H:i:s'),
-						'reportID' => $email_single->emailID,
-						'subscriberID' => $email_single->subscriberID
-					);
+				$email = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 LIMIT 1","get_row");
+				if($email != null){
+					SendPress_Data::queue_email_process( $email->id );
+					$result = $this->sp_mail_it( $email );
+					if ($result) {
+						$table = $this->queue_table();
+						$wpdb->query( 
+							$wpdb->prepare( 
+								"DELETE FROM $table WHERE id = %d",
+							    $email->id  
+						    )
+						);
+						$senddata = array(
+							'sendat' => date('Y-m-d H:i:s'),
+							'reportID' => $email->emailID,
+							'subscriberID' => $email->subscriberID
+						);
 
-					$wpdb->insert( $this->subscriber_open_table(),  $senddata);
-					
-				} else {
-					$wpdb->update( $this->queue_table() , array('attempts'=>$email_single->attempts+1,'inprocess'=>'0','last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email_single->id ));
+						$wpdb->insert( $this->subscriber_open_table(),  $senddata);
+						
+					} else {
+						$wpdb->update( $this->queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
+					}
+				} else{//We ran out of emails to process.
+					break;
 				}
-
-			} else{
+			} else{ //Stop was set.
 				break;
 			}
 
