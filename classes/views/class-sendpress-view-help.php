@@ -34,7 +34,7 @@ class SendPress_View_Help extends SendPress_View{
 	<p>Also check our <a href="http://sendpress.com/support" target="_blank">Knowledge Base</a> for help at <a href="http://sendpress.com/support" target="_blank">http://sendpress.com/support</a></p>
 
 	<b>Premium Support</b>
-	<p>Premium support is available if you have purchased it or SendPress Pro from SendPress.com. Premium support covers both the FREE and PRO versions of SendPress and can be access via our support site: <a href="http://sendpress.com/support" target="_blank">http://sendpress.com/support</a></p>
+	<p>Premium support is available if you have purchased it or SendPress Pro from SendPress.com. Premium support covers both the FREE and PRO versions of SendPress and can be accessed via our support site: <a href="http://sendpress.com/support" target="_blank">http://sendpress.com/support</a>.</p>
 	<p>Premium support requires a SendPress.com account and you will need to login to create a ticket.</p>
 
 <?php
