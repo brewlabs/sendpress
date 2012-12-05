@@ -411,6 +411,9 @@ class SendPress{
 		if( SendPress_Option::get('send_optin_email') == false ){
 			SendPress_Option::set('send_optin_email','yes');
 		}
+		if( SendPress_Option::get('confirm-page') == false ){
+			SendPress_Option::set('confirm-page','default');
+		}
 
 		if( SendPress_Option::get('cron_send_count') == false ){
 			SendPress_Option::set('cron_send_count','100');
@@ -672,9 +675,9 @@ class SendPress{
 	    
 	    add_submenu_page('sp-overview', __('Reports','sendpress'), __('Reports','sendpress'), $role, 'sp-reports', array(&$this,'render_view'));
 	   	add_submenu_page('sp-overview', __('Subscribers','sendpress'), __('Subscribers','sendpress'), $role, 'sp-subscribers', array(&$this,'render_view'));
-	    
+	    add_submenu_page('sp-overview', __('Queue','sendpress'), __('Queue','sendpress'), $role, 'sp-queue', array(&$this,'render_view'));
 	   	add_submenu_page('sp-overview', __('Settings','sendpress'), __('Settings','sendpress'), $role, 'sp-settings', array(&$this,'render_view'));
-	   	add_submenu_page('sp-overview', __('Queue','sendpress'), __('Queue','sendpress'), $role, 'sp-queue', array(&$this,'render_view'));
+	  
 
 	   	if( defined('WP_DEBUG') && WP_DEBUG ){
 	   		add_submenu_page('sp-overview', __('Add-ons','sendpress'), __('Add-ons','sendpress'), $role, 'sp-pro', array(&$this,'render_view'));
@@ -697,8 +700,9 @@ class SendPress{
 		$view_class->add_tab( __('Emails','sendpress'), 'sp-emails', ($this->_page === 'sp-emails') );
 		$view_class->add_tab( __('Reports','sendpress'), 'sp-reports', ($this->_page === 'sp-reports') );
 		$view_class->add_tab( __('Subscribers','sendpress'), 'sp-subscribers', ($this->_page === 'sp-subscribers') );
-		$view_class->add_tab( __('Settings','sendpress'), 'sp-settings', ($this->_page === 'sp-settings') );
 		$view_class->add_tab( __('Queue','sendpress'), 'sp-queue', ($this->_page === 'sp-queue') );
+		$view_class->add_tab( __('Settings','sendpress'), 'sp-settings', ($this->_page === 'sp-settings') );
+		
 		if( defined('WP_DEBUG') && WP_DEBUG ){
 			$view_class->add_tab( __('Add-ons','sendpress'), 'sp-pro', ($this->_page === 'sp-pro') );
 		}

@@ -7,7 +7,7 @@ class SendPress_View_Help extends SendPress_View{
 	function prerender($sp){
 		wp_enqueue_script( 'dashboard' );
 		sp_add_help_widget( 'help_support', 'Support Information', array(&$this,'help_support'));
-		sp_add_help_widget( 'help_knowledge', 'Knowledge Base', array(&$this,'help_knowledge'),'side',  array(&$this,'help_knowledge_control') );
+		sp_add_help_widget( 'help_knowledge', 'Recent Knowledge Base Articles', array(&$this,'help_knowledge'),'side' );
 		sp_add_help_widget( 'help_debug', 'Debug Information', array(&$this,'help_debug'), 'side');
 		
 		sp_add_help_widget( 'help_blog', 'Recent Blog Posts', array(&$this,'help_blog'),'normal',  array(&$this,'help_blog_control') );

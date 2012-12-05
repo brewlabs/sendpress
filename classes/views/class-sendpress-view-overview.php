@@ -4,6 +4,12 @@
 defined( 'ABSPATH' ) || exit;
 
 class SendPress_View_Overview extends SendPress_View{
+
+	function tracking( $get, $sp ){
+		SendPress_Option::set('allow_tracking', $get['allow_tracking']);
+		self::redirect();
+	}
+
 	
 	function html($sp){
 		

@@ -19,7 +19,7 @@ require_once ('Mobile_Detect.php');
 require_once ('class-smtp-api-sendgrid.php');
 
 if( is_admin() ){
-
+	require_once ( 'class-tour.php' );
 	require_once ( 'class-sp-tinymce.php' );
 	require_once ( 'class-emails-table.php' );
 	require_once ( 'class-lists-table.php' );
