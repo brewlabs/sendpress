@@ -10,22 +10,23 @@ class SendPress_View_Settings extends SendPress_View {
 	function sub_menu($sp){ 
 	?>
 
-	<div class="subnav">
-		<ul class="nav nav-pills">
+	<div class="navbar navbar-inverse">
+		<div class="navbar-inner">
+		<ul class="nav">
 			<!--
 		  <li <?php if($sp->_current_view == ''){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings::link();; ?>"><i class="icon-envelope"></i> <?php _e('Basic Setup','sendpress'); ?></a></li>
 		 -->
 		  <li <?php if($sp->_current_view == 'styles'){ ?>class="active"<?php } ?> >
-		    <a href="<?php echo SendPress_View_Settings_Styles::link(); ?>"><i class="icon-envelope"></i> <?php _e('Basic Settings & Styles','sendpress'); ?></a>
+		    <a href="<?php echo SendPress_View_Settings_Styles::link(); ?>"><i class="icon-envelope icon-white"></i> <?php _e('Basic Settings & Styles','sendpress'); ?></a>
 		  </li>
-		  <li <?php if($sp->_current_view == 'activation'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Activation::link(); ?>"><i class="icon-user"></i> <?php _e('Double Opt-in Email','sendpress'); ?></a></li>
-		 <li <?php if($sp->_current_view == 'account'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Account::link(); ?>"><i class="icon-user"></i> <?php _e('Sending Account','sendpress'); ?></a></li>
-			 <li <?php if($sp->_current_view == 'feedback'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Feedback::link();  ?>"><i class="icon-wrench"></i> <?php _e('Feedback','sendpress'); ?></a></li>	
-			<li <?php if($sp->_current_view == 'widget'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Widget::link(); ?>"><i class="icon-cog"></i> <?php _e('Widget/Shortcode','sendpress'); ?></a></li>
-			<li <?php if($sp->_current_view == 'access'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Access::link(); ?>"><i class="icon-lock"></i> <?php _e('Premissions','sendpress'); ?></a></li>		
+		  <li <?php if($sp->_current_view == 'activation'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Activation::link(); ?>"><i class="icon-user  icon-white"></i> <?php _e('Emails & Pages','sendpress'); ?></a></li>
+		 <li <?php if($sp->_current_view == 'account'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Account::link(); ?>"><i class="icon-inbox icon-white"></i> <?php _e('Sending Account','sendpress'); ?></a></li>
+			 <li <?php if($sp->_current_view == 'feedback'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Feedback::link();  ?>"><i class="icon-bullhorn icon-white"></i> <?php _e('Feedback','sendpress'); ?></a></li>	
+			<li <?php if($sp->_current_view == 'widget'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Widget::link(); ?>"><i class="icon-cog icon-white"></i> <?php _e('Widget/Shortcode','sendpress'); ?></a></li>
+			<li <?php if($sp->_current_view == 'access'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Access::link(); ?>"><i class="icon-lock icon-white"></i> <?php _e('Premissions','sendpress'); ?></a></li>		
 		</ul>
 	</div>
-
+</div>
 	<?php
 	}
 	function prerender($sp){

@@ -144,7 +144,7 @@ class SendPress_Template {
 			ob_start();
 			require_once( $template_list[$selected_template]['file'] );
 			$HtmlCode= ob_get_clean(); 
-			
+			ob_end_clean(); 
 			$HtmlCode =str_replace("*|SP:SUBJECT|*",$post->post_title ,$HtmlCode);
 
 			$body_bg			=	get_post_meta( $post->ID , 'body_bg', true );
@@ -165,16 +165,21 @@ class SendPress_Template {
 
 			$header_link_open = '';
 			$header_link_close = '';
-			
+		
 			if($active_header == 'image'){
 				if(!empty($image_header_url)){
-					$header_link_open = "<a style='color:".$header_text_color."' href='".$header_link."'>";
+					$header_link_open = "<a style='color:".$header_text_color."' href='".$image_header_url."'>";
 					$header_link_close = "</a>";
 
 				}
 				$headercontent = $header_link_open. "<img style='display:block;' src='".$upload_image."' border='0' />". $header_link_close;
 				$HtmlCode =str_replace("*|SP:HEADERCONTENT|*",$headercontent ,$HtmlCode);
 			} else {
+				if(!empty($header_link)){
+					$header_link_open = "<a style='color:".$header_text_color."' href='".$header_link."'>";
+					$header_link_close = "</a>";
+
+				}
 				$headercontent =  "<div style='padding: 10px; text-align:center;'><h1 style='text-align:center; color: ".$header_text_color." !important;'>".$header_link_open.$header_text . $header_link_close."</h1>".$sub_header_text."</div>";
 				$HtmlCode =str_replace("*|SP:HEADERCONTENT|*",$headercontent ,$HtmlCode);
 			}
