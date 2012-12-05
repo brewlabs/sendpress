@@ -180,7 +180,7 @@ class SendPress_Template {
 					$header_link_close = "</a>";
 
 				}
-				$headercontent =  "<div style='padding: 10px; text-align:center;'><h1 style='text-align:center; color: ".$header_text_color." !important;'>".$header_link_open.$header_text . $header_link_close."</h1>".$sub_header_text."</div>";
+				$headercontent =  "<div style='padding: 10px; text-align:center;'><h1 style='text-align:center; color: ".$header_text_color." !important;'>".$header_link_open. $header_text . $header_link_close."</h1>".$sub_header_text."</div>";
 				$HtmlCode =str_replace("*|SP:HEADERCONTENT|*",$headercontent ,$HtmlCode);
 			}
 

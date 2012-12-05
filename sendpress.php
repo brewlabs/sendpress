@@ -44,7 +44,7 @@ class SendPress{
 
 	var $_report_post_type = 'sp_report';
 
-	var $adminpages = array('sp','sp-overview','sp-reports','sp-emails','sp-templates','sp-subscribers','sp-settings','sp-queue','sp-pro');
+	var $adminpages = array('sp','sp-overview','sp-reports','sp-emails','sp-templates','sp-subscribers','sp-settings','sp-queue','sp-pro','sp-help');
 
 	var $_templates = array();
 	var $_messages = array();
@@ -679,6 +679,8 @@ class SendPress{
 	   	if( defined('WP_DEBUG') && WP_DEBUG ){
 	   		add_submenu_page('sp-overview', __('Add-ons','sendpress'), __('Add-ons','sendpress'), $role, 'sp-pro', array(&$this,'render_view'));
 	   	}
+
+	   	add_submenu_page('sp-overview', __('Help','sendpress'), __('Help','sendpress'), $role, 'sp-help', array(&$this,'render_view'));
 	   
 	   	if(SendPress_Option::get('feedback') == 'yes'){
 			$this->presstrends_plugin();
@@ -688,7 +690,6 @@ class SendPress{
 	function render_view(){
 		$view_class = $this->get_view_class($this->_page, $this->_current_view);
 		//echo "About to render: $view_class, $this->_page";
-		//print_r($class);
 		$view_class = NEW $view_class;
 
 		//add tabs
@@ -701,6 +702,7 @@ class SendPress{
 		if( defined('WP_DEBUG') && WP_DEBUG ){
 			$view_class->add_tab( __('Add-ons','sendpress'), 'sp-pro', ($this->_page === 'sp-pro') );
 		}
+		$view_class->add_tab( __('Help','sendpress'), 'sp-help', ($this->_page === 'sp-help') );
 		$view_class->prerender( $this );
 		$view_class->render( $this );
 	}
@@ -715,13 +717,13 @@ class SendPress{
 	static function get_view_class( $main , $view = false){
 		$page = explode('-', $main);
 		$classname = '';
-		
 		foreach($page as $p){
 			if($p != 'sp'){
 				if($classname !== ''){
 					$classname = '_';
 				}
 				$classname .= ucwords( $p );
+				
 			}
 		}
 

@@ -274,6 +274,8 @@ if( is_admin() ){
 	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-subscribers-subscriber.php');
 	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-subscribers-subscribers.php');
 
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-help.php');
+
 	/*
 	$_foo = SENDPRESS_CLASSES_VIEWS;
 
