@@ -7,10 +7,11 @@ class SendPress_View_Help extends SendPress_View{
 	function prerender($sp){
 		wp_enqueue_script( 'dashboard' );
 		sp_add_help_widget( 'help_support', 'Support Information', array(&$this,'help_support'));
-		sp_add_help_widget( 'help_debug', 'Debug Information', array(&$this,'help_debug'));
-		sp_add_help_widget( 'help_knowledge', 'Knowledge Base', array(&$this,'help_knowledge'),  array(&$this,'help_knowledge_control') );
-		sp_add_help_widget( 'help_blog', 'Recent Blog Posts', array(&$this,'help_blog'),  array(&$this,'help_blog_control') );
-		sp_add_help_widget( 'help_shortcodes', 'Shortcode Cheat Sheet', array(&$this,'help_shortcodes'));
+		sp_add_help_widget( 'help_knowledge', 'Knowledge Base', array(&$this,'help_knowledge'),'side',  array(&$this,'help_knowledge_control') );
+		sp_add_help_widget( 'help_debug', 'Debug Information', array(&$this,'help_debug'), 'side');
+		
+		sp_add_help_widget( 'help_blog', 'Recent Blog Posts', array(&$this,'help_blog'),'normal',  array(&$this,'help_blog_control') );
+		sp_add_help_widget( 'help_shortcodes', 'Shortcode Cheat Sheet', array(&$this,'help_shortcodes') ,'normal');
 
 
 	}
@@ -188,7 +189,7 @@ function _sp_help_control_callback( $dashboard, $meta_box ) {
 	echo '</form>';
 }
 
-function sp_add_help_widget( $widget_id, $widget_name, $callback, $control_callback = null ) {
+function sp_add_help_widget( $widget_id, $widget_name, $callback, $location =null, $control_callback = null ) {
 	$screen = get_current_screen();
 	global $wp_dashboard_control_callbacks;
 
@@ -210,8 +211,9 @@ function sp_add_help_widget( $widget_id, $widget_name, $callback, $control_callb
 		$side_widgets = array('dashboard_primary', 'dashboard_secondary');
 	else
 		$side_widgets = array();
+	if( $location == null)
+		$location = 'normal';
 
-	$location = 'normal';
 	if ( in_array($widget_id, $side_widgets) )
 		$location = 'side';
 
