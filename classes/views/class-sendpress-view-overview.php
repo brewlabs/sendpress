@@ -2,7 +2,7 @@
 
 // Prevent loading this file directly
 defined( 'ABSPATH' ) || exit;
-
+if( !class_exists('SendPress_View_Overview') ){
 class SendPress_View_Overview extends SendPress_View{
 
 	function tracking( $get, $sp ){
@@ -96,3 +96,4 @@ list( $display_version ) = explode( '-', $wp_version );
 // Add Access Controll!
 SendPress_View_Overview::cap('sendpress_view');
 //SendPress_View_Overview::cap('sendpress_access');
+}

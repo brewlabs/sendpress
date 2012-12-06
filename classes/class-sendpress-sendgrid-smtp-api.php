@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) || exit;
 # Version 1.0
 # Last Updated 6/22/2009
 
-class SmtpApiHeader
+class SendPress_SendGrid_SMTP_API
 {
 var $data;
 

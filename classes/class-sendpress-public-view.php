@@ -73,7 +73,7 @@ class SendPress_Public_View {
 	 * Initializes the view.
 	 */
 	function init() {
-		$detect = new Mobile_Detect;
+		$detect = new SendPress_Mobile_Detect;
     	$this->_device_type = ( $detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
     	
     	switch($this->_device_type){
@@ -256,11 +256,11 @@ class SendPress_Public_View {
 function sp_public_sort($a,$b){
     return strlen($a)-strlen($b);
 }
-
+/*
 require_once ( SENDPRESS_PUBLIC_CLASSES. '/class-sendpress-public-view-confirm.php' );
 require_once ( SENDPRESS_PUBLIC_CLASSES. '/class-sendpress-public-view-link.php' );
 require_once ( SENDPRESS_PUBLIC_CLASSES. '/class-sendpress-public-view-manage.php' );
 require_once ( SENDPRESS_PUBLIC_CLASSES. '/class-sendpress-public-view-open.php' );
-
+*/
 do_action('sendpress_public_view_class_loaded');
 

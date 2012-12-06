@@ -2,6 +2,7 @@
 
 // Prevent loading this file directly
 defined( 'ABSPATH' ) || exit;
+if( !class_exists('SendPress_View_Emails') ){
 
 class SendPress_View_Emails extends SendPress_View{
 	
@@ -33,3 +34,5 @@ class SendPress_View_Emails extends SendPress_View{
 
 }
 SendPress_View_Emails::cap('sendpress_email');
+
+}

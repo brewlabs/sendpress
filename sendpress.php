@@ -16,6 +16,42 @@ define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
 
+class MyClass {
+  public static function autoload($className) {
+  	if( strpos($className, 'SendPress') !== 0 ){
+  		return;
+  	}
+  
+    $cls = str_replace('_', '-',	strtolower($className) );
+    if( substr($cls, -1) == '-'){
+    	$cls = substr($cls, 0, -1);
+    	$className  = substr($className, 0, -1);
+    }
+    if(class_exists($className)){
+    	return;
+    }
+
+    if( strpos($className, 'Public_View') != false ){
+    	include SENDPRESS_PATH."classes/public-views/class-".$cls.".php";
+  		return;
+  	} 
+
+    if( strpos($className, 'View') != false ){
+    	include SENDPRESS_PATH."classes/views/class-".$cls.".php";
+  		return;
+  	} 
+  	if( strpos($className, 'Module') != false ){
+    	include SENDPRESS_PATH."classes/modules/class-".$cls.".php";
+  		return;
+  	} 
+    
+    include SENDPRESS_PATH."classes/class-".$cls.".php";
+    
+  }
+}
+
+spl_autoload_register(array('MyClass', 'autoload'));
+
 /*
 *
 *	Supporting Classes they build out the WordPress table views.
@@ -30,8 +66,9 @@ require_once( SENDPRESS_PATH . 'inc/functions.php' );
 require_once( SENDPRESS_PATH . 'classes/class-file-loader.php' );
 $sp_loader = new File_Loader('SendPress Required Class');
 */
-require_once( SENDPRESS_PATH . 'classes/selective-loader.php' );
+//require_once( SENDPRESS_PATH . 'classes/selective-loader.php' );
 class SendPress{
+
 
 	var $prefix = 'sendpress_';
 	var $ready = false;
@@ -1740,7 +1777,7 @@ If you do not want to confirm, simply ignore this message.
 		$phpmailer->AddCustomHeader( sprintf( 'X-SP-MID: %s',$email->messageID ) );
 		*/
 	
-		$hdr = new SmtpApiHeader();
+		$hdr = new SendPress_SendGrid_SMTP_API();
 
 		$hdr->addFilterSetting('dkim', 'domain', $this->get_domain_from_email($from_email) );
 		//$phpmailer->AddCustomHeader( sprintf( 'X-SP-MID: %s',$email->messageID ) );

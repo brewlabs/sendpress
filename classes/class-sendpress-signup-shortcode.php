@@ -1,10 +1,10 @@
 <?php
-// SendPress Required Class: SendPress_Sugnup_Shortcode
+// SendPress Required Class: SendPress_Signup_Shortcode
 
 // Prevent loading this file directly
 defined( 'ABSPATH' ) || exit;
 
-class SendPress_Sugnup_Shortcode{
+class SendPress_Signup_Shortcode{
 
 	function load_form( $attr, $content = null ) {
 
@@ -101,4 +101,4 @@ class SendPress_Sugnup_Shortcode{
 
 }
 
-add_shortcode('sendpress-signup', array('SendPress_Sugnup_Shortcode','load_form'));
+add_shortcode('sendpress-signup', array('SendPress_Signup_Shortcode','load_form'));

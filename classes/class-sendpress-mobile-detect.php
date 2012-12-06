@@ -34,9 +34,9 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-if( class_exists('Mobile_Detect') ){ return; }
+if( !class_exists('SendPress_Mobile_Detect') ){ 
 
-class Mobile_Detect {
+class SendPress_Mobile_Detect {
 
     // External info.
     protected $userAgent = null;
@@ -447,7 +447,7 @@ class Mobile_Detect {
             }
         }
 
-	    return false;
+        return false;
 
     }
 
@@ -695,4 +695,5 @@ class Mobile_Detect {
     }
 
 
+}
 }
