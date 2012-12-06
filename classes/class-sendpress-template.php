@@ -265,6 +265,9 @@ class SendPress_Template {
 					$HtmlCode =str_replace("*|SP:BROWSER|*",'' ,$HtmlCode);
 					$HtmlCode =str_replace("*|SP:UNSUBSCRIBE|*",'' ,$HtmlCode);
 					$HtmlCode =str_replace("*|ID|*",'' ,$HtmlCode);
+					$HtmlCode =str_replace("*|FNAME|*",'' ,$HtmlCode);
+					$HtmlCode =str_replace("*|LNAME|*",'' ,$HtmlCode);
+					$HtmlCode =str_replace("*|EMAIL|*",'' ,$HtmlCode);
 				}
 				echo $HtmlCode;
 			} else {
