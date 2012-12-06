@@ -3,9 +3,9 @@
 // Prevent loading this file directly
 defined( 'ABSPATH' ) || exit;
 
-// SendPress Required Class: SendPress_Ajax_Processor
+// SendPress Required Class: SendPress_Ajax_Loader
 
-class SendPress_Ajax_Processor{
+class SendPress_Ajax_Loader{
 
 	static $ajax_nonce = "love-me-some-sendpress-ajax-2012";
 	
@@ -13,7 +13,7 @@ class SendPress_Ajax_Processor{
 		static $instance = false;
 
 		if ( !$instance ) {
-			$instance = new SendPress_Ajax_Processor;
+			$instance = new SendPress_Ajax_Loader;
 			$instance->add_hooks();
 		}
 
@@ -47,14 +47,14 @@ class SendPress_Ajax_Processor{
 	 
 	    // generate a nonce with a unique ID "myajax-post-comment-nonce"
 	    // so that you can check it later when an AJAX request is sent
-	    'sendpressnonce' => wp_create_nonce( SendPress_Ajax_Processor::$ajax_nonce ),
+	    'sendpressnonce' => wp_create_nonce( SendPress_Ajax_Loader::$ajax_nonce ),
 	    )
 		);
 	}
 
 	function verify_ajax_call(){
 		$nonce = isset($_POST['spnonce']) ? $_POST['spnonce'] :  $_GET['spnonce'] ;
-    	if ( ! wp_verify_nonce( $nonce, SendPress_Ajax_Processor::$ajax_nonce ) ){
+    	if ( ! wp_verify_nonce( $nonce, SendPress_Ajax_Loader::$ajax_nonce ) ){
         	die ( 'Busted!');
        	}
 	}
@@ -225,4 +225,3 @@ class SendPress_Ajax_Processor{
 
 }
 
-add_action( 'init', array( 'SendPress_Ajax_Processor', 'init' ) );

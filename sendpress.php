@@ -138,7 +138,7 @@ class SendPress{
 
 			add_filter( 'query_vars', array( $this, 'add_vars' ) );
 			//add_filter( 'cron_schedules', array($this,'cron_schedule' ));
-			
+			SendPress_Ajax_Loader::init();
 			if( is_admin() ){
 				$this->maybe_upgrade();
 				$this->ready_for_sending();
