@@ -19,7 +19,7 @@ class SendPress_View_Settings extends SendPress_View {
 		  <li <?php if($sp->_current_view == 'styles'){ ?>class="active"<?php } ?> >
 		    <a href="<?php echo SendPress_View_Settings_Styles::link(); ?>"><i class="icon-envelope "></i> <?php _e('Basic Settings & Styles','sendpress'); ?></a>
 		  </li>
-		  <li <?php if($sp->_current_view == 'activation'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Activation::link(); ?>"><i class="icon-user  "></i> <?php _e('Emails & Pages','sendpress'); ?></a></li>
+		  <li <?php if($sp->_current_view == 'activation'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Activation::link(); ?>"><i class="icon-user  "></i> <?php _e('System Emails & Pages','sendpress'); ?></a></li>
 		 <li <?php if($sp->_current_view == 'account'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Account::link(); ?>"><i class="icon-inbox "></i> <?php _e('Sending Account','sendpress'); ?></a></li>
 			<li <?php if($sp->_current_view == 'access'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Access::link(); ?>"><i class="icon-lock "></i> <?php _e('Premissions','sendpress'); ?></a></li>	
 			<li <?php if($sp->_current_view == 'advanced'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Advanced::link(); ?>"><i class="icon-lock "></i> <?php _e('Advanced','sendpress'); ?></a></li>		
