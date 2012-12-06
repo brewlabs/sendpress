@@ -33,7 +33,7 @@ class SendPress_Tour {
 		//}
 
 		$track = SendPress_Option::get( 'allow_tracking' );
-		if ( $track == false && !isset( $_GET['allow_tracking'] ) ) {
+		if ( ($track == false || $track== '') && !isset( $_GET['allow_tracking'] ) ) {
 			add_action( 'admin_print_footer_scripts', array( $this, 'tracking_request' ) );
 		} 
 		/*else if ( !isset( $options['ignore_tour'] ) || !$options['ignore_tour'] ) {
@@ -49,8 +49,8 @@ class SendPress_Tour {
 	 */
 	function tracking_request() {
 		$id      = '#wpadminbar';
-		$content = '<h3>' . __( 'Help improve SendPress', 'sendpress' ) . '</h3>';
-		$content .= '<p>' . __( 'You\'ve just installed SendPres by BrewLabs. Please helps us improve it by allowing us to gather anonymous usage stats so we know which configurations, plugins and themes to test with.', 'sendpress' ) . '</p>';
+		$content = '<h3>' . __( 'Help Make SendPress Better', 'sendpress' ) . '</h3>';
+		$content .= '<p>' . __( 'You\'ve just installed SendPres. Please helps us improve it by allowing us to gather anonymous usage stats so we know which configurations, plugins and themes to test with.', 'sendpress' ) . '</p>';
 		$opt_arr   = array(
 			'content'  => $content,
 			'position' => array( 'edge' => 'top', 'align' => 'center' )

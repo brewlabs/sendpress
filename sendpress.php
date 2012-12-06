@@ -418,7 +418,7 @@ class SendPress{
 		if( SendPress_Option::get('cron_send_count') == false ){
 			SendPress_Option::set('cron_send_count','100');
 		}
-
+		//SendPress_Option::set('allow_tracking', '');
 		//wp_clear_scheduled_hook( 'sendpress_cron_action' );
 		// Schedule an action if it's not already scheduled
 		/*
