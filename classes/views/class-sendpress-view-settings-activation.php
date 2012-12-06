@@ -47,6 +47,7 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		
 		
 <div class="boxer form-box">
+	<h2>Double Opt-in Email</h2>
 	<div style="float: right; width: 45%;"><br>
 		<b>Subject</b><br>
 		<input type="text" name="subject" class="regular-text sp-text" style="width: 100%;" value="<?php echo  stripcslashes($dpost->post_title); ?>"/>

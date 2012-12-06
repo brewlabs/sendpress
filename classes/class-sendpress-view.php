@@ -265,7 +265,7 @@ if( is_admin() ){
 	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-settings-feedback.php');
 	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-settings-styles.php');
 	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-settings-widget.php');
-
+	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-settings-advanced.php');
 
 	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-subscribers.php');
 	require_once(SENDPRESS_CLASSES_VIEWS.'class-sendpress-view-subscribers-add.php');
