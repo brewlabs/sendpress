@@ -15,6 +15,24 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 		SendPress_Option::set('feedback', 'no' );
 	}
 
+	$widget_options =  array();
+
+        $widget_options['widget_options']['load_css'] = 0;
+        $widget_options['widget_options']['load_ajax'] = 0;
+        $widget_options['widget_options']['load_scripts_in_footer'] = 0;
+        if(isset($_POST['load_css'])){
+            $widget_options['widget_options']['load_css'] = $_POST['load_css'];
+        }
+        if(isset($_POST['load_ajax'])){
+            $widget_options['widget_options']['load_ajax'] = $_POST['load_ajax'];
+        }
+        if(isset($_POST['load_scripts_in_footer'])){
+            $widget_options['widget_options']['load_scripts_in_footer'] = $_POST['load_scripts_in_footer'];
+        }
+
+        SendPress_Option::set($widget_options); 
+
+        self::redirect();
 	}
 
 	function html($sp) {
@@ -25,7 +43,20 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 <br class="clear">
 		<br class="clear">
 <div class="boxer form-box">
-	<div style="float: right; width: 45%;"><br>
+	<div style="float: right; width: 45%;">
+		<h2>Javascript & CSS</h2>
+		<?php 
+				$widget_options = SendPress_Option::get('widget_options');
+				//print_r($widget_options);
+			?>
+			<input class="turnoff-css-checkbox sendpress_checkbox" value="<?php echo $widget_options['load_css']; ?>" type="checkbox" <?php if( $widget_options['load_css'] == 1 ){ echo 'checked'; } ?> id="load_css" name="load_css"/>  <?php _e('Disable front end CSS','sendpress'); ?><br>
+			
+			<input class="turnoff-ajax-checkbox sendpress_checkbox" value="<?php echo $widget_options['load_ajax']; ?>" type="checkbox" <?php if( $widget_options['load_ajax'] == 1 ){ echo 'checked'; } ?> id="load_ajax" name="load_ajax"/>  <?php  _e('Disable signup form ajax','sendpress'); ?><br>
+
+			
+			<input class="footer-scripts-checkbox sendpress_checkbox" value="<?php echo $widget_options['load_scripts_in_footer']; ?>" type="checkbox" <?php if( $widget_options['load_scripts_in_footer'] == 1 ){ echo 'checked'; } ?> id="load_scripts_in_footer" name="load_scripts_in_footer"/>  <?php _e('Load Javascript in Footer','sendpress'); ?> 
+		
+
 	<br class="clear">
 	</div>	
 	<div style="width: 45%; margin-right: 10%">
