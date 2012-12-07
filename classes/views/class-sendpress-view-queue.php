@@ -26,7 +26,7 @@ class SendPress_View_Queue extends SendPress_View {
 	$testListTable = new SendPress_Queue_Table();
 	//Fetch, prepare, sort, and filter our data...
 	$testListTable->prepare_items();
-	$sp->update_option('no_cron_send', 'false');
+	SendPress_Option::set('no_cron_send', 'false');
 	//$sp->fetch_mail_from_queue();
 	$sp->cron_start();
 	//echo $sp->get_key(). "<br>";

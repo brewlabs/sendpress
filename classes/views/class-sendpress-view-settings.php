@@ -34,47 +34,7 @@ class SendPress_View_Settings extends SendPress_View {
 		}
 	}
 	function html($sp) {
-		
-/*
-		$default_styles_id = SendPress_Data::get_template_id_by_slug('user-style');
-$post =  get_post( $default_styles_id );
-?>
-<form method="post" id="post">
-	<input type="hidden" name="post_ID" id="post_ID" value="<?php echo $post->ID; ?>" />
-<br class="clear">
-<div style="float:right;" >
-	<a href="?page=sp-settings&view=information" class="btn btn-large" ><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e('Save','sendpress'); ?></a>
-</div>
-<input type="hidden" name="action" value="template-default-setup" />
-<br class="clear">
-<div class="boxer form-box">
-<div style="float: right; width: 45%;">
-	<h3>Socail Media</h3>
-	<p>These items only show on the tempalte if a url is entered.</p>
-	<p><label><?php _e('Twitter URL','sendpress'); ?>:</label>
-	<input name="twitter" type="text" id="twitter" value="<?php echo $sp->get_option('twitter'); ?>" class="regular-text"></p>
-<p><label><?php _e('Facebook URL','sendpress'); ?>:</label>
-<input name="facebook" type="text" id="facebook" value="<?php echo $sp->get_option('facebook'); ?>" class="regular-text"></p>
-<p><label><?php _e('LinkedIn URL','sendpress'); ?>:</label>
-<input name="linkedin" type="text" id="linkedin" value="<?php echo $sp->get_option('linkedin'); ?>" class="regular-text"></p>
-	<p class="alert alert-info">Make sure you include http:// in your links</p>
-</div>	
-<div style="width: 45%; margin-right: 10%">
-<p><label><?php _e('From Name','sendpress'); ?>:</label>
-	<input name="fromname" type="text" id="fromname" value="<?php echo $sp->get_option('fromname'); ?>" class="regular-text"></p>
-<p><label><?php _e('From Email','sendpress'); ?>:</label>
-<input name="fromemail" type="text" id="fromemail" value="<?php echo $sp->get_option('fromemail'); ?>" class="regular-text"></p>
-<p><label style='width: 100%;'><?php _e('CAN-SPAM','sendpress'); ?>: <small><?php _e('required in the US.','sendpress'); ?></small></label>
-<textarea cols="20" rows="10" class="large-text code" name="can-spam"><?php echo $sp->get_option('canspam'); ?></textarea>
-<p><?php _e('<b>Tell recipients where you’re located.</b> Your message must include your valid physical postal address. This can be your current street address, a post office box you’ve registered with the U.S. Postal Service, or a private mailbox you’ve registered with a commercial mail receiving agency established under Postal Service regulations.','sendpress'); ?></p>
-<?php _e('This is dictated under the <a href="http://business.ftc.gov/documents/bus61-can-spam-act-compliance-guide-business" target="_blank">Federal CAN-SPAM Act of 2003</a>.','sendpress'); ?>
-					</p>
-</div></div>
-
-<?php wp_nonce_field($sp->_nonce_value); ?>
-</form>
-<?php
-*/
+		echo "Parent view needs a child.";
 	}
 
 }

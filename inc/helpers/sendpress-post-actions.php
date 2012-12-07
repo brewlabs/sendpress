@@ -239,9 +239,9 @@ switch ( $this->_current_action ) {
 
         $email_post = get_post( $saveid );
 
-        $subject = $this->get_option('current_send_subject_'. $saveid);
+        $subject = SendPress_Option::get('current_send_subject_'. $saveid);
 
-        $info = $this->get_option('current_send_'.$saveid);
+        $info = SendPress_Option::get('current_send_'.$saveid);
         $slug = $this->random_code();
 
         $new_id = SendPress_Posts::copy($email_post, $subject, $slug, $this->_report_post_type );

@@ -144,7 +144,7 @@ class SendPress_Template {
 			ob_start();
 			require_once( $template_list[$selected_template]['file'] );
 			$HtmlCode= ob_get_clean(); 
-			ob_end_clean(); 
+			
 			$HtmlCode =str_replace("*|SP:SUBJECT|*",$post->post_title ,$HtmlCode);
 
 			$body_bg			=	get_post_meta( $post->ID , 'body_bg', true );

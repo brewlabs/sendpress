@@ -100,8 +100,8 @@ if(isset($_GET['emailID'])){
 		?>
 		<form  method="POST" name="post" id="post">
 <?php
-$info = $sp->get_option('current_send_'.$post->ID );
-$subject = $sp->get_option('current_send_subject_'.$post->ID ,true);
+$info = SendPress_Option::get('current_send_'.$post->ID );
+$subject = SendPress_Option::get('current_send_subject_'.$post->ID ,true);
 ?>
 <div id="styler-menu">
     <div style="float:right;" class="btn-group">

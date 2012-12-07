@@ -162,9 +162,3 @@ class SdndPress_Plugin_State{
 	const Inactive_Pro = 3;
 
 }
-
-if( is_admin() ){
-	require_once(SENDPRESS_CLASSES_MODULES.'class-sendpress-module-pro.php');
-	require_once(SENDPRESS_CLASSES_MODULES.'class-sendpress-module-reports.php');
-	do_action('sendpress_module_class_loaded');
-}

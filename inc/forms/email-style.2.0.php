@@ -304,17 +304,17 @@ if(strlen($active_header['value']) > 0){
 							$social = '';
 							$bg = 	$body_link['value'];
 
-							if($twit = $sp->get_option('twitter') ){
+							if($twit =  SendPress_Option::get('twitter') ){
 								$social .= "<a href='$twit' style='color: $bg;'>Twitter</a>";
 							}
 
-							if($fb = $sp->get_option('facebook') ){
+							if($fb =  SendPress_Option::get('facebook') ){
 								if($social != ''){
 									$social .= " | ";
 								}
 								$social .= "<a href='$fb'  style='color: $bg;'>Facebook</a>";
 							}
-							if($ld = $sp->get_option('linkedin') ){
+							if($ld =  SendPress_Option::get('linkedin') ){
 								if($social != ''){
 									$social .= " | ";
 								}
@@ -327,8 +327,8 @@ if(strlen($active_header['value']) > 0){
 						<?php } ?>
 					 <div id="can-spam-template">
 					 	<?php
-					 	if ( false !== $sp->get_option('canspam') ){
-					 		echo wpautop( $sp->get_option('canspam') );
+					 	if ( false !==  SendPress_Option::get('canspam') ){
+					 		echo wpautop(  SendPress_Option::get('canspam') );
 
 					 	} else { ?>	
 					 	Blog/Company Name<br>

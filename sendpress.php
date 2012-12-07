@@ -16,41 +16,8 @@ define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
 
-class MyClass {
-  public static function autoload($className) {
-  	if( strpos($className, 'SendPress') !== 0 ){
-  		return;
-  	}
-  
-    $cls = str_replace('_', '-',	strtolower($className) );
-    if( substr($cls, -1) == '-'){
-    	$cls = substr($cls, 0, -1);
-    	$className  = substr($className, 0, -1);
-    }
-    if(class_exists($className)){
-    	return;
-    }
 
-    if( strpos($className, 'Public_View') != false ){
-    	include SENDPRESS_PATH."classes/public-views/class-".$cls.".php";
-  		return;
-  	} 
 
-    if( strpos($className, 'View') != false ){
-    	include SENDPRESS_PATH."classes/views/class-".$cls.".php";
-  		return;
-  	} 
-  	if( strpos($className, 'Module') != false ){
-    	include SENDPRESS_PATH."classes/modules/class-".$cls.".php";
-  		return;
-  	} 
-    
-    include SENDPRESS_PATH."classes/class-".$cls.".php";
-    
-  }
-}
-
-spl_autoload_register(array('MyClass', 'autoload'));
 
 /*
 *
@@ -117,6 +84,37 @@ class SendPress{
 		do_action( 'sendpress_loaded' );
 	}
 
+	public static function autoload($className) {
+	  	if( strpos($className, 'SendPress') !== 0 ){
+	  		return;
+	  	}
+	  
+	    $cls = str_replace('_', '-',	strtolower($className) );
+	    if( substr($cls, -1) == '-'){
+	    	$cls = substr($cls, 0, -1);
+	    	$className  = substr($className, 0, -1);
+	    }
+	    if(class_exists($className)){
+	    	return;
+	    }
+
+	    if( strpos($className, 'Public_View') != false ){
+	    	include SENDPRESS_PATH."classes/public-views/class-".$cls.".php";
+	  		return;
+	  	} 
+
+	    if( strpos($className, 'View') != false ){
+	    	include SENDPRESS_PATH."classes/views/class-".$cls.".php";
+	  		return;
+	  	} 
+	  	if( strpos($className, 'Module') != false ){
+	    	include SENDPRESS_PATH."classes/modules/class-".$cls.".php";
+	  		return;
+	  	} 
+	    
+	    include SENDPRESS_PATH."classes/class-".$cls.".php";
+    
+  }
 
 	static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
@@ -444,7 +442,7 @@ class SendPress{
 		$this->add_caps();
 		if ( isset( $_REQUEST['post_id'] ) ){
    			$p = get_post($_REQUEST['post_id']);
-   			if($p->post_type == 'sp_newsletters'){
+   			if(  $p !==null && $p->post_type == 'sp_newsletters'){
    				add_filter('disable_captions', create_function('$a','return true;'));
    			}
    		}
@@ -1987,10 +1985,7 @@ If you do not want to confirm, simply ignore this message.
 		$wpdb->insert( $table, $values);
 	}
 
-	function sp_welcome_panel( ) {
-		require_once (SENDPRESS_PATH. 'inc/helpers/sendpress-welcome-panel.php');
-	}
-
+	
 	function set_default_email_style( $id ){
 		if( false == get_post_meta( $id , 'body_bg', true) ) {
 
@@ -2222,6 +2217,9 @@ If you do not want to confirm, simply ignore this message.
 	}
 
 }// End SP CLASS
+
+// AutoLoad Classes
+spl_autoload_register(array('SendPress', 'autoload'));
 
 register_activation_hook( __FILE__, array( 'SendPress', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'SendPress', 'plugin_deactivation' ) );

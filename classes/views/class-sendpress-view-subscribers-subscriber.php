@@ -11,7 +11,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 	<h2><?php _e('Edit Subscriber','sendpress'); ?></h2>
 	</div>
 <?php
-	$sub = $sp->getSubscriber($_GET['subscriberID'],$_GET['listID']);
+	$sub = SendPress_Data::get_subscriber($_GET['subscriberID'],$_GET['listID']);
 	
 	?>
 	<form id="subscriber-edit" method="post">
