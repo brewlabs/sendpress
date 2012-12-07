@@ -30,23 +30,29 @@ class SendPress_View_Help extends SendPress_View{
 	function help_support(){
 ?>
 	<b>Basic Support</b>
-	<p>You can get support for the FREE version of SendPress on the <a href="http://wordpress.org/support/plugin/sendpress" target="_blank">WordPress.org forums</a>.</p>
-	<p>Also check our <a href="http://sendpress.com/support" target="_blank">Knowledge Base</a> for help at <a href="http://sendpress.com/support" target="_blank">http://sendpress.com/support</a></p>
-
+	<p>You can get support for the FREE version of SendPress on the <a href="http://wordpress.org/support/plugin/sendpress" target="_blank">WordPress.org forums</a>.<br>Also check our <a href="http://sendpress.com/support" target="_blank">Knowledge Base</a> for help at <a href="http://sendpress.com/support" target="_blank">http://sendpress.com/support</a></p>
+	<br>
 	<b>Premium Support</b>
-	<p>Premium support is available if you have purchased it or SendPress Pro from SendPress.com. Premium support covers both the FREE and PRO versions of SendPress and can be accessed via our support site: <a href="http://sendpress.com/support" target="_blank">http://sendpress.com/support</a>.</p>
-	<p>Premium support requires a SendPress.com account and you will need to login to create a ticket.</p>
+	<p>Premium support is available if you have purchased SendPress Pro from SendPress.com. Premium support can be accessed via our support site: <a href="http://sendpress.com/support" target="_blank">http://sendpress.com/support</a> and requires a SendPress.com account.</p>
 
 <?php
 	}
 
 	function help_debug(){
 		global $wp_version,$wpdb;;
-		echo "<p><b>WordPress Version</b>: ". $wp_version."</p>";
-		echo "<p><b>SendPress Version</b>: ".SENDPRESS_VERSION ."</p>";
-		echo '<p><b>PHP Version</b>: ' . phpversion(). '</p>';
-		echo '<p><b>MySQL Version</b>: ' . $wpdb->db_version() . '</p>';
+		echo "<b>WordPress Version</b>: ". $wp_version."<br>";
+		echo "<b>SendPress Version</b>: ".SENDPRESS_VERSION ."<br>";
+		echo '<b>PHP Version</b>: ' . phpversion(). '<br>';
 		
+		$mem = (int) ini_get('memory_limit') ;	
+		$used =  function_exists('memory_get_usage') ? round(memory_get_usage() / 1024 / 1024, 2) : 0;
+		if(!empty( $mem ) && !empty( $used ) ){
+			$prec = round ( $used / $mem * 100, 0);
+		}
+		echo '<b>PHP Memory Limit</b>: '. $mem . __(' MByte') . '<br>';
+		echo '<b>PHP Memory Used</b>: '. $used . __(' MByte') . '<br>';
+		
+		echo '<b>MySQL Version</b>: ' . $wpdb->db_version() . '<br><br>';
 		echo "<b>Ports:</b><br>";
 	  	$server  = "smtp.sendgrid.net";
 	  	$port   = "25";
