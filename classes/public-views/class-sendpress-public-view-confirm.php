@@ -8,6 +8,7 @@ class SendPress_Public_View_Confirm extends SendPress_Public_View{
 
 	function html($sp){
 		$ip = $_SERVER['REMOTE_ADDR'];
+		//print_r($info);
 		$info = $this->data();
 		if(isset($info->listids)){
 			$lists = explode(',',$info->listids);
@@ -23,8 +24,9 @@ class SendPress_Public_View_Confirm extends SendPress_Public_View{
 		if(SendPress_Option::get('confirm-page') == 'custom' ){
 			$page = SendPress_Option::get('confirm-page-id');
 			if($page != false){
-				$plink = get_page_link($page);
+				$plink = get_permalink($page);
 				if($plink != ""){
+					//echo $plink;
 					wp_redirect($plink);
 				}
 

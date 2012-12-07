@@ -70,10 +70,15 @@ class SendPress_View {
 			$l .= "-".$parts[4];
 		}
 		$l = strtolower($l);
-		$params = http_build_query($params, '', '&');
-		if(strlen($params) > 0 ){
-			$params .='&'. $params;
+		if(!empty($params) && (is_array($params) || is_object($params)) ){
+			$params = http_build_query($params, '', '&');
+			if(strlen($params) > 0 ){
+				$params .='&'. $params;
+			}
+		} else {
+			$params = '';
 		}
+		
 
 		return  admin_url( 'admin.php'. $l . $params );
 

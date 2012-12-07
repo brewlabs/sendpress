@@ -2,6 +2,8 @@
 // SendPress Required Class: SendPress_Public_View
 // Prevent loading this file directly
 defined( 'ABSPATH' ) || exit;
+
+
 // Plugin paths, for including files
 if ( ! defined( 'SENDPRESS_PUBLIC_CLASSES' ) )
 	define( 'SENDPRESS_PUBLIC_CLASSES', trailingslashit( plugin_dir_path( __FILE__ ) . 'public-views' ) );
@@ -60,6 +62,9 @@ class SendPress_Public_View {
 
 
 	function SendPress_Public_View( $title='' ) {
+
+		
+		
 		$this->title( $title );
 
 		if ( $this->init() === false ) {
@@ -73,6 +78,11 @@ class SendPress_Public_View {
 	 * Initializes the view.
 	 */
 	function init() {
+		//Disable W3 Total Cache on Public Pages
+		define('DONOTCACHEOBJECT',true);
+		define('DONOTCACHEPAGE',true);
+		define('DONOTCACHEDB',true);
+		
 		$detect = new SendPress_Mobile_Detect;
     	$this->_device_type = ( $detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
     	

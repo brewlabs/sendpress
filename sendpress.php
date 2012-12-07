@@ -113,6 +113,7 @@ class SendPress{
 	
 	function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
+		add_action( 'widgets_init', array( $this,'load_widgets') );
 		do_action( 'sendpress_loaded' );
 	}
 
@@ -127,6 +128,8 @@ class SendPress{
 
 
 	function init() {
+			SendPress_Ajax_Loader::init();
+			SendPress_Signup_Shortcode::init();
 		
 			load_plugin_textdomain( 'sendpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 			$this->add_custom_post();
@@ -138,7 +141,7 @@ class SendPress{
 
 			add_filter( 'query_vars', array( $this, 'add_vars' ) );
 			//add_filter( 'cron_schedules', array($this,'cron_schedule' ));
-			SendPress_Ajax_Loader::init();
+			
 			if( is_admin() ){
 				$this->maybe_upgrade();
 				$this->ready_for_sending();
@@ -168,11 +171,20 @@ class SendPress{
 			add_action( 'wp_enqueue_scripts', array( $this, 'add_front_end_styles' ) );
 
 			add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
-		
+			
 		
 	}
 
-	
+		/**
+		 * Register our widget.
+		 * 'SendPress_Signup_Widget' is the widget class used below.
+		 *
+		 * @since 1.0
+		 */
+		function load_widgets() {
+			register_widget( 'SendPress_Widget_Signup' );
+		}
+
 
 	function admin_notice(){
 		//This is the WordPress one shows above menu area.

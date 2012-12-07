@@ -234,19 +234,3 @@ class SendPress_Widget_Signup extends WP_Widget {
 		
 	}
 }
-
-/**
- * Add function to widgets_init that'll load our widget.
- * @since 1.0
- */
-add_action( 'widgets_init', 'sendpress_load_widgets' );
-
-/**
- * Register our widget.
- * 'SendPress_Signup_Widget' is the widget class used below.
- *
- * @since 1.0
- */
-function sendpress_load_widgets() {
-	register_widget( 'SendPress_Widget_Signup' );
-}
