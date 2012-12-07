@@ -121,7 +121,7 @@ class SendPress_Public_View {
   			<?php 
   				$spdata = array(
   					"ajaxurl"=>  admin_url( 'admin-ajax.php' ),
-  					"nonce" => wp_create_nonce( SendPress_Ajax_Processor::$ajax_nonce )
+  					"nonce" => wp_create_nonce( SendPress_Ajax_Loader::$ajax_nonce )
   				);
   				?>
   			<script>var spdata = <?php echo json_encode($spdata); ?></script>
