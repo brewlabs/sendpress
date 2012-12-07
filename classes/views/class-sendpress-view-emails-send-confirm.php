@@ -5,6 +5,85 @@ defined( 'ABSPATH' ) || exit;
 
 class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
 	
+  function save($post, $sp){
+        $saveid = $_POST['post_ID'];
+
+        update_post_meta( $saveid, 'send_date', date('Y-m-d H:i:s') );
+
+        $email_post = get_post( $saveid );
+
+        $subject = SendPress_Option::get('current_send_subject_'. $saveid);
+
+        $info = SendPress_Option::get('current_send_'.$saveid);
+        $slug = $sp->random_code();
+
+        $new_id = SendPress_Posts::copy($email_post, $subject, $slug, $sp->_report_post_type );
+        SendPress_Posts::copy_meta_info($new_id, $saveid);
+
+
+        $count = 0;    
+
+        if(isset($info['listIDS'])){
+            foreach($info['listIDS'] as $list_id){
+                $_email = $sp->get_active_subscribers( $list_id );
+
+                foreach($_email as $email){
+                   
+                     $go = array(
+                        'from_name' => 'Josh',
+                        'from_email' => 'joshlyford@gmail.com',
+                        'to_email' => $email->email,
+                        'emailID'=> $new_id,
+                        'subscriberID'=> $email->subscriberID,
+                        //'to_name' => $email->fistname .' '. $email->lastname,
+                        'subject' => $subject,
+                        'listID'=> $list_id
+                        );
+                   
+                    $sp->add_email_to_queue($go);
+                    $count++;
+
+                }
+
+
+            }
+        }
+
+
+        if(isset($info['testemails'])){
+            foreach($info['testemails'] as $email){
+                   
+                     $go = array(
+                        'from_name' => 'Josh',
+                        'from_email' => 'joshlyford@gmail.com',
+                        'to_email' => $email['email'],
+                        'emailID'=> $new_id,
+                        'subscriberID'=> 0,
+                        'subject' => $subject,
+                        'listID' => 0
+                        );
+                   
+                    $sp->add_email_to_queue($go);
+                    $count++;
+
+                
+
+
+            }
+        }
+
+        update_post_meta($new_id,'_send_count', $count );
+        update_post_meta($new_id,'_send_data', $info );
+
+   
+        SendPress_View_Queue::redirect();
+        //wp_redirect( '?page=sp-queue' );
+
+  }
+
+
+
+
 	function html($sp) {
 		global $post_ID, $post;
 
@@ -19,7 +98,7 @@ if(isset($_GET['emailID'])){
 }
 
 		?>
-		<form action="admin.php?page=<?php echo $sp->_page; ?>" method="POST" name="post" id="post">
+		<form  method="POST" name="post" id="post">
 <?php
 $info = $sp->get_option('current_send_'.$post->ID );
 $subject = $sp->get_option('current_send_subject_'.$post->ID ,true);
@@ -34,7 +113,7 @@ $subject = $sp->get_option('current_send_subject_'.$post->ID ,true);
 </div>
 <h2><?php _e('Confirm Send','sendpress'); ?></h2>
 
-<input type="hidden" value="save-send-confirm" name="action" />
+
 <input type="hidden" id="user-id" name="user_ID" value="<?php //echo $current_user->ID; ?>" />
 <input type="hidden" id="post_ID" name="post_ID" value="<?php echo $post->ID; ?>" />
 <div class="boxer">
