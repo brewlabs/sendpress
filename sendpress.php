@@ -1930,7 +1930,6 @@ class SendPress{
 		$attempts = 0;
 		for ($i=0; $i < $limit ; $i++) { 
 				$email = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE (success = 0) AND (max_attempts != attempts) AND (inprocess = 0) ORDER BY id ASC LIMIT 1","get_results");
-				error_log(print_r($email,true));
 				if( !empty($email) ){
 					$email = $email[0];
 					$attempts++;

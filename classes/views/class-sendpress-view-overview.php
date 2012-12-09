@@ -44,8 +44,8 @@ list( $display_version ) = explode( '-', $wp_version );
 <div class="sp-badge"><?php printf( __( 'Version %s' ), SENDPRESS_VERSION ); ?></div>
 
 <div class="welcome-panel-content">
-<h3><?php _e( 'Welcome to SendPress! ' ); ?></h3>
-<p class="about-description">Thanks for trying out SendPress. Their is a little bit of setup to do before you can start sending emails out. If you follow the steps below you will be up and running in no time.</p>
+<h3><?php _e( 'Welcome to SendPress! ','sendpress' ); ?></h3>
+<p class="about-description"><?php _e('Thanks for trying out SendPress. Their is a little bit of setup to do before you can start sending emails out. If you follow the steps below you will be up and running in no time','sendpress'); ?>.</p>
 <!--
 <p class="about-description"><?php _e( 'If you need help getting started, check out our documentation on <a href="http://docs.sendpress.com/">First Steps with SendPress</a>. If you&#8217;d rather dive right in, here are a few things most people do first set up SendPress. If you need help, use the Help tab in the upper right corner to get information on how to use your current screen and where to go for more assistance.' ); ?></p>
 -->
