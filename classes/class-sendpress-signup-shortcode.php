@@ -69,7 +69,7 @@ class SendPress_Signup_Shortcode{
 							<?php if( !$label ): ?>
 								<label for="firstname"><?php echo $firstname_label; ?>:</label>
 							<?php endif; ?>
-							<input type="text" id="firstname" orig="<?php echo $firstname_label; ?>" value="<?php if($label){ echo $firstname_label; } ?>" tabindex="50" name="firstname" />
+							<input type="text" id="firstname" orig="<?php echo $firstname_label; ?>" value="<?php if($label){ echo $firstname_label; } ?>"  name="firstname" />
 						</p>
 					<?php endif; ?>
 
@@ -78,7 +78,7 @@ class SendPress_Signup_Shortcode{
 							<?php if( !$label ): ?>
 								<label for="lastname"><?php echo $lastname_label; ?>:</label>
 							<?php endif; ?>
-							<input type="text" id="lastname" orig="<?php echo $lastname_label; ?>" value="<?php if($label){ echo $lastname_label; } ?>" tabindex="50" name="lastname" />
+							<input type="text" id="lastname" orig="<?php echo $lastname_label; ?>" value="<?php if($label){ echo $lastname_label; } ?>" name="lastname" />
 						</p>
 					<?php endif; ?>
 
@@ -86,11 +86,11 @@ class SendPress_Signup_Shortcode{
 						<?php if( !$label ): ?>
 							<label for="email"><?php echo $email_label; ?>:</label>
 						<?php endif; ?>
-						<input type="text" id="email" orig="<?php echo $email_label; ?>" value="<?php if($label){ echo $email_label; } ?>" tabindex="50" name="email" />
+						<input type="text" id="email" orig="<?php echo $email_label; ?>" value="<?php if($label){ echo $email_label; } ?>" name="email" />
 					</p>
 
 					<p class="submit">
-						<input value="<?php echo $button_text; ?>" class="signup-submit" type="submit" tabindex="53" id="submit" name="submit">
+						<input value="<?php echo $button_text; ?>" class="signup-submit" type="submit"  id="submit" name="submit">
 					</p>
 				</div>
 			</form>
