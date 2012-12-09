@@ -128,6 +128,7 @@ class SendPress{
 	function init() {
 			SendPress_Ajax_Loader::init();
 			SendPress_Signup_Shortcode::init();
+			SendPress_Sender::init();
 		
 			load_plugin_textdomain( 'sendpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 			$this->add_custom_post();
@@ -906,12 +907,20 @@ class SendPress{
 			require_once(SENDPRESS_PATH . 'inc/db/alter-tracking.php');
 			SendPress_Option::set('sendpress_ignore_087', 'false');
 		}
+		
+		if(version_compare( $current_version, '0.8.7.5', '<' )){
+			SendPress_Data::set_double_optin_content();
+		}
+
 
 		if(version_compare( $current_version, '0.8.8', '<' )){
 			$pro_plugins = array();
 			$pro_plugins['pro_plugins']['setup_value'] = false;
 			SendPress_Option::set($pro_plugins);
 		}
+
+
+
 
 		SendPress_Option::set( 'version' , SENDPRESS_VERSION );
 	}	
@@ -933,33 +942,13 @@ class SendPress{
 		$update_optin = false;
 
 		if($optin->post_content == ""){
-			$optin->post_content = "Howdy.
-
-We're ready to send you emails from *|SITE:TITLE|*, but first we need you to confirm that this is what you really want.
-
-If you want *|SITE:TITLE|* content delivered by email, all you have to do is click the link below. Thanks!
-
------------------------------------------------------------
-CONFIRM BY VISITING THE LINK BELOW:
-
-*|SP:CONFIRMLINK|*
-
-Click the link above to give us permission to send you
-information.  It's fast and easy!  If you cannot click the
-full URL above, please copy and paste it into your web
-browser.
-
------------------------------------------------------------
-If you do not want to confirm, simply ignore this message.
-";
-
+			$optin->post_content = SendPress_Data::optin_content();
 			$update_optin = true;
 		}
 
-
         //clear the cached file.
     	if($optin->post_title == ""){
-			$optin->post_title = "Please respond to join the *|SITE:TITLE|* email list.";
+			$optin->post_title = SendPress_Data::optin_title();
 			$update_optin = true;
 		}
 
@@ -1744,7 +1733,7 @@ If you do not want to confirm, simply ignore this message.
 		$phpmailer->FromName = SendPress_Option::get('fromname');
 		$phpmailer->Sender = SendPress_Option::get('fromemail');
 		$sending_method  = SendPress_Option::get('sendmethod');
-			
+		
 		$phpmailer = apply_filters('sendpress_sending_method_'. $sending_method, $phpmailer );
 
 		
@@ -1786,9 +1775,7 @@ If you do not want to confirm, simply ignore this message.
 		$phpmailer->MessageID = $email->messageID;
 		$phpmailer->AddCustomHeader( sprintf( 'X-SP-MID: %s',$email->messageID ) );
 		*/
-	
 		$hdr = new SendPress_SendGrid_SMTP_API();
-
 		$hdr->addFilterSetting('dkim', 'domain', $this->get_domain_from_email($from_email) );
 		//$phpmailer->AddCustomHeader( sprintf( 'X-SP-MID: %s',$email->messageID ) );
 		$phpmailer->AddCustomHeader(sprintf( 'X-SMTPAPI: %s', $hdr->asJSON() ) );
@@ -1799,17 +1786,19 @@ If you do not want to confirm, simply ignore this message.
 			// Start output buffering to grab smtp output
 			ob_start(); 
 		}
+
+
 		// Send!
 		$result = true; // start with true, meaning no error
 		$result = @$phpmailer->Send();
-		$phpmailer->SMTPClose();
+		//$phpmailer->SMTPClose();
 		if($istest == true){
 			// Grab the smtp debugging output
 			$smtp_debug = ob_get_clean();
 			SendPress_Option::set('phpmailer_error', $phpmailer->ErrorInfo);
 			SendPress_Option::set('last_test_debug', $smtp_debug);
 			$this->last_send_smtp_debug = $smtp_debug;
-			//print_r($smtp_debug);
+			error_log($smtp_debug);
 		}
 
 		if ( ( $result != true  ) ) {
@@ -1864,7 +1853,7 @@ If you do not want to confirm, simply ignore this message.
 		$count = SendPress_Option::get('cron_send_count');
 		for ($i=0; $i < $count ; $i++) { 
 			if($this->cron_stop() == false ){
-				$email = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 LIMIT 1","get_row");
+				$email = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 ORDER BY id LIMIT 1","get_row");
 				if($email != null){
 					SendPress_Data::queue_email_process( $email->id );
 					$result = $this->sp_mail_it( $email );
@@ -1936,11 +1925,48 @@ If you do not want to confirm, simply ignore this message.
 		
 		global $wpdb;
 		$limit =  wp_rand(1, 10);
-		$emails = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE success = 0 AND max_attempts != attempts LIMIT ".$limit,"get_results");
+		//$emails = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE success = 0 AND max_attempts != attempts LIMIT ".$limit,"get_results");
 		$count = 0;
-		if( empty($emails) ){
-			return array('attempted'=> 0,'sent'=>$count);
+		$attempts = 0;
+		for ($i=0; $i < $limit ; $i++) { 
+				$email = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE (success = 0) AND (max_attempts != attempts) AND (inprocess = 0) ORDER BY id ASC LIMIT 1","get_results");
+				error_log(print_r($email,true));
+				if( !empty($email) ){
+					$email = $email[0];
+					$attempts++;
+					SendPress_Data::queue_email_process( $email->id );
+					$result = $this->sp_mail_it( $email );
+					if ($result) {
+						$table = $this->queue_table();
+						$wpdb->query( 
+							$wpdb->prepare( 
+								"DELETE FROM $table WHERE id = %d",
+							    $email->id  
+						    )
+						);
+						$senddata = array(
+							'sendat' => date('Y-m-d H:i:s'),
+							'reportID' => $email->emailID,
+							'subscriberID' => $email->subscriberID
+						);
+
+						$wpdb->insert( $this->subscriber_open_table(),  $senddata);
+						$count++;
+					} else {
+						$wpdb->update( $this->queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
+					}
+				} else{//We ran out of emails to process.
+					break;
+				}
+
 		}
+
+
+
+
+
+
+		/*
 
 		foreach($emails as $email_single ){
 			$result = $this->sp_mail_it( $email_single );
@@ -1968,8 +1994,12 @@ If you do not want to confirm, simply ignore this message.
 			if( $sending_method  == 'gmail' ){
 				sleep(1);
 			}
-		}
-		return array('attempted'=> count($emails),'sent'=>$count);
+
+
+		
+
+		}*/
+		return array('attempted'=> $attempts,'sent'=>$count);
 	}
 
 	function add_email_to_queue($values){

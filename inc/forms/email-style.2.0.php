@@ -371,7 +371,7 @@ if(strlen($active_header['value']) > 0){
 <div class="tab-content">
 	 <div class="tab-pane active" id="posts">
 
-  	<div id="search-header">Search Posts: <input type="text" name="q" id="query"></div>
+  	<div id="search-header">Search Posts: <input type="text" name="q" id="sp-single-query"></div>
   	<div  id="sp-post-preview" class="well">
   		No Post Selected
   	</div>

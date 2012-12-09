@@ -236,6 +236,4 @@ class SendPress_Posts{
 
 
 
-
-
 }

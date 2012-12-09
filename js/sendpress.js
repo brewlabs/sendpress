@@ -70,7 +70,7 @@
                     }
             });
 
-            var a = $('#query').autocomplete({
+            var a = $('#sp-single-query').autocomplete({
                 serviceUrl: spvars.ajaxurl,
                 maxHeight:400,
                 width:300,
@@ -351,7 +351,7 @@
         batchsent: function(response){
             response = $.parseJSON(response);
             spadmin.log(response);
-            if(parseInt(response.attempted) > 0){
+            if( response != undefined && parseInt(response.attempted) > 0){
                 spadmin.queue.count = spadmin.queue.count + parseInt(response.sent);
                 var $qt =$("#queue-sent");
                 $qt.html(spadmin.queue.count);

@@ -8,6 +8,12 @@ defined( 'ABSPATH' ) || exit;
 if(!class_exists('SendPress_Sender')){  
 
 class SendPress_Sender {
+
+	function init(){
+		add_filter('sendpress_sending_method_gmail',array('SendPress_Sender','gmail'),10,1);
+		add_filter('sendpress_sending_method_sendpress',array('SendPress_Sender','sendpress'),10,1);
+	}
+
 	//qjrizsmmteujfzcq
 	function gmail($phpmailer){
 		// Set the mailer type as per config above, this overrides the already called isMail method
@@ -49,7 +55,6 @@ class SendPress_Sender {
 
 
 
-add_filter('sendpress_sending_method_gmail',array('SendPress_Sender','gmail'),10,1);
-add_filter('sendpress_sending_method_sendpress',array('SendPress_Sender','sendpress'),10,1);
+
 
 }

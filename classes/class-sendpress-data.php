@@ -246,6 +246,40 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 
+	function set_double_optin_content( ){
+		$optin = self::get_template_by_slug('double-optin');
+		$optin->post_content = self::optin_content();
+		$optin->post_title = self::optin_title();
+		delete_transient( 'sendpress_email_html_'. $optin->ID );
+		wp_update_post( $optin );
+	}
+
+	function optin_title(){
+		return "Please respond to join the *|SITE:TITLE|* email list.";
+	}
+
+	function optin_content(){
+		return "Howdy.
+
+We're ready to send you emails from *|SITE:TITLE|*, but first we need you to confirm that this is what you really want.
+
+If you want *|SITE:TITLE|* content delivered by email, all you have to do is click the link below. Thanks!
+
+-----------------------------------------------------------
+CONFIRM BY VISITING THE LINK BELOW:
+
+*|SP:CONFIRMLINK|*
+
+Click the link above to give us permission to send you
+information.  It's fast and easy!  If you cannot click the
+full URL above, please copy and paste it into your web
+browser.
+
+-----------------------------------------------------------
+If you do not want to confirm, simply ignore this message.
+";
+	}
+
 
 
 
