@@ -32,11 +32,11 @@ jQuery(document).ready(function($) {
 
         if( signup.email.length === 0 ){
             $error.show();    
-            $error.html('<div class="item">*Please enter your e-mail address.</div>');
+            $error.html('<div class="item">*'+sendpress.missingemail+'.</div>');
             submit_ok = false;
         }else if(!emailReg.test(signup.email)) {
             $error.show();
-            $error.html('<div class="item">Enter a valid email address.</div>');
+            $error.html('<div class="item">'+sendpress.invalidemail+'.</div>');
             submit_ok = false;
         }
 

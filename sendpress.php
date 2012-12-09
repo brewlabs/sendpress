@@ -573,7 +573,7 @@ class SendPress{
 
 		wp_register_script('sendpress-signup-form-js', SENDPRESS_URL .'js/sendpress.signup.js', array('jquery'), SENDPRESS_VERSION, (bool)$widget_options['load_scripts_in_footer'] );
 		wp_enqueue_script( 'sendpress-signup-form-js' );
-		wp_localize_script( 'sendpress-signup-form-js', 'sendpress', array( 'ajaxurl' => admin_url( 'admin-ajax.php', 'http' ) ) );
+		wp_localize_script( 'sendpress-signup-form-js', 'sendpress', array( 'invalidemail'=>__("Please enter your e-mail address","sendpress"),  'missingemail'=>__("Please enter your e-mail address","sendpress"), 'ajaxurl' => admin_url( 'admin-ajax.php', 'http' ) ) );
    	}
 
    	function handle_front_end_posts(){
