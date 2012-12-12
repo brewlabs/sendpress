@@ -20,6 +20,7 @@ if(class_exists('SendPress_Template')){ return; }
 class SendPress_Template {
 
 	private static $instance;
+	static $cache_key_templates = 'sendpress:email_template_cache';
 	var $_info = array();
 
 	function __construct() {
@@ -27,6 +28,7 @@ class SendPress_Template {
 	}
 
 	function init() {
+		if ( false === ( $sp_templates = get_transient ( self::$cache_key_templates ) ) ) {
 		$mainfiles = $this->glob_php( SENDPRESS_PATH . 'templates' );
 		$themmefiles = $this->glob_php( TEMPLATEPATH . '/sendpress' );
 		$wordpressfiles = $this->glob_php( WP_CONTENT_DIR . '/sendpress' );
@@ -42,6 +44,8 @@ class SendPress_Template {
 				$sp_templates[$temp[1]] = $info;
 			} 
 		}
+		set_transient( self::$cache_key_templates, $sp_templates , 60*60 );
+		}	
 		$this->info( $sp_templates );
 		do_action( 'sendpress_template_loaded' );
 	}

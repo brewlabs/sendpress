@@ -66,11 +66,11 @@ class SendPress{
 	private static $instance;
 
 	function log($args) {
-		return SP_Helper::log($args);
+		return SendPress_Helper::log($args);
 	}
 
 	function append_log($msg, $queueid = -1) {
-		return SP_Helper::append_log($msg, $queueid);
+		return SendPress_Helper::append_log($msg, $queueid);
 	}
 	
 	function nonce_value(){
@@ -1150,7 +1150,7 @@ class SendPress{
         
             $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND(t2.status = ".$status.") AND (t2.listID =  ". $listID .")";
           //  "SELECT COUNT(*) FROM $table WHERE listID = $listID AND status = $status"
-		$count = $this->wpdbQuery($this->wpdbQuery($query, 'prepare'), 'get_var');
+		$count = $this->wpdbQuery($query, 'get_var');
 		return $count;
 	}
 
@@ -1791,6 +1791,7 @@ class SendPress{
 		// Send!
 		$result = true; // start with true, meaning no error
 		$result = @$phpmailer->Send();
+
 		//$phpmailer->SMTPClose();
 		if($istest == true){
 			// Grab the smtp debugging output
@@ -1801,7 +1802,7 @@ class SendPress{
 			error_log($smtp_debug);
 		}
 
-		if ( ( $result != true  ) ) {
+		if (  $result != true && $istest == true  ) {
 			$hostmsg = 'host: '.($phpmailer->Host).'  port: '.($phpmailer->Port).'  secure: '.($phpmailer->SMTPSecure) .'  auth: '.($phpmailer->SMTPAuth).'  user: '.($phpmailer->Username)."  pass: *******\n";
 		    $msg = '';
 			$msg .= __('The result was: ','sendpress').$result."\n";

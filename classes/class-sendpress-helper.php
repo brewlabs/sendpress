@@ -1,8 +1,8 @@
 <?php
-// SendPress Required Class: SP_Helper
+// SendPress Required Class: SendPress_Helper
 // Prevent loading this file directly
 defined( 'ABSPATH' ) || exit;
-class SP_Helper {
+class SendPress_Helper {
 
 	function log($args) {
 
