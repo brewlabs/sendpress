@@ -12,10 +12,20 @@ class SendPress_View_Help extends SendPress_View{
 		
 		sp_add_help_widget( 'help_blog', 'Recent Blog Posts', array(&$this,'help_blog'),'normal',  array(&$this,'help_blog_control') );
 		sp_add_help_widget( 'help_shortcodes', 'Shortcode Cheat Sheet', array(&$this,'help_shortcodes') ,'normal');
+		sp_add_help_widget( 'help_editemail', 'Customizing Emails', array(&$this,'help_editemail') ,'normal');
 
 
 	}
 
+	function help_editemail(){
+?>
+		<b>SendPress Editor Button</b>
+		<p>Look for this button <img src="<?php echo SENDPRESS_URL; ?>/js/icon.png" /> to open the popup for adding posts to an email and personilizing emails.</p>
+
+		
+
+<?php
+	}
 
 	function help_shortcodes(){
 ?>

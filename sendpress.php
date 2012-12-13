@@ -101,19 +101,41 @@ class SendPress{
 	    }
 
 	    if( strpos($className, 'Public_View') != false ){
+	    	if( defined('SENDPRESS_PRO_PATH') ) {
+	    		$pro_file = SENDPRESS_PRO_PATH."classes/public-views/class-".$cls.".php";
+	    		if( file_exists( $pro_file ) ){
+	    			include SENDPRESS_PRO_PATH."classes/public-views/class-".$cls.".php";
+	    			return;
+	    		}
+	    	}
 	    	include SENDPRESS_PATH."classes/public-views/class-".$cls.".php";
 	  		return;
 	  	} 
 
 	    if( strpos($className, 'View') != false ){
+	    	if( defined('SENDPRESS_PRO_PATH') ) {
+	    		$pro_file = SENDPRESS_PRO_PATH."classes/views/class-".$cls.".php";
+	    		if( file_exists( $pro_file ) ){
+	    			include SENDPRESS_PRO_PATH."classes/views/class-".$cls.".php";
+	    			return;
+	    		}
+	    	}
 	    	include SENDPRESS_PATH."classes/views/class-".$cls.".php";
 	  		return;
-	  	} 
+	  	}
+
 	  	if( strpos($className, 'Module') != false ){
 	    	include SENDPRESS_PATH."classes/modules/class-".$cls.".php";
 	  		return;
 	  	} 
-	    
+
+	    if( defined('SENDPRESS_PRO_PATH') ) {
+    		$pro_file = SENDPRESS_PRO_PATH."classes/class-".$cls.".php";
+    		if( file_exists( $pro_file ) ){
+    			include SENDPRESS_PRO_PATH."classes/class-".$cls.".php";
+    			return;
+    		}
+    	}
 	    include SENDPRESS_PATH."classes/class-".$cls.".php";
     
   }
@@ -1796,6 +1818,7 @@ class SendPress{
 		}
 
 
+
 		// Send!
 		$result = true; // start with true, meaning no error
 		$result = @$phpmailer->Send();
@@ -1807,7 +1830,7 @@ class SendPress{
 			SendPress_Option::set('phpmailer_error', $phpmailer->ErrorInfo);
 			SendPress_Option::set('last_test_debug', $smtp_debug);
 			$this->last_send_smtp_debug = $smtp_debug;
-			error_log($smtp_debug);
+		
 		}
 
 		if (  $result != true && $istest == true  ) {
