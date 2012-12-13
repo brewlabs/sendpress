@@ -81,6 +81,8 @@ class SendPress{
 	function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
 		add_action( 'widgets_init', array( $this,'load_widgets') );
+		add_action('plugins_loaded',array( $this, 'load_plugin_language'));
+			
 		do_action( 'sendpress_loaded' );
 	}
 
@@ -130,7 +132,6 @@ class SendPress{
 			SendPress_Signup_Shortcode::init();
 			SendPress_Sender::init();
 		
-			load_plugin_textdomain( 'sendpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 			$this->add_custom_post();
 			
 			if(SendPress_Option::get('permalink_rebuild')){
@@ -154,7 +155,6 @@ class SendPress{
 				add_action( 'sendpress_notices', array( $this,'sendpress_notices') );
 			}
 
-			
 			add_filter( 'template_include', array( $this, 'template_include' ) );
 			add_action( 'sendpress_cron_action', array( $this,'sendpress_cron_action_run') );
 			if ( !wp_next_scheduled( 'sendpress_cron_action' ) ) {
@@ -172,6 +172,10 @@ class SendPress{
 			add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
 			
 		
+	}
+
+	function load_plugin_language(){
+		load_plugin_textdomain( 'sendpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	}
 
 		/**
@@ -193,7 +197,10 @@ class SendPress{
 	function sendpress_notices(){
 		if( in_array('settings', $this->_messages) ){
 		echo '<div class="alert alert-error">';
-			printf(__('<b>Warning!</b> Before sending any emails please setup your <a href="%1s">information</a>.','sendpress'), SendPress_View_Settings::link() );
+			echo "<b>";
+			_e('Warning','sendpress');
+			echo "</b>";
+			printf(__('Before sending any emails please setup your <a href="%1s">information</a>.','sendpress'), SendPress_View_Settings::link() );
 	    echo '</div>';
 		}
 	}
@@ -1143,14 +1150,15 @@ class SendPress{
 
 	// COUNT DATA
 	function countSubscribers($listID, $status = 2) {
+		global $wpdb;
 		$table = $this->list_subcribers_table();
 
 		$query = "SELECT COUNT(*) FROM " .  $this->subscriber_table() ." as t1,". $this->list_subcribers_table()." as t2,". $this->subscriber_status_table()." as t3";
 
         
-            $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND(t2.status = ".$status.") AND (t2.listID =  ". $listID .")";
+            $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND(t2.status = %d) AND (t2.listID =  %d)";
           //  "SELECT COUNT(*) FROM $table WHERE listID = $listID AND status = $status"
-		$count = $this->wpdbQuery($query, 'get_var');
+		$count = $this->wpdbQuery( $wpdb->prepare( $query, $status, $listID) , 'get_var');
 		return $count;
 	}
 
@@ -2251,6 +2259,7 @@ class SendPress{
 // AutoLoad Classes
 spl_autoload_register(array('SendPress', 'autoload'));
 
+	
 register_activation_hook( __FILE__, array( 'SendPress', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'SendPress', 'plugin_deactivation' ) );
 

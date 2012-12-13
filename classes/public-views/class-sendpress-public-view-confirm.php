@@ -38,8 +38,8 @@ class SendPress_Public_View_Confirm extends SendPress_Public_View{
 		?>
 			<div class="span12">
 				<div class='area'>
-					<h1>Thank you for signing up!</h1>
-					<p>You’re all set, and should start receiving emails soon.</p>
+					<h1><?php _e('Thank you for signing up!','sendpress'); ?></h1>
+					<p><?php _e("You're all set, and should start receiving emails soon.","sendpress"); ?></p>
 				</div>
 			</div>
 			<?php 

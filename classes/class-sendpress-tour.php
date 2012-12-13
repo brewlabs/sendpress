@@ -50,7 +50,7 @@ class SendPress_Tour {
 	 */
 	function intro_tour() {
 		global $pagenow, $current_user;
-
+/*
 		$adminpages = array(
 			'sp-overview'      => array(
 				'content'  => '<h3>' . __( 'Dashboard', 'wordpress-seo' ) . '</h3><p>' . __( 'This is the WordPress SEO Dashboard, here you can restart this tour or revert the WP SEO settings to default.', 'wordpress-seo' ) . '</p>'
@@ -91,7 +91,7 @@ class SendPress_Tour {
 				'button2'  => __( 'Next', 'wordpress-seo' ),
 				'function' => 'window.location="' . admin_url( 'admin.php?page=wpseo_xml' ) . '";'
 			),
-/*
+
 			'wpseo_xml'            => array(
 				'content'  => '<h3>' . __( 'XML Sitemaps', 'wordpress-seo' ) . '</h3><p>' . __( 'This plugin adds an XML sitemap to your site. It\'s automatically updated when you publish a new post, page or custom post and Google and Bing will be automatically notified.', 'wordpress-seo' ) . '</p><p>' . __( 'Be sure to check whether post types or taxonomies are showing that search engines shouldn\'t be indexing, if so, check the box before them to hide them from the XML sitemaps.', 'wordpress-seo' ) . '</p>',
 				'button2'  => __( 'Next', 'wordpress-seo' ),
@@ -143,7 +143,7 @@ class SendPress_Tour {
 		if ( 'admin.php' != $pagenow || !array_key_exists( $page, $adminpages ) ) {
 			$id      = '#toplevel_page_sp-overview';
 			$content = '<h3>' . __( 'Welcome to SendPress', 'sendpress' ) . '</h3>';
-			$content .= '<p>' . __( 'You\'ve just installed SendPress! Click "Start Tour" to view a quick introduction of this plugins core functionality.', 'sendpress' ) . '</p>';
+			$content .= '<p>' . __( 'You\'ve just installed SendPress! Click &ldquo;Start Tour&rdquo; to view a quick introduction of this plugins core functionality.', 'sendpress' ) . '</p>';
 			$opt_arr  = array(
 				'content'  => $content,
 				'position' => array( 'edge' => 'left', 'align' => 'left' )

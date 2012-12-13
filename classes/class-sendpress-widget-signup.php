@@ -138,7 +138,7 @@ class SendPress_Widget_Signup extends WP_Widget {
 			'first_label' => __('First Name', 'sendpress'), 
 			'last_label' => __('Last Name', 'sendpress'), 
 			'email_label' => __('E-Mail', 'sendpress'), 
-			'desc' => __('', 'sendpress'), 
+			'desc' => '',
 			'button_text' => __('Submit', 'sendpress'),
 			'thank_you' => __('Check your inbox now to confirm your subscription.', 'sendpress')
 		);

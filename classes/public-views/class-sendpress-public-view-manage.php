@@ -58,7 +58,9 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 		echo "<div class='area'>";
 		$name = get_bloginfo('name'); 
 		echo '<h1>'. $name .'</h1>';
-		echo '<h2>Manage Subscription</h2>';
+		echo '<h2>';
+		_e('Manage Subscription','sendpress');
+		echo '</h2>';
 
 	
 	if ( isset($info->action) && $info->action == 'unsubscribe' ) {
@@ -68,10 +70,14 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 
 	$subscriber = $sp->getSubscriber( $info->id );
 	
-	echo '<h4>Subscriber Info</h4>';
+	echo '<h4>';
+	_e('Subscriber Info','sendpress');
+	echo '</h4>';
 	echo '<div class="well">';
-	echo '<b>Email:</b> '. $subscriber->email.'<br>';
-	echo '<b>Signup date:</b> '.$subscriber->join_date.'';
+	$emailtext = _e('Email','sendpress');
+	echo '<b>' .$emailtext. ':</b> '. $subscriber->email.'<br>';
+	$date = _e('Signup Date','sendpress');
+	echo '<b>'.$date.':</b> '.$subscriber->join_date.'';
 	echo '</div>';
 	$c = ' hide ';
 if ( !empty($_POST) && check_admin_referer($this->_nonce_value) ){
@@ -133,16 +139,16 @@ wp_reset_query();
 
 	<div class="alert alert-block alert-info <?php echo $c; ?> fade in">
  
-  <h4 class="alert-heading">Saved!</h4>
- Your subscriptions have been updated. Thanks.
+  <h4 class="alert-heading"><?php _e('Saved','sendpress'); ?>!</h4>
+ <?php _e('Your subscriptions have been updated. Thanks.','sendpress'); ?>
 </div>
-
+<p><?php _e('You are subscribed to the following lists:','sendpress'); ?></p>
 	<?php
-	echo '<p>You are subscribed to the following lists:</p>';
+	
 	//echo $subscriber[0]->subscriberID;
 
 	$info->action = "update";
-	$key = $sp->encrypt_data( $info );
+	$key = SendPress_Data::encrypt( $info );
 
 
 
@@ -155,9 +161,9 @@ wp_reset_query();
 
 <table cellpadding="0" cellspacing="0" class="table table-condensed table-striped">
 	<tr>
-		<th  >Subscribed</th>
-		<th  >Unsubscribed</th>
-		<th  >List</th>
+		<th  ><?php _e('Subscribed','sendpress'); ?></th>
+		<th  ><?php _e('Unsubscribed','sendpress'); ?></th>
+		<th  ><?php _e('List','sendpress'); ?></th>
 		<th class="hidden-phone">Updated</th>
 	</tr>
 <?php
@@ -186,7 +192,7 @@ if( $my_query->have_posts() ) {
   	<td><?php the_title(); ?></td>
   	<td class="hidden-phone"><span id="list_<?php echo $my_query->post->ID;?>"><?php 
   	if(isset($subscriber->updated)) { echo $subscriber->updated; } else {
-		 	echo 'Never Subscribed';
+		 	_e('Never Subscribed','sendpress');
 		 }
 		 ?></span>
 	</td>
@@ -221,9 +227,9 @@ wp_reset_query();
 
 </table>
 <br>
-<input type="submit" class="btn btn-primary" value="Save My Settings"/>
+<input type="submit" class="btn btn-primary" value="<?php _e('Save My Settings','sendpress'); ?>"/>
 </form>
-	<a  href="<?php echo site_url(); ?>"><i class="icon-hand-left"></i> Return to <?php echo $name; ?></a>
+	<a  href="<?php echo site_url(); ?>"><i class="icon-hand-left"></i> <?php _e('Return to','sendpress'); ?> <?php echo $name; ?></a>
 </div>
 </div>
 	<?php
