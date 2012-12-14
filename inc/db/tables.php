@@ -10,7 +10,7 @@ global $wpdb;
 $subscriber_table = SendPress_DB_Tables::subscriber_table();
 
 require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-
+$wpdb->flush();
 if($wpdb->get_var("show tables like '$subscriber_table'") != $subscriber_table) {
 	$sql2 = "CREATE TABLE ".$subscriber_table." (
 		  subscriberID bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -33,7 +33,7 @@ if($wpdb->get_var("show tables like '$subscriber_table'") != $subscriber_table) 
 }
 
 $subscriber_list_subscribers = SendPress_DB_Tables::list_subcribers_table();
-
+$wpdb->flush();
 if($wpdb->get_var("show tables like '$subscriber_list_subscribers'") != $subscriber_list_subscribers) {
 
 
@@ -53,35 +53,9 @@ if($wpdb->get_var("show tables like '$subscriber_list_subscribers'") != $subscri
 	dbDelta($sql3);
 }
 
-/*
-$subscriber_lists = SendPress_DB_Tables::lists_table();
-
-if($wpdb->get_var("show tables like '$subscriber_lists'") != $subscriber_lists) {
-
-
-
-	$sql4 = "CREATE TABLE ". $subscriber_lists ." (
-	  `listID` int(11) unsigned NOT NULL AUTO_INCREMENT,
-	  `name` varchar(255) DEFAULT NULL,
-	  `created` datetime DEFAULT NULL,
-	  `last_send_date` datetime DEFAULT NULL,
-	  `public` TINYINT(1) DEFAULT 0,
-	  PRIMARY KEY (`listID`)
-	)";
-
-	dbDelta($sql4);
-
-	$wpdb->insert($subscriber_lists, array('name'=>'My First List','created'=> date('Y-m-d H:i:s') ));
-
-}
-*/
-
 $subscriber_queue = SendPress_DB_Tables::queue_table();
-
+$wpdb->flush();
 if($wpdb->get_var("show tables like '$subscriber_queue'") != $subscriber_queue) {
-
-
-
 	$sql5 = "CREATE TABLE ".$subscriber_queue." (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `subscriberID` int(11) DEFAULT NULL,
@@ -106,7 +80,6 @@ if($wpdb->get_var("show tables like '$subscriber_queue'") != $subscriber_queue) 
 	)";
 
 	dbDelta($sql5);
-
 }
 
 add_option("sendpress_db_version", SendPress_DB_Tables::$db_version);

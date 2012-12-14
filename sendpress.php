@@ -226,7 +226,7 @@ class SendPress{
 		echo '<div class="alert alert-error">';
 			echo "<b>";
 			_e('Warning','sendpress');
-			echo "</b>";
+			echo "</b>&nbsp;";
 			printf(__('Before sending any emails please setup your <a href="%1s">information</a>.','sendpress'), SendPress_View_Settings::link() );
 	    echo '</div>';
 		}
