@@ -572,7 +572,7 @@ font-weight: normal;
 line-height: 1.2;
 margin: .1em 0 .8em;
 }
-.sp-welcome-panel-content .about-description, .sp-welcome-panel h3 {
+.sp-welcome-panel .about-description, .sp-welcome-panel h3 {
 margin-left: 190px;
 }
 
