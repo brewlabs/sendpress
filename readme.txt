@@ -91,6 +91,15 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
+= 0.8.8.1 =
+* uninstall file error fixed.
+* Security check added to all files
+* DB Error on unistall and reinstall
+* Active Subscribers bug in 3.5 fixed
+* Spanish Translation Started
+* Remove all subscribers from list added
+* PHP 5.2 bug fixed
+
 = 0.8.8 =
 * Double Optin added
 * Code optimized for memory usage and loading
@@ -165,6 +174,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.8.8.1 =
+Unistall Error fix and bug fixes.
 
 = 0.8.8 =
 Double optin and performence updates.
