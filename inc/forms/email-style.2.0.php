@@ -1,4 +1,9 @@
 <?php 
+// Prevent loading this file directly
+if ( !defined('SENDPRESS_VERSION') ) {
+	header('HTTP/1.0 403 Forbidden');
+	die;
+}
 
 $default_styles_id = SendPress_Data::get_template_id_by_slug('user-style');
 

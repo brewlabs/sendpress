@@ -1,9 +1,9 @@
 <?php
-// SendPress Required Class: SmtpApiHeader
-
 // Prevent loading this file directly
-defined( 'ABSPATH' ) || exit;
-
+if ( !defined('SENDPRESS_VERSION') ) {
+	header('HTTP/1.0 403 Forbidden');
+	die;
+}
 # Version 1.0
 # Last Updated 6/22/2009
 

@@ -1,7 +1,11 @@
 <?php
-// SendPress Required Class: SendPress_View
+
 // Prevent loading this file directly
-defined( 'ABSPATH' ) || exit;
+if ( !defined('SENDPRESS_VERSION') ) {
+	header('HTTP/1.0 403 Forbidden');
+	die;
+}
+
 // Plugin paths, for including files
 if ( ! defined( 'SENDPRESS_CLASSES' ) )
 	define( 'SENDPRESS_CLASSES', plugin_dir_path( __FILE__ ) );

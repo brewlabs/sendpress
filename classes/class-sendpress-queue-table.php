@@ -1,7 +1,9 @@
 <?php
-// SendPress Required Class: SendPress_Queue_Table
 // Prevent loading this file directly
-defined( 'ABSPATH' ) || exit;
+if ( !defined('SENDPRESS_VERSION') ) {
+    header('HTTP/1.0 403 Forbidden');
+    die;
+}
 /************************** CREATE A PACKAGE CLASS *****************************
  *******************************************************************************
  * Create a new list table package that extends the core WP_List_Table class.

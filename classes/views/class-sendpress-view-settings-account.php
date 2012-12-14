@@ -2,7 +2,10 @@
 
 
 // Prevent loading this file directly
-defined( 'ABSPATH' ) || exit;
+if ( !defined('SENDPRESS_VERSION') ) {
+	header('HTTP/1.0 403 Forbidden');
+	die;
+}
 
 
 class SendPress_View_Settings_Account extends SendPress_View_Settings {

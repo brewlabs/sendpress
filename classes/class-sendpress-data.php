@@ -1,5 +1,9 @@
 <?php
-// SendPress Required Class: SendPress_Data
+// Prevent loading this file directly
+if ( !defined('SENDPRESS_VERSION') ) {
+	header('HTTP/1.0 403 Forbidden');
+	die;
+}
 
 class SendPress_Data extends SendPress_DB_Tables {
 

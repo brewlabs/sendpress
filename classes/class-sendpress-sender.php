@@ -1,9 +1,10 @@
 <?php
 
-// SendPress Required Class: SendPress_Sender
-
-defined( 'ABSPATH' ) || exit;
-// Plugin paths, for including files
+// Prevent loading this file directly
+if ( !defined('SENDPRESS_VERSION') ) {
+	header('HTTP/1.0 403 Forbidden');
+	die;
+}
 
 if(!class_exists('SendPress_Sender')){  
 

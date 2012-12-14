@@ -2,7 +2,10 @@
 // SendPress Required Class: SendPress_Emails_Table
 
 // Prevent loading this file directly
-defined( 'ABSPATH' ) || exit;
+if ( !defined('SENDPRESS_VERSION') ) {
+    header('HTTP/1.0 403 Forbidden');
+    die;
+}
 
 /************************** CREATE A PACKAGE CLASS *****************************
  *******************************************************************************

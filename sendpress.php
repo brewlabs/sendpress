@@ -8,6 +8,11 @@ Author: SendPress
 Author URI: http://sendpress.com/
 */
 
+if ( !defined('DB_NAME') ) {
+	header('HTTP/1.0 403 Forbidden');
+	die;
+}
+
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'https://api.sendpres.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.2' );

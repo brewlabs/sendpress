@@ -1,4 +1,10 @@
 <?php
+// Prevent loading this file directly
+if ( !defined('SENDPRESS_VERSION') ) {
+	header('HTTP/1.0 403 Forbidden');
+	die;
+}
+
 global $wpdb;
 /*
 $table_to_update = SendPress_Table_Manager::subscriber_click_table();
