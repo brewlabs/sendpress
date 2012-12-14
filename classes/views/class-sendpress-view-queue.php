@@ -16,7 +16,7 @@ class SendPress_View_Queue extends SendPress_View {
 	
 	function empty_queue( $get, $sp ){
 		SendPress_Data::delete_queue_emails();
-		self::redirect();
+		SendPress_View_Queue::redirect();
 	}
 
 	function html($sp) {

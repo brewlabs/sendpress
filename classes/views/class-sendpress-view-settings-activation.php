@@ -26,13 +26,8 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		
 		wp_update_post($dpost);
 
-		//SendPress_Option::set('optin_body', $_POST['body']);
-		//print_r();
-		//echo self::link();
-		//print_r(get_class( $this ));
-		//self::n();
-		//echo "asdf";
-		self::redirect(arrat);
+		
+		SendPress_View_Settings_Activation::redirect();
 	}
 	
 	function html($sp) {

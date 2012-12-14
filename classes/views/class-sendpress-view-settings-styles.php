@@ -101,7 +101,7 @@ class SendPress_View_Settings_Styles extends SendPress_View_Settings {
         SendPress_Option::set('fromname', $fromname );
 
 
-        self::redirect();
+        SendPress_View_Settings_Styles::redirect();
 	}
 	
 	function html($sp) {
@@ -123,7 +123,7 @@ $fn = __('From Name','sendpress');
 		<form method="post" id="post">
 	<br class="clear">
 <div style="float:right;" >
-	<a href="<?php echo self::link(); ?>" class="btn btn-large" ><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e('Save','sendpress'); ?></a>
+	<a href="<?php echo SendPress_View_Settings_Styles::link(); ?>" class="btn btn-large" ><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e('Save','sendpress'); ?></a>
 </div>
 <br class="clear">
 <h3>Requried Settings</h3>

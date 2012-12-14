@@ -82,12 +82,8 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 			
 		}	
 
-		//print_r();
-		//echo self::link();
-		//print_r(get_class( $this ));
-		//self::n();
-		//echo "asdf";
-		self::redirect();
+		
+		SendPress_View_Settings_Access::redirect();
 	}
 	
 	function html($sp) {
