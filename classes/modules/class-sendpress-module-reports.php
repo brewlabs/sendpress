@@ -9,7 +9,7 @@ class SendPress_Module_Reports extends SendPress_Module{
 		$hide = false;
 		$plugin_path = 'sendpress-advanced-reports/sendpress-advanced-reports.php';
 		if( $this->is_pro_active() ){
-			$plugin_path = 'sendpress-pro/sendpress-advanced-reports/sendpress-advanced-reports.php';
+			$plugin_path = 'sendpress-pro/extensions/class-sendpress-advanced-reports.php';
 		}
 	?>
 		<h4>Advanced Reports</h4>
