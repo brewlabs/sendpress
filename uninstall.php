@@ -12,6 +12,7 @@
 if ( !defined( 'WP_UNINSTALL_PLUGIN' ) )
 	exit ();
 
+define('SENDPRESS_VERSION','0.8.8.1');
 //Remove settings
 delete_option('sendpress_options');
 delete_option('sendpress_db_version');
