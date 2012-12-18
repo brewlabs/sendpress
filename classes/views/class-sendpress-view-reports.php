@@ -8,6 +8,23 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Reports extends SendPress_View{
 	
+	function admin_init(){
+		add_action('load-sendpress_page_sp-reports',array($this,'screen_options'));
+	}
+
+	function screen_options(){
+
+		$screen = get_current_screen();
+	 	
+		$args = array(
+			'label' => __('Reports per page', 'sendpress'),
+			'default' => 10,
+			'option' => 'sendpress_reports_per_page'
+		);
+		add_screen_option( 'per_page', $args );
+	}
+
+
 	function html($sp){
 		
 		//Create an instance of our package class...

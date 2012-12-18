@@ -1378,6 +1378,11 @@ width: 150px;
     padding: 0px;
 }
 
+@media (max-width: 1120px) { 
+    .nav-sp{
+    margin: 20px 0;
+}
+ }
 
 
 

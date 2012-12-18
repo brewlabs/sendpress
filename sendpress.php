@@ -98,8 +98,8 @@ class SendPress{
 	  
 	    $cls = str_replace('_', '-',	strtolower($className) );
 	    if( substr($cls, -1) == '-'){
-	    	$cls = substr($cls, 0, -1);
-	    	$className  = substr($className, 0, -1);
+	    	//AutoLoad seems to get odd clasname sometimes that ends with _
+  			return;
 	    }
 	    if(class_exists($className)){
 	    	return;
@@ -158,6 +158,9 @@ class SendPress{
 			SendPress_Ajax_Loader::init();
 			SendPress_Signup_Shortcode::init();
 			SendPress_Sender::init();
+			if(defined('WP_ADMIN') && WP_ADMIN == true){
+				$sendpress_screen_options = new SendPress_Screen_Options();
+			}
 		
 			$this->add_custom_post();
 			
@@ -500,6 +503,7 @@ class SendPress{
 		if( SendPress_Option::get('cron_send_count') == false ){
 			SendPress_Option::set('cron_send_count','100');
 		}
+
 		//SendPress_Option::set('allow_tracking', '');
 		//wp_clear_scheduled_hook( 'sendpress_cron_action' );
 		// Schedule an action if it's not already scheduled
@@ -541,7 +545,13 @@ class SendPress{
 	   		$this->_current_view = isset( $_GET['view'] ) ? $_GET['view'] : '' ;
 	   		
 	   		
-			wp_enqueue_script(array('jquery', 'editor', 'thickbox', 'media-upload'));
+
+
+			$view_class = $this->get_view_class($this->_page, $this->_current_view);
+			$view_class = NEW $view_class;
+			$view_class->admin_init();
+
+			wp_enqueue_script(array('jquery', 'editor', 'thickbox', 'media-upload','dashboard'));
 			wp_enqueue_style('thickbox');
 			wp_register_script('spfarb', SENDPRESS_URL .'js/farbtastic.js' ,'', SENDPRESS_VERSION );
 			wp_enqueue_script( 'spfarb' );
@@ -563,7 +573,7 @@ class SendPress{
 
 	    	$view_class = $this->get_view_class($this->_page, $this->_current_view);
 	    		
-	    	if ( !empty($_POST) && check_admin_referer($this->_nonce_value) ){
+	    	if ( !empty($_POST) &&  (isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'],$this->_nonce_value) )   ){
 
 	    		
 	    		if( method_exists( $view_class , 'save' ) ){
@@ -760,7 +770,6 @@ class SendPress{
 	    add_submenu_page('sp-overview', __('Queue','sendpress'), __('Queue','sendpress'), $role, 'sp-queue', array(&$this,'render_view'));
 	   	add_submenu_page('sp-overview', __('Settings','sendpress'), __('Settings','sendpress'), $role, 'sp-settings', array(&$this,'render_view'));
 	  
-
 	   	if( defined('WP_DEBUG') && WP_DEBUG ){
 	   		add_submenu_page('sp-overview', __('Add-ons','sendpress'), __('Add-ons','sendpress'), $role, 'sp-pro', array(&$this,'render_view'));
 	   	}
@@ -773,6 +782,7 @@ class SendPress{
 	}
 
 	function render_view(){
+
 		$view_class = $this->get_view_class($this->_page, $this->_current_view);
 		//echo "About to render: $view_class, $this->_page";
 		$view_class = NEW $view_class;

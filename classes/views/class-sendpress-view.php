@@ -32,6 +32,7 @@ class SendPress_View {
 		}
 	}
 	
+	function admin_init(){}
 
     /**
      * redirect redirects to the view called on.
@@ -253,8 +254,8 @@ class SendPress_View {
 		
 	}
 
-}
 
+}
 do_action('sendpress_view_class_loaded');
 
 

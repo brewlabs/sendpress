@@ -97,9 +97,11 @@ class SendPress_Emails_Table extends WP_List_Table {
                 $a = '<div class="inline-buttons">';
                 $a .= '<a class="btn view-btn" title="'.  get_post_meta($item->ID, "_sendpress_subject", true) . '" href="'. get_permalink( $item->ID  ). '"><i class="icon-eye-open "></i> View</a> ';
                 $a .= '<a class="btn " href="?page='.$_REQUEST['page'].'&view=style&emailID='. $item->ID .'"><i class="icon-edit"></i> Edit</a> ';
+                $a = apply_filters('sendpress_email_table', $a, $item);
                 if( SendPress_View_Emails_Send::access() ) { 
                 $a .= '<a class="btn  btn-primary " href="'. SendPress_View_Emails_Send::link().'&emailID='. $item->ID .'"><i class="icon-envelope icon-white"></i> Send</a>';
                 }
+
                 $a .= '</div>';
                 return $a;
             default:
@@ -301,6 +303,9 @@ class SendPress_Emails_Table extends WP_List_Table {
             'post_type' => $this->_sendpress->_email_post_type ,
             'post_status' => array('publish','draft')
             );
+         
+
+
             $query = new WP_Query( $args );
             /*
             echo '<pre>';
@@ -308,34 +313,47 @@ class SendPress_Emails_Table extends WP_List_Table {
             echo '</pre>';
             */
             $totalitems = $query->found_posts;
-            $perpage = 10;
+           // get the current user ID
+            $user = get_current_user_id();
+            // get the current admin screen
+            $screen = get_current_screen();
+            // retrieve the "per_page" option
+            $screen_option = $screen->get_option('per_page', 'option');
+            // retrieve the value of the option stored for the current user
+            $per_page = get_user_meta($user, $screen_option, true);
+
+            if ( empty ( $per_page) || $per_page < 1 ) {
+                // get the default value if none is set
+                $per_page = $screen->get_option( 'per_page', 'default' );
+            }
             //Which page is this?
             $paged = !empty($_GET["paged"]) ? mysql_real_escape_string($_GET["paged"]) : '';
             //Page Number
             if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
             //How many pages do we have in total?
-            $totalpages = ceil($totalitems/$perpage);
+            $totalpages = ceil($totalitems/$per_page);
             //adjust the query to take pagination into account
-            if(!empty($paged) && !empty($perpage)){
-                $offset=($paged-1)*$perpage;
-               // $query.=' LIMIT '.(int)$offset.','.(int)$perpage;
+            if(!empty($paged) && !empty($per_page)){
+                $offset=($paged-1)*$per_page;
+               // $query.=' LIMIT '.(int)$offset.','.(int)$per_page;
             }
 
     /* -- Register the pagination -- */
         $this->set_pagination_args( array(
             "total_items" => $totalitems,
             "total_pages" => $totalpages,
-            "per_page" => $perpage,
+            "per_page" => $per_page,
         ) );
             
 
             $args = array(
             'post_type' => $this->_sendpress->_email_post_type ,
             'post_status' => array('publish','draft'),
-            'posts_per_page' => $perpage,
+            'posts_per_page' => $per_page,
             'paged'=> $paged,
             );
-
+            if ( !empty( $_GET['s'] ) )
+                $args['s'] = $_GET['s'];
             if(isset($_GET['order'])){
                 $args['order'] = $_GET['order'];
             }
