@@ -547,14 +547,18 @@ class SendPress{
 	   		
 
 
-			$view_class = $this->get_view_class($this->_page, $this->_current_view);
-			$view_class = NEW $view_class;
-			$view_class->admin_init();
+			
 
 			wp_enqueue_script(array('jquery', 'editor', 'thickbox', 'media-upload','dashboard'));
 			wp_enqueue_style('thickbox');
 			wp_register_script('spfarb', SENDPRESS_URL .'js/farbtastic.js' ,'', SENDPRESS_VERSION );
 			wp_enqueue_script( 'spfarb' );
+	
+			wp_register_script('sendpress-flot', SENDPRESS_URL .'js/flot/jquery.flot.js' ,'', SENDPRESS_VERSION );
+			wp_register_script('sendpress-flot-selection', SENDPRESS_URL .'js/flot/jquery.flot.selection.js' ,'', SENDPRESS_VERSION );
+			wp_register_script('sendpress-flot-resize', SENDPRESS_URL .'js/flot/jquery.flot.resize.js' ,'', SENDPRESS_VERSION );
+		
+
 			wp_register_script('sendpress-admin-js', SENDPRESS_URL .'js/sendpress.js','', SENDPRESS_VERSION );
 			wp_enqueue_script('sendpress-admin-js');
 			wp_register_script('sendpress_bootstrap', SENDPRESS_URL .'bootstrap/js/bootstrap.min.js' ,'',SENDPRESS_VERSION);
@@ -570,7 +574,9 @@ class SendPress{
     		wp_enqueue_style( 'sendpress_css_base' );
 
 	    	do_action('sendpress_admin_scripts');
-
+	    	$view_class = $this->get_view_class($this->_page, $this->_current_view);
+			$view_class = NEW $view_class;
+			$view_class->admin_init();	
 	    	$view_class = $this->get_view_class($this->_page, $this->_current_view);
 	    		
 	    	if ( !empty($_POST) &&  (isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'],$this->_nonce_value) )   ){

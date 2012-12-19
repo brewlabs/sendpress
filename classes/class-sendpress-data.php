@@ -71,6 +71,42 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
+	function get_clicks_and_opens($rid){
+		global $wpdb;
+		$table = self::subscriber_event_table();
+		$result = $wpdb->get_results("SELECT COUNT(eventID) as count,date(eventdate) as day FROM $table WHERE reportID = '$rid' GROUP BY date(eventdate) ORDER BY eventID DESC ;");
+		return $result;
+	}
+
+	function get_clicks_count($rid){
+		global $wpdb;
+		$table = self::subscriber_event_table();
+		$result = $wpdb->get_results("SELECT COUNT(eventID) as count,date(eventdate) as day FROM $table WHERE reportID = '$rid' AND type = 'click' GROUP BY date(eventdate) ORDER BY eventID DESC ;");
+		return $result;
+	}
+
+	function get_opens_count($rid){
+		global $wpdb;
+		$table = self::subscriber_event_table();
+		$result = $wpdb->get_results("SELECT COUNT(eventID) as count,date(eventdate) as day FROM $table WHERE reportID = '$rid' AND type = 'open' GROUP BY date(eventdate) ORDER BY eventID DESC ;");
+		return $result;
+	}
+
+	function get_opens_unique_count($rid){
+		global $wpdb;
+		$table = self::subscriber_event_table();
+		$result = $wpdb->get_results("SELECT COUNT(t.eventID) as count,date(t.eventdate) as day FROM  (Select eventdate,eventID FROM $table  WHERE  reportID = '$rid' AND type = 'open' GROUP BY subscriberID) as t GROUP BY date(eventdate) ORDER BY eventID DESC ");
+		return $result;
+	}
+
+	function get_clicks_unique_count($rid){
+		global $wpdb;
+		$table = self::subscriber_event_table();
+		$result = $wpdb->get_results("SELECT COUNT(t.eventID) as count,date(t.eventdate) as day FROM  (Select eventdate,eventID FROM $table  WHERE  reportID = '$rid' AND type = 'click' GROUP BY subscriberID) as t GROUP BY date(eventdate) ORDER BY eventID DESC ");
+		return $result;
+	}
+
+
 
 	/********************* END REPORTS FUNCTIONS **************************/
 
