@@ -7,6 +7,24 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Subscribers_Subscribers extends SendPress_View_Subscribers {
 	
+	function admin_init(){
+		add_action('load-sendpress_page_sp-subscribers',array($this,'screen_options'));
+	}
+
+	function screen_options(){
+
+		$screen = get_current_screen();
+	 	
+	 
+		$args = array(
+			'label' => __('Subscribers per page', 'sendpress'),
+			'default' => 10,
+			'option' => 'sendpress_subscribers_per_page'
+		);
+		add_screen_option( 'per_page', $args );
+	}
+	
+
 	function remove_subscribers( $get, $sp ){
 		SendPress_Data::remove_all_subscribers( $get['listID'] );
 		SendPress_View_Subscribers_Subscribers::redirect( array('listID'=> $get['listID'] ));

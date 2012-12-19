@@ -7,6 +7,21 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class SendPress_View_Subscribers extends SendPress_View {
+	function admin_init(){
+		add_action('load-sendpress_page_sp-subscribers',array($this,'screen_options'));
+	}
+
+	function screen_options(){
+
+		$screen = get_current_screen();
+	 	
+		$args = array(
+			'label' => __('Lists per page', 'sendpress'),
+			'default' => 10,
+			'option' => 'sendpress_lists_per_page'
+		);
+		add_screen_option( 'per_page', $args );
+	}
 	
 	function html($sp) {
 	

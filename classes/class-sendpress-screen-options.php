@@ -17,6 +17,9 @@ class SendPress_Screen_Options {
 	function set_screen_options($status, $option, $value) {
  		if ( 'sendpress_emails_per_page' == $option ) return $value;
  		if ( 'sendpress_reports_per_page' == $option ) return $value;
+ 		if ( 'sendpress_lists_per_page' == $option ) return $value;
+ 		if ( 'sendpress_subscribers_per_page' == $option ) return $value;
+ 		if ( 'sendpress_queue_per_page' == $option ) return $value;		
 	}
 
 }

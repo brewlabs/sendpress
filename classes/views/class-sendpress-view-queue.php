@@ -13,6 +13,24 @@ if ( !defined('SENDPRESS_VERSION') ) {
 *
 */
 class SendPress_View_Queue extends SendPress_View {
+
+
+	function admin_init(){
+		add_action('load-sendpress_page_sp-queue',array($this,'screen_options'));
+	}
+
+	function screen_options(){
+
+		$screen = get_current_screen();
+	 	
+	 
+		$args = array(
+			'label' => __('Emails per page', 'sendpress'),
+			'default' => 10,
+			'option' => 'sendpress_queue_per_page'
+		);
+		add_screen_option( 'per_page', $args );
+	}
 	
 	function empty_queue( $get, $sp ){
 		SendPress_Data::delete_queue_emails();

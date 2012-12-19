@@ -286,24 +286,36 @@ class SendPress_Queue_Table extends WP_List_Table {
         //Number of elements in your table?
         $totalitems = $wpdb->query($query); //return the total number of affected rows
         //How many to display per page?
-        $perpage = 15;
+        // get the current user ID
+            $user = get_current_user_id();
+            // get the current admin screen
+            $screen = get_current_screen();
+            // retrieve the "per_page" option
+            $screen_option = $screen->get_option('per_page', 'option');
+            // retrieve the value of the option stored for the current user
+            $per_page = get_user_meta($user, $screen_option, true);
+
+            if ( empty ( $per_page) || $per_page < 1 ) {
+                // get the default value if none is set
+                $per_page = $screen->get_option( 'per_page', 'default' );
+            }
         //Which page is this?
         $paged = !empty($_GET["paged"]) ? mysql_real_escape_string($_GET["paged"]) : '';
         //Page Number
         if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
         //How many pages do we have in total?
-        $totalpages = ceil($totalitems/$perpage);
+        $totalpages = ceil($totalitems/$per_page);
         //adjust the query to take pagination into account
-        if(!empty($paged) && !empty($perpage)){
-            $offset=($paged-1)*$perpage;
-            $query.=' LIMIT '.(int)$offset.','.(int)$perpage;
+        if(!empty($paged) && !empty($per_page)){
+            $offset=($paged-1)*$per_page;
+            $query.=' LIMIT '.(int)$offset.','.(int)$per_page;
         }
 
     /* -- Register the pagination -- */
         $this->set_pagination_args( array(
             "total_items" => $totalitems,
             "total_pages" => $totalpages,
-            "per_page" => $perpage,
+            "per_page" => $per_page,
         ) );
         //The pagination links are automatically built according to those parameters
 

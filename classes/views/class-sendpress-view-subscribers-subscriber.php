@@ -7,6 +7,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
+
 	
 	function html($sp) {
 		?>
