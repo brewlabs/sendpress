@@ -6,6 +6,9 @@ a.btn:focus{
 #poststuff h2{
     margin: 0 ;
 }
+p{
+    font-size: 14px;
+}
 .spwrap h2{
     font-size: 20px;
     line-height: 22px;
