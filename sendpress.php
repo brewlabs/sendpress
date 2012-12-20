@@ -24,15 +24,13 @@ define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
 
 if(!defined('SENDPRESS_STORE_URL') ){
 	$SP_Store_URL = 'http://sendpress.com';
-	$SP_Pro_Plugin_Name = 'SendPress Pro';
 
 	if( defined('WP_DEBUG') && WP_DEBUG ){
 		$SP_Store_URL = 'http://sendpress.com';
-		$SP_Pro_Plugin_Name = 'SendPress Pro';
 	}
 
 	define( 'SENDPRESS_STORE_URL', $SP_Store_URL );
-	define( 'SENDPRESS_PRO_NAME', $SP_Pro_Plugin_Name );
+	define( 'SENDPRESS_PRO_NAME', 'SendPress Pro' );
 }
 
 
