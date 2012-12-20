@@ -21,16 +21,19 @@ define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
 
-$EDD_Store_URL = 'http://sendpress.com';
-$EDD_Pro_Plugin_Name = 'SendPress Pro';
 
-if( defined('WP_DEBUG') && WP_DEBUG ){
-	$EDD_Store_URL = 'http://sendpress.com';
-	$EDD_Pro_Plugin_Name = 'SendPress Pro';
+if(!defined('SENDPRESS_STORE_URL') ){
+	$SP_Store_URL = 'http://sendpress.com';
+	$SP_Pro_Plugin_Name = 'SendPress Pro';
+
+	if( defined('WP_DEBUG') && WP_DEBUG ){
+		$SP_Store_URL = 'http://sendpress.com';
+		$SP_Pro_Plugin_Name = 'SendPress Pro';
+	}
+
+	define( 'SENDPRESS_STORE_URL', $SP_Store_URL );
+	define( 'SENDPRESS_PRO_NAME', $SP_Pro_Plugin_Name );
 }
-
-define( 'EDD_STORE_URL', $EDD_Store_URL );
-define( 'EDD_SP_PRO', $EDD_Pro_Plugin_Name );
 
 
 /*
@@ -606,20 +609,26 @@ class SendPress{
 			$view_class->admin_init();	
 	    	$view_class = $this->get_view_class($this->_page, $this->_current_view);
 	    		
+	    	$this->_current_action = isset( $_GET['action'] ) ? $_GET['action'] : '' ;
+		    $this->_current_action = isset( $_GET['action2'] ) ? $_GET['action2'] : $this->_current_action ;
+		    $this->_current_action = isset( $_POST['action2'] ) ? $_POST['action2'] : $this->_current_action ;
+		    $this->_current_action = isset( $_POST['action'] ) && $_POST['action'] !== '-1' ? $_POST['action'] : $this->_current_action ;
+		    $method = str_replace("-","_", $this->_current_action);
+	    	$method = str_replace(" ","_",$method);
+	    		
+
 	    	if ( !empty($_POST) &&  (isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'],$this->_nonce_value) )   ){
 
-	    		
-	    		if( method_exists( $view_class , 'save' ) ){
+	    		if( method_exists( $view_class , $method )  ){
+	    			$save_class = new $view_class;
+	    			$save_class->$method();
+	    		} elseif( method_exists( $view_class , 'save' )  ) {
 	    			//$view_class::save($this);
 	    			$save_class = new $view_class;
 	    			$save_class->save( $_POST, $this );
 	    		} else {
 
-		    	$this->_current_action = isset( $_GET['action'] ) ? $_GET['action'] : '' ;
-		    	$this->_current_action = isset( $_GET['action2'] ) ? $_GET['action2'] : $this->_current_action ;
-		    	$this->_current_action = isset( $_POST['action2'] ) ? $_POST['action2'] : $this->_current_action ;
-		    	$this->_current_action = isset( $_POST['action'] ) && $_POST['action'] !== '-1' ? $_POST['action'] : $this->_current_action ;
-
+		    	
 		    	require_once( SENDPRESS_PATH . 'inc/helpers/sendpress-post-actions.php' );
 		    	
 		    	}
@@ -629,7 +638,7 @@ class SendPress{
 		    	$this->_current_action = $_GET['action'];
 		    	$this->_current_action = ( isset( $_GET['action2'] ) && $_GET['action2'] !== '-1')  ? $_GET['action2'] : $this->_current_action ;
 		    	$method = str_replace("-","_", $this->_current_action);
-	    			$method = str_replace(" ","_",$method);
+	    		$method = str_replace(" ","_",$method);
 	    		if( method_exists( $view_class , $method ) ){
 	    			$save_class = new $view_class;
 
