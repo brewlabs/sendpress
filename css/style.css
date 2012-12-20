@@ -877,6 +877,11 @@ width: 150px;
             bottom:auto;
             top:15px;
         }
+        .sendpress-module.pro-module .description{
+            margin-top:5px;
+           
+            margin-bottom:10px;
+        }
 
 
 
@@ -1380,6 +1385,9 @@ width: 150px;
 .navbar-inner{
     padding: 0px;
 }
+
+
+
 
 @media (max-width: 1120px) { 
     .nav-sp{

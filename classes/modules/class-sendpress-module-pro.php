@@ -9,6 +9,10 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_Module_Pro extends SendPress_Module{
 	
 	function html($sp){
+		$key_active = false;
+		if( SendPress_Option::get('api_key_state') === 'active' ){
+			$key_active = true;
+		}
 	?>
 		<h4>SendPress Pro</h4>
 		<form method="post" id="post">
@@ -25,12 +29,16 @@ class SendPress_Module_Pro extends SendPress_Module{
 			
 			<h5>Enable Updates and Support</h5>
 			<label for="api_key"><?php _e('API Key','sendpress'); ?></label>
-			<input name="api_key" type="text" id="api_key" value="<?php echo SendPress_Option::get('api_key'); ?>" class="regular-text">
-			<a href="#" class="save-api-key btn-primary btn-small btn">Save</a>
+			<input <?php if($key_active){ echo 'disabled'; } ?> name="api_key" type="text" id="api_key" value="<?php echo SendPress_Option::get('api_key'); ?>" class="regular-text">
+			<?php if( !$key_active ): ?>
+				<a href="#" class="save-api-key btn-primary btn-small btn">Activate</a>
+			<?php else: ?>
+				<a href="#" class="save-api-key btn-small btn">Deactivate</a>
+			<?php endif; ?>
 			<div class="description">
-				Enter your API key to enable premium support and Pro updates. get your API key <a href="#">here</a>.
+				Enter your API key to enable premium support and automatic updates. Get your API key by logging into <a href="http://sednpress.com">SendPress.com</a>.
 			</div>
-			<input class="action" type="hidden" name="action" value="module-save-api-key" />
+			<input class="action" type="hidden" name="action" value="<?php if($key_active){ echo 'module-deactivate-api-key'; }else{ echo 'module-save-api-key'; }?>" />
 			<?php wp_nonce_field($sp->_nonce_value); ?>
 		</form>
 

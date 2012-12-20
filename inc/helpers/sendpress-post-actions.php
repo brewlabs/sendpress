@@ -500,8 +500,57 @@ switch ( $this->_current_action ) {
     break;
 
     case 'module-save-api-key':
-        SendPress_Option::set('api_key',$_POST['api_key']);
+
+        $license = $_POST['api_key'];
+
+        $api_params = array( 
+            'edd_action'=> 'activate_license', 
+            'license'   => $license, 
+            'item_name' => urlencode( EDD_SP_PRO ) // the name of our product in EDD
+        );
         
+        // Call the custom API.
+        $response = wp_remote_get( add_query_arg( $api_params, EDD_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
+
+        // make sure the response came back okay
+        if ( is_wp_error( $response ) )
+            return false;
+
+        // decode the license data
+        $license_data = json_decode( wp_remote_retrieve_body( $response ) );
+
+        SendPress_Option::set('api_key',$license);
+        SendPress_Option::set('api_key_state',$license_data->license);
+        
+    break;
+
+    case 'module-deactivate-api-key':
+
+        $license = SendPress_Option::get('api_key');
+        // data to send in our API request
+        $api_params = array( 
+            'edd_action'=> 'deactivate_license', 
+            'license'   => $license, 
+            'item_name' => urlencode( EDD_SP_PRO ) // the name of our product in EDD
+        );
+        
+        // Call the custom API.
+        $response = wp_remote_get( add_query_arg( $api_params, EDD_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
+
+        // make sure the response came back okay
+        if ( is_wp_error( $response ) )
+            return false;
+
+        // decode the license data
+        $license_data = json_decode( wp_remote_retrieve_body( $response ) );
+        
+        // $license_data->license will be either "deactivated" or "failed"
+        if( $license_data->license == 'deactivated' ){
+            SendPress_Option::set('api_key','');
+            SendPress_Option::set('api_key_state',$license_data->license);
+            //need to check what the value is on page load and display a message if its failed.
+        }
+
     break;
 
 }

@@ -21,7 +21,16 @@ define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
 
+$EDD_Store_URL = 'http://sendpress.com';
+$EDD_Pro_Plugin_Name = 'SendPress Pro';
 
+if( defined('WP_DEBUG') && WP_DEBUG ){
+	$EDD_Store_URL = 'http://sendpress.com';
+	$EDD_Pro_Plugin_Name = 'SendPress Pro';
+}
+
+define( 'EDD_STORE_URL', $EDD_Store_URL );
+define( 'EDD_SP_PRO', $EDD_Pro_Plugin_Name );
 
 
 /*
@@ -175,6 +184,7 @@ class SendPress{
 			if( is_admin() ){
 				$this->maybe_upgrade();
 				$this->ready_for_sending();
+				$this->check_api_key();
 			
 				add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 				add_action( 'admin_init', array( $this, 'admin_init' ) );
@@ -233,6 +243,23 @@ class SendPress{
 			printf(__('Before sending any emails please setup your <a href="%1s">information</a>.','sendpress'), SendPress_View_Settings::link() );
 	    echo '</div>';
 		}
+		if( in_array('api_key_failed', $this->_messages) ){
+		echo '<div class="alert alert-error">';
+			echo "<b>";
+			_e('Alert','sendpress');
+			echo "</b>&nbsp;";
+			printf(__('There is something wrong with your API Key for SendPress Pro!','sendpress') );
+	    echo '</div>';
+		}
+	}
+
+	function check_api_key(){
+
+		$state = SendPress_Option::get('api_key_state');
+		if( $state === 'failed' ){
+			$this->show_message('api_key_failed');
+		}
+
 	}
 
     /**
