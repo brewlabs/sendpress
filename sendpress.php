@@ -26,7 +26,7 @@ if(!defined('SENDPRESS_STORE_URL') ){
 	$SP_Store_URL = 'http://sendpress.com';
 
 	if( defined('WP_DEBUG') && WP_DEBUG ){
-		$SP_Store_URL = 'http://sendpress.com';
+		$SP_Store_URL = 'http://testing.sendpress.com/3.4.2';
 	}
 
 	define( 'SENDPRESS_STORE_URL', $SP_Store_URL );

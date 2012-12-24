@@ -10,7 +10,6 @@ class SendPress_View_Pro extends SendPress_View{
 
 	
 	 function module_save_api_key(){
-
         $license = $_POST['api_key'];
 
         $api_params = array( 
@@ -18,7 +17,7 @@ class SendPress_View_Pro extends SendPress_View{
             'license'   => $license, 
             'item_name' => urlencode( SENDPRESS_PRO_NAME ) // the name of our product in EDD
         );
-        
+
         // Call the custom API.
         $response = wp_remote_get( add_query_arg( $api_params, SENDPRESS_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
 
@@ -54,7 +53,7 @@ class SendPress_View_Pro extends SendPress_View{
 
         // decode the license data
         $license_data = json_decode( wp_remote_retrieve_body( $response ) );
-        
+
         // $license_data->license will be either "deactivated" or "failed"
         if( $license_data->license == 'deactivated' ){
             SendPress_Option::set('api_key','');
@@ -74,12 +73,11 @@ class SendPress_View_Pro extends SendPress_View{
                 //make sure the plugin loads from sendpress pro
                 $pro_options[$path] = true;
                 SendPress_Option::set('pro_plugins',$pro_options); 
-                break;
             }
+        }else{
+            activate_plugin($path);
         }
-        
-        activate_plugin($path);
-        
+
     }
 
     function module_deactivate_sendpress_pro(){
@@ -94,16 +92,13 @@ class SendPress_View_Pro extends SendPress_View{
                 $pro_options[$path] = false;
 
                 SendPress_Option::set('pro_plugins',$pro_options); 
-                break;
                 
             }
+        }else{
+            deactivate_plugins($path);
         }
 
-        deactivate_plugins($path);
     }
-
-
-
 
 	
 	function html($sp){

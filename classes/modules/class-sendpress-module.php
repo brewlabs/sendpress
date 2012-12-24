@@ -88,6 +88,10 @@ class SendPress_Module {
 				$pro_options = SendPress_Option::get('pro_plugins');
 			}
 
+			if(!array_key_exists($path, $pro_options)){
+				!$pro_options[$path] = false;
+			}
+
 			if( !$pro_options[$path] ){
 				$button['class'] = 'module-activate-plugin btn-success btn-activate btn';
 				//$button['id'] = 'module-activate-plugin';

@@ -9,10 +9,18 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_Module_Pro extends SendPress_Module{
 	
 	function html($sp){
+		//for testing only
+		//SendPress_Option::set('api_key','');
+        //SendPress_Option::set('api_key_state','');
+
 		$key_active = false;
-		if( SendPress_Option::get('api_key_state') === 'active' ){
+		if( SendPress_Option::get('api_key_state') === 'valid' ){
 			$key_active = true;
 		}
+		SendPress_Helper::log('API Key = '.SendPress_Option::get('api_key'));
+		SendPress_Helper::log('API State = '.SendPress_Option::get('api_key_state'));
+		//$key_active = true;
+		
 	?>
 		<h4>SendPress Pro</h4>
 		<form method="post" id="post">
@@ -29,11 +37,14 @@ class SendPress_Module_Pro extends SendPress_Module{
 			
 			<h5>Enable Updates and Support</h5>
 			<label for="api_key"><?php _e('API Key','sendpress'); ?></label>
+			<?php if($key_active){
+				echo '<span class="icon-ok-sign"></span>';
+			}?>
 			<input <?php if($key_active){ echo 'disabled'; } ?> name="api_key" type="text" id="api_key" value="<?php echo SendPress_Option::get('api_key'); ?>" class="regular-text">
 			<?php if( !$key_active ): ?>
-				<a href="#" class="save-api-key btn-primary btn-small btn">Activate</a>
+				<a href="#" class="save-api-key btn-primary btn-small btn">Register Key</a>
 			<?php else: ?>
-				<a href="#" class="save-api-key btn-small btn">Deactivate</a>
+				<a href="#" class="save-api-key btn-small btn">Remove Key</a>
 			<?php endif; ?>
 			<div class="description">
 				Enter your API key to enable premium support and automatic updates. Get your API key by logging into <a href="http://sednpress.com">SendPress.com</a>.
