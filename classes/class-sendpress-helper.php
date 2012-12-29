@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Helper {
 
-	function log($args) {
+	function log($args, $tofile = false) {
 
 		 if( defined('WP_DEBUG') && WP_DEBUG === true ){
 
@@ -35,8 +35,13 @@ class SendPress_Helper {
 					}
 				}
 
-				$log_message .= '\n';
-				$this->append_log($log_message);
+				if($tofile){
+					$log_message .= '\n';
+					SELF::append_log($log_message);
+				}else{
+					error_log($log_message);
+				}
+				
 			}
 		}
 		return $args;

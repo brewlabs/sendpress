@@ -26,7 +26,7 @@ if(!defined('SENDPRESS_STORE_URL') ){
 	$SP_Store_URL = 'http://sendpress.com';
 
 	if( defined('WP_DEBUG') && WP_DEBUG ){
-		$SP_Store_URL = 'http://sendpress.com';
+		$SP_Store_URL = 'http://testing.sendpress.com/3.4.2';
 	}
 
 	define( 'SENDPRESS_STORE_URL', $SP_Store_URL );
@@ -163,11 +163,11 @@ class SendPress{
 		return self::$instance;
 	}
 
-
 	function init() {
 			SendPress_Ajax_Loader::init();
 			SendPress_Signup_Shortcode::init();
 			SendPress_Sender::init();
+			SendPress_Pro_Installer::init();
 			if(defined('WP_ADMIN') && WP_ADMIN == true){
 				$sendpress_screen_options = new SendPress_Screen_Options();
 			}

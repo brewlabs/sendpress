@@ -883,6 +883,10 @@ width: 150px;
             margin-bottom:10px;
         }
 
+        .sendpress-module.pro-module input.regular-text{
+            width:250px !important;
+        }
+
 
 
 
