@@ -63,6 +63,33 @@ class SendPress_View_Pro extends SendPress_View{
 
     }
 
+    function module_check_api_key(){
+
+        $license = SendPress_Option::get('api_key');
+        // data to send in our API request
+        $api_params = array( 
+            'edd_action'=> 'get_version', 
+            'license'   => $license, 
+            'name' => urlencode( SENDPRESS_PRO_NAME ) // the name of our product in EDD
+        );
+        
+        // Call the custom API.
+        $response = wp_remote_get( add_query_arg( $api_params, SENDPRESS_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
+
+        // make sure the response came back okay
+        if ( is_wp_error( $response ) )
+            return false;
+
+        // decode the license data
+        $license_data = json_decode( wp_remote_retrieve_body( $response ) );
+
+        // $license_data->license will be either "deactivated" or "failed"
+         echo '<pre>';
+        print_r($license_data);
+        echo '</pre>';
+
+    }
+
 
     function module_activate_sendpress_pro(){
         $path = $_POST['plugin_path'];

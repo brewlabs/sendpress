@@ -33,6 +33,17 @@ class SendPress_Module_Pro extends SendPress_Module{
 			<?php wp_nonce_field($sp->_nonce_value); ?>
 		</form>
 
+		<!-- <form method="post" id="post">
+			
+			<h5>Check API</h5>
+			
+				<a href="#" class="save-api-key btn-primary btn-small btn">Check API</a>
+			
+			
+			<input class="action" type="hidden" name="action" value="module-check-api-key" />
+			<?php wp_nonce_field($sp->_nonce_value); ?>
+		</form> -->
+
 		<form method="post" id="post">
 			
 			<h5>Enable Updates and Support</h5>
@@ -52,7 +63,7 @@ class SendPress_Module_Pro extends SendPress_Module{
 			<input class="action" type="hidden" name="action" value="<?php if($key_active){ echo 'module-deactivate-api-key'; }else{ echo 'module-save-api-key'; }?>" />
 			<?php wp_nonce_field($sp->_nonce_value); ?>
 		</form>
-
+		
 	<?php
 	}
 

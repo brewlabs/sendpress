@@ -66,10 +66,26 @@ class SendPress_Module {
 			if( $this->is_pro_active() ){
 				$btn = $this->get_button($plugin_path,true);
 			}else{
-				$btn = $this->get_button($plugin_path);
+				if( $this->pro_plugin_state() === 'installable' ){
+					$button = array('class' => 'btn btn-success btn-activate', 'href' => wp_nonce_url(admin_url('update.php?action=install-plugin&plugin=sendpress-pro'), 'install-plugin_sendpress-pro'), 'target' => '', 'text' => 'Install Pro');
+
+					$btn = $this->build_button($button);
+				}else{
+					$btn = $this->get_button($plugin_path);
+				}
 			}
 		}else{
-			$btn = $this->get_button($plugin_path);
+			
+			switch( $this->pro_plugin_state() ){
+				case 'installable':
+					$button = array('class' => 'btn btn-success btn-activate', 'href' => wp_nonce_url(admin_url('update.php?action=install-plugin&plugin=sendpress-pro'), 'install-plugin_sendpress-pro'), 'target' => '', 'text' => 'Install');
+
+					$btn = $this->build_button($button);
+					break;
+				default:
+					$btn = $this->get_button($plugin_path);
+					break;
+			}
 		}
 
 		echo '<div class="inline-buttons">'.$btn.'</div>';
@@ -144,6 +160,22 @@ class SendPress_Module {
 			return true;
 		}
 		return false;
+	}
+
+	function pro_plugin_state(){
+		$ret = 'not-installed';
+		if( file_exists(WP_PLUGIN_DIR.'/sendpress-pro/sendpress-pro.php') ){
+			$ret = 'installed';
+			if( is_plugin_active('sendpress-pro/sendpress-pro.php') ){
+				$ret = 'activated';
+			}
+		}
+
+		if( $ret === 'not-installed' && SendPress_Option::get('api_key_state') === 'valid'  ){
+			$ret = 'installable';
+		}
+
+		return $ret;
 	}
 
 	function is_visible() {

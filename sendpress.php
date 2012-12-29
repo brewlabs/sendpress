@@ -163,11 +163,11 @@ class SendPress{
 		return self::$instance;
 	}
 
-
 	function init() {
 			SendPress_Ajax_Loader::init();
 			SendPress_Signup_Shortcode::init();
 			SendPress_Sender::init();
+			SendPress_Pro_Installer::init();
 			if(defined('WP_ADMIN') && WP_ADMIN == true){
 				$sendpress_screen_options = new SendPress_Screen_Options();
 			}
