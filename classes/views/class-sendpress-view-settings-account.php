@@ -12,6 +12,33 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 	
 	function html($sp) {?>
 <form method="post" id="post">
+You are currently sending emails with: <strong>Your Website</strong>
+<div class="tabbable tabs-left">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">Your Website</a></li>
+    <li><a href="#tab2" data-toggle="tab">Gmail</a></li>
+    <li><a href="#tab3" data-toggle="tab">Custom SMTP</a></li>
+    <li><a href="#tab4" data-toggle="tab">SendGrid</a></li>
+    <li><a href="#tab5" data-toggle="tab">DYN</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      <p>I'm in Section 1.</p>
+    </div>
+    <div class="tab-pane" id="tab2">
+      <p>Howdy, I'm in Section 2.</p>
+    </div>
+    <div class="tab-pane" id="tab3">
+      <p>Howdy, I'm in Section 2.</p>
+    </div>
+    <div class="tab-pane" id="tab4">
+      <p>Howdy, I'm in Section 2.</p>
+    </div>
+    <div class="tab-pane" id="tab5">
+      <p>Howdy, I'm in Section 2.</p>
+    </div>
+  </div>
+</div>
 
 <br class="clear">
 <div style="float:right;" >
