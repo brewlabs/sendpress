@@ -1045,7 +1045,12 @@ class SendPress{
 
 	function wpdbQuery($query, $type) {
 		global $wpdb;
-		$result = $wpdb->$type( $query );
+		// eliminate warnings with debug mode
+		if($type == 'prepare'){
+			$result = $wpdb->$type( $query, array() );
+		} else {
+			$result = $wpdb->$type( $query );
+		}
 		return $result;
 	}
 
