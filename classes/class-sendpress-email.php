@@ -87,7 +87,7 @@ class SendPress_Email {
 			    	$this->post_info = get_post( $this->id() );
 				}
 			    $body_html = SendPress_Template::get_instance()->render( $this->post_info->ID, false, false , $this->remove_links() );
-			    set_transient( 'sendpress_report_body_html_'. $this->id(), $body_html );
+			    set_transient( 'sendpress_report_body_html_'. $this->id(), $body_html , 60*60*2 );
 
 			}
 			
@@ -179,7 +179,7 @@ class SendPress_Email {
 			    $email_subject =  $this->post_info->post_title;
 				
 			    $email_subject = SendPress_Template::tag_replace($email_subject);
-				set_transient( 'sendpress_report_subject_'. $this->id(), $email_subject );
+				set_transient( 'sendpress_report_subject_'. $this->id(), $email_subject , 60*60*2);
 			    // Get any existing copy of our transient data
 			}
 			$subscriber = SendPress_Data::get_subscriber($this->subscriber_id());

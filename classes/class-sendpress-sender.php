@@ -112,9 +112,9 @@ class SendPress_Sender_Factory {
 }
 
 
-
+/*
 function _get_widget_id_base($id) {
 	return preg_replace( '/-[0-9]+$/', '', $id );
 }
 
-
+*/
