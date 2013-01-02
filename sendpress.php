@@ -49,7 +49,7 @@ require_once( SENDPRESS_PATH . 'classes/class-file-loader.php' );
 $sp_loader = new File_Loader('SendPress Required Class');
 */
 //require_once( SENDPRESS_PATH . 'classes/selective-loader.php' );
-class SendPress{
+class SendPress {
 
 
 	var $prefix = 'sendpress_';
@@ -196,6 +196,8 @@ class SendPress{
 				add_action( 'sendpress_notices', array( $this,'sendpress_notices') );
 			}
 
+			
+			add_image_size( 'sendpress-max', 600, 99999 );
 			add_filter( 'template_include', array( $this, 'template_include' ) );
 			add_action( 'sendpress_cron_action', array( $this,'sendpress_cron_action_run') );
 			if ( !wp_next_scheduled( 'sendpress_cron_action' ) ) {
@@ -1959,7 +1961,7 @@ class SendPress{
 							'subscriberID' => $email->subscriberID
 						);
 
-						$wpdb->insert( $this->subscriber_open_table(),  $senddata);
+						//$wpdb->insert( $this->subscriber_open_table(),  $senddata);
 						
 					} else {
 						$wpdb->update( $this->queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
@@ -1976,37 +1978,7 @@ class SendPress{
 
 
 
-		/*
-		foreach($emails as $email_single ){
-			//error_log(' Send via cron ');
-			if($this->cron_stop() == false ){
-				//error_log(' really sent ');
-				$result = $this->sp_mail_it( $email_single );
-				if ($result) {
-					$table = $this->queue_table();
-					$wpdb->query( 
-						$wpdb->prepare( 
-							"DELETE FROM $table WHERE id = %d",
-						    $email_single->id  
-					    )
-					);
-					$senddata = array(
-						'sendat' => date('Y-m-d H:i:s'),
-						'reportID' => $email_single->emailID,
-						'subscriberID' => $email_single->subscriberID
-					);
-
-					$wpdb->insert( $this->subscriber_open_table(),  $senddata);
-					
-				} else {
-					$wpdb->update( $this->queue_table() , array('attempts'=>$email_single->attempts+1,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email_single->id ));
-				}
-			} else {
-				//error_log('Get out');
-				break;
-			}	
-		}
-		*/
+		
 	}
 
 	function send_single_from_queue(){
@@ -2037,7 +2009,7 @@ class SendPress{
 							'subscriberID' => $email->subscriberID
 						);
 
-						$wpdb->insert( $this->subscriber_open_table(),  $senddata);
+						//$wpdb->insert( $this->subscriber_open_table(),  $senddata);
 						$count++;
 					} else {
 						$wpdb->update( $this->queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
@@ -2053,39 +2025,6 @@ class SendPress{
 
 
 
-		/*
-
-		foreach($emails as $email_single ){
-			$result = $this->sp_mail_it( $email_single );
-			if ($result) {
-				$table = $this->queue_table();
-				$wpdb->query( 
-					$wpdb->prepare( 
-						"DELETE FROM $table WHERE id = %d",
-					    $email_single->id  
-				    )
-				);
-				$senddata = array(
-					'sendat' => date('Y-m-d H:i:s'),
-					'reportID' => $email_single->emailID,
-					'subscriberID' => $email_single->subscriberID
-				);
-
-				$wpdb->insert( $this->subscriber_open_table(),  $senddata);
-				$count++;
-			} else {
-				$wpdb->update( $this->queue_table() , array('attempts'=>$email_single->attempts+1,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email_single->id ));
-				
-			}
-			$sending_method  = SendPress_Option::get('sendmethod');	
-			if( $sending_method  == 'gmail' ){
-				sleep(1);
-			}
-
-
-		
-
-		}*/
 		return array('attempted'=> $attempts,'sent'=>$count);
 	}
 

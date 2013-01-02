@@ -11,40 +11,42 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Settings_Account extends SendPress_View_Settings {
 	
 	function html($sp) {?>
-<form method="post" id="post">
-You are currently sending emails with: <strong>Your Website</strong>
-<div class="tabbable tabs-left">
-  <ul class="nav nav-tabs">
-    <li class="active"><a href="#tab1" data-toggle="tab">Your Website</a></li>
-    <li><a href="#tab2" data-toggle="tab">Gmail</a></li>
-    <li><a href="#tab3" data-toggle="tab">Custom SMTP</a></li>
-    <li><a href="#tab4" data-toggle="tab">SendGrid</a></li>
-    <li><a href="#tab5" data-toggle="tab">DYN</a></li>
-  </ul>
-  <div class="tab-content">
-    <div class="tab-pane active" id="tab1">
-      <p>I'm in Section 1.</p>
-    </div>
-    <div class="tab-pane" id="tab2">
-      <p>Howdy, I'm in Section 2.</p>
-    </div>
-    <div class="tab-pane" id="tab3">
-      <p>Howdy, I'm in Section 2.</p>
-    </div>
-    <div class="tab-pane" id="tab4">
-      <p>Howdy, I'm in Section 2.</p>
-    </div>
-    <div class="tab-pane" id="tab5">
-      <p>Howdy, I'm in Section 2.</p>
+
+<div style="float:right;" >
+  <a href="?page=sp-templates&view=account" class="btn btn-large" ><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e('Save','sendpress'); ?></a>
+</div>
+  <h2>Sending Account Setup</h2>
+  <br class="clear">
+  <input type="hidden" name="action" value="account-setup" />
+  You are currently sending emails with: <strong>Your Website</strong>
+  <div class="tabbable tabs-left">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#tab1" data-toggle="tab">Your Website</a></li>
+      <li><a href="#tab2" data-toggle="tab"><i class="icon-ok"></i> Gmail</a></li>
+      <li><a href="#tab3" data-toggle="tab">Custom SMTP</a></li>
+      <li><a href="#tab4" data-toggle="tab">SendGrid</a></li>
+      <li><a href="#tab5" data-toggle="tab">DYN</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab1">
+        <p>I'm in Section 1.</p>
+      </div>
+      <div class="tab-pane" id="tab2">
+        <p>Howdy, I'm in Section 2.</p>
+      </div>
+      <div class="tab-pane" id="tab3">
+        <p>Howdy, I'm in Section 2.</p>
+      </div>
+      <div class="tab-pane" id="tab4">
+        <p>Howdy, I'm in Section 2.</p>
+      </div>
+      <div class="tab-pane" id="tab5">
+        <p>Howdy, I'm in Section 2.</p>
+      </div>
     </div>
   </div>
-</div>
 
-<br class="clear">
-<div style="float:right;" >
-	<a href="?page=sp-templates&view=account" class="btn btn-large" ><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e('Save','sendpress'); ?></a>
-</div>
-<input type="hidden" name="action" value="account-setup" />
+<form method="post" id="post">
 <br class="clear">
 <div class="boxer form-box">
 <div class="sendpress-panel-column-container">
