@@ -62,32 +62,45 @@ class SendPress_Module {
 	}
 
 	function buttons($plugin_path){
-		if( !$this->is_pro($plugin_path) ){
-			if( $this->is_pro_active() ){
-				$btn = $this->get_button($plugin_path,true);
-			}else{
-				if( $this->pro_plugin_state() === 'installable' ){
-					$button = array('class' => 'btn btn-success btn-activate', 'href' => wp_nonce_url(admin_url('update.php?action=install-plugin&plugin=sendpress-pro'), 'install-plugin_sendpress-pro'), 'target' => '', 'text' => 'Install Pro');
-
-					$btn = $this->build_button($button);
-				}else{
-					$btn = $this->get_button($plugin_path);
-				}
-			}
-		}else{
 			
-			switch( $this->pro_plugin_state() ){
-				case 'installable':
-					$button = array('class' => 'btn btn-success btn-activate', 'href' => wp_nonce_url(admin_url('update.php?action=install-plugin&plugin=sendpress-pro'), 'install-plugin_sendpress-pro'), 'target' => '', 'text' => 'Install');
+		switch( $this->pro_plugin_state() ){
+			case 'installable':
+			case 'not-installed':
+			case 'installed':
+				$button = array(
+					'class' => 'btn disabled btn-activate', 
+					'href' => '#',
+					'target' => '', 'text' => 'Activate'
+				);
+				$btn = $this->build_button($button);
+				break;
+			default:
+				$button = array(
+					'class' => 'module-activate-plugin btn-success btn-activate btn', 
+					'href' => '#',
+					'target' => '', 'text' => 'Activate'
+				);
+				//pro is active, check the option to see what the deal is
+				$pro_options = SendPress_Option::get('pro_plugins');
 
-					$btn = $this->build_button($button);
-					break;
-				default:
-					$btn = $this->get_button($plugin_path);
-					break;
-			}
+				if( !empty($pro_options) ){
+
+					if( !array_key_exists($plugin_path, $pro_options)){
+						$pro_options[$plugin_path] = false;
+						SendPress_Option::set('pro_plugins',$pro_options);
+						$pro_options = SendPress_Option::get('pro_plugins');
+					}
+					if( $pro_options[$plugin_path] ){
+						$button['class'] = 'btn module-deactivate-plugin';
+						$button['text'] = 'Deactivate';
+
+					}
+
+				}
+				
+				$btn = $this->build_button($button);
+				break;
 		}
-
 		echo '<div class="inline-buttons">'.$btn.'</div>';
 	}
 
