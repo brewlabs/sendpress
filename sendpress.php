@@ -813,7 +813,7 @@ class SendPress {
 	   	add_submenu_page('sp-overview', __('Settings','sendpress'), __('Settings','sendpress'), $role, 'sp-settings', array(&$this,'render_view'));
 	  
 	   	if( defined('WP_DEBUG') && WP_DEBUG || defined('SENDPRESS_PRO_VERSION') ) {
-	   		add_submenu_page('sp-overview', __('Add-ons','sendpress'), __('Add-ons','sendpress'), $role, 'sp-pro', array(&$this,'render_view'));
+	   		add_submenu_page('sp-overview', __('Pro Add-ons','sendpress'), __('Pro Add-ons','sendpress'), $role, 'sp-pro', array(&$this,'render_view'));
 	   	}
 
 	   	add_submenu_page('sp-overview', __('Help','sendpress'), __('Help','sendpress'), $role, 'sp-help', array(&$this,'render_view'));
@@ -838,7 +838,7 @@ class SendPress {
 		$view_class->add_tab( __('Settings','sendpress'), 'sp-settings', ($this->_page === 'sp-settings') );
 		
 		if( defined('WP_DEBUG') && WP_DEBUG || defined('SENDPRESS_PRO_VERSION') ){
-			$view_class->add_tab( __('Add-ons','sendpress'), 'sp-pro', ($this->_page === 'sp-pro') );
+			$view_class->add_tab( __('Pro Add-ons','sendpress'), 'sp-pro', ($this->_page === 'sp-pro') );
 		}
 		$view_class->add_tab( __('Help','sendpress'), 'sp-help', ($this->_page === 'sp-help') );
 		$view_class->prerender( $this );
