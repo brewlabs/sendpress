@@ -147,7 +147,9 @@ class SendPress_View_Queue extends SendPress_View {
 
 	echo $rate;
 
-	?> seconds.<br>To change these settings go to <a href="<?php echo SendPress_View_Settings_Account::link(); ?>">Settings > Sending Account</a>.
+	?> seconds.<br>
+	You are also limited to <?php echo $hour; ?> emails per hour.<br>
+	To change these settings go to <a href="<?php echo SendPress_View_Settings_Account::link(); ?>">Settings > Sending Account</a>.
   </div>
   <div class="modal-footer">
    <?php _e('If you close this window sending will stop. ','sendpress');?><a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('Close','sendpress');?></a>
