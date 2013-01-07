@@ -134,8 +134,20 @@ class SendPress_View_Queue extends SendPress_View {
        style="width: 40%;"></div>
 </div>
 	Sent <span id="queue-sent">-</span> <?php _e('of','sendpress');?> <span id="queue-total">-</span> emails.<br>
-	You are currently sending 1 email approximately every <?php $rate = 3600 / SendPress_Option::get('emails-per-hour');
-	echo $rate;?> seconds.<br>To change these settings go to <a href="<?php echo SendPress_View_Settings_Account::link(); ?>">Settings > Sending Account</a>.
+	You are currently sending 1 email approximately every <?php 
+	$hour = SendPress_Option::get('emails-per-hour');
+	if($hour != 0){
+	$rate = 3600 / $hour; 
+	if($rate > 8){
+			$rate = 8;
+		}
+	} else {
+		$rate = "0.25";
+	}
+
+	echo $rate;
+
+	?> seconds.<br>To change these settings go to <a href="<?php echo SendPress_View_Settings_Account::link(); ?>">Settings > Sending Account</a>.
   </div>
   <div class="modal-footer">
    <?php _e('If you close this window sending will stop. ','sendpress');?><a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('Close','sendpress');?></a>

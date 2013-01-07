@@ -1993,6 +1993,9 @@ class SendPress {
 		if($emails_per_hour != 0){
 			$rate = 3600 / $emails_per_hour;
 		}
+		if($rate > 8){
+			$rate = 8;
+		}
 		$emails_today =  SendPress_Option::get('emails-today');
 		$emails_per_day = SendPress_Option::get('emails-per-day');
 		$email_count = isset($emails_today[date("z")]) ? $emails_today[date("z")] : 0 ;
@@ -2054,6 +2057,9 @@ class SendPress {
 		$emails_per_hour = SendPress_Option::get('emails-per-hour');
 		if($emails_per_hour != 0){
 			$rate = 3600 / $emails_per_hour;
+		}
+		if($rate > 8){
+			$rate = 8;
 		}
 		$emails_today =  SendPress_Option::get('emails-today');
 		$emails_per_day = SendPress_Option::get('emails-per-day');
