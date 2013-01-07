@@ -71,7 +71,7 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 		$sp->unsubscribe_from_list( $info->id , $info->report, $info->listID  );
 	}
 
-	$subscriber = $sp->getSubscriber( $info->id );
+	$subscriber = SendPress_Data::get_subscriber( $info->id );
 	
 	echo '<h4>';
 	_e('Subscriber Info','sendpress');
@@ -90,13 +90,10 @@ $args=array(
   'post_type' => 'sendpress_list',
   'post_status' => 'publish',
   'posts_per_page' => -1,
-  'caller_get_posts'=> 1
+  'ignore_sticky_posts'=> 1
 );
-$my_query = null;
 $my_query = new WP_Query($args);
 if( $my_query->have_posts() ) {
-  //echo 'List of Posts';
-  $lists_susbscriber = $sp->getSubscriberLists( $info->id  );
 
   while ($my_query->have_posts()) : $my_query->the_post(); 	
 
@@ -176,9 +173,8 @@ wp_reset_query();
   'post_type' => 'sendpress_list',
   'post_status' => 'publish',
   'posts_per_page' => -1,
-  'caller_get_posts'=> 1
+  'ignore_sticky_posts'=> 1
 );
-$my_query = null;
 $my_query = new WP_Query($args);
 if( $my_query->have_posts() ) {
  
