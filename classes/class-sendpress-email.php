@@ -158,10 +158,12 @@ class SendPress_Email {
 			$subscriber = SendPress_Data::get_subscriber($this->subscriber_id());
 			
 			$body_html = str_replace("*|SP:UNSUBSCRIBE|*", $remove_me , $body_html );
-			$body_html = str_replace("*|FNAME|*", $subscriber->firstname , $body_html );
-			$body_html = str_replace("*|LNAME|*", $subscriber->lastname , $body_html );
-			$body_html = str_replace("*|EMAIL|*", $subscriber->email , $body_html );
-			$body_html = str_replace("*|ID|*", $subscriber->subscriberID , $body_html );
+			if (!is_null($subscriber)) {
+				$body_html = str_replace("*|FNAME|*", $subscriber->firstname , $body_html );
+				$body_html = str_replace("*|LNAME|*", $subscriber->lastname , $body_html );
+				$body_html = str_replace("*|EMAIL|*", $subscriber->email , $body_html );
+				$body_html = str_replace("*|ID|*", $subscriber->subscriberID , $body_html );
+			}
 				
 			//echo  $body_html;
 
@@ -183,10 +185,12 @@ class SendPress_Email {
 			    // Get any existing copy of our transient data
 			}
 			$subscriber = SendPress_Data::get_subscriber($this->subscriber_id());
-			$email_subject = str_replace("*|FNAME|*", $subscriber->firstname , $email_subject );
-			$email_subject = str_replace("*|LNAME|*", $subscriber->lastname , $email_subject );
-			$email_subject = str_replace("*|EMAIL|*", $subscriber->email , $email_subject );
-			$email_subject = str_replace("*|ID|*", $subscriber->subscriberID , $email_subject );
+			if (!is_null($subscriber)) {
+				$email_subject = str_replace("*|FNAME|*", $subscriber->firstname , $email_subject );
+				$email_subject = str_replace("*|LNAME|*", $subscriber->lastname , $email_subject );
+				$email_subject = str_replace("*|EMAIL|*", $subscriber->email , $email_subject );
+				$email_subject = str_replace("*|ID|*", $subscriber->subscriberID , $email_subject );
+  			}
 
 			return $email_subject;
 	}
