@@ -110,8 +110,6 @@ class SendPress_View_Pro extends SendPress_View{
     function module_deactivate_sendpress_pro(){
         $path = $_POST['plugin_path'];
         $pro_options = SendPress_Option::get('pro_plugins');
-        
-        //var_dump($pro_options);
 
         if( !preg_match('/sendpress-pro.php/i',$path) ){
             if( preg_match('/sendpress-pro/i',$path) ){
@@ -129,8 +127,8 @@ class SendPress_View_Pro extends SendPress_View{
 
 	
 	function html($sp){
-		
-		$modules = array('pro','reports', 'spam_test', 'sendgrid');
+		//SendPress_Option::set('pro_plugins','');
+		$modules = array('pro','reports', 'spam_test', 'empty');
 		echo '<div class="sendpress-addons">';
 		foreach ($modules as $mod) {
 			$mod_class = $this->get_module_class($mod);

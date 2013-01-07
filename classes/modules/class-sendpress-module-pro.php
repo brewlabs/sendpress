@@ -67,6 +67,49 @@ class SendPress_Module_Pro extends SendPress_Module{
 	<?php
 	}
 
+	function buttons($plugin_path){
+		
+		switch( $this->pro_plugin_state() ){
+			case 'installable':
+				$button = array(
+					'class' => 'btn btn-success btn-activate', 
+					'href' => wp_nonce_url(admin_url('update.php?action=install-plugin&plugin=sendpress-pro'), 'install-plugin_sendpress-pro'), 
+					'target' => '', 
+					'text' => 'Install Pro'
+				);
+				break;
+			case 'not-installed':
+				$button = array(
+					'class' => 'btn-primary btn-buy btn', 
+					'href' => 'http://sendpress.com', 
+					'target' => '_blank', 
+					'text' => 'Buy Now'
+				);
+				break;
+			case 'activated':
+				$button = array(
+					'class' => 'btn module-deactivate-plugin', 
+					'href' => '#', 
+					'target' => '', 
+					'text' => 'Deactivate'
+				);
+				break;
+			case 'installed':
+				$button = array(
+					'class' => 'module-activate-plugin btn-success btn-activate btn', 
+					'href' => '#',
+					'target' => '', 'text' => 'Activate'
+				);
+				break;
+		}
+
+			
+		$btn = $this->build_button($button);
+		
+		
+		echo '<div class="inline-buttons">'.$btn.'</div>';
+	}
+
 	function module_start(){
 		echo '<div class="sendpress-module pro-module">';
 		echo '<div class="inner-module">';
