@@ -45,7 +45,7 @@ switch ( $this->_current_action ) {
 
     case 'account-setup':
     
-        
+        /*
         $options =  array();
 
         $options['sendmethod'] = $_POST['sendmethod'];
@@ -62,6 +62,7 @@ switch ( $this->_current_action ) {
 
         
         wp_redirect( admin_url('admin.php?page=sp-settings&view=account') );
+        */
     
     break;
      case 'test-account-setup':

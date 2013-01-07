@@ -10,7 +10,11 @@ if(!class_exists('SendPress_Sender')){
 
 class SendPress_Sender {
 
-	function form(){
+	function label(){
+		return __('Sender Missing Label','sendpress');
+	}
+	 
+	function settings(){
 
 	}
 
@@ -64,57 +68,26 @@ class SendPress_Sender {
 		return $phpmailer;
 	}
 
+	function get_domain_from_email($email){
+		$domain = substr(strrchr($email, "@"), 1);
+		return $domain;
+	}
+
+	function send_email(){
+
+
+
+
+		
+	}
+
+
+
+
+
+
+
 }
 
 }
 
-
-
-/**
- * Singleton that registers and instantiates WP_Widget classes.
- *
- * @package WordPress
- * @subpackage Widgets
- * @since 2.8
- */
-class SendPress_Sender_Factory {
-	var $senders = array();
-
-	function SendPress_Sender_Factory() {
-		add_action( 'sendpress_sender_init', array( $this, '_register_senders' ), 100 );
-	}
-
-	function register($sender_class) {
-		$this->senders[$sender_class] = new $sender_class();
-	}
-
-	function unregister($sender_class) {
-		if ( isset($this->senders[$sender_class]) )
-			unset($this->senders[$sender_class]);
-	}
-
-	function _register_senders() {
-		global $wp_registered_senders;
-		$keys = array_keys($this->senders);
-		$registered = array_keys($wp_registered_senders);
-		$registered = array_map('_get_widget_id_base', $registered);
-
-		foreach ( $keys as $key ) {
-			// don't register new widget if old widget with the same id is already registered
-			if ( in_array($this->senders[$key]->id_base, $registered, true) ) {
-				unset($this->senders[$key]);
-				continue;
-			}
-
-			$this->senders[$key]->_register();
-		}
-	}
-}
-
-
-/*
-function _get_widget_id_base($id) {
-	return preg_replace( '/-[0-9]+$/', '', $id );
-}
-
-*/

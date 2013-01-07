@@ -8,6 +8,27 @@ if ( !defined('SENDPRESS_VERSION') ) {
 	die;
 }
 
+global $sendpress_sender_factory;
+$sendpress_sender_factory = new SendPress_Sender_Factory();
+
+function sendpress_register_sender( $classname ){
+	global $sendpress_sender_factory;
+	$sendpress_sender_factory->register($classname);
+}
+
+function sendpress_unregister_sender( $classname ){
+	global $sendpress_sender_factory;
+	$sendpress_sender_factory->unregister($classname);
+}
+
+
+
+/**
+ * Private
+ */
+function _get_sendpress_id_base($id) {
+	return preg_replace( '/-[0-9]+$/', '', $id );
+}
 
 
 

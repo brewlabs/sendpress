@@ -1,5 +1,14 @@
+/*
+h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
+font-weight: normal;
+line-height: 1;
+color: #999;
+}
 
-
+h2 small{
+    font-size: 12px;
+}
+*/
 a.btn:focus{
     color: inherit;
 }

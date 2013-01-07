@@ -38,6 +38,17 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 
+	function emails_in_queue($id = false){
+		global $wpdb;
+		$table = self::queue_table();
+		if($id == false){
+			$query = "SELECT COUNT(*) FROM $table";
+		} else {
+			$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where emailID = %d", $id );
+		}	
+		return $wpdb->get_var( $query );
+	}
+
 
 	/********************* QUEUE FUNCTIONS **************************/
 
@@ -47,7 +58,17 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	/********************* REPORTS FUNCTIONS **************************/	
 
-    /**
+   
+    function update_report_sent_count( $id ) {
+    	if( $sent=get_post_meta($id , '_sent_total', true)){
+    		$sent++;
+    	} else {
+    		$sent = 1;
+    	}
+   		update_post_meta( $id ,'_sent_total' , $sent );
+    }
+
+ 	/**
      * Get url's in the database by the report and url string
      * 
      * @param mixed $id         the report id.
@@ -57,6 +78,7 @@ class SendPress_Data extends SendPress_DB_Tables {
      *
      * @return mixed Value.
      */
+    
 	function get_url_by_report_url( $id , $url_string ){
 		$table = self::report_url_table();
 		$result = self::wpdbQuery("SELECT * FROM $table WHERE reportID = '$id' AND url = '$url_string'", 'get_results');

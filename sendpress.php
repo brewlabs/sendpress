@@ -43,6 +43,10 @@ if(!class_exists('WP_List_Table')){
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
+// AutoLoad Classes
+spl_autoload_register(array('SendPress', 'autoload'));
+
+
 require_once( SENDPRESS_PATH . 'inc/functions.php' );
 /*
 require_once( SENDPRESS_PATH . 'classes/class-file-loader.php' );
@@ -168,6 +172,12 @@ class SendPress {
 			SendPress_Signup_Shortcode::init();
 			SendPress_Sender::init();
 			SendPress_Pro_Installer::init();
+			SendPress_Cron::get_instance();
+
+
+			sendpress_register_sender('SendPress_Sender_Website');
+			sendpress_register_sender('SendPress_Sender_Gmail');
+
 			if(defined('WP_ADMIN') && WP_ADMIN == true){
 				$sendpress_screen_options = new SendPress_Screen_Options();
 			}
@@ -534,6 +544,23 @@ class SendPress {
 			SendPress_Option::set('cron_send_count','100');
 		}
 
+		if( SendPress_Option::get('emails-per-day') == false ){
+			SendPress_Option::set('emails-per-day','1000');
+			SendPress_Option::set('emails-per-hour','100');
+		}
+
+		if( SendPress_Option::get('emails-today') == false ){
+			$emails_today = array( date("z") => '0' );
+			SendPress_Option::set('emails-today', $emails_today);
+		}
+
+		$emails_today = SendPress_Option::get('emails-today');
+		$emails_today[date("z") + 1 ] = '0';
+
+		SendPress_Option::set('emails-today', $emails_today);
+
+
+
 		//SendPress_Option::set('allow_tracking', '');
 		//wp_clear_scheduled_hook( 'sendpress_cron_action' );
 		// Schedule an action if it's not already scheduled
@@ -548,7 +575,6 @@ class SendPress {
 		/*
 		add_meta_box( 'email-status', __( 'Email Status', 'sendpress' ), array( $this, 'email_meta_box' ), $this->_email_post_type, 'side', 'low' );
 			
-		add_meta_box( 'sendpress_stuff2', __( 'WordPress SEO by Yoast2', 'wordpress-seo' ), array( $this, 'meta_box' ), $this->_email_post_type, 'side', 'low' );
 		*/
 
 		if( ( isset($_GET['page']) && $_GET['page'] == 'sp-templates' ) || (isset( $_GET['view'] ) && $_GET['view'] == 'style-email' )) {
@@ -829,12 +855,14 @@ class SendPress {
 		//echo "About to render: $view_class, $this->_page";
 		$view_class = NEW $view_class;
 
+		$queue = SendPress_Data::emails_in_queue();
+
 		//add tabs
 		$view_class->add_tab( __('Overview','sendpress'), 'sp-overview', ($this->_page === 'sp-overview') );
 		$view_class->add_tab( __('Emails','sendpress'), 'sp-emails', ($this->_page === 'sp-emails') );
 		$view_class->add_tab( __('Reports','sendpress'), 'sp-reports', ($this->_page === 'sp-reports') );
 		$view_class->add_tab( __('Subscribers','sendpress'), 'sp-subscribers', ($this->_page === 'sp-subscribers') );
-		$view_class->add_tab( __('Queue','sendpress'), 'sp-queue', ($this->_page === 'sp-queue') );
+		$view_class->add_tab( __('Queue','sendpress') . ' <small>('. $queue .')</small>', 'sp-queue', ($this->_page === 'sp-queue') );
 		$view_class->add_tab( __('Settings','sendpress'), 'sp-settings', ($this->_page === 'sp-settings') );
 		
 		if( defined('WP_DEBUG') && WP_DEBUG || defined('SENDPRESS_PRO_VERSION') ){
@@ -1228,7 +1256,7 @@ class SendPress {
 
 	// COUNT DATA
 	function countData($table) {
-		$count = $this->wpdbQuery($this->wpdbQuery("SELECT COUNT(*) FROM $table", 'prepare'), 'get_var');
+		$count = $this->wpdbQuery("SELECT COUNT(*) FROM $table", 'get_var');
 		return $count;
 	}
 
@@ -1248,8 +1276,9 @@ class SendPress {
 
 	// COUNT DATA
 	function countQueue() {
+		global $wpdb;
 		$table = $this->queue_table();
-		$count = $this->wpdbQuery($this->wpdbQuery("SELECT COUNT(1) FROM $table WHERE success = 0 AND max_attempts != attempts", 'prepare'), 'get_var');
+		$count = $this->wpdbQuery("SELECT COUNT(1) FROM $table WHERE success = 0 AND max_attempts != attempts", 'get_var');
 		return $count;
 	}
 
@@ -1740,8 +1769,22 @@ class SendPress {
 	   	$body = $message->html();
 	   	$subject = $message->subject();
 	   	$to = $email->to_email;
+	   	$text = $message->text();
 
-	   	return  $this->send_email($to, $subject, $body, '', false );
+	   	global $sendpress_sender_factory;
+	   	$senders = $sendpress_sender_factory->get_all_senders();
+   		$method = SendPress_Option::get( 'sendmethod' );
+
+
+
+   		if( isset($senders[ $method ]) ){
+
+   			return $senders[$method]->send_email($to, $subject, $body, $text, false );
+   		}
+
+
+
+	   	return  $this->send_email($to, $subject, $body, $text, false );
 	}
 
 
@@ -1945,13 +1988,27 @@ class SendPress {
 
 	function fetch_mail_from_queue(){
 		global $wpdb;
-		$count = SendPress_Option::get('cron_send_count');
+		$count = SendPress_Option::get('emails-per-hour');
+		$emails_per_hour = SendPress_Option::get('emails-per-hour');
+		if($emails_per_hour != 0){
+			$rate = 3600 / $emails_per_hour;
+		}
+		$emails_today =  SendPress_Option::get('emails-today');
+		$emails_per_day = SendPress_Option::get('emails-per-day');
+		$email_count = isset($emails_today[date("z")]) ? $emails_today[date("z")] : 0 ;
+
+		if( $emails_per_day != false && $emails_per_day != 0  &&  $email_count >= $emails_per_day  ){
+			return;
+		}
+
+
 		for ($i=0; $i < $count ; $i++) { 
 			if($this->cron_stop() == false ){
 				$email = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 ORDER BY id LIMIT 1","get_row");
 				if($email != null){
 					SendPress_Data::queue_email_process( $email->id );
 					$result = $this->sp_mail_it( $email );
+					$email_count++;
 					if ($result) {
 						$table = $this->queue_table();
 						$wpdb->query( 
@@ -1967,7 +2024,7 @@ class SendPress {
 						);
 
 						//$wpdb->insert( $this->subscriber_open_table(),  $senddata);
-						
+						SendPress_Data::update_report_sent_count( $email->emailID );
 					} else {
 						$wpdb->update( $this->queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
 					}
@@ -1977,11 +2034,15 @@ class SendPress {
 			} else{ //Stop was set.
 				break;
 			}
-
+			if($emails_per_hour != 0){
+					sleep( $rate );
+				}	
 		}
 
 
+		$emails_today[date("z")] = $email_count;
 
+		SendPress_Option::set('emails-today', $emails_today );
 
 		
 	}
@@ -1990,16 +2051,38 @@ class SendPress {
 		
 		global $wpdb;
 		$limit =  wp_rand(1, 10);
+		$emails_per_hour = SendPress_Option::get('emails-per-hour');
+		if($emails_per_hour != 0){
+			$rate = 3600 / $emails_per_hour;
+		}
+		$emails_today =  SendPress_Option::get('emails-today');
+		$emails_per_day = SendPress_Option::get('emails-per-day');
+		$email_count = isset($emails_today[date("z")]) ? $emails_today[date("z")] : 0 ;
+
 		//$emails = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE success = 0 AND max_attempts != attempts LIMIT ".$limit,"get_results");
 		$count = 0;
 		$attempts = 0;
+
+		if( $emails_per_day != false && $emails_per_day != 0  &&  intval($email_count) >= intval($emails_per_day)  ){
+			return array('attempted'=> $attempts,'sent'=>$count);
+		}
+
 		for ($i=0; $i < $limit ; $i++) { 
 				$email = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE (success = 0) AND (max_attempts != attempts) AND (inprocess = 0) ORDER BY id ASC LIMIT 1","get_results");
 				if( !empty($email) ){
 					$email = $email[0];
 					$attempts++;
+
+					if( $emails_per_day != false && $emails_per_day != 0  &&  intval($email_count) >= intval($emails_per_day) ){
+						$emails_today[date("z")] = $email_count;	
+						SendPress_Option::set('emails-today', $emails_today );
+						return array('attempted'=> $attempts,'sent'=>$count);
+					}
+
 					SendPress_Data::queue_email_process( $email->id );
 					$result = $this->sp_mail_it( $email );
+					$email_count++;
+					error_log($email_count);
 					if ($result) {
 						$table = $this->queue_table();
 						$wpdb->query( 
@@ -2016,22 +2099,26 @@ class SendPress {
 
 						//$wpdb->insert( $this->subscriber_open_table(),  $senddata);
 						$count++;
+						SendPress_Data::update_report_sent_count( $email->emailID );
 					} else {
 						$wpdb->update( $this->queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
 					}
 				} else{//We ran out of emails to process.
 					break;
 				}
-
+				if($emails_per_hour != 0){
+					sleep( $rate );
+				}	
 		}
 
+		$emails_today[date("z")] = $email_count;
 
-
-
-
+		SendPress_Option::set('emails-today', $emails_today );
 
 		return array('attempted'=> $attempts,'sent'=>$count);
 	}
+
+
 
 	function add_email_to_queue($values){
 		global $wpdb;
@@ -2279,8 +2366,6 @@ class SendPress {
 
 }// End SP CLASS
 
-// AutoLoad Classes
-spl_autoload_register(array('SendPress', 'autoload'));
 
 	
 register_activation_hook( __FILE__, array( 'SendPress', 'plugin_activation' ) );

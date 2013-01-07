@@ -81,9 +81,16 @@ class SendPress_View_Queue extends SendPress_View {
 	<div id="button-area">  
 	<a id="send-now" class="btn btn-primary btn-large " data-toggle="modal" href="#sendpress-sending"   ><i class="icon-white icon-refresh"></i> <?php _e('Send Emails Now','sendpress');?></a>
 	</div>
-	
-		
-		<h2><?php _e('Queue','sendpress');?></h2>
+	<?php
+		$emails_per_day = SendPress_Option::get('emails-per-day');
+		if($emails_per_day == 0){
+			$emails_per_day = __('Unlimited','sendpress');
+		}
+  $emails_per_hour =  SendPress_Option::get('emails-per-hour');
+  $emails_today = SendPress_Option::get('emails-today');
+?>
+
+		<h2><strong><?php echo $emails_today[date("z")]; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_day; ?></strong> <?php _e('emails sent today','sendpress'); ?>.<br><br></h2>
 		</div>
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="email-filter" method="get">
@@ -126,7 +133,9 @@ class SendPress_View_Queue extends SendPress_View {
   <div id="sendbar-inner" class="bar"
        style="width: 40%;"></div>
 </div>
-	Sent <span id="queue-sent">-</span> <?php _e('of','sendpress');?> <span id="queue-total">-</span> emails.
+	Sent <span id="queue-sent">-</span> <?php _e('of','sendpress');?> <span id="queue-total">-</span> emails.<br>
+	You are currently sending 1 email approximately every <?php $rate = 3600 / SendPress_Option::get('emails-per-hour');
+	echo $rate;?> seconds.<br>To change these settings go to <a href="<?php echo SendPress_View_Settings_Account::link(); ?>">Settings > Sending Account</a>.
   </div>
   <div class="modal-footer">
    <?php _e('If you close this window sending will stop. ','sendpress');?><a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('Close','sendpress');?></a>

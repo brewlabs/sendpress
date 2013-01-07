@@ -130,7 +130,7 @@ class SendPress_View_Pro extends SendPress_View{
 	
 	function html($sp){
 		
-		$modules = array('pro','reports', 'spam_test', 'empty');
+		$modules = array('pro','reports', 'spam_test', 'sendgrid');
 		echo '<div class="sendpress-addons">';
 		foreach ($modules as $mod) {
 			$mod_class = $this->get_module_class($mod);

@@ -82,9 +82,16 @@ class SendPress_Reports_Table extends WP_List_Table {
                 return '<span class="label">Coming Soon</span>';
 
                 case 'count':
-                 $display = get_post_meta($item->ID, '_send_count', true) . '';
-                 return $display;
-            
+                    $rec = get_post_meta($item->ID, '_send_count', true) . '';
+                    $sent = get_post_meta($item->ID, '_sent_total', true) . '';
+                    $queue = SendPress_Data::emails_in_queue($item->ID);
+                    $string = "Recipients: ". $rec ."<br>";
+                    $string .= "Sent: ". $sent ."<br>";
+                    $string .= "In Queue: ". $queue ."<br>";
+
+                 return $string;
+
+                
                case'sentto':
                 $display = '';
                 $info = get_post_meta($item->ID, '_send_data', true);
@@ -218,7 +225,8 @@ class SendPress_Reports_Table extends WP_List_Table {
             'cb' => '<input type="checkbox" />', //Render a checkbox instead of text
             'title' => 'Subject',
             'created' => 'Date Sent',
-            'count' => 'Recipients',
+            'count' => 'Info',
+
             'sentto' => 'Lists',
             'opens' => 'Opens ',
             'clicks'=> 'Clicks',

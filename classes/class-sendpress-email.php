@@ -76,6 +76,36 @@ class SendPress_Email {
 		$this->_list_ids = $list_ids;
 	}
 
+	function text_convert($html,$fullConvert = true){
+
+		if($fullConvert){
+			$html = preg_replace('# +#',' ',$html);
+			$html = str_replace(array("\n","\r","\t"),'',$html);
+		}
+		$removepictureslinks = "#< *a[^>]*> *< *img[^>]*> *< *\/ *a *>#isU";
+		$removeScript = "#< *script(?:(?!< */ *script *>).)*< */ *script *>#isU";
+		$removeStyle = "#< *style(?:(?!< */ *style *>).)*< */ *style *>#isU";
+		$removeStrikeTags =  '#< *strike(?:(?!< */ *strike *>).)*< */ *strike *>#iU';
+		$replaceByTwoReturnChar = '#< *(h1|h2)[^>]*>#Ui';
+		$replaceByStars = '#< *li[^>]*>#Ui';
+		$replaceByReturnChar1 = '#< */ *(li|td|tr|div|p)[^>]*> *< *(li|td|tr|div|p)[^>]*>#Ui';
+		$replaceByReturnChar = '#< */? *(br|p|h1|h2|legend|h3|li|ul|h4|h5|h6|tr|td|div)[^>]*>#Ui';
+		$replaceLinks = '/< *a[^>]*href *= *"([^#][^"]*)"[^>]*>(.*)< *\/ *a *>/Uis';
+		$text = preg_replace(array($removepictureslinks,$removeScript,$removeStyle,$removeStrikeTags,$replaceByTwoReturnChar,$replaceByStars,$replaceByReturnChar1,$replaceByReturnChar,$replaceLinks),array('','','','',"\n\n","\n* ","\n","\n",'${2} ( ${1} )'),$html);
+		$text = str_replace(array(" ","&nbsp;"),' ',strip_tags($text));
+		$text = trim(@html_entity_decode($text,ENT_QUOTES,'UTF-8'));
+		if($fullConvert){
+			$text = preg_replace('# +#',' ',$text);
+			$text = preg_replace('#\n *\n\s+#',"\n\n",$text);
+		}
+		return $text;
+	}
+
+	function text(){
+		return $this->text_convert( $this->html() , true);
+	}
+
+
 	function html(){
 			global $wpdb;
 			//$email =  $this->email();

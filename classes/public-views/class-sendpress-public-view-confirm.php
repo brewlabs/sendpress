@@ -7,7 +7,23 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class SendPress_Public_View_Confirm extends SendPress_Public_View{
-	
+	function prerender(){
+		if(SendPress_Option::get('confirm-page') == 'custom' ){
+			$page = SendPress_Option::get('confirm-page-id');
+			if($page != false){
+				$plink = get_permalink($page);
+				if($plink != ""){
+					wp_redirect( $plink );
+					exit();
+				}
+
+			}
+
+
+		}
+		
+	}
+
 
 	function html($sp){
 		$ip = $_SERVER['REMOTE_ADDR'];
@@ -23,20 +39,7 @@ class SendPress_Public_View_Confirm extends SendPress_Public_View{
 				}
 			}
 		}
-
-		if(SendPress_Option::get('confirm-page') == 'custom' ){
-			$page = SendPress_Option::get('confirm-page-id');
-			if($page != false){
-				$plink = get_permalink($page);
-				if($plink != ""){
-					//echo $plink;
-					wp_redirect($plink);
-				}
-
-			}
-
-
-		}
+		
 
 		?>
 			<div class="span12">
