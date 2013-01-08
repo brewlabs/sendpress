@@ -33,7 +33,6 @@ if(!defined('SENDPRESS_STORE_URL') ){
 	define( 'SENDPRESS_PRO_NAME', 'SendPress Pro' );
 }
 
-
 /*
 *
 *	Supporting Classes they build out the WordPress table views.
@@ -269,7 +268,9 @@ class SendPress {
 	function check_api_key(){
 
 		$state = SendPress_Option::get('api_key_state');
-		if( $state === 'failed' ){
+		$key = SendPress_Option::get('api_key');
+		echo 'state = '.$state;
+		if( $state !== 'valid' && !empty($key) ){
 			$this->show_message('api_key_failed');
 		}
 
@@ -497,25 +498,24 @@ class SendPress {
 
 	/* Display a notice that can be dismissed */
 		
-		function sendpress_ignore_087() {
-		        /* Check that the user hasn't already clicked to ignore the message */
-		    if ( ! SendPress_Option::get('sendpress_ignore_087') ) {
-		        echo '<div class="updated"><p>';
-		        printf(__('<b>SendPress</b>: We have upgraded your lists to a new format. Please check your <a href="%1$s">widget settings</a> to re-enable your list(s). | <a href="%2$s">Hide Notice</a>'), admin_url('widgets.php'), admin_url('widgets.php?sendpress_ignore_087=0') );
-		        echo "</p></div>";
-		    }
-		}
+	function sendpress_ignore_087() {
+	        /* Check that the user hasn't already clicked to ignore the message */
+	    if ( ! SendPress_Option::get('sendpress_ignore_087') ) {
+	        echo '<div class="updated"><p>';
+	        printf(__('<b>SendPress</b>: We have upgraded your lists to a new format. Please check your <a href="%1$s">widget settings</a> to re-enable your list(s). | <a href="%2$s">Hide Notice</a>'), admin_url('widgets.php'), admin_url('widgets.php?sendpress_ignore_087=0') );
+	        echo "</p></div>";
+	    }
+	}
 		
 
-		function myformatTinyMCE($in)
-		{
-			$in['plugins']= str_replace('wpeditimage,', '', $in['plugins']);
-			return $in;
-		}
+	function myformatTinyMCE($in){
+		$in['plugins']= str_replace('wpeditimage,', '', $in['plugins']);
+		return $in;
+	}
 
 
 
-		function admin_init(){
+	function admin_init(){
 		$this->set_template_default();
 		$this->add_caps();
 		if ( isset( $_REQUEST['post_id'] ) ){
