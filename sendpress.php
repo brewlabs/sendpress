@@ -269,7 +269,7 @@ class SendPress {
 
 		$state = SendPress_Option::get('api_key_state');
 		$key = SendPress_Option::get('api_key');
-		echo 'state = '.$state;
+		//echo 'state = '.$state;
 		if( $state !== 'valid' && !empty($key) ){
 			$this->show_message('api_key_failed');
 		}
