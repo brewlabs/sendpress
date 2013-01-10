@@ -1,5 +1,5 @@
 <?php
-// SendPress Required Class: SendPress_Pro_Installer
+// SendPress Required Class: SendPress_Pro_Manager
 // Prevent loading this file directly
 if ( !defined('SENDPRESS_VERSION') ) {
 	header('HTTP/1.0 403 Forbidden');
@@ -7,7 +7,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 /**
-* SendPress_Pro_Installer
+* SendPress_Pro_Manager
 *
 * @uses     
 *
@@ -16,13 +16,13 @@ if ( !defined('SENDPRESS_VERSION') ) {
 * @license  See SENPRESS
 * @since 	0.8.8.5     
 */
-class SendPress_Pro_Installer {
+class SendPress_Pro_Manager {
 
 	function &init() {
 		static $instance = false;
 
 		if ( !$instance ) {
-			$instance = new SendPress_Pro_Installer;
+			$instance = new SendPress_Pro_Manager;
 			$instance->_init();
 		}
 
@@ -31,6 +31,30 @@ class SendPress_Pro_Installer {
 
 	function _init(){
 		add_filter('plugins_api_result', array( $this, 'get_pro_details' ),10,3);
+		add_action( 'admin_head', array( $this, 'check_api_key' ) );
+	}
+
+	function check_api_key(){
+		if( class_exists('SendPress_Option') ){
+			$state = SendPress_Option::get('api_key_state');
+			$key = SendPress_Option::get('api_key');
+			//echo 'state = '.$state;
+			if( $state !== 'valid' && !empty($key) ){
+				//$this->show_message('api_key_failed');
+				add_action('sendpress_notices', array($this, 'key_notice'));
+				SendPress_Option::set('api_key','');
+			}
+		}
+
+	}
+
+	function key_notice(){
+		echo '<div class="alert alert-error">';
+			echo "<b>";
+			_e('Alert','sendpress');
+			echo "</b>&nbsp;-&nbsp;";
+			printf(__('Your API key is either invalid or in use on another site. Need help? Visit <a href="http://sendpress.com/support/">SendPress Support</a>','sendpress'), SendPress_Option::get('api_key_state') );
+	    echo '</div>';
 	}
 	
 	function get_pro_details( $res, $action, $args ){

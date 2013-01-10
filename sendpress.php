@@ -170,9 +170,8 @@ class SendPress {
 			SendPress_Ajax_Loader::init();
 			SendPress_Signup_Shortcode::init();
 			SendPress_Sender::init();
-			SendPress_Pro_Installer::init();
+			SendPress_Pro_Manager::init();
 			SendPress_Cron::get_instance();
-
 
 			sendpress_register_sender('SendPress_Sender_Website');
 			sendpress_register_sender('SendPress_Sender_Gmail');
@@ -194,11 +193,9 @@ class SendPress {
 			if( is_admin() ){
 				$this->maybe_upgrade();
 				$this->ready_for_sending();
-				$this->check_api_key();
-			
+				
 				add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 				add_action( 'admin_init', array( $this, 'admin_init' ) );
-				add_action( 'admin_head', array( $this, 'admin_head' ) );
 				add_action( 'admin_notices', array( $this,'admin_notice') );
 				add_action( 'admin_print_scripts', array($this,'editor_insidepopup') );
 				add_filter( 'gettext', array($this, 'change_button_text'), null, 2 );
@@ -255,25 +252,6 @@ class SendPress {
 			printf(__('Before sending any emails please setup your <a href="%1s">information</a>.','sendpress'), SendPress_View_Settings::link() );
 	    echo '</div>';
 		}
-		if( in_array('api_key_failed', $this->_messages) ){
-		echo '<div class="alert alert-error">';
-			echo "<b>";
-			_e('Alert','sendpress');
-			echo "</b>&nbsp;";
-			printf(__('There is something wrong with your API Key for SendPress Pro!','sendpress') );
-	    echo '</div>';
-		}
-	}
-
-	function check_api_key(){
-
-		$state = SendPress_Option::get('api_key_state');
-		$key = SendPress_Option::get('api_key');
-		//echo 'state = '.$state;
-		if( $state !== 'valid' && !empty($key) ){
-			$this->show_message('api_key_failed');
-		}
-
 	}
 
     /**
@@ -447,10 +425,6 @@ class SendPress {
 
 	function SendPress(){
 		//$this->_templates = $this->get_templates();
-	}
-
-	function admin_head(){
-		//wp_editor( false );
 	}
 	
 	function create_color_picker( $value ) { ?>	
