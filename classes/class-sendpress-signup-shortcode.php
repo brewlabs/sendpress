@@ -51,7 +51,7 @@ class SendPress_Signup_Shortcode{
 
 		$label = filter_var($label_display, FILTER_VALIDATE_BOOLEAN);
 
-		$widget_options = SENDPRESS::get_option('widget_options');
+		$widget_options = SendPress_Option::get('widget_options');
 	    ?>
 	    
 	    <div class="sendpress-signup-form">

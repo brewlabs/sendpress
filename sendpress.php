@@ -1209,12 +1209,7 @@ class SendPress {
 		return $result;	
 	}
 
-	// GET DETAIL (RETURN X WHERE Y = Z)
-	function linkListSubscriber($listID, $subscriberID, $status = 0) {
-		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::update_subscriber_status()' );
-		return SendPress_Data::update_subscriber_status($listID, $subscriberID, $status );	
-	}
-
+	
 	// COUNT DATA
 	function countData($table) {
 		$count = $this->wpdbQuery("SELECT COUNT(*) FROM $table", 'get_var');
@@ -1267,15 +1262,7 @@ class SendPress {
 		return $wpdb->insert_id;
 	}
 
-	function get_subscriber_by_email( $email ){
-		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::get_subscriber_by_email()' );
-		return SendPress_Data::get_subscriber_by_email( $email );
-	}
-
-	function addSubscriber($values){
-		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::add_subscriber()' );
-		return SendPress_Data::add_subscriber( $values );
-	}
+	
 
 	function updateSubscriber($subscriberID, $values){
 		$table = $this->subscriber_table();
@@ -1290,15 +1277,7 @@ class SendPress {
 		//return $wpdb->insert_id;
 	}
 
-	function updateStatus($listID,$subscriberID,$status){
-		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::update_subscriber_status()' );
-		return SendPress_Data::update_subscriber_status($listID, $subscriberID , $status);
-	}
-
-	function getSubscriber($subscriberID, $listID = false){
-		_deprecated_function( __FUNCTION__, '0.8.7', 'SendPress_Data::get_subscriber($subscriberID, $listID)' );
-		return SendPress_Data::get_subscriber($subscriberID, $listID);
-	}
+	
 
 	function getSubscriberLists( $value ) {
 		$table = $this->list_subcribers_table();
@@ -1351,9 +1330,7 @@ class SendPress {
         return $this->wpdbQuery($query, 'get_results');
 	}
 
-	function is_double_optin(){
-		return SendPress_Option::is_double_optin();
-	}
+	
 
 
 	function the_content( $content ) {
@@ -1371,45 +1348,6 @@ class SendPress {
 	}
 	
 
-	function send_optin($subscriberID, $listids, $lists){
-		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Manager::send_optin()' );
-		SendPress_Manager::send_optin($subscriberID, $listids, $lists);	
-	}
-
-	function subscribe_user($listid, $email, $first, $last){
-		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::subscribe_user()' );
-		SendPress_Data::subscribe_user($listid, $email, $first, $last);
-	}
-
-	/**
-	 * Returns the requested option.  
- 	 *
-	 * @param string $name    Option name
-	 * @param mixed  $default (optional)
-	 */
-	function get_option( $name, $default = false ) {
-		_deprecated_function( __FUNCTION__, '0.8.7', 'SendPress_Option::get()' );
-		return SendPress_Option::get( $name, $default);
-	}	
-	/**
-	 * Updates the single given option.  
- 	 *
-	 * @param string $name  Option name
-	 * @param mixed  $value Option value
-	 */
-	function update_option( $name, $value ) {
-		_deprecated_function( __FUNCTION__, '0.8.7', 'SendPress_Option::set()' );
-		return SendPress_Option::set( $name, $value  );
-	}
-	/**
-	 * Updates the multiple given options.  
- 	 *
-	 * @param array $array array( option name => option value, ... )
-	 */
-	function update_options( $array ) {
-		_deprecated_function( __FUNCTION__, '0.8.7', 'SendPress_Option::set()' );
-		return  SendPress_Option::set( $array );
-	}
 
     /**
      * plugin_activation
@@ -1448,48 +1386,9 @@ class SendPress {
 		wp_clear_scheduled_hook( 'sendpress_cron_action' );
 	} 
 
-	function subscriber_table(){
-		return SendPress_Data::subscriber_table();
-	}
-
-	function list_subcribers_table(){
-		return SendPress_Data::list_subcribers_table();
-	}
-
-	function lists_table(){
-		return SendPress_Data::lists_table();
-	}
-
-	function subscriber_status_table(){
-		return SendPress_Data::subscriber_status_table();
-	}
-
-	function subscriber_event_table(){
-		return SendPress_Data::subscriber_event_table();
-	}
-
-	function subscriber_click_table(){
-		return SendPress_Data::subscriber_click_table();
-	}
-
-	function subscriber_open_table(){
-		return SendPress_Data::subscriber_open_table();
-	}
 	
-	function report_url_table(){
-		return SendPress_Data::report_url_table();
-	}
-	
-	function queue_table(){
-		return SendPress_Data::queue_table();
-	}
 
-	/**
-	 * Generate Unsubscribe code
-	 **/
-	function random_code() {
-	    return SendPress_Data::random_code();
-	}
+	
 
 	function csv2array($input,$delimiter=',',$enclosure='"',$escape='\\'){ 
     	$fields=explode($enclosure.$delimiter.$enclosure,substr($input,1,-1)); 
@@ -1538,10 +1437,7 @@ class SendPress {
 
 	
 
-	function get_templates(){
-		_deprecated_function( __FUNCTION__, '0.8.7', 'SendPress_Template::get_instance()->info()' );
-		return SendPress_Template::get_instance()->info();
-	}
+	
 
 	/**
 	 * Returns an array of all PHP files in the specified absolute path.
@@ -1602,15 +1498,10 @@ class SendPress {
 		endforeach;
 	}
 
-	/**
-	* Used to add Overwrite send info for testing. 
-	*
-	* @return boolean true if mail sent successfully, false if an error
+	/*
+		Funtion to be removed.	
 	*/
-    function sp_mail_it( $queue_row ) {
-
-		SendPress_Manager::send_email_from_queue($queue_row);
-	}
+   
 
 
 	
@@ -1631,23 +1522,9 @@ class SendPress {
 		return $domain;
 	}
 
-	function get_key(){
-		return SendPress_Data::get_key();
-	}
+	
 
-	function encrypt_data( $message ) {
-		return SendPress_Data::encrypt($message);		
-	}
-
-	function decrypt_data($message) {
-		return SendPress_Data::decrypt($message);
-	}
-
-
-	function send_email($to, $subject, $html, $text, $istest = false ){
-		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Sender_(type)::send_email()' );
-		return SendPress_Manager::old_send_email($to, $subject, $html, $text, $istest );
-	}
+	
 
 
 	function send_test(){
@@ -2029,6 +1906,151 @@ class SendPress {
 			$result = $wpdb->insert($this->subscriber_click_table() ,$clickData);
 		}
 	}
+
+	/*
+	*
+	*	FUNCTIONS TO BE REMOVED PLEASE DO NOT USE
+	* 
+	*/
+	function get_templates(){
+		_deprecated_function( __FUNCTION__, '0.8.7', 'SendPress_Template::get_instance()->info()' );
+		return SendPress_Template::get_instance()->info();
+	}
+
+	function get_key(){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::get_key()' );
+		return SendPress_Data::get_key();
+	}
+
+	function encrypt_data( $message ) {
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::encrypt()' );
+		return SendPress_Data::encrypt($message);		
+	}
+
+	function decrypt_data($message) {
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::decrypt()' );
+		return SendPress_Data::decrypt($message);
+	}
+
+	function sp_mail_it( $queue_row ) {
+    	_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Manager::send_email_from_queue()' );
+		SendPress_Manager::send_email_from_queue($queue_row);
+	}
+
+	function send_email($to, $subject, $html, $text, $istest = false ){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Sender_(type)::send_email()' );
+		return SendPress_Manager::old_send_email($to, $subject, $html, $text, $istest );
+	}
+
+	function subscriber_table(){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::subscriber_table()' );
+		return SendPress_Data::subscriber_table();
+	}
+
+	function list_subcribers_table(){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::list_subcribers_table()' );
+		return SendPress_Data::list_subcribers_table();
+	}
+
+	function lists_table(){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::lists_table()' );
+		return SendPress_Data::lists_table();
+	}
+
+	function subscriber_status_table(){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::subscriber_status_table()' );
+		return SendPress_Data::subscriber_status_table();
+	}
+
+	function subscriber_event_table(){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::subscriber_event_table()' );
+		return SendPress_Data::subscriber_event_table();
+	}
+
+	function subscriber_click_table(){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::subscriber_click_table()' );
+		return SendPress_Data::subscriber_click_table();
+	}
+
+	function subscriber_open_table(){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::subscriber_open_table()' );
+		return SendPress_Data::subscriber_open_table();
+	}
+	
+	function report_url_table(){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::report_url_table()' );
+		return SendPress_Data::report_url_table();
+	}
+	
+	function queue_table(){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::queue_table()' );
+		return SendPress_Data::queue_table();
+	}
+
+	function random_code() {
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::random_code()' );
+	    return SendPress_Data::random_code();
+	}
+
+	function send_optin($subscriberID, $listids, $lists){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Manager::send_optin()' );
+		SendPress_Manager::send_optin($subscriberID, $listids, $lists);	
+	}
+
+	function subscribe_user($listid, $email, $first, $last){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::subscribe_user()' );
+		SendPress_Data::subscribe_user($listid, $email, $first, $last);
+	}
+
+	function get_option( $name, $default = false ) {
+		_deprecated_function( __FUNCTION__, '0.8.7', 'SendPress_Option::get()' );
+		return SendPress_Option::get( $name, $default);
+	}	
+	
+	function update_option( $name, $value ) {
+		_deprecated_function( __FUNCTION__, '0.8.7', 'SendPress_Option::set()' );
+		return SendPress_Option::set( $name, $value  );
+	}
+	
+	function update_options( $array ) {
+		_deprecated_function( __FUNCTION__, '0.8.7', 'SendPress_Option::set()' );
+		return  SendPress_Option::set( $array );
+	}
+
+	function is_double_optin(){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Option::is_double_optin()' );
+		return SendPress_Option::is_double_optin();
+	}
+
+	function get_subscriber_by_email( $email ){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::get_subscriber_by_email()' );
+		return SendPress_Data::get_subscriber_by_email( $email );
+	}
+
+	function addSubscriber($values){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::add_subscriber()' );
+		return SendPress_Data::add_subscriber( $values );
+	}
+
+	function updateStatus($listID,$subscriberID,$status){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::update_subscriber_status()' );
+		return SendPress_Data::update_subscriber_status($listID, $subscriberID , $status);
+	}
+
+	function getSubscriber($subscriberID, $listID = false){
+		_deprecated_function( __FUNCTION__, '0.8.7', 'SendPress_Data::get_subscriber($subscriberID, $listID)' );
+		return SendPress_Data::get_subscriber($subscriberID, $listID);
+	}
+
+	function linkListSubscriber($listID, $subscriberID, $status = 0) {
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::update_subscriber_status()' );
+		return SendPress_Data::update_subscriber_status($listID, $subscriberID, $status );	
+	}
+	/*
+	*
+	*	END FUNCTIONS TO BE REMOVED PLEASE DO NOT USE
+	* 
+	*/
 
 }// End SP CLASS
 
