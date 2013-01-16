@@ -362,7 +362,25 @@ class SendPress {
 	  	global $post; 
 
 	  	if($action = get_query_var( 'sendpress' )){
-		  	$this->load_default_screen($action);
+		  	
+		  	//Look for encrypted data
+	  		$data = SendPress_Data::decrypt( $action );
+			$view = false;
+		 	
+		 	if(is_object($data)){
+		 		$view = isset($data->view) ? $data->view : false;
+		 	} else {
+		 		$view= $action;
+		 	}
+
+		 	$view_class = SendPress_Data::get_public_view_class($view);
+		 	if(class_exists($view_class)){
+		 		$view_class = NEW $view_class;
+				$view_class->data($data);
+				$view_class->prerender();
+				$view_class->render();
+			}
+		  	//$this->load_default_screen($action);
 			die();
 		}
 
@@ -885,27 +903,7 @@ class SendPress {
 		return "SendPress_View";
 	}
 
-	/**
-	 * Get field class name
-	 *
-	 * @param string $type Field type
-	 *
-	 * @return bool|string Field class name OR false on failure
-	 */
-	static function get_public_view_class( $view = false){
-		
-		if($view !== false){
-			$view = str_replace('-',' ',$view);
-			$view  = ucwords( $view );
-			$view = str_replace(' ','_',$view);
-			$class = "SendPress_Public_View_{$view}";
-
-			if ( class_exists( $class ) )
-				return $class;
-		}
-		
-		return "SendPress_Public_View";
-	}
+	
 	
 	function upgrade_lists_to_custom_postype(){
 		$table = $this->lists_table();
@@ -1082,17 +1080,8 @@ class SendPress {
 		return $result;	
 	}
 
-	function get_url_by_id( $id ) {
-		$table = $this->report_url_table();
-		$result = $this->wpdbQuery("SELECT * FROM $table WHERE urlID = '$id'", 'get_row');
-		return $result;	
-	}
 
-	function get_open_without_id($rid, $sid){
-		$table = $this->subscriber_event_table();
-		$result = $this->wpdbQuery("SELECT * FROM $table WHERE reportID = '$rid' AND subscriberID = '$sid' AND type='open' ", 'query');
-		return $result;
-	}
+	
 	function get_opens_unique_count($rid){
 		$table = $this->subscriber_event_table();
 		$result = $this->wpdbQuery("SELECT COUNT( DISTINCT subscriberID ) FROM $table WHERE reportID = '$rid' AND type = 'open';", 'get_var');
@@ -1219,13 +1208,8 @@ class SendPress {
 
 	// GET DETAIL (RETURN X WHERE Y = Z)
 	function linkListSubscriber($listID, $subscriberID, $status = 0) {
-		$table = $this->list_subcribers_table();
-		$result = $this->wpdbQuery("SELECT id FROM $table WHERE listID = $listID AND subscriberID = $subscriberID ", 'get_var');
-		
-		if($result == false){
-			$result = $this->wpdbQuery("INSERT INTO $table (listID, subscriberID, status, updated) VALUES( '" . $listID . "', '" . $subscriberID . "','".$status."','".date('Y-m-d H:i:s')."')", 'query');
-		}
-		return $result;	
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::update_subscriber_status()' );
+		return SendPress_Data::update_subscriber_status($listID, $subscriberID, $status );	
 	}
 
 	// COUNT DATA
@@ -1325,17 +1309,8 @@ class SendPress {
 	}
 
 	function updateStatus($listID,$subscriberID,$status){
-		$table = $this->list_subcribers_table();
-
-		$check = $this->getSubscriberListsStatus($listID, $subscriberID);
-		if($check == false && $status == '2'){
-			$this->linkListSubscriber($listID,$subscriberID,$status);
-
-		}else {
-			global $wpdb;
-			$result = $wpdb->update($table,array('status'=>$status,'updated'=>date('Y-m-d H:i:s')), array('subscriberID'=> $subscriberID,'listID'=>$listID) );
-		}
-		return $this->getSubscriberListsStatus($listID, $subscriberID);
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::update_subscriber_status()' );
+		return SendPress_Data::update_subscriber_status($listID, $subscriberID , $status);
 	}
 
 	function getSubscriber($subscriberID, $listID = false){
@@ -1350,9 +1325,8 @@ class SendPress {
 	}
 
 	function getSubscriberListsStatus( $listID,$subscriberID ) {
-		$table = $this->list_subcribers_table();
-		$result = $this->wpdbQuery("SELECT status,updated FROM $table WHERE subscriberID = $subscriberID AND listID = $listID", 'get_row');
-		return $result;	
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::get_subscriber_list_status($listID, $subscriberID)' );
+		return SendPress_Data::get_subscriber_list_status($listID, $subscriberID);
 	}
 
 	function getSubscribers($listID = false){
@@ -2264,41 +2238,10 @@ class SendPress {
 		$wpdb->update( $this->list_subcribers_table() , array('status'=> 3) , array('listID'=> $lid,'subscriberID'=>$sid ));
 	}
 
-	function unsubscribe_from_list( $sid, $rid, $lid ) {
-		global $wpdb;
-		$stat = get_post_meta($rid, '_unsubscribe_count', true );
-		$stat++;
-		update_post_meta($rid, '_unsubscribe_count', $stat );
-		$wpdb->update( $this->list_subcribers_table() , array('status'=> 3) , array('listID'=> $lid,'subscriberID'=>$sid ));
-	}
-
-	function track_click( $sid, $rid, $lid, $ip , $device_type, $device ){
-		global $wpdb;
-
-		if(false == $this->get_open_without_id($rid,$sid) ){
-			$this->track_open($sid, $rid, $ip, $device_type, $device );
-		}
-
-		$urlData = array(
-			'eventdate'=>date('Y-m-d H:i:s'),
-			'subscriberID' => $sid,
-			'reportID' => $rid,
-			'urlID'=>$lid,
-			'ip'=>$ip,
-			'devicetype'=> $device_type,
-			'device'=> $device,
-			'type'=>'click'
-		);
-		
-		$wpdb->insert( $this->subscriber_event_table(),  $urlData);
-
-		//print_r($this->get_open_without_id($rid,$sid));
-	}
 	
-	function track_open( $sid, $rid, $ip = null , $device_type=null, $device=null ){
-		global $wpdb;
-		$wpdb->insert( $this->subscriber_event_table() , array('reportID'=> $rid,'subscriberID'=>$sid,'eventdate'=>date('Y-m-d H:i:s'),'type'=>'open' ,'ip'=>$ip,'devicetype'=> $device_type,'device'=> $device));
-	}
+	
+	
+	
 
 	function get_ip_info($ip){
 		if($ip != false && false == get_transient('sp-'.$ip) ){

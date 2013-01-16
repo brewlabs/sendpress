@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Public_View_Manage extends SendPress_Public_View {
 	
-	function prerender($sp){
+	function prerender(){
 		add_action('sendpress_public_view_scripts', array(&$this,'scripts'));		
 	}
 
@@ -45,7 +45,7 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 	}
 		
 
-	function html($sp) {
+	function html() {
 		$info = $this->data();
 		/*
 		$link = array(
@@ -68,7 +68,7 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 	
 	if ( isset($info->action) && $info->action == 'unsubscribe' ) {
 		//$sid, $rid, $lid
-		$sp->unsubscribe_from_list( $info->id , $info->report, $info->listID  );
+		SendPress_Data::unsubscribe_from_list( $info->id , $info->report, $info->listID  );
 	}
 
 	$subscriber = SendPress_Data::get_subscriber( $info->id );
@@ -102,19 +102,11 @@ if( $my_query->have_posts() ) {
 	$list_id = $my_query->post->ID;
 
 	if(isset($_POST['subscribe_'.$list_id ])){
-				$list_status = $sp->getSubscriberListsStatus( $list_id , $info->id );
+				$list_status = SendPress_Data::get_subscriber_list_status( $list_id , $info->id );
 				if(isset($list_status->status)){
-					$sp->updateStatus( $list_id , $info->id , $_POST[ 'subscribe_'.$list_id ] );
-					//echo $info->status;
-					/*
-					if( listID && $_POST['subscribe_'.$list_id ] == '3' && $list_status->status != '3'  ){
-						//echo 'why';
-						//$sp->register_unsubscribed( $info->id , $ );
-					}
-					*/
-
+					SendPress_Data::update_subscriber_status( $list_id , $info->id , $_POST[ 'subscribe_'.$list_id ] );
 				} elseif( $_POST['subscribe_'. $list_id ] == '2' ){
-					$sp->linkListSubscriber( $list_id , $info->id, $_POST[ 'subscribe_'.$list_id ] );
+					SendPress_Data::update_subscriber_status( $list_id , $info->id, $_POST[ 'subscribe_'.$list_id ] );
 				}
 			} 
 
@@ -156,7 +148,7 @@ wp_reset_query();
 	?>
 	
 <form action="?sendpress=<?php echo $key; ?>" method="post">
-<?php wp_nonce_field($sp->_nonce_value); ?>
+<?php wp_nonce_field( SendPress_Data::nonce() ); ?>
 <input type="hidden" name="subscriberid" id="subscriberid" value="<?php echo $info->id; ?>" />
 
 <table cellpadding="0" cellspacing="0" class="table table-condensed table-striped">
@@ -179,7 +171,7 @@ $my_query = new WP_Query($args);
 if( $my_query->have_posts() ) {
  
   while ($my_query->have_posts()) : $my_query->the_post(); 
-  $subscriber = $sp->getSubscriberListsStatus($my_query->post->ID, $info->id);
+  $subscriber = SendPress_Data::get_subscriber_list_status($my_query->post->ID, $info->id);
   ?>
   	<tr>
   	<?php

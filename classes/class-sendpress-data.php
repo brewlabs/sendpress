@@ -7,6 +7,10 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Data extends SendPress_DB_Tables {
 
+	function nonce(){
+		return 'sendpress-is-awesome';
+	}
+
 	/********************* BASE FUNCTIONS **************************/	
 
 	function wpdbQuery($query, $type) {
@@ -79,10 +83,25 @@ class SendPress_Data extends SendPress_DB_Tables {
      * @return mixed Value.
      */
     
+
+ 	function get_url_by_id( $id ) {
+ 		global $wpdb;
+		$table = self::report_url_table();
+		$result = $wpdb->get_row( $wpdb->prepare("SELECT * FROM $table WHERE urlID = %d", $id) );
+		return $result;	
+	}
+
 	function get_url_by_report_url( $id , $url_string ){
 		$table = self::report_url_table();
 		$result = self::wpdbQuery("SELECT * FROM $table WHERE reportID = '$id' AND url = '$url_string'", 'get_results');
 		return $result;	
+	}
+
+	function get_open_without_id($rid, $sid){
+		global $wpdb;
+		$table = SendPress_Data::subscriber_event_table();
+		$result = $wpdb->query( $wpdb->prepare("SELECT * FROM $table WHERE reportID = %d AND subscriberID = %d AND type='open' ", $rid, $sid ) );
+		return $result;
 	}
 
 
@@ -128,7 +147,33 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $result;
 	}
 
+	function track_click( $sid, $rid, $lid, $ip , $device_type, $device ){
+		global $wpdb;
 
+		if(false == SendPress_Data::get_open_without_id($rid,$sid) ){
+			SendPress_Data::track_open($sid, $rid, $ip, $device_type, $device );
+		}
+
+		$urlData = array(
+			'eventdate'=>date('Y-m-d H:i:s'),
+			'subscriberID' => $sid,
+			'reportID' => $rid,
+			'urlID'=>$lid,
+			'ip'=>$ip,
+			'devicetype'=> $device_type,
+			'device'=> $device,
+			'type'=>'click'
+		);
+		
+		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $urlData);
+
+		//print_r($this->get_open_without_id($rid,$sid));
+	}
+
+	function track_open( $sid, $rid, $ip = null , $device_type=null, $device=null ){
+		global $wpdb;
+		$wpdb->insert( SendPress_Data::subscriber_event_table() , array('reportID'=> $rid,'subscriberID'=>$sid,'eventdate'=>date('Y-m-d H:i:s'),'type'=>'open' ,'ip'=>$ip,'devicetype'=> $device_type,'device'=> $device));
+	}
 
 	/********************* END REPORTS FUNCTIONS **************************/
 
@@ -205,6 +250,17 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		//print_r($this->get_open_without_id($rid,$sid));
 	}
+
+	function unsubscribe_from_list( $sid, $rid, $lid ) {
+		global $wpdb;
+		$stat = get_post_meta($rid, '_unsubscribe_count', true );
+		$stat++;
+		update_post_meta($rid, '_unsubscribe_count', $stat );
+		$wpdb->update( SendPress_Data::list_subcribers_table() , array('status'=> 3) , array('listID'=> $lid,'subscriberID'=>$sid ));
+	}
+
+
+
 
 	/********************* END SUBSCRIBER FUNCTIONS **************************/
 
@@ -314,6 +370,30 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	/********************* END TEMPLATE POST FUNCTIONS **************************/
 
+	/********************* PUBLIC VIEW FUNCTIONS **************************/
+	/**
+	 * Get field class name
+	 *
+	 * @param string $type Field type
+	 *
+	 * @return bool|string Field class name OR false on failure
+	 */
+	static function get_public_view_class( $view = false){
+		
+		if($view !== false){
+			$view = str_replace('-',' ',$view);
+			$view  = ucwords( $view );
+			$view = str_replace(' ','_',$view);
+			$class = "SendPress_Public_View_{$view}";
+
+			if ( class_exists( $class ) )
+				return $class;
+		}
+		
+		return "SendPress_Public_View";
+	}
+
+	/********************* END PUBLIC VIEW FUNCTIONS **************************/
 
 
 	function set_double_optin_content( ){

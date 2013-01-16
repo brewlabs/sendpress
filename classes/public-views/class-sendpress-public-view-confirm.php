@@ -25,7 +25,7 @@ class SendPress_Public_View_Confirm extends SendPress_Public_View{
 	}
 
 
-	function html($sp){
+	function html(){
 		$ip = $_SERVER['REMOTE_ADDR'];
 		//print_r($info);
 		$info = $this->data();
