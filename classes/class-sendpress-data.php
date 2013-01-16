@@ -212,17 +212,17 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 	
 	function update_subscriber_status( $listID, $subscriberID ,$status){
-		$table = self::list_subcribers_table();
+		$table = SendPress_Data::list_subcribers_table();
 
-		$check = self::get_subscriber_list_status($listID, $subscriberID);
-		if($check == false && $status == '2'){
-			self::set_subscriber_status($listID,$subscriberID,$status);
-
+		$check = SendPress_Data::get_subscriber_list_status($listID, $subscriberID);
+		
+		if( $check == false ){
+			SendPress_Data::set_subscriber_status($listID,$subscriberID,$status);
 		} else {
 			global $wpdb;
 			$result = $wpdb->update($table,array('status'=>$status,'updated'=>date('Y-m-d H:i:s')), array('subscriberID'=> $subscriberID,'listID'=>$listID) );
 		}
-		return self::get_subscriber_list_status($listID, $subscriberID);
+		return SendPress_Data::get_subscriber_list_status($listID, $subscriberID);
 	}
 
 	function get_subscriber_list_status( $listID,$subscriberID ) {
@@ -262,7 +262,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	function get_subscriber_by_email( $email ){
 		global $wpdb;
 		$table = SendPress_Data::subscriber_table();
-		$result = $wpdb->get_var( $wpdb->prepare("SELECT subscriberID FROM $table WHERE email = %d ", $email) );
+		$result = $wpdb->get_var( $wpdb->prepare("SELECT subscriberID FROM $table WHERE email = %s ", $email) );
 		return $result;
 	}
 
@@ -283,7 +283,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		$result = SendPress_Data::get_subscriber_by_email($email);
 		
-
 		if(	$result ){ return $result; }
 		global $wpdb;
 		$result = $wpdb->insert($table,$values);
@@ -294,10 +293,11 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 	function subscribe_user($listid, $email, $first, $last){
-
+		
 		$success = false;
 		$subscriberID = SendPress_Data::add_subscriber(array('firstname' => $first,'lastname' => $last,'email' => $email));
-
+			
+		
 		if( false === $subscriberID ){
 			return false;
 		}
@@ -308,8 +308,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$lists = get_posts( $args );
 
 		$listids = explode(',', $listid);
-
-
+		
 
 		
 	    //$lists = $s->getData($s->lists_table());
@@ -318,11 +317,11 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$status = 2;
 		if( SendPress_Option::is_double_optin() ){
 			$status = 1;
-			$this->send_optin( $subscriberID, $listids, $lists);
+			SendPress_Manager::send_optin( $subscriberID, $listids, $lists);
 
 		}
 
-
+		//print_r($lists);
 
 		foreach($lists as $list){
 			if( in_array($list->ID, $listids) ){

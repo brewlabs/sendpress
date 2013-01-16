@@ -104,8 +104,38 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 	</div>
 </div>
 
+<div class="boxer form-box">
+	<h2>General Form Post Settings</h2>
+	<div style="float: right; width: 45%;"><br>
+		<b>Page Text</b><br>
+		<textarea style="width:100%; padding: 8px;" rows="21" name="post-page-text"></textarea>
 
+	</div>	
+<div style="width: 45%; margin-right: 10%"><br>
+	<div class='well'>
+<?php $ctype = SendPress_Option::get('post-page'); ?>
+<input type="radio" name="post-page" value="default" <?php if($ctype=='default'){echo "checked='checked'"; } ?> /> Use Default SendPress Page<br><br>
+			<input type="radio" name="post-page" value="custom"  <?php if($ctype=='custom'){echo "checked='checked'";} ?>/> Redirect to <select name="post-page-id"> 
+ <option value="">
+ 	<?php $cpageid = SendPress_Option::get('post-page-id');?>
+<?php echo esc_attr( __( 'Select page' ) ); ?></option> 
+ <?php 
+  $pages = get_pages(); 
+  foreach ( $pages as $page ) {
+  	$s ='';
+  	if($cpageid == $page->ID){ $s =  "selected"; }
+  	$option = '<option value="' . $page->ID .'" ' .$s. '>';
+	$option .= $page->post_title;
+	$option .= '</option>';
+	echo $option;
+  }
+ ?>
+</select>
 
+</div>
+</div>
+	<br class="clear">
+</div>
 
 <?php wp_nonce_field($sp->_nonce_value); ?>
 </form>

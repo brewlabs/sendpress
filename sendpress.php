@@ -379,7 +379,10 @@ class SendPress {
 		 	$view_class = SendPress_Data::get_public_view_class($view);
 		 	if(class_exists($view_class)){
 		 		$view_class = NEW $view_class;
-				$view_class->data($data);
+		 		$view_class->data($data);
+				if( isset( $_POST['sp'] ) && method_exists($view_class, 'save') ){
+					$view_class->save();
+				} 
 				$view_class->prerender();
 				$view_class->render();
 			}
@@ -1517,25 +1520,7 @@ class SendPress {
 	    return $result;
 	}
 
-	function get_domain_from_email($email){
-		$domain = substr(strrchr($email, "@"), 1);
-		return $domain;
-	}
-
 	
-
-	
-
-
-	function send_test(){
-		$text= __('This is text only alternative body.','sendpress');
-		$subject = __('A Test Email from SendPress.','sendpress');
-		$body= __( 'SendPress test email :).','sendpres' );
-		$testemails = explode(',' , SendPress_Option::get('testemail') );
-		foreach ($testemails as $emailadd) {
-			$this->send_email($emailadd, $subject, $body, $text, true );
-		}
-	}
 
 	function cron_stop(){
 		$upload_dir = wp_upload_dir();
@@ -2045,6 +2030,11 @@ class SendPress {
 	function linkListSubscriber($listID, $subscriberID, $status = 0) {
 		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::update_subscriber_status()' );
 		return SendPress_Data::update_subscriber_status($listID, $subscriberID, $status );	
+	}
+
+	function send_test(){
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Manager::send_test()' );
+		SendPress_Manager::send_test();
 	}
 	/*
 	*

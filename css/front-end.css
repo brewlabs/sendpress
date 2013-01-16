@@ -5,10 +5,6 @@
 .sendpress-signup-form{
 
 	}
-	/* element that surrounds each field and label */
-	.sendpress-signup-form fieldset{
-		margin-bottom:5px;
-	}
 	/* labels in the sing up form */
 	.sendpress-signup-form label{
 		display:block;
@@ -16,11 +12,12 @@
 		padding:0 5px 0 0;
 	}
 	/* input fields in sign up form */
-	.sendpress-signup-form input{
-	
+	.sendpress-signup-form input[text]{
+		width: 100%;
 	}
 	/* submit button */
-	.sendpress-signup-form .submit{
+	.sendpress-submit{
+		margin-top: 20px;
 	}
 	/* element where error messages are displayed */
 	.sendpress-signup-form #error{

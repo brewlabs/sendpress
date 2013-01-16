@@ -7,9 +7,22 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class SendPress_Manager {
+
+
+	function send_test(){
+		$text= __('This is text only alternative body.','sendpress');
+		$subject = __('A Test Email from SendPress.','sendpress');
+		$body= __( 'SendPress test email :).','sendpres' );
+		$testemails = explode(',' , SendPress_Option::get('testemail') );
+		foreach ($testemails as $emailadd) {
+			SendPress_Manager::send($emailadd, $subject, $body, $text, true );
+		}
+	}	
 	
+
+
 	function send_optin($subscriberID, $listids, $lists){
-			$s =SendPress_Data::get_subscriber( $subscriberID );
+			$subscriber = SendPress_Data::get_subscriber( $subscriberID );
 			$l = '';
 			foreach($lists as $list){
 				if( in_array($list->ID, $listids) ){
@@ -42,11 +55,7 @@ class SendPress_Manager {
 			$html = str_replace("*|SP:CONFIRMLINK|*", $href , $html );
 
 			$sub =  $message->subject();
-			//send_email($to, $subject, $html, $text, $istest = false )
-			///SendPress::email_style_default()	
-			//echo $href;
-			SendPress_Manager::send( $s->email, $sub , $html, '', false );
-			
+			SendPress_Manager::send( $subscriber->email, $sub , $html, '', false );
 	}
 
 
@@ -138,14 +147,13 @@ class SendPress_Manager {
 		
 		
 		$hdr = new SendPress_SendGrid_SMTP_API();
-		$hdr->addFilterSetting('dkim', 'domain', $this->get_domain_from_email($from_email) );
-		//$phpmailer->AddCustomHeader( sprintf( 'X-SP-MID: %s',$email->messageID ) );
+		$hdr->addFilterSetting('dkim', 'domain', SendPress_Manager::get_domain_from_email($from_email) );
 		$phpmailer->AddCustomHeader(sprintf( 'X-SMTPAPI: %s', $hdr->asJSON() ) );
 		$phpmailer->AddCustomHeader('X-SP-ACCOUNT','TEST-FROM_DEV');
+		
 		// Set SMTPDebug to 2 will collect dialogue between us and the mail server
 		if($istest == true){
 			$phpmailer->SMTPDebug = 2;
-		
 			// Start output buffering to grab smtp output
 			ob_start(); 
 		}
@@ -161,7 +169,6 @@ class SendPress_Manager {
 			$smtp_debug = ob_get_clean();
 			SendPress_Option::set('phpmailer_error', $phpmailer->ErrorInfo);
 			SendPress_Option::set('last_test_debug', $smtp_debug);
-			//$this->last_send_smtp_debug = $smtp_debug;
 		
 		}
 
@@ -173,15 +180,17 @@ class SendPress_Manager {
 		    $msg .= $hostmsg;
 		    $msg .= __("The SMTP debugging output is shown below:\n","sendpress");
 		    $msg .= $smtp_debug."\n";
-		    //$msg .= 'The full debugging output(exported mailer) is shown below:\n';
-		    //$msg .= var_export($phpmailer,true)."\n";
-			//$this->append_log($msg);								
 		}
 
 	
 		
 		return $result;
 
+	}
+
+	function get_domain_from_email($email){
+		$domain = substr(strrchr($email, "@"), 1);
+		return $domain;
 	}
 
 

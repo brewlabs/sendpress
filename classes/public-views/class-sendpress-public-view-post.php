@@ -14,13 +14,10 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 
 	function html() {
 
-		$email = $_POST['email'];	
-		$firstname = $_POST['firstname'];
-		$lists = $_POST['listids'];
-		$list_info = explode(',', $lists);
+		$email = $_POST['sp'];	
 		//foreach()
 
-
+		print_r($email);
 
 		echo "Nice Post";
 	

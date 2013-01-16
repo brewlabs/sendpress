@@ -55,14 +55,17 @@ class SendPress_Signup_Shortcode{
 	    ?>
 	    
 	    <div class="sendpress-signup-form">
-			<form id="sendpress_signup" method="POST" <?php if( !$widget_options['load_ajax'] ){ ?>class="sendpress-signup"<?php } ?>>
+			<form id="sendpress_signup" method="POST" <?php if( !$widget_options['load_ajax'] ){ ?>class="sendpress-signup"<?php } else { ?>action="?sendpress=post"<?php } ?> >
 				<?php 
 					if( $widget_options['load_ajax'] ){
 						echo '<input type="hidden" name="action" value="signup-user" />';
 						echo '<input type="hidden" name="redirect" value="'.get_permalink().'" />';
 					}
+					if(empty($listids)){
+						echo "<div><b>-- NO LIST HAS BEEN SELECTED IN WIDGET SETTINGS --<b></div>";
+					}
 				?>
-				<input type="hidden" name="list" id="list" value="<?php echo $listids; ?>" />
+				<input type="hidden" name="sp[list]" id="list" value="<?php echo $listids; ?>" />
 				<div id="error"><?php echo $sendpress_signup_error; ?></div>
 				<div id="thanks" <?php if( $sendpress_show_thanks ){ echo 'style="display:block;"'; }else{ echo 'style="display:none;"'; } ?>><?php echo $thank_you; ?></div>
 				<div id="form-wrap" <?php if( $sendpress_show_thanks ){ echo 'style="display:none;"'; } ?>>
@@ -72,7 +75,7 @@ class SendPress_Signup_Shortcode{
 							<?php if( !$label ): ?>
 								<label for="firstname"><?php echo $firstname_label; ?>:</label>
 							<?php endif; ?>
-							<input type="text" id="firstname" orig="<?php echo $firstname_label; ?>" value="<?php if($label){ echo $firstname_label; } ?>"  name="firstname" />
+							<input type="text" id="sp-firstname" orig="<?php echo $firstname_label; ?>" value="<?php if($label){ echo $firstname_label; } ?>"  name="sp[firstname]" />
 						</p>
 					<?php endif; ?>
 
@@ -81,7 +84,7 @@ class SendPress_Signup_Shortcode{
 							<?php if( !$label ): ?>
 								<label for="lastname"><?php echo $lastname_label; ?>:</label>
 							<?php endif; ?>
-							<input type="text" id="lastname" orig="<?php echo $lastname_label; ?>" value="<?php if($label){ echo $lastname_label; } ?>" name="lastname" />
+							<input type="text" id="sp-lastname" orig="<?php echo $lastname_label; ?>" value="<?php if($label){ echo $lastname_label; } ?>" name="sp[lastname]" />
 						</p>
 					<?php endif; ?>
 
@@ -89,11 +92,11 @@ class SendPress_Signup_Shortcode{
 						<?php if( !$label ): ?>
 							<label for="email"><?php echo $email_label; ?>:</label>
 						<?php endif; ?>
-						<input type="text" id="email" orig="<?php echo $email_label; ?>" value="<?php if($label){ echo $email_label; } ?>" name="email" />
+						<input type="text" id="sp-email" orig="<?php echo $email_label; ?>" value="<?php if($label){ echo $email_label; } ?>" name="sp[email]" />
 					</p>
 
 					<p class="submit">
-						<input value="<?php echo $button_text; ?>" class="signup-submit" type="submit"  id="submit" name="submit">
+						<input value="<?php echo $button_text; ?>" class="sendpress-submit" type="submit"  id="submit" name="submit">
 					</p>
 				</div>
 			</form>
