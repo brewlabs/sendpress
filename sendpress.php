@@ -1268,34 +1268,13 @@ class SendPress {
 	}
 
 	function get_subscriber_by_email( $email ){
-		$table = $this->subscriber_table();
-		$result = $this->wpdbQuery("SELECT subscriberID FROM $table WHERE email = '$email' ", 'get_var');
-		return $result;
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::get_subscriber_by_email()' );
+		return SendPress_Data::get_subscriber_by_email( $email );
 	}
 
 	function addSubscriber($values){
-		$table = $this->subscriber_table();
-		$email = $values['email'];
-
-		if(!isset($values['join_date'])){
-			$values['join_date'] =  date('Y-m-d H:i:s');
-		}
-		if(!isset($values['identity_key'])){
-			$values['identity_key'] =  $this->random_code();
-		}
-
-		if( !filter_var($email, FILTER_VALIDATE_EMAIL) ){
-			return false;
-		}
-
-		$result = $this->get_subscriber_by_email($email);
-		
-
-		if(	$result ){ return $result; }
-		global $wpdb;
-		$result = $wpdb->insert($table,$values);
-		//$result = $this->wpdbQuery("SELECT @lastid2 := LAST_INSERT_ID()",'query');
-		return $wpdb->insert_id;
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::add_subscriber()' );
+		return SendPress_Data::add_subscriber( $values );
 	}
 
 	function updateSubscriber($subscriberID, $values){
@@ -1373,10 +1352,7 @@ class SendPress {
 	}
 
 	function is_double_optin(){
-		if( SendPress_Option::get('send_optin_email') == 'yes'){
-			return true;			
-		}
-		return false;
+		return SendPress_Option::is_double_optin();
 	}
 
 
@@ -1396,84 +1372,13 @@ class SendPress {
 	
 
 	function send_optin($subscriberID, $listids, $lists){
-			$s =SendPress_Data::get_subscriber( $subscriberID );
-			$l = '';
-			foreach($lists as $list){
-				if( in_array($list->ID, $listids) ){
-					$l .= $list->post_title ." <br>";
-				}
-			}
-		//	add_filter( 'the_content', array( $this, 'the_content') );	
-			$optin = SendPress_Data::get_template_id_by_slug('double-optin');
-			$user = SendPress_Data::get_template_id_by_slug('user-style');
-			SendPress_Posts::copy_meta_info($optin,$user);
-
-			
-
-			$message = new SendPress_Email();
-			$message->id($optin);
-			$message->remove_links(true);
-			$message->purge(true);
-			$message->subscriber_id($subscriberID);
-			
-			$code = array(
-					"id"=>$subscriberID,
-					"listids"=> implode(',',$listids),
-					"view"=>"confirm"
-				);
-			$code = SendPress_Data::encrypt( $code );
-
-			$href = site_url() ."?sendpress=".$code;
-
-			$html = $message->html();
-			$html = str_replace("*|SP:CONFIRMLINK|*", $href , $html );
-
-			$sub =  $message->subject();
-			//send_email($to, $subject, $html, $text, $istest = false )
-			///SendPress::email_style_default()	
-			//echo $href;
-			$this->send_email( $s->email, $sub , $html, '', false );
-		
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Manager::send_optin()' );
+		SendPress_Manager::send_optin($subscriberID, $listids, $lists);	
 	}
 
 	function subscribe_user($listid, $email, $first, $last){
-
-		$success = false;
-		$subscriberID = $this->addSubscriber(array('firstname' => $first,'lastname' => $last,'email' => $email));
-
-		if( false === $subscriberID ){
-			return false;
-		}
-		$args = array( 'post_type' => 'sendpress_list','numberposts'     => -1,
-	    'offset'          => 0,
-	    'orderby'         => 'post_title',
-	    'order'           => 'DESC', );
-		$lists = get_posts( $args );
-
-		$listids = explode(',', $listid);
-
-
-
-		
-	    //$lists = $s->getData($s->lists_table());
-	    //$listids = array();
-
-		$status = 2;
-		if( $this->is_double_optin() ){
-			$status = 1;
-			$this->send_optin( $subscriberID, $listids, $lists);
-
-		}
-
-
-
-		foreach($lists as $list){
-			if( in_array($list->ID, $listids) ){
-				$success = $this->linkListSubscriber($list->ID, $subscriberID, $status);
-			}
-		}
-
-		return $success;
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::subscribe_user()' );
+		SendPress_Data::subscribe_user($listid, $email, $first, $last);
 	}
 
 	/**
@@ -1583,9 +1488,7 @@ class SendPress {
 	 * Generate Unsubscribe code
 	 **/
 	function random_code() {
-	    $now = time();
-	    $random_code = substr( $now, strlen( $now ) - 3, 3 ) . substr( md5( uniqid( rand(), true ) ), 0, 8 ) . substr( md5( $now . rand() ), 0, 4);
-	    return $random_code;
+	    return SendPress_Data::random_code();
 	}
 
 	function csv2array($input,$delimiter=',',$enclosure='"',$escape='\\'){ 
@@ -1704,38 +1607,9 @@ class SendPress {
 	*
 	* @return boolean true if mail sent successfully, false if an error
 	*/
-    function sp_mail_it( $email ) {
+    function sp_mail_it( $queue_row ) {
 
-		if ( $this->_debugMode ) {
-		    $originalTo = $email->to_email;
-		    $to = $this->_debugAddress;
-		    $email->subject = '('.$originalTo.') '.$email->subject;
-		
-			$this->append_log('-- Overrode TO, instead of '.$originalTo.' used address '.$this->_debugAddress );
-	   	}
-	   	$message = new SendPress_Email();
-	   	$message->id( $email->emailID );
-	   	$message->subscriber_id( $email->subscriberID );
-	   	$message->list_id( $email->listID );
-	   	$body = $message->html();
-	   	$subject = $message->subject();
-	   	$to = $email->to_email;
-	   	$text = $message->text();
-
-	   	global $sendpress_sender_factory;
-	   	$senders = $sendpress_sender_factory->get_all_senders();
-   		$method = SendPress_Option::get( 'sendmethod' );
-
-
-
-   		if( isset($senders[ $method ]) ){
-
-   			return $senders[$method]->send_email($to, $subject, $body, $text, false );
-   		}
-
-
-
-	   	return  $this->send_email($to, $subject, $body, $text, false );
+		SendPress_Manager::send_email_from_queue($queue_row);
 	}
 
 
@@ -1771,142 +1645,8 @@ class SendPress {
 
 
 	function send_email($to, $subject, $html, $text, $istest = false ){
-		global $phpmailer, $wpdb;
-
-		// (Re)create it, if it's gone missing
-		if ( !is_object( $phpmailer ) || !is_a( $phpmailer, 'PHPMailer' ) ) {
-			require_once ABSPATH . WPINC . '/class-phpmailer.php';
-			require_once ABSPATH . WPINC . '/class-smtp.php';
-			$phpmailer = new PHPMailer();
-		}
-		
-		/*
-		 * Make sure the mailer thingy is clean before we start,  should not
-		 * be necessary, but who knows what others are doing to our mailer
-		 */
-		$phpmailer->ClearAddresses();
-		$phpmailer->ClearAllRecipients();
-		$phpmailer->ClearAttachments();
-		$phpmailer->ClearBCCs();
-		$phpmailer->ClearCCs();
-		$phpmailer->ClearCustomHeaders();
-		$phpmailer->ClearReplyTos();
-		//return $email;
-		$phpmailer->MsgHTML( $html );
-		$phpmailer->AddAddress( trim( $to ) );
-		$phpmailer->AltBody= $text;
-		$phpmailer->Subject = $subject;
-		$content_type = 'text/html';
-		$phpmailer->ContentType = $content_type;
-		// Set whether it's plaintext, depending on $content_type
-		//if ( 'text/html' == $content_type )
-		$phpmailer->IsHTML( true );
-		
-		// If we don't have a charset from the input headers
-		if ( !isset( $charset ) )
-		//$charset = get_bloginfo( 'charset' );
-		// Set the content-type and charset
-		$phpmailer->CharSet = 'UTF-8';
-		$phpmailer->Encoding = 'quoted-printable';
-		/**
-		* We'll let php init mess with the message body and headers.  But then
-		* we stomp all over it.  Sorry, my plug-inis more important than yours :)
-		*/
-		do_action_ref_array( 'phpmailer_init', array( &$phpmailer ) );
-		
-		$from_email = SendPress_Option::get('fromemail');
-		$phpmailer->From = $from_email;
-		$phpmailer->FromName = SendPress_Option::get('fromname');
-		$phpmailer->Sender = SendPress_Option::get('fromemail');
-		$sending_method  = SendPress_Option::get('sendmethod');
-		
-		$phpmailer = apply_filters('sendpress_sending_method_'. $sending_method, $phpmailer );
-
-		
-		/*
-		if($sending_method == 'sendpress'){
-			// Set the mailer type as per config above, this overrides the already called isMail method
-			$phpmailer->Mailer = 'smtp';
-			// We are sending SMTP mail
-			$phpmailer->IsSMTP();
-
-			// Set the other options
-			$phpmailer->Host = 'smtp.sendgrid.net';
-			$phpmailer->Port = 25;
-
-			// If we're using smtp auth, set the username & password
-			$phpmailer->SMTPAuth = TRUE;
-			$phpmailer->Username = SendPress_Option::get('sp_user');
-			$phpmailer->Password = SendPress_Option::get('sp_pass');
-	
-		} elseif ( $sending_method == 'gmail' ){
-
-			// Set the mailer type as per config above, this overrides the already called isMail method
-			$phpmailer->Mailer = 'smtp';
-			// We are sending SMTP mail
-			$phpmailer->IsSMTP();
-
-			// Set the other options
-			$phpmailer->Host = 'smtp.gmail.com';
-			$phpmailer->SMTPAuth = true;  // authentication enabled
-			$phpmailer->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
-
-			$phpmailer->Port = 465;
-			// If we're using smtp auth, set the username & password
-			$phpmailer->SMTPAuth = TRUE;
-			$phpmailer->Username = SendPress_Option::get('gmailuser');
-			$phpmailer->Password = SendPress_Option::get('gmailpass');
-		} 
-		
-		$phpmailer->MessageID = $email->messageID;
-		$phpmailer->AddCustomHeader( sprintf( 'X-SP-MID: %s',$email->messageID ) );
-		*/
-		$hdr = new SendPress_SendGrid_SMTP_API();
-		$hdr->addFilterSetting('dkim', 'domain', $this->get_domain_from_email($from_email) );
-		//$phpmailer->AddCustomHeader( sprintf( 'X-SP-MID: %s',$email->messageID ) );
-		$phpmailer->AddCustomHeader(sprintf( 'X-SMTPAPI: %s', $hdr->asJSON() ) );
-		$phpmailer->AddCustomHeader('X-SP-ACCOUNT','TEST-FROM_DEV');
-		// Set SMTPDebug to 2 will collect dialogue between us and the mail server
-		if($istest == true){
-			$phpmailer->SMTPDebug = 2;
-		
-			// Start output buffering to grab smtp output
-			ob_start(); 
-		}
-
-
-
-		// Send!
-		$result = true; // start with true, meaning no error
-		$result = @$phpmailer->Send();
-
-		//$phpmailer->SMTPClose();
-		if($istest == true){
-			// Grab the smtp debugging output
-			$smtp_debug = ob_get_clean();
-			SendPress_Option::set('phpmailer_error', $phpmailer->ErrorInfo);
-			SendPress_Option::set('last_test_debug', $smtp_debug);
-			$this->last_send_smtp_debug = $smtp_debug;
-		
-		}
-
-		if (  $result != true && $istest == true  ) {
-			$hostmsg = 'host: '.($phpmailer->Host).'  port: '.($phpmailer->Port).'  secure: '.($phpmailer->SMTPSecure) .'  auth: '.($phpmailer->SMTPAuth).'  user: '.($phpmailer->Username)."  pass: *******\n";
-		    $msg = '';
-			$msg .= __('The result was: ','sendpress').$result."\n";
-		    $msg .= __('The mailer error info: ','sendpress').$phpmailer->ErrorInfo."\n";
-		    $msg .= $hostmsg;
-		    $msg .= __("The SMTP debugging output is shown below:\n","sendpress");
-		    $msg .= $smtp_debug."\n";
-		    //$msg .= 'The full debugging output(exported mailer) is shown below:\n';
-		    //$msg .= var_export($phpmailer,true)."\n";
-			$this->append_log($msg);								
-		}
-
-	
-		
-		return $result;
-
+		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Sender_(type)::send_email()' );
+		return SendPress_Manager::old_send_email($to, $subject, $html, $text, $istest );
 	}
 
 

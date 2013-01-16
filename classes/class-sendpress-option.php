@@ -66,4 +66,15 @@ class SendPress_Option {
 		$options[$option] = $value;
 		return update_option( self::$key , $options );
 	}
+
+
+	function is_double_optin(){
+		if( SendPress_Option::get('send_optin_email') == 'yes'){
+			return true;			
+		}
+		return false;
+	}
+
+
+	
 }

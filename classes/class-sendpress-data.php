@@ -246,7 +246,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 			'type'=>'confirm'
 		);
 		
-		$wpdb->insert( self::subscriber_event_table(),  $event_data);
+		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $event_data);
 
 		//print_r($this->get_open_without_id($rid,$sid));
 	}
@@ -259,8 +259,85 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$wpdb->update( SendPress_Data::list_subcribers_table() , array('status'=> 3) , array('listID'=> $lid,'subscriberID'=>$sid ));
 	}
 
+	function get_subscriber_by_email( $email ){
+		global $wpdb;
+		$table = SendPress_Data::subscriber_table();
+		$result = $wpdb->get_var( $wpdb->prepare("SELECT subscriberID FROM $table WHERE email = %d ", $email) );
+		return $result;
+	}
+
+	function add_subscriber($values){
+		$table =  SendPress_Data::subscriber_table();
+		$email = $values['email'];
+
+		if(!isset($values['join_date'])){
+			$values['join_date'] =  date('Y-m-d H:i:s');
+		}
+		if(!isset($values['identity_key'])){
+			$values['identity_key'] =  SendPress_Data::random_code();
+		}
+
+		if( !filter_var($email, FILTER_VALIDATE_EMAIL) ){
+			return false;
+		}
+
+		$result = SendPress_Data::get_subscriber_by_email($email);
+		
+
+		if(	$result ){ return $result; }
+		global $wpdb;
+		$result = $wpdb->insert($table,$values);
+		//$result = $this->wpdbQuery("SELECT @lastid2 := LAST_INSERT_ID()",'query');
+		return $wpdb->insert_id;
+	}
 
 
+
+	function subscribe_user($listid, $email, $first, $last){
+
+		$success = false;
+		$subscriberID = SendPress_Data::add_subscriber(array('firstname' => $first,'lastname' => $last,'email' => $email));
+
+		if( false === $subscriberID ){
+			return false;
+		}
+		$args = array( 'post_type' => 'sendpress_list','numberposts'  => -1,
+	    'offset'          => 0,
+	    'orderby'         => 'post_title',
+	    'order'           => 'DESC', );
+		$lists = get_posts( $args );
+
+		$listids = explode(',', $listid);
+
+
+
+		
+	    //$lists = $s->getData($s->lists_table());
+	    //$listids = array();
+
+		$status = 2;
+		if( SendPress_Option::is_double_optin() ){
+			$status = 1;
+			$this->send_optin( $subscriberID, $listids, $lists);
+
+		}
+
+
+
+		foreach($lists as $list){
+			if( in_array($list->ID, $listids) ){
+				$success = SendPress_Data::update_subscriber_status($list->ID, $subscriberID, $status);
+			}
+		}
+
+		return $success;
+	}
+
+	function random_code() {
+	    $now = time();
+	    $random_code = substr( $now, strlen( $now ) - 3, 3 ) . substr( md5( uniqid( rand(), true ) ), 0, 8 ) . substr( md5( $now . rand() ), 0, 4);
+	    return $random_code;
+	}
 
 	/********************* END SUBSCRIBER FUNCTIONS **************************/
 
