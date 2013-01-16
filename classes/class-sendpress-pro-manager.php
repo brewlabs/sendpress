@@ -36,11 +36,15 @@ class SendPress_Pro_Manager {
 
 	function check_api_key(){
 		if( class_exists('SendPress_Option') ){
-			$state = SendPress_Option::get('api_key_state');
 			$key = SendPress_Option::get('api_key');
-			//echo 'state = '.$state;
+			if ( false === ( $state = get_transient( 'sendpress_key_state' ) ) ) {
+			    // It wasn't there, so regenerate the data and save the transient
+			    $sendpress_key_state = $this->check_key($key);
+			    set_transient( 'sendpress_key_state', $sendpress_key_state['state'], $sendpress_key_state['transient_time'] );
+			    $state = $sendpress_key_state['state'];
+			}
+			
 			if( $state !== 'valid' && !empty($key) ){
-				//$this->show_message('api_key_failed');
 				add_action('sendpress_notices', array($this, 'key_notice'));
 				SendPress_Option::set('api_key','');
 			}
@@ -48,12 +52,36 @@ class SendPress_Pro_Manager {
 
 	}
 
+	function check_key($key){
+
+        // data to send in our API request
+        $api_params = array( 
+            'edd_action'=> 'check_license', 
+            'license'   => $key, 
+            'item_name' => urlencode( SENDPRESS_PRO_NAME ) // the name of our product in EDD
+        );
+        
+        // Call the custom API.
+        $response = wp_remote_get( add_query_arg( $api_params, SENDPRESS_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
+
+        // make sure the response came back okay
+        // if response didn't come back, lets set the transient and try again in a day.
+        if ( is_wp_error( $response ) )
+            return array('state'=>'valid', 'transient_time'=>DAY_IN_SECONDS);
+
+        // decode the license data
+        $license_data = json_decode( wp_remote_retrieve_body( $response ) );
+
+        // $license_data->license will be either "deactivated" or "failed"
+        return array('state'=>$license_data->license, 'transient_time'=>SENDPRESS_TRANSIENT_LENGTH);
+	}
+
 	function key_notice(){
 		echo '<div class="alert alert-error">';
 			echo "<b>";
 			_e('Alert','sendpress');
 			echo "</b>&nbsp;-&nbsp;";
-			printf(__('Your API key is either invalid or in use on another site. Need help? Visit <a href="http://sendpress.com/support/">SendPress Support</a>','sendpress'), SendPress_Option::get('api_key_state') );
+			printf(__('Your API key is either invalid or in use on another site. Need help? Visit <a href="http://sendpress.com/support/">SendPress Support</a>','sendpress'), get_transient( 'sendpress_key_state' ) );
 	    echo '</div>';
 	}
 	

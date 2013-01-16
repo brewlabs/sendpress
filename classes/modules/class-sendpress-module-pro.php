@@ -9,17 +9,13 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_Module_Pro extends SendPress_Module{
 	
 	function html($sp){
-		//for testing only
-		//SendPress_Option::set('api_key','');
-        //SendPress_Option::set('api_key_state','');
 
 		$key_active = false;
-		if( SendPress_Option::get('api_key_state') === 'valid' ){
+		if( get_transient( 'sendpress_key_state' ) === 'valid' ){
 			$key_active = true;
 		}
 		SendPress_Helper::log('API Key = '.SendPress_Option::get('api_key'));
-		SendPress_Helper::log('API State = '.SendPress_Option::get('api_key_state'));
-		//$key_active = true;
+		SendPress_Helper::log('API State = '.get_transient( 'sendpress_key_state' ));
 		
 	?>
 		<h4>SendPress Pro</h4>

@@ -52,8 +52,11 @@ require_once( SENDPRESS_PATH . 'classes/class-file-loader.php' );
 $sp_loader = new File_Loader('SendPress Required Class');
 */
 //require_once( SENDPRESS_PATH . 'classes/selective-loader.php' );
-class SendPress {
+if( !defined('SENDPRESS_TRANSIENT_LENGTH') ){
+	define( 'SENDPRESS_TRANSIENT_LENGTH', WEEK_IN_SECONDS );
+}
 
+class SendPress {
 
 	var $prefix = 'sendpress_';
 	var $ready = false;

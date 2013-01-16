@@ -183,8 +183,8 @@ class SendPress_Module {
 				$ret = 'activated';
 			}
 		}
-
-		if( $ret === 'not-installed' && SendPress_Option::get('api_key_state') === 'valid'  ){
+		
+		if( $ret === 'not-installed' && get_transient( 'sendpress_key_state' ) === 'valid'  ){
 			$ret = 'installable';
 		}
 

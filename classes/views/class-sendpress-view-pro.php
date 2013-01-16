@@ -30,7 +30,8 @@ class SendPress_View_Pro extends SendPress_View{
 
         SendPress_Option::set('api_key',$license);
         if($license_data){
-        	SendPress_Option::set('api_key_state', $license_data->license);
+        	//SendPress_Option::set('api_key_state', $license_data->license);
+            set_transient( 'sendpress_key_state', $license_data->license, SENDPRESS_TRANSIENT_LENGTH );
     	}
     }
 
@@ -55,10 +56,10 @@ class SendPress_View_Pro extends SendPress_View{
         $license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
         // $license_data->license will be either "deactivated" or "failed"
-        if( $license_data->license == 'deactivated' ){
+        if( $license_data->license === 'deactivated' || $license_data->license === 'failed' ){
             SendPress_Option::set('api_key','');
-            SendPress_Option::set('api_key_state',$license_data->license);
-            //need to check what the value is on page load and display a message if its failed.
+            //SendPress_Option::set('api_key_state',$license_data->license);
+            delete_transient( 'sendpress_key_state' );
         }
 
     }
