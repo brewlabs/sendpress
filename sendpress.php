@@ -176,6 +176,7 @@ class SendPress {
 			SendPress_Pro_Manager::init();
 			SendPress_Cron::get_instance();
 
+
 			sendpress_register_sender('SendPress_Sender_Website');
 			sendpress_register_sender('SendPress_Sender_Gmail');
 
@@ -364,8 +365,10 @@ class SendPress {
 	function template_include( $template ) { 
 	  	global $post; 
 
-	  	if($action = get_query_var( 'sendpress' )){
+	  	if( (get_query_var( 'sendpress' )) || isset($_POST['sendpress']) ){
 		  	
+		  	$action = isset($_POST['sendpress']) ? $_POST['sendpress'] : get_query_var( 'sendpress' );
+
 		  	//Look for encrypted data
 	  		$data = SendPress_Data::decrypt( $action );
 			$view = false;
@@ -546,6 +549,10 @@ class SendPress {
 			SendPress_Option::set('emails-per-day','1000');
 			SendPress_Option::set('emails-per-hour','100');
 		}
+
+		
+
+		
 
 		if( SendPress_Option::get('emails-today') == false ){
 			$emails_today = array( date("z") => '0' );

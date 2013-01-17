@@ -103,7 +103,7 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 
 	</div>
 </div>
-
+<!--
 <div class="boxer form-box">
 	<h2>General Form Post Settings</h2>
 	<div style="float: right; width: 45%;"><br>
@@ -136,6 +136,7 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 </div>
 	<br class="clear">
 </div>
+-->
 
 <?php wp_nonce_field($sp->_nonce_value); ?>
 </form>
