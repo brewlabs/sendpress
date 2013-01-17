@@ -31,7 +31,7 @@ class SendPress_Sender {
 		add_filter('sendpress_sending_method_sendpress',array('SendPress_Sender','sendpress'),10,1);
 	}
 
-	//qjrizsmmteujfzcq
+	//Legacy Sending
 	function gmail($phpmailer){
 		// Set the mailer type as per config above, this overrides the already called isMail method
 		$phpmailer->Mailer = 'smtp';
@@ -50,7 +50,7 @@ class SendPress_Sender {
 		$phpmailer->Password = SendPress_Option::get('gmailpass');
 		return $phpmailer;
 	}
-
+	//Legacy Sending
 	function sendpress($phpmailer){
 		// Set the mailer type as per config above, this overrides the already called isMail method
 		$phpmailer->Mailer = 'smtp';

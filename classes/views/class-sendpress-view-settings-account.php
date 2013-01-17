@@ -41,6 +41,16 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 
   }
 
+  function send_test_email(){
+
+        $options['testemail'] = $_POST['testemail'];
+        
+        SendPress_Option::set($options);
+        SendPress_Manager::send_test();
+       // $this->send_test();
+       // $this->redirect();
+  }
+
 
   function html( $sp ) {
     global  $sendpress_sender_factory;
@@ -131,7 +141,7 @@ wp_nonce_field( $sp->_nonce_value );
 ?>
 </form>
 <form method="post" id="post" class="form-horizontal">
-<input type="hidden" name="action" value="test-account-setup" />
+<input type="hidden" name="action" value="send-test-email" />
 <br class="clear">
 <div class="alert alert-success">
   <?php _e( '<b>NOTE: </b>Remeber to check your spam folder if you do not seem to be recieving emails', 'sendpress' ); ?>.

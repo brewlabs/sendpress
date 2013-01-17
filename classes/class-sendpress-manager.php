@@ -15,7 +15,7 @@ class SendPress_Manager {
 		$body= __( 'SendPress test email :).','sendpres' );
 		$testemails = explode(',' , SendPress_Option::get('testemail') );
 		foreach ($testemails as $emailadd) {
-			SendPress_Manager::send($emailadd, $subject, $body, $text, true );
+			 SendPress_Manager::send($emailadd, $subject, $body, $text, true );
 		}
 	}	
 	
