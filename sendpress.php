@@ -1,7 +1,7 @@
 <?php 
 /*
 Plugin Name: SendPress: Email Marketing and Newsletters
-Version: 0.8.8.5
+Version: 0.8.8.6
 Plugin URI: http://sendpress.com
 Description: Easy to manage Email Markteing and Newsletter plugin for WordPress. 
 Author: SendPress
@@ -16,7 +16,7 @@ if ( !defined('DB_NAME') ) {
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'https://api.sendpres.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.2' );
-define( 'SENDPRESS_VERSION', '0.8.8.5' );
+define( 'SENDPRESS_VERSION', '0.8.8.6' );
 define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -589,6 +589,13 @@ class SendPress {
 
 		//MAKE SURE WE ARE ON AN ADMIN PAGE
 		if(isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)){
+
+			if(SendPress_Option::get('whatsnew')){
+				SendPress_Option::set('whatsnew',false);
+				SendPress_View_Help_Whatsnew::redirect();
+			}
+
+
 			$this->_page = $_GET['page'];
 			add_filter('tiny_mce_before_init',  array($this,'myformatTinyMCE') );
 			if( isset($_GET['spv'])){
@@ -962,6 +969,8 @@ class SendPress {
 
 		if ( version_compare( $current_version, SENDPRESS_VERSION, '==' ) )
 			return;
+
+		SendPress_Option::set('whatsnew',true);
 
 		if(version_compare( $current_version, '0.6.2', '==' )){
 			require_once(SENDPRESS_PATH . 'inc/db/status.table.php');

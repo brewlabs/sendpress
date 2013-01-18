@@ -643,8 +643,14 @@ margin-right: 0;
 
 
 
-
-
+.about-wrap .sp-badge {
+position: absolute;
+top: 0;
+right: 0;
+}
+.sp-footer{
+    padding-bottom: 5px;
+}
 
 
 
