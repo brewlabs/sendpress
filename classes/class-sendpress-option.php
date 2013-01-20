@@ -67,9 +67,31 @@ class SendPress_Option {
 		return update_option( self::$key , $options );
 	}
 
-
+	 /**
+     * is_double_optin
+     * 
+     *
+     * @access public
+     *
+     * @return bool 
+     */
 	function is_double_optin(){
 		if( SendPress_Option::get('send_optin_email') == 'yes'){
+			return true;			
+		}
+		return false;
+	}
+
+	/**
+     * use_theme_style
+     * 
+     *
+     * @access public
+     *
+     * @return bool 
+     */
+    function use_theme_style(){
+		if( SendPress_Option::get('try-theme') == 'yes'){
 			return true;			
 		}
 		return false;

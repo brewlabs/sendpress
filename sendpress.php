@@ -537,6 +537,11 @@ class SendPress {
 		if( SendPress_Option::get('send_optin_email') == false ){
 			SendPress_Option::set('send_optin_email','yes');
 		}
+
+		if( SendPress_Option::get('try-theme') == false ){
+			SendPress_Option::set('try-theme','no');
+		}
+
 		if( SendPress_Option::get('confirm-page') == false ){
 			SendPress_Option::set('confirm-page','default');
 		}

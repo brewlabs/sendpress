@@ -14,12 +14,109 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 
 	function html() {
 
-		$email = $_POST['sp'];	
+		$user_info = isset($_POST['sp']) ?  $_POST['sp']: array() ;	
+		$valid_user = array();
 		//foreach()
+		if(isset($user_info['list'])){
+			$data_error = false;
+			if( isset($user_info['email']) && is_email( $user_info['email'] )){
+				$valid_user['email'] = $user_info['email'];
+			} else {
+				$data_error = __('Invalid Email','sendpress');
+			}
 
-		print_r($email);
+			if( isset($user_info['firstname']) ){
+				$valid_user['firstname'] = $user_info['firstname'];
+			} else {
+				$valid_user['firstname'] = '';
+			}
+			
+			if( isset($user_info['lastname']) ){
+				$valid_user['lastname'] = $user_info['lastname'];
+			} else {
+				$valid_user['lastname'] = '';
+			}
+			$status = false;
+			if($data_error ==  false){
+				$status =  SendPress_Data::subscribe_user($user_info['list'], $valid_user['email'], $valid_user['firstname'], $valid_user['lastname']);
+				if($status == false){
+					$data_error = __('Problem with subscribing user.','sendpress');
+				}
+			} 
 
-		echo "Nice Post";
+
+			$post_responce = get_post_meta($user_info['list'], 'post-page', true);
+			if($post_responce == false){
+				$post_responce = 'default';
+			}
+
+			$optin = SendPress_Option::is_double_optin();
+
+			switch($post_responce){
+
+				case "json": //Respond to post with json data
+					if( $status == false || $data_error != false  ){
+						// { success: true/false, list: listid , name: listname, optin: true/false }
+						$info= array(
+							"success" => false,
+							"error" => $data_error,
+							"list" => $user_info['list'],
+							);
+
+
+
+					}
+					if($status){
+						$info= array(
+							"success" => true,
+							"error" => $data_error,
+							"list" => $user_info['list'],
+							"optin" => $optin,
+							"email"=> $valid_user['email']
+							);
+
+
+
+					}
+					$encoded = json_encode($info);
+					header('Content-type: application/json');
+					exit($encoded);
+				break;
+
+				default:
+
+				$this->default_page($status , $data_error );
+			}
+
+
+
+
+
+				
+
+
+
+
+
+		} else {
+			SendPress_Public_View::page_start();
+			?>
+			<div class="span12">
+				<div class='area'>
+					<h1><?php _e('You must provide a list ID for the post page to work','sendpress'); ?>.</h1>
+				</div>
+			</div>
+			<?php
+			SendPress_Public_View::page_end();
+
+
+
+		}
+
+
+		//print_r($email);
+
+		//echo "Nice Post";
 	
 		/*
 
@@ -41,5 +138,31 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 		header( 'Location: '.$link ) ;
 		*/
 	}
+
+
+
+		function default_page($status, $error){
+			SendPress_Public_View::page_start();
+			?>
+			<div class="span12">
+				<div class='area'>
+					<?php if( $status == true && $error == false){ ?>
+						<h1><?php _e('Thank You for subscribing','sendpress'); ?>.</h1>
+
+					<?php } else { ?>
+						<h1><?php _e('Sorry, We had a Problem adding your email','sendpress'); ?>.</h1>
+
+
+					<?php } ?>
+
+
+
+				</div>
+			</div>
+			<?php
+			SendPress_Public_View::page_end();
+
+		}
+
 
 }

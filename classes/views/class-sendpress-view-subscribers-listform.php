@@ -48,7 +48,7 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 		<b>HTML</b><br>
 		<textarea style="width:100%; padding: 8px;" rows="21" name="post-page-text">
 &lt;form method="post" action="<?php echo trailingslashit(site_url()); ?>">
-	&lt;input type="hidden" name="sp[list]" value="1115"/>
+	&lt;input type="hidden" name="sp[list]" value="<?php echo $list_id;?>"/>
 	&lt;input type="hidden" name="sendpress" value="post" />
 	<div id="form-wrap">
 		<p name="email">
@@ -69,7 +69,12 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 </div>
 	Response Options
 	<div class='well'>
-<?php $ctype = get_post_meta($list_id, 'post-page', true); ?>
+<?php $ctype = get_post_meta($list_id, 'post-page', true);
+	if($ctype == false){
+		$ctype = 'default';
+	}
+
+ ?>
 <input type="radio" name="post-page" value="default" <?php if($ctype=='default'){echo "checked='checked'"; } ?> /> Show Default SendPress Page<br><br>
 			<input type="radio" name="post-page" value="custom"  <?php if($ctype=='custom'){echo "checked='checked'";} ?>/> Redirect to <select name="post-page-id"> 
  <option value="">

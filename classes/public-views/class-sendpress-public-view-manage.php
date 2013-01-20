@@ -47,6 +47,12 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 
 	function html() {
 		$info = $this->data();
+
+		if(!isset($info->id)){
+			$info = NEW stdClass();
+			$info->id = 0;
+		}
+
 		/*
 		$link = array(
 				"id"=>$email->subscriberID,
@@ -72,6 +78,13 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 	}
 
 	$subscriber = SendPress_Data::get_subscriber( $info->id );
+
+	if($subscriber == false){
+		$subscriber = NEW stdClass();
+		$subscriber->email = 'example@sendpress.com';
+		$subscriber->join_date = date("F j, Y, g:i a");
+
+	}
 	
 	echo '<h4>';
 	_e('Subscriber Info','sendpress');

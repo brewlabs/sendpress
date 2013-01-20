@@ -17,6 +17,9 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		SendPress_Option::set('optin_subject', $_POST['subject']);
 		SendPress_Option::set('confirm-page', $_POST['confirm-page']);
 		SendPress_Option::set('confirm-page-id',$_POST['confirm-page-id']);
+		SendPress_Option::set('try-theme', $_POST['try-theme']);
+
+
 
 		$optin = SendPress_Data::get_template_id_by_slug('double-optin');
 		$dpost = get_post($optin);
@@ -42,7 +45,20 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		</div>
 		<br class="clear">
 		<br class="clear">
-		
+<div class="boxer form-box">
+	<h2>Public Page Settings</h2>
+	<br><b>Use theme styles:&nbsp;&nbsp;&nbsp;<input type="radio" value="yes" <?php if(SendPress_Option::get('try-theme')=='yes'){ echo "checked='checked'"; } ?> name="try-theme"> Yes&nbsp;&nbsp;&nbsp;<input type="radio" value="no" <?php if(SendPress_Option::get('try-theme')=='no'){ echo "checked='checked'"; } ?> name="try-theme"> No</b>
+	<br>This will attempt to use the WordPress theme functions <code>get_header</code> and <code>get_footer</code> to build the SendPress default public pages.
+	<br><br><b>View the default pages below to see how they look.</b>
+	<ul class="nomargin">
+		<li><a href="<?php echo site_url(); ?>?sendpress=confirm">Confirmation Page</a></li>
+		<li><a href="<?php echo site_url(); ?>?sendpress=manage">Manage Page</a></li>
+		<li><a href="<?php echo site_url(); ?>?sendpress=post">Post Page</a></li>
+	</ul>
+
+
+</div>
+	
 		
 <div class="boxer form-box">
 	<h2>Double Opt-in Email</h2>
