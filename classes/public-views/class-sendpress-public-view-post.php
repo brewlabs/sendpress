@@ -83,6 +83,16 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 					exit($encoded);
 				break;
 
+				case "redirect":
+						$post_redirect = get_post_meta($user_info['list'], 'post-redirect', true);
+						if($post_redirect == false){
+							$post_redirect = site_url();
+						}
+
+						wp_redirect($post_redirect);
+
+				break;
+
 				default:
 
 				$this->default_page($status , $data_error );
