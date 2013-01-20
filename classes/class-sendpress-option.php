@@ -97,6 +97,5 @@ class SendPress_Option {
 		return false;
 	}
 
-
 	
 }
