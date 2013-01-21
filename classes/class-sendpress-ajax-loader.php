@@ -92,7 +92,11 @@ class SendPress_Ajax_Loader{
 			$content = get_the_content();
 			$content = apply_filters('the_content', $content);
 			$content = str_replace(']]>', ']]&gt;', $content);
-			$d->data[] = array("content"=> $content,"excerpt"=>get_the_excerpt() );
+			$d->data[] = array(
+				"content" => $content,
+				"excerpt" => get_the_excerpt(),
+				"url" => get_permalink()
+			);
 			
 		endwhile;
 
