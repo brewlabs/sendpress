@@ -413,6 +413,16 @@ if(strlen($active_header['value']) > 0){
 		  H6
 		</label>
 	</p>
+	<p>Header Link:&nbsp;
+	  	<label class="radio">
+		  <input type="radio" name="headerlinkOptions" id="optionsRadios2" value="link" checked>
+		  Link Header to Post
+		</label>
+		<label class="radio">
+		  <input type="radio" name="headerlinkOptions" id="optionsRadios2" value="nolink">
+		  Don't Link Header to Post
+		</label>
+	</p>
   	<p>Post Content:&nbsp;
 	  	<label class="radio">
 		  <input type="radio" name="optionsRadios" id="optionsRadios1" value="excerpt" checked>
