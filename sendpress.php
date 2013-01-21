@@ -539,7 +539,7 @@ class SendPress {
 		}
 
 		if( SendPress_Option::get('try-theme') == false ){
-			SendPress_Option::set('try-theme','no');
+			SendPress_Option::set('try-theme','yes');
 		}
 
 		if( SendPress_Option::get('confirm-page') == false ){
