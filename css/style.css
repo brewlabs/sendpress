@@ -76,6 +76,12 @@ border-collapse: separate;
     outline: none;
 }
 
+.sendpress-sysinfo{
+    width: 100%;
+    height: 800px;
+}
+
+
 input#title {
 border-color: #CCC;
 padding: 3px 8px;
