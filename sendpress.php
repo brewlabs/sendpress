@@ -1627,7 +1627,7 @@ class SendPress {
 	function send_single_from_queue(){
 		
 		global $wpdb;
-		$limit =  wp_rand(1, 10);
+		$limit =  1; //wp_rand(1, 10);
 		$emails_per_hour = SendPress_Option::get('emails-per-hour');
 		if($emails_per_hour != 0){
 			$rate = 3600 / $emails_per_hour;
@@ -1660,7 +1660,7 @@ class SendPress {
 					}
 
 					SendPress_Data::queue_email_process( $email->id );
-					$result = $this->sp_mail_it( $email );
+					$result = SendPress_Manager::send_email_from_queue( $email );
 					$email_count++;
 					error_log($email_count);
 					if ($result) {

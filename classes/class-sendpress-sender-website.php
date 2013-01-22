@@ -95,7 +95,7 @@ class SendPress_Sender_Website extends SendPress_Sender {
 		$phpmailer->Sender = SendPress_Option::get('fromemail');
 		
 		$hdr = new SendPress_SendGrid_SMTP_API();
-		$hdr->addFilterSetting('dkim', 'domain', $this->get_domain_from_email($from_email) );
+		$hdr->addFilterSetting('dkim', 'domain', SendPress_Manager::get_domain_from_email($from_email) );
 		//$phpmailer->AddCustomHeader( sprintf( 'X-SP-MID: %s',$email->messageID ) );
 		$phpmailer->AddCustomHeader(sprintf( 'X-SMTPAPI: %s', $hdr->asJSON() ) );
 		$phpmailer->AddCustomHeader('X-SP-ACCOUNT','TEST-FROM_DEV');
