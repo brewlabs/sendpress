@@ -211,7 +211,6 @@ class SendPress_Ajax_Loader{
 	}
 
 	function sendcount(){
-		error_log('asdf');
 		$this->verify_ajax_call();
 		// Create the response array
 		$sp = new SendPress;

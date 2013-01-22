@@ -85,8 +85,6 @@ class SendPress_Manager {
    		$method = SendPress_Option::get( 'sendmethod' );
 
    		if( array_key_exists( $method , $senders) && is_a( $senders[$method] , 'SendPress_Sender') ){
-   			error_log($method);
-   			error_log('New Running');
    			return $senders[$method]->send_email($to, $subject, $body, $text, $test );
    		}
 
@@ -96,7 +94,6 @@ class SendPress_Manager {
 
 	function old_send_email($to, $subject, $html, $text, $istest = false ){
 		global $phpmailer, $wpdb;
-		error_log('Old Method');
 		// (Re)create it, if it's gone missing
 		if ( !is_object( $phpmailer ) || !is_a( $phpmailer, 'PHPMailer' ) ) {
 			require_once ABSPATH . WPINC . '/class-phpmailer.php';

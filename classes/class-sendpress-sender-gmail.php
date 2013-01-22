@@ -86,7 +86,6 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 		$phpmailer->Mailer = 'smtp';
 		// We are sending SMTP mail
 		$phpmailer->IsSMTP();
-		error_log('gmail');
 		// Set the other options
 		$phpmailer->Host = 'smtp.gmail.com';
 		$phpmailer->SMTPAuth = true;  // authentication enabled
