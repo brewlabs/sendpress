@@ -1581,13 +1581,13 @@ class SendPress {
 
 		for ($i=0; $i < $count ; $i++) { 
 			if($this->cron_stop() == false ){
-				$email = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 ORDER BY id LIMIT 1","get_row");
+				$email = $this->wpdbQuery("SELECT * FROM ". SendPress_Data::queue_table() ." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 ORDER BY id LIMIT 1","get_row");
 				if($email != null){
 					SendPress_Data::queue_email_process( $email->id );
-					$result = $this->sp_mail_it( $email );
+					$result = SendPress_Manager::send_email_from_queue( $email );
 					$email_count++;
 					if ($result) {
-						$table = $this->queue_table();
+						$table = SendPress_Data::queue_table();
 						$wpdb->query( 
 							$wpdb->prepare( 
 								"DELETE FROM $table WHERE id = %d",
@@ -1603,7 +1603,7 @@ class SendPress {
 						//$wpdb->insert( $this->subscriber_open_table(),  $senddata);
 						SendPress_Data::update_report_sent_count( $email->emailID );
 					} else {
-						$wpdb->update( $this->queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
+						$wpdb->update( SendPress_Data::queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
 					}
 				} else{//We ran out of emails to process.
 					break;
