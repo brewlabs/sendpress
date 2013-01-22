@@ -63,11 +63,18 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 				"action"=>"unsubscribe"
 			);
 		*/
+		?>
+		<?php
+
 		echo "<div class='span12'>";
 		echo "<div class='area'>";
+		$try_theme = SendPress_Option::use_theme_style();
 		$name = get_bloginfo('name'); 
-		echo '<h1>'. $name .'</h1>';
-		echo '<h2>';
+		if(!$try_theme){
+			
+			echo '<h1>'. $name .'</h1>';
+		}
+		echo '<h2 class="entry-title">';
 		_e('Manage Subscription','sendpress');
 		echo '</h2>';
 
