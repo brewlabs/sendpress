@@ -84,8 +84,9 @@ class SendPress_Manager {
 	   	$senders = $sendpress_sender_factory->get_all_senders();
    		$method = SendPress_Option::get( 'sendmethod' );
 
-   		if( isset($senders[ $method ]) ){
+   		if( array_key_exists( $method , $senders) && is_a( $senders[$method] , 'SendPress_Sender') ){
    			error_log($method);
+   			error_log('New Running');
    			return $senders[$method]->send_email($to, $subject, $body, $text, $test );
    		}
 
