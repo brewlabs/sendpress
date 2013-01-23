@@ -20,10 +20,13 @@ class SendPress_Signup_Shortcode{
 
 	    ob_start();
 
-	   $args = array( 'post_type' => 'sendpress_list','numberposts'     => -1,
-    'offset'          => 0,
-    'orderby'         => 'post_title',
-    'order'           => 'DESC', );
+	   $args = array( 
+	   		'post_type' 	=> 'sendpress_list',
+	   		'numberposts'   => -1,
+    		'offset'        => 0,
+    		'orderby'       => 'post_title',
+    		'order'         => 'DESC'
+    	);
 
 		$lists = get_posts( $args );
 	    //$lists = $s->getData($s->lists_table());
@@ -46,7 +49,8 @@ class SendPress_Signup_Shortcode{
 			'desc' => '',
 			'label_width' => 100,
 			'thank_you'=>'Thank you for subscribing!',
-			'button_text' => 'Submit'
+			'button_text' => 'Submit',
+			'no_list_error' => '<div><b>-- NO LIST HAS BEEN SET! --</b></div>'
 		), $attr));
 
 		$label = filter_var($label_display, FILTER_VALIDATE_BOOLEAN);
@@ -62,7 +66,7 @@ class SendPress_Signup_Shortcode{
 						echo '<input type="hidden" name="redirect" value="'.get_permalink().'" />';
 					}
 					if(empty($listids)){
-						echo "<div><b>-- NO LIST HAS BEEN SELECTED IN WIDGET SETTINGS --<b></div>";
+						echo $no_list_error;
 					}
 				?>
 				<input type="hidden" name="sp[list]" id="list" value="<?php echo $listids; ?>" />

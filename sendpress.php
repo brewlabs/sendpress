@@ -21,15 +21,10 @@ define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
 
-
 if(!defined('SENDPRESS_STORE_URL') ){
-	$SP_Store_URL = 'http://sendpress.com';
-
-	if( defined('WP_DEBUG') && WP_DEBUG ){
-		$SP_Store_URL = 'http://testing.sendpress.com/3.4.2';
-	}
-
-	define( 'SENDPRESS_STORE_URL', $SP_Store_URL );
+	define( 'SENDPRESS_STORE_URL', 'http://sendpress.com' );
+}
+if(!defined('SENDPRESS_PRO_NAME') ){
 	define( 'SENDPRESS_PRO_NAME', 'SendPress Pro' );
 }
 
