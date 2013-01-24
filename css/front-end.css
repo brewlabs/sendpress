@@ -12,7 +12,7 @@
 		padding:0 5px 0 0;
 	}
 	/* input fields in sign up form */
-	.sendpress-signup-form input[text]{
+	.sendpress-signup-form input[type=text]{
 		width: 100%;
 	}
 	/* submit button */

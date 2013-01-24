@@ -54,6 +54,8 @@ class SendPress_Widget_Signup extends WP_Widget {
 		$args.= 'firstname_label="'.$instance['first_label'].'" ';
 		$args.= 'lastname_label="'.$instance['last_label'].'" ';
 		$args.= 'email_label="'.$instance['email_label'].'" ';
+		$args.= 'list_label="'.$instance['list_label'].'" ';
+		
 		$args.= 'button_text="'.$instance['button_text'].'" ';
 		$args.= 'thank_you="'.$instance['thank_you'].'" ';
 		$args.= 'label_display="'.$instance['label_display'].'" ';
@@ -103,6 +105,7 @@ class SendPress_Widget_Signup extends WP_Widget {
 		( strlen($new_instance['first_label']) !== 0 ) ? $instance['first_label'] = strip_tags( $new_instance['first_label'] ) : $instance['first_label'] = 'First Name';
 		( strlen($new_instance['last_label']) !== 0 ) ? $instance['last_label'] = strip_tags( $new_instance['last_label'] ) : $instance['last_label'] = 'Last Name';
 		( strlen($new_instance['email_label']) !== 0 ) ? $instance['email_label'] = strip_tags( $new_instance['email_label'] ) : $instance['email_label'] = 'E-Mail';
+		( strlen($new_instance['list_label']) !== 0 ) ? $instance['list_label'] = strip_tags( $new_instance['list_label'] ) : $instance['list_label'] = 'List Selection';
 		( strlen($new_instance['button_text']) !== 0 ) ? $instance['button_text'] = strip_tags( $new_instance['button_text'] ) : $instance['button_text'] = 'Submit';
 		( strlen($new_instance['thank_you']) !== 0 ) ? $instance['thank_you'] = strip_tags( $new_instance['thank_you'] ) : $instance['thank_you'] = 'Thank you for subscribing!';
 
@@ -146,6 +149,7 @@ class SendPress_Widget_Signup extends WP_Widget {
 			'first_label' => __('First Name', 'sendpress'), 
 			'last_label' => __('Last Name', 'sendpress'), 
 			'email_label' => __('E-Mail', 'sendpress'), 
+			'list_label' => __('List Selection', 'sendpress'), 
 			'desc' => '',
 			'button_text' => __('Submit', 'sendpress'),
 			'thank_you' => __('Check your inbox now to confirm your subscription.', 'sendpress')
@@ -214,8 +218,11 @@ class SendPress_Widget_Signup extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'button_text' ); ?>"><?php _e('Button Text:', 'sendpress'); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'button_text' ); ?>" name="<?php echo $this->get_field_name( 'button_text' ); ?>" value="<?php echo $instance['button_text']; ?>" style="width:100%;" />
 		</p>
-
-		<p>Check off the lists you would like users to subscribe to.</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'list_label' ); ?>"><?php _e('Lists Label: multiple lists only', 'sendpress'); ?></label>
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'list_label' ); ?>" name="<?php echo $this->get_field_name( 'list_label' ); ?>" value="<?php echo $instance['list_label']; ?>" style="width:100%;" />
+		</p>
+		<p><b>Check off the lists you would like<br>users to subscribe to.</b></p>
 		<?php 
 		$foundLists = false;
 		foreach($lists as $list){

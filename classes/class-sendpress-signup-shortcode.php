@@ -42,6 +42,7 @@ class SendPress_Signup_Shortcode{
 			'firstname_label' => 'First Name',
 			'lastname_label' => 'Last Name',
 			'email_label' => 'EMail',
+			'list_label' => 'List Selection',
 			'listids' => '',
 			'display_firstname' => false,
 			'display_lastname' => false,
@@ -69,11 +70,29 @@ class SendPress_Signup_Shortcode{
 						echo $no_list_error;
 					}
 				?>
-				<input type="hidden" name="sp[list]" id="list" value="<?php echo $listids; ?>" />
+					
 				<div id="error"><?php echo $sendpress_signup_error; ?></div>
 				<div id="thanks" <?php if( $sendpress_show_thanks ){ echo 'style="display:block;"'; }else{ echo 'style="display:none;"'; } ?>><?php echo $thank_you; ?></div>
 				<div id="form-wrap" <?php if( $sendpress_show_thanks ){ echo 'style="display:none;"'; } ?>>
 					<p><?php echo $desc; ?></p>
+					<?php
+					$list_ids = explode(",",$listids);
+					if( count($list_ids) > 1 ) { ?>
+						<p>
+						<label for="list"><?php echo $list_label; ?>:</label>
+						<?php
+						foreach ($list_ids as $id) { ?>
+							<input type="checkbox" name="sp[list]" id="list" value="<?php echo $id; ?>" checked/> <?php echo get_the_title($id); ?><br>
+						<?php
+						} ?>	
+						</p>
+						<?php
+
+					} else { ?>
+						<input type="hidden" name="sp[list]" id="list" value="<?php echo $listids; ?>" />
+
+					<?php } ?>
+
 					<?php if( filter_var($display_firstname, FILTER_VALIDATE_BOOLEAN)  ): ?>
 						<p name="firstname">
 							<?php if( !$label ): ?>
