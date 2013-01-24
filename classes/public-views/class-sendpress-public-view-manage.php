@@ -66,10 +66,11 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 		?>
 		<?php
 
-		echo "<div class='span12'>";
-		echo "<div class='area'>";
+
+		
 		$try_theme = SendPress_Option::use_theme_style();
 		$name = get_bloginfo('name'); 
+		echo "<div class='entry-header'>";
 		if(!$try_theme){
 			
 			echo '<h1>'. $name .'</h1>';
@@ -77,8 +78,8 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 		echo '<h2 class="entry-title">';
 		_e('Manage Subscription','sendpress');
 		echo '</h2>';
-
-	
+		echo "</div>";
+		
 	if ( isset($info->action) && $info->action == 'unsubscribe' ) {
 		//$sid, $rid, $lid
 		SendPress_Data::unsubscribe_from_list( $info->id , $info->report, $info->listID  );
@@ -96,10 +97,10 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 	echo '<h4>';
 	_e('Subscriber Info','sendpress');
 	echo '</h4>';
-	echo '<div class="well">';
-	$emailtext = _e('Email','sendpress');
+	echo '<div class="subscriber-info">';
+	$emailtext = __('Email','sendpress');
 	echo '<b>' .$emailtext. ':</b> '. $subscriber->email.'<br>';
-	$date = _e('Signup Date','sendpress');
+	$date = __('Signup Date','sendpress');
 	echo '<b>'.$date.':</b> '.$subscriber->join_date.'';
 	echo '</div>';
 	$c = ' hide ';
@@ -171,7 +172,7 @@ wp_reset_query();
 <?php wp_nonce_field( SendPress_Data::nonce() ); ?>
 <input type="hidden" name="subscriberid" id="subscriberid" value="<?php echo $info->id; ?>" />
 
-<table cellpadding="0" cellspacing="0" class="table table-condensed table-striped">
+<table cellpadding="0" cellspacing="0" class="table table-condensed table-striped table-bordered">
 	<tr>
 		<th  ><?php _e('Subscribed','sendpress'); ?></th>
 		<th  ><?php _e('Unsubscribed','sendpress'); ?></th>
@@ -240,9 +241,9 @@ wp_reset_query();
 <br>
 <input type="submit" class="btn btn-primary" value="<?php _e('Save My Settings','sendpress'); ?>"/>
 </form>
+	<br>
 	<a  href="<?php echo site_url(); ?>"><i class="icon-hand-left"></i> <?php _e('Return to','sendpress'); ?> <?php echo $name; ?></a>
-</div>
-</div>
+
 	<?php
 
 

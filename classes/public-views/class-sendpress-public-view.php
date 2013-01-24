@@ -77,6 +77,98 @@ class SendPress_Public_View {
 		
 	}
 
+	function _public_css(){ ?>
+	<style>
+		.subscriber-info{min-height:20px;padding:19px;margin-bottom:20px;background-color:#f5f5f5;border:1px solid #e3e3e3;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);-moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);}.well blockquote{border-color:#ddd;border-color:rgba(0, 0, 0, 0.15);}
+		.sendpress-content table{max-width:100%;background-color:transparent;border-collapse:collapse;border-spacing:0;}
+.sendpress-content .table{width:100%;margin-bottom:20px;}.sendpress-content .table th,.sendpress-content .table td{padding:8px;line-height:20px;text-align:left;vertical-align:top;border-top:1px solid #dddddd;}
+.sendpress-content .table th{font-weight:bold;}
+.sendpress-content .table thead th{vertical-align:bottom;}
+.sendpress-content .table caption+thead tr:first-child th,.sendpress-content .table caption+thead tr:first-child td,.sendpress-content .table colgroup+thead tr:first-child th,.sendpress-content .table colgroup+thead tr:first-child td,.sendpress-content .table thead:first-child tr:first-child th,.sendpress-content .table thead:first-child tr:first-child td{border-top:0;}
+.sendpress-content .table tbody+tbody{border-top:2px solid #dddddd;}
+.sendpress-content .table-condensed th,.sendpress-content .table-condensed td{padding:4px 5px;}
+.sendpress-content .table-bordered{border:1px solid #dddddd;border-collapse:separate;*border-collapse:collapse;border-left:0;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;}.sendpress-content .table-bordered th,.sendpress-content .table-bordered td{border-left:1px solid #dddddd;}
+.sendpress-content .table-bordered caption+thead tr:first-child th,.sendpress-content .table-bordered caption+tbody tr:first-child th,.sendpress-content .table-bordered caption+tbody tr:first-child td,.sendpress-content .table-bordered colgroup+thead tr:first-child th,.sendpress-content .table-bordered colgroup+tbody tr:first-child th,.sendpress-content .table-bordered colgroup+tbody tr:first-child td,.sendpress-content .table-bordered thead:first-child tr:first-child th,.sendpress-content .table-bordered tbody:first-child tr:first-child th,.sendpress-content .table-bordered tbody:first-child tr:first-child td{border-top:0;}
+.sendpress-content .table-bordered thead:first-child tr:first-child th:first-child,.sendpress-content .table-bordered tbody:first-child tr:first-child td:first-child{-webkit-border-top-left-radius:4px;border-top-left-radius:4px;-moz-border-radius-topleft:4px;}
+.sendpress-content .table-bordered thead:first-child tr:first-child th:last-child,.sendpress-content .table-bordered tbody:first-child tr:first-child td:last-child{-webkit-border-top-right-radius:4px;border-top-right-radius:4px;-moz-border-radius-topright:4px;}
+.sendpress-content .table-bordered thead:last-child tr:last-child th:first-child,.sendpress-content .table-bordered tbody:last-child tr:last-child td:first-child,.sendpress-content .table-bordered tfoot:last-child tr:last-child td:first-child{-webkit-border-radius:0 0 0 4px;-moz-border-radius:0 0 0 4px;border-radius:0 0 0 4px;-webkit-border-bottom-left-radius:4px;border-bottom-left-radius:4px;-moz-border-radius-bottomleft:4px;}
+.sendpress-content .table-bordered thead:last-child tr:last-child th:last-child,.sendpress-content .table-bordered tbody:last-child tr:last-child td:last-child,.sendpress-content .table-bordered tfoot:last-child tr:last-child td:last-child{-webkit-border-bottom-right-radius:4px;border-bottom-right-radius:4px;-moz-border-radius-bottomright:4px;}
+.sendpress-content .table-bordered caption+thead tr:first-child th:first-child,.sendpress-content .table-bordered caption+tbody tr:first-child td:first-child,.sendpress-content .table-bordered colgroup+thead tr:first-child th:first-child,.sendpress-content .table-bordered colgroup+tbody tr:first-child td:first-child{-webkit-border-top-left-radius:4px;border-top-left-radius:4px;-moz-border-radius-topleft:4px;}
+.sendpress-content .table-bordered caption+thead tr:first-child th:last-child,.sendpress-content .table-bordered caption+tbody tr:first-child td:last-child,.sendpress-content .table-bordered colgroup+thead tr:first-child th:last-child,.sendpress-content .table-bordered colgroup+tbody tr:first-child td:last-child{-webkit-border-top-right-radius:4px;border-top-right-radius:4px;-moz-border-radius-topleft:4px;}
+.sendpress-content .table-striped tbody tr:nth-child(odd) td,.sendpress-content .table-striped tbody tr:nth-child(odd) th{background-color:#f9f9f9;}
+.sendpress-content .table-hover tbody tr:hover td,.sendpress-content .table-hover tbody tr:hover th{background-color:#f5f5f5;}
+.sendpress-content table [class*=span],.sendpress-content .row-fluid table [class*=span]{display:table-cell;float:none;margin-left:0;}
+
+.sendpress-content .alert{padding:8px 35px 8px 14px;margin-bottom:20px;text-shadow:0 1px 0 rgba(255, 255, 255, 0.5);background-color:#fcf8e3;border:1px solid #fbeed5;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;color:#c09853;}
+.sendpress-content .alert h4{margin:0;}
+.sendpress-content .alert .close{position:relative;top:-2px;right:-21px;line-height:20px;}
+.sendpress-content .alert-success{background-color:#dff0d8;border-color:#d6e9c6;color:#468847;}
+.sendpress-content .alert-danger,.sendpress-content .alert-error{background-color:#f2dede;border-color:#eed3d7;color:#b94a48;}
+.sendpress-content .alert-info{background-color:#d9edf7;border-color:#bce8f1;color:#3a87ad;}
+.sendpress-content .alert-block{padding-top:14px;padding-bottom:14px;}
+.sendpress-content .alert-block>p,.sendpress-content .alert-block>ul{margin-bottom:0;}
+.sendpress-content .alert-block p+p{margin-top:5px;}
+	</style>
+	<?php
+	}
+
+	function _public_before(){
+		$theme = wp_get_theme();
+		$theme  = $theme->Template;	
+		switch(strtolower($theme)){
+			case 'twentytwelve':
+			case 'twentyeleven':
+			case 'twentyten':
+			?>
+			<div id="primary" class="site-content">
+				<div id="content" role="main">
+			<?php
+			break;
+			case 'genesis':
+			do_action( 'genesis_before_content_sidebar_wrap' );
+			?>
+			<div id="content-sidebar-wrap">
+				<?php do_action( 'genesis_before_content' ); ?>
+					<div id="content" class="hfeed">
+			<?php
+			break;
+
+		}
+		?>
+		<div id="sendpress-public" class="sendpress-content type-page status-publish hentry entry">
+			<?php
+			do_action('sendpress_public_css');
+
+	}
+
+	function _public_after(){ ?>
+		</div>
+	<?php
+		$theme = wp_get_theme();
+		$theme  = $theme->Template;		
+		switch(strtolower($theme)){
+			case 'twentytwelve':
+			case 'twentyeleven':
+			case 'twentyten':
+			?>
+			</div>
+		</div>
+			<?php
+			break;
+			case 'genesis': 
+			?>
+					</div><!-- end #content -->
+				<?php do_action( 'genesis_after_content' ); ?>
+			</div><!-- end #content-sidebar-wrap -->
+			<?php
+			do_action( 'genesis_after_content_sidebar_wrap' );
+			break;
+
+		}
+
+	}
+
+
 	/**
 	 * Initializes the view.
 	 */
@@ -85,7 +177,11 @@ class SendPress_Public_View {
 		define('DONOTCACHEOBJECT',true);
 		define('DONOTCACHEPAGE',true);
 		define('DONOTCACHEDB',true);
-		
+		add_action('genesis_site_layout','__genesis_return_full_width_content');
+		add_action('sendpress_public_before', array('SendPress_Public_View','_public_before'));
+		add_action('sendpress_public_after', array('SendPress_Public_View','_public_after'));
+		add_action('sendpress_public_css', array('SendPress_Public_View','_public_css'));
+
 		$detect = new SendPress_Mobile_Detect;
     	$this->_device_type = ( $detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
     	
@@ -116,7 +212,7 @@ class SendPress_Public_View {
 		$try_theme = SendPress_Option::use_theme_style();
 		if($try_theme){
 			get_header();
-
+			do_action('sendpress_public_before');
 		} else {
 
 
@@ -162,7 +258,7 @@ class SendPress_Public_View {
 
 	function page_end(){
 		$try_theme = SendPress_Option::use_theme_style();
-
+		do_action('sendpress_public_after');
 		if($try_theme){
 			do_action('sendpress_public_view_scripts');
 			get_footer();
