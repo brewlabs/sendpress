@@ -58,29 +58,30 @@ class SendPress_Widget_Signup extends WP_Widget {
 		$args.= 'thank_you="'.$instance['thank_you'].'" ';
 		$args.= 'label_display="'.$instance['label_display'].'" ';
 		$args.= 'desc="'.$instance['desc'].'" ';
+		$args.= 'no_list_error="<div><b>-- NO LIST HAS BEEN SELECTED IN WIDGET SETTINGS --</b></div>" ';
 
 	
-		$post_args = array( 'post_type' => 'sendpress_list','numberposts'     => -1,
-    	'offset'          => 0,
-    	'orderby'         => 'post_title',
-    	'order'           => 'DESC', );
+		$post_args = array( 
+	   		'post_type' 	=> 'sendpress_list',
+	   		'numberposts'   => -1,
+    		'offset'        => 0,
+    		'orderby'       => 'post_title',
+    		'order'         => 'DESC'
+    	);
 		$lists = get_posts( $post_args );
 	    //$lists = $s->getData($s->lists_table());
 	    $listids = array();
 
 		foreach($lists as $list){
 			if( get_post_meta($list->ID,'public',true) == 1 ){
-
 				if(isset( $instance['list_'.$list->ID] ) && filter_var($instance['list_'.$list->ID], FILTER_VALIDATE_BOOLEAN) ){
-
-						$listids[] = $list->ID;
+					$listids[] = $list->ID;
 				}
 			}
 		}
 	
 		$args.= 'listids="'.implode(',',$listids).'" ';
 		
-	
 		//do_shortcode goes here
 		echo do_shortcode('[sendpress-signup '.$args.']');
 
@@ -96,7 +97,8 @@ class SendPress_Widget_Signup extends WP_Widget {
 
 		/* Strip tags for title and name to remove HTML (important for text inputs). */
 		$instance['title'] = strip_tags( $new_instance['title'] );
-		$instance['desc'] = strip_tags( $new_instance['desc'] );
+		// $instance['desc'] = strip_tags( $new_instance['desc'] );
+		$instance['desc'] = $new_instance['desc'];
 
 		( strlen($new_instance['first_label']) !== 0 ) ? $instance['first_label'] = strip_tags( $new_instance['first_label'] ) : $instance['first_label'] = 'First Name';
 		( strlen($new_instance['last_label']) !== 0 ) ? $instance['last_label'] = strip_tags( $new_instance['last_label'] ) : $instance['last_label'] = 'Last Name';
@@ -108,10 +110,13 @@ class SendPress_Widget_Signup extends WP_Widget {
 		$instance['show_last'] = $new_instance['show_last'];
 		$instance['label_display'] = $new_instance['label_display'];
 
-		$args = array( 'post_type' => 'sendpress_list','numberposts'     => -1,
-    'offset'          => 0,
-    'orderby'         => 'post_title',
-    'order'           => 'DESC' );
+		$args = array( 
+	   		'post_type' 	=> 'sendpress_list',
+	   		'numberposts'   => -1,
+    		'offset'        => 0,
+    		'orderby'       => 'post_title',
+    		'order'         => 'DESC'
+    	);
 		$lists = get_posts( $args );
 	    //$lists = $s->getData($s->lists_table());
 	    $listids = array();

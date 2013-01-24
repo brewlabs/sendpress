@@ -95,8 +95,6 @@ class SendPress_Pro_Manager {
         if($license_data){
         	SendPress_Option::set('api_key',$key);
         	SendPress_Pro_Manager::set_pro_state(array('state'=>$license_data->license, 'transient_time'=>SENDPRESS_TRANSIENT_LENGTH));
-        	//SendPress_Option::set('api_key_state', $license_data->license);
-            //set_transient( 'sendpress_key_state', $license_data->license, SENDPRESS_TRANSIENT_LENGTH );
             return true;
     	}
     	return false;
@@ -126,16 +124,16 @@ class SendPress_Pro_Manager {
         if( $license_data->license === SENDPRESS_PRO_DEACTIVATED || $license_data->license === SENDPRESS_PRO_FAILED ){
             SendPress_Option::set('api_key','');
             SendPress_Pro_Manager::set_pro_state(false); //this will delete the transient
-            //delete_transient( 'sendpress_key_state' );
             return true;
         }
         return false;
 	}
 
 	function check_key(){
+
 		$key = SendPress_Option::get('api_key');
 
-		if(!empty($key)){
+		if(empty($key)){
 			return array('state'=>SENDPRESS_PRO_DEACTIVATED, 'transient_time'=>YEAR_IN_SECONDS);
 		}
 

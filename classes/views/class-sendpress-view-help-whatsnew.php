@@ -115,7 +115,7 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 		</div>
 		<div class="last-feature">
 			<h4>Support for Genesis eNews Extended</h4>
-			<p>If you run a theme that uses the <a href="http://studiopress.com" target="_blank">Genesis Framework</a>, this option makes it easy to creat a subscrition area to match your theme. Check out <a href="http://wordpress.org/extend/plugins/genesis-enews-extended" target="_blank">Genesis eNews Extended</a> on WordPress.org.</p>
+			<p>If you run a theme that uses the <a href="http://studiopress.com" target="_blank">Genesis Framework</a>, this option makes it easy to create a subscrition area to match your theme. Check out <a href="http://wordpress.org/extend/plugins/genesis-enews-extended" target="_blank">Genesis eNews Extended</a> on WordPress.org.</p>
 	
 		</div>
 	</div>
