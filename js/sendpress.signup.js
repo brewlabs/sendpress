@@ -1,4 +1,7 @@
-jQuery(document).ready(function($) {
+;(function ( $, window, document, undefined ) {
+
+
+$(document).ready(function($) {
 	var $signups = $('.sendpress-signup');
     
     $signups.each(function(){
@@ -24,14 +27,21 @@ jQuery(document).ready(function($) {
             emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
          $error.hide();
 
-        signup['first'] = $form.find('#firstname').val();
-        signup['last'] = $form.find('#lastname').val();
-        signup['email'] = $form.find('#email').val();
-        signup['listid'] = $form.find('#list').val();
+        signup['first'] = $form.find('.sp_firstname').val();
+        signup['last'] = $form.find('.sp_lastname').val();
+        signup['email'] = $form.find('.sp_email').val();
+        signup['listid'] = "";//$form.find('.sp_list').val();
+
+        $form.find("input:checkbox.sp_list:checked").each(function()
+{
+    signup['listid'] += $(this).val() +",";
+});
+
+
         signup['action'] = 'sendpress_subscribe_to_list';
 
         if( signup.email.length === 0 ){
-            $error.show();    
+            $error.show();
             $error.html('<div class="item">*'+sendpress.missingemail+'.</div>');
             submit_ok = false;
         }else if(!emailReg.test(signup.email)) {
@@ -96,6 +106,7 @@ jQuery(document).ready(function($) {
 
 
 
+}).call( window.sendpress=window.sendpress || {}, jQuery, window, document );
 
 
 

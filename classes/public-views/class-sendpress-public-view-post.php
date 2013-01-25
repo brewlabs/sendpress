@@ -13,8 +13,13 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 	function page_end(){}
 
 	function html() {
+		$post_options = array('list','email','firstname','lastname');
+		$user_info = array();
+		foreach ($post_options as $opt) {
+			$user_info[$opt] = isset($_POST['sp_' . $opt]) ?  $_POST['sp_' . $opt]: false ;
+		}
 
-		$user_info = isset($_POST['sp']) ?  $_POST['sp']: array() ;	
+		
 		$valid_user = array();
 		//foreach()
 		if(isset($user_info['list'])){
@@ -38,7 +43,8 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			}
 			$status = false;
 			if($data_error ==  false){
-				$status =  SendPress_Data::subscribe_user($user_info['list'], $valid_user['email'], $valid_user['firstname'], $valid_user['lastname']);
+				$list = implode(",", $user_info['list']);
+				$status =  SendPress_Data::subscribe_user($list, $valid_user['email'], $valid_user['firstname'], $valid_user['lastname']);
 				if($status == false){
 					$data_error = __('Problem with subscribing user.','sendpress');
 				}

@@ -98,7 +98,7 @@ class SendPress_Sender_Website extends SendPress_Sender {
 		$hdr->addFilterSetting('dkim', 'domain', SendPress_Manager::get_domain_from_email($from_email) );
 		//$phpmailer->AddCustomHeader( sprintf( 'X-SP-MID: %s',$email->messageID ) );
 		$phpmailer->AddCustomHeader(sprintf( 'X-SMTPAPI: %s', $hdr->asJSON() ) );
-		$phpmailer->AddCustomHeader('X-SP-ACCOUNT','TEST-FROM_DEV');
+		$phpmailer->AddCustomHeader('X-SP-METHOD: website');
 		// Set SMTPDebug to 2 will collect dialogue between us and the mail server
 		if($istest == true){
 			$phpmailer->SMTPDebug = 2;

@@ -148,7 +148,7 @@ class SendPress_Manager {
 		$hdr = new SendPress_SendGrid_SMTP_API();
 		$hdr->addFilterSetting('dkim', 'domain', SendPress_Manager::get_domain_from_email($from_email) );
 		$phpmailer->AddCustomHeader(sprintf( 'X-SMTPAPI: %s', $hdr->asJSON() ) );
-		$phpmailer->AddCustomHeader('X-SP-ACCOUNT','TEST-FROM_DEV');
+		$phpmailer->AddCustomHeader('X-SP-METHOD: old');
 		
 		// Set SMTPDebug to 2 will collect dialogue between us and the mail server
 		if($istest == true){

@@ -82,14 +82,14 @@ class SendPress_Signup_Shortcode{
 						<label for="list"><?php echo $list_label; ?>:</label>
 						<?php
 						foreach ($list_ids as $id) { ?>
-							<input type="checkbox" name="sp[list]" id="list" value="<?php echo $id; ?>" checked/> <?php echo get_the_title($id); ?><br>
+							<input type="checkbox" name="sp_list[]" class="sp_list" id="list<?php echo $id; ?>" value="<?php echo $id; ?>" checked /> <?php echo get_the_title($id); ?><br>
 						<?php
 						} ?>	
 						</p>
 						<?php
 
 					} else { ?>
-						<input type="hidden" name="sp[list]" id="list" value="<?php echo $listids; ?>" />
+						<input type="hidden" name="sp_list" id="list" class="sp_list" value="<?php echo $listids; ?>" />
 
 					<?php } ?>
 
@@ -98,7 +98,7 @@ class SendPress_Signup_Shortcode{
 							<?php if( !$label ): ?>
 								<label for="firstname"><?php echo $firstname_label; ?>:</label>
 							<?php endif; ?>
-							<input type="text" id="sp-firstname" orig="<?php echo $firstname_label; ?>" value="<?php if($label){ echo $firstname_label; } ?>"  name="sp[firstname]" />
+							<input type="text" class="sp_firstname" orig="<?php echo $firstname_label; ?>" value="<?php if($label){ echo $firstname_label; } ?>"  name="sp_firstname" />
 						</p>
 					<?php endif; ?>
 
@@ -107,7 +107,7 @@ class SendPress_Signup_Shortcode{
 							<?php if( !$label ): ?>
 								<label for="lastname"><?php echo $lastname_label; ?>:</label>
 							<?php endif; ?>
-							<input type="text" id="sp-lastname" orig="<?php echo $lastname_label; ?>" value="<?php if($label){ echo $lastname_label; } ?>" name="sp[lastname]" />
+							<input type="text" class="sp_lastname" orig="<?php echo $lastname_label; ?>" value="<?php if($label){ echo $lastname_label; } ?>" name="sp_lastname" />
 						</p>
 					<?php endif; ?>
 
@@ -115,7 +115,7 @@ class SendPress_Signup_Shortcode{
 						<?php if( !$label ): ?>
 							<label for="email"><?php echo $email_label; ?>:</label>
 						<?php endif; ?>
-						<input type="text" id="sp-email" orig="<?php echo $email_label; ?>" value="<?php if($label){ echo $email_label; } ?>" name="sp[email]" />
+						<input type="text" class="sp_email" orig="<?php echo $email_label; ?>" value="<?php if($label){ echo $email_label; } ?>" name="sp_email" />
 					</p>
 
 					<p class="submit">

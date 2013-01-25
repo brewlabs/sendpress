@@ -309,7 +309,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		$listids = explode(',', $listid);
 		
-
+		//error_log($listids);
 		
 	    //$lists = $s->getData($s->lists_table());
 	    //$listids = array();
