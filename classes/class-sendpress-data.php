@@ -325,7 +325,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		foreach($lists as $list){
 			if( in_array($list->ID, $listids) ){
-				$success = SendPress_Data::update_subscriber_status($list->ID, $subscriberID, $status);
+				$current_status = SendPress_Data::get_subscriber_list_status( $list->ID, $subscriberID );
+				
+				if($current_status->status < 2 ){
+					$success = SendPress_Data::update_subscriber_status($list->ID, $subscriberID, $status);
+				} else {
+					$success = true;
+				}
 			}
 		}
 

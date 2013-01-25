@@ -36,6 +36,9 @@ $(document).ready(function($) {
 {
     signup['listid'] += $(this).val() +",";
 });
+        if(signup['listid'] === ""){
+            signup['listid'] = $form.find('.sp_list').val();
+        }
 
 
         signup['action'] = 'sendpress_subscribe_to_list';
