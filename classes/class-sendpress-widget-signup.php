@@ -60,7 +60,7 @@ class SendPress_Widget_Signup extends WP_Widget {
 		$args.= 'thank_you="'.$instance['thank_you'].'" ';
 		$args.= 'label_display="'.$instance['label_display'].'" ';
 		$args.= 'desc="'.$instance['desc'].'" ';
-		$args.= 'no_list_error="<div><b>-- NO LIST HAS BEEN SELECTED IN SENDPRESS WIDGET SETTINGS --</b></div>"';
+		$args.= 'no_list_error="<div><b>-- NO LIST HAS BEEN SELECTED IN SENDPRESS WIDGET SETTINGS --</b></div>" ';
 
 	
 		$post_args = array( 
