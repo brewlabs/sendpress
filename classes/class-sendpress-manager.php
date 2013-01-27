@@ -8,6 +8,125 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Manager {
 
+	function send_limit_reached(){
+
+		global $wpdb;
+		
+		$emails_per_hour = SendPress_Option::get('emails-per-hour');
+		
+		if($emails_per_hour != 0){
+			$rate = 3600 / $emails_per_hour;
+		}
+		if($rate > 8){
+			$rate = 8;
+		}
+		
+		$emails_today =  SendPress_Option::get('emails-today');
+		$emails_per_day = SendPress_Option::get('emails-per-day');
+		$email_count = isset($emails_today[date("z")]) ? $emails_today[date("z")] : 0 ;
+		$emails_this_hour = SendPress_Option::get('emails-this-hour');
+		// Check our daily send limit
+		if($emails_per_day != false && $emails_per_day != 0 ){
+			if( intval($email_count) >= intval($emails_per_day)  ){
+				return true;
+			}
+		}
+
+		$email_last_sent = SendPress_Option::get('email-last-sent');
+		//Haven't sent an email in the last hour
+		if( $email_last_sent == false || ( $email_last_sent + (60 * 60) ) <= time()   ){
+			SendPress_Option::set('emails-this-hour', 0);
+			SendPress_Option::set('time-delay', false);
+			return false;
+		}
+
+
+		if( $emails_this_hour >= $emails_per_hour ){
+			$time_delay =  SendPress_Option::get('time-delay');
+			if($time_delay == false){
+				$time_delay = time() + (60 * 60);
+				SendPress_Option::set('time-delay', $time_delay);
+			}	
+			if($time_delay < time() ){
+				//The hour is up start sending
+				SendPress_Option::set('emails-this-hour', 0);
+				SendPress_Option::set('time-delay', false);
+				return false;
+			}
+			return true;
+		}
+
+
+
+		return false;
+	}
+
+	function emails_allowed_to_send(){
+		$emails_per_day = SendPress_Option::get('emails-per-day');
+		$emails_per_hour = SendPress_Option::get('emails-per-hour');
+		$count = SendPress_Data::emails_in_queue();
+		$emails_this_hour = SendPress_Manager::emails_this_hour();
+		$emails_today = SendPress_Manager::emails_today();
+		$hour = $emails_per_hour - $emails_this_hour;
+		$day = $emails_per_day - $emails_today;
+
+		if($count <= $hour && $count <= $day ){
+			return $count;
+		}
+		if($hour <= $day){
+			return $hour;
+		}
+		return $day;
+
+
+
+
+	}
+
+
+	function increase_email_count( $add = 1 ){
+		$emails_today =  SendPress_Option::get('emails-today');
+		$emails_this_hour = SendPress_Option::get('emails-this-hour');
+		$emails_this_hour = $emails_this_hour != false ? $emails_this_hour : 0 ;
+		$email_count = isset($emails_today[date("z")]) ? $emails_today[date("z")] : 0 ;
+		$email_count = $email_count + $add;
+		$emails_this_hour = $emails_this_hour + $add;
+		$emails_today[date("z")] = $email_count;
+
+		SendPress_Option::set('emails-today', $emails_today );
+		SendPress_Option::set('emails-this-hour', $emails_this_hour );
+		SendPress_Option::set('email-last-sent', time() );
+	}
+
+	function reset_counters(){
+		$emails_today =  SendPress_Option::get('emails-today');
+		$emails_today[date("z")] = 0;
+
+		SendPress_Option::set('emails-today', $emails_today );
+		SendPress_Option::set('emails-this-hour', 0 );
+		SendPress_Option::set('email-last-sent', time() - (60 * 60) );
+
+	}
+
+	function emails_this_hour(){
+		$email_last_sent = SendPress_Option::get('email-last-sent');
+		//Haven't sent an email in the last hour
+		if( $email_last_sent == false || ( $email_last_sent + (60 * 60) ) <= time()   ){
+			SendPress_Option::set('emails-this-hour', 0);
+			SendPress_Option::set('time-delay', false);
+			return 0;
+		}
+
+		$hour = SendPress_Option::get('emails-this-hour');
+		return $hour;
+	}
+
+	function emails_today(){
+		$emails_today =  SendPress_Option::get('emails-today');
+		$email_count = isset($emails_today[date("z")]) ? $emails_today[date("z")] : 0 ;
+		return $email_count;
+	}
+
 
 	function send_test(){
 		$text= __('This is text only alternative body.','sendpress');

@@ -565,7 +565,6 @@ class SendPress {
 		SendPress_Option::set('emails-today', $emails_today);
 
 
-
 		//SendPress_Option::set('allow_tracking', '');
 		//wp_clear_scheduled_hook( 'sendpress_cron_action' );
 		// Schedule an action if it's not already scheduled
@@ -1568,8 +1567,8 @@ class SendPress {
 		$emails_today =  SendPress_Option::get('emails-today');
 		$emails_per_day = SendPress_Option::get('emails-per-day');
 		$email_count = isset($emails_today[date("z")]) ? $emails_today[date("z")] : 0 ;
-
-		if( $emails_per_day != false && $emails_per_day != 0  &&  $email_count >= $emails_per_day  ){
+		$attempts = 0;
+		if( SendPress_Manager::send_limit_reached()  ){
 			return;
 		}
 
@@ -1578,6 +1577,11 @@ class SendPress {
 			if($this->cron_stop() == false ){
 				$email = $this->wpdbQuery("SELECT * FROM ". SendPress_Data::queue_table() ." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 ORDER BY id LIMIT 1","get_row");
 				if($email != null){
+
+					if( SendPress_Manager::send_limit_reached() ){
+						break;
+					}
+					$attempts++;
 					SendPress_Data::queue_email_process( $email->id );
 					$result = SendPress_Manager::send_email_from_queue( $email );
 					$email_count++;
@@ -1612,9 +1616,8 @@ class SendPress {
 		}
 
 
-		$emails_today[date("z")] = $email_count;
-
-		SendPress_Option::set('emails-today', $emails_today );
+		
+		SendPress_Manager::increase_email_count( $attempts );
 
 		
 	}
@@ -1638,7 +1641,7 @@ class SendPress {
 		$count = 0;
 		$attempts = 0;
 
-		if( $emails_per_day != false && $emails_per_day != 0  &&  intval($email_count) >= intval($emails_per_day)  ){
+		if( SendPress_Manager::send_limit_reached()  ){
 			return array('attempted'=> $attempts,'sent'=>$count);
 		}
 
@@ -1646,18 +1649,17 @@ class SendPress {
 				$email = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE (success = 0) AND (max_attempts != attempts) AND (inprocess = 0) ORDER BY id ASC LIMIT 1","get_results");
 				if( !empty($email) ){
 					$email = $email[0];
-					$attempts++;
+					
 
-					if( $emails_per_day != false && $emails_per_day != 0  &&  intval($email_count) >= intval($emails_per_day) ){
-						$emails_today[date("z")] = $email_count;	
-						SendPress_Option::set('emails-today', $emails_today );
+					if( SendPress_Manager::send_limit_reached() ){
 						return array('attempted'=> $attempts,'sent'=>$count);
 					}
 
+					$attempts++;
 					SendPress_Data::queue_email_process( $email->id );
 					$result = SendPress_Manager::send_email_from_queue( $email );
 					$email_count++;
-					error_log($email_count);
+					
 					if ($result) {
 						$table = $this->queue_table();
 						$wpdb->query( 
@@ -1686,10 +1688,7 @@ class SendPress {
 				}	
 		}
 
-		$emails_today[date("z")] = $email_count;
-
-		SendPress_Option::set('emails-today', $emails_today );
-
+		SendPress_Manager::increase_email_count( $attempts );
 		return array('attempted'=> $attempts,'sent'=>$count);
 	}
 

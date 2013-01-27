@@ -213,9 +213,11 @@ class SendPress_Ajax_Loader{
 	function sendcount(){
 		$this->verify_ajax_call();
 		// Create the response array
-		$sp = new SendPress;
+		// 
+		$count = SendPress_Manager::emails_allowed_to_send();
+		//$sp = new SendPress;
 		$response = array(
-			'total' => $sp->countQueue()
+			'total' => $count
 		);
 		echo json_encode($response);
 		exit();

@@ -37,6 +37,11 @@ class SendPress_View_Queue extends SendPress_View {
 		SendPress_View_Queue::redirect();
 	}
 
+	function reset_counters(){
+		SendPress_Manager::reset_counters();
+		SendPress_View_Queue::redirect();
+	}
+
 	function html($sp) {
 
 	if(isset($_GET['cron'])){
@@ -88,9 +93,13 @@ class SendPress_View_Queue extends SendPress_View {
 		}
   $emails_per_hour =  SendPress_Option::get('emails-per-hour');
   $emails_today = SendPress_Option::get('emails-today');
-?>
 
-		<h2><strong><?php echo $emails_today[date("z")]; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_day; ?></strong> <?php _e('emails sent today','sendpress'); ?>.<br><br></h2>
+?>
+		
+		<h2><strong><?php echo $emails_today[date("z")]; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_day; ?></strong> <?php _e('emails sent today','sendpress'); ?>.</h2>
+		<h2><strong><?php  echo SendPress_Manager::emails_this_hour(); ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_hour; ?></strong> <?php _e('emails sent this hour','sendpress'); ?>.</h2><br><br>
+			
+ 
 		</div>
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="email-filter" method="get">
