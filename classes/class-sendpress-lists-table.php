@@ -315,11 +315,15 @@ class SendPress_Lists_Table extends WP_List_Table {
                 // get the default value if none is set
                 $per_page = $screen->get_option( 'per_page', 'default' );
             }
+
+            $per_page = SendPress_Debug::piglatin_per_page_fix($per_page);
+
             //Which page is this?
             $paged = !empty($_GET["paged"]) ? mysql_real_escape_string($_GET["paged"]) : '';
             //Page Number
             if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
             //How many pages do we have in total?
+
             $totalpages = ceil($totalitems/$per_page);
             //adjust the query to take pagination into account
             if(!empty($paged) && !empty($per_page)){

@@ -366,15 +366,26 @@ class SendPress_Reports_Table extends WP_List_Table {
 
             if ( empty ( $per_page) || $per_page < 1 ) {
                 // get the default value if none is set
-               
                 $per_page = $screen->get_option( 'per_page', 'default' );
-          
             }
+            $per_page = SendPress_Debug::piglatin_per_page_fix($per_page);
+            
             //Which page is this?
             $paged = !empty($_GET["paged"]) ? mysql_real_escape_string($_GET["paged"]) : '';
             //Page Number
             if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
             //How many pages do we have in total?
+
+            if( is_plugin_active('piglatin/piglatin.php') ){
+                /*
+                hard coding this so I can run through these pages 
+                and look at the language support.  for some reason 
+                when pig latin is active, get_current_screen doesn't 
+                return the per_page array
+                */
+                $per_page = 10;
+            }
+
             $totalpages = ceil($totalitems/$per_page);
             //adjust the query to take pagination into account
             if(!empty($paged) && !empty($per_page)){
