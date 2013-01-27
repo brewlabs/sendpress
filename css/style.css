@@ -868,7 +868,7 @@ width: 150px;
     width:250px;
     float:left;
     background: #f7f7f7;
-    height:200px;
+    min-height:200px;
     position:relative;
     }
     .sendpress-module .inner-module{
@@ -877,7 +877,7 @@ width: 150px;
 
     .sendpress-module.pro-module{
         width:790px;
-        height:150px;
+        min-height:150px;
     }
     .sendpress-module h4{
         margin:0px 0px 5px;

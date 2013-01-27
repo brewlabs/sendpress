@@ -10,10 +10,10 @@ class SendPress_Module_Empty extends SendPress_Module{
 	
 	function html($sp){
 	?>
-		<h4>More Coming Soon!</h4>
+		<h4><?php _e('More Coming Soon!','sendpress');?></h4>
 		
 			<div class="description">
-				Cool stuff is on the horizon, check back soon!
+				<?php _e('Cool stuff is on the horizon, check back soon!','sendpress');?>
 			</div>
 			<?php 
 
@@ -21,7 +21,7 @@ class SendPress_Module_Empty extends SendPress_Module{
 				array(	'class' => 'btn module-empty', 
 						'href' => 'http://sendpress.uservoice.com', 
 						'target' => '_blank', 
-						'text' => 'Request a Feature'
+						'text' => __('Request a Feature','sendpress')
 					)
 			);
 

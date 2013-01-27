@@ -70,7 +70,7 @@ class SendPress_Module {
 				$button = array(
 					'class' => 'btn disabled btn-activate', 
 					'href' => '#',
-					'target' => '', 'text' => 'Activate'
+					'target' => '', 'text' => __('Activate','sendpress')
 				);
 				$btn = $this->build_button($button);
 				break;
@@ -78,7 +78,7 @@ class SendPress_Module {
 				$button = array(
 					'class' => 'module-activate-plugin btn-success btn-activate btn', 
 					'href' => '#',
-					'target' => '', 'text' => 'Activate'
+					'target' => '', 'text' => __('Activate','sendpress')
 				);
 				//pro is active, check the option to see what the deal is
 				$pro_options = SendPress_Option::get('pro_plugins');
@@ -92,7 +92,7 @@ class SendPress_Module {
 					}
 					if( $pro_options[$plugin_path] ){
 						$button['class'] = 'btn module-deactivate-plugin';
-						$button['text'] = 'Deactivate';
+						$button['text'] = __('Deactivate','sendpress');
 
 					}
 
@@ -105,7 +105,9 @@ class SendPress_Module {
 	}
 
 	function get_button($path, $from_pro = false){
-		$button = array('class' => 'btn module-deactivate-plugin', 'href' => '#', 'target' => '', 'text' => 'Deactivate');
+		_deprecated_function( __FUNCTION__, '0.9', 'SendPress_Module::buttons()' );
+		
+		$button = array('class' => 'btn module-deactivate-plugin', 'href' => '#', 'target' => '', 'text' => __('Deactivate','sendpress') );
 		if( $from_pro ){
 			$pro_options = SendPress_Option::get('pro_plugins');
 			$reg_plugin = substr($path, 14, strlen($path));
@@ -126,7 +128,7 @@ class SendPress_Module {
 				//$button['id'] = 'module-activate-plugin';
 				$button['text'] = 'Activate';
 			}else{
-				$button['text'] = 'Deactivate';
+				$button['text'] = __('Deactivate','sendpress');
 			}
 
 		}else{

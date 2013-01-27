@@ -15,10 +15,10 @@ class SendPress_Module_Spam_Test extends SendPress_Module{
 			$plugin_path = 'sendpress-pro/extensions/class-sendpress-spam-test.php';
 		}
 	?>
-		<h4>Spam Testing</h4>
+		<h4><?php _e('Spam Testing','sendpress');?></h4>
 		<form method="post" id="post">
 			<div class="description">
-				Test your emails with SpamAssassin.
+				<?php echo sprintf(	__( 'Test your emails with %s.','sendpress' ), 'SpamAssassin' ); ?>
 			</div>
 			<?php $this->buttons($plugin_path);?>
 			<input type="hidden" name="plugin_path" value="<?php echo $plugin_path; ?>" />

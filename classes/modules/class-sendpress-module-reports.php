@@ -15,10 +15,10 @@ class SendPress_Module_Reports extends SendPress_Module{
 			$plugin_path = 'sendpress-pro/extensions/class-sendpress-advanced-reports.php';
 		}
 	?>
-		<h4>Advanced Reports</h4>
+		<h4><?php _e('Advanced Reports','sendpress');?></h4>
 		<form method="post" id="post">
 			<div class="description">
-				Add more details to your reports. See who clicked what and when.
+				<?php _e('Add more details to your reports. See who clicked what and when.','sendpress');?>
 			</div>
 			<?php $this->buttons($plugin_path);?>
 			<input type="hidden" name="plugin_path" value="<?php echo $plugin_path; ?>" />
