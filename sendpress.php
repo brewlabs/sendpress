@@ -551,7 +551,7 @@ class SendPress {
 		}
 
 		
-
+		$this->create_initial_list();
 		
 
 		if( SendPress_Option::get('emails-today') == false ){
@@ -1357,11 +1357,21 @@ class SendPress {
 		$optin = SendPress_Data::get_template_id_by_slug('double-optin');	
 		if ( $post->post_type == 'sptemplates' && $post->ID == $optin ) {
 			$content .= "";
-
-			
 		}
 		
 		return $content;
+		
+	}
+
+	function create_initial_list(){
+
+		//check if you have lists
+		$lists = wp_count_posts('sendpress_list');		
+
+		if( intval($lists->publish) === 0 ){
+			//add in a fresh list
+			$id = $this->createList( array('name'=> 'My First SendPress Newsletter', 'public'=>1 ) );
+		}
 		
 	}
 	
@@ -1392,6 +1402,7 @@ class SendPress {
 		wp_clear_scheduled_hook('sendpress_cron_action_run');
 		SendPress_Option::set( 'permalink_rebuild' , true );
 		SendPress_Option::set( 'install_date' , time() );
+
 	}
 
 	/**
