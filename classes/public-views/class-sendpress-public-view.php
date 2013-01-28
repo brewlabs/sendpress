@@ -114,7 +114,13 @@ class SendPress_Public_View {
 
 	function _public_before(){
 		$theme = wp_get_theme();
-		$theme  = $theme->Template;	
+		if( isset($theme->Parent ) ){
+			$theme = $theme->Parent;
+		} else {
+			$theme  = $theme->Template;	
+
+		}
+	
 		switch(strtolower($theme)){
 			case 'twentytwelve':
 			case 'twentyeleven':
@@ -133,6 +139,14 @@ class SendPress_Public_View {
 			<?php
 			break;
 
+			case 'responsive': ?>
+			  <div id="content-full" class="grid col-940">
+
+
+			<?php
+			break;
+
+
 		}
 		?>
 		<div id="sendpress-public" class="sendpress-content type-page status-publish hentry entry">
@@ -145,7 +159,12 @@ class SendPress_Public_View {
 		</div>
 	<?php
 		$theme = wp_get_theme();
-		$theme  = $theme->Template;		
+		if( isset($theme->Parent ) ){
+			$theme = $theme->Parent;
+		} else {
+			$theme  = $theme->Template;	
+
+		}	
 		switch(strtolower($theme)){
 			case 'twentytwelve':
 			case 'twentyeleven':
@@ -162,6 +181,13 @@ class SendPress_Public_View {
 			</div><!-- end #content-sidebar-wrap -->
 			<?php
 			do_action( 'genesis_after_content_sidebar_wrap' );
+			break;
+
+			case 'responsive': ?>
+			  </div>
+
+
+			<?php
 			break;
 
 		}
