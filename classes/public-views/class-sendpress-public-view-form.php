@@ -13,16 +13,53 @@ class SendPress_Public_View_Form extends SendPress_Public_View{
 	function page_end(){}
 
 	function save(){
-		if(isset($_POST['sp'])){
-			$post = $_POST['sp'];
-			$result = SendPress_Data::subscribe_user($post['list'], $post['email'],'','');
-			print_r($result);
-			if($result){
-				$this->message = "You have been sent a confirmation email.";
-			} else {
-				$this->message = "Sorry. We had a problem adding you please try again.";
-			}
+		$post_options = array('list','email','firstname','lastname');
+		$user_info = array();
+		foreach ($post_options as $opt) {
+			$user_info[$opt] = isset($_POST['sp_' . $opt]) ?  $_POST['sp_' . $opt]: false ;
 		}
+		
+		$valid_user = array();
+		//foreach()
+		if(isset($user_info['list'])){
+			if(!is_array($user_info['list'])){
+				$user_info['list'] = array($user_info['list']);
+			}
+
+			$data_error = false;
+			if( isset($user_info['email']) && is_email( $user_info['email'] )){
+				$valid_user['email'] = $user_info['email'];
+			} else {
+				$data_error = __('Invalid Email','sendpress');
+			}
+
+			if( isset($user_info['firstname']) ){
+				$valid_user['firstname'] = $user_info['firstname'];
+			} else {
+				$valid_user['firstname'] = '';
+			}
+			
+			if( isset($user_info['lastname']) ){
+				$valid_user['lastname'] = $user_info['lastname'];
+			} else {
+				$valid_user['lastname'] = '';
+			}
+			$status = false;
+			if($data_error ==  false){
+				$list = implode(",", $user_info['list']);
+				$status =  SendPress_Data::subscribe_user($list, $valid_user['email'], $valid_user['firstname'], $valid_user['lastname']);
+				if($status == false){
+					$data_error = __('Problem with subscribing user.','sendpress');
+				} else{
+					$data_error =__('Thanks for subscribing.','sendpress');
+		
+				}
+			} 
+		}
+
+		$this->message = $data_error;
+			
+
 			
 	}
 
@@ -41,17 +78,32 @@ class SendPress_Public_View_Form extends SendPress_Public_View{
 	
 	
 			<form id="sendpress_signup" method="POST" >
-				<input type="hidden" name="sp[list]" id="list" value="<? echo $_GET['list']; ?>">
+				<input type="hidden" name="sp_list" id="list" value="<? echo $_GET['list']; ?>">
 				<?php if($this->message !=''){ ?>
 					<div id="thanks"><?php echo $this->message; ?></div>
 				<?php }  else { ?>
 				<div id="form-wrap">
-										
+											
+					<?php if(isset($_GET['f'])) { ?>
+					<p name="firstname">
+						<label for="firstname">First Name:</label>
+						<input class="sp-text" type="text" id="sp-email" orig="EMail" value="" name="sp_firstname">
+					</p>
+					<?php } ?>
+					<?php if(isset($_GET['l'])) { ?>
+					<p name="lastname">
+						<label for="lastname">Last Name:</label>
+						<input class="sp-text" type="text" id="sp-email" orig="EMail" value="" name="sp_lastname">
+					</p>
+					<?php } ?>
+
 					<p name="email">
-													<label for="email">EMail:</label>
-												<input class="sp-text" type="text" id="sp-email" orig="EMail" value="" name="sp[email]">
+						<label for="email">EMail:</label>
+						<input class="sp-text" type="text" id="sp-email" orig="EMail" value="" name="sp_email">
 					</p>
 
+
+					<?php wp_nonce_field('sendpress-form-post','sp'); ?>
 					<p class="submit">
 						<input value="Submit" class="sendpress-submit" type="submit" id="submit" name="submit">
 					</p>

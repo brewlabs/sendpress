@@ -48,12 +48,20 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 		<b>HTML</b><br>
 		<textarea style="width:100%; padding: 8px;" rows="21" name="post-page-text">
 &lt;form method="post" action="<?php echo trailingslashit(site_url()); ?>">
-	&lt;input type="hidden" name="sp[list]" value="<?php echo $list_id;?>"/>
+	&lt;input type="hidden" name="sp_list" value="<?php echo $list_id;?>"/>
 	&lt;input type="hidden" name="sendpress" value="post" />
 	<div id="form-wrap">
 		<p name="email">
 			<label for="email">EMail:</label>
-			&lt;input type="text" value="" name="sp[email]"/>
+			&lt;input type="text" value="" name="sp_email"/>
+		</p>
+		<p name="firstname">
+			<label for="email">First Name:</label>
+			&lt;input type="text" value="" name="sp_firstname"/>
+		</p>
+		<p name="lastname">
+			<label for="email">Last Name:</label>
+			&lt;input type="text" value="" name="sp_lastname"/>
 		</p>
 		<p class="submit">
 			&lt;input value="Submit" class="sendpress-submit" type="submit" id="submit" name="submit">

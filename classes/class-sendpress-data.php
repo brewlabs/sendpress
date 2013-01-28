@@ -226,8 +226,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 	function get_subscriber_list_status( $listID,$subscriberID ) {
-		$table = self::list_subcribers_table();
-		$result = self::wpdbQuery("SELECT status,updated FROM $table WHERE subscriberID = $subscriberID AND listID = $listID", 'get_row');
+		$table = SendPress_Data::list_subcribers_table();
+		$result = SendPress_Data::wpdbQuery("SELECT status,updated FROM $table WHERE subscriberID = $subscriberID AND listID = $listID", 'get_row');
 		return $result;	
 	}
 

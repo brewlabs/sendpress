@@ -378,7 +378,7 @@ class SendPress {
 		 	if(class_exists($view_class)){
 		 		$view_class = NEW $view_class;
 		 		$view_class->data($data);
-				if( isset( $_POST['sp'] ) && method_exists($view_class, 'save') ){
+				if( isset( $_POST['sp'] ) && wp_verify_nonce( $_POST['sp'],'sendpress-form-post') && method_exists($view_class, 'save') ){
 					$view_class->save();
 				} 
 				$view_class->prerender();
