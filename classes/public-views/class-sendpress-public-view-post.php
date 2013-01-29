@@ -61,6 +61,8 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 				$post_responce = 'default';
 			}
 
+			print_r($status);
+
 			$optin = SendPress_Option::is_double_optin();
 
 			switch($post_responce){
@@ -164,6 +166,9 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 
 		function default_page($status, $error){
 			SendPress_Public_View::page_start();
+
+			print_r($status);
+			print_r($error);
 			?>
 			<div class="span12">
 				<div class='area'>
