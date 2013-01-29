@@ -61,8 +61,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 				$post_responce = 'default';
 			}
 
-			print_r($status);
-
+		
 			$optin = SendPress_Option::is_double_optin();
 
 			switch($post_responce){
