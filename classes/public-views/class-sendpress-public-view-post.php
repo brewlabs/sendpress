@@ -23,6 +23,11 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 		$valid_user = array();
 		//foreach()
 		if(isset($user_info['list'])){
+
+			if(!is_array($user_info['list'])){
+				$user_info['list'] = array($user_info['list']);
+			}
+
 			$data_error = false;
 			if( isset($user_info['email']) && is_email( $user_info['email'] )){
 				$valid_user['email'] = $user_info['email'];

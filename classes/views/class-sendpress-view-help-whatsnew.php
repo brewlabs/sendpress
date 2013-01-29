@@ -66,7 +66,7 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 
 	<div class="feature-section images-stagger-right">
 		<img alt="" src="<?php echo SENDPRESS_URL;?>/img/pro-reports.jpg" class="image-66">
-		<h4>Introducing SendPress Pro</h4>
+		<h4>Coming in February SendPress Pro</h4>
 		<p>Take your newsletters and marketing to the next level with advanced, flexible, and elegant add-ons.</p>
 		<p>SendPress Pro is built to extend SendPress FREE to a full Email Marketing System like MailChimp, Constant Contact, etc.</p>
 		<p>The initial release includes Advanced Reports, Spam Testing, Sending via SendGrid*, Custom SMTP and of course access to our Priority Support site.</p>
@@ -79,7 +79,7 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 
 	<div class="feature-section images-stagger-right">
 		<img alt="" src="<?php echo SENDPRESS_URL;?>/img/new-forms.jpg" class="image-66">
-		<h4>New Forms to use on Facebook and more</h4>
+		<h4>New Forms to use on your website and more</h4>
 		<p>The new form options allow for a wide array of setups. You can use an iframe, a shortcode, plain old html or the API to add a user from code.</p>
 	</div>
 </div>
