@@ -86,7 +86,7 @@ class SendPress {
 	}
 
 	function append_log($msg, $queueid = -1) {
-		return SendPress_Helper::append_log($msg, $queueid);
+		return SendPress_Helper::append_log($msg, $queueid);å
 	}
 	
 	function nonce_value(){
