@@ -287,14 +287,16 @@ class SendPress_Subscribers_Table extends WP_List_Table {
             $screen = get_current_screen();
             // retrieve the "per_page" option
             $screen_option = $screen->get_option('per_page', 'option');
-            // retrieve the value of the option stored for the current user
-            $per_page = get_user_meta($user, $screen_option, true);
-
-            if ( empty ( $per_page) || $per_page < 1 ) {
-                // get the default value if none is set
-                $per_page = $screen->get_option( 'per_page', 'default' );
+            $per_page = 10;
+            if(!empty( $screen_option)) {
+                // retrieve the value of the option stored for the current user
+                $per_page = get_user_meta($user, $screen_option, true);
+                
+                if ( empty ( $per_page) || $per_page < 1 ) {
+                    // get the default value if none is set
+                    $per_page = $screen->get_option( 'per_page', 'default' );
+                }
             }
-            $per_page = SendPress_Debug::piglatin_per_page_fix($per_page);
         //Which page is this?
         $paged = !empty($_GET["paged"]) ? mysql_real_escape_string($_GET["paged"]) : '';
         //Page Number
