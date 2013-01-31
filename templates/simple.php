@@ -47,7 +47,7 @@ global $post;
 		h1, h2, h3, h4, h5, h6 {color: black !important;}
 
 		/*h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}*/
-
+/*
 		
 			h1, .h1{
 				 color:#202020;
@@ -135,7 +135,7 @@ global $post;
                 margin-left:0;
                 text-align:left;
             }
-
+	*/
            /* 
 		h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {
 		color: red !important;  Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. 

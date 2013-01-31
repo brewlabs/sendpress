@@ -171,7 +171,7 @@ class SendPress {
 			SendPress_Pro_Manager::init();
 			SendPress_Cron::get_instance();
 
-
+		
 			sendpress_register_sender('SendPress_Sender_Website');
 			sendpress_register_sender('SendPress_Sender_Gmail');
 
@@ -192,7 +192,6 @@ class SendPress {
 			if( is_admin() ){
 				$this->maybe_upgrade();
 				$this->ready_for_sending();
-				
 				add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 				add_action( 'admin_init', array( $this, 'admin_init' ) );
 				add_action( 'admin_notices', array( $this,'admin_notice') );
@@ -514,6 +513,7 @@ class SendPress {
 	function admin_init(){
 		$this->set_template_default();
 		$this->add_caps();
+
 		if ( isset( $_REQUEST['post_id'] ) ){
    			$p = get_post($_REQUEST['post_id']);
    			if(  $p !==null && $p->post_type == 'sp_newsletters'){
@@ -550,7 +550,6 @@ class SendPress {
 			SendPress_Option::set('emails-per-hour','100');
 		}
 
-		
 		$this->create_initial_list();
 		
 
