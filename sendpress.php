@@ -600,6 +600,11 @@ class SendPress {
 			if( isset($_GET['spv'])){
 				$this->update_option( 'version' , $_GET['spv'] );
 			}
+
+			if( isset($_GET['beta'])){
+				SendPress_Option::set( 'beta' , absint( $_GET['beta'] ) );
+			}
+
 			remove_editor_styles();
 			add_filter( 'mce_css', array($this,'plugin_mce_css') );
 			//Stop Facebook Plugin from posting emails to Facebook.
@@ -849,7 +854,7 @@ class SendPress {
 	    add_submenu_page('sp-overview', __('Queue','sendpress'), __('Queue','sendpress'), $role, 'sp-queue', array(&$this,'render_view'));
 	   	add_submenu_page('sp-overview', __('Settings','sendpress'), __('Settings','sendpress'), $role, 'sp-settings', array(&$this,'render_view'));
 	  
-	   	if( defined('WP_DEBUG') && WP_DEBUG || defined('SENDPRESS_PRO_VERSION') ) {
+	   	if( SendPress_Option::get('beta') ) {
 	   		add_submenu_page('sp-overview', __('Pro Add-ons','sendpress'), __('Pro Add-ons','sendpress'), $role, 'sp-pro', array(&$this,'render_view'));
 	   	}
 
@@ -876,7 +881,7 @@ class SendPress {
 		$view_class->add_tab( __('Queue','sendpress') . ' <small>('. $queue .')</small>', 'sp-queue', ($this->_page === 'sp-queue') );
 		$view_class->add_tab( __('Settings','sendpress'), 'sp-settings', ($this->_page === 'sp-settings') );
 		
-		if( defined('WP_DEBUG') && WP_DEBUG || defined('SENDPRESS_PRO_VERSION') ){
+		if( SendPress_Option::get('beta') ) {
 			$view_class->add_tab( __('Pro Add-ons','sendpress'), 'sp-pro', ($this->_page === 'sp-pro') );
 		}
 		$view_class->add_tab( __('Help','sendpress'), 'sp-help', ($this->_page === 'sp-help') );

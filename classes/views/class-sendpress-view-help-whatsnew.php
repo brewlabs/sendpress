@@ -140,8 +140,11 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 		<a href="<?php echo SendPress_View_Reports::link(); ?>">Reports</a> |
 		<a href="<?php echo SendPress_View_Subscribers::link(); ?>">Subscribers</a> |
 		<a href="<?php echo SendPress_View_Queue::link(); ?>">Queue</a> |
-		<a href="<?php echo SendPress_View_Settings::link(); ?>">Settings</a> |
+		<a href="<?php echo SendPress_View_Settings::link(); ?>">Settings</a> 
+		<?php if( SendPress_Option::get('beta') ) { ?>
+		|
 		<a href="<?php echo SendPress_View_Pro::link(); ?>">Pro Add-ons</a> 
+		<?php } ?>
 </div>
 <br>
 </div>
