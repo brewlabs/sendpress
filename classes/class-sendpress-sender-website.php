@@ -76,7 +76,14 @@ class SendPress_Sender_Website extends SendPress_Sender {
 		// Set whether it's plaintext, depending on $content_type
 		//if ( 'text/html' == $content_type )
 		$phpmailer->IsHTML( true );
-		
+		$hosting = SendPress_Option::get('website-hosting-provider');
+		if($hosting == 'godaddy'){
+			// We are sending SMTP mail
+			$phpmailer->IsSMTP();
+			// Set the other options
+			$phpmailer->Host = 'relay-hosting.secureserver.net';
+		}
+
 		// If we don't have a charset from the input headers
 		//if ( !isset( $charset ) )
 		//$charset = get_bloginfo( 'charset' );
