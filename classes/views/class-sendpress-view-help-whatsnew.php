@@ -102,8 +102,8 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 
 	<div class="feature-section col three-col">
 		<div>
-			<h4>Screen Options</h4>
-			<p>Every table view now uses settings to adjust the number of records displayed.</p>
+			<h4>Theme Styles</h4>
+			<p>All public SendPress pages will now try and use your for styling. Go to <a href="<?php echo SendPress_View_Settings_Activation::link(); ?>">System Emails &amp; Pages</a> to check it out.</p>
 		</div>
 		<div>
 			<h4>Updated Basic Reports</h4>
