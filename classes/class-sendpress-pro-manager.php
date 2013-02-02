@@ -75,7 +75,7 @@ class SendPress_Pro_Manager {
 	}
 
 	function activate_key($key){
-		
+
 		$api_params = array( 
             'edd_action'=> 'activate_license', 
             'license'   => $key, 
@@ -186,6 +186,7 @@ class SendPress_Pro_Manager {
 	}
 	
 	function get_pro_details( $res, $action, $args ){
+
 		if( $action === 'plugin_information' && $args->slug === 'sendpress-pro' ){
 
 			if( class_exists('SendPress_Option') ){
@@ -211,6 +212,8 @@ class SendPress_Pro_Manager {
 				$obj->download_link = $data->package;
 
 				$res = $obj;
+
+				
 
 			}
 			
