@@ -1570,6 +1570,7 @@ class SendPress {
 	}
 
 	function fetch_mail_from_queue(){
+		@ini_set('max_execution_time',0);
 		global $wpdb;
 		$count = SendPress_Option::get('emails-per-hour');
 		$emails_per_hour = SendPress_Option::get('emails-per-hour');
@@ -1596,6 +1597,7 @@ class SendPress {
 					if( SendPress_Manager::send_limit_reached() ){
 						break;
 					}
+					SendPress_Manager::increase_email_count( 1 );
 					$attempts++;
 					SendPress_Data::queue_email_process( $email->id );
 					$result = SendPress_Manager::send_email_from_queue( $email );
@@ -1625,14 +1627,12 @@ class SendPress {
 			} else{ //Stop was set.
 				break;
 			}
-			if($emails_per_hour != 0){
-					sleep( $rate );
-				}	
+			
 		}
 
 
 		
-		SendPress_Manager::increase_email_count( $attempts );
+		
 
 		
 	}
@@ -1698,9 +1698,7 @@ class SendPress {
 				} else{//We ran out of emails to process.
 					break;
 				}
-				if($emails_per_hour != 0){
-					sleep( $rate );
-				}	
+				
 		}
 
 		SendPress_Manager::increase_email_count( $attempts );

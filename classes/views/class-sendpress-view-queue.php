@@ -77,6 +77,8 @@ class SendPress_View_Queue extends SendPress_View {
 		print_r($x->id);
 			echo "<br>";
 			*/
+		
+		//echo wp_get_schedule('sendpress_cron_action_run');
 
 	?>
 
