@@ -30,7 +30,7 @@ if ($unconfirmed != null) {
 		array( 
 			'status' => 'Unconfirmed',	// string
 		), 
-		array( 'ID' => 1 ), 
+		array( 'statusid' => 1 ), 
 		array( 
 			'%s',	// value1
 		), 
@@ -60,7 +60,7 @@ if ($active != null) {
 		array( 
 			'status' => 'Active',	// string
 		), 
-		array( 'ID' => 2 ), 
+		array( 'statusid' => 2 ), 
 		array( 
 			'%s',	// value1
 		), 
@@ -89,7 +89,7 @@ if ($unsubscribed != null) {
 		array( 
 			'status' => 'Unsubscribed',	// string
 		), 
-		array( 'ID' => 3 ), 
+		array( 'statusid' => 3 ), 
 		array( 
 			'%s',	// value1
 		), 
@@ -118,7 +118,7 @@ if ($bounced != null) {
 		array( 
 			'status' => 'Bounced',	// string
 		), 
-		array( 'ID' => 4 ), 
+		array( 'statusid' => 4 ), 
 		array( 
 			'%s',	// value1
 		), 

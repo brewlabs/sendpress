@@ -44,7 +44,7 @@ class SendPress_Manager {
 		if( $emails_this_hour >= $emails_per_hour ){
 			$time_delay =  SendPress_Option::get('time-delay');
 			if($time_delay == false){
-				$time_delay = time() + (60 * 60);
+				$time_delay = time() + (60 * 59.5);
 				SendPress_Option::set('time-delay', $time_delay);
 			}	
 			if($time_delay < time() ){
