@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid,
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 0.8.8
+Stable tag: 0.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,6 +94,10 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 
 == Changelog ==
+
+= 0.9.1 - 2011.2.3 =
+* Fix for cron not sending on some hosts
+
 
 = 0.9 - 2011.1.31 =
 * New Qeueue manager for emails per day and per hour
@@ -192,6 +196,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.1 =
+Fix for Automated sending on some hosts
+
+= 0.9 =
+New Queue Manager, Theme Support and Forms
 
 = 0.8.8.1 =
 Unistall Error fix and bug fixes.
