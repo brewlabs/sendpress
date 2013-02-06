@@ -56,7 +56,7 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 			<!--
 			<h2>Email Template Name</h2>
 			-->
-			<input type="hidden" name="post_title" size="30" tabindex="1" value="<?php  echo $sp->random_code();  //echo esc_attr( htmlspecialchars( $post->post_title ) ); ?>" id="title" autocomplete="off" />
+			<input type="hidden" name="post_title" size="30" tabindex="1" value="<?php  echo SendPress_Data::random_code();  //echo esc_attr( htmlspecialchars( $post->post_title ) ); ?>" id="title" autocomplete="off" />
 		<!--<br><br>-->
 			<h2><?php _e('Subject','sendpress'); ?></h2>
 			<input type="text" name="post_subject" size="30" tabindex="1" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
