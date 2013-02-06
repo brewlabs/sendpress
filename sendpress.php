@@ -1709,7 +1709,7 @@ class SendPress {
 
 	function add_email_to_queue($values){
 		global $wpdb;
-		$table = $this->queue_table();
+		$table = SendPress_Data::queue_table();
 		$messageid = $this->unique_message_id();
 		$values["messageID"] = $messageid;
 		$values["date_published"] = date('Y-m-d H:i:s');
