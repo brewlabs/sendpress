@@ -274,7 +274,7 @@ class SendPress_Queue_Table extends WP_List_Table {
 
  
        
-        $query = "SELECT * FROM " .  $this->_sendpress->queue_table();
+        $query = "SELECT * FROM " .  SendPress_Data::queue_table();
        
         /* -- Ordering parameters -- */
         //Parameters that are going to be used to order the result
