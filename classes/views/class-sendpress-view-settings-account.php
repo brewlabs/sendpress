@@ -106,7 +106,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
       if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { $class = "active"; }
       echo "<div class='tab-pane $class' id='$key'>";
 ?>      
-        <p>&nbsp;<input name="sendpres-sender" type="radio"  <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> Activate
+        <p>&nbsp;<input name="sendpress-sender" type="radio"  <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> Activate
         <?php
         echo $sender->label();
         echo "</p><div class='well'>";
