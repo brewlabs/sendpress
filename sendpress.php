@@ -1313,14 +1313,14 @@ class SendPress {
 	}
 
 	function getSubscribers($listID = false){
-		$query = "SELECT t1.*, t3.status FROM " .  $this->subscriber_table() ." as t1,". $this->list_subcribers_table()." as t2,". $this->subscriber_status_table()." as t3 " ;
+		$query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
 
         $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.listID =  ". $listID .")";
         
         return $this->wpdbQuery($query, 'get_results');
 	}
 	function get_active_subscribers($listID = false){
-		$query = "SELECT t1.*, t3.status FROM " .  $this->subscriber_table() ." as t1,". $this->list_subcribers_table()." as t2,". $this->subscriber_status_table()." as t3 " ;
+		$query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
 
         $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.listID =  ". $listID .") AND (t2.status = 2)";
         
@@ -1328,7 +1328,7 @@ class SendPress {
 	}
 
 	function getSubscriberbyKey($key){
-		return $this->getDetail($this->subscriber_table(), 'identity_key', $key );
+		return $this->getDetail(SendPress_Data::subscriber_table(), 'identity_key', $key );
 	}
 
 	function getSubscriberKey($id){
@@ -1341,12 +1341,12 @@ class SendPress {
 
 	function exportList($listID = false){
 		if($listID){
-        $query = "SELECT t1.*, t3.status FROM " .  $this->subscriber_table() ." as t1,". $this->list_subcribers_table()." as t2,". $this->subscriber_status_table()." as t3 " ;
+        $query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
 
         
             $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.listID =  ". $listID .")";
         } else {
-            $query = "SELECT * FROM " .  $this->subscriber_table();
+            $query = "SELECT * FROM " .  SendPress_Data::subscriber_table();
         }
 
         return $this->wpdbQuery($query, 'get_results');
@@ -1709,7 +1709,7 @@ class SendPress {
 
 	function add_email_to_queue($values){
 		global $wpdb;
-		$table = $this->queue_table();
+		$table = SendPress_Data::queue_table();
 		$messageid = $this->unique_message_id();
 		$values["messageID"] = $messageid;
 		$values["date_published"] = date('Y-m-d H:i:s');

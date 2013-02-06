@@ -18,7 +18,7 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
         $subject = SendPress_Option::get('current_send_subject_'. $saveid);
 
         $info = SendPress_Option::get('current_send_'.$saveid);
-        $slug = $sp->random_code();
+        $slug = SendPress_Data::random_code();
 
         $new_id = SendPress_Posts::copy($email_post, $subject, $slug, $sp->_report_post_type );
         SendPress_Posts::copy_meta_info($new_id, $saveid);
