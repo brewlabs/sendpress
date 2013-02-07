@@ -17,7 +17,7 @@ class SendPress_View_Settings extends SendPress_View {
 		<div class="navbar-inner">
 		<ul class="nav">
 			<!--
-		  <li <?php if($sp->_current_view == ''){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings::link();; ?>"><i class="icon-envelope"></i> <?php _e('Basic Setup','sendpress'); ?></a></li>
+		  <li <?php if($sp->_current_view == ''){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings::link(); ?>"><i class="icon-envelope"></i> <?php _e('Basic Setup','sendpress'); ?></a></li>
 		 -->
 		  <li <?php if($sp->_current_view == 'styles'){ ?>class="active"<?php } ?> >
 		    <a href="<?php echo SendPress_View_Settings_Styles::link(); ?>"><i class="icon-pencil "></i> <?php _e('Basic Settings & Styles','sendpress'); ?></a>
