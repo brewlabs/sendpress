@@ -389,7 +389,7 @@ switch ( $this->_current_action ) {
         update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
         update_post_meta( $my_post['ID'], '_sendpress_status', 'private');
 
-        $this->set_default_email_style($my_post['ID']);
+        SendPress_Email::set_default_style($my_post['ID']);
         //clear the cached file.
         delete_transient( 'sendpress_email_html_'. $my_post['ID'] );
 
@@ -432,7 +432,7 @@ switch ( $this->_current_action ) {
         update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
         update_post_meta( $my_post['ID'], '_sendpress_status', 'private');
 
-        $this->set_default_email_style($my_post['ID']);
+        SendPress_Email::set_default_style( $my_post['ID'] );
         //clear the cached file.
         delete_transient( 'sendpress_email_html_'. $my_post['ID'] );
 

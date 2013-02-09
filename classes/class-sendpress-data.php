@@ -7,8 +7,20 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Data extends SendPress_DB_Tables {
 
+
 	function nonce(){
 		return 'sendpress-is-awesome';
+	}
+
+	function nonce_field(){
+		wp_nonce_field( SendPress_Data::nonce() );
+	}
+
+	function email_post_type(){
+		return 'sp_newsletters';
+	}
+	function report_post_type(){
+		return 'sp_report';
 	}
 
 	/********************* BASE FUNCTIONS **************************/	
@@ -25,6 +37,27 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $result;
 	}
 
+
+	function let_to_num( $v ) {
+
+		$l   = substr( $v, -1 );
+		$ret = substr( $v, 0, -1 );
+
+		switch ( strtoupper( $l ) ) {
+			case 'P':
+				$ret *= 1024;
+			case 'T':
+				$ret *= 1024;
+			case 'G':
+				$ret *= 1024;
+			case 'M':
+				$ret *= 1024;
+			case 'K':
+				$ret *= 1024;
+				break;
+		}
+		return $ret;
+	}
 	
 	/********************* BASE FUNCTIONS **************************/
 
@@ -324,7 +357,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		foreach($lists as $list){
 			if( in_array($list->ID, $listids) ){
 				$current_status = SendPress_Data::get_subscriber_list_status( $list->ID, $subscriberID );
-				if($current_status->status < 2 ){
+				if(isset($current_status->status) && $current_status->status < 2 ){
 					$success = SendPress_Data::update_subscriber_status($list->ID, $subscriberID, $status);
 				} else {
 
@@ -341,6 +374,16 @@ class SendPress_Data extends SendPress_DB_Tables {
 	    $random_code = substr( $now, strlen( $now ) - 3, 3 ) . substr( md5( uniqid( rand(), true ) ), 0, 8 ) . substr( md5( $now . rand() ), 0, 4);
 	    return $random_code;
 	}
+
+	/**
+	 * Gets all currently created subscriber status out of the DB
+	 * @return array
+	 */
+	function get_statuses( ) {
+		global $wpdb;
+		return $wpdb->get_results("SELECT * FROM " . SendPress_Data::subscriber_status_table() );
+	}
+
 
 	/********************* END SUBSCRIBER FUNCTIONS **************************/
 

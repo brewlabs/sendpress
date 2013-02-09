@@ -24,7 +24,7 @@ class SendPress_View_Subscribers_Add extends SendPress_View_Subscribers {
 	    <?php _e('Lastname','sendpress'); ?>: <input type="text" name="lastname" value="" /><br>
 	    <?php _e('Status','sendpress'); ?>: <select name="status">
 	    			<?php 
-	    				$results = $sp->getData($sp->subscriber_status_table());
+	    				$results =  SendPress_Data::get_statuses();
 	    				foreach($results as $status){
 	    					$selected = '';
 	    					if($status->status == 'Active'){
@@ -40,7 +40,7 @@ class SendPress_View_Subscribers_Add extends SendPress_View_Subscribers {
 	    		</select>
 	    		<br>
 	  <button type="submit" class="btn btn-primary"><?php _e('Submit','sendpress'); ?></button>
-	   <?php wp_nonce_field($sp->_nonce_value); ?>
+	   <?php SendPress_Data::nonce_field(); ?>
 
 	</form>
 	</div>
@@ -63,7 +63,7 @@ john@gmail.com, John, Doe<br>
 	    <input type="hidden" name="listID" value="<?php echo $_GET['listID']; ?>" />
 	   	<textarea name="csv-add" cols='50' rows='25'></textarea>
 	   	<button type="submit" class="btn btn-primary"><?php _e('Submit','sendpress'); ?></button>
-	   	<?php wp_nonce_field($sp->_nonce_value); ?>
+	   	<?php SendPress_Data::nonce_field(); ?>
 </form>
 </div>
 </div>

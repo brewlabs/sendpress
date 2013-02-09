@@ -12,7 +12,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 
   function account_setup(){
 
-    if(  wp_verify_nonce( $_POST['_spnonce'] , basename(__FILE__) )){
+    //if(  wp_verify_nonce( $_POST['_spnonce'] , basename(__FILE__) )){
 
         $options =  array();
 
@@ -25,7 +25,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 
         $options['phpmailer_error'] = '';
         $options['last_test_debug'] = '';
-        SendPress_Option::set($options);
+        SendPress_Option::set( $options );
 
           global  $sendpress_sender_factory;
 
@@ -34,7 +34,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
           foreach ( $senders as $key => $sender ) {
             $sender->save();
           }
-        }
+       // }
 
         $this->redirect();
 
@@ -42,7 +42,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
   }
 
   function send_test_email(){
-
+        $options = array();
         $options['testemail'] = $_POST['testemail'];
         
         SendPress_Option::set($options);
@@ -137,7 +137,7 @@ You have sent <strong><?php echo $count_today; ?></strong> emails so far today.<
 </div>
 <?php 
 //Page Nonce
-wp_nonce_field(  basename(__FILE__) ,'_spnonce' );
+//wp_nonce_field(  basename(__FILE__) ,'_spnonce' );
 wp_nonce_field( $sp->_nonce_value );
 ?>
 </form>
@@ -157,7 +157,7 @@ wp_nonce_field( $sp->_nonce_value );
 
 <?php 
 //Page Nonce
-wp_nonce_field(  basename(__FILE__) ,'_spnonce' );
+//wp_nonce_field(  basename(__FILE__) ,'_spnonce' );
 //SendPress General Nonce
 wp_nonce_field( $sp->_nonce_value );
 ?>

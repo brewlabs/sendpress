@@ -9,13 +9,18 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 
 	function save(){
-		$list_id = $_GET['listID'];
-		$postpage = $_POST['post-page'];
-		$postpageid = $_POST['post-page-id'];
-		$postredirect = $_POST['post-redirect'];
-		update_post_meta($list_id,'post-page',$postpage  );
-		update_post_meta($list_id,'post-page-id',$postpageid  );
-		update_post_meta($list_id,'post-redirect',$postredirect  );
+
+		if(isset($_POST['listID'])){
+			$list_id = $_POST['listID'];
+			$postpage = $_POST['post-page'];
+			$postpageid = $_POST['post-page-id'];
+			$postredirect = $_POST['post-redirect'];
+			update_post_meta($list_id,'post-page',$postpage  );
+			update_post_meta($list_id,'post-page-id',$postpageid  );
+			update_post_meta($list_id,'post-redirect',$postredirect  );
+		} else {
+			$list_id = $_GET['listID'];
+		}
 
 		$this->redirect(array('listID'=> $list_id));
 	}
@@ -73,6 +78,7 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 <div style="width: 45%; margin-right: 10%"><br>
 	Post URL
 	<div class='well'>
+		<input type="hidden" name="listID" value="<?php echo $list_id ;?>" />
 	<input type="text" readonly value="<?php echo trailingslashit(site_url()); ?>" class="sp-text"/>
 </div>
 	Response Options

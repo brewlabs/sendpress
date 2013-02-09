@@ -1218,7 +1218,7 @@ class SendPress {
 	function requeue_email($emailid){
 		global $wpdb;
 
-		$table = $this->queue_table();
+		$table = SendPress_Data::queue_table();
 
 		$result = $wpdb->update($table,array('attempts'=>0 ,'inprocess'=>0), array('id'=> $emailid) );
 	
@@ -1226,7 +1226,7 @@ class SendPress {
 
 	// GET DETAIL (RETURN X WHERE Y = Z)
 	function unlink_list_subscriber($listID, $subscriberID) {
-		$table = $this->list_subcribers_table();
+		$table = SendPress_Data::list_subcribers_table();
 		$result = $this->wpdbQuery("DELETE FROM $table WHERE listID = '$listID' AND subscriberID = '$subscriberID' ", 'query');
 		return $result;	
 	}
@@ -1241,9 +1241,9 @@ class SendPress {
 	// COUNT DATA
 	function countSubscribers($listID, $status = 2) {
 		global $wpdb;
-		$table = $this->list_subcribers_table();
+		$table = SendPress_Data::list_subcribers_table();
 
-		$query = "SELECT COUNT(*) FROM " .  $this->subscriber_table() ." as t1,". $this->list_subcribers_table()." as t2,". $this->subscriber_status_table()." as t3";
+		$query = "SELECT COUNT(*) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3";
 
         
             $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND(t2.status = %d) AND (t2.listID =  %d)";
@@ -1255,20 +1255,20 @@ class SendPress {
 	// COUNT DATA
 	function countQueue() {
 		global $wpdb;
-		$table = $this->queue_table();
+		$table = SendPress_Data::queue_table();
 		$count = $this->wpdbQuery("SELECT COUNT(1) FROM $table WHERE success = 0 AND max_attempts != attempts", 'get_var');
 		return $count;
 	}
 
 	function add_subscriber_with_optin(){
-		$table = $this->subscriber_table();
+		$table = SendPress_Data::subscriber_table();
 		$email = $values['email'];
 
 		if(!isset($values['join_date'])){
 			$values['join_date'] =  date('Y-m-d H:i:s');
 		}
 		if(!isset($values['identity_key'])){
-			$values['identity_key'] =  $this->random_code();
+			$values['identity_key'] =  SendPress_Data::random_code();
 		}
 
 		if( !filter_var($email, FILTER_VALIDATE_EMAIL) ){
@@ -1287,7 +1287,7 @@ class SendPress {
 	
 
 	function updateSubscriber($subscriberID, $values){
-		$table = $this->subscriber_table();
+		$table = SendPress_Data::subscriber_table();
 		$email = $values['email'];
 		global $wpdb;
 		$result = $this->wpdbQuery("SELECT subscriberID FROM $table WHERE email = '$email' ", 'get_var');
@@ -1302,7 +1302,7 @@ class SendPress {
 	
 
 	function getSubscriberLists( $value ) {
-		$table = $this->list_subcribers_table();
+		$table = SendPress_Data::list_subcribers_table();
 		$result = $this->wpdbQueryArray("SELECT listID FROM $table WHERE subscriberID = '$value'", 'get_results');
 		return $result;	
 	}
@@ -1661,7 +1661,7 @@ class SendPress {
 		}
 
 		for ($i=0; $i < $limit ; $i++) { 
-				$email = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE (success = 0) AND (max_attempts != attempts) AND (inprocess = 0) ORDER BY id ASC LIMIT 1","get_results");
+				$email = $this->wpdbQuery("SELECT * FROM ".SendPress_Data::queue_table()." WHERE (success = 0) AND (max_attempts != attempts) AND (inprocess = 0) ORDER BY id ASC LIMIT 1","get_results");
 				if( !empty($email) ){
 					$email = $email[0];
 					
@@ -1676,7 +1676,7 @@ class SendPress {
 					$email_count++;
 					
 					if ($result) {
-						$table = $this->queue_table();
+						$table = SendPress_Data::queue_table();
 						$wpdb->query( 
 							$wpdb->prepare( 
 								"DELETE FROM $table WHERE id = %d",
@@ -1693,7 +1693,7 @@ class SendPress {
 						$count++;
 						SendPress_Data::update_report_sent_count( $email->emailID );
 					} else {
-						$wpdb->update( $this->queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
+						$wpdb->update( SendPress_Data::queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
 					}
 				} else{//We ran out of emails to process.
 					break;
@@ -1722,31 +1722,7 @@ class SendPress {
 
 	
 	function set_default_email_style( $id ){
-		if( false == get_post_meta( $id , 'body_bg', true) ) {
-
-			$default_styles_id = SendPress_Data::get_template_id_by_slug( 'user-style' );
-
-			if(false == get_post_meta( $default_styles_id , 'body_bg', true) ){
-				$default_styles_id = SendPress_Data::get_template_id_by_slug('default-style');
-			}
-
-			$default_post = get_post( $default_styles_id );
-
-			update_post_meta( $id , 'body_bg',  get_post_meta( $default_post->ID , 'body_bg', true) );
-			update_post_meta( $id , 'body_text',  get_post_meta( $default_post->ID , 'body_text', true) );
-			update_post_meta( $id , 'body_link',  get_post_meta( $default_post->ID , 'body_link', true) );
-			
-			update_post_meta( $id , 'header_bg',  get_post_meta( $default_post->ID , 'header_bg', true) );
-			update_post_meta( $id , 'header_text_color',  get_post_meta( $default_post->ID , 'header_text_color', true) );
-			//update_post_meta( $id , 'header_text',  get_post_meta( $default_post->ID , 'header_text', true) );
-
-			update_post_meta( $id, 'content_bg',  get_post_meta( $default_post->ID , 'content_bg', true) );
-			update_post_meta( $id , 'content_text',  get_post_meta( $default_post->ID , 'content_text', true) );
-			update_post_meta( $id , 'sp_content_link_color',  get_post_meta( $default_post->ID , 'sp_content_link_color', true) );
-			update_post_meta( $id , 'content_border',  get_post_meta( $default_post->ID , 'content_border', true) );
-			update_post_meta( $id , 'upload_image',  get_post_meta( $default_post->ID , 'upload_image', true) );
-
-		} 
+		SendPress_Email::set_default_style( $id ); 
 	}
 
 	function simple_page_start(){

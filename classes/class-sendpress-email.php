@@ -226,6 +226,35 @@ class SendPress_Email {
 	}
 
 
+	function set_default_style( $id ){
+		if( false == get_post_meta( $id , 'body_bg', true) ) {
+
+			$default_styles_id = SendPress_Data::get_template_id_by_slug( 'user-style' );
+
+			if(false == get_post_meta( $default_styles_id , 'body_bg', true) ){
+				$default_styles_id = SendPress_Data::get_template_id_by_slug('default-style');
+			}
+
+			$default_post = get_post( $default_styles_id );
+
+			update_post_meta( $id , 'body_bg',  get_post_meta( $default_post->ID , 'body_bg', true) );
+			update_post_meta( $id , 'body_text',  get_post_meta( $default_post->ID , 'body_text', true) );
+			update_post_meta( $id , 'body_link',  get_post_meta( $default_post->ID , 'body_link', true) );
+			
+			update_post_meta( $id , 'header_bg',  get_post_meta( $default_post->ID , 'header_bg', true) );
+			update_post_meta( $id , 'header_text_color',  get_post_meta( $default_post->ID , 'header_text_color', true) );
+			//update_post_meta( $id , 'header_text',  get_post_meta( $default_post->ID , 'header_text', true) );
+
+			update_post_meta( $id, 'content_bg',  get_post_meta( $default_post->ID , 'content_bg', true) );
+			update_post_meta( $id , 'content_text',  get_post_meta( $default_post->ID , 'content_text', true) );
+			update_post_meta( $id , 'sp_content_link_color',  get_post_meta( $default_post->ID , 'sp_content_link_color', true) );
+			update_post_meta( $id , 'content_border',  get_post_meta( $default_post->ID , 'content_border', true) );
+			update_post_meta( $id , 'upload_image',  get_post_meta( $default_post->ID , 'upload_image', true) );
+
+		} 
+	}
+
+
 }
 }
 

@@ -16,6 +16,34 @@ if ( !defined('SENDPRESS_VERSION') ) {
 *
 */
 class SendPress_View_Emails_Create extends SendPress_View_Emails {
+
+	function save(){
+
+		$_POST['post_type'] = SendPress_Data::email_post_type();
+        // Update post 37
+
+        $my_post = _wp_translate_postdata(true);
+        /*            
+        $my_post['ID'] = $_POST['post_ID'];
+        $my_post['post_content'] = $_POST['content'];
+        $my_post['post_title'] = $_POST['post_title'];
+        */
+        $my_post['post_status'] = 'publish';
+        // Update the post into the database
+        wp_update_post( $my_post );
+        update_post_meta( $my_post['ID'], '_sendpress_subject', $_POST['post_subject'] );
+        update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
+        update_post_meta( $my_post['ID'], '_sendpress_status', 'private');
+
+        SendPress_Email::set_default_style( $my_post['ID'] );
+        //clear the cached file.
+        delete_transient( 'sendpress_email_html_'. $my_post['ID'] );
+
+        
+        SendPress_View_Emails_Style::redirect( array('emailID' =>  $my_post['ID']  )   );
+        //$this->save_redirect( $_POST  );
+
+	}
 	
 	function html($sp) {
 		$post = get_default_post_to_edit( $sp->_email_post_type, true );
@@ -26,12 +54,20 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 
 		wp_enqueue_script('post');
 
-		$post_type = $sp->_email_post_type;
-		$post_type_object = get_post_type_object($sp->_email_post_type);
+		$post_type = SendPress_Data::email_post_type();
+		$post_type_object = get_post_type_object( $post_type );
 
 		?>
-		<form action="admin.php?page=<?php echo $sp->_page; ?>" method="POST" name="post" id="post">
-		<?php $sp->styler_menu('edit'); ?>
+		<form method="POST" name="post" id="post">
+		<div id="styler-menu">
+			<div style="float:right;" class="btn-group">
+				<input type="submit" value="<?php _e('Save & Next','sendpress'); ?>" class="btn btn-primary btn-large" />
+			</div>
+			<div id="sp-cancel-btn" style="float:right; margin-top: 5px;">
+				<a href="<?php echo SendPress_View_Emails::link(); ?>" id="cancel-update" class="btn"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+			</div>
+		</div>
+		
 		<h2>Create Email</h2>
 		<div id="poststuff" class="metabox-holder"> 
 		<!--

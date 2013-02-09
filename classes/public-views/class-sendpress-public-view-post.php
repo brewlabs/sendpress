@@ -13,7 +13,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 	function page_end(){}
 
 	function html() {
-		$post_options = array('list','email','firstname','lastname');
+		$post_options = array('list','email','firstname','lastname','return');
 		$user_info = array();
 		foreach ($post_options as $opt) {
 			$user_info[$opt] = isset($_POST['sp_' . $opt]) ?  $_POST['sp_' . $opt]: false ;
@@ -56,14 +56,18 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			} 
 
 
-			$post_responce = get_post_meta($user_info['list'], 'post-page', true);
+			$post_responce = get_post_meta($user_info['list'][0], 'post-page', true);
 			if($post_responce == false){
 				$post_responce = 'default';
+			}
+			if($user_info['return'] != false){
+				$post_responce = $user_info['return'];
 			}
 
 		
 			$optin = SendPress_Option::is_double_optin();
 
+		
 			switch($post_responce){
 
 				case "json": //Respond to post with json data
