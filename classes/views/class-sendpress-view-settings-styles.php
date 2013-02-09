@@ -130,38 +130,26 @@ $fn = __('From Name','sendpress');
 <div class="boxer form-box">
 <div style="float: right; width: 45%;">
 	<h4 class="nomargin"><?php _e('From Email','sendpress'); ?></h4>
-	<input name="fromemail" type="text" id="fromemail" value="<?php echo SendPress_Option::get('fromemail'); ?>" class="regular-text sp-text">
+	<input name="fromemail" tabindex=2 type="text" id="fromemail" value="<?php echo SendPress_Option::get('fromemail'); ?>" class="regular-text sp-text">
 
 </div>	
 <div style="width: 45%; margin-right: 10%">
 	<h4 class="nomargin"><?php _e('From Name','sendpress'); ?></h4>
-	<input name="fromname" type="text" id="fromname" value="<?php echo SendPress_Option::get('fromname'); ?>" class="regular-text sp-text">
+	<input name="fromname" tabindex=1 type="text" id="fromname" value="<?php echo SendPress_Option::get('fromname'); ?>" class="regular-text sp-text">
 
 </div>
 </div>
-
-
-
-
 
 <br class="clear">
 <h3>Optional Settings</h3>
 		<?php require_once( SENDPRESS_PATH. 'inc/forms/email-style.2.0.php' ); ?>
 		
-
 <br class="clear">
-
-
-
-
 
 <?php wp_nonce_field($sp->_nonce_value); ?>
 		</form>
 	<?php
 	}
-
-
-
 	function text_settings(){
 		?>
 
