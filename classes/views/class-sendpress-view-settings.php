@@ -24,7 +24,8 @@ class SendPress_View_Settings extends SendPress_View {
 		  </li>
 		  <li <?php if($sp->_current_view == 'activation'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Activation::link(); ?>"><i class=" icon-bullhorn"></i> <?php _e('System Emails & Pages','sendpress'); ?></a></li>
 		 <li <?php if($sp->_current_view == 'account'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Account::link(); ?>"><i class="icon-envelope "></i> <?php _e('Sending Account','sendpress'); ?></a></li>
-			<li <?php if($sp->_current_view == 'access'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Access::link(); ?>"><i class="icon-user "></i> <?php _e('Permissions','sendpress'); ?></a></li>	
+			<li <?php if($sp->_current_view == 'access'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Access::link(); ?>"><i class="icon-user "></i> <?php _e('Permissions','sendpress'); ?></a></li>
+			<li <?php if($sp->_current_view == 'notifications'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Notifications::link(); ?>"><i class="icon-bell"></i> <?php _e('Notifications','sendpress'); ?></a></li>	
 			<li <?php if($sp->_current_view == 'advanced'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_View_Settings_Advanced::link(); ?>"><i class=" icon-wrench "></i> <?php _e('Advanced','sendpress'); ?></a></li>		
 		</ul>
 	</div>
