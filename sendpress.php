@@ -165,59 +165,59 @@ class SendPress {
 	}
 
 	function init() {
-			SendPress_Ajax_Loader::init();
-			SendPress_Signup_Shortcode::init();
-			SendPress_Sender::init();
-			SendPress_Pro_Manager::init();
-			SendPress_Cron::get_instance();
+		SendPress_Ajax_Loader::init();
+		SendPress_Signup_Shortcode::init();
+		SendPress_Sender::init();
+		SendPress_Pro_Manager::init();
+		SendPress_Cron::get_instance();
+
+	
+		sendpress_register_sender('SendPress_Sender_Website');
+		sendpress_register_sender('SendPress_Sender_Gmail');
+
+		if(defined('WP_ADMIN') && WP_ADMIN == true){
+			$sendpress_screen_options = new SendPress_Screen_Options();
+		}
+	
+		$this->add_custom_post();
+		
+		if(SendPress_Option::get('permalink_rebuild')){
+			 flush_rewrite_rules( false );
+			 SendPress_Option::set('permalink_rebuild',false);
+		}
+
+		add_filter( 'query_vars', array( $this, 'add_vars' ) );
+		//add_filter( 'cron_schedules', array($this,'cron_schedule' ));
+		
+		if( is_admin() ){
+			$this->maybe_upgrade();
+			$this->ready_for_sending();
+			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+			add_action( 'admin_init', array( $this, 'admin_init' ) );
+			add_action( 'admin_notices', array( $this,'admin_notice') );
+			add_action( 'admin_print_scripts', array($this,'editor_insidepopup') );
+			add_filter( 'gettext', array($this, 'change_button_text'), null, 2 );
+			add_action( 'sendpress_notices', array( $this,'sendpress_notices') );
+
+		}
 
 		
-			sendpress_register_sender('SendPress_Sender_Website');
-			sendpress_register_sender('SendPress_Sender_Gmail');
-
-			if(defined('WP_ADMIN') && WP_ADMIN == true){
-				$sendpress_screen_options = new SendPress_Screen_Options();
-			}
+		add_image_size( 'sendpress-max', 600, 99999 );
+		add_filter( 'template_include', array( $this, 'template_include' ) );
+		add_action( 'sendpress_cron_action', array( $this,'sendpress_cron_action_run') );
+		if ( !wp_next_scheduled( 'sendpress_cron_action' ) ) {
+			wp_schedule_event( time(), 'hourly', 'sendpress_cron_action' );
+			//wp_schedule_event( time(), 'hourly', 'my_hourly_event');
+		}
 		
-			$this->add_custom_post();
-			
-			if(SendPress_Option::get('permalink_rebuild')){
-				 flush_rewrite_rules( false );
-				 SendPress_Option::set('permalink_rebuild',false);
-			}
+		//using this for now, might find a different way to include things later
+		// global $load_signup_js;
+		// $load_signup_js = false;
+		
+		add_action( 'get_header', array( $this, 'add_front_end_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'add_front_end_styles' ) );
 
-			add_filter( 'query_vars', array( $this, 'add_vars' ) );
-			//add_filter( 'cron_schedules', array($this,'cron_schedule' ));
-			
-			if( is_admin() ){
-				$this->maybe_upgrade();
-				$this->ready_for_sending();
-				add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-				add_action( 'admin_init', array( $this, 'admin_init' ) );
-				add_action( 'admin_notices', array( $this,'admin_notice') );
-				add_action( 'admin_print_scripts', array($this,'editor_insidepopup') );
-				add_filter( 'gettext', array($this, 'change_button_text'), null, 2 );
-				add_action( 'sendpress_notices', array( $this,'sendpress_notices') );
-			}
-
-			
-			add_image_size( 'sendpress-max', 600, 99999 );
-			add_filter( 'template_include', array( $this, 'template_include' ) );
-			add_action( 'sendpress_cron_action', array( $this,'sendpress_cron_action_run') );
-			if ( !wp_next_scheduled( 'sendpress_cron_action' ) ) {
-				wp_schedule_event( time(), 'hourly', 'sendpress_cron_action' );
-				//wp_schedule_event( time(), 'hourly', 'my_hourly_event');
-			}
-			
-			//using this for now, might find a different way to include things later
-			// global $load_signup_js;
-			// $load_signup_js = false;
-			
-			add_action( 'get_header', array( $this, 'add_front_end_scripts' ) );
-			add_action( 'wp_enqueue_scripts', array( $this, 'add_front_end_styles' ) );
-
-			add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
-			
+		add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
 		
 	}
 
@@ -967,7 +967,8 @@ class SendPress {
 	function maybe_upgrade() {
 
 		$current_version = SendPress_Option::get('version', '0' );
-		//$current_version = '0.8.6.8';
+		//$current_version = '0.9.2';
+		//echo $current_version;
 		//error_log($current_version);
 
 		if ( version_compare( $current_version, SENDPRESS_VERSION, '==' ) )
@@ -1028,6 +1029,20 @@ class SendPress {
 			$pro_plugins = array();
 			$pro_plugins['pro_plugins']['setup_value'] = false;
 			SendPress_Option::set($pro_plugins);
+		}
+
+
+
+		if(version_compare( $current_version, '0.9.2', '<' )){
+			$options = SendPress_Option::get('notification_options');
+
+			if( !array_key_exists('user_subscribe', $options) ){
+				$options['user_subscribe'] = 'none';
+			}
+			if( !array_key_exists('user_unsubscribe', $options) ){
+				$options['user_unsubscribe'] = 'none';
+			}
+			SendPress_Option::set('notification_options', $options );
 		}
 
 
