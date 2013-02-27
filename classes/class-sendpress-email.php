@@ -194,7 +194,8 @@ class SendPress_Email {
 				$body_html = str_replace("*|EMAIL|*", $subscriber->email , $body_html );
 				$body_html = str_replace("*|ID|*", $subscriber->subscriberID , $body_html );
 			}
-				
+			
+            $body_html = apply_filters('sendpress_post_render_email', $body_html);
 			//echo  $body_html;
 
 			//print_r($email);
