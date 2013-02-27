@@ -145,29 +145,32 @@ class SendPress_Email {
 			foreach ($aTags as $aElement) {
 				$href = $aElement->getAttribute('href');
 				//ADD TO DB?
-
-				$urlinDB = SendPress_Data::get_url_by_report_url( $this->id(), $href );
-				if(!isset($urlinDB[0])){
 				
-					$urlData = array(
-						'url' => trim($href),
-						'reportID' => $this->id(),
+				if(strrpos( $href, "*|" ) === false ) {
+
+					$urlinDB = SendPress_Data::get_url_by_report_url( $this->id(), $href );
+					if(!isset($urlinDB[0])){
+					
+						$urlData = array(
+							'url' => trim($href),
+							'reportID' => $this->id(),
+						);
+						$urlID = SendPress_Data::insert_report_url( $urlData );
+					
+					} else {
+						$urlID  = $urlinDB[0]->urlID;
+					}
+					$link = array(
+						"id"=>$this->subscriber_id(),
+						"report"=> $this->id(),
+						"urlID"=> $urlID,
+						"view"=>"link"
 					);
-					$urlID = SendPress_Data::insert_report_url( $urlData );
-				
-				} else {
-					$urlID  = $urlinDB[0]->urlID;
-				}
-				$link = array(
-					"id"=>$this->subscriber_id(),
-					"report"=> $this->id(),
-					"urlID"=> $urlID,
-					"view"=>"link"
-				);
-				$x = SendPress_Data::encrypt( $link );
+					$x = SendPress_Data::encrypt( $link );
 
-				$href = site_url() ."?sendpress=".$x;
-				$aElement->setAttribute('href', $href);
+					$href = site_url() ."?sendpress=".$x;
+					$aElement->setAttribute('href', $href);
+				}
 			}
 			$body_html = $dom->saveHtml();
 
