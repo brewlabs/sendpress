@@ -18,34 +18,25 @@ class SendPress_Module_Pro extends SendPress_Module{
 		// SendPress_Helper::log('API State = '.get_transient( 'sendpress_key_state' ));
 		
 	?>
-		<h4><?php _e('SendPress Pro','sendpress');?></h4>
-		<form method="post" id="post">
-			<div class="description">
-				<?php _e('Get SendPress Pro for premium support, advanced reports, and much much more!','sendpress');?>
-			</div>
-			<?php $this->buttons('sendpress-pro/sendpress-pro.php');?>
-			<input type="hidden" name="plugin_path" value="sendpress-pro/sendpress-pro.php" />
-			<input class="action" type="hidden" name="action" value="module-activate-sendpress-pro" />
-			<?php wp_nonce_field($sp->_nonce_value); ?>
-		</form>
+		<h4><?php _e('SendPress API Key','sendpress');?></h4>
+		
 
 		<form method="post" id="post">
 			
-			<h5><?php _e('Enable Updates and Support','sendpress');?></h5>
-			<label for="api_key"><?php _e('API Key','sendpress'); ?></label>
+			
 			<?php if($key_active){
 				echo '<span class="icon-ok-sign"></span>';
 			}?>
-			<input <?php if($key_active){ echo 'disabled'; } ?> name="api_key" type="text" id="api_key" value="<?php echo SendPress_Option::get('api_key'); ?>" class="regular-text">
+			<input <?php if($key_active){ echo 'disabled'; } ?> name="api_key" type="text" id="api_key" value="<?php echo SendPress_Option::get('api_key'); ?>" class="regular-text sp-text">
 			<?php if( !$key_active ): ?>
-				<a href="#" class="save-api-key btn-primary btn-small btn"><?php _e('Register Key','sendpress');?></a>
+				<a href="#" class="save-api-key btn-success btn-large btn"><?php _e('Register Key','sendpress');?></a>
 			<?php else: ?>
-				<a href="#" class="save-api-key btn-small btn"><?php _e('Remove Key','sendpress');?></a>
+				<a href="#" class="save-api-key btn-danger btn"><?php _e('Remove Key','sendpress');?></a>
 			<?php endif; ?>
 			<div class="description">
 				<?php echo sprintf(	__( 'Enter your API key to enable premium support and automatic updates. Get your API key by logging into <a href="%s">SendPress.com</a>.','sendpress' ), 'http://sednpress.com' ); ?>
 			</div>
-			<input class="action" type="hidden" name="action" value="<?php if($key_active){ echo 'module-deactivate-api-key'; }else{ echo 'module-save-api-key'; }?>" />
+			<input class="action " type="hidden" name="action" value="<?php if($key_active){ echo 'module-deactivate-api-key'; }else{ echo 'module-save-api-key'; }?>" />
 			<?php wp_nonce_field($sp->_nonce_value); ?>
 		</form>
 		

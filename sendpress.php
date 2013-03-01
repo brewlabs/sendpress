@@ -141,6 +141,14 @@ class SendPress {
 	  	}
 
 	  	if( strpos($className, 'Module') != false ){
+	  		if( defined('SENDPRESS_PRO_PATH') ) {
+	    		$pro_file = SENDPRESS_PRO_PATH."classes/modules/class-".$cls.".php";
+	    		if( file_exists( $pro_file ) ){
+	    			include SENDPRESS_PRO_PATH."classes/modules/class-".$cls.".php";
+	    			return;
+	    		}
+	    	}
+
 	    	include SENDPRESS_PATH."classes/modules/class-".$cls.".php";
 	  		return;
 	  	} 
@@ -853,9 +861,8 @@ class SendPress {
 	    add_submenu_page('sp-overview', __('Queue','sendpress') ." (". $queue.")", __('Queue','sendpress')." (". $queue.")", $role, 'sp-queue', array(&$this,'render_view'));
 	   	add_submenu_page('sp-overview', __('Settings','sendpress'), __('Settings','sendpress'), $role, 'sp-settings', array(&$this,'render_view'));
 	  
-	   	if( SendPress_Option::get('beta') ) {
-	   		add_submenu_page('sp-overview', __('Pro Add-ons','sendpress'), __('Pro Add-ons','sendpress'), $role, 'sp-pro', array(&$this,'render_view'));
-	   	}
+	   	add_submenu_page('sp-overview', __('Pro Add-ons','sendpress'), __('Pro Add-ons','sendpress'), $role, 'sp-pro', array(&$this,'render_view'));
+	   	
 
 	   	add_submenu_page('sp-overview', __('Help','sendpress'), __('Help','sendpress'), $role, 'sp-help', array(&$this,'render_view'));
 	   
@@ -880,9 +887,8 @@ class SendPress {
 		$view_class->add_tab( __('Queue','sendpress') . ' <small>('. $queue .')</small>', 'sp-queue', ($this->_page === 'sp-queue') );
 		$view_class->add_tab( __('Settings','sendpress'), 'sp-settings', ($this->_page === 'sp-settings') );
 		
-		if( SendPress_Option::get('beta') ) {
-			$view_class->add_tab( __('Pro Add-ons','sendpress'), 'sp-pro', ($this->_page === 'sp-pro') );
-		}
+		$view_class->add_tab( __('Pro Add-ons','sendpress'), 'sp-pro', ($this->_page === 'sp-pro') );
+		
 		$view_class->add_tab( __('Help','sendpress'), 'sp-help', ($this->_page === 'sp-help') );
 		$view_class->prerender( $this );
 		$view_class->render( $this );

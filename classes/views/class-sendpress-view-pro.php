@@ -58,7 +58,27 @@ class SendPress_View_Pro extends SendPress_View{
 	
 	function html($sp){
 		//SendPress_Option::set('pro_plugins','');
-		$modules = array('pro','reports', 'spam_test', 'empty');
+        ?>
+        <div class="pro-header" >
+            <form method="post" id="post" style="float:right;">
+            <?php 
+            $sppro = new SendPress_Module_Pro();
+            $sppro->buttons('sendpress-pro/sendpress-pro.php'); ?> 
+            <input type="hidden" name="plugin_path" value="sendpress-pro/sendpress-pro.php" />
+            <input class="action" type="hidden" name="action" value="module-activate-sendpress-pro" />
+            <?php wp_nonce_field($sp->_nonce_value); ?>
+        </form>
+<img src="<?php echo SENDPRESS_URL;?>/img/logopro.png" height="50px" />
+    <?php if( is_plugin_active('sendpress-pro/sendpress-pro.php') ){ ?>
+        <p class="lead">Thanks for using <b>SendPress Pro</b>.</p>
+    <?php } else { ?> 
+        <p class="lead">Take your emails to the next level with <b>SendPress Pro</b> you can build an email marketing system tailored to your needs. All within WordPress with no need for an external system.</p>
+    <?php } ?>
+    </div>
+                <?php
+
+
+		$modules = apply_filters('sendpress_pro_modules', array('pro','reports', 'spam_test', 'empty') );
 		echo '<div class="sendpress-addons">';
 		foreach ($modules as $mod) {
 			$mod_class = $this->get_module_class($mod);
