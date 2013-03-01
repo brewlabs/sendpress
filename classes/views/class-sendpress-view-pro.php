@@ -72,7 +72,7 @@ class SendPress_View_Pro extends SendPress_View{
     <?php if( is_plugin_active('sendpress-pro/sendpress-pro.php') ){ ?>
         <p class="lead">Thanks for using <b>SendPress Pro</b>.</p>
     <?php } else { ?> 
-        <p class="lead">Take your emails to the next level with <b>SendPress Pro</b> you can build an email marketing system tailored to your needs. All within WordPress with no need for an external system.</p>
+        <p class="lead">Take your emails to the next level. <b>SendPress Pro</b> allows you to build an email marketing system tailored to your needs. All within WordPress with no need for an external system.</p>
     <?php } ?>
     </div>
                 <?php
