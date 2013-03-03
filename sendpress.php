@@ -1,7 +1,7 @@
 <?php 
 /*
 Plugin Name: SendPress: Email Marketing and Newsletters
-Version: 0.9.1
+Version: 0.9.2-Beta
 Plugin URI: http://sendpress.com
 Description: Easy to manage Email Markteing and Newsletter plugin for WordPress. 
 Author: SendPress
@@ -16,7 +16,7 @@ if ( !defined('DB_NAME') ) {
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'https://api.sendpres.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.2' );
-define( 'SENDPRESS_VERSION', '0.9.1' );
+define( 'SENDPRESS_VERSION', '0.9.2-Beta' );
 define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -1041,6 +1041,10 @@ class SendPress {
 
 		if(version_compare( $current_version, '0.9.2', '<' )){
 			$options = SendPress_Option::get('notification_options');
+
+			if($options === false){
+				$options = array();
+			}
 
 			if( !array_key_exists('user_subscribe', $options) ){
 				$options['user_subscribe'] = 'none';
