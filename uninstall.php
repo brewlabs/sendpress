@@ -9,13 +9,34 @@
  */
 
 //if uninstall not called from WordPress exit
-if ( !defined( 'WP_UNINSTALL_PLUGIN' ) )
+if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ){
 	exit ();
+}
 
-define( 'SENDPRESS_VERSION', '0.8.8.1' );
+global $wpdb, $wp_roles;
+
+define( 'SENDPRESS_VERSION', '0.9.2' );
 //Remove settings
 delete_option( 'sendpress_options' );
 delete_option( 'sendpress_db_version' );
+
+
+
+
+/** Delete All the Custom Post Types */
+$sp_post_types = array( 'sp_newsletters', 'sp_report', 'sptemplates', 'sendpress_list' );
+foreach ( $sp_post_types as $post_type ) {
+
+	$items = get_posts( array( 'post_type' => $post_type, 'numberposts' => -1, 'fields' => 'ids' ) );
+
+	if ( $items ) {
+		foreach ( $items as $item ) {
+			delete_transient('sendpress_report_subject_' . $item );
+			delete_transient('sendpress_report_body_html_' . $item );
+			wp_delete_post( $item, true);
+		}
+	}
+}
 
 //Drop All DB tables
 //This could use an updated for Multisite

@@ -1,7 +1,7 @@
 <?php 
 /*
 Plugin Name: SendPress: Email Marketing and Newsletters
-Version: 0.9.2-Beta
+Version: 0.9.2
 Plugin URI: http://sendpress.com
 Description: Easy to manage Email Markteing and Newsletter plugin for WordPress. 
 Author: SendPress
@@ -558,7 +558,8 @@ class SendPress {
 			SendPress_Option::set('emails-per-hour','100');
 		}
 
-		$this->create_initial_list();
+		//Removed in 0.9.2
+		//$this->create_initial_list();
 		
 
 		if( SendPress_Option::get('emails-today') == false ){
@@ -861,7 +862,7 @@ class SendPress {
 	    add_submenu_page('sp-overview', __('Queue','sendpress') ." (". $queue.")", __('Queue','sendpress')." (". $queue.")", $role, 'sp-queue', array(&$this,'render_view'));
 	   	add_submenu_page('sp-overview', __('Settings','sendpress'), __('Settings','sendpress'), $role, 'sp-settings', array(&$this,'render_view'));
 	  
-	   	add_submenu_page('sp-overview', __('Pro Add-ons','sendpress'), __('Pro Add-ons','sendpress'), $role, 'sp-pro', array(&$this,'render_view'));
+	   	add_submenu_page('sp-overview', __('Pro','sendpress'), __('Pro','sendpress'), $role, 'sp-pro', array(&$this,'render_view'));
 	   	
 
 	   	add_submenu_page('sp-overview', __('Help','sendpress'), __('Help','sendpress'), $role, 'sp-help', array(&$this,'render_view'));
@@ -887,9 +888,10 @@ class SendPress {
 		$view_class->add_tab( __('Queue','sendpress') . ' <small>('. $queue .')</small>', 'sp-queue', ($this->_page === 'sp-queue') );
 		$view_class->add_tab( __('Settings','sendpress'), 'sp-settings', ($this->_page === 'sp-settings') );
 		
-		$view_class->add_tab( __('Pro Add-ons','sendpress'), 'sp-pro', ($this->_page === 'sp-pro') );
-		
 		$view_class->add_tab( __('Help','sendpress'), 'sp-help', ($this->_page === 'sp-help') );
+		$view_class->add_tab( __('Pro','sendpress'), 'sp-pro', ($this->_page === 'sp-pro') );
+		
+
 		$view_class->prerender( $this );
 		$view_class->render( $this );
 	}
@@ -1418,14 +1420,14 @@ class SendPress {
 			deactivate_plugins( __FILE__ );
 	    	wp_die( sprintf( __('SendPress requires WordPress version %s or later.', 'sendpress'), SENDPRESS_MINIMUM_WP_VERSION) );
 		} else {
-		    if( SendPress_Option::get('version','0') == '0' ){
+		    //if( SendPress_Option::get('version','0') == '0' ){
 		    	SendPress_Option::set('sendpress_ignore_087', 'true');
 		    	require_once(SENDPRESS_PATH .'inc/db/tables.php');
 		    	require_once(SENDPRESS_PATH .'inc/db/status.table.php');
 		    	require_once(SENDPRESS_PATH .'inc/db/open.click.table.php');
 		    	SendPress_Option::set( 'version' , SENDPRESS_VERSION );
 
-			}	
+			//}	
 		}
 		//Make sure we stop the old action from running
 		wp_clear_scheduled_hook('sendpress_cron_action_run');
@@ -1880,7 +1882,7 @@ class SendPress {
 	function get_ip_info($ip){
 		if($ip != false && false == get_transient('sp-'.$ip) ){
 			$geo = wp_remote_get('http://api.hostip.info/get_json.php?ip='.$ip.'&position=true');
-			set_transient('sp-'.$ip, $geo['body'], 60*60*24*7);
+			//set_transient('sp-'.$ip, $geo['body'], 60*60*24*7);
 		} else {
 			return get_transient('sp-'.$ip);
 		}

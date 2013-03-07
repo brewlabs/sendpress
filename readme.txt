@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid,
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 0.9.1
+Stable tag: 0.9.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,11 +95,17 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
-= 0.9.1 - 2011.2.3 =
+= 0.9.2 - 2013.3.6 =
+* Pro tab activated
+* Email HTML filter
+* Fixed for confirmation link in href
+* Fixed a few typos
+
+= 0.9.1 - 2013.2.3 =
 * Fix for cron not sending on some hosts
 
 
-= 0.9 - 2011.1.31 =
+= 0.9 - 2013.1.31 =
 * New Qeueue manager for emails per day and per hour
 * Ability to use theme template for SendPress Pages
 * New forms page for each list 

@@ -168,7 +168,7 @@ if( SendPress_Option::get('beta') ) {
 <?php } ?>
 
 <div style="float: right; width: 45%;">
-	<h4 class="nomargin">Socail Media</h4>
+	<h4 class="nomargin">Social Media</h4>
 	<p>These items only show on the tempalte if a url is entered.</p>
 	<p><label><?php _e('Twitter URL','sendpress'); ?>:</label>
 	<input name="twitter" type="text" id="twitter" value="<?php echo SendPress_Option::get('twitter'); ?>" class="regular-text sp-text"></p>
