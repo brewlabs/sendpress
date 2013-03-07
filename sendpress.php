@@ -16,7 +16,7 @@ if ( !defined('DB_NAME') ) {
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'https://api.sendpres.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.2' );
-define( 'SENDPRESS_VERSION', '0.9.2-Beta' );
+define( 'SENDPRESS_VERSION', '0.9.2' );
 define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -862,11 +862,13 @@ class SendPress {
 	    add_submenu_page('sp-overview', __('Queue','sendpress') ." (". $queue.")", __('Queue','sendpress')." (". $queue.")", $role, 'sp-queue', array(&$this,'render_view'));
 	   	add_submenu_page('sp-overview', __('Settings','sendpress'), __('Settings','sendpress'), $role, 'sp-settings', array(&$this,'render_view'));
 	  
-	   	add_submenu_page('sp-overview', __('Pro','sendpress'), __('Pro','sendpress'), $role, 'sp-pro', array(&$this,'render_view'));
 	   	
 
 	   	add_submenu_page('sp-overview', __('Help','sendpress'), __('Help','sendpress'), $role, 'sp-help', array(&$this,'render_view'));
 	   
+	   add_submenu_page('sp-overview', __('Pro','sendpress'), __('Pro','sendpress'), $role, 'sp-pro', array(&$this,'render_view'));
+	   
+
 	   	if(SendPress_Option::get('feedback') == 'yes'){
 			$this->presstrends_plugin();
 		}
