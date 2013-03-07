@@ -100,6 +100,7 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * Email HTML filter
 * Fixed for confirmation link in href
 * Fixed a few typos
+* Remove all custom post type posts on uninstall
 
 = 0.9.1 - 2013.2.3 =
 * Fix for cron not sending on some hosts
@@ -202,6 +203,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.2 =
+Pro tab activated and minor bug fixes
 
 = 0.9.1 =
 Fix for Automated sending on some hosts
