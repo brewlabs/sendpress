@@ -618,16 +618,9 @@ class SendPress {
 			//Stop Facebook Plugin from posting emails to Facebook.
 			remove_action( 'transition_post_status', 'fb_publish_later', 10, 3);
 
-
-
 			wp_enqueue_style( 'farbtastic' );
 			$tiny = new SendPress_TinyMCE();
 	   		$this->_current_view = isset( $_GET['view'] ) ? $_GET['view'] : '' ;
-	   		
-	   		
-
-
-			
 
 			wp_enqueue_script(array('jquery', 'editor', 'thickbox', 'media-upload','dashboard'));
 			wp_enqueue_style('thickbox');
@@ -649,6 +642,11 @@ class SendPress {
     		wp_register_script('sendpress_ls', SENDPRESS_URL .'js/jquery.autocomplete.js' ,'', SENDPRESS_VERSION );
 			wp_enqueue_script('sendpress_ls');
 			//wp_localize_script( 'sendpress_js', 'sendpress', array( 'ajaxurl' => admin_url( 'admin-ajax.php', 'http' ) ) );
+
+			wp_register_style( 'sendpress_jquery_ibutton_css', SENDPRESS_URL . 'css/jquery.ibutton.css', false, SENDPRESS_VERSION );
+    		wp_enqueue_style( 'sendpress_jquery_ibutton_css' );
+    		wp_register_script('sendpress_jquery_ibutton_js', SENDPRESS_URL .'js/jquery.ibutton.min.js' ,'',SENDPRESS_VERSION);
+			wp_enqueue_script('sendpress_jquery_ibutton_js');
 
 			wp_register_style( 'sendpress_css_base', SENDPRESS_URL . 'css/style.css', false, SENDPRESS_VERSION );
     		wp_enqueue_style( 'sendpress_css_base' );

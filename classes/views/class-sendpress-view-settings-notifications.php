@@ -34,6 +34,7 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 				//print_r($options);
 			?>
 			<h3>Notification E-mail</h3>
+
 			<div class="boxer form-box">
 				<div style="float: right; width: 45%;">
 					<h4 class="nomargin"><?php _e('E-mail','sendpress'); ?></h4>
@@ -46,20 +47,33 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 			</div>
 			<div class="well">
 				<h4>Notification Settings</h4>
+				
 				<p>Select the notifications you'd like to receive and how often you'd like to receive them.</p>
-				<p>
-					User Subscribed:
-					<input type=radio value="none" name="user_subscribe" <?php checked( 'none' == $options['user_subscribe'] ); ?>/> None
-					<input type=radio value="daily" name="user_subscribe" <?php checked( 'daily' == $options['user_subscribe'] ); ?>/> Daily
-					<input type=radio value="weekly" name="user_subscribe" <?php checked( 'weekly' == $options['user_subscribe'] ); ?>/> Weekly
-					<input type=radio value="monthly" name="user_subscribe" <?php checked( 'monthly' == $options['user_subscribe'] ); ?>/> Monthly
+				<p> 
+				  <label for="enable-notifications">Enable Notifications</label> 
+				  <input class="ibutton" type="checkbox" id="notifications-enable-subscribed"/> 
 				</p>
 				<p>
-					User Unsbscribed:
-					<input type=radio value="none" name="user_unsubscribe" <?php checked( 'none' == $options['user_unsubscribe'] ); ?>/> None
-					<input type=radio value="daily" name="user_unsubscribe" <?php checked( 'daily' == $options['user_unsubscribe'] ); ?>/> Daily
-					<input type=radio value="weekly" name="user_unsubscribe" <?php checked( 'weekly' == $options['user_unsubscribe'] ); ?>/> Weekly
-					<input type=radio value="monthly" name="user_unsubscribe" <?php checked( 'monthly' == $options['user_unsubscribe'] ); ?>/> Monthly
+					<div>User Subscribed:</div>
+					
+				  	<label for="notifications-subscribed-daily">Daily</label> 
+				  	<input class="ibutton" type="checkbox" id="notifications-subscribed-daily"/> 
+
+				  	<label for="notifications-subscribed-weekly">Weekly</label> 
+				  	<input class="ibutton" type="checkbox" id="notifications-subscribed-weekly"/> 
+
+				  	<label for="notifications-subscribed-monthly">Monthly</label>
+				  	<input class="ibutton" type="checkbox" id="notifications-subscribed-monthly"/>
+				<p>
+					<div>User Unsbscribed:</div>
+					<label for="notifications-unsubscribed-daily">Daily</label> 
+				  	<input class="ibutton" type="checkbox" id="notifications-unsubscribed-daily"/> 
+
+				  	<label for="notifications-unsubscribed-weekly">Weekly</label> 
+				  	<input class="ibutton" type="checkbox" id="notifications-unsubscribed-weekly"/> 
+
+				  	<label for="notifications-unsubscribed-monthly">Monthly</label>
+				  	<input class="ibutton" type="checkbox" id="notifications-unsubscribed-monthly"/> 
 				</p>
 			</div>
 			<?php wp_nonce_field($sp->_nonce_value); ?>
