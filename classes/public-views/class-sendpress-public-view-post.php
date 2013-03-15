@@ -19,6 +19,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			$user_info[$opt] = isset($_POST['sp_' . $opt]) ?  $_POST['sp_' . $opt]: false ;
 		}
 
+
 		
 		$valid_user = array();
 		//foreach()
@@ -47,6 +48,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 				$valid_user['lastname'] = '';
 			}
 			$status = false;
+			
 			if($data_error ==  false){
 				$list = implode(",", $user_info['list']);
 				$status =  SendPress_Data::subscribe_user($list, $valid_user['email'], $valid_user['firstname'], $valid_user['lastname']);
@@ -55,7 +57,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 				}
 			} 
 
-
+			
 			$post_responce = get_post_meta($user_info['list'][0], 'post-page', true);
 			if($post_responce == false){
 				$post_responce = 'default';

@@ -106,10 +106,11 @@ echo $time;//11:09
 		}
   $emails_per_hour =  SendPress_Option::get('emails-per-hour');
   $emails_today = SendPress_Option::get('emails-today');
+  $emails_so_far = isset($emails_today[date("z")]) ? $emails_today[date("z")] : 0;
 
 ?>
 		
-		<h2><strong><?php echo $emails_today[date("z")]; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_day; ?></strong> <?php _e('emails sent today','sendpress'); ?>.</h2>
+		<h2><strong><?php echo $emails_so_far; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_day; ?></strong> <?php _e('emails sent today','sendpress'); ?>.</h2>
 		<h2><strong><?php  echo SendPress_Manager::emails_this_hour(); ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_hour; ?></strong> <?php _e('emails sent this hour','sendpress'); ?>.</h2><br><br>
 			
  

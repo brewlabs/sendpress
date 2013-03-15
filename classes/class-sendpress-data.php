@@ -329,11 +329,11 @@ class SendPress_Data extends SendPress_DB_Tables {
 		
 		$success = false;
 		$subscriberID = SendPress_Data::add_subscriber(array('firstname' => $first,'lastname' => $last,'email' => $email));
-			
 		
 		if( false === $subscriberID ){
 			return false;
 		}
+		
 		$args = array( 'post_type' => 'sendpress_list','numberposts'  => -1,
 	    'offset'          => 0,
 	    'orderby'         => 'post_title',
@@ -341,8 +341,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$lists = get_posts( $args );
 
 		$listids = explode(',', $listid);
-		
-		//error_log($listids);
 		
 	    //$lists = $s->getData($s->lists_table());
 	    //$listids = array();
@@ -357,7 +355,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		foreach($lists as $list){
 			if( in_array($list->ID, $listids) ){
 				$current_status = SendPress_Data::get_subscriber_list_status( $list->ID, $subscriberID );
-				if(isset($current_status->status) && $current_status->status < 2 ){
+				if( empty($current_status) || ( isset($current_status->status) && $current_status->status < 2 ) ){
 					$success = SendPress_Data::update_subscriber_status($list->ID, $subscriberID, $status);
 				} else {
 
