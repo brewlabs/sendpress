@@ -36,7 +36,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
           }
        // }
 
-        $this->redirect();
+        self::redirect();
 
 
   }
@@ -56,6 +56,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
     global  $sendpress_sender_factory;
 
     $senders = $sendpress_sender_factory->get_all_senders();
+    ksort($senders);
     $method = SendPress_Option::get( 'sendmethod' );
 ?>
 <div style="float:right;" >
