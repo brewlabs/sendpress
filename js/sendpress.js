@@ -6,15 +6,16 @@
     
     this.init = function($, document){
         $(document).ready(function($){
-           spadmin.log("SP Init Started");
+            spadmin.log("SP Init Started");
          
-           //Load SendPress Sections with refence to themselves :)
-           spadmin.menu.init.call(spadmin.menu, $);
-           spadmin.edit.init.call(spadmin.edit, $);
-           spadmin.emailmanager.init.call(spadmin.emailmanager, $);
+            //Load SendPress Sections with refence to themselves :)
+            spadmin.menu.init.call(spadmin.menu, $);
+            spadmin.edit.init.call(spadmin.edit, $);
+            spadmin.emailmanager.init.call(spadmin.emailmanager, $);
 
-           spadmin.log("SP Finished Started");
-           spadmin.log(spvars);
+            spadmin.notifications.init.call(spadmin.notifications, $);
+            spadmin.log("SP Finished Started");
+            spadmin.log(spvars);
 
         });
     }
@@ -374,6 +375,12 @@
         },
         closesend:function(){
             $('#sendpress-sending').modal('hide');
+        }
+    }
+
+    this.notifications = {
+        init:function($){
+            $(".ibutton").iButton(); 
         }
     }
 
