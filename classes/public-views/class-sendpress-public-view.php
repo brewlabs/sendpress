@@ -124,7 +124,7 @@ class SendPress_Public_View {
 		switch(strtolower($theme)){
 			case 'twentytwelve':
 			case 'twentyeleven':
-			case 'twentyten':
+			
 			?>
 			<div id="primary" class="site-content">
 				<div id="content" role="main">
@@ -145,6 +145,12 @@ class SendPress_Public_View {
 
 			<?php
 			break;
+
+			case 'twentyten': ?>
+				<div id="container">
+			<div id="content" role="main">
+
+			<?php
 
 
 		}
@@ -168,7 +174,7 @@ class SendPress_Public_View {
 		switch(strtolower($theme)){
 			case 'twentytwelve':
 			case 'twentyeleven':
-			case 'twentyten':
+			
 			?>
 			</div>
 		</div>
@@ -189,6 +195,12 @@ class SendPress_Public_View {
 
 			<?php
 			break;
+
+			case 'twentyten': ?>
+				</div>
+			</div>
+
+			<?php
 
 		}
 
