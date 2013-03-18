@@ -1488,11 +1488,48 @@ line-height: 30px;
 
 @media (max-width: 1120px) { 
     .nav-sp{
-    margin: 20px 0;
-}
+        margin: 20px 0;
+    }
  }
 
+/*Notification CSS*/
+.notifications .half{
+    float:left;
+    width:48%;
 
+    }
+    .notifications .half.right{
+        margin-left:4%;
+    }
+
+.notifications .left{
+    float:left;
+    margin-right:10px;
+    padding-top:4px;
+
+    }
+
+    .notifications .half .well h4{
+        margin:0px 0px 10px 0px;
+    }
+    .notifications .well .notification-container{
+        margin-bottom:10px;
+        
+        }
+        .notifications .well .notification-container:after{
+            content:"";
+            display: block;
+            clear:both;
+        }
+    .notifications .well .left{
+        width:65px;
+    }
+
+.notifications .well:after{
+    content:"";
+    display: block;
+    clear:both;
+}
 
 
 

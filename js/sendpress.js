@@ -380,7 +380,18 @@
 
     this.notifications = {
         init:function($){
-            $(".ibutton").iButton(); 
+            $(".ibutton").iButton({
+                labelOn: "Yes", 
+                labelOff: "No",
+                change: function($input){
+                    $input.attr('value',($input.is(':checked')) ? 'true' : 'false');
+                    if( $input.attr('id') === 'notifications-enable' ){
+                        //toggle the lower buttons
+                        $('.optional-notifications').iButton('disable');
+                       
+                    }
+                }
+            }); 
         }
     }
 

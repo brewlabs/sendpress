@@ -975,7 +975,7 @@ class SendPress {
 	function maybe_upgrade() {
 
 		$current_version = SendPress_Option::get('version', '0' );
-		//$current_version = '0.9.2';
+		//$current_version = '0.9.3';
 		//echo $current_version;
 		//error_log($current_version);
 
@@ -1039,22 +1039,26 @@ class SendPress {
 			SendPress_Option::set($pro_plugins);
 		}
 
-
-
-		if(version_compare( $current_version, '0.9.2', '<' )){
+		if(version_compare( $current_version, '0.9.2', '>' )){
+			
 			$options = SendPress_Option::get('notification_options');
-
-			if($options === false){
-				$options = array();
+			if($options === ''){
+				$options = array(
+		        	'email' => '',
+		        	'name' => '',
+		        	'notifications-enable' => false,
+		        	'notifications-subscribed-instant' => false,
+		        	'notifications-subscribed-daily' => false,
+		        	'notifications-subscribed-weekly' => false,
+		        	'notifications-subscribed-monthly' => false,
+		        	'notifications-unsubscribed-instant' => false,
+		        	'notifications-unsubscribed-daily' => false,
+		        	'notifications-unsubscribed-weekly' => false,
+		        	'notifications-unsubscribed-monthly' => false
+		        );
+		        SendPress_Option::set('notification_options', $options );
 			}
-
-			if( !array_key_exists('user_subscribe', $options) ){
-				$options['user_subscribe'] = 'none';
-			}
-			if( !array_key_exists('user_unsubscribe', $options) ){
-				$options['user_unsubscribe'] = 'none';
-			}
-			SendPress_Option::set('notification_options', $options );
+			
 		}
 
 
