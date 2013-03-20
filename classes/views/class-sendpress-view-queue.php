@@ -111,9 +111,9 @@ echo $time;//11:09
 ?>
 		
 		<h2><strong><?php echo $emails_so_far; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_day; ?></strong> <?php _e('emails sent today','sendpress'); ?>.</h2>
-		<h2><strong><?php  echo SendPress_Manager::emails_this_hour(); ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_hour; ?></strong> <?php _e('emails sent this hour','sendpress'); ?>.</h2><br><br>
-			
- 
+		<h2><strong><?php  echo SendPress_Manager::emails_this_hour(); ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_hour; ?></strong> <?php _e('emails sent this hour','sendpress'); ?>.</h2>
+		<small>You can adjust these settings here: <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>">Settings > Sending Account</a>.</small>
+ 		<br><br>
 		</div>
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="email-filter" method="get">
@@ -172,7 +172,7 @@ echo $time;//11:09
 
 	?> seconds.<br>
 	You are also limited to <?php echo $hour; ?> emails per hour.<br>
-	To change these settings go to <a href="<?php echo SendPress_View_Settings_Account::link(); ?>">Settings > Sending Account</a>.
+	To change these settings go to <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>">Settings > Sending Account</a>.
   </div>
   <div class="modal-footer">
    <?php _e('If you close this window sending will stop. ','sendpress');?><a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('Close','sendpress');?></a>
@@ -182,4 +182,4 @@ echo $time;//11:09
 	}
 
 }
-SendPress_View_Queue::cap('sendpress_queue');
+SendPress_Admin::add_cap('Queue','sendpress_queue');

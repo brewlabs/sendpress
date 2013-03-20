@@ -273,7 +273,7 @@ $screen = get_current_screen();
 
 }
 // Add Access Controll!
-SendPress_View_Help::cap('sendpress_view');
+SendPress_Admin::add_cap('Help','sendpress_view');
 //SendPress_View_Overview::cap('sendpress_access');
 
 

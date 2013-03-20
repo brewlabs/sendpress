@@ -40,7 +40,7 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
         delete_transient( 'sendpress_email_html_'. $my_post['ID'] );
 
         
-        SendPress_View_Emails_Style::redirect( array('emailID' =>  $my_post['ID']  )   );
+        SendPress_Admin::redirect( 'Emails_Style' , array('emailID' =>  $my_post['ID']  )   );
         //$this->save_redirect( $_POST  );
 
 	}
@@ -64,7 +64,7 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 				<input type="submit" value="<?php _e('Save & Next','sendpress'); ?>" class="btn btn-primary btn-large" />
 			</div>
 			<div id="sp-cancel-btn" style="float:right; margin-top: 5px;">
-				<a href="<?php echo SendPress_View_Emails::link(); ?>" id="cancel-update" class="btn"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+				<a href="<?php echo SendPress_Admin::link('Emails'); ?>" id="cancel-update" class="btn"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
 			</div>
 		</div>
 		

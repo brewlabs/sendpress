@@ -106,4 +106,4 @@ class SendPress_View_Pro extends SendPress_View{
 	}
 
 }
-SendPress_View_Pro::cap('sendpress_addons');
+SendPress_Admin::add_cap('Pro','sendpress_addons');

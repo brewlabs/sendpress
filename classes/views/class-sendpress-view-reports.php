@@ -53,4 +53,4 @@ class SendPress_View_Reports extends SendPress_View{
 	
 	}
 }
-SendPress_View_Reports::cap('sendpress_reports');
+SendPress_Admin::add_cap('Reports','sendpress_reports');

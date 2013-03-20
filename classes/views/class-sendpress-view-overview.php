@@ -11,18 +11,13 @@ class SendPress_View_Overview extends SendPress_View{
 
 	function tracking( $get, $sp ){
 		SendPress_Option::set('allow_tracking', $get['allow_tracking']);
-		SendPress_View_Overview::redirect();
+		SendPress_Admin::redirect('Overview');
 	}
 
 	
 	function html($sp){
 		
 global $wp_version;
-
-				
-	
-
-
 
 $classes = 'sp-welcome-panel';
 
@@ -59,17 +54,17 @@ list( $display_version ) = explode( '-', $wp_version );
 	<h4><span class="icon16 icon-settings"></span> <?php _e( 'Basic Settings','sendpress' ); ?></h4>
 	<p><?php _e( 'Here are a few easy things you can do to get your feet wet. Make sure to click Save on each Settings screen.', 'sendpress' ); ?></p>
 	<ul>
-	<li><?php echo sprintf(	__( '<a href="%s">Choose your sending method</a>','sendpress' ), SendPress_View_Settings_Account::link() ); ?></li>
-	<li><?php echo sprintf( __( '<a href="%s">Set your CAN-SPAM information</a>' ,'sendpress'), SendPress_View_Settings::link() ); ?></li>
-	<li><?php echo sprintf( __( '<a href="%s">Style your default template</a>', 'sendpress' ), SendPress_View_Settings_Styles::link() ); ?></li>
+	<li><?php echo sprintf(	__( '<a href="%s">Choose your sending method</a>','sendpress' ), SendPress_Admin::link('Settings_Account') ); ?></li>
+	<li><?php echo sprintf( __( '<a href="%s">Set your CAN-SPAM information</a>' ,'sendpress'), SendPress_Admin::link('Settings') ); ?></li>
+	<li><?php echo sprintf( __( '<a href="%s">Style your default template</a>', 'sendpress' ), SendPress_Admin::link('Settings_Styles') ); ?></li>
 	</ul>
 </div>
 <div class="welcome-panel-column">
 	<h4><span class="icon16 icon-page"></span> <?php _e( 'Add Real Content' ); ?></h4>
 	<p><?php _e( 'Check out each section to see how it all works, then add some content and start sending emails!','sendpress' ); ?></p>
 	<ul>
-	<li><?php echo sprintf( __( '<a href="%s">Create your subscription list</a>', 'sendpress' ), SendPress_View_Subscribers::link() ); ?></li>
-	<li><?php echo sprintf( __( '<a href="%s">Create your first email</a>', 'sendpress' ), SendPress_View_Emails::link() ); ?></li>
+	<li><?php echo sprintf( __( '<a href="%s">Create your subscription list</a>', 'sendpress' ), SendPress_Admin::link('Subscribers') ); ?></li>
+	<li><?php echo sprintf( __( '<a href="%s">Create your first email</a>', 'sendpress' ), SendPress_Admin::link('Emails') ); ?></li>
 	</ul>
 </div>
 <div class="welcome-panel-column welcome-panel-last">
@@ -77,7 +72,7 @@ list( $display_version ) = explode( '-', $wp_version );
 	
 	<ul>
 	<li><?php echo sprintf(	__( '<a href="%s">Setup the SendPress widget</a>' ,'sendpress'), esc_url( admin_url('widgets.php') ) ); ?></li>
-	<li><?php echo sprintf( __( '<a href="%s">View your reports</a>','sendpress' ), SendPress_View_Reports::link() ); ?></li>
+	<li><?php echo sprintf( __( '<a href="%s">View your reports</a>','sendpress' ), SendPress_Admin::link('Reports') ); ?></li>
 	<li><?php echo sprintf( __( '<a href="%s">Provide us with some feedback</a>','sendpress' ),  'http://sendpress.com' ); ?></li>
 	</ul>
 </div>
@@ -99,6 +94,6 @@ list( $display_version ) = explode( '-', $wp_version );
 
 }
 // Add Access Controll!
-SendPress_View_Overview::cap('sendpress_view');
+SendPress_Admin::add_cap('Overview','sendpress_view');
 //SendPress_View_Overview::cap('sendpress_access');
 }

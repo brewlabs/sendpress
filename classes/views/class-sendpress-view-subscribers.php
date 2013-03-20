@@ -7,6 +7,10 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class SendPress_View_Subscribers extends SendPress_View {
+	function _get_called_class(){
+		return "SendPress_View_Subscribers";
+	}
+
 	function admin_init(){
 		add_action('load-sendpress_page_sp-subscribers',array($this,'screen_options'));
 	}
@@ -49,4 +53,4 @@ class SendPress_View_Subscribers extends SendPress_View {
 	}
 
 }
-SendPress_View_Subscribers::cap('sendpress_subscribers');
+SendPress_Admin::add_cap('Subscribers','sendpress_subscribers');

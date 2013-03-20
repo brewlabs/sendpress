@@ -9,6 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Help_Whatsnew extends SendPress_View{
 	function prerender($sp){
 		wp_enqueue_script( 'dashboard' );
+		/*
 		sp_add_help_widget( 'help_support', 'Support Information', array(&$this,'help_support'));
 		sp_add_help_widget( 'help_knowledge', 'Recent Knowledge Base Articles', array(&$this,'help_knowledge'),'side' );
 		sp_add_help_widget( 'help_debug', 'Debug Information', array(&$this,'help_debug'), 'side');
@@ -16,7 +17,7 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 		sp_add_help_widget( 'help_blog', 'Recent Blog Posts', array(&$this,'help_blog'),'normal',  array(&$this,'help_blog_control') );
 		sp_add_help_widget( 'help_shortcodes', 'Shortcode Cheat Sheet', array(&$this,'help_shortcodes') ,'normal');
 		sp_add_help_widget( 'help_editemail', 'Customizing Emails', array(&$this,'help_editemail') ,'normal');
-
+		*/
 	}
 
 	function page_start(){
@@ -136,14 +137,14 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 </div>
 
 <div class="return-to-dashboard">
-		Back to SendPress: <a href="<?php echo SendPress_View_Emails::link(); ?>">Emails</a> |
-		<a href="<?php echo SendPress_View_Reports::link(); ?>">Reports</a> |
-		<a href="<?php echo SendPress_View_Subscribers::link(); ?>">Subscribers</a> |
-		<a href="<?php echo SendPress_View_Queue::link(); ?>">Queue</a> |
-		<a href="<?php echo SendPress_View_Settings::link(); ?>">Settings</a> 
+		Back to SendPress: <a href="<?php echo SendPress_Admin::link('Emails'); ?>">Emails</a> |
+		<a href="<?php echo SendPress_Admin::link('Reports'); ?>">Reports</a> |
+		<a href="<?php echo SendPress_Admin::link('Subscribers'); ?>">Subscribers</a> |
+		<a href="<?php echo SendPress_Admin::link('Queue'); ?>">Queue</a> |
+		<a href="<?php echo SendPress_Admin::link('Settings'); ?>">Settings</a> 
 		<?php if( SendPress_Option::get('beta') ) { ?>
 		|
-		<a href="<?php echo SendPress_View_Pro::link(); ?>">Pro Add-ons</a> 
+		<a href="<?php echo SendPress_Admin::link('Pro'); ?>">Pro Add-ons</a> 
 		<?php } ?>
 </div>
 <br>
@@ -154,6 +155,6 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 
 }
 // Add Access Controll!
-SendPress_View_Help::cap('sendpress_view');
+SendPress_Admin::add_cap('Pro','sendpress_view');
 //SendPress_View_Overview::cap('sendpress_access');
 

@@ -179,4 +179,4 @@ $link = $link.$sep.'inline=true';
 	} 
 
 }
-SendPress_View_Emails_Send_Confirm::cap('sendpress_email_send');
+SendPress_Admin::add_cap('Emails_Send_Confirm','sendpress_email_send');

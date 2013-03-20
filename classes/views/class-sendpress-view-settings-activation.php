@@ -30,7 +30,7 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		wp_update_post($dpost);
 
 		
-		SendPress_View_Settings_Activation::redirect();
+		SendPress_Admin::redirect('Settings_Activation');
 	}
 	
 	function html($sp) {

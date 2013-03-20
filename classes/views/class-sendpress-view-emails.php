@@ -65,6 +65,6 @@ class SendPress_View_Emails extends SendPress_View{
 
 
 
-SendPress_View_Emails::cap('sendpress_email');
+SendPress_Admin::add_cap('Emails','sendpress_email');
 
 }

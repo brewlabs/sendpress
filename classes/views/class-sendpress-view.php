@@ -18,6 +18,7 @@ class SendPress_View {
 	var $_visible = true;
 	var $_tabs = "";
 	var $_nonce_value = 'sendpress-is-awesome';
+	var $_name = "SendPress_View";
 	static $_admin_cap = 'manage_options';
 	static $_cap = array();
 	static $instance;
@@ -43,65 +44,8 @@ class SendPress_View {
 
 	function admin_init(){}
 
-    /**
-     * redirect redirects to the view called on.
-     * 
-     * @param array $params option query string parameters array('update'=>'true').
-     *
-     * @access public
-     * @static
-     *
-     * @return mixed Value.
-     */
-	static function redirect( $params = array() ){
-		$classname = get_called_class();
-		$url = self::link( $params, $classname );
-		if (headers_sent()) {
-			echo "<script>document.location.href='".$url."';</script>"; 
-		}
-		else {
-			wp_redirect(  $url ); 
-		}
-		exit;
-	}
 
-    /**
-     * link
-     * 
-     * @param array $params query string parameters array('update'=>'true').
-     *
-     * @access public
-     * @static
-     *
-     * @return mixed Url to view.
-     */
-	static function link( $params = array() , $classname= false){
-		if($classname == false){
-			$classname = get_called_class();
-		}
-		$parts = explode("_", $classname);
-		$l = "?page=sp-".$parts[2];
-		if(isset( $parts[3])){
-			$l .= "&view=".$parts[3];
-		}
-		if(isset($parts[4])){
-			$l .= "-".$parts[4];
-		}
-		$l = strtolower($l);
-		if(!empty($params) && (is_array($params) || is_object($params)) ){
-			$params = http_build_query($params, '', '&');
-			if(strlen($params) > 0 ){
-				$params = '&'. $params;
-			}
-		} else {
-			$params = '';
-		}
-		
-		return  admin_url( 'admin.php'. $l . $params );
-
-		//return ;
-
-	}
+	
 
 	/**
 	 * Initializes the view.
@@ -130,45 +74,6 @@ class SendPress_View {
 		//echo '<div class="clear"></div>';
 	}
 
-	static public function view_cap($current_class = null){
-		if ( ! isset( $current_class ) ){
-			$current_class = get_called_class();
-		}
-		//Check for set permissions
-		if(isset(self::$_primary[$current_class]))
-			return self::$_primary[$current_class];
-		
-		$p = self::getParents( $current_class );
-		//Check Parent class for limit
-
-		foreach ($p as $c) {
-			if(isset(self::$_primary[$c]))
-				return  self::$_primary[$c];
-		}
-		//Return Admin view Cap
-		return self::$_admin_cap;
-	}
-
-	
-
-	static public function access($class = null){
-		if(is_object($class) ){
-			$class = get_class($class);
-		}
-		
-		//Admin
-		if( current_user_can(self::$_admin_cap) || is_super_admin() || current_user_can('delete_users') ){
-			return true;
-		}
-		
-		//View Specific
-		if( current_user_can( self::view_cap($class) ) ){
-			return true;	
-		}
-		
-		//You can't see me
-		return false;
-	}
 
 	//Might not need anymore?
 	static function get_instance() {
@@ -188,7 +93,7 @@ class SendPress_View {
 	function render($sp = false) {
 		$this->page_start();
 		$this->sub_menu($sp);
-		if( self::access( $this ) ){
+		if( SendPress_Admin::access( $this ) ){
 			$this->html($sp);
 		} else {
 			$this->noaccess($sp);
@@ -220,21 +125,7 @@ class SendPress_View {
 		$this->_tabs .= '<a class="nav-tab'.$class.'" href="?page='.$link.'">'.$title.'</a>';
 	}
 
-	/*
-	* Page HTML
-	*/
-
-	public function getParents($class=null, $plist=array()) {
-	    $class = $class ? $class : $this;
-	    $parent = get_parent_class($class);
-	    if($parent) {
-	      $plist[] = $parent;
-	      /*Do not use $this. Use 'self' here instead, or you
-	       * will get an infinite loop. */
-	      $plist = self::getParents($parent, $plist);
-	    }
-	    return $plist;
-	  }
+	
 
 	function html($sp){
 		echo "Page not built yet.";
@@ -244,9 +135,6 @@ class SendPress_View {
 	}
 	//static  public function save(){}
 
-	static public function n() {
-        return get_called_class(); 
-    }
 
 	function is_visible() {
 		return $this->_visible;
@@ -262,14 +150,7 @@ class SendPress_View {
 		$this->_title = $title;
 	}
 
-	static public function cap( $cap=NULL ) {
-		if ( ! isset( $cap ) )
-			return self::$_primary;
-
-		$class = get_called_class();
-		self::$_primary[ $class ] = $cap;
-		
-	}
+	
 
 
 }

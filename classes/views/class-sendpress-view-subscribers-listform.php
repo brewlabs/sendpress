@@ -21,8 +21,7 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 		} else {
 			$list_id = $_GET['listID'];
 		}
-
-		$this->redirect(array('listID'=> $list_id));
+		SendPress_Admin::redirect('Subscribers_Listform',array('listID'=> $list_id));
 	}
 
 	
@@ -36,7 +35,7 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 	?>	
 		<div id="taskbar">
 		<div id="button-area" >
-			<a href="<?php echo SendPress_View_Subscribers::link(); ?>" class="btn btn-large" ><i class="icon-backward"></i> <?php _e('Back to Lists','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><?php _e('Save','sendpress'); ?></a>
+			<a href="<?php echo SendPress_Admin::link('Subscribers'); ?>" class="btn btn-large" ><i class="icon-backward"></i> <?php _e('Back to Lists','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><?php _e('Save','sendpress'); ?></a>
 		</div>
 		<h2><?php _e('Form Settings for List ','sendpress'); echo ':' . $listinfo->post_title; ?></h2>
 		</div>
