@@ -206,7 +206,7 @@ class SendPress {
 			add_action( 'admin_print_scripts', array($this,'editor_insidepopup') );
 			add_filter( 'gettext', array($this, 'change_button_text'), null, 2 );
 			add_action( 'sendpress_notices', array( $this,'sendpress_notices') );
-
+			add_filter('user_has_cap',array( $this,'user_has_cap') , 10 , 3);
 		}
 
 		
@@ -228,6 +228,28 @@ class SendPress {
 		add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
 		
 	}
+
+	function user_has_cap($all, $caps, $args){
+
+		if(isset($args[2])){
+			$post = get_post( $args[2] );
+			if($post->post_type == 'sp_newsletters'){
+				if( current_user_can('sendpress_email') ){
+					foreach($caps as $cap){
+						$all[$cap] = 1;
+					}
+					
+
+				}
+
+
+			}
+
+		}
+		return $all;
+
+	}
+
 
 	function load_plugin_language(){
 		load_plugin_textdomain( 'sendpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
