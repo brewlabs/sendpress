@@ -233,7 +233,7 @@ class SendPress {
 
 		if(isset($args[2])){
 			$post = get_post( $args[2] );
-			if($post->post_type == 'sp_newsletters'){
+			if($post !== null && $post->post_type == 'sp_newsletters'){
 				if( current_user_can('sendpress_email') ){
 					foreach($caps as $cap){
 						$all[$cap] = 1;
