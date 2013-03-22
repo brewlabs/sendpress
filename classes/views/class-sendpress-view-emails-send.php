@@ -52,7 +52,7 @@ $post_args = array( 'post_type' => 'sendpress_list','numberposts'     => -1,
 		
 $current_lists = get_posts( $post_args );
 foreach($current_lists as $list){
-	echo "<input name='listIDS[]' type='checkbox' id='listIDS' value=" . $list->ID. "> ".$list->post_title ."<br>";
+	echo "<input name='listIDS[]' type='checkbox' id='listIDS' value=" . $list->ID. "> ".$list->post_title . " <small>(".SendPress_Data::get_count_subscribers($list->ID). ")</small><br>";
 }
 ?>
 </div>
@@ -72,6 +72,7 @@ $sep = strstr($link, '?') ? '&' : '?';
 $link = $link.$sep.'inline=true';
 ?>
 <iframe src="<?php echo $link; ?>" width="100%" height="600px"></iframe>
+</div>
 </div>
 </form>
 <?php

@@ -36,7 +36,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
           }
        // }
 
-        self::redirect();
+        SendPress_Admin::redirect('Settings_Account');
 
 
   }

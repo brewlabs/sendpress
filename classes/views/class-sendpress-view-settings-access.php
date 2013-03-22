@@ -83,7 +83,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 		}	
 
 		
-		SendPress_View_Settings_Access::redirect();
+		SendPress_Admin::redirect('Settings_Access');
 	}
 	
 	function html($sp) {

@@ -79,7 +79,7 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
         update_post_meta($new_id,'_send_data', $info );
 
    
-        SendPress_View_Queue::redirect();
+        SendPress_Admin::redirect('Queue');
         //wp_redirect( '?page=sp-queue' );
 
   }
@@ -132,7 +132,7 @@ $subject = SendPress_Option::get('current_send_subject_'.$post->ID ,true);
 if( !empty($info['listIDS']) ){
     foreach($info['listIDS'] as $list_id){
         $list = $sp->get_list_details( $list_id );
-        echo $list->post_title.'<br>';      
+        echo $list->post_title. " <small>(".SendPress_Data::get_count_subscribers($list_id). ")</small><br>";      
 
     } 
 } else {

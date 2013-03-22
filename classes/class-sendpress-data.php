@@ -382,6 +382,20 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $wpdb->get_results("SELECT * FROM " . SendPress_Data::subscriber_status_table() );
 	}
 
+	// COUNT DATA
+	function get_count_subscribers($listID, $status = 2) {
+		global $wpdb;
+		$table = SendPress_Data::list_subcribers_table();
+
+		$query = "SELECT COUNT(*) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3";
+
+        
+            $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND(t2.status = %d) AND (t2.listID =  %d)";
+          //  "SELECT COUNT(*) FROM $table WHERE listID = $listID AND status = $status"
+		$count = $wpdb->get_var( $wpdb->prepare( $query, $status, $listID));
+		return $count;
+	}
+
 
 	/********************* END SUBSCRIBER FUNCTIONS **************************/
 

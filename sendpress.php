@@ -770,7 +770,7 @@ class SendPress {
 				<?php } ?>
 				<?php if($this->_current_view == 'style'){ ?>
 				<a href="#" id="save-update" class="btn btn-primary btn-large "><i class="icon-white icon-ok"></i> <?php echo __('Update','sendpress'); ?></a>
-				<?php if( SendPress_View_Emails_Send::access() ) { ?>
+				<?php if( SendPress_Admin::access('Emails_Send') ) { ?>
 				<a href="#" id="save-send-email" class="btn btn-primary btn-large "><i class="icon-envelope icon-white"></i> <?php echo __('Send','sendpress'); ?></a>
 				<?php } ?>	
 				<?php } ?>
