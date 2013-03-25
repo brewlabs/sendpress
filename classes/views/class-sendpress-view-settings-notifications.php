@@ -46,14 +46,14 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 					<input class="ibutton" type="checkbox" value="<?php echo $options['notifications-enable']; ?>" name="notifications-enable" id="notifications-enable" <?php checked( $options['notifications-enable'], true ); ?>/> 
 				</p>
 				<h3>Notification E-mail</h3>
-
+				<!-- <a href="#" class="tooltip" rel="tooltip" data-toggle="tooltip" title="The name and e-mail you want notifications to be sent to."><i class="icon-question-sign"></i></a> -->
 				<div class="boxer form-box">
 					<div style="float: right; width: 45%;">
 						<h4 class="nomargin"><?php _e('E-mail','sendpress'); ?></h4>
 						<input name="toemail" tabindex=2 type="text" id="toemail" value="<?php echo $options['email']; ?>" class="regular-text sp-text">
 					</div>	
 					<div style="width: 45%; margin-right: 10%">
-						<h4 class="nomargin"><?php _e('Name','sendpress'); ?></h4>
+						<h4 class="nomargin"><?php _e('To Name','sendpress'); ?></h4>
 						<input name="toname" tabindex=1 type="text" id="toname" value="<?php echo $options['name']; ?>" class="regular-text sp-text">
 					</div>
 				</div>

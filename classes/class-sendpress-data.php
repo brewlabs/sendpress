@@ -255,6 +255,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 			global $wpdb;
 			$result = $wpdb->update($table,array('status'=>$status,'updated'=>date('Y-m-d H:i:s')), array('subscriberID'=> $subscriberID,'listID'=>$listID) );
 		}
+
+		//add event for notification tracking
+		SendPress_Data::add_subscribe_event($subscriberID, $listID, $status);
+
 		return SendPress_Data::get_subscriber_list_status($listID, $subscriberID);
 	}
 
@@ -282,6 +286,30 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $event_data);
 
 		//print_r($this->get_open_without_id($rid,$sid));
+	}
+
+	function add_subscribe_event( $sid, $lid, $type ){
+		global $wpdb;
+
+		error_log('type = '.$type);
+
+		$event_type = 'unknown_event_type';
+		if( is_numeric($type) ){
+			if($type == 2){
+				$event_type = 'subscribe';
+			}elseif($type == 3){
+				$event_type = 'unsubscribed';
+			}
+		}
+
+		$event_data = array(
+			'eventdate'=>date('Y-m-d H:i:s'),
+			'subscriberID' => $sid,
+			'urlID'=>$lid,
+			'type'=>$event_type
+		);
+		
+		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $event_data);
 	}
 
 	function unsubscribe_from_list( $sid, $rid, $lid ) {

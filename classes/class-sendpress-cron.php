@@ -71,6 +71,10 @@ class SendPress_Cron {
                 'interval' => 604800,
                 'display' => __( 'Once every 28 days','sendpress')
                 ),
+            'monthly' => array(
+                'interval' => 2419200,
+                'display' => __( 'Once Monthly' )
+                )
             );
 
         return array_merge($param, $frequencies);
