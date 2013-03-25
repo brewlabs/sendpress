@@ -35,6 +35,17 @@ class SendPress_Notifications_Manager {
 
 	}
 
+	function send_instant_notification($event_data){
+
+		$options = SendPress_Option::get('notification_options');
+		
+		if( $options['notifications-'.$event_data['type'].'-instant'] ){
+			//build the message and send it....
+			
+		}
+
+	}
+
 	function sendpress_notification_daily(){
 		SendPress_Notifications_Manager::maybe_send_notification('daily');
 	}
@@ -49,22 +60,19 @@ class SendPress_Notifications_Manager {
 
 		$options = SendPress_Option::get('notification_options');
 
-		if ( ! wp_next_scheduled( 'sendpress_notification_daily' ) ) {
+		if ( ! wp_next_scheduled( 'sendpress_notification_daily' ) && ($options['notifications-subscribed-daily'] || $options['notifications-unsubscribed-daily']) ) {
 			wp_schedule_event( time(), 'daily', 'sendpress_notification_daily' );
 		}
-		if ( ! wp_next_scheduled( 'sendpress_notification_weekly' ) ) {
+		if ( ! wp_next_scheduled( 'sendpress_notification_weekly' ) && ($options['notifications-subscribed-weekly'] || $options['notifications-unsubscribed-weekly']) ) {
 			wp_schedule_event( time(), 'weekly', 'sendpress_notification_weekly' );
 		}
-		if ( ! wp_next_scheduled( 'sendpress_notification_monthly' ) ) {
+		if ( ! wp_next_scheduled( 'sendpress_notification_monthly' ) && ($options['notifications-subscribed-monthly'] || $options['notifications-unsubscribed-monthly']) ) {
 			wp_schedule_event( time(), 'monthly', 'sendpress_notification_monthly' );
 		}
 
 		add_action( 'sendpress_notification_daily', array( $this, 'subscribed_daily' ) );
 		add_action( 'sendpress_notification_weekly', array( $this, 'subscribed_weekly' ) );
 		add_action( 'sendpress_notification_monthly', array( $this, 'subscribed_monthly' ) );
-
-		SendPress_Notifications_Manager::maybe_send_notification('instant');
-
 	}
 
 }

@@ -296,7 +296,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$event_type = 'unknown_event_type';
 		if( is_numeric($type) ){
 			if($type == 2){
-				$event_type = 'subscribe';
+				$event_type = 'subscribed';
 			}elseif($type == 3){
 				$event_type = 'unsubscribed';
 			}
@@ -310,6 +310,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 		);
 		
 		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $event_data);
+
+		//if instant, check if we need a notification and send one
+		SendPress_Notifications_Manager::send_instant_notification($event_data);
 	}
 
 	function unsubscribe_from_list( $sid, $rid, $lid ) {
