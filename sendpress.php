@@ -181,12 +181,6 @@ class SendPress {
 		SendPress_Pro_Manager::init();
 		SendPress_Cron::get_instance();
 		SendPress_Notifications_Manager::init();
-
-		// echo date('Y-m-d', strtotime(date('Y-m-d')." -1 week")).'<br>';
-		// echo date('Y-m-d');
-
-		//print_r(SendPress_Data::get_subscriber_event_count_week(date('Y-m-d', strtotime(date('Y-m-d')." -1 week")),date('Y-m-d'),'unsubscribed'));
-		//print_r(SendPress_Data::get_subscriber_event_count_day(date('Y-m-d'),'unsubscribed'));
 	
 		sendpress_register_sender('SendPress_Sender_Website');
 		sendpress_register_sender('SendPress_Sender_Gmail');
