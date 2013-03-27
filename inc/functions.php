@@ -74,6 +74,10 @@ if( !defined('MINUTE_IN_SECONDS') ){
  	define( 'YEAR_IN_SECONDS',  365 * DAY_IN_SECONDS    );
 }
 
+if( defined('DAY_IN_SECONDS') ){
+	define( 'MONTH_IN_SECONDS',  28 * DAY_IN_SECONDS    );
+}
+
 define('SENDPRESS_PRO_VALID', 'valid');
 define('SENDPRESS_PRO_DEACTIVATED', 'deactivated');
 define('SENDPRESS_PRO_FAILED', 'failed');
