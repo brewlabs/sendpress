@@ -6,19 +6,19 @@ if ( !defined('SENDPRESS_VERSION') ) {
 	die;
 }
 
-class SendPress_Module_Reports extends SendPress_Module{
+class SendPress_Module_Customsmtp extends SendPress_Module{
 	
 	function html($sp){
 		$hide = false;
-		$plugin_path = 'sendpress-advanced-reports/sendpress-advanced-reports.php';
+		$plugin_path = '';
 		if( $this->is_pro_active() ){
-			$plugin_path = 'sendpress-pro/extensions/class-sendpress-advanced-reports.php';
+			$plugin_path = 'sendpress-pro/extensions/sendpress-sender-customsmtp.php';
 		}
 	?>
-		<h4><?php _e('Advanced Reports','sendpress');?></h4>
+		<h4>Custom SMTP</h4>
 		<form method="post" id="post">
 			<div class="description">
-				<?php _e('Add more details to your reports. See who clicked what and when. What device they used and where they were.','sendpress');?>
+				Connects to any SMTP service to send your SendPress emails.
 			</div>
 			<?php $this->buttons($plugin_path);?>
 			<input type="hidden" name="plugin_path" value="<?php echo $plugin_path; ?>" />

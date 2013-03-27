@@ -863,7 +863,7 @@ width: 150px;
 .sendpress-module{
     position: relative;
     float: left;
-    width: 240px;
+    width: 250px;
     min-height: 160px;
     max-height: 220px;
     margin: 0 0 15px 15px;
@@ -872,7 +872,7 @@ width: 150px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
     background: #fff;
-    padding: 15px 0 35px 15px;
+   
     -webkit-box-shadow: inset 0 1px 0 #fff, inset 0 0 20px rgba(0,0,0,0.05), 0 1px 2px rgba( 0,0,0,0.1 );
     -moz-box-shadow: inset 0 1px 0 #fff, inset 0 0 20px rgba(0,0,0,0.05), 0 1px 2px rgba( 0,0,0,0.1 );
     box-shadow: inset 0 1px 0 #fff, inset 0 0 20px rgba(0,0,0,0.05), 0 1px 2px rgba( 0,0,0,0.1 );
@@ -881,6 +881,7 @@ width: 150px;
     }
     .sendpress-module .inner-module{
        /* padding:20px 15px; */
+        padding: 15px 15px 35px 15px;
     }
    
     .sendpress-module.pro-module{
@@ -889,6 +890,10 @@ width: 150px;
         padding-bottom: 15px;
         background-color: whiteSmoke;
        }
+ .sendpress-module.pro-module .inner-module{
+    padding:  15px 15px 5px 15px;
+ }
+
     .sendpress-module h4{
         margin:0px 0px 5px;
         font-size:15px;

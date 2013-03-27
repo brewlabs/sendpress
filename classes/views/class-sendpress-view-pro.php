@@ -78,7 +78,7 @@ class SendPress_View_Pro extends SendPress_View{
                 <?php
 
 
-		$modules = apply_filters('sendpress_pro_modules', array('pro','reports', 'spam_test', 'empty') );
+		$modules = apply_filters('sendpress_pro_modules', array('pro','reports', 'spam_test', 'sendgrid', 'mailjet','amazonses','customsmtp','empty','empty','empty') );
 		echo '<div class="sendpress-addons">';
 		foreach ($modules as $mod) {
 			$mod_class = $this->get_module_class($mod);

@@ -18,7 +18,7 @@ class SendPress_Module_Spam_Test extends SendPress_Module{
 		<h4><?php _e('Spam Testing','sendpress');?></h4>
 		<form method="post" id="post">
 			<div class="description">
-				<?php echo sprintf(	__( 'Test your emails with %s.','sendpress' ), 'SpamAssassin' ); ?>
+				One click spam testing. Find out how your email does with our own email testing system.
 			</div>
 			<?php $this->buttons($plugin_path);?>
 			<input type="hidden" name="plugin_path" value="<?php echo $plugin_path; ?>" />
