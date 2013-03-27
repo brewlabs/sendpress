@@ -210,21 +210,21 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	function get_subscriber_event_count_month($date, $type){
 		global $wpdb;
-		$table = self::subscriber_event_table();//SELECT * FROM table_name WHERE MONTH(date_column) = 4;
+		$table = SendPress_Data::subscriber_event_table();//SELECT * FROM table_name WHERE MONTH(date_column) = 4;
 		$result = $wpdb->get_results("SELECT COUNT(eventdate) as count FROM $table WHERE type = '$type' AND MONTH(eventdate) = $date");
 		return $result;
 	}
 	//date_column between "2001-01-05" and "2001-01-10"
 	function get_subscriber_event_count_week($date1, $date2, $type){
 		global $wpdb;
-		$table = self::subscriber_event_table();
+		$table = SendPress_Data::subscriber_event_table();
 		$result = $wpdb->get_results("SELECT COUNT(eventdate) as count FROM $table WHERE type = '$type' AND (eventdate >= '$date1' AND eventdate <= '$date2') ");
 		return $result;
 	}
 
 	function get_subscriber_event_count_day($date, $type){
 		global $wpdb;
-		$table = self::subscriber_event_table();//SELECT * FROM table_name WHERE MONTH(date_column) = 4;
+		$table = SendPress_Data::subscriber_event_table();//SELECT * FROM table_name WHERE MONTH(date_column) = 4;
 		$result = $wpdb->get_results("SELECT COUNT(eventdate) as count FROM $table WHERE type = '$type' AND eventdate = '$date'");
 		return $result;
 	}
