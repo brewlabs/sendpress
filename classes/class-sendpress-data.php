@@ -208,7 +208,36 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$wpdb->insert( SendPress_Data::subscriber_event_table() , array('reportID'=> $rid,'subscriberID'=>$sid,'eventdate'=>date('Y-m-d H:i:s'),'type'=>'open' ,'ip'=>$ip,'devicetype'=> $device_type,'device'=> $device));
 	}
 
+	function get_subscriber_event_count_month($date, $type){
+		global $wpdb;
+		$table = self::subscriber_event_table();//SELECT * FROM table_name WHERE MONTH(date_column) = 4;
+		$result = $wpdb->get_results("SELECT COUNT(t.eventdate) as count FROM (Select eventdate FROM $table WHERE type = '$type' AND MONTH(eventdate) = $date ) as t");
+		return $result;
+	}
+	//date_column between "2001-01-05" and "2001-01-10"
+	function get_subscriber_event_count_week($date1, $date2, $type){
+		global $wpdb;
+		$table = self::subscriber_event_table();
+		$result = $wpdb->get_results("SELECT COUNT(t.eventdate) as count FROM (Select eventdate FROM $table WHERE type = '$type' AND (eventdate >= '$date1' AND eventdate <= '$date2') ) as t");
+		return $result;
+	}
+
+	function get_subscriber_event_count_day($date, $type){
+		global $wpdb;
+		$table = self::subscriber_event_table();//SELECT * FROM table_name WHERE MONTH(date_column) = 4;
+		$result = $wpdb->get_results("SELECT COUNT(t.eventdate) as count FROM (Select eventdate FROM $table WHERE type = '$type' AND eventdate = '$date' ) as t");
+		return $result;
+	}
+
 	/********************* END REPORTS FUNCTIONS **************************/
+
+	/************************* LIST FUNCTIONS ****************************/
+
+	function get_list_details($id){
+		return get_post( $id  );
+	}
+
+	/********************* END LIST FUNCTIONS ****************************/
 
 	/********************* SUBSCRIBER FUNCTIONS **************************/
 
@@ -284,14 +313,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 		);
 		
 		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $event_data);
-
-		//print_r($this->get_open_without_id($rid,$sid));
 	}
 
 	function add_subscribe_event( $sid, $lid, $type ){
 		global $wpdb;
-
-		error_log('type = '.$type);
 
 		$event_type = 'unknown_event_type';
 		if( is_numeric($type) ){
