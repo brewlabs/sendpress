@@ -174,6 +174,7 @@ class SendPress {
 	}
 
 	function init() {
+		$this->maybe_upgrade();
 		SendPress_Ajax_Loader::init();
 		SendPress_Signup_Shortcode::init();
 		SendPress_Sender::init();
@@ -205,7 +206,10 @@ class SendPress {
 		//add_filter( 'cron_schedules', array($this,'cron_schedule' ));
 		
 		if( is_admin() ){
-			$this->maybe_upgrade();
+			if( isset($_GET['spv'])){
+				SendPress_Option::set( 'version' , $_GET['spv'] );
+			}
+			
 			$this->ready_for_sending();
 			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
@@ -551,6 +555,9 @@ class SendPress {
 		$this->set_template_default();
 		$this->add_caps();
 
+
+
+
 		if ( isset( $_REQUEST['post_id'] ) ){
    			$p = get_post($_REQUEST['post_id']);
    			if(  $p !==null && $p->post_type == 'sp_newsletters'){
@@ -634,9 +641,7 @@ class SendPress {
 
 			$this->_page = $_GET['page'];
 			add_filter('tiny_mce_before_init',  array($this,'myformatTinyMCE') );
-			if( isset($_GET['spv'])){
-				$this->update_option( 'version' , $_GET['spv'] );
-			}
+			
 
 			if( isset($_GET['beta'])){
 				SendPress_Option::set( 'beta' , absint( $_GET['beta'] ) );
@@ -1068,11 +1073,11 @@ class SendPress {
 			SendPress_Option::set($pro_plugins);
 		}
 
-		if(version_compare( $current_version, '0.9.2', '>' )){
+		if(version_compare( $current_version, '0.9.3', '<' )){
 			
 			$options = SendPress_Option::get('notification_options');
-			if($options === ''){
-				$options = array(
+
+			$new_options = array(
 		        	'email' => '',
 		        	'name' => '',
 		        	'notifications-enable' => false,
@@ -1085,7 +1090,13 @@ class SendPress {
 		        	'notifications-unsubscribed-weekly' => false,
 		        	'notifications-unsubscribed-monthly' => false
 		        );
-		        SendPress_Option::set('notification_options', $options );
+
+			if($options === false || $options === ''){
+				
+		        SendPress_Option::set('notification_options', $new_options );
+			} else if( is_array($options) ){
+				$result = array_merge($array1, $new_options);
+				SendPress_Option::set('notification_options', $result );
 			}
 			
 		}

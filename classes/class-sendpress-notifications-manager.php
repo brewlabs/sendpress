@@ -126,6 +126,8 @@ class SendPress_Notifications_Manager {
 
 		$options = SendPress_Option::get('notification_options');
 
+		//print_r($options);
+
 		if ( ! wp_next_scheduled( 'sendpress_notification_daily' ) && ($options['notifications-subscribed-daily'] || $options['notifications-unsubscribed-daily']) ) {
 			wp_schedule_event( time(), 'daily', 'sendpress_notification_daily' );
 		}
