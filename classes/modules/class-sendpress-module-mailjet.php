@@ -18,7 +18,11 @@ class SendPress_Module_Mailjet extends SendPress_Module{
 		<h4>MailJet</h4>
 		<form method="post" id="post">
 			<div class="description">
-				Connects to MailJet to send your SendPress emails. A MailJet account is required to use this option.
+				Connects to <a href="http://www.mailjet.com/" target="_blank">MailJet</a> to send your SendPress emails. A <a href="http://www.mailjet.com/" target="_blank">MailJet</a> account is required to use this option.
+				<br><br>
+				Get a <a href="http://www.mailjet.com/" target="_blank">MailJet</a> Account.
+				<br>
+				<br>
 			</div>
 			<?php $this->buttons($plugin_path);?>
 			<input type="hidden" name="plugin_path" value="<?php echo $plugin_path; ?>" />

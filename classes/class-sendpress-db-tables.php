@@ -131,6 +131,7 @@ class SendPress_DB_Tables {
 		return $wpdb->prefix . self::$prefix . "queue";
 	}
 
+  
 
     function remove_all_data(){
         if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ){
@@ -153,6 +154,28 @@ class SendPress_DB_Tables {
 
         $drop_tables = "DROP TABLE IF EXISTS $st,$qt,$rt,$so,$se,$sc,$ss,$lt,$ls;";
         $e = $wpdb->query($drop_tables);
+    }
+
+    /**
+     * 
+     * SENDPRESS TABLE UPDATES
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     **/
+    function update_tables_093(){
+        global $wpdb;
+        $table_to_update = SendPress_DB_Tables::subscriber_table();
+        if( $wpdb->get_var("SHOW COLUMNS FROM ". $table_to_update ." LIKE 'wp_user_id'") == false) {
+            $wpdb->query("ALTER TABLE ". $table_to_update ." ADD COLUMN `wp_user_id` bigint(20) DEFAULT NULL");
+            $wpdb->query("ALTER TABLE ". $table_to_update ." ADD UNIQUE KEY `wp_user_id` (`wp_user_id`)");
+        }
     }
 
 

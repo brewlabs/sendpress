@@ -23,9 +23,11 @@ if($wpdb->get_var("show tables like '$subscriber_table'") != $subscriber_table) 
 		  bounced int(1) NOT NULL DEFAULT '0',
 		  firstname varchar(250) NOT NULL DEFAULT '',
 		  lastname varchar(250) NOT NULL DEFAULT '',
+		  wp_user_id bigint(20) DEFAULT NULL,
 		  PRIMARY KEY (`subscriberID`),
 		  UNIQUE KEY  (`email`) ,
-		  UNIQUE KEY (`identity_key`) 
+		  UNIQUE KEY (`identity_key`),
+		  UNIQUE KEY `wp_user_id` (`wp_user_id`)
 		)"; 
 	
 

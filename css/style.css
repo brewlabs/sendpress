@@ -107,7 +107,9 @@ width: 100%;
 outline: none;
 }
 
-
+.mod-first{
+    clear: left;
+}
 
 #taskbar {
  margin: 0 0 15px;

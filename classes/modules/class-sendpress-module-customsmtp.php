@@ -12,7 +12,7 @@ class SendPress_Module_Customsmtp extends SendPress_Module{
 		$hide = false;
 		$plugin_path = '';
 		if( $this->is_pro_active() ){
-			$plugin_path = 'sendpress-pro/extensions/sendpress-sender-customsmtp.php';
+			$plugin_path = 'sendpress-pro/extensions/sendpress-sender-custom.php';
 		}
 	?>
 		<h4>Custom SMTP</h4>

@@ -16,6 +16,7 @@ class SendPress_Module {
 	var $_title = '';
 	var $_visible = true;
 	var $_nonce_value = 'sendpress-is-awesome';
+	var $_index = 0;
 	//var $_active = false;
 
 	function SendPress_View( $title='' ) {
@@ -33,7 +34,12 @@ class SendPress_Module {
 	function init() {}
 
 	function module_start(){
-		echo '<div class="sendpress-module">';
+		$class ='';
+		if($this->index() % 3 == 1){
+			$class= " mod-first";
+		}
+
+		echo '<div class="sendpress-module '. $class .'">';
 		echo '<div class="inner-module">';
 	}
 
@@ -205,6 +211,11 @@ class SendPress_Module {
 		if ( ! isset( $title ) )
 			return $this->_title;
 		$this->_title = $title;
+	}
+	function index( $index=NULL ) {
+		if ( ! isset( $index ) )
+			return $this->_index;
+		$this->_index = $index;
 	}
 
 }
