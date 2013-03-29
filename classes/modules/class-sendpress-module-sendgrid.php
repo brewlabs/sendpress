@@ -20,8 +20,7 @@ class SendPress_Module_Sendgrid extends SendPress_Module{
 			<div class="description">
 				Connects to <a href=" http://mbsy.co/sendgrid/148304" target="_blank">SendGrid</a> to send your SendPress emails. A <a href=" http://mbsy.co/sendgrid/148304" target="_blank">SendGrid</a> account is required to use this option.
 				<br><br>
-				Get a <a href="http://mbsy.co/sendgrid/148304" target="_blank">SendGrid</a> Account.
-				<br><br>
+				
 			</div>
 			<?php $this->buttons($plugin_path);?>
 			<input type="hidden" name="plugin_path" value="<?php echo $plugin_path; ?>" />

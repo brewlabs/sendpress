@@ -6,23 +6,22 @@ if ( !defined('SENDPRESS_VERSION') ) {
 	die;
 }
 
-class SendPress_Module_Mailjet extends SendPress_Module{
+class SendPress_Module_Autoresponders extends SendPress_Module{
 	
 	function html($sp){
 		$hide = false;
 		$plugin_path = '';
 		if( $this->is_pro_active() ){
-			$plugin_path = 'sendpress-pro/extensions/sendpress-sender-mailjet.php';
+			$plugin_path = 'sendpress-pro/extensions/sendpress-autoresponders.php';
 		}
 	?>
-		<h4>MailJet</h4>
+		<h4>Autoresponders</h4>
 		<form method="post" id="post">
 			<div class="description">
-				Connects to <a href="http://www.mailjet.com/" target="_blank">MailJet</a> to send your SendPress emails. A <a href="http://www.mailjet.com/" target="_blank">MailJet</a> account is required to use this option.
-				<br><br>
-				
+				Allows you to send a follow-up email after an event. Like send a welcome email a few days after someone subscribes to a list.
 			</div>
-			<?php $this->buttons($plugin_path);?>
+			<div class="inline-buttons"><a class="btn disabled btn-activate" href="#">Coming Soon</a></div>
+			<?php //$this->buttons($plugin_path);?>
 			<input type="hidden" name="plugin_path" value="<?php echo $plugin_path; ?>" />
 			<input class="action" type="hidden" name="action" value="module-activate-sendpress-pro" />
 			<?php wp_nonce_field($sp->_nonce_value); ?>
