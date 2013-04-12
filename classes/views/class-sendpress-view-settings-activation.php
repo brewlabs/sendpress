@@ -69,6 +69,8 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		<?php if(strpos($dpost->post_content,'*|SP:CONFIRMLINK|*'  )  == false){ echo "<div class='alert alert-error'>Missing <b>*|SP:CONFIRMLINK|*</b> in body content.</div>";} ?>
 		<textarea style="width:100%; padding: 8px;" rows="21" name="body"><?php 
 		remove_filter( 'the_content', 'wpautop' );
+		global $post;
+		$post = $dpost;
 		$content = apply_filters('the_content', $dpost->post_content);
 									$content = str_replace(']]>', ']]&gt;', $content);
 									echo stripcslashes($content); ?></textarea>

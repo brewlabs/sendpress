@@ -27,8 +27,8 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
         $count = 0;    
 
         if(isset($info['listIDS'])){
-            foreach($info['listIDS'] as $list_id){
-                $_email = $sp->get_active_subscribers( $list_id );
+           // foreach($info['listIDS'] as $list_id){
+                $_email = SendPress_Data::get_active_subscribers_lists($info['listIDS']); //$sp->get_active_subscribers( $list_id );
 
                 foreach($_email as $email){
                    
@@ -40,7 +40,7 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
                         'subscriberID'=> $email->subscriberID,
                         //'to_name' => $email->fistname .' '. $email->lastname,
                         'subject' => $subject,
-                        'listID'=> $list_id
+                        'listID'=> $email->listid
                         );
                    
                     $sp->add_email_to_queue($go);
@@ -49,7 +49,7 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
                 }
 
 
-            }
+          //  }
         }
 
 

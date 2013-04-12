@@ -274,7 +274,7 @@ global $post;
 							<td width="100%" valign="top" style="font-size: 13px; font-family: arial,sans-serif; color: *|SP:CONTENTTEXT|*;">
 								<?php $content = apply_filters('the_content', $post->post_content);
 									$content = str_replace(']]>', ']]&gt;', $content);
-									echo $content;
+									echo nl2br($content);
 								?>
 							</td>
 						</tr>

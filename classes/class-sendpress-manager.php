@@ -153,13 +153,16 @@ class SendPress_Manager {
 			$user = SendPress_Data::get_template_id_by_slug('user-style');
 			SendPress_Posts::copy_meta_info($optin,$user);
 
-			
-
+		
 			$message = new SendPress_Email();
 			$message->id($optin);
+			$message->subscriber_id($subscriberID);
 			$message->remove_links(true);
 			$message->purge(true);
-			$message->subscriber_id($subscriberID);
+			$html = $message->html();
+			$message->purge(false);
+			$text = $message->text();
+			
 			
 			$code = array(
 					"id"=>$subscriberID,
@@ -169,12 +172,13 @@ class SendPress_Manager {
 			$code = SendPress_Data::encrypt( $code );
 
 			$href = site_url() ."?sendpress=".$code;
-
-			$html = $message->html();
+			
+			
 			$html = str_replace("*|SP:CONFIRMLINK|*", $href , $html );
-
+			$text = str_replace("*|SP:CONFIRMLINK|*", $href , $text );
+			$text = nl2br($text);
 			$sub =  $message->subject();
-			SendPress_Manager::send( $subscriber->email, $sub , $html, '', false );
+			SendPress_Manager::send( $subscriber->email, $sub , $html, $text, false );
 	}
 
 

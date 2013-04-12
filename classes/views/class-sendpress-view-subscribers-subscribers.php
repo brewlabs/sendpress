@@ -79,7 +79,7 @@ if(isset($_GET['listID'])){
 		<p><?php _e('This will remove all subscribers from the list','sendpress');?>.</p>
 	</div>
 	<div class="modal-footer">
-	<a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('No! I was Joking','sendpress');?></a><a href="<?php echo SendPress_View_Subscribers_Subscribers::link() . $list ; ?>&action=remove-subscribers" id="confirm-delete" class="btn btn-danger" ><?php _e('Yes! Remove All Subscribers','sendpress');?></a>
+	<a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('No! I was Joking','sendpress');?></a><a href="<?php echo SendPress_Admin::link('Subscribers_Subscribers') . $list ; ?>&action=remove-subscribers" id="confirm-delete" class="btn btn-danger" ><?php _e('Yes! Remove All Subscribers','sendpress');?></a>
 	</div>
 </div>
 	<?php

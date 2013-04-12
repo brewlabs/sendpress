@@ -34,12 +34,12 @@ class SendPress_View_Queue extends SendPress_View {
 	
 	function empty_queue( $get, $sp ){
 		SendPress_Data::delete_queue_emails();
-		SendPress_View_Queue::redirect();
+		SendPress_Admin::redirect('Queue');
 	}
 
 	function reset_counters(){
 		SendPress_Manager::reset_counters();
-		SendPress_View_Queue::redirect();
+		SendPress_Admin::redirect('Queue');
 	}
 
 	function html($sp) {

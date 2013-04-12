@@ -263,6 +263,19 @@ class SendPress_Data extends SendPress_DB_Tables {
         return self::wpdbQuery($query, 'get_row');
 	}
 
+	function get_active_subscribers_lists($list_ids = array() ){
+		global $wpdb;
+		$lists = implode(',', $list_ids);
+		$query = "SELECT t1.subscriberID,t1.email, t3.status, t2.listid, count(*) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
+
+        $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.status = 2) AND (t2.listID in  ( ". $lists ."  )) GROUP BY t1.subscriberID  ";
+        
+     
+        return $wpdb->get_results( $query );
+	}
+
+
+
 	function set_subscriber_status($listID, $subscriberID, $status = 0) {
 		$table = self::list_subcribers_table();
 		$result = self::wpdbQuery("SELECT id FROM $table WHERE listID = $listID AND subscriberID = $subscriberID ", 'get_var');
@@ -389,7 +402,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if( false === $subscriberID ){
 			return false;
 		}
-		
+		error_log('id ' . $subscriberID);
 		$args = array( 'post_type' => 'sendpress_list','numberposts'  => -1,
 	    'offset'          => 0,
 	    'orderby'         => 'post_title',

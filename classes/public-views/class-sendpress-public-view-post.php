@@ -69,7 +69,6 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 		
 			$optin = SendPress_Option::is_double_optin();
 
-		
 			switch($post_responce){
 
 				case "json": //Respond to post with json data
@@ -100,14 +99,29 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 					header('Content-type: application/json');
 					exit($encoded);
 				break;
+				case "custom":
+					$post_redirect = get_post_meta($user_info['list'][0], 'post-page-id', true);
+						if($post_redirect == false){
+							$post_redirect = site_url();
+						} else {
+							$plink = get_permalink($post_redirect);
+							if($plink != ""){
+								wp_redirect( $plink );
+								exit();
+							}
+						}
 
+						wp_redirect($post_redirect);
+						exit();
+				break;
 				case "redirect":
-						$post_redirect = get_post_meta($user_info['list'], 'post-redirect', true);
+						$post_redirect = get_post_meta($user_info['list'][0], 'post-redirect', true);
 						if($post_redirect == false){
 							$post_redirect = site_url();
 						}
 
 						wp_redirect($post_redirect);
+						exit();
 
 				break;
 
