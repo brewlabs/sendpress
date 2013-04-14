@@ -107,12 +107,18 @@ echo $time;//11:09
   $emails_per_hour =  SendPress_Option::get('emails-per-hour');
   $emails_today = SendPress_Option::get('emails-today');
   $emails_so_far = isset($emails_today[date("z")]) ? $emails_today[date("z")] : 0;
-
-?>
+	?>
 		
 		<h2><strong><?php echo $emails_so_far; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_day; ?></strong> <?php _e('emails sent today','sendpress'); ?>.</h2>
 		<h2><strong><?php  echo SendPress_Manager::emails_this_hour(); ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_hour; ?></strong> <?php _e('emails sent this hour','sendpress'); ?>.</h2>
 		<small>You can adjust these settings here: <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>">Settings > Sending Account</a>.</small>
+ 		<?php
+$offset = get_option( 'gmt_offset' ) * 60 * 60; // Time offset in seconds
+$local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
+
+?><br><small>The cron will run again around: <?php
+echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $local_timestamp);
+?></small>
  		<br><br>
 		</div>
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
