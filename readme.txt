@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid,
 Requires at least: 3.4
 Tested up to: 3.5.1
-Stable tag: 0.9.3
+Stable tag: 0.9.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,6 +94,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 
 == Changelog ==
+
+= 0.9.3.1 - 2013.4.18 =
+* View link errors fixed
+* Minor updates for php 5.2
+* Subscriber Widget saving update
+* Added more tracking to subscriber events
 
 = 0.9.3 - 2013.3.29 =
 * New Pro options
@@ -211,6 +217,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.3.1 =
+Minor bug fixes and other updates
 
 = 0.9.3 =
 Better support for older versions of PHP
