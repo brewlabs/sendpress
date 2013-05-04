@@ -95,6 +95,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
+= 0.9.3.2 - 2013.5.4 =
+* Simple Notifications added
+* Extra spacing in template fixed
+* Fixed broken links
+
 = 0.9.3.1 - 2013.4.18 =
 * View link errors fixed
 * Minor updates for php 5.2
@@ -217,6 +222,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.3.2 =
+New Notifications option and bug fixes
 
 = 0.9.3.1 =
 Minor bug fixes and other updates

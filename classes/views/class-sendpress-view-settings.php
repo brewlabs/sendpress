@@ -22,13 +22,11 @@ class SendPress_View_Settings extends SendPress_View {
 		  <li <?php if($sp->_current_view == 'styles'){ ?>class="active"<?php } ?> >
 		    <a href="<?php echo SendPress_Admin::link('Settings_Styles'); ?>"><i class="icon-pencil "></i> <?php _e('Basic Settings & Styles','sendpress'); ?></a>
 		  </li>
-		  <li <?php if($sp->_current_view == 'activation'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings_Activation'); ?>"><i class=" icon-bullhorn"></i> <?php _e('System Emails & Pages','sendpress'); ?></a></li>
-		 <li <?php if($sp->_current_view == 'account'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>"><i class="icon-envelope "></i> <?php _e('Sending Account','sendpress'); ?></a></li>
-			<li <?php if($sp->_current_view == 'access'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings_Access'); ?>"><i class="icon-user "></i> <?php _e('Permissions','sendpress'); ?></a></li>
-			<?php if( SendPress_Option::get('beta') ) { ?>
-			<li <?php if($sp->_current_view == 'notifications'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings_Notifications'); ?>"><i class="icon-bell"></i> <?php _e('Notifications','sendpress'); ?></a></li>	
-			<?php } ?>
-			<li <?php if($sp->_current_view == 'advanced'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings_Advanced'); ?>"><i class=" icon-wrench "></i> <?php _e('Advanced','sendpress'); ?></a></li>		
+		<li <?php if($sp->_current_view == 'activation'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings_Activation'); ?>"><i class=" icon-bullhorn"></i> <?php _e('System Emails & Pages','sendpress'); ?></a></li>
+		<li <?php if($sp->_current_view == 'account'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>"><i class="icon-envelope "></i> <?php _e('Sending Account','sendpress'); ?></a></li>
+		<li <?php if($sp->_current_view == 'access'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings_Access'); ?>"><i class="icon-user "></i> <?php _e('Permissions','sendpress'); ?></a></li>
+		<li <?php if($sp->_current_view == 'notifications'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings_Notifications'); ?>"><i class="icon-bell"></i> <?php _e('Notifications','sendpress'); ?></a></li>	
+		<li <?php if($sp->_current_view == 'advanced'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings_Advanced'); ?>"><i class=" icon-wrench "></i> <?php _e('Advanced','sendpress'); ?></a></li>		
 		</ul>
 	</div>
 </div>
