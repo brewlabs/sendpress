@@ -305,7 +305,7 @@ class SendPress_Public_View {
 		?>
 	</div>
 		</div>
-		     <script src="http://code.jquery.com/jquery-latest.js"></script>
+		     <script src="<?php echo SENDPRESS_URL; ?>js/jquery-1.9.1.min.js"></script>
   			 <script type='text/javascript' src='<?php echo SENDPRESS_URL; ?>bootstrap/js/bootstrap.js?ver=3.3.2'></script>
 	   		<?php do_action('sendpress_public_view_scripts'); ?>
 	    </body>

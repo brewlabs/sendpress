@@ -95,6 +95,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
+= 0.9.3.3 - 2013.5.5 =
+* Bug fix for public pages
+
 = 0.9.3.2 - 2013.5.4 =
 * Simple Notifications added
 * Extra spacing in template fixed
@@ -222,6 +225,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.3.3 = 
+Fixed bug with public pages
 
 = 0.9.3.2 =
 New Notifications option and bug fixes
