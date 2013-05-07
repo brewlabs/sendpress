@@ -6,7 +6,7 @@ Plugin URI: http://sendpress.com
 Description: Easy to manage Email Markteing and Newsletter plugin for WordPress. 
 Author: SendPress
 Author URI: http://sendpress.com/
-
+test
 */
 
 if ( !defined('DB_NAME') ) {
