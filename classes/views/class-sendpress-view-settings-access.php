@@ -14,10 +14,14 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 		  
 		foreach ($this->get_editable_roles() as $role) 
 		{
-			if($role == 'Editor' || $role == 'Contributor' || $role == 'Author' || $role == 'Subscriber'){
+			if($role != 'Administrator'){
 			$sp_view = false;
-			$saverole= get_role( strtolower( $role)   );
+			$saverole  = get_role( str_replace(" ","_", strtolower( $role)  ) );
+				
 			$role = strtolower($role );
+
+			if(false !== get_class($saverole)){
+
 			if( isset($_POST[$role . "_edit"] )){
 				$sp_view = true;
 				$saverole->add_cap( 'sendpress_email');
@@ -78,7 +82,8 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 			}else{
 				$saverole->remove_cap('sendpress_view');
 			}
-		}
+			}
+			}
 			
 		}	
 
@@ -110,13 +115,15 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 		<?php
 		foreach ($this->get_editable_roles() as $role) 
 		{
-			if($role == 'Subscriber' || $role == 'Editor' || $role == 'Contributor' || $role == 'Author'){
+			if($role != 'Administrator'){
+				$listrole = get_role( str_replace(" ","_", strtolower( $role)  ) );
+				$role =  strtolower( $role );
+				$checked = '';
+				if(false !== get_class($listrole)){
 				echo "<tr>";
 				echo "<td>". $role . "</td>";
 				
-				$listrole = get_role( strtolower( $role)   );
-				$role =  strtolower( $role );
-				$checked = '';
+				
 				
 				if( $listrole->has_cap('sendpress_email')) {
 					$checked = 'checked';
@@ -161,6 +168,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 				}
 				echo "<td><input $checked type='checkbox' name='". $role . "_addons'  > ".__('Full Access','sendpress') ."</td>";
 				echo "</tr>";
+			}
 				//print_r($role);
 			}
 		}

@@ -185,6 +185,10 @@ class SendPress {
 		sendpress_register_sender('SendPress_Sender_Website');
 		sendpress_register_sender('SendPress_Sender_Gmail');
 
+		SendPress_Admin::add_cap('Emails_Send','sendpress_email_send');
+
+		
+		
 		if(defined('WP_ADMIN') && WP_ADMIN == true){
 			$sendpress_screen_options = new SendPress_Screen_Options();
 		}

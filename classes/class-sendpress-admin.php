@@ -58,6 +58,8 @@ class SendPress_Admin {
 	static public function access($class = null){
 		if(is_object($class) ){
 			$class = get_class($class);
+		} else {
+			$class = strtolower( 'sendpress_view_'.$class );
 		}
 		/*
 		$x = wp_get_current_user();
