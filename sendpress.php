@@ -52,6 +52,7 @@ if( !defined('SENDPRESS_TRANSIENT_LENGTH') ){
 	define( 'SENDPRESS_TRANSIENT_LENGTH', WEEK_IN_SECONDS );
 }
 
+//the best plugin, ever
 class SendPress {
 
 	var $prefix = 'sendpress_';
