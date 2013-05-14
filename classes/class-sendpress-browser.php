@@ -21,7 +21,7 @@
 	 * Author: Chris Schuld (http://chrisschuld.com/)
 	 * Last Modified: August 20th, 2010
 	 * @version 1.9
-	 * @package PegasusPHP
+	 * @package SendPress
 	 *
 	 * Copyright (C) 2008-2010 Chris Schuld  (chris@chrisschuld.com)
 	 *

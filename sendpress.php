@@ -1,488 +1,499 @@
 <?php 
-/*
-Plugin Name: SendPress: Email Marketing and Newsletters
-Version: 0.9.3.3
-Plugin URI: http://sendpress.com
-Description: Easy to manage Email Markteing and Newsletter plugin for WordPress. 
-Author: SendPress
-Author URI: http://sendpress.com/
-Push
-*/
-
-if ( !defined('DB_NAME') ) {
-	header('HTTP/1.0 403 Forbidden');
-	die;
-}
-
-defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'https://api.sendpres.com' );
-define( 'SENDPRESS_API_VERSION', 1 );
-define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.2' );
-define( 'SENDPRESS_VERSION', '0.9.3.3' );
-define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
-define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
-define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
-
-if(!defined('SENDPRESS_STORE_URL') ){
-	define( 'SENDPRESS_STORE_URL', 'http://sendpress.com' );
-}
-if(!defined('SENDPRESS_PRO_NAME') ){
-	define( 'SENDPRESS_PRO_NAME', 'SendPress Pro' );
-}
-
-/*
-*
-*	Supporting Classes they build out the WordPress table views.
-*
-*/
-if(!class_exists('WP_List_Table')){
-    require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
-}
-
-// AutoLoad Classes
-spl_autoload_register(array('SendPress', 'autoload'));
-
-
-require_once( SENDPRESS_PATH . 'inc/functions.php' );
-/*
-require_once( SENDPRESS_PATH . 'classes/class-file-loader.php' );
-$sp_loader = new File_Loader('SendPress Required Class');
-*/
-//require_once( SENDPRESS_PATH . 'classes/selective-loader.php' );
-if( !defined('SENDPRESS_TRANSIENT_LENGTH') ){
-	define( 'SENDPRESS_TRANSIENT_LENGTH', WEEK_IN_SECONDS );
-}
-
-class SendPress {
-
-	var $prefix = 'sendpress_';
-	var $ready = false;
-	var $_nonce_value = 'sendpress-is-awesome';
-
-	var $_current_action = '';
-	var $_current_view = '';
-
-	var $_email_post_type = 'sp_newsletters';
-
-	var $_report_post_type = 'sp_report';
-
-	var $adminpages = array('sp','sp-overview','sp-reports','sp-emails','sp-templates','sp-subscribers','sp-settings','sp-queue','sp-pro','sp-help');
-
-	var $_templates = array();
-	var $_messages = array();
-
-	var $_page = '';
-
-	var $testmode = false;
-
-	var $_posthelper = '';
-
-	var $_debugAddress = 'josh@sendpress.com';
-
-	var $_debugMode = false;
-
-	private static $instance;
-
-	function log($args) {
-		return SendPress_Helper::log($args);
-	}
-
-	function append_log($msg, $queueid = -1) {
-		return SendPress_Helper::append_log($msg, $queueid);
+	/*
+	Plugin Name: SendPress: Email Marketing and Newsletters
+	Version: 0.9.3.3
+	Plugin URI: http://sendpress.com
+	Description: Easy to manage Email Markteing and Newsletter plugin for WordPress. 
+	Author: SendPress
+	Author URI: http://sendpress.com/
+	Push
+	*/
+	
+	if ( !defined('DB_NAME') ) {
+		header('HTTP/1.0 403 Forbidden');
+		die;
 	}
 	
-	function nonce_value(){
-		return 'sendpress-is-awesome';
+	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'https://api.sendpres.com' );
+	define( 'SENDPRESS_API_VERSION', 1 );
+	define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.2' );
+	define( 'SENDPRESS_VERSION', '0.9.3.3' );
+	define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
+	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
+	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
+	
+	if(!defined('SENDPRESS_STORE_URL') ){
+		define( 'SENDPRESS_STORE_URL', 'http://sendpress.com' );
+	}
+	if(!defined('SENDPRESS_PRO_NAME') ){
+		define( 'SENDPRESS_PRO_NAME', 'SendPress Pro' );
 	}
 	
+	/*
+	*
+	*	Supporting Classes they build out the WordPress table views.
+	*
+	*/
+	if(!class_exists('WP_List_Table')){
+	    require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+	}
 	
-	function __construct() {
-		add_action( 'init', array( $this, 'init' ) );
-		add_action( 'widgets_init', array( $this,'load_widgets') );
-		add_action('plugins_loaded',array( $this, 'load_plugin_language'));
-			
-		do_action( 'sendpress_loaded' );
-	}
-
-	public static function autoload($className) {
-	  	if( strpos($className, 'SendPress') !== 0 ){
-	  		return;
-	  	}
-	  
-	    $cls = str_replace('_', '-',	strtolower($className) );
-	    if( substr($cls, -1) == '-'){
-	    	//AutoLoad seems to get odd clasname sometimes that ends with _
-  			return;
-	    }
-	    if(class_exists($className)){
-	    	return;
-	    }
-
-	    if( strpos($className, 'Public_View') != false ){
-	    	if( defined('SENDPRESS_PRO_PATH') ) {
-	    		$pro_file = SENDPRESS_PRO_PATH."classes/public-views/class-".$cls.".php";
-	    		if( file_exists( $pro_file ) ){
-	    			include SENDPRESS_PRO_PATH."classes/public-views/class-".$cls.".php";
-	    			return;
-	    		}
-	    	}
-	    	include SENDPRESS_PATH."classes/public-views/class-".$cls.".php";
-	  		return;
-	  	} 
-
-	    if( strpos($className, 'View') != false ){
-	    	if( defined('SENDPRESS_PRO_PATH') ) {
-	    		$pro_file = SENDPRESS_PRO_PATH."classes/views/class-".$cls.".php";
-	    		if( file_exists( $pro_file ) ){
-	    			include SENDPRESS_PRO_PATH."classes/views/class-".$cls.".php";
-	    			return;
-	    		}
-	    	}
-	    	include SENDPRESS_PATH."classes/views/class-".$cls.".php";
-	  		return;
-	  	}
-
-	  	if( strpos($className, 'Module') != false ){
-	  		if( defined('SENDPRESS_PRO_PATH') ) {
-	    		$pro_file = SENDPRESS_PRO_PATH."classes/modules/class-".$cls.".php";
-	    		if( file_exists( $pro_file ) ){
-	    			include SENDPRESS_PRO_PATH."classes/modules/class-".$cls.".php";
-	    			return;
-	    		}
-	    	}
-
-	    	include SENDPRESS_PATH."classes/modules/class-".$cls.".php";
-	  		return;
-	  	} 
-
-	    if( defined('SENDPRESS_PRO_PATH') ) {
-    		$pro_file = SENDPRESS_PRO_PATH."classes/class-".$cls.".php";
-    		if( file_exists( $pro_file ) ){
-    			include SENDPRESS_PRO_PATH."classes/class-".$cls.".php";
-    			return;
-    		}
-    	}
-	    include SENDPRESS_PATH."classes/class-".$cls.".php";
-    
-  }
-
-	static function get_instance() {
-		if ( ! isset( self::$instance ) ) {
-			$class_name = __CLASS__;
-			self::$instance = new $class_name;
-		}
-		return self::$instance;
-	}
-
-	function init() {
-		$this->maybe_upgrade();
-		SendPress_Ajax_Loader::init();
-		SendPress_Signup_Shortcode::init();
-		SendPress_Sender::init();
-		SendPress_Pro_Manager::init();
-		SendPress_Cron::get_instance();
-		SendPress_Notifications_Manager::init();
+	// AutoLoad Classes
+	spl_autoload_register(array('SendPress', 'autoload'));
 	
-		sendpress_register_sender('SendPress_Sender_Website');
-		sendpress_register_sender('SendPress_Sender_Gmail');
-
-		SendPress_Admin::add_cap('Emails_Send','sendpress_email_send');
-
-		
-		
-		if(defined('WP_ADMIN') && WP_ADMIN == true){
-			$sendpress_screen_options = new SendPress_Screen_Options();
-		}
 	
-		$this->add_custom_post();
-		
-		if(SendPress_Option::get('permalink_rebuild')){
-			 flush_rewrite_rules( false );
-			 SendPress_Option::set('permalink_rebuild',false);
-		}
-
-		add_filter( 'query_vars', array( $this, 'add_vars' ) );
-		//add_filter( 'cron_schedules', array($this,'cron_schedule' ));
-		
-		if( is_admin() ){
-			if( isset($_GET['spv'])){
-				SendPress_Option::set( 'version' , $_GET['spv'] );
-			}
-			
-			$this->ready_for_sending();
-			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-			add_action( 'admin_init', array( $this, 'admin_init' ) );
-			add_action( 'admin_notices', array( $this,'admin_notice') );
-			add_action( 'admin_print_scripts', array($this,'editor_insidepopup') );
-			add_filter( 'gettext', array($this, 'change_button_text'), null, 2 );
-			add_action( 'sendpress_notices', array( $this,'sendpress_notices') );
-			add_filter('user_has_cap',array( $this,'user_has_cap') , 10 , 3);
-		}
-
-		
-		add_image_size( 'sendpress-max', 600, 99999 );
-		add_filter( 'template_include', array( $this, 'template_include' ) );
-		add_action( 'sendpress_cron_action', array( $this,'sendpress_cron_action_run') );
-		if ( !wp_next_scheduled( 'sendpress_cron_action' ) ) {
-			wp_schedule_event( time(), 'hourly', 'sendpress_cron_action' );
-			//wp_schedule_event( time(), 'hourly', 'my_hourly_event');
-		}
-		
-		//using this for now, might find a different way to include things later
-		// global $load_signup_js;
-		// $load_signup_js = false;
-		
-		add_action( 'get_header', array( $this, 'add_front_end_scripts' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'add_front_end_styles' ) );
-
-		add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
-		
+	require_once( SENDPRESS_PATH . 'inc/functions.php' );
+	/*
+	require_once( SENDPRESS_PATH . 'classes/class-file-loader.php' );
+	$sp_loader = new File_Loader('SendPress Required Class');
+	*/
+	//require_once( SENDPRESS_PATH . 'classes/selective-loader.php' );
+	if( !defined('SENDPRESS_TRANSIENT_LENGTH') ){
+		define( 'SENDPRESS_TRANSIENT_LENGTH', WEEK_IN_SECONDS );
 	}
-
-	function user_has_cap($all, $caps, $args){
-
-		if(isset($args[2])){
-			$post = get_post( $args[2] );
-			if($post !== null && $post->post_type == 'sp_newsletters'){
-				if( current_user_can('sendpress_email') ){
-					foreach($caps as $cap){
-						$all[$cap] = 1;
-					}
-					
-
-				}
-
-
-			}
-
-		}
-		return $all;
-
-	}
-
-
-	function load_plugin_language(){
-		load_plugin_textdomain( 'sendpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-	}
+	/**
+	 * The Main Brain. 
+	 *
+	 * @package SendPress
+	 * @subpackage 
+	 * @since thedawnoftime
+	 */
+	class SendPress {
+	
+		var $prefix = 'sendpress_';
+		var $ready = false;
+		var $_nonce_value = 'sendpress-is-awesome';
+	
+		var $_current_action = '';
+		var $_current_view = '';
+	
+		var $_email_post_type = 'sp_newsletters';
+	
+		var $_report_post_type = 'sp_report';
+	
+		var $adminpages = array('sp','sp-overview','sp-reports','sp-emails','sp-templates','sp-subscribers','sp-settings','sp-queue','sp-pro','sp-help');
+	
+		var $_templates = array();
+		var $_messages = array();
+	
+		var $_page = '';
+	
+		var $testmode = false;
+	
+		var $_posthelper = '';
+	
+		var $_debugAddress = 'josh@sendpress.com';
+	
+		var $_debugMode = false;
+	
+		private static $instance;
 
 		/**
-		 * Register our widget.
-		 * 'SendPress_Signup_Widget' is the widget class used below.
-		 *
-		 * @since 1.0
+		 * [log description]
+		 * @param  [type] $args [description]
+		 * @return [type]       [description]
 		 */
-		function load_widgets() {
-			register_widget( 'SendPress_Widget_Signup' );
+		function log($args) {
+			return SendPress_Helper::log($args);
 		}
-
-
-	function admin_notice(){
-		//This is the WordPress one shows above menu area.
-		//echo 'wtf';
-
-	}
-	function sendpress_notices(){
-		if( in_array('settings', $this->_messages) ){
-		echo '<div class="alert alert-error">';
-			echo "<b>";
-			_e('Warning','sendpress');
-			echo "</b>&nbsp;";
-			printf(__('Before sending any emails please setup your <a href="%1s">information</a>.','sendpress'), SendPress_Admin::link('Settings') );
-	    echo '</div>';
+	
+		function append_log($msg, $queueid = -1) {
+			return SendPress_Helper::append_log($msg, $queueid);
 		}
-	}
-
-    /**
-     * ready_for_sending
-     * 
-     * @access public
-     *
-     * @return mixed Value.
-     */
-	function ready_for_sending(){
 		
-		$ready = true;
-		$message = '';
-
-		$from = SendPress_Option::get('fromname');
-		if($from == false || $from == ''){
-			$ready = false;	
-			$this->show_message('settings');
+		function nonce_value(){
+			return 'sendpress-is-awesome';
 		}
-
-		$fromemail = SendPress_Option::get('fromemail');
-		if( ( $from == false || $from == '' ) && !is_email( $fromemail ) ){
-			$ready = false;	
-			$this->show_message('settings');
+		
+		
+		function __construct() {
+			add_action( 'init', array( $this, 'init' ) );
+			add_action( 'widgets_init', array( $this,'load_widgets') );
+			add_action('plugins_loaded',array( $this, 'load_plugin_language'));
+				
+			do_action( 'sendpress_loaded' );
 		}
-
-		/*
-		$canspam = SendPress_Option::get('canspam');
-		if($canspam == false || $canspam == ''){
-			$ready = false;	
-			$this->show_message('settings');
-		}
-		*/
-
-		$this->ready = $ready;
-	}
-
-	function show_message($item){
-		if(!in_array($item,$this->_messages) ){
-			array_push($this->_messages, $item);
-		}	
-	}
- 
-	// Hook into that action that'll fire weekly
-	function sendpress_cron_action_run() {
-		$this->fetch_mail_from_queue();
-	}
- 
-	function cron_schedule( $schedules ) {
-	    $schedules['tenminutes'] = array(
-	        'interval' => 300, // 1 week in seconds
-	        'display'  => __( 'Once Every Minute' ),
-	    );
-	 
-	    return $schedules;
-	}
-
-	// Start of Presstrends Magic
-	function presstrends_plugin() {
-
-		// PressTrends Account API Key
-		$api_key = 'eu1x95k67zut64gsjb5qozo7whqemtqiltzu';
-		$auth = 'j0nc5cpqb2nlv8xgn0ouo7hxgac5evn0o';
-
-		// Start of Metrics
-		global $wpdb;
-		$data = get_transient( 'presstrends_data' );
-		if (!$data || $data == ''){
-			$api_base = 'http://api.presstrends.io/index.php/api/pluginsites/update/auth/';
-			$url = $api_base . $auth . '/api/' . $api_key . '/';
-			$data = array();
-			$count_posts = wp_count_posts();
-			$count_pages = wp_count_posts('page');
-			$comments_count = wp_count_comments();
-			$theme_data = get_theme_data(get_stylesheet_directory() . '/style.css');
-			$plugin_count = count(get_option('active_plugins'));
-			$all_plugins = get_plugins();
-			foreach($all_plugins as $plugin_file => $plugin_data) {
-			$plugin_name .= $plugin_data['Name'];
-			$plugin_name .= '&';}
-			$plugin_data = get_plugin_data( __FILE__ );
-			$plugin_version = $plugin_data['Version'];
-			$posts_with_comments = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}posts WHERE post_type='post' AND comment_count > 0");
-			$comments_to_posts = number_format(($posts_with_comments / $count_posts->publish) * 100, 0, '.', '');
-			$pingback_result = $wpdb->get_var('SELECT COUNT(comment_ID) FROM '.$wpdb->comments.' WHERE comment_type = "pingback"');
-			$data['url'] = stripslashes(str_replace(array('http://', '/', ':' ), '', site_url()));
-			$data['posts'] = $count_posts->publish;
-			$data['pages'] = $count_pages->publish;
-			$data['comments'] = $comments_count->total_comments;
-			$data['approved'] = $comments_count->approved;
-			$data['spam'] = $comments_count->spam;
-			$data['pingbacks'] = $pingback_result;
-			$data['post_conversion'] = $comments_to_posts;
-			$data['theme_version'] = $plugin_version;
-			$data['theme_name'] = urlencode($theme_data['Name']);
-			$data['site_name'] = str_replace( ' ', '', get_bloginfo( 'name' ));
-			$data['plugins'] = $plugin_count;
-			$data['plugin'] = urlencode($plugin_name);
-			$data['wpversion'] = get_bloginfo('version');
-			foreach ( $data as $k => $v ) {
-			$url .= $k . '/' . $v . '/';}
-			$response = wp_remote_get( $url );
-			set_transient('presstrends_data', $data, 60*60*24);
-		}
-	}
-
-	function template_include( $template ) { 
-	  	global $post; 
-
-	  	if( (get_query_var( 'sendpress' )) || isset($_POST['sendpress']) ){
-		  	
-		  	$action = isset($_POST['sendpress']) ? $_POST['sendpress'] : get_query_var( 'sendpress' );
-
-		  	//Look for encrypted data
-	  		$data = SendPress_Data::decrypt( $action );
-			$view = false;
-		 	
-		 	if(is_object($data)){
-		 		$view = isset($data->view) ? $data->view : false;
-		 	} else {
-		 		$view= $action;
-		 	}
-
-		 	$view_class = SendPress_Data::get_public_view_class($view);
-		 	if(class_exists($view_class)){
-		 		$view_class = NEW $view_class;
-		 		$view_class->data($data);
-				if( isset( $_POST['sp'] ) && wp_verify_nonce( $_POST['sp'],'sendpress-form-post') && method_exists($view_class, 'save') ){
-					$view_class->save();
-				} 
-				$view_class->prerender();
-				$view_class->render();
+	
+		public static function autoload($className) {
+		  	if( strpos($className, 'SendPress') !== 0 ){
+		  		return;
+		  	}
+		  
+		    $cls = str_replace('_', '-',	strtolower($className) );
+		    if( substr($cls, -1) == '-'){
+		    	//AutoLoad seems to get odd clasname sometimes that ends with _
+	  			return;
+		    }
+		    if(class_exists($className)){
+		    	return;
+		    }
+	
+		    if( strpos($className, 'Public_View') != false ){
+		    	if( defined('SENDPRESS_PRO_PATH') ) {
+		    		$pro_file = SENDPRESS_PRO_PATH."classes/public-views/class-".$cls.".php";
+		    		if( file_exists( $pro_file ) ){
+		    			include SENDPRESS_PRO_PATH."classes/public-views/class-".$cls.".php";
+		    			return;
+		    		}
+		    	}
+		    	include SENDPRESS_PATH."classes/public-views/class-".$cls.".php";
+		  		return;
+		  	} 
+	
+		    if( strpos($className, 'View') != false ){
+		    	if( defined('SENDPRESS_PRO_PATH') ) {
+		    		$pro_file = SENDPRESS_PRO_PATH."classes/views/class-".$cls.".php";
+		    		if( file_exists( $pro_file ) ){
+		    			include SENDPRESS_PRO_PATH."classes/views/class-".$cls.".php";
+		    			return;
+		    		}
+		    	}
+		    	include SENDPRESS_PATH."classes/views/class-".$cls.".php";
+		  		return;
+		  	}
+	
+		  	if( strpos($className, 'Module') != false ){
+		  		if( defined('SENDPRESS_PRO_PATH') ) {
+		    		$pro_file = SENDPRESS_PRO_PATH."classes/modules/class-".$cls.".php";
+		    		if( file_exists( $pro_file ) ){
+		    			include SENDPRESS_PRO_PATH."classes/modules/class-".$cls.".php";
+		    			return;
+		    		}
+		    	}
+	
+		    	include SENDPRESS_PATH."classes/modules/class-".$cls.".php";
+		  		return;
+		  	} 
+	
+		    if( defined('SENDPRESS_PRO_PATH') ) {
+	    		$pro_file = SENDPRESS_PRO_PATH."classes/class-".$cls.".php";
+	    		if( file_exists( $pro_file ) ){
+	    			include SENDPRESS_PRO_PATH."classes/class-".$cls.".php";
+	    			return;
+	    		}
+	    	}
+		    include SENDPRESS_PATH."classes/class-".$cls.".php";
+	    
+	  }
+	
+		static function get_instance() {
+			if ( ! isset( self::$instance ) ) {
+				$class_name = __CLASS__;
+				self::$instance = new $class_name;
 			}
-		  	//$this->load_default_screen($action);
-			die();
+			return self::$instance;
 		}
-
-	  	if(isset($post)){
- 			if($post->post_type == $this->_email_post_type || $post->post_type == $this->_report_post_type  ) {
-  				
-  				$inline = false;
-				if(isset($_GET['inline']) ){
-					$inline = true;
+	
+		function init() {
+			$this->maybe_upgrade();
+			SendPress_Ajax_Loader::init();
+			SendPress_Signup_Shortcode::init();
+			SendPress_Sender::init();
+			SendPress_Pro_Manager::init();
+			SendPress_Cron::get_instance();
+			SendPress_Notifications_Manager::init();
+		
+			sendpress_register_sender('SendPress_Sender_Website');
+			sendpress_register_sender('SendPress_Sender_Gmail');
+	
+			SendPress_Admin::add_cap('Emails_Send','sendpress_email_send');
+	
+			
+			
+			if(defined('WP_ADMIN') && WP_ADMIN == true){
+				$sendpress_screen_options = new SendPress_Screen_Options();
+			}
+		
+			$this->add_custom_post();
+			
+			if(SendPress_Option::get('permalink_rebuild')){
+				 flush_rewrite_rules( false );
+				 SendPress_Option::set('permalink_rebuild',false);
+			}
+	
+			add_filter( 'query_vars', array( $this, 'add_vars' ) );
+			//add_filter( 'cron_schedules', array($this,'cron_schedule' ));
+			
+			if( is_admin() ){
+				if( isset($_GET['spv'])){
+					SendPress_Option::set( 'version' , $_GET['spv'] );
 				}
-				return SendPress_Template::get_instance()->render(false, true, $inline );
-  				//return SENDPRESS_PATH. '/template-loader.php';
-    		//return dirname(__FILE__) . '/my_special_template.php'; 
+				
+				$this->ready_for_sending();
+				add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+				add_action( 'admin_init', array( $this, 'admin_init' ) );
+				add_action( 'admin_notices', array( $this,'admin_notice') );
+				add_action( 'admin_print_scripts', array($this,'editor_insidepopup') );
+				add_filter( 'gettext', array($this, 'change_button_text'), null, 2 );
+				add_action( 'sendpress_notices', array( $this,'sendpress_notices') );
+				add_filter('user_has_cap',array( $this,'user_has_cap') , 10 , 3);
+			}
+	
+			
+			add_image_size( 'sendpress-max', 600, 99999 );
+			add_filter( 'template_include', array( $this, 'template_include' ) );
+			add_action( 'sendpress_cron_action', array( $this,'sendpress_cron_action_run') );
+			if ( !wp_next_scheduled( 'sendpress_cron_action' ) ) {
+				wp_schedule_event( time(), 'hourly', 'sendpress_cron_action' );
+				//wp_schedule_event( time(), 'hourly', 'my_hourly_event');
+			}
+			
+			//using this for now, might find a different way to include things later
+			// global $load_signup_js;
+			// $load_signup_js = false;
+			
+			add_action( 'get_header', array( $this, 'add_front_end_scripts' ) );
+			add_action( 'wp_enqueue_scripts', array( $this, 'add_front_end_styles' ) );
+	
+			add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
+			
+		}
+	
+		function user_has_cap($all, $caps, $args){
+	
+			if(isset($args[2])){
+				$post = get_post( $args[2] );
+				if($post !== null && $post->post_type == 'sp_newsletters'){
+					if( current_user_can('sendpress_email') ){
+						foreach($caps as $cap){
+							$all[$cap] = 1;
+						}
+						
+	
+					}
+	
+	
+				}
+	
+			}
+			return $all;
+	
+		}
+	
+	
+		function load_plugin_language(){
+			load_plugin_textdomain( 'sendpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+		}
+	
+			/**
+	 * Register our widget.
+	 * 'SendPress_Signup_Widget' is the widget class used below.
+	 *
+	 * @since 1.0
+	 */
+			function load_widgets() {
+				register_widget( 'SendPress_Widget_Signup' );
+			}
+	
+	
+		function admin_notice(){
+			//This is the WordPress one shows above menu area.
+			//echo 'wtf';
+	
+		}
+		function sendpress_notices(){
+			if( in_array('settings', $this->_messages) ){
+			echo '<div class="alert alert-error">';
+				echo "<b>";
+				_e('Warning','sendpress');
+				echo "</b>&nbsp;";
+				printf(__('Before sending any emails please setup your <a href="%1s">information</a>.','sendpress'), SendPress_Admin::link('Settings') );
+		    echo '</div>';
 			}
 		}
-  		return $template; 
-	} 
 	
-    /**
-     * has_identity_key
-     * 
-     * @access public
-     *
-     * @return mixed Value.
-     */
-	function has_identity_key(){
-		$key = (get_query_var('fxti')) ? get_query_var('fxti') : false;
-		if(false == $key)
-			return $key;
-		$result =  $this->getSubscriberbyKey( $key );
-		if(!empty( $result ) ) {
-			return true;
+	    /**
+	 * ready_for_sending
+	 * 
+	 * @access public
+	 *
+	 * @return mixed Value.
+	 */
+		function ready_for_sending(){
+			
+			$ready = true;
+			$message = '';
+	
+			$from = SendPress_Option::get('fromname');
+			if($from == false || $from == ''){
+				$ready = false;	
+				$this->show_message('settings');
+			}
+	
+			$fromemail = SendPress_Option::get('fromemail');
+			if( ( $from == false || $from == '' ) && !is_email( $fromemail ) ){
+				$ready = false;	
+				$this->show_message('settings');
+			}
+	
+			/*
+			$canspam = SendPress_Option::get('canspam');
+			if($canspam == false || $canspam == ''){
+				$ready = false;	
+				$this->show_message('settings');
+			}
+	 */
+	
+			$this->ready = $ready;
 		}
-		return false;
-	}
-
-	function add_vars($public_query_vars) {
-		$public_query_vars[] = 'fxti';
-		$public_query_vars[] = 'sendpress';
-		$public_query_vars[] = 'splist';
-		$public_query_vars[] = 'spreport';
-		$public_query_vars[] = 'spurl';
-		$public_query_vars[] = 'a';
-		return $public_query_vars;
-	}
-
-	function add_custom_post(){
-		SendPress_Posts::email_post_type( $this->_email_post_type );
-		SendPress_Posts::report_post_type( $this->_report_post_type );
-		SendPress_Posts::template_post_type();
-		SendPress_Posts::list_post_type();
-	}
-
 	
-
-	function SendPress(){
-		//$this->_templates = $this->get_templates();
-	}
+		function show_message($item){
+			if(!in_array($item,$this->_messages) ){
+				array_push($this->_messages, $item);
+			}	
+		}
+	 
+		// Hook into that action that'll fire weekly
+		function sendpress_cron_action_run() {
+			$this->fetch_mail_from_queue();
+		}
+	 
+		function cron_schedule( $schedules ) {
+		    $schedules['tenminutes'] = array(
+		        'interval' => 300, // 1 week in seconds
+		        'display'  => __( 'Once Every Minute' ),
+		    );
+		 
+		    return $schedules;
+		}
 	
-	function create_color_picker( $value ) { ?>	
+		// Start of Presstrends Magic
+		function presstrends_plugin() {
+	
+			// PressTrends Account API Key
+			$api_key = 'eu1x95k67zut64gsjb5qozo7whqemtqiltzu';
+			$auth = 'j0nc5cpqb2nlv8xgn0ouo7hxgac5evn0o';
+	
+			// Start of Metrics
+			global $wpdb;
+			$data = get_transient( 'presstrends_data' );
+			if (!$data || $data == ''){
+				$api_base = 'http://api.presstrends.io/index.php/api/pluginsites/update/auth/';
+				$url = $api_base . $auth . '/api/' . $api_key . '/';
+				$data = array();
+				$count_posts = wp_count_posts();
+				$count_pages = wp_count_posts('page');
+				$comments_count = wp_count_comments();
+				$theme_data = get_theme_data(get_stylesheet_directory() . '/style.css');
+				$plugin_count = count(get_option('active_plugins'));
+				$all_plugins = get_plugins();
+				foreach($all_plugins as $plugin_file => $plugin_data) {
+				$plugin_name .= $plugin_data['Name'];
+				$plugin_name .= '&';}
+				$plugin_data = get_plugin_data( __FILE__ );
+				$plugin_version = $plugin_data['Version'];
+				$posts_with_comments = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}posts WHERE post_type='post' AND comment_count > 0");
+				$comments_to_posts = number_format(($posts_with_comments / $count_posts->publish) * 100, 0, '.', '');
+				$pingback_result = $wpdb->get_var('SELECT COUNT(comment_ID) FROM '.$wpdb->comments.' WHERE comment_type = "pingback"');
+				$data['url'] = stripslashes(str_replace(array('http://', '/', ':' ), '', site_url()));
+				$data['posts'] = $count_posts->publish;
+				$data['pages'] = $count_pages->publish;
+				$data['comments'] = $comments_count->total_comments;
+				$data['approved'] = $comments_count->approved;
+				$data['spam'] = $comments_count->spam;
+				$data['pingbacks'] = $pingback_result;
+				$data['post_conversion'] = $comments_to_posts;
+				$data['theme_version'] = $plugin_version;
+				$data['theme_name'] = urlencode($theme_data['Name']);
+				$data['site_name'] = str_replace( ' ', '', get_bloginfo( 'name' ));
+				$data['plugins'] = $plugin_count;
+				$data['plugin'] = urlencode($plugin_name);
+				$data['wpversion'] = get_bloginfo('version');
+				foreach ( $data as $k => $v ) {
+				$url .= $k . '/' . $v . '/';}
+				$response = wp_remote_get( $url );
+				set_transient('presstrends_data', $data, 60*60*24);
+			}
+		}
+	
+		function template_include( $template ) { 
+		  	global $post; 
+	
+		  	if( (get_query_var( 'sendpress' )) || isset($_POST['sendpress']) ){
+			  	
+			  	$action = isset($_POST['sendpress']) ? $_POST['sendpress'] : get_query_var( 'sendpress' );
+	
+			  	//Look for encrypted data
+		  		$data = SendPress_Data::decrypt( $action );
+				$view = false;
+			 	
+			 	if(is_object($data)){
+			 		$view = isset($data->view) ? $data->view : false;
+			 	} else {
+			 		$view= $action;
+			 	}
+	
+			 	$view_class = SendPress_Data::get_public_view_class($view);
+			 	if(class_exists($view_class)){
+			 		$view_class = NEW $view_class;
+			 		$view_class->data($data);
+					if( isset( $_POST['sp'] ) && wp_verify_nonce( $_POST['sp'],'sendpress-form-post') && method_exists($view_class, 'save') ){
+						$view_class->save();
+					} 
+					$view_class->prerender();
+					$view_class->render();
+				}
+			  	//$this->load_default_screen($action);
+				die();
+			}
+	
+		  	if(isset($post)){
+	 			if($post->post_type == $this->_email_post_type || $post->post_type == $this->_report_post_type  ) {
+	  				
+	  				$inline = false;
+					if(isset($_GET['inline']) ){
+						$inline = true;
+					}
+					return SendPress_Template::get_instance()->render(false, true, $inline );
+	  				//return SENDPRESS_PATH. '/template-loader.php';
+	    		//return dirname(__FILE__) . '/my_special_template.php'; 
+				}
+			}
+	  		return $template; 
+		} 
+		
+	    /**
+	 * has_identity_key
+	 * 
+	 * @access public
+	 *
+	 * @return mixed Value.
+	 */
+		function has_identity_key(){
+			$key = (get_query_var('fxti')) ? get_query_var('fxti') : false;
+			if(false == $key)
+				return $key;
+			$result =  $this->getSubscriberbyKey( $key );
+			if(!empty( $result ) ) {
+				return true;
+			}
+			return false;
+		}
+	
+		function add_vars($public_query_vars) {
+			$public_query_vars[] = 'fxti';
+			$public_query_vars[] = 'sendpress';
+			$public_query_vars[] = 'splist';
+			$public_query_vars[] = 'spreport';
+			$public_query_vars[] = 'spurl';
+			$public_query_vars[] = 'a';
+			return $public_query_vars;
+		}
+	
+		function add_custom_post(){
+			SendPress_Posts::email_post_type( $this->_email_post_type );
+			SendPress_Posts::report_post_type( $this->_report_post_type );
+			SendPress_Posts::template_post_type();
+			SendPress_Posts::list_post_type();
+		}
+	
+		
+	
+		function SendPress(){
+			//$this->_templates = $this->get_templates();
+		}
+		
+		function create_color_picker( $value ) { ?>	
 		<input class="cpcontroller" data-id="<?php echo $value['id']; ?>" css-id="<?php echo $value['css']; ?>" link-id="<?php echo $value['link']; ?>" name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>" type="text" value="<?php  echo isset($value['value']) ? $value['value'] : $value['std'] ; ?>" />
 		<input type='hidden' value='<?php echo $value['std'];?>' id='default_<?php echo $value['id']; ?>'/>
 		<a href="#" class="btn btn-mini reset-line" data-type="cp" data-id="<?php echo $value['id']; ?>" >Reset</a>
