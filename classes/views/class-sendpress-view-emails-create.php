@@ -20,7 +20,7 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 	function save(){
 
 		$_POST['post_type'] = SendPress_Data::email_post_type();
-        // Update post 37
+        // Update post 37 (37!)
 
         $my_post = _wp_translate_postdata(true);
         /*            
