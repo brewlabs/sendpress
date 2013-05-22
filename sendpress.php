@@ -206,11 +206,6 @@
 		
 			$this->add_custom_post();
 			
-			if(SendPress_Option::get('permalink_rebuild')){
-				 flush_rewrite_rules( false );
-				 SendPress_Option::set('permalink_rebuild',false);
-			}
-	
 			add_filter( 'query_vars', array( $this, 'add_vars' ) );
 			//add_filter( 'cron_schedules', array($this,'cron_schedule' ));
 			
@@ -1481,7 +1476,8 @@
 		}
 		//Make sure we stop the old action from running
 		wp_clear_scheduled_hook('sendpress_cron_action_run');
-		SendPress_Option::set( 'permalink_rebuild' , true );
+		flush_rewrite_rules();
+				 
 		SendPress_Option::set( 'install_date' , time() );
 
 	}
@@ -1492,7 +1488,7 @@
 	*	@static
 	*/
 	function plugin_deactivation(){
-		flush_rewrite_rules( false );
+		flush_rewrite_rules( );
 		wp_clear_scheduled_hook( 'sendpress_cron_action' );
 	} 
 
