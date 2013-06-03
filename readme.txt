@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid,
 Requires at least: 3.4
 Tested up to: 3.5.1
-Stable tag: 0.9.3.3
+Stable tag: 0.9.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,6 +94,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 
 == Changelog ==
+
+
+= 0.9.3.4 - 2013.5.21 =
+* Premalink 404 error fix
+* add support for custom WordPress to SP permisions
+* 
 
 = 0.9.3.3 - 2013.5.5 =
 * Bug fix for public pages

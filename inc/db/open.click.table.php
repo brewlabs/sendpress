@@ -43,7 +43,7 @@ $wpdb->flush();
 if($wpdb->get_var("show tables like '$report_url_table'") != $report_url_table) {
   $sqltable = "CREATE TABLE ".$report_url_table." (
   `urlID` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `url` varchar(2000) DEFAULT '',
+  `url` varchar(2000) DEFAULT NULL,
   `reportID` int(11) DEFAULT NULL,
   PRIMARY KEY (`urlID`),
   KEY `url` (`url`),
@@ -54,3 +54,5 @@ if($wpdb->get_var("show tables like '$report_url_table'") != $report_url_table) 
   dbDelta($sqltable);   
 
 }
+
+$wpdb->flush();

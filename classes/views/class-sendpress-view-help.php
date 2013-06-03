@@ -69,6 +69,9 @@ class SendPress_View_Help extends SendPress_View{
 		echo '<b>PHP Memory Used</b>: '. $used . __(' MByte') . '<br>';
 		
 		echo '<b>MySQL Version</b>: ' . $wpdb->db_version() . '<br><br>';
+
+		SendPress_DB_Tables::check_setup();
+
 		echo "<b>Ports:</b><br>";
 	  	$server  = "smtp.sendgrid.net";
 	  	$port   = "25";
@@ -114,6 +117,8 @@ SP Version:              <?php echo SENDPRESS_VERSION . "\n"; ?>
 WordPress Version:        <?php echo get_bloginfo( 'version' ) . "\n"; ?>
 
 <?php echo $browser ; ?>
+
+<?php echo SendPress_DB_Tables::check_setup_support(); ?>
 
 PHP Version:              <?php echo PHP_VERSION . "\n"; ?>
 MySQL Version:            <?php echo mysql_get_server_info() . "\n"; ?>

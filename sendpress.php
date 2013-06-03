@@ -1,7 +1,7 @@
 <?php 
 	/*
 	Plugin Name: SendPress: Email Marketing and Newsletters
-	Version: 0.9.3.3
+	Version: 0.9.3.4
 	Plugin URI: http://sendpress.com
 	Description: Easy to manage Email Markteing and Newsletter plugin for WordPress. 
 	Author: SendPress
@@ -17,7 +17,7 @@
 	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'https://api.sendpres.com' );
 	define( 'SENDPRESS_API_VERSION', 1 );
 	define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.2' );
-	define( 'SENDPRESS_VERSION', '0.9.3.3' );
+	define( 'SENDPRESS_VERSION', '0.9.3.4' );
 	define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -206,7 +206,6 @@
 		
 			$this->add_custom_post();
 			
-			add_filter( 'query_vars', array( $this, 'add_vars' ) );
 			//add_filter( 'cron_schedules', array($this,'cron_schedule' ));
 			
 			if( is_admin() ){
@@ -623,6 +622,7 @@
 		add_meta_box( 'email-status', __( 'Email Status', 'sendpress' ), array( $this, 'email_meta_box' ), $this->_email_post_type, 'side', 'low' );
 			
 		*/
+		
 
 		if( ( isset($_GET['page']) && $_GET['page'] == 'sp-templates' ) || (isset( $_GET['view'] ) && $_GET['view'] == 'style-email' )) {
 			wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' ,'', SENDPRESS_VERSION);
@@ -906,7 +906,7 @@
 	}
 
 	function render_view(){
-
+		
 		$view_class = $this->get_view_class($this->_page, $this->_current_view);
 		//echo "About to render: $view_class, $this->_page";
 		$view_class = NEW $view_class;
@@ -2030,7 +2030,8 @@
 
 }// End SP CLASS
 
-
+add_filter( 'query_vars', array( 'SendPress', 'add_vars' ) );
+			
 	
 register_activation_hook( __FILE__, array( 'SendPress', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'SendPress', 'plugin_deactivation' ) );

@@ -172,9 +172,10 @@ class SendPress_Manager {
 			$code = SendPress_Data::encrypt( $code );
 
 			$href = site_url() ."?sendpress=".$code;
+			$html_href = "<a href='". site_url() ."?sendpress=".$code ."'>". site_url() ."?sendpress=".$code ."</a>";
 			
 			
-			$html = str_replace("*|SP:CONFIRMLINK|*", $href , $html );
+			$html = str_replace("*|SP:CONFIRMLINK|*", $html_href , $html );
 			$text = str_replace("*|SP:CONFIRMLINK|*", $href , $text );
 			$text = nl2br($text);
 			$sub =  $message->subject();

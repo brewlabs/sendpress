@@ -131,6 +131,103 @@ class SendPress_DB_Tables {
 		return $wpdb->prefix . self::$prefix . "queue";
 	}
 
+
+    function check_setup(){
+        global $wpdb;
+
+        echo "<b>Database Tables</b>: <br>";
+        $subscriber_events_table =  SendPress_DB_Tables::subscriber_event_table();
+        if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
+            echo $subscriber_events_table . " Not Installed<br>";
+        } else {
+             echo $subscriber_events_table . " OK<br>";
+        }
+
+        $report_url_table =  SendPress_DB_Tables::report_url_table();
+        if($wpdb->get_var("show tables like '$report_url_table'") != $report_url_table) {
+            echo $report_url_table . " Not Installed<br>";
+        } else {
+             echo $report_url_table . " OK<br>";
+        }
+
+        $subscriber_status_table =  SendPress_DB_Tables::subscriber_status_table();
+        if($wpdb->get_var("show tables like '$subscriber_status_table'") != $subscriber_status_table) {
+            echo $subscriber_status_table . " Not Installed<br>";
+        } else {
+             echo $subscriber_status_table . " OK<br>";
+        }
+
+        $subscriber_table = SendPress_DB_Tables::subscriber_table();
+        if($wpdb->get_var("show tables like '$subscriber_table'") != $subscriber_table) {
+            echo $subscriber_table . " Not Installed<br>";
+        } else {
+             echo $subscriber_table . " OK<br>";
+        }
+
+        $subscriber_list_subscribers = SendPress_DB_Tables::list_subcribers_table();
+        if($wpdb->get_var("show tables like '$subscriber_list_subscribers'") != $subscriber_list_subscribers) {
+            echo $subscriber_list_subscribers . " Not Installed<br>";
+        } else {
+             echo $subscriber_list_subscribers . " OK<br>";
+        }
+
+        $subscriber_queue = SendPress_DB_Tables::queue_table();
+        if($wpdb->get_var("show tables like '$subscriber_queue'") != $subscriber_queue) {
+            echo $subscriber_queue . " Not Installed<br>";
+        } else {
+             echo $subscriber_queue . " OK<br>";
+        }
+        echo "<br>";
+    }
+
+
+     function check_setup_support(){
+        global $wpdb;
+
+        echo "Database Tables: \n";
+        $subscriber_events_table =  SendPress_DB_Tables::subscriber_event_table();
+        if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
+            echo $subscriber_events_table . " Not Installed\n";
+        } else {
+             echo $subscriber_events_table . " OK\n";
+        }
+
+        $report_url_table =  SendPress_DB_Tables::report_url_table();
+        if($wpdb->get_var("show tables like '$report_url_table'") != $report_url_table) {
+            echo $report_url_table . " Not Installed\n";
+        } else {
+             echo $report_url_table . " OK\n";
+        }
+
+        $subscriber_status_table =  SendPress_DB_Tables::subscriber_status_table();
+        if($wpdb->get_var("show tables like '$subscriber_status_table'") != $subscriber_status_table) {
+            echo $subscriber_status_table . " Not Installed\n";
+        } else {
+             echo $subscriber_status_table . " OK\n";
+        }
+
+        $subscriber_table = SendPress_DB_Tables::subscriber_table();
+        if($wpdb->get_var("show tables like '$subscriber_table'") != $subscriber_table) {
+            echo $subscriber_table . " Not Installed\n";
+        } else {
+             echo $subscriber_table . " OK\n";
+        }
+
+        $subscriber_list_subscribers = SendPress_DB_Tables::list_subcribers_table();
+        if($wpdb->get_var("show tables like '$subscriber_list_subscribers'") != $subscriber_list_subscribers) {
+            echo $subscriber_list_subscribers . " Not Installed\n";
+        } else {
+             echo $subscriber_list_subscribers . " OK\n";
+        }
+
+        $subscriber_queue = SendPress_DB_Tables::queue_table();
+        if($wpdb->get_var("show tables like '$subscriber_queue'") != $subscriber_queue) {
+            echo $subscriber_queue . " Not Installed\n";
+        } else {
+             echo $subscriber_queue . " OK\n";
+        }
+        echo "\n";
+    }
   
 
     function remove_all_data(){
