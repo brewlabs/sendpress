@@ -1,14 +1,14 @@
 <?php 
-	/*
-	Plugin Name: SendPress: Email Marketing and Newsletters
-	Version: 0.9.3.4
-	Plugin URI: http://sendpress.com
-	Description: Easy to manage Email Markteing and Newsletter plugin for WordPress. 
-	Author: SendPress
-	Author URI: http://sendpress.com/
-	Push
-	*/
-	
+/*
+Plugin Name: SendPress: Email Marketing and Newsletters
+Version: 0.9.3.4
+Plugin URI: http://sendpress.com
+Description: Easy to manage Email Markteing and Newsletter plugin for WordPress. 
+Author: SendPress
+Author URI: http://sendpress.com/
+Push
+*/
+
 	if ( !defined('DB_NAME') ) {
 		header('HTTP/1.0 403 Forbidden');
 		die;
