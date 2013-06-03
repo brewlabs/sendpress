@@ -96,10 +96,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 
-= 0.9.3.4 - 2013.5.21 =
+= 0.9.3.4 - 2013.6.3 =
 * Premalink 404 error fix
-* add support for custom WordPress to SP permisions
-* 
+* add support for custom WordPress roles mapped to SP permisions
+* DB Table check in Help Section
+* added clickable link to confirmation emails
 
 = 0.9.3.3 - 2013.5.5 =
 * Bug fix for public pages
@@ -231,6 +232,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.3.4 =
+Permalink fix and Confirmation email update
 
 = 0.9.3.3 = 
 Fixed bug with public pages
