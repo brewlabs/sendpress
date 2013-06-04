@@ -128,11 +128,17 @@ class SendPress_Email {
 				"report"=> $this->id(),
 				"view"=>"open"
 			);
-			$x = SendPress_Data::encrypt( $open_info );
+			$code = SendPress_Data::encrypt( $open_info );
 
-			//[firstname]
+			if( SendPress_Option::get('old_permalink') ){
+				$link = site_url() ."?sendpress=".$code;
+			} else {
+				$link = site_url() ."/sendpress/".$code;
+				
+			}
 
-			$tracker = "<img src='".site_url()."?sendpress=". $x ."' width='1' height='1'/></body>";
+
+			$tracker = "<img src='". $link ."' width='1' height='1'/></body>";
 			$body_html = str_replace("</body>",$tracker , $body_html );
 			$body_link			=	get_post_meta( $this->id() , 'body_link', true );
 
@@ -167,15 +173,20 @@ class SendPress_Email {
 						"urlID"=> $urlID,
 						"view"=>"link"
 					);
-					$x = SendPress_Data::encrypt( $link );
-
-					$href = site_url() ."?sendpress=".$x;
+					$code = SendPress_Data::encrypt( $link );
+					if( SendPress_Option::get('old_permalink') ){
+						$link = site_url() ."?sendpress=".$code;
+					} else {
+						$link = site_url() ."/sendpress/".$code;
+						
+					}
+					$href = $link;
 					$aElement->setAttribute('href', $href);
 				}
 			}
 			$body_html = $dom->saveHtml();
 
-			$link = array(
+			$link_data = array(
 				"id"=>$this->subscriber_id(),
 				"report"=> $this->id(),
 				"urlID"=> '0',
@@ -183,12 +194,19 @@ class SendPress_Email {
 				"listID"=>$this->list_id(),
 				"action"=>"unsubscribe"
 			);
-			$x = SendPress_Data::encrypt( $link );
+			$code = SendPress_Data::encrypt( $link_data );
+			if( SendPress_Option::get('old_permalink') ){
+				$link = site_url() ."?sendpress=".$code;
+			} else {
+				$link = site_url() ."/sendpress/".$code;
+				
+			}
+
 			$start_text = __("Not interested anymore?","sendpress");
 			$unsubscribe = __("Unsubscribe","sendpress");
 			$instantly = __("Instantly","sendpress");
 
-			$remove_me = $start_text.' <a href="'.site_url().'?sendpress='.$x.'"  style="color: '.$body_link.';" >'.$unsubscribe.'</a> '.$instantly.'.';
+			$remove_me = $start_text.' <a href="'.$link.'"  style="color: '.$body_link.';" >'.$unsubscribe.'</a> '.$instantly.'.';
 			
 			$subscriber = SendPress_Data::get_subscriber($this->subscriber_id());
 			

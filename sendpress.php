@@ -198,7 +198,10 @@ Push
 	
 			SendPress_Admin::add_cap('Emails_Send','sendpress_email_send');
 	
-			
+			    add_rewrite_rule(  
+        "sendpress/([^/]+)/?",  
+        'index.php?sendpress=$matches[1]',  
+        "top"); 
 			
 			if(defined('WP_ADMIN') && WP_ADMIN == true){
 				$sendpress_screen_options = new SendPress_Screen_Options();
@@ -406,11 +409,9 @@ Push
 		  	if( (get_query_var( 'sendpress' )) || isset($_POST['sendpress']) ){
 			  	
 			  	$action = isset($_POST['sendpress']) ? $_POST['sendpress'] : get_query_var( 'sendpress' );
-	
-			  	//Look for encrypted data
-		  		$data = SendPress_Data::decrypt( $action );
+				//Look for encrypted data
+		  		$data = SendPress_Data::decrypt( urldecode($action) );
 				$view = false;
-			 	
 			 	if(is_object($data)){
 			 		$view = isset($data->view) ? $data->view : false;
 			 	} else {

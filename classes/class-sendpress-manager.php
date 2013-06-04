@@ -171,8 +171,14 @@ class SendPress_Manager {
 				);
 			$code = SendPress_Data::encrypt( $code );
 
-			$href = site_url() ."?sendpress=".$code;
-			$html_href = "<a href='". site_url() ."?sendpress=".$code ."'>". site_url() ."?sendpress=".$code ."</a>";
+			if( SendPress_Option::get('old_permalink') ){
+				$link = site_url() ."?sendpress=".$code;
+			} else {
+				$link = site_url() ."/sendpress/".$code;
+			}
+			
+			$href = $link;
+			$html_href = "<a href='". $link  ."'>". $link  ."</a>";
 			
 			
 			$html = str_replace("*|SP:CONFIRMLINK|*", $html_href , $html );

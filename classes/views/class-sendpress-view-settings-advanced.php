@@ -17,6 +17,11 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 		SendPress_Option::set('allow_tracking', 'no' );
 		SendPress_Option::set('feedback', 'no' );
 	}
+	if(isset( $post['old_permalink'] )){
+		SendPress_Option::set('old_permalink', true );
+	} else {
+		SendPress_Option::set('old_permalink', false );
+	}
 
 	$widget_options =  array();
 
@@ -59,6 +64,10 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 			
 			<input class="footer-scripts-checkbox sendpress_checkbox" value="<?php echo $widget_options['load_scripts_in_footer']; ?>" type="checkbox" <?php if( $widget_options['load_scripts_in_footer'] == 1 ){ echo 'checked'; } ?> id="load_scripts_in_footer" name="load_scripts_in_footer"/>  <?php _e('Load Javascript in Footer','sendpress'); ?> 
 		
+			<h2>Permalink Settings</h2>
+			<?php $ctype = SendPress_Option::get('old_permalink'); ?>
+			<input type="checkbox" name="old_permalink" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> Use old permalink with ?sendpress=.
+	
 
 	<br class="clear">
 	</div>	
