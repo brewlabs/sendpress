@@ -171,7 +171,7 @@ class SendPress_Manager {
 				);
 			$code = SendPress_Data::encrypt( $code );
 
-			if( SendPress_Option::get('old_permalink') ){
+			if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
 				$link = site_url() ."?sendpress=".$code;
 			} else {
 				$link = site_url() ."/sendpress/".$code;

@@ -130,7 +130,7 @@ class SendPress_Email {
 			);
 			$code = SendPress_Data::encrypt( $open_info );
 
-			if( SendPress_Option::get('old_permalink') ){
+			if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
 				$link = site_url() ."?sendpress=".$code;
 			} else {
 				$link = site_url() ."/sendpress/".$code;
@@ -174,7 +174,7 @@ class SendPress_Email {
 						"view"=>"link"
 					);
 					$code = SendPress_Data::encrypt( $link );
-					if( SendPress_Option::get('old_permalink') ){
+					if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
 						$link = site_url() ."?sendpress=".$code;
 					} else {
 						$link = site_url() ."/sendpress/".$code;
@@ -195,7 +195,7 @@ class SendPress_Email {
 				"action"=>"unsubscribe"
 			);
 			$code = SendPress_Data::encrypt( $link_data );
-			if( SendPress_Option::get('old_permalink') ){
+			if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
 				$link = site_url() ."?sendpress=".$code;
 			} else {
 				$link = site_url() ."/sendpress/".$code;
