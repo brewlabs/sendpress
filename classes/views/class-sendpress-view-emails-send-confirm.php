@@ -167,6 +167,23 @@ if( !empty($info['testemails']) ){
 $link =  get_permalink( $post->ID ); 
 $sep = strstr($link, '?') ? '&' : '?';
 $link = $link.$sep.'inline=true';
+
+$open_info = array(
+    "id"=>$post->ID,
+
+    "view"=>"email"
+);
+$code = SendPress_Data::encrypt( $open_info );
+
+if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
+    $url = site_url() ."?sendpress=".$code."/";
+} else {
+    $url = site_url() ."/sendpress/".$code ."/";
+    
+}
+
+$sep = strstr($url, '?') ? '&' : '?';
+$link = $url.$sep.'inline=true';
 ?>
 <iframe src="<?php echo $link; ?>" width="100%" height="600px"></iframe>
 </div>

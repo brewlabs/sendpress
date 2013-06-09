@@ -672,7 +672,8 @@ If you do not want to confirm, simply ignore this message.
 			if ($msgord + $keyord > 255){$encstring .= chr(($msgord + $keyord)-256);}
 		}
 		*/
-		return urlencode(base64_encode($message));
+		
+		return urlencode(str_replace("=","",base64_encode( $message)));
 	}
 
 	function decrypt($message) {

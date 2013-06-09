@@ -8,6 +8,10 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Emails_Style extends SendPress_View_Emails {
 	
+	function admin_init(){
+		remove_filter('the_editor',					'qtrans_modifyRichEditor');
+	}
+
 	function html($sp) {
 		global $post_ID, $post;
 

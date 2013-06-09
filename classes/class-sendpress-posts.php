@@ -98,7 +98,12 @@ class SendPress_Posts{
 				'query_var' => true,
 				'exclude_from_search'=>true,
 				'_edit_link' => 'sendpress.php',
-				'show_ui' => false,'capability_type' => 'post','hierarchical' => false,'rewrite' => array('slug' => 'emails','with_front'=>false),'supports' => array('title','editor'),'labels' => array (
+				'show_ui' => false,
+				'capability_type' => 'post',
+				'hierarchical' => false,
+				'rewrite' => array('slug' => 'emails','with_front'=>false),
+				'supports' => array('title','editor'),
+				'labels' => array (
 				'name' => 'emails',
 				'singular_name' => 'email',
 				'menu_name' => 'email',

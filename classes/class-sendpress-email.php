@@ -133,7 +133,7 @@ class SendPress_Email {
 			if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
 				$link = site_url() ."?sendpress=".$code;
 			} else {
-				$link = site_url() ."/sendpress/".$code;
+				$link = site_url() ."/sendpress/".$code."/";
 				
 			}
 
@@ -177,7 +177,7 @@ class SendPress_Email {
 					if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
 						$link = site_url() ."?sendpress=".$code;
 					} else {
-						$link = site_url() ."/sendpress/".$code;
+						$link = site_url() ."/sendpress/".$code."/";
 						
 					}
 					$href = $link;
@@ -198,7 +198,7 @@ class SendPress_Email {
 			if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
 				$link = site_url() ."?sendpress=".$code;
 			} else {
-				$link = site_url() ."/sendpress/".$code;
+				$link = site_url() ."/sendpress/".$code."/";
 				
 			}
 

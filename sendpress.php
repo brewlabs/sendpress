@@ -227,7 +227,7 @@ Push
 			}
 	
 			
-			add_image_size( 'sendpress-max', 600, 99999 );
+			add_image_size( 'sendpress-max', 600, 600 );
 			add_filter( 'template_include', array( $this, 'template_include' ) );
 			add_action( 'sendpress_cron_action', array( $this,'sendpress_cron_action_run') );
 			if ( !wp_next_scheduled( 'sendpress_cron_action' ) ) {
@@ -471,7 +471,7 @@ Push
 			$public_query_vars[] = 'splist';
 			$public_query_vars[] = 'spreport';
 			$public_query_vars[] = 'spurl';
-			$public_query_vars[] = 'a';
+			$public_query_vars[] = 'spemail';
 			return $public_query_vars;
 		}
 	

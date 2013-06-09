@@ -282,6 +282,21 @@ class SendPress_Template {
 				//PREP FOR SENDING
 				if($no_links == false){
 				$link = get_permalink(  $post->ID );
+				$open_info = array(
+					"id"=>$post->ID,
+
+					"view"=>"email"
+				);
+				$code = SendPress_Data::encrypt( $open_info );
+
+				if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
+					$url = site_url() ."?sendpress=".trim($code)."";
+				} else {
+					$url = site_url() ."/sendpress/".trim($code) ."/";
+					
+				}
+				$link = $url;
+
 				$browser = $display_correct.' <a style="color: '.$body_link.';" href="'.$link.'">'.$view.'</a>.';
 				$HtmlCode =str_replace("*|SP:BROWSER|*",$browser ,$HtmlCode);
 				
