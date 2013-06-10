@@ -60,7 +60,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
     $method = SendPress_Option::get( 'sendmethod' );
 ?>
 <div style="float:right;" >
-  <a href="?page=sp-templates&view=account" class="btn btn-large" ><i class="icon-remove"></i> <?php _e( 'Cancel', 'sendpress' ); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e( 'Save', 'sendpress' ); ?></a>
+  <a href="" class="btn btn-large" ><i class="icon-remove"></i> <?php _e( 'Cancel', 'sendpress' ); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e( 'Save', 'sendpress' ); ?></a>
 </div>
   <h2>Sending Account Setup</h2>
   <br class="clear">
