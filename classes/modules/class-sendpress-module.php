@@ -17,6 +17,7 @@ class SendPress_Module {
 	var $_visible = true;
 	var $_nonce_value = 'sendpress-is-awesome';
 	var $_index = 0;
+	var $_pro_version = 0;
 	//var $_active = false;
 
 	function SendPress_View( $title='' ) {
@@ -107,7 +108,16 @@ class SendPress_Module {
 				$btn = $this->build_button($button);
 				break;
 		}
-		echo '<div class="inline-buttons">'.$btn.'</div>';
+		if( !defined('SENDPRESS_PRO_VERSION') || ( SENDPRESS_PRO_VERSION >= $this->_pro_version) ){
+				echo '<div class="inline-buttons">'.$btn.'</div>';
+			
+			} else {
+				echo "<br><div class='btn disabled btn-activate inline-buttons' style='margin: 0px;'>Please upgrade SendPress Pro.</div>"; 
+			
+
+			}
+
+		
 	}
 
 	function get_button($path, $from_pro = false){
@@ -158,13 +168,14 @@ class SendPress_Module {
 	}
 
 	function build_button($btn){
-		$button = '<a ';
-		foreach( $btn as $key => $item ){
-			if( strlen($btn[$key]) > 0 && $key !== 'text' ){
-				$button .= $key.'="'.$item.'" ';
+			$button = '<a ';
+			foreach( $btn as $key => $item ){
+				if( strlen($btn[$key]) > 0 && $key !== 'text' ){
+					$button .= $key.'="'.$item.'" ';
+				}
 			}
-		}
-		$button .= '>'.$btn['text'].'</a>';
+			$button .= '>'.$btn['text'].'</a>';
+
 
 		return $button;
 	}
