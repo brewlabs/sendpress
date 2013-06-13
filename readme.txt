@@ -95,8 +95,13 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
-
-
+= 0.9.4 - 2013.6.12 =
+* SendPress Pro Amazon SES Enabled
+* New rewrite rules for email previews
+* Added new translations
+* Fixed bad url on cancel button
+* Added SendPress image size
+* Template rendering bug fix for public views
 
 = 0.9.3.4 - 2013.6.3 =
 * Premalink 404 error fix
@@ -234,6 +239,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.4 =
+Bug fixes and general performence updates
 
 = 0.9.3.4 =
 Permalink fix and Confirmation email update
