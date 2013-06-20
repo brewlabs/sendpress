@@ -151,6 +151,14 @@ class SendPress_Email {
 			$aTags = $dom->getElementsByTagName('a');
 			foreach ($aTags as $aElement) {
 				$href = $aElement->getAttribute('href');
+				/*
+				$style = $aElement->getAttribute('style');
+
+				if($style == ""){
+					$aElement->setAttribute('style');
+				}
+				*/
+
 				//ADD TO DB?
 				
 				if(strrpos( $href, "*|" ) === false ) {
