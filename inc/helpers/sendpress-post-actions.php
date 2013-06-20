@@ -382,6 +382,24 @@ switch ( $this->_current_action ) {
         $my_post['post_content'] = $_POST['content'];
         $my_post['post_title'] = $_POST['post_title'];
         */
+       /*
+        $str = $my_post['post_content'];
+        $DOM = new DOMDocument;
+        $DOM->loadHTML($str);
+           //get all H1
+        $aTags = $DOM->getElementsByTagName('a');
+
+        foreach ($aTags as $aElement) {
+            $style = $aElement->getAttribute('style');
+
+                if($style == ""){
+                    $aElement->setAttribute('style', 'color: '. $contentlink);
+                }
+        }
+
+        $body_html = $DOM->saveHtml();
+        $my_post['post_content']  = $body_html;
+    */
         $my_post['post_status'] = 'publish';
         // Update the post into the database
         wp_update_post( $my_post );
