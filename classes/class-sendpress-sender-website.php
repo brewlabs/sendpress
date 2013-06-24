@@ -89,7 +89,7 @@ class SendPress_Sender_Website extends SendPress_Sender {
 		//$charset = get_bloginfo( 'charset' );
 		// Set the content-type and charset
 		$phpmailer->CharSet = 'UTF-8';
-		$phpmailer->Encoding = 'quoted-printable';
+		$phpmailer->Encoding = '8bit';
 		/**
 		* We'll let php init mess with the message body and headers.  But then
 		* we stomp all over it.  Sorry, my plug-inis more important than yours :)
