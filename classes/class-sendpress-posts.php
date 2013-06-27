@@ -92,7 +92,7 @@ class SendPress_Posts{
 
 		register_post_type( $name , array(	
 				'show_in_menu' => false,
-				'public' => true,
+				'public' => false,
 				'publicly_queryable' =>true,
 				'show_ui' => false,
 				'query_var' => true,
@@ -125,7 +125,7 @@ class SendPress_Posts{
 	function report_post_type($name){
 		register_post_type( $name , array(	
 			'show_in_menu' => false,
-			'public' => true,
+			'public' => false,
 			'publicly_queryable' =>true,
 			'show_ui' => false,
 			'query_var' => true,
@@ -160,7 +160,7 @@ class SendPress_Posts{
 			'labels' => array(
 				'name' => __( 'SendPress Internal Container', 'sendpress' ),
 			),
-			'public' => true,
+			'public' => false,
 			'show_ui' => false,
 			'capability_type' => 'post',
 			'hierarchical' => false,
@@ -180,7 +180,7 @@ class SendPress_Posts{
 			'labels' => array(
 				'name' => __( 'SendPress List', 'sendpress' ),
 			),
-			'public' => true,
+			'public' => false,
 			'show_ui' => false,
 			'capability_type' => 'post',
 			'hierarchical' => false,
