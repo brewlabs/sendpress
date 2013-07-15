@@ -13,7 +13,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 	function page_end(){}
 
 	function html() {
-		$post_options = array('list','email','firstname','lastname','return');
+		$post_options = array('list','email','firstname','lastname','return','status');
 		$user_info = array();
 		foreach ($post_options as $opt) {
 			$user_info[$opt] = isset($_POST['sp_' . $opt]) ?  $_POST['sp_' . $opt]: false ;
@@ -30,6 +30,12 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			}
 
 			$data_error = false;
+			if( isset($user_info['status']) ){
+				$valid_user['status'] = $user_info['status'];
+			} else {
+				$valid_user['status'] = 2;
+			}
+
 			if( isset($user_info['email']) && is_email( $user_info['email'] )){
 				$valid_user['email'] = $user_info['email'];
 			} else {
@@ -51,7 +57,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			
 			if($data_error ==  false){
 				$list = implode(",", $user_info['list']);
-				$status =  SendPress_Data::subscribe_user($list, $valid_user['email'], $valid_user['firstname'], $valid_user['lastname']);
+				$status =  SendPress_Data::subscribe_user($list, $valid_user['email'], $valid_user['firstname'], $valid_user['lastname'] , $valid_user['status']);
 				if($status == false){
 					$data_error = __('Problem with subscribing user.','sendpress');
 				}

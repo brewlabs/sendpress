@@ -394,7 +394,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 
-	function subscribe_user($listid, $email, $first, $last){
+	function subscribe_user($listid, $email, $first, $last, $status = 2){
 		
 		$success = false;
 		$subscriberID = SendPress_Data::add_subscriber(array('firstname' => $first,'lastname' => $last,'email' => $email));
@@ -414,11 +414,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 	    //$lists = $s->getData($s->lists_table());
 	    //$listids = array();
 
-		$status = 2;
-		if( SendPress_Option::is_double_optin() ){
+		
+		if( $status == 2 && SendPress_Option::is_double_optin() ){
 			$status = 1;
 			SendPress_Manager::send_optin( $subscriberID, $listids, $lists);
-
 		}
 		
 		foreach($lists as $list){
