@@ -684,6 +684,45 @@ width: 150px;
     text-decoration: none;
 }
 
+/* -- add subscriber css -- */
+#subscriber-create .sublabel{
+    display: inline-block;
+    min-width:65px;
+}
+#subscriber-create .sp-text{
+    width:350px;
+}
+
+#subscriber-create .btn{
+    margin-left:67px;
+}
+
+.subscribers-create-container{
+
+}
+
+.subscribers-create-container:after{
+    content:" ";
+    display: block;
+    clear: both;
+}
+
+#subscribers-create{
+    float:left;
+    width:70%;
+}
+#subscribers-create:after{
+
+}
+#subscribers-create textarea{
+    width:100%;
+    height:200px;
+    display: block;
+}
+
+#subscribers-create .btn{
+    
+}
 
 /* -- edit list css -- */
 
