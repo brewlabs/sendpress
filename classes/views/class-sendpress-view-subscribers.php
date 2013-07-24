@@ -15,6 +15,10 @@ class SendPress_View_Subscribers extends SendPress_View {
 		add_action('load-sendpress_page_sp-subscribers',array($this,'screen_options'));
 	}
 
+	function sub_menu($sp){
+		do_action('sendpress-subscribers-sub-menu',$sp);
+	}
+
 	function screen_options(){
 
 		$screen = get_current_screen();
