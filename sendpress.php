@@ -480,6 +480,8 @@ Push
 			SendPress_Posts::report_post_type( $this->_report_post_type );
 			SendPress_Posts::template_post_type();
 			SendPress_Posts::list_post_type();
+			SendPress_Posts::jobs_post_type();
+			do_action('sendpress_custom_post_types_created');
 		}
 	
 		
