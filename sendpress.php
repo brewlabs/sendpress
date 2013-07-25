@@ -1260,14 +1260,7 @@ Push
 		// Insert the post into the database
   		$new_id = wp_insert_post( $my_post );
   		update_post_meta($new_id,'public',$values['public']);
-		//add_post_meta($new_id,'last_send_date',$newlist->last_send_date);
-		//add_post_meta($new_id,'legacy_id',$newlist->listID);
-		//$this->upgrade_lists_new_id( $newlist->listID, $new_id);
-		//	$table = $this->lists_table();
-
 		
-		//$result = $this->wpdbQuery("INSERT INTO $table (name, created, public) VALUES( '" .$values['name'] . "', '" . date('Y-m-d H:i:s') . "','" .$values['public'] . "')", 'query');
-
 		return $new_id;	
 	}
 

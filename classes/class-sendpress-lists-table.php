@@ -291,10 +291,13 @@ class SendPress_Lists_Table extends WP_List_Table {
              $sortable = $this->get_sortable_columns();
              $this->_column_headers = array($columns, $hidden, $sortable);
         /* -- Fetch the items -- */
-            $args = array(
-            'post_type' => 'sendpress_list',
-            'post_status' => array('publish','draft')
-            );
+            // $args = array(
+            // 'post_type' => 'sendpress_list',
+            // 'post_status' => array('publish','draft')
+            // );
+
+            $args = apply_filters('sendpress_list_table_query',array('post_type' => 'sendpress_list','post_status' => array('publish','draft')));
+
             $query = new WP_Query( $args );
             /*
             echo '<pre>';
@@ -368,6 +371,7 @@ class SendPress_Lists_Table extends WP_List_Table {
 
             }
             
+            $args = apply_filters('sendpress_list_table_query',$args);
 
             $query2 = new WP_Query( $args );
 
