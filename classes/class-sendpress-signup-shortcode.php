@@ -20,23 +20,15 @@ class SendPress_Signup_Shortcode{
 
 	    ob_start();
 
-	   $args = array( 
-	   		'post_type' 	=> 'sendpress_list',
-	   		'numberposts'   => -1,
-    		'offset'        => 0,
-    		'orderby'       => 'post_title',
-    		'order'         => 'DESC'
-    	);
-
-		$lists = get_posts( $args );
-	    //$lists = $s->getData($s->lists_table());
-	    $listids = array();
-
-		foreach($lists as $list){
-			if( get_post_meta($list->ID,'public',true) == 1 ){
-				$default_list_id = $list->ID;
-			}
-		}
+	   $lists = SendPress_Data::get_lists(
+			array('meta_query' => array(
+				array(
+					'key' => 'public',
+					'value' => true
+				)
+			)),
+			false
+		);
 
 	    extract(shortcode_atts(array(
 			'firstname_label' => 'First Name',

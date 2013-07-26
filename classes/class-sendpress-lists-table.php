@@ -296,9 +296,10 @@ class SendPress_Lists_Table extends WP_List_Table {
             // 'post_status' => array('publish','draft')
             // );
 
-            $args = apply_filters('sendpress_list_table_query',array('post_type' => 'sendpress_list','post_status' => array('publish','draft')));
+            //$args = apply_filters('sendpress_list_table_query',array('post_type' => 'sendpress_list','post_status' => array('publish','draft')));
 
-            $query = new WP_Query( $args );
+            $query = SendPress_Data::get_lists(array('post_status' => array('publish','draft')));
+            //$query = new WP_Query( $args );
             /*
             echo '<pre>';
             print_r($query);
@@ -371,9 +372,11 @@ class SendPress_Lists_Table extends WP_List_Table {
 
             }
             
-            $args = apply_filters('sendpress_list_table_query',$args);
+            //$args = apply_filters('sendpress_list_table_query',$args);
 
-            $query2 = new WP_Query( $args );
+            $query2 = SendPress_Data::get_lists($args);
+
+            // $query2 = new WP_Query( $args );
 
             $this->items = $query2->posts;
         }

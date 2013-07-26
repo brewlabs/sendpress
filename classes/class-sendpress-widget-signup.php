@@ -155,18 +155,20 @@ class SendPress_Widget_Signup extends WP_Widget {
 			'thank_you' => __('Check your inbox now to confirm your subscription.', 'sendpress')
 		);
 
-		$args = array( 'post_type' => 'sendpress_list','numberposts'     => -1,
-	    'offset'          => 0,
-	    'orderby'         => 'post_title',
-	    'order'           => 'DESC', );
-		$lists = get_posts( $args );
-	    //$lists = $s->getData($s->lists_table());
+		$lists = SendPress_Data::get_lists(
+			array('meta_query' => array(
+				array(
+					'key' => 'public',
+					'value' => true
+				)
+			)),
+			false
+		);
+
 	    $listids = array();
 
 		foreach($lists as $list){
-			if( get_post_meta($list->ID,'public',true) == 1 ){
-				$defaults['list_'.$list->ID] = false;
-			}
+			$defaults['list_'.$list->ID] = false;
 		}
 
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
@@ -224,21 +226,17 @@ class SendPress_Widget_Signup extends WP_Widget {
 		</p>
 		<p><b>Check off the lists you would like<br>users to subscribe to.</b></p>
 		<?php 
-		$foundLists = false;
-		foreach($lists as $list){
-			
-			if( get_post_meta($list->ID,'public',true) == 1 ){
+		if( count($lists) === 0 ){
+			echo '<p>No public lists available</p>';
+		}else{
+			foreach($lists as $list){
 				?>
 				<p>
 					<input class="checkbox" type="checkbox" <?php checked( $instance['list_'.$list->ID], 'on' ); ?> id="<?php echo $this->get_field_id( 'list_'.$list->ID ); ?>" name="<?php echo $this->get_field_name( 'list_'.$list->ID ); ?>" /> 
 					<label for="<?php echo $this->get_field_id( 'list_'.$list->ID ); ?>"><?php echo $list->post_title; ?></label>
 				</p> 
 				<?php
-				$foundLists = true;
 			}
-		}
-		if(!$foundLists){
-			echo '<p>No public lists available</p>';
 		}
 		?>
 		<p>
