@@ -685,14 +685,17 @@ width: 150px;
 }
 
 /* -- add subscriber css -- */
+#subscriber-edit .sublabel,
 #subscriber-create .sublabel{
     display: inline-block;
     min-width:65px;
 }
+#subscriber-edit .sp-text,
 #subscriber-create .sp-text{
     width:350px;
 }
 
+#subscriber-edit .btn,
 #subscriber-create .btn{
     margin-left:67px;
 }

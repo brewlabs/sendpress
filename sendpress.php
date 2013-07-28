@@ -199,9 +199,9 @@ Push
 			SendPress_Admin::add_cap('Emails_Send','sendpress_email_send');
 	
 			    add_rewrite_rule(  
-        "sendpress/([^/]+)/?",  
-        'index.php?sendpress=$matches[1]',  
-        "top"); 
+			        "sendpress/([^/]+)/?",  
+			        'index.php?sendpress=$matches[1]',  
+			        "top"); 
 			
 			if(defined('WP_ADMIN') && WP_ADMIN == true){
 				$sendpress_screen_options = new SendPress_Screen_Options();
@@ -255,13 +255,8 @@ Push
 						foreach($caps as $cap){
 							$all[$cap] = 1;
 						}
-						
-	
 					}
-	
-	
 				}
-	
 			}
 			return $all;
 	
@@ -272,15 +267,15 @@ Push
 			load_plugin_textdomain( 'sendpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 		}
 	
-			/**
-	 * Register our widget.
-	 * 'SendPress_Signup_Widget' is the widget class used below.
-	 *
-	 * @since 1.0
-	 */
-			function load_widgets() {
-				register_widget( 'SendPress_Widget_Signup' );
-			}
+		/**
+		 * Register our widget.
+		 * 'SendPress_Signup_Widget' is the widget class used below.
+		 *
+		 * @since 1.0
+		 */
+		function load_widgets() {
+			register_widget( 'SendPress_Widget_Signup' );
+		}
 	
 	
 		function admin_notice(){
@@ -448,12 +443,12 @@ Push
 		} 
 		
 	    /**
-	 * has_identity_key
-	 * 
-	 * @access public
-	 *
-	 * @return mixed Value.
-	 */
+		 * has_identity_key
+		 * 
+		 * @access public
+		 *
+		 * @return mixed Value.
+		 */
 		function has_identity_key(){
 			$key = (get_query_var('fxti')) ? get_query_var('fxti') : false;
 			if(false == $key)
