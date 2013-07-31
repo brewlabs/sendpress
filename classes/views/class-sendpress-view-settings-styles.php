@@ -99,7 +99,7 @@ class SendPress_View_Settings_Styles extends SendPress_View_Settings {
         SendPress_Option::set('twitter', $twitter);
         SendPress_Option::set('fromemail', $fromemail );
         SendPress_Option::set('fromname', $fromname );
-
+        SendPress_Option::set('unsubscribetext', $unsubtext);
 
         SendPress_Admin::redirect('Settings_Styles');
 	}
@@ -166,6 +166,7 @@ if( SendPress_Option::get('beta') ) {
 <p><input name="inbrowser" type="text" id="inbrowser" value="<?php echo SendPress_Option::get('inbrowser'); ?>" class="regular-text sp-text"></p>
 <br>
 <?php } ?>
+
 
 <div style="float: right; width: 45%;">
 	<h4 class="nomargin">Social Media</h4>

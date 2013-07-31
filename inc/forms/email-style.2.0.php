@@ -347,7 +347,14 @@ if(strlen($active_header['value']) > 0){
                                 Anywhere, USA 01234<br>
                                <?php } ?>
                             </div><br>
+                            <?php if( SendPress_Option::get('old_unsubscribe_link', false) === true ){ ?>
                                 <?php echo $start_text ?> <a href="#" ><?php echo $unsubscribe ?></a> <?php echo $instantly ?>.
+                               <?php } else { 
+$manage = __("Manage Subscription","sendpress");
+                               	?> 
+<a href="#" ><?php echo $unsubscribe ?></a> | <a href="#" ><?php echo $manage ?></a>
+
+                               <?php } ?>
 				</div>
 		  </div>
 

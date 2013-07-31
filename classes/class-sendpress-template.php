@@ -272,6 +272,7 @@ class SendPress_Template {
 				} else {
 					$HtmlCode =str_replace("*|SP:BROWSER|*",'' ,$HtmlCode);
 					$HtmlCode =str_replace("*|SP:UNSUBSCRIBE|*",'' ,$HtmlCode);
+					$HtmlCode =str_replace("*|SP:MANAGE|*",'' ,$HtmlCode);
 					$HtmlCode =str_replace("*|ID|*",'' ,$HtmlCode);
 					$HtmlCode =str_replace("*|FNAME|*",'' ,$HtmlCode);
 					$HtmlCode =str_replace("*|LNAME|*",'' ,$HtmlCode);
@@ -303,6 +304,7 @@ class SendPress_Template {
 				}else {
 					$HtmlCode =str_replace("*|SP:BROWSER|*",'' ,$HtmlCode);
 					$HtmlCode =str_replace("*|SP:UNSUBSCRIBE|*",'' ,$HtmlCode);
+					$HtmlCode =str_replace("*|SP:MANAGE|*",'' ,$HtmlCode);
 				}
 				return $HtmlCode;
 			}

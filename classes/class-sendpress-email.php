@@ -210,15 +210,54 @@ class SendPress_Email {
 				
 			}
 
-			$start_text = __("Not interested anymore?","sendpress");
-			$unsubscribe = __("Unsubscribe","sendpress");
-			$instantly = __("Instantly","sendpress");
 
-			$remove_me = $start_text.' <a href="'.$link.'"  style="color: '.$body_link.';" >'.$unsubscribe.'</a> '.$instantly.'.';
+
+
+
+			
 			
 			$subscriber = SendPress_Data::get_subscriber($this->subscriber_id());
+
+			if( SendPress_Option::get('old_unsubscribe_link', false) === true ){
+				$start_text = __("Not interested anymore?","sendpress");
+				$unsubscribe = __("Unsubscribe","sendpress");
+				$instantly = __("Instantly","sendpress");
+
+				$remove_me_old = $start_text.' <a href="'.$link.'"  style="color: '.$body_link.';" >'.$unsubscribe.'</a> '.$instantly.'.';
+
+
+				$body_html = str_replace("*|SP:UNSUBSCRIBE|*", $remove_me_old , $body_html );
+				$body_html = str_replace("*|SP:MANAGE|*", '' , $body_html );
+			} else {
+
+				$link_data = array(
+					"id"=>$this->subscriber_id(),
+					"report"=> $this->id(),
+					"urlID"=> '0',
+					"view"=>"manage",
+					"listID"=>$this->list_id(),
+					"action"=>""
+				);
+				$code = SendPress_Data::encrypt( $link_data );
+				if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
+					$manage_link = site_url() ."?sendpress=".$code;
+				} else {
+					$manage_link = site_url() ."/sendpress/".$code."/";
+					
+				}
+
+				$unsubscribe = __("Unsubscribe","sendpress");
+				$manage = __("Manage Subscription","sendpress");
+				
+				$remove_me = ' <a href="'.$link.'"  style="color: '.$body_link.';" >'.$unsubscribe.'</a> | ';
+				$manage = ' <a href="'.$manage_link.'"  style="color: '.$body_link.';" >'.$manage.'</a> ';
+
+				$body_html = str_replace("*|SP:UNSUBSCRIBE|*", $remove_me , $body_html );
+				$body_html = str_replace("*|SP:MANAGE|*", $manage , $body_html );
+
+			}
 			
-			$body_html = str_replace("*|SP:UNSUBSCRIBE|*", $remove_me , $body_html );
+			
 			if (!is_null($subscriber)) {
 				$body_html = str_replace("*|FNAME|*", $subscriber->firstname , $body_html );
 				$body_html = str_replace("*|LNAME|*", $subscriber->lastname , $body_html );
