@@ -80,9 +80,10 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 		$from_email = SendPress_Option::get('fromemail');
 		$phpmailer->From = $from_email;
 		$phpmailer->FromName = SendPress_Option::get('fromname');
-		$phpmailer->Sender = SendPress_Option::get('fromemail');
+		$phpmailer->Sender = 'bounce@sendpress.us';
+		//$phpmailer->Sender = SendPress_Option::get('fromemail');
 		$sending_method  = SendPress_Option::get('sendmethod');
-		
+
 		$phpmailer->Mailer = 'smtp';
 		// We are sending SMTP mail
 		$phpmailer->IsSMTP();
@@ -102,6 +103,7 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 		$hdr->addFilterSetting('dkim', 'domain', SendPress_Manager::get_domain_from_email($from_email) );
 		$phpmailer->AddCustomHeader(sprintf( 'X-SMTPAPI: %s', $hdr->asJSON() ) );
 		$phpmailer->AddCustomHeader('X-SP-METHOD: Gmail');
+		$phpmailer->AddCustomHeader('List-Unsubscribe: <mailto:'.$from_email.'>');
 		
 		// Set SMTPDebug to 2 will collect dialogue between us and the mail server
 		if($istest == true){

@@ -29,7 +29,7 @@ class SendPress_DB_Tables {
      *
      * @return mixed Value.
      */
-	function subscriber_table(){
+	static function subscriber_table(){
 		global $wpdb;
 		return $wpdb->prefix . self::$prefix . "subscribers";
 	}
@@ -42,7 +42,7 @@ class SendPress_DB_Tables {
      *
      * @return mixed Value.
      */
-	function list_subcribers_table(){
+	static function list_subcribers_table(){
 		global $wpdb;
 		return $wpdb->prefix . self::$prefix  . "list_subscribers";
 	}
@@ -54,7 +54,7 @@ class SendPress_DB_Tables {
      *
      * @return mixed Value.
      */
-	function lists_table(){
+	static function lists_table(){
 		global $wpdb;
 		return $wpdb->prefix . self::$prefix . "lists";
 	}
@@ -66,7 +66,7 @@ class SendPress_DB_Tables {
      *
      * @return mixed Value.
      */
-	function subscriber_status_table(){
+	static function subscriber_status_table(){
 		global $wpdb;
 		return $wpdb->prefix . self::$prefix . "subscribers_status";
 	}
@@ -78,7 +78,7 @@ class SendPress_DB_Tables {
      *
      * @return mixed Value.
      */
-	function subscriber_event_table(){
+	static function subscriber_event_table(){
 		global $wpdb;
 		return $wpdb->prefix . self::$prefix . "subscribers_event";
 	}
@@ -102,7 +102,7 @@ class SendPress_DB_Tables {
      *
      * @return mixed Value.
      */
-	function subscriber_open_table(){
+	static function subscriber_open_table(){
 		global $wpdb;
 		return $wpdb->prefix . self::$prefix . "subscribers_open";
 	}
@@ -114,7 +114,7 @@ class SendPress_DB_Tables {
      *
      * @return mixed Value.
      */
-	function report_url_table(){
+	static function report_url_table(){
 		global $wpdb;
 		return $wpdb->prefix . self::$prefix . "report_url";
 	}
@@ -126,13 +126,13 @@ class SendPress_DB_Tables {
      *
      * @return mixed Value.
      */
-	function queue_table(){
+	static function queue_table(){
 		global $wpdb;
 		return $wpdb->prefix . self::$prefix . "queue";
 	}
 
 
-    function check_setup(){
+    static function check_setup(){
         global $wpdb;
 
         echo "<b>Database Tables</b>: <br>";
@@ -181,7 +181,7 @@ class SendPress_DB_Tables {
     }
 
 
-     function check_setup_support(){
+    static function check_setup_support(){
         global $wpdb;
 
         echo "Database Tables: \n";
@@ -230,7 +230,7 @@ class SendPress_DB_Tables {
     }
   
 
-    function remove_all_data(){
+    static function remove_all_data(){
         if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ){
             return;
         }
@@ -266,7 +266,7 @@ class SendPress_DB_Tables {
      * 
      * 
      **/
-    function update_tables_093(){
+    static function update_tables_093(){
         global $wpdb;
         $table_to_update = SendPress_DB_Tables::subscriber_table();
         if( $wpdb->get_var("SHOW COLUMNS FROM ". $table_to_update ." LIKE 'wp_user_id'") == false) {

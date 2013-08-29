@@ -284,7 +284,7 @@ class SendPress_Queue_Table extends WP_List_Table {
 
         /* -- Pagination parameters -- */
         //Number of elements in your table?
-        $totalitems = $wpdb->query($query); //return the total number of affected rows
+        $totalitems = SendPress_Data::emails_in_queue();//$wpdb->query($query); //return the total number of affected rows
         //How many to display per page?
         // get the current user ID
             $user = get_current_user_id();

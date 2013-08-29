@@ -192,7 +192,6 @@ Push
 			SendPress_Pro_Manager::init();
 			SendPress_Cron::get_instance();
 			SendPress_Notifications_Manager::init();
-		
 			sendpress_register_sender('SendPress_Sender_Website');
 			sendpress_register_sender('SendPress_Sender_Gmail');
 	

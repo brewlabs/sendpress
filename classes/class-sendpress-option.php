@@ -20,7 +20,7 @@ if(class_exists('SendPress_Option')){ return; }
 * @license  See SENPRESS
 * @since 	0.8.7     
 */
-class SendPress_Option {
+class SendPress_Option extends SendPress_Base {
 	private static $key = 'sendpress_options';
 
     /**
@@ -33,7 +33,7 @@ class SendPress_Option {
      *
      * @return mixed Value default or option value.
      */
-	function get( $name, $default = false ) {
+	static function get( $name, $default = false ) {
 		$options = get_option( self::$key );
 		if ( is_array( $options ) && isset( $options[$name] ) ) {
 			return is_array( $options[$name] )  ? $options[$name] : stripslashes( $options[$name] );
@@ -41,6 +41,13 @@ class SendPress_Option {
 		return $default;
 	}	
 	
+	static function get_encrypted( $name , $default = false ) {
+		$options = get_option( self::$key );
+		if ( is_array( $options ) && isset( $options[$name] ) ) {
+			return  self::_decrypt( $options[$name] ) ;
+		}
+		return $default;
+	}
 
     /**
      * set
@@ -50,9 +57,9 @@ class SendPress_Option {
      *
      * @access public
      *
-     * @return bool Value succus or failure of option save.
+     * @return bool Value success or failure of option save.
      */
-	function set($option, $value= null){
+	static function set($option, $value= null){
 		$options = get_option( self::$key );
 		
 		//Set options with an array of values.
@@ -67,6 +74,22 @@ class SendPress_Option {
 		return update_option( self::$key , $options );
 	}
 
+
+
+
+	static function set_encrypted($option, $value = null){
+		$options = get_option( self::$key );
+
+		
+		$options[$option] = self::_encrypt( $value );
+
+		return update_option(self::$key , $options);
+	}	
+
+
+
+
+
 	 /**
      * is_double_optin
      * 
@@ -75,7 +98,7 @@ class SendPress_Option {
      *
      * @return bool 
      */
-	function is_double_optin(){
+	static function is_double_optin(){
 		if( SendPress_Option::get('send_optin_email') == 'yes'){
 			return true;			
 		}
@@ -90,7 +113,7 @@ class SendPress_Option {
      *
      * @return bool 
      */
-    function use_theme_style(){
+    static function use_theme_style(){
 		if( SendPress_Option::get('try-theme') == 'yes'){
 			return true;			
 		}
