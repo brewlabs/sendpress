@@ -139,7 +139,7 @@ $local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
 echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $local_timestamp);
 ?><br><br>
 You have sent <strong><?php echo $count_today; ?></strong> emails so far today.<br><br>
-<input type="text" size="6" name="emails-per-day" value="<?php echo $emails_per_day; ?>" /> Emails Per Day - Use 0 for Unlimited<br><br>
+<input type="text" size="6" name="emails-per-day" value="<?php echo $emails_per_day; ?>" /> Emails Per Day<br><br>
 <input type="text" size="6" name="emails-per-hour" value="<?php echo $emails_per_hour; ?>" /> Emails Per Hour 
 </div>
 <?php 
