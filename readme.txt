@@ -3,8 +3,8 @@ Plugin URI: http://sendpress.com
 Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid,
 Requires at least: 3.4
-Tested up to: 3.5.1
-Stable tag: 0.9.4.1
+Tested up to: 3.6
+Stable tag: 0.9.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,6 +94,13 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 
 == Changelog ==
+
+= 0.9.4.2 - 2013.8.29 =
+* added manage subscription link to template
+* Support for Mandrill sending in Pro
+* Added check before sending confirmation email
+* change template encoding to 8bit
+* update subscriber add UI
 
 = 0.9.4.1 - 2013.6.19 =
 * Fix for Send Confirm Screen
