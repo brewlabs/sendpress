@@ -251,8 +251,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Upgrade Notice ==
 
+= 0.9.4.2 =
+Multiple bug fixes
+
 = 0.9.4 =
-Bug fixes and general performence updates
+Bug fixes and general performance updates
 
 = 0.9.3.4 =
 Permalink fix and Confirmation email update
