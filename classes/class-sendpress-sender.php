@@ -72,12 +72,8 @@ class SendPress_Sender {
 		return $domain;
 	}
 
-	function send_email(){
-
-
-
-
-		
+	function send_email($to, $subject, $html, $text, $istest = false ){
+		return false;
 	}
 
 

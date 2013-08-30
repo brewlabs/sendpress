@@ -108,11 +108,11 @@ class SendPress_Module {
 				$btn = $this->build_button($button);
 				break;
 		}
-		if( !defined('SENDPRESS_PRO_VERSION') || ( SENDPRESS_PRO_VERSION >= $this->_pro_version) ){
+		if( !defined('SENDPRESS_PRO_VERSION') || version_compare( SENDPRESS_PRO_VERSION, $this->_pro_version, '>=' )){
 				echo '<div class="inline-buttons">'.$btn.'</div>';
 			
 			} else {
-				echo "<br><div class='btn disabled btn-activate inline-buttons' style='margin: 0px;'>Please upgrade SendPress Pro.</div>"; 
+				echo "<br><div class='btn disabled btn-activate inline-buttons' style='margin: 0px;'>Requires Pro v".$this->_pro_version."</div>"; 
 			
 
 			}

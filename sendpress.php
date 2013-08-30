@@ -1,7 +1,7 @@
 <?php 
 /*
 Plugin Name: SendPress: Email Marketing and Newsletters
-Version: 0.9.4.1
+Version: 0.9.5
 Plugin URI: http://sendpress.com
 Description: Easy to manage Email Markteing and Newsletter plugin for WordPress. 
 Author: SendPress
@@ -192,7 +192,6 @@ Push
 			SendPress_Pro_Manager::init();
 			SendPress_Cron::get_instance();
 			SendPress_Notifications_Manager::init();
-		
 			sendpress_register_sender('SendPress_Sender_Website');
 			sendpress_register_sender('SendPress_Sender_Gmail');
 	

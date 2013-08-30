@@ -301,6 +301,7 @@ global $post;
 						<tr>
 							<td width="100%" valign="top" style="font-size: 13px; font-family: arial,sans-serif; color: *|SP:BODYTEXT|*;">
 							*|SP:UNSUBSCRIBE|*
+							*|SP:MANAGE|*
 							</td>
 						</tr>
 					</table>

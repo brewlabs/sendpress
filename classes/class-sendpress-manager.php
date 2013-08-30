@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Manager {
 
-	function send_limit_reached(){
+	static function send_limit_reached(){
 
 		global $wpdb;
 		
@@ -61,7 +61,7 @@ class SendPress_Manager {
 		return false;
 	}
 
-	function emails_allowed_to_send(){
+	static function emails_allowed_to_send(){
 		$emails_per_day = SendPress_Option::get('emails-per-day');
 		$emails_per_hour = SendPress_Option::get('emails-per-hour');
 		$count = SendPress_Data::emails_in_queue();
@@ -84,7 +84,7 @@ class SendPress_Manager {
 	}
 
 
-	function increase_email_count( $add = 1 ){
+	static function increase_email_count( $add = 1 ){
 		$emails_today =  SendPress_Option::get('emails-today');
 		$emails_this_hour = SendPress_Option::get('emails-this-hour');
 		$emails_this_hour = $emails_this_hour != false ? $emails_this_hour : 0 ;
@@ -98,7 +98,7 @@ class SendPress_Manager {
 		SendPress_Option::set('email-last-sent', time() );
 	}
 
-	function reset_counters(){
+	static function reset_counters(){
 		$emails_today =  SendPress_Option::get('emails-today');
 		$emails_today[date("z")] = 0;
 
@@ -108,7 +108,7 @@ class SendPress_Manager {
 
 	}
 
-	function emails_this_hour(){
+	static function emails_this_hour(){
 		$email_last_sent = SendPress_Option::get('email-last-sent');
 		//Haven't sent an email in the last hour
 		if( $email_last_sent == false || ( $email_last_sent + (60 * 60) ) <= time()   ){
@@ -121,14 +121,14 @@ class SendPress_Manager {
 		return $hour;
 	}
 
-	function emails_today(){
+	static function emails_today(){
 		$emails_today =  SendPress_Option::get('emails-today');
 		$email_count = isset($emails_today[date("z")]) ? $emails_today[date("z")] : 0 ;
 		return $email_count;
 	}
 
 
-	function send_test(){
+	static function send_test(){
 		$text= __('This is text only alternative body.','sendpress');
 		$subject = __('A Test Email from SendPress.','sendpress');
 		$body= __( 'SendPress test email :).','sendpres' );
@@ -140,7 +140,7 @@ class SendPress_Manager {
 	
 
 
-	function send_optin($subscriberID, $listids, $lists){
+	static function send_optin($subscriberID, $listids, $lists){
 			$subscriber = SendPress_Data::get_subscriber( $subscriberID );
 			$l = '';
 			foreach($lists as $list){
@@ -194,7 +194,7 @@ class SendPress_Manager {
 	*
 	* @return boolean true if mail sent successfully, false if an error
 	*/
-    function send_email_from_queue( $email ) {
+    static function send_email_from_queue( $email ) {
 
 	   	$message = new SendPress_Email();
 	   	$message->id( $email->emailID );
@@ -208,7 +208,7 @@ class SendPress_Manager {
 	   
 	}
 
-	function send($to , $subject, $body, $text, $test = false){
+	static function send($to , $subject, $body, $text, $test = false){
 
 		global $sendpress_sender_factory;
 	   	$senders = $sendpress_sender_factory->get_all_senders();
@@ -222,7 +222,7 @@ class SendPress_Manager {
 
 	}
 
-	function old_send_email($to, $subject, $html, $text, $istest = false ){
+	static function old_send_email($to, $subject, $html, $text, $istest = false ){
 		global $phpmailer, $wpdb;
 		// (Re)create it, if it's gone missing
 		if ( !is_object( $phpmailer ) || !is_a( $phpmailer, 'PHPMailer' ) ) {
@@ -317,7 +317,7 @@ class SendPress_Manager {
 
 	}
 
-	function get_domain_from_email($email){
+	static function get_domain_from_email($email){
 		$domain = substr(strrchr($email, "@"), 1);
 		return $domain;
 	}

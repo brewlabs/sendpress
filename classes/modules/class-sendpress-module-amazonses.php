@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Module_Amazonses extends SendPress_Module{
 	
-	var $_pro_version = 0.7;
+	var $_pro_version = '0.7';
 
 	function html($sp){
 		$hide = false;

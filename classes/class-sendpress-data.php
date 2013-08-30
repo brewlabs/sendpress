@@ -8,37 +8,37 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_Data extends SendPress_DB_Tables {
 
 
-	function nonce(){
+	static function nonce(){
 		return 'sendpress-is-awesome';
 	}
 
-	function nonce_field(){
+	static function nonce_field(){
 		wp_nonce_field( SendPress_Data::nonce() );
 	}
 
-	function email_post_type(){
+	static function email_post_type(){
 		return 'sp_newsletters';
 	}
-	function report_post_type(){
+	static function report_post_type(){
 		return 'sp_report';
 	}
 
-	/********************* BASE FUNCTIONS **************************/	
+	/********************* BASE static functionS **************************/	
 
-	function wpdbQuery($query, $type) {
+	static function wpdbQuery($query, $type) {
 		global $wpdb;
 		$result = $wpdb->$type( $query );
 		return $result;
 	}
 
-	function wpdbQueryArray($query) {
+	static function wpdbQueryArray($query) {
 		global $wpdb;
 		$result = $wpdb->get_results( $query , ARRAY_N);
 		return $result;
 	}
 
 
-	function let_to_num( $v ) {
+	static function let_to_num( $v ) {
 
 		$l   = substr( $v, -1 );
 		$ret = substr( $v, 0, -1 );
@@ -59,23 +59,23 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $ret;
 	}
 	
-	/********************* BASE FUNCTIONS **************************/
+	/********************* BASE static functionS **************************/
 
-	/********************* QUEUE FUNCTIONS **************************/
+	/********************* QUEUE static functionS **************************/
 
-	function delete_queue_emails(){
+	static function delete_queue_emails(){
 		$table = self::queue_table();
 		self::wpdbQuery("DELETE FROM $table", 'query');
 	}
 
-	function queue_email_process($id){
+	static function queue_email_process($id){
 		$table = self::queue_table();
 		global $wpdb;
 		$result = $wpdb->update( $table ,array('inprocess'=>'1','last_attempt'=>date('Y-m-d H:i:s')), array('id'=> $id) );
 
 	}
 
-	function emails_in_queue($id = false){
+	static function emails_in_queue($id = false){
 		global $wpdb;
 		$table = self::queue_table();
 		if($id == false){
@@ -87,16 +87,16 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
-	/********************* QUEUE FUNCTIONS **************************/
+	/********************* QUEUE static functionS **************************/
 
 
 
 
 
-	/********************* REPORTS FUNCTIONS **************************/	
+	/********************* REPORTS static functionS **************************/	
 
    
-    function update_report_sent_count( $id ) {
+    static function update_report_sent_count( $id ) {
     	if( $sent=get_post_meta($id , '_sent_total', true)){
     		$sent++;
     	} else {
@@ -117,20 +117,20 @@ class SendPress_Data extends SendPress_DB_Tables {
      */
     
 
- 	function get_url_by_id( $id ) {
+ 	static function get_url_by_id( $id ) {
  		global $wpdb;
 		$table = self::report_url_table();
 		$result = $wpdb->get_row( $wpdb->prepare("SELECT * FROM $table WHERE urlID = %d", $id) );
 		return $result;	
 	}
 
-	function get_url_by_report_url( $id , $url_string ){
+	static function get_url_by_report_url( $id , $url_string ){
 		$table = self::report_url_table();
 		$result = self::wpdbQuery("SELECT * FROM $table WHERE reportID = '$id' AND url = '$url_string'", 'get_results');
 		return $result;	
 	}
 
-	function get_open_without_id($rid, $sid){
+	static function get_open_without_id($rid, $sid){
 		global $wpdb;
 		$table = SendPress_Data::subscriber_event_table();
 		$result = $wpdb->query( $wpdb->prepare("SELECT * FROM $table WHERE reportID = %d AND subscriberID = %d AND type='open' ", $rid, $sid ) );
@@ -138,49 +138,49 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
-	function insert_report_url( $url ){
+	static function insert_report_url( $url ){
 		global $wpdb;
 		$wpdb->insert( self::report_url_table(),  $url);
 		return $wpdb->insert_id;
 	}
 
 
-	function get_clicks_and_opens($rid){
+	static function get_clicks_and_opens($rid){
 		global $wpdb;
 		$table = self::subscriber_event_table();
 		$result = $wpdb->get_results("SELECT COUNT(eventID) as count,date(eventdate) as day FROM $table WHERE reportID = '$rid' GROUP BY date(eventdate) ORDER BY eventID DESC ;");
 		return $result;
 	}
 
-	function get_clicks_count($rid){
+	static function get_clicks_count($rid){
 		global $wpdb;
 		$table = self::subscriber_event_table();
 		$result = $wpdb->get_results("SELECT COUNT(eventID) as count,date(eventdate) as day FROM $table WHERE reportID = '$rid' AND type = 'click' GROUP BY date(eventdate) ORDER BY eventID DESC ;");
 		return $result;
 	}
 
-	function get_opens_count($rid){
+	static function get_opens_count($rid){
 		global $wpdb;
 		$table = self::subscriber_event_table();
 		$result = $wpdb->get_results("SELECT COUNT(eventID) as count,date(eventdate) as day FROM $table WHERE reportID = '$rid' AND type = 'open' GROUP BY date(eventdate) ORDER BY eventID DESC ;");
 		return $result;
 	}
 
-	function get_opens_unique_count($rid){
+	static function get_opens_unique_count($rid){
 		global $wpdb;
 		$table = self::subscriber_event_table();
 		$result = $wpdb->get_results("SELECT COUNT(t.eventID) as count,date(t.eventdate) as day FROM  (Select eventdate,eventID FROM $table  WHERE  reportID = '$rid' AND type = 'open' GROUP BY subscriberID) as t GROUP BY date(eventdate) ORDER BY eventID DESC ");
 		return $result;
 	}
 
-	function get_clicks_unique_count($rid){
+	static function get_clicks_unique_count($rid){
 		global $wpdb;
 		$table = self::subscriber_event_table();
 		$result = $wpdb->get_results("SELECT COUNT(t.eventID) as count,date(t.eventdate) as day FROM  (Select eventdate,eventID FROM $table  WHERE  reportID = '$rid' AND type = 'click' GROUP BY subscriberID) as t GROUP BY date(eventdate) ORDER BY eventID DESC ");
 		return $result;
 	}
 
-	function track_click( $sid, $rid, $lid, $ip , $device_type, $device ){
+	static function track_click( $sid, $rid, $lid, $ip , $device_type, $device ){
 		global $wpdb;
 
 		if(false == SendPress_Data::get_open_without_id($rid,$sid) ){
@@ -203,39 +203,40 @@ class SendPress_Data extends SendPress_DB_Tables {
 		//print_r($this->get_open_without_id($rid,$sid));
 	}
 
-	function track_open( $sid, $rid, $ip = null , $device_type=null, $device=null ){
+	static function track_open( $sid, $rid, $ip = null , $device_type=null, $device=null ){
 		global $wpdb;
 		$wpdb->insert( SendPress_Data::subscriber_event_table() , array('reportID'=> $rid,'subscriberID'=>$sid,'eventdate'=>date('Y-m-d H:i:s'),'type'=>'open' ,'ip'=>$ip,'devicetype'=> $device_type,'device'=> $device));
 	}
 
-	function get_subscriber_event_count_month($date, $type){
+	static function get_subscriber_event_count_month($date, $type){
 		global $wpdb;
 		$table = SendPress_Data::subscriber_event_table();//SELECT * FROM table_name WHERE MONTH(date_column) = 4;
 		$result = $wpdb->get_var("SELECT COUNT(eventdate) as count FROM $table WHERE type = '$type' AND MONTH(eventdate) = $date");
 		return $result;
 	}
 	//date_column between "2001-01-05" and "2001-01-10"
-	function get_subscriber_event_count_week($date1, $date2, $type){
+	static function get_subscriber_event_count_week($date1, $date2, $type){
 		global $wpdb;
 		$table = SendPress_Data::subscriber_event_table();
 		$result = $wpdb->get_var("SELECT COUNT(eventdate) as count FROM $table WHERE type = '$type' AND date(eventdate) BETWEEN '$date1' AND '$date2'");
 		return $result;
 	}
 
-	function get_subscriber_event_count_day($date, $type){
+	static function get_subscriber_event_count_day($date, $type){
 		global $wpdb;
 		$table = SendPress_Data::subscriber_event_table();//SELECT * FROM table_name WHERE MONTH(date_column) = 4;
 		$result = $wpdb->get_var("SELECT COUNT(eventdate) as count FROM $table WHERE type = '$type' AND date(eventdate) = '$date'");
 		return $result;
 	}
 
-	/********************* END REPORTS FUNCTIONS **************************/
+	/********************* END REPORTS static functionS **************************/
 
-	/************************* LIST FUNCTIONS ****************************/
+	/************************* LIST static functionS ****************************/
 
-	function get_list_details($id){
+	static function get_list_details($id){
 		return get_post( $id  );
 	}
+
 
 	function get_lists($args = array(), $use_wpquery = true){
 
@@ -253,9 +254,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	/********************* END LIST FUNCTIONS ****************************/
 
-	/********************* SUBSCRIBER FUNCTIONS **************************/
 
-	function remove_all_subscribers( $list_id = false ){
+	/********************* SUBSCRIBER static functionS **************************/
+
+	static function remove_all_subscribers( $list_id = false ){
 		if($list_id !== false && is_numeric( $list_id )){
 			global $wpdb;
 			$table = self::list_subcribers_table();
@@ -264,7 +266,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
-	function get_subscriber($subscriberID, $listID = false){
+	static function get_subscriber($subscriberID, $listID = false){
 		if($listID){
         	$query = "SELECT t1.*, t3.status FROM " .  self::subscriber_table() ." as t1,". self::list_subcribers_table()." as t2,". self::subscriber_status_table()." as t3 " ;
 
@@ -277,7 +279,7 @@ class SendPress_Data extends SendPress_DB_Tables {
         return self::wpdbQuery($query, 'get_row');
 	}
 
-	function get_active_subscribers_lists($list_ids = array() ){
+	static function get_active_subscribers_lists($list_ids = array() ){
 		global $wpdb;
 		$lists = implode(',', $list_ids);
 		$query = "SELECT t1.subscriberID,t1.email, t3.status, t2.listid, count(*) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
@@ -290,7 +292,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 
-	function set_subscriber_status($listID, $subscriberID, $status = 0) {
+	static function set_subscriber_status($listID, $subscriberID, $status = 0) {
 		$table = self::list_subcribers_table();
 		$result = self::wpdbQuery("SELECT id FROM $table WHERE listID = $listID AND subscriberID = $subscriberID ", 'get_var');
 		
@@ -300,7 +302,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $result;	
 	}
 	
-	function update_subscriber_status( $listID, $subscriberID ,$status){
+	static function update_subscriber_status( $listID, $subscriberID ,$status){
 		$table = SendPress_Data::list_subcribers_table();
 
 		$check = SendPress_Data::get_subscriber_list_status($listID, $subscriberID);
@@ -318,14 +320,14 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return SendPress_Data::get_subscriber_list_status($listID, $subscriberID);
 	}
 
-	function get_subscriber_list_status( $listID,$subscriberID ) {
+	static function get_subscriber_list_status( $listID,$subscriberID ) {
 		$table = SendPress_Data::list_subcribers_table();
 		$result = SendPress_Data::wpdbQuery("SELECT status,updated FROM $table WHERE subscriberID = $subscriberID AND listID = $listID", 'get_row');
 		return $result;	
 	}
 
 
-	function add_subscriber_event( $sid, $rid, $lid, $ip , $device_type, $device ){
+	static function add_subscriber_event( $sid, $rid, $lid, $ip , $device_type, $device ){
 		global $wpdb;
 
 		$event_data = array(
@@ -342,7 +344,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $event_data);
 	}
 
-	function add_subscribe_event( $sid, $lid, $type ){
+	static function add_subscribe_event( $sid, $lid, $type ){
 		global $wpdb;
 
 		$event_type = 'unknown_event_type';
@@ -367,7 +369,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		SendPress_Notifications_Manager::send_instant_notification($event_data);
 	}
 
-	function unsubscribe_from_list( $sid, $rid, $lid ) {
+	static function unsubscribe_from_list( $sid, $rid, $lid ) {
 		global $wpdb;
 		$stat = get_post_meta($rid, '_unsubscribe_count', true );
 		$stat++;
@@ -375,14 +377,14 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$wpdb->update( SendPress_Data::list_subcribers_table() , array('status'=> 3) , array('listID'=> $lid,'subscriberID'=>$sid ));
 	}
 
-	function get_subscriber_by_email( $email ){
+	static function get_subscriber_by_email( $email ){
 		global $wpdb;
 		$table = SendPress_Data::subscriber_table();
 		$result = $wpdb->get_var( $wpdb->prepare("SELECT subscriberID FROM $table WHERE email = %s ", $email) );
 		return $result;
 	}
 
-	function add_subscriber($values){
+	static function add_subscriber($values){
 		$table =  SendPress_Data::subscriber_table();
 		$email = $values['email'];
 
@@ -408,7 +410,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 
-	function subscribe_user($listid, $email, $first, $last, $status = 2){
+	static function subscribe_user($listid, $email, $first, $last, $status = 2){
 		
 		$success = false;
 		$subscriberID = SendPress_Data::add_subscriber(array('firstname' => $first,'lastname' => $last,'email' => $email));
@@ -449,7 +451,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $success;
 	}
 
-	function random_code() {
+	static function random_code() {
 	    $now = time();
 	    $random_code = substr( $now, strlen( $now ) - 3, 3 ) . substr( md5( uniqid( rand(), true ) ), 0, 8 ) . substr( md5( $now . rand() ), 0, 4);
 	    return $random_code;
@@ -459,13 +461,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 	 * Gets all currently created subscriber status out of the DB
 	 * @return array
 	 */
-	function get_statuses( ) {
+	static function get_statuses( ) {
 		global $wpdb;
 		return $wpdb->get_results("SELECT * FROM " . SendPress_Data::subscriber_status_table() );
 	}
 
 	// COUNT DATA
-	function get_count_subscribers($listID, $status = 2) {
+	static function get_count_subscribers($listID, $status = 2) {
 		global $wpdb;
 		$table = SendPress_Data::list_subcribers_table();
 
@@ -479,9 +481,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
-	/********************* END SUBSCRIBER FUNCTIONS **************************/
+	/********************* END SUBSCRIBER static functionS **************************/
 
-	/********************* TEMPLATE POST FUNCTIONS **************************/
+	/********************* TEMPLATE POST static functionS **************************/
 
 
 	/**
@@ -494,12 +496,12 @@ class SendPress_Data extends SendPress_DB_Tables {
 	*
 	* @return mixed Value.
 	*/
-	function get_template_id_by_slug( $slug ) {
+	static function get_template_id_by_slug( $slug ) {
 		global $wpdb;
 		$_id = 0;
 		$slug = strtolower( str_replace( ' ', '_', $slug ) );
 		if ( $slug ) {
-			// Tell the function what to look for in a post.
+			// Tell the static function what to look for in a post.
 			$_args = array('post_parent' => '0', 'post_type' => 'sptemplates', 'name' => 'sp-template-' . $slug, 'post_status' => 'draft', 'comment_status' => 'closed', 'ping_status' => 'closed' );
 
 
@@ -546,12 +548,12 @@ class SendPress_Data extends SendPress_DB_Tables {
 	*
 	* @return mixed Value.
 	*/
-	function get_template_by_slug( $slug ) {
+	static function get_template_by_slug( $slug ) {
 		global $wpdb;
 		$_id = 0;
 		$slug = strtolower( str_replace( ' ', '_', $slug ) );
 		if ( $slug ) {
-			// Tell the function what to look for in a post.
+			// Tell the static function what to look for in a post.
 			$_args = array('post_parent' => '0', 'post_type' => 'sptemplates', 'name' => 'sp-template-' . $slug, 'post_status' => 'draft', 'comment_status' => 'closed', 'ping_status' => 'closed' );
 			// look in the database for a "silent" post that meets our criteria.
 			//$_posts = get_posts( $_args );
@@ -585,9 +587,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 	} 
 
 
-	/********************* END TEMPLATE POST FUNCTIONS **************************/
+	/********************* END TEMPLATE POST static functionS **************************/
 
-	/********************* PUBLIC VIEW FUNCTIONS **************************/
+	/********************* PUBLIC VIEW static functionS **************************/
 	/**
 	 * Get field class name
 	 *
@@ -613,7 +615,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	/********************* END PUBLIC VIEW FUNCTIONS **************************/
 
 
-	function set_double_optin_content( ){
+	static function set_double_optin_content( ){
 		$optin = self::get_template_by_slug('double-optin');
 		$optin->post_content = self::optin_content();
 		$optin->post_title = self::optin_title();
@@ -621,11 +623,11 @@ class SendPress_Data extends SendPress_DB_Tables {
 		wp_update_post( $optin );
 	}
 
-	function optin_title(){
+	static function optin_title(){
 		return "Please respond to join the *|SITE:TITLE|* email list.";
 	}
 
-	function optin_content(){
+	static function optin_content(){
 		return "Howdy.
 
 We're ready to send you emails from *|SITE:TITLE|*, but first we need you to confirm that this is what you really want.
@@ -658,7 +660,7 @@ If you do not want to confirm, simply ignore this message.
 
 
 
-	function get_key(){
+	static function get_key(){
 		$key = SendPress_Option::get('email_key');
 		if($key == false){
 			$key = sha1(microtime(true).mt_rand(10000,90000));
@@ -669,7 +671,7 @@ If you do not want to confirm, simply ignore this message.
 
 
 
-	function encrypt( $message ) {
+	static function encrypt( $message ) {
 		$key = self::get_key();
 		$message = json_encode($message);
 		$encstring = '';
@@ -689,7 +691,7 @@ If you do not want to confirm, simply ignore this message.
 		return urlencode(str_replace("=","",base64_encode( $message)));
 	}
 
-	function decrypt($message) {
+	static function decrypt($message) {
 		$key = self::get_key();
 		$decstring ='';
 		$keylength = strlen($key);
