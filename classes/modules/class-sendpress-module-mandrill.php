@@ -7,7 +7,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class SendPress_Module_Mandrill extends SendPress_Module{
-	
+	var $_pro_version = '0.7.5';
 	function html($sp){
 		$hide = false;
 		$plugin_path = '';

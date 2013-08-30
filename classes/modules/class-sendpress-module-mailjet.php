@@ -8,6 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Module_Mailjet extends SendPress_Module{
 	
+
 	function html($sp){
 		$hide = false;
 		$plugin_path = '';
