@@ -80,7 +80,7 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 		$from_email = SendPress_Option::get('fromemail');
 		$phpmailer->From = $from_email;
 		$phpmailer->FromName = SendPress_Option::get('fromname');
-		$phpmailer->Sender = 'bounce@sendpress.us';
+		//$phpmailer->Sender = 'bounce@sendpress.us';
 		//$phpmailer->Sender = SendPress_Option::get('fromemail');
 		$sending_method  = SendPress_Option::get('sendmethod');
 
