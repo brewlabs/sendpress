@@ -22,9 +22,12 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
 
         $new_id = SendPress_Posts::copy($email_post, $subject, $slug, $sp->_report_post_type );
         SendPress_Posts::copy_meta_info($new_id, $saveid);
+        $lists = implode(',', $info['listIDS']);
 
-
+        update_post_meta($new_id,'_send_lists', $lists );
         $count = 0;    
+
+        /*
 
         if(isset($info['listIDS'])){
            // foreach($info['listIDS'] as $list_id){
@@ -33,13 +36,13 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
                 foreach($_email as $email){
                    
                      $go = array(
-                        'from_name' => 'Josh',
-                        'from_email' => 'joshlyford@gmail.com',
+                        'from_name' => '',
+                        'from_email' => '',
                         'to_email' => $email->email,
                         'emailID'=> $new_id,
                         'subscriberID'=> $email->subscriberID,
                         //'to_name' => $email->fistname .' '. $email->lastname,
-                        'subject' => $subject,
+                        'subject' => '',
                         'listID'=> $email->listid
                         );
                    
@@ -51,7 +54,7 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
 
           //  }
         }
-
+            */
 
         if(isset($info['testemails'])){
             foreach($info['testemails'] as $email){
@@ -69,17 +72,14 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
                     $sp->add_email_to_queue($go);
                     $count++;
 
-                
-
-
             }
         }
 
         update_post_meta($new_id,'_send_count', $count );
-        update_post_meta($new_id,'_send_data', $info );
+       // update_post_meta($new_id,'_send_data', $info );
 
    
-        SendPress_Admin::redirect('Queue');
+        SendPress_Admin::redirect('Emails_Send_Queue',array('emailID'=> $new_id));
         //wp_redirect( '?page=sp-queue' );
 
   }

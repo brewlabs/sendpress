@@ -10,15 +10,36 @@ if( !class_exists('SendPress_View_Settings_Access') ){
 
 class SendPress_View_Settings_Access extends SendPress_View_Settings {
 
+	function str_lreplace($search, $replace, $subject)
+{
+    $pos = strrpos($subject, $search);
+
+    if($pos !== false)
+    {
+        $subject = substr_replace($subject, $replace, $pos, strlen($search));
+    }
+
+    return $subject;
+}
+
 	function save() {
 		  
 		foreach ($this->get_editable_roles() as $role) 
 		{
 			if($role != 'Administrator'){
 			$sp_view = false;
-			$saverole  = get_role( str_replace(" ","_", strtolower( $role)  ) );
-				
+
 			$role = str_replace(" ","_", strtolower( $role)  );
+
+			
+			$pos = strrpos($role, "s2member");
+
+			if($pos !== false){
+				$role = $this->str_lreplace("_", "", $role);
+			}
+
+			$saverole  = get_role( $role );
+					
 
 			if(false !== get_class($saverole)){
 
@@ -117,9 +138,26 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 		foreach ($this->get_editable_roles() as $role) 
 		{
 			if($role != 'Administrator'){
+				
+			$role = str_replace(" ","_", strtolower( $role)  );
+
+			
+			$pos = strrpos($role, "s2member");
+		
+			if($pos !== false){
+				$role = $this->str_lreplace("_", "", $role);
+			}
+			//$saverole  = get_role( $role );
+				
+
+
 				$listrole = get_role( str_replace(" ","_", strtolower( $role)  ) );
 				$role =  str_replace(" ","_", strtolower( $role)  );
 				$checked = '';
+
+
+
+
 				if(false !== get_class($listrole)){
 				echo "<tr>";
 				echo "<td>". $role . "</td>";
