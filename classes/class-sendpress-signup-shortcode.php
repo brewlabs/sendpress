@@ -109,6 +109,9 @@ class SendPress_Signup_Shortcode{
 						<?php endif; ?>
 						<input type="text" class="sp_email" orig="<?php echo $email_label; ?>" value="<?php if($label){ echo $email_label; } ?>" name="sp_email" />
 					</p>
+					<p name="extra_fields" class="signup-fields-bottom">
+						<?php do_action('sendpress_signup_form'); ?>
+					</p>
 
 					<p class="submit">
 						<input value="<?php echo $button_text; ?>" class="sendpress-submit" type="submit"  id="submit" name="submit">

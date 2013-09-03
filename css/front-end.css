@@ -28,3 +28,8 @@
 	.sendpress-signup-form #thanks{
 		margin:10px 0px;
 	}
+	/*Extra fields that only exist if you have SendPress Pro*/
+	.signup-fields-bottom label{
+		/*float:left;*/
+		display:inline;
+	}
