@@ -190,50 +190,12 @@ class SendPress_Pro_Manager {
 		$check = array('state'=>'valid', 'transient_time'=>DAY_IN_SECONDS, 'sp_state'=>'failed');
 		foreach($pro_names as $name){
 			$check = SendPress_Pro_Manager::check_key($key,$name);
-			print_r($check);
 			if( $check['sp_state'] === 'passed' ){
 				return $check;
 			}
 		}
 
 		return $check;
-
-	}
-
-	function get_sp_product_name(){
-
-		$key = SendPress_Option::get('api_key');
-		global $pro_names;
-		foreach($pro_names as $name){
-			
-			$api_params = array( 
-	            'edd_action'=> 'check_license', 
-	            'license'   => 'eaccb5afbac9c3f4fb6cbce58d0a8ffc', 
-	            'item_name' => urlencode( $name ) // the name of our product in EDD
-	        );
-
-	        // Call the custom API.
-	        $response = wp_remote_get( add_query_arg( $api_params, SENDPRESS_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
-
-	        // make sure the response came back okay
-	        // if response didn't come back, lets set the transient and try again in a day.
-	        if ( is_wp_error( $response ) )
-	            return $failed;
-
-	        // decode the license data
-	        $license_data = json_decode( wp_remote_retrieve_body( $response ) );
-
-	        if($license_data){
-	     	   // $license_data->license will be either "deactivated" or "failed"
-	     	   //return array('state'=>$license_data->license, 'transient_time'=>SENDPRESS_TRANSIENT_LENGTH);
-
-	        	print_r($license_data);
-	    	}
-
-		}
-		
-        
-        
 
 	}
 
