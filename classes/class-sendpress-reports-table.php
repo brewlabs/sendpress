@@ -82,7 +82,7 @@ class SendPress_Reports_Table extends WP_List_Table {
                 return '<span class="label">Coming Soon</span>';
 
                 case 'count':
-                    $rec = get_post_meta($item->ID, '_send_count', true) . '';
+                    $rec = get_post_meta($item->ID, '_send_count', true) + get_post_meta($item->ID, '_send_last_count', true)  . '';
                     $sent = get_post_meta($item->ID, '_sent_total', true) . '';
                     $queue = SendPress_Data::emails_in_queue($item->ID);
                     $string = "Recipients: ". $rec ."<br>";
@@ -104,6 +104,19 @@ class SendPress_Reports_Table extends WP_List_Table {
                     }
 
                     } 
+                } else {
+                    
+                    $lists = get_post_meta($item->ID,'_send_lists', true);
+                    $list = explode(",",$lists );
+                    foreach($list as $list_id){
+                    
+                    $list = get_post( $list_id );
+                    if($list &&  $list->post_type == 'sendpress_list'){
+                        $display .= $list->post_title.'<br>';      
+                    }
+
+                    } 
+
                 }
 
                 return $display;

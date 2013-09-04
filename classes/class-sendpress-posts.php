@@ -10,14 +10,14 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Posts{
 	
-	function delete($post_id){
+	static function delete($post_id){
 		wp_delete_post($post_id);
 	}
 
 	/**
 	 * Create a Duplicate post
 	 */
-	function copy($post, $post_title ='',$post_name='', $post_type= '') {
+	static function copy($post, $post_title ='',$post_name='', $post_type= '') {
 
 		// We don't want to clone revisions
 		if ($post->post_type == 'revision') return;
@@ -73,7 +73,7 @@ class SendPress_Posts{
 
 
 
-	function copy_meta_info($new_id, $old_id) {
+	static function copy_meta_info($new_id, $old_id) {
 		$post_meta_keys = get_post_custom_keys($old_id);
 		if (empty($post_meta_keys)) return;
 		
@@ -88,7 +88,7 @@ class SendPress_Posts{
 	}
 
 	// Added 'exclude_from_search'=>true
-	function email_post_type($name){
+	static function email_post_type($name){
 
 		register_post_type( $name , array(	
 				'show_in_menu' => false,
@@ -122,7 +122,7 @@ class SendPress_Posts{
 	}
 
 	// Added 'exclude_from_search'=>true
-	function report_post_type($name){
+	static function report_post_type($name){
 		register_post_type( $name , array(	
 			'show_in_menu' => false,
 			'public' => false,
@@ -155,7 +155,7 @@ class SendPress_Posts{
 	}
 
 	// Added 'exclude_from_search'=>true
-	function template_post_type(){
+	static function template_post_type(){
 		register_post_type( 'sptemplates', array(
 			'labels' => array(
 				'name' => __( 'SendPress Internal Container', 'sendpress' ),
@@ -175,7 +175,7 @@ class SendPress_Posts{
 	}
 
 		// Added 'exclude_from_search'=>true
-	function list_post_type(){
+	static function list_post_type(){
 		register_post_type( 'sendpress_list', array(
 			'labels' => array(
 				'name' => __( 'SendPress List', 'sendpress' ),
@@ -199,7 +199,7 @@ class SendPress_Posts{
 	Unused for now
 	*/
 
-	function pages_post_type(){
+	static function pages_post_type(){
 		register_post_type( 'sendpress',
             array(
                 'labels' => array(

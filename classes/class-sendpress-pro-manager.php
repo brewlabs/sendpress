@@ -18,7 +18,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 */
 class SendPress_Pro_Manager {
 
-	function &init() {
+	static function &init() {
 		static $instance = false;
 
 		if ( !$instance ) {
@@ -69,7 +69,7 @@ class SendPress_Pro_Manager {
 			
 			if( $state !== 'valid' && !empty($key) ){
 				add_action('sendpress_notices', array($this, 'key_notice'));
-				SendPress_Option::set('api_key','');
+				//SendPress_Option::set('api_key','');
 			}
 		}
 	}
@@ -95,7 +95,9 @@ class SendPress_Pro_Manager {
         if($license_data){
         	if( $license_data->license !== 'invalid' ){
         		SendPress_Option::set('api_key',$key);
+        		SendPress_Option::set('api_product', $name);
         		SendPress_Pro_Manager::set_pro_state(array('state'=>$license_data->license, 'transient_time'=>SENDPRESS_TRANSIENT_LENGTH));
+        		
             	return true;
         	}
         	return false;
@@ -208,7 +210,7 @@ class SendPress_Pro_Manager {
 			
 			$api_params = array( 
 	            'edd_action'=> 'check_license', 
-	            'license'   => 'eaccb5afbac9c3f4fb6cbce58d0a8ffc', 
+	            'license'   => $key, 
 	            'item_name' => urlencode( $name ) // the name of our product in EDD
 	        );
 
@@ -260,15 +262,16 @@ class SendPress_Pro_Manager {
 	
 	function get_pro_details( $res, $action, $args ){
 
+	
 		if( $action === 'plugin_information' && $args->slug === 'sendpress-pro' ){
 
 			if( class_exists('SendPress_Option') ){
 				$license = SendPress_Option::get('api_key');
-
+				$product = SendPress_Option::get('api_product','SendPress Pro');
 				$api_params = array( 
 		            'edd_action'=> 'get_version', 
 		            'license'   => $license, 
-		            'name' => urlencode( SENDPRESS_PRO_NAME ) // the name of our product in EDD
+		            'name' => urlencode( $product ) // the name of our product in EDD
 		        );
 		        
 		        $response = wp_remote_get( add_query_arg( $api_params, SENDPRESS_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
@@ -277,13 +280,13 @@ class SendPress_Pro_Manager {
 		            return false;
 
 		        $data = json_decode( wp_remote_retrieve_body( $response ) );
-
 		        $obj = new stdClass();
-				$obj->name = $data->name;
+				$obj->name = 'SendPress Pro';
 				$obj->slug = $args->slug;
 				$obj->version = $data->version;
 				$obj->download_link = $data->package;
-
+				$obj->sections = $data->sections;
+			
 				$res = $obj;
 
 				

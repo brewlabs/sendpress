@@ -26,7 +26,7 @@ class SendPress_Sender {
 		return "Default Sender";
 	}
 
-	function init(){
+	static function init(){
 		add_filter('sendpress_sending_method_gmail',array('SendPress_Sender','gmail'),10,1);
 		add_filter('sendpress_sending_method_sendpress',array('SendPress_Sender','sendpress'),10,1);
 	}

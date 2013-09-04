@@ -84,6 +84,7 @@ class SendPress_Public_View_Form extends SendPress_Public_View{
 	
 			<form id="sendpress_signup" method="POST" >
 				<input type="hidden" name="sp_list" id="list" value="<? echo $_GET['list']; ?>">
+				<input type="hidden" name="sendpress" value="post">
 				<?php if($this->message !=''){ ?>
 					<div id="thanks"><?php echo $this->message; ?></div>
 				<?php }  else { ?>
@@ -92,19 +93,19 @@ class SendPress_Public_View_Form extends SendPress_Public_View{
 					<?php if(isset($_GET['f'])) { ?>
 					<p name="firstname">
 						<label for="firstname">First Name:</label>
-						<input class="sp-text" type="text" id="sp-email" orig="EMail" value="" name="sp_firstname">
+						<input class="sp-text" type="text" id="sp_firstname" orig="EMail" value="" name="sp_firstname">
 					</p>
 					<?php } ?>
 					<?php if(isset($_GET['l'])) { ?>
 					<p name="lastname">
 						<label for="lastname">Last Name:</label>
-						<input class="sp-text" type="text" id="sp-email" orig="EMail" value="" name="sp_lastname">
+						<input class="sp-text" type="text" id="sp_lastname" orig="EMail" value="" name="sp_lastname">
 					</p>
 					<?php } ?>
 
 					<p name="email">
 						<label for="email">EMail:</label>
-						<input class="sp-text" type="text" id="sp-email" orig="EMail" value="" name="sp_email">
+						<input class="sp-text" type="text" id="sp_email" orig="EMail" value="" name="sp_email">
 					</p>
 
 

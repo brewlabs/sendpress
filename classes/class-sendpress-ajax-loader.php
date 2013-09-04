@@ -12,7 +12,7 @@ class SendPress_Ajax_Loader{
 
 	static $ajax_nonce = "love-me-some-sendpress-ajax-2012";
 	
-	function &init() {
+	static function &init() {
 		static $instance = false;
 
 		if ( !$instance ) {
