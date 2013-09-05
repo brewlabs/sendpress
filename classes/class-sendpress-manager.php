@@ -254,11 +254,11 @@ class SendPress_Manager {
 		$phpmailer->IsHTML( true );
 		
 		// If we don't have a charset from the input headers
-		if ( !isset( $charset ) )
+		//if ( !isset( $charset ) )
 		//$charset = get_bloginfo( 'charset' );
 		// Set the content-type and charset
-		$phpmailer->CharSet = 'UTF-8';
-		$phpmailer->Encoding = '8bit';
+		//$phpmailer->CharSet = 'UTF-8';
+		//$phpmailer->Encoding = '8bit';
 		/**
 		* We'll let php init mess with the message body and headers.  But then
 		* we stomp all over it.  Sorry, my plug-inis more important than yours :)
