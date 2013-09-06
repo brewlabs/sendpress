@@ -248,6 +248,8 @@ class SendPress_Public_View {
 	function page_start(){
 
 		$try_theme = SendPress_Option::use_theme_style();
+		//moved this do action outside the if because i need it, and now it matches the after.
+		do_action('sendpress_public_before_pro');
 		if($try_theme){
 			get_header();
 			do_action('sendpress_public_before');
