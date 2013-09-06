@@ -93,8 +93,6 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 		//if ( 'text/html' == $content_type )
 		$phpmailer->IsHTML( true );
 		
-		
-
 
 		/**
 		* We'll let php init mess with the message body and headers.  But then

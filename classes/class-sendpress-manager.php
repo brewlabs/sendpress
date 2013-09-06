@@ -274,7 +274,7 @@ class SendPress_Manager {
 		//if ( 'text/html' == $content_type )
 		$phpmailer->IsHTML( true );
 		
-		
+
 		/**
 		* We'll let php init mess with the message body and headers.  But then
 		* we stomp all over it.  Sorry, my plug-inis more important than yours :)

@@ -200,7 +200,7 @@ class SendPress_Email {
 				"urlID"=> '0',
 				"view"=>"manage",
 				"listID"=>$this->list_id(),
-				"action"=>"unsubscribe"
+				"action"=>""
 			);
 			$code = SendPress_Data::encrypt( $link_data );
 			if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
