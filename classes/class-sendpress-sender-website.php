@@ -66,6 +66,26 @@ class SendPress_Sender_Website extends SendPress_Sender {
 		$phpmailer->ClearCCs();
 		$phpmailer->ClearCustomHeaders();
 		$phpmailer->ClearReplyTos();
+
+		
+		$charset = SendPress_Option::get('email-charset','UTF-8');
+		
+		$phpmailer->CharSet = $charset;
+		$phpmailer->Encoding = '8bit';
+
+
+		if($charset != 'UTF-8'){
+             $html = $this->change($html,'UTF-8',$charset);
+             $text = $this->change($text,'UTF-8',$charset);
+             $subject = $this->change($subject,'UTF-8',$charset);
+                    
+            }
+
+            
+
+        $subject = str_replace(array('â€™','â€œ','â€�','â€“'),array("'",'"','"','-'),$subject);
+        $html = str_replace(chr(194),chr(32),$html);
+		$text = str_replace(chr(194),chr(32),$text);
 		//return $email;
 		$phpmailer->MsgHTML( $html );
 		$phpmailer->AddAddress( trim( $to ) );
@@ -88,8 +108,7 @@ class SendPress_Sender_Website extends SendPress_Sender {
 		//if ( !isset( $charset ) )
 		//$charset = get_bloginfo( 'charset' );
 		// Set the content-type and charset
-		$phpmailer->CharSet = 'UTF-8';
-		$phpmailer->Encoding = '8bit';
+		
 		/**
 		* We'll let php init mess with the message body and headers.  But then
 		* we stomp all over it.  Sorry, my plug-inis more important than yours :)

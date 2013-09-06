@@ -47,6 +47,12 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 		 * Make sure the mailer thingy is clean before we start,  should not
 		 * be necessary, but who knows what others are doing to our mailer
 		 */
+		// If we don't have a charset from the input headers
+		
+		
+
+
+
 		$phpmailer->ClearAddresses();
 		$phpmailer->ClearAllRecipients();
 		$phpmailer->ClearAttachments();
@@ -55,6 +61,28 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 		$phpmailer->ClearCustomHeaders();
 		$phpmailer->ClearReplyTos();
 		//return $email;
+		
+
+		$charset = SendPress_Option::get('email-charset','UTF-8');
+		
+		$phpmailer->CharSet = $charset;
+		$phpmailer->Encoding = '8bit';
+
+
+		if($charset != 'UTF-8'){
+			error_log("change encoding");
+             $html = $this->change($html,'UTF-8',$charset);
+             $text = $this->change($text,'UTF-8',$charset);
+             $subject = $this->change($subject,'UTF-8',$charset);
+                    
+            }
+
+            
+
+        $subject = str_replace(array('â€™','â€œ','â€�','â€“'),array("'",'"','"','-'),$subject);
+        $html = str_replace(chr(194),chr(32),$html);
+		$text = str_replace(chr(194),chr(32),$text);
+		
 		$phpmailer->MsgHTML( $html );
 		$phpmailer->AddAddress( trim( $to ) );
 		$phpmailer->AltBody= $text;
@@ -65,12 +93,9 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 		//if ( 'text/html' == $content_type )
 		$phpmailer->IsHTML( true );
 		
-		// If we don't have a charset from the input headers
-		if ( !isset( $charset ) )
-		//$charset = get_bloginfo( 'charset' );
-		// Set the content-type and charset
-		$phpmailer->CharSet = 'UTF-8';
-		$phpmailer->Encoding = '8bit';
+		
+
+
 		/**
 		* We'll let php init mess with the message body and headers.  But then
 		* we stomp all over it.  Sorry, my plug-inis more important than yours :)

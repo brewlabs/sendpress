@@ -21,7 +21,8 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 
         $options['emails-per-day'] = $_POST['emails-per-day'];
         $options['emails-per-hour'] = $_POST['emails-per-hour'];
-
+         $options['email-charset'] = $_POST['email-charset'];
+        
 
         $options['phpmailer_error'] = '';
         $options['last_test_debug'] = '';
@@ -124,7 +125,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 <?php } ?>
 <br class="clear">
 
-<h2 >Sending Speed And Limit</h2>
+<h2 >Advanced Sending Options</h2>
 <div class="well">
 <?php
   $emails_per_day = SendPress_Option::get('emails-per-day');
@@ -141,12 +142,50 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
 You have sent <strong><?php echo $count_today; ?></strong> emails so far today.<br><br>
 <input type="text" size="6" name="emails-per-day" value="<?php echo $emails_per_day; ?>" /> Emails Per Day<br><br>
 <input type="text" size="6" name="emails-per-hour" value="<?php echo $emails_per_hour; ?>" /> Emails Per Hour 
+<br><br><?php
+  $charset = SendPress_Option::get('email-charset','UTF-8');
+ ?>Charset: 
+<select name="email-charset" id="">
+
+<?php
+$charsete = SendPress_Data::get_charset_types();
+  foreach ( $charsete as $type) {
+     $select="";
+    if($type == $charset){
+      $select = " selected ";
+    }
+    echo "<option $select value=$type>$type</option>";
+
+  }
+?>
+</select><br>
+Squares or weird characters displaying in your emails select the charset for your language.
+<br><br>
+Encoding: <select name="email-charset" id="">
+<?php
+ $charset = SendPress_Option::get('email-encoding','8bit');
+$charsete = SendPress_Data::get_encoding_types();
+  foreach ( $charsete as $type) {
+     $select="";
+    if($type == $charset){
+      $select = " selected ";
+    }
+    echo "<option $select value=$type>$type</option>";
+
+  }
+?>
+</select><br>
+Older versions of SendPress used "quoted-printable"
+
 </div>
+
+
 <?php 
 //Page Nonce
 //wp_nonce_field(  basename(__FILE__) ,'_spnonce' );
 wp_nonce_field( $sp->_nonce_value );
 ?>
+<input type="submit" class="btn btn-primary btn-large" value="Save"/> <a href="" class="btn btn-large"><i class="icon-remove"></i> Cancel</a>
 </form>
 <form method="post" id="post" class="form-horizontal">
 <input type="hidden" name="action" value="send-test-email" />
