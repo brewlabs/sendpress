@@ -37,6 +37,8 @@ class SendPress_View_Queue extends SendPress_View {
 		SendPress_Admin::redirect('Queue');
 	}
 
+	
+
 	function reset_counters(){
 		SendPress_Manager::reset_counters();
 		SendPress_Admin::redirect('Queue');

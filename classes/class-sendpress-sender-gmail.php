@@ -70,8 +70,7 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 
 
 		if($charset != 'UTF-8'){
-			error_log("change encoding");
-             $html = $this->change($html,'UTF-8',$charset);
+			 $html = $this->change($html,'UTF-8',$charset);
              $text = $this->change($text,'UTF-8',$charset);
              $subject = $this->change($subject,'UTF-8',$charset);
                     
