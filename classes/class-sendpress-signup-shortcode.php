@@ -9,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Signup_Shortcode{
 
-	function init(){
+	static function init(){
 		add_shortcode('sendpress-signup', array('SendPress_Signup_Shortcode','load_form'));
 	}
 

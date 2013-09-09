@@ -467,7 +467,7 @@ Push
 			return false;
 		}
 	
-		function add_vars($public_query_vars) {
+		static function add_vars($public_query_vars) {
 			$public_query_vars[] = 'fxti';
 			$public_query_vars[] = 'sendpress';
 			$public_query_vars[] = 'splist';

@@ -10,7 +10,7 @@ class SendPress_View_Settings extends SendPress_View {
 	
 	
 
-	function sub_menu($sp){ 
+	function sub_menu($sp = false){ 
 	?>
 
 	<div class="navbar">
@@ -33,7 +33,7 @@ class SendPress_View_Settings extends SendPress_View {
 </div>
 	<?php
 	}
-	function prerender($sp){
+	function prerender($sp = false){
 		if(  $sp->_current_view == '' ){
 			SendPress_Admin::redirect('Settings_Styles');
 		}

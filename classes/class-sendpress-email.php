@@ -297,7 +297,7 @@ class SendPress_Email {
 	}
 
 
-	function set_default_style( $id ){
+	static function set_default_style( $id ){
 		if( false == get_post_meta( $id , 'body_bg', true) ) {
 
 			$default_styles_id = SendPress_Data::get_template_id_by_slug( 'user-style' );
