@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid,
 Requires at least: 3.4
 Tested up to: 3.6
-Stable tag: 0.9.4.4
+Stable tag: 0.9.4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,6 +94,13 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 
 == Changelog ==
+
+= 0.9.4.5 - 2013.9.10 =
+* email encoding options
+* forms and iframe updates
+* s2member conflict fix
+* sending speed saving
+
 
 = 0.9.4.4 - 2013.9.4 =
 * forms not posting emails correctly
