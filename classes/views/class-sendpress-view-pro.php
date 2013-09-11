@@ -10,13 +10,13 @@ class SendPress_View_Pro extends SendPress_View{
 
 	function module_save_api_key(){
         $license = $_POST['api_key'];
-        if( false === SendPress_Pro_Manager::activate_key($license) ){
+        if( false === SendPress_Pro_Manager::try_activate_key($license) ){
             add_action('sendpress_notices', array('SendPress_Pro_Manager', 'activate_key_notice'));
         }
     }
 
     function module_deactivate_api_key(){
-        if( false === SendPress_Pro_Manager::deactivate_key() ){
+        if( false === SendPress_Pro_Manager::try_deactivate_key() ){
             add_action('sendpress_notices', array('SendPress_Pro_Manager', 'deactivate_key_notice'));
         }
     }

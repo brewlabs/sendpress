@@ -7,7 +7,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class SendPress_View_Help_Whatsnew extends SendPress_View{
-	function prerender($sp){
+	function prerender($sp = false){
 		wp_enqueue_script( 'dashboard' );
 		/*
 		sp_add_help_widget( 'help_support', 'Support Information', array(&$this,'help_support'));
@@ -34,9 +34,30 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 
 <h1>Welcome to SendPress <?php echo SENDPRESS_VERSION; ?></h1>
 
-<div class="about-text">Thank you for updating to the latest version! SendPress <?php echo SENDPRESS_VERSION; ?> has multiple bug fixes and other minor updates. We hope you like it.</div>
+<div class="about-text">Thank you for updating to the latest version.</div>
 
 <div class="sp-badge">Version <?php echo SENDPRESS_VERSION; ?></div>
+
+<div class="changelog">
+	<h3>Show support and help keeps SendPress going</h3>
+
+	<div class="feature-section col two-col">
+		<p style="padding: 5px;">
+		</p>
+		<div>
+			<a href="http://wordpress.org/support/view/plugin-reviews/sendpress" target="_blank"><img alt="" src="<?php echo SENDPRESS_URL;?>/img/ratethis.png" class="image-100"></a>
+		
+		</div>
+		<div class="last-feature">
+			<h4>Please give us a Review</h4>
+			Keep SendPress free and updated by showing support and giving us a review. All feedback is appreciated.
+			<br><br><a href="http://wordpress.org/support/view/plugin-reviews/sendpress" target="_blank">Review SendPress on WordPress.org</a>
+			<br><br>
+			Thanks,<br>
+			The SendPress Team
+		</div>
+	</div>
+</div>
 
 <h2 class="nav-tab-wrapper">
 	<a href="#" class="nav-tab nav-tab-active">
@@ -44,7 +65,7 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 		Credits	</a><a href="freedoms.php" class="nav-tab">
 		Freedoms	</a>-->
 </h2>
-
+<!--
 <div class="changelog">
 	<h3>New Pro Options</h3>
 
@@ -101,20 +122,20 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 </div>
 -->
 <div class="changelog">
-	<h3>Even More</h3>
+	<h3>What's New</h3>
 
 	<div class="feature-section col three-col">
 		<div>
-			<h4>Better Support for PHP 5.2</h4>
-			<p>Fixed multiple issue's with older versions of php.</p>
+			<h4>Email Character Encoding</h4>
+			<p>Select the character encoding of your emails to make sure they match your language.</p>
 		</div>
 		<div>
-			<h4>Updated Permissions Settings</h4>
-			<p>Added support for more WordPress roles and fixed email editing bugs</p>
+			<h4>Manage Subscription Link</h4>
+			<p>Added support for manage subscription link in footer of email.</p>
 		</div>
 		<div class="last-feature">
-			<h4>Added Support for Twenty Ten</h4>
-			<p>SendPress is now aware of styling for Twenty Ten. This allows for embeding SendPress subscription management screen in theme.</p>
+			<h4>New Queue Builder</h4>
+			<p>Adds emails to sending queue in batches for large lists.</p>
 	
 		</div>
 	</div>

@@ -18,7 +18,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 */
 class SendPress_Pro_Manager {
 
-	function &init() {
+	static function &init() {
 		static $instance = false;
 
 		if ( !$instance ) {
@@ -45,7 +45,7 @@ class SendPress_Pro_Manager {
 	function get_pro_state(){
 		if ( false === ( $state = get_transient( 'sendpress_key_state' ) ) ) {
 		    // It wasn't there, so regenerate the data and save the transient
-		    $sendpress_key_state = $this->check_key();
+		    $sendpress_key_state = $this->try_check_key();
 			$this->set_pro_state($sendpress_key_state);
 			//set_transient( 'sendpress_key_state', $sendpress_key_state['state'], $sendpress_key_state['transient_time'] );
 			$state = $sendpress_key_state['state'];
@@ -69,17 +69,17 @@ class SendPress_Pro_Manager {
 			
 			if( $state !== 'valid' && !empty($key) ){
 				add_action('sendpress_notices', array($this, 'key_notice'));
-				SendPress_Option::set('api_key','');
+				//SendPress_Option::set('api_key','');
 			}
 		}
 	}
 
-	function activate_key($key){
+	function activate_key($key,$name){
 
 		$api_params = array( 
             'edd_action'=> 'activate_license', 
             'license'   => $key, 
-            'item_name' => urlencode( SENDPRESS_PRO_NAME ) // the name of our product in EDD
+            'item_name' => urlencode( $name ) // the name of our product in EDD
         );
 
         // Call the custom API.
@@ -93,21 +93,35 @@ class SendPress_Pro_Manager {
         $license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
         if($license_data){
-        	SendPress_Option::set('api_key',$key);
-        	SendPress_Pro_Manager::set_pro_state(array('state'=>$license_data->license, 'transient_time'=>SENDPRESS_TRANSIENT_LENGTH));
-            return true;
+        	if( $license_data->license !== 'invalid' ){
+        		SendPress_Option::set('api_key',$key);
+        		SendPress_Option::set('api_product', $name);
+        		SendPress_Pro_Manager::set_pro_state(array('state'=>$license_data->license, 'transient_time'=>SENDPRESS_TRANSIENT_LENGTH));
+        		
+            	return true;
+        	}
+        	return false;
     	}
     	return false;
 	}
 
-	function deactivate_key(){
+	function try_activate_key($key){
 
-		$key = SendPress_Option::get('api_key');
+		//$key = SendPress_Option::get('api_key');
+		global $pro_names;
+		foreach($pro_names as $name){
+			SendPress_Pro_Manager::activate_key($key,$name);
+		}
+
+	}
+
+	function deactivate_key($key, $name){
+
         // data to send in our API request
         $api_params = array( 
             'edd_action'=> 'deactivate_license', 
             'license'   => $key, 
-            'item_name' => urlencode( SENDPRESS_PRO_NAME ) // the name of our product in EDD
+            'item_name' => urlencode( $name ) // the name of our product in EDD
         );
         
         // Call the custom API.
@@ -129,21 +143,27 @@ class SendPress_Pro_Manager {
         return false;
 	}
 
-	function check_key(){
-
+	function try_deactivate_key(){
 		$key = SendPress_Option::get('api_key');
+		global $pro_names;
+		foreach($pro_names as $name){
+			SendPress_Pro_Manager::deactivate_key($key,$name);
+		}
+	}
+
+	function check_key($key,$name){
 
 		if(empty($key)){
-			return array('state'=>SENDPRESS_PRO_DEACTIVATED, 'transient_time'=>YEAR_IN_SECONDS);
+			return array('state'=>SENDPRESS_PRO_DEACTIVATED, 'transient_time'=>YEAR_IN_SECONDS,'sp_state'=>'passed');
 		}
 
-		$failed = array('state'=>'valid', 'transient_time'=>DAY_IN_SECONDS);
+		$failed = array('state'=>'valid', 'transient_time'=>DAY_IN_SECONDS, 'sp_state'=>'failed');
         
         // data to send in our API request
         $api_params = array( 
             'edd_action'=> 'check_license', 
             'license'   => $key, 
-            'item_name' => urlencode( SENDPRESS_PRO_NAME ) // the name of our product in EDD
+            'item_name' => urlencode( $name ) // the name of our product in EDD
         );
         
         // Call the custom API.
@@ -159,10 +179,28 @@ class SendPress_Pro_Manager {
 
         if($license_data){
      	   // $license_data->license will be either "deactivated" or "failed"
-     	   return array('state'=>$license_data->license, 'transient_time'=>SENDPRESS_TRANSIENT_LENGTH);
+     	   return array('state'=>$license_data->license, 'transient_time'=>SENDPRESS_TRANSIENT_LENGTH,  'sp_state'=>'passed');
     	}
     	return $failed;
 	}
+
+	function try_check_key(){
+
+		$key = SendPress_Option::get('api_key');
+		global $pro_names;
+
+		$check = array('state'=>'valid', 'transient_time'=>DAY_IN_SECONDS, 'sp_state'=>'failed');
+		foreach($pro_names as $name){
+			$check = SendPress_Pro_Manager::check_key($key,$name);
+			if( $check['sp_state'] === 'passed' ){
+				return $check;
+			}
+		}
+
+		return $check;
+
+	}
+
 
 	function key_notice(){
 		echo '<div class="alert alert-error">';
@@ -187,15 +225,16 @@ class SendPress_Pro_Manager {
 	
 	function get_pro_details( $res, $action, $args ){
 
+	
 		if( $action === 'plugin_information' && $args->slug === 'sendpress-pro' ){
 
 			if( class_exists('SendPress_Option') ){
 				$license = SendPress_Option::get('api_key');
-
+				$product = SendPress_Option::get('api_product','SendPress Pro');
 				$api_params = array( 
 		            'edd_action'=> 'get_version', 
 		            'license'   => $license, 
-		            'name' => urlencode( SENDPRESS_PRO_NAME ) // the name of our product in EDD
+		            'name' => urlencode( $product ) // the name of our product in EDD
 		        );
 		        
 		        $response = wp_remote_get( add_query_arg( $api_params, SENDPRESS_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
@@ -204,13 +243,13 @@ class SendPress_Pro_Manager {
 		            return false;
 
 		        $data = json_decode( wp_remote_retrieve_body( $response ) );
-
 		        $obj = new stdClass();
-				$obj->name = $data->name;
+				$obj->name = 'SendPress Pro';
 				$obj->slug = $args->slug;
 				$obj->version = $data->version;
 				$obj->download_link = $data->package;
-
+				$obj->sections = $data->sections;
+			
 				$res = $obj;
 
 				

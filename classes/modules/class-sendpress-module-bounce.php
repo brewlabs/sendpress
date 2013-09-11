@@ -20,8 +20,8 @@ class SendPress_Module_Bounce extends SendPress_Module{
 			<div class="description">
 				SendPress will automatically mark bounced emails and remove them from your lists.
 			</div>
-			<!-- <div class="inline-buttons"><a class="btn disabled btn-activate" href="#">Coming Soon</a></div>-->
-			<?php $this->buttons($plugin_path);?>
+			 <div class="inline-buttons"><a class="btn disabled btn-activate" href="#">Coming Soon</a></div>
+			<!--<?php $this->buttons($plugin_path);?> -->
 			<input type="hidden" name="plugin_path" value="<?php echo $plugin_path; ?>" />
 			<input class="action" type="hidden" name="action" value="module-activate-sendpress-pro" />
 			<?php wp_nonce_field($sp->_nonce_value); ?>

@@ -28,7 +28,7 @@ class SendPress_View_Emails extends SendPress_View{
 	}
 
  	
-	function prerender(){
+	function prerender($sp= false){
 	
 	
 

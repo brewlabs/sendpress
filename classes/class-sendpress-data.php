@@ -87,6 +87,104 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
+	static function process_with_iron( $id ){
+		global $wpdb;
+		$table = self::queue_table();
+		$query = $wpdb->prepare("SELECT id from $table where id = %d and inprocess = %d" , $id,0);
+		$id = $wpdb->get_var($query);
+		if(!isset($id)){
+			return 0;
+		}
+		$result = $wpdb->update( $table ,array('inprocess'=>'1','last_attempt'=>date('Y-m-d H:i:s')), array('id'=> $id) );
+		return $result;
+	}
+
+
+	static function fetch_queue_for_iron(){
+		global $wpdb;
+		$table = self::queue_table();
+
+		$counter = SendPress_Option::get('last_queue_id');
+		if($counter == false){
+			$coutner = 0;
+		} else {
+				$query = $wpdb->prepare("SELECT id from $table where id = %d" , $counter+1);
+				$id = $wpdb->get_var($query);
+				if(!isset($id)){
+					$counter= 0;
+				}
+		}
+
+
+
+
+
+		$query = $wpdb->prepare("SELECT * FROM $table  WHERE id > %d LIMIT 10" , $counter);
+
+
+		$data =  $wpdb->get_results($query,ARRAY_A);
+
+		$end = end($data);
+		if($end['id']){
+			SendPress_Option::set('last_queue_id', $end['id']);
+		}
+		return $data;
+
+		
+	}
+
+
+	static function add_email_to_queue($values){
+		global $wpdb;
+		$table = SendPress_Data::queue_table();
+		$messageid = SendPress_Data::unique_message_id();
+		$values["messageID"] = $messageid;
+		$values["date_published"] = date('Y-m-d H:i:s');
+		//$q = $wpdb->prepare("INSERT INTO $table (subscriberID, from_name,from_email,to_email, subject, messageID, date_published, emailID, listID) VALUES( '" .$values['subscriberID'] . "','" .$values['from_name'] . "', '" .$values['from_email'] .  "', '" .$values['to_email'] . "', '" .$values['subject'] . "', '" .$messageid . "', '". date('Y-m-d H:i:s') . "', '" .$values['emailID']. "', '" .$values['listID'] ."' )");
+		//error_log($q);
+		//$result = $this->wpdbQuery($q, 'query');
+
+		$wpdb->insert( $table, $values);
+	}
+
+	static	function unique_message_id() {
+		if ( isset($_SERVER['SERVER_NAME'] ) ) {
+	      	$servername = $_SERVER['SERVER_NAME'];
+	    } else {
+	      	$servername = 'localhost.localdomain';
+	    }
+	    $uniq_id = md5(uniqid(time()));
+	    $result = sprintf('%s@%s', $uniq_id, $servername);
+	    return $result;
+	}
+
+
+	static function get_charset_types(){
+		return array(
+				"UTF-8",
+				"UTF-7",
+				"BIG5",
+				"ISO-8859-1",
+				"ISO-8859-2",
+				"ISO-8859-3",
+				"ISO-8859-4",
+				"ISO-8859-5",
+				"ISO-8859-6",
+				"ISO-8859-7",
+				"ISO-8859-8",
+				"ISO-8859-9",
+				"ISO-8859-10",
+				"ISO-8859-13",
+				"ISO-8859-14",
+				"ISO-8859-15",
+				"Windows-1251",
+				"Windows-1252");
+
+	}
+
+	static function get_encoding_types(){
+		return array("8bit", "7bit", "binary", "base64",  "quoted-printable");
+	}
 	/********************* QUEUE static functionS **************************/
 
 
@@ -288,6 +386,30 @@ class SendPress_Data extends SendPress_DB_Tables {
         
      
         return $wpdb->get_results( $query );
+	}
+
+	static function get_active_subscribers_lists_with_id($list_ids = array() , $id = 0 ){
+		global $wpdb;
+		$lists = implode(',', $list_ids);
+		$query = "SELECT t1.subscriberID,t1.email, t3.status, t2.listid, count(*) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
+
+        $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.status = 2) AND (t2.listID in  ( ". $lists ."  )) AND t1.subscriberID > ".$id." GROUP BY t1.subscriberID LIMIT 1000";
+        
+     
+        return $wpdb->get_results( $query );
+	}
+
+
+	static function get_active_subscribers_count($list_ids = array() ){
+		global $wpdb;
+		$lists = implode(',', $list_ids);
+		$query = "SELECT  t1.subscriberID FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
+
+        $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.status = 2) AND (t2.listID in  ( ". $lists ."  )) GROUP BY t1.subscriberID  ";
+        
+        $x =$wpdb->get_results( $query );
+
+        return count($x);
 	}
 
 

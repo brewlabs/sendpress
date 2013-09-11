@@ -28,6 +28,9 @@ Push
 	if(!defined('SENDPRESS_PRO_NAME') ){
 		define( 'SENDPRESS_PRO_NAME', 'SendPress Pro' );
 	}
+
+	global $pro_names;
+	$pro_names = array('SendPress Pro','Pro3','Pro20');
 	
 	/*
 	*
@@ -459,7 +462,7 @@ Push
 			return false;
 		}
 	
-		function add_vars($public_query_vars) {
+		static function add_vars($public_query_vars) {
 			$public_query_vars[] = 'fxti';
 			$public_query_vars[] = 'sendpress';
 			$public_query_vars[] = 'splist';
@@ -629,8 +632,8 @@ Push
 		//MAKE SURE WE ARE ON AN ADMIN PAGE
 		if(isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)){
 
-			if(SendPress_Option::get('whatsnew')){
-				SendPress_Option::set('whatsnew',false);
+			if(SendPress_Option::get('whatsnew','show') == 'show'){
+				SendPress_Option::set('whatsnew','hide');
 				SendPress_Admin::redirect('Help_Whatsnew');
 			}
 
@@ -1012,7 +1015,7 @@ Push
 		if ( version_compare( $current_version, SENDPRESS_VERSION, '==' ) )
 			return;
 
-		SendPress_Option::set('whatsnew',true);
+		SendPress_Option::set('whatsnew','show');
 
 		if(version_compare( $current_version, '0.6.2', '==' )){
 			require_once(SENDPRESS_PATH . 'inc/db/status.table.php');

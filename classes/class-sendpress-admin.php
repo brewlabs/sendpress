@@ -24,6 +24,9 @@ class SendPress_Admin {
 		if(isset( $parts[1])){
 			$l .= "&view=".$parts[1];
 		}
+		if(isset($parts[2])){
+			$l .= "-".$parts[2];
+		}
 		if(isset($parts[3])){
 			$l .= "-".$parts[3];
 		}

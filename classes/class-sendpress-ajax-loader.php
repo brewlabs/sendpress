@@ -12,7 +12,7 @@ class SendPress_Ajax_Loader{
 
 	static $ajax_nonce = "love-me-some-sendpress-ajax-2012";
 	
-	function &init() {
+	static function &init() {
 		static $instance = false;
 
 		if ( !$instance ) {
@@ -35,6 +35,7 @@ class SendPress_Ajax_Loader{
 		add_action("wp_ajax_nopriv_sendpress_subscribe_to_list", array(&$this,'subscribe_to_list') );
 
 		add_action('wp_ajax_sendpress-sendbatch', array(&$this, 'send_batch'));
+		add_action('wp_ajax_sendpress-queuebatch', array(&$this, 'queue_batch'));
 		add_action('wp_ajax_sendpress-stopcron', array(&$this, 'cron_stop'));
 		add_action('wp_ajax_sendpress-sendcount', array(&$this, 'sendcount'));
 		add_action('sendpress_admin_scripts',array(&$this,'admin_scripts'));
@@ -229,6 +230,70 @@ class SendPress_Ajax_Loader{
 		
 		echo json_encode($count);
 		exit();
+	}
+
+	function queue_batch(){
+		$this->verify_ajax_call();
+		$reportid = isset($_POST['reportid']) ? $_POST['reportid'] : 0;
+		$lists = get_post_meta($reportid, '_send_lists', true);
+	
+		$list = explode(",",$lists );
+		$last = get_post_meta($reportid, '_send_last', true);
+		$count_last = get_post_meta($reportid, '_send_last_count', true);
+		if($last == false){
+			$last = 0;
+			$count_last = 0;
+		}
+
+
+
+		$x  = SendPress_Data::get_active_subscribers_lists_with_id( $list ,$last );
+
+
+
+
+		foreach($x as $email){
+                   
+                     $go = array(
+                        'from_name' => 'queue',
+                        'from_email' => 'queue',
+                        'to_email' => $email->email,
+                        'emailID'=> $reportid,
+                        'subscriberID'=> $email->subscriberID,
+                        //'to_name' => $email->fistname .' '. $email->lastname,
+                        'subject' => '',
+                        'listID'=> $email->listid
+                        );
+                   
+                    SendPress_Data::add_email_to_queue($go);
+             
+                }
+
+
+
+
+
+
+
+
+
+		$count_last += count( $x );  
+		 update_post_meta($reportid,'_send_last_count',$count_last );
+		//if()
+		if(count( $x ) == 1000){
+			
+			$w = end($x);
+			 update_post_meta($reportid,'_send_last',$w->subscriberID );
+
+			echo json_encode(array("lastid"=> $w->subscriberID ,"count" =>count( $x )  ));
+
+			exit();
+		}
+		 update_post_meta($reportid,'_send_last', -1 );
+		echo json_encode(array("lastid"=> 0 ,"count" =>count( $x ) ));
+		exit();
+
+	
 	}
 
 }

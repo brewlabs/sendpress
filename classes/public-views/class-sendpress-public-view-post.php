@@ -19,8 +19,6 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			$user_info[$opt] = isset($_POST['sp_' . $opt]) ?  $_POST['sp_' . $opt]: false ;
 		}
 
-
-		
 		$valid_user = array();
 		//foreach()
 		if(isset($user_info['list'])){
@@ -30,25 +28,25 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			}
 
 			$data_error = false;
-			if( isset($user_info['status']) ){
+			if( $user_info['status'] !== false ){
 				$valid_user['status'] = $user_info['status'];
 			} else {
 				$valid_user['status'] = 2;
 			}
 
-			if( isset($user_info['email']) && is_email( $user_info['email'] )){
+			if( $user_info['email'] !== false && is_email( $user_info['email'] )){
 				$valid_user['email'] = $user_info['email'];
 			} else {
 				$data_error = __('Invalid Email','sendpress');
 			}
 
-			if( isset($user_info['firstname']) ){
+			if( $user_info['firstname'] !== false ){
 				$valid_user['firstname'] = $user_info['firstname'];
 			} else {
 				$valid_user['firstname'] = '';
 			}
 			
-			if( isset($user_info['lastname']) ){
+			if( $user_info['lastname'] !== false ){
 				$valid_user['lastname'] = $user_info['lastname'];
 			} else {
 				$valid_user['lastname'] = '';

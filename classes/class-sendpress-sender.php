@@ -26,7 +26,7 @@ class SendPress_Sender {
 		return "Default Sender";
 	}
 
-	function init(){
+	static function init(){
 		add_filter('sendpress_sending_method_gmail',array('SendPress_Sender','gmail'),10,1);
 		add_filter('sendpress_sending_method_sendpress',array('SendPress_Sender','sendpress'),10,1);
 	}
@@ -77,7 +77,32 @@ class SendPress_Sender {
 	}
 
 
-
+	function change($data,$input,$output){
+		$input = strtoupper(trim($input));
+		$output = strtoupper(trim($output));
+		if($input == $output) return $data;
+		if ($input == 'UTF-8' && $output == 'ISO-8859-1'){
+			$data = str_replace(array('€','„','“'),array('EUR','"','"'),$data);
+		}
+		if (function_exists('iconv')){
+			set_error_handler('sendpress_encoding_error_handler');
+			$encodedData = iconv($input, $output."//IGNORE", $data);
+			restore_error_handler();
+			if(!sendpress_encoding_error_handler('result')){
+				return $encodedData;
+			}
+		}
+		if (function_exists('mb_convert_encoding')){
+			return mb_convert_encoding($data, $output, $input);
+		}
+		if ($input == 'UTF-8' && $output == 'ISO-8859-1'){
+			return utf8_decode($data);
+		}
+		if ($input == 'ISO-8859-1' && $output == 'UTF-8'){
+			return utf8_encode($data);
+		}
+		return $data;
+	}
 
 
 
@@ -86,3 +111,13 @@ class SendPress_Sender {
 
 }
 
+ function sendpress_encoding_error_handler($errno,$errstr=''){
+      static $error = false;
+      if(is_string($errno) && $errno=='result'){
+          $currentError = $error;
+          $error = false;
+          return $currentError;
+      }
+      $error = true;
+      return true;
+ }

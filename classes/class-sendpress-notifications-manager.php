@@ -18,7 +18,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 */
 class SendPress_Notifications_Manager {
 
-	function &init() {
+	static function &init() {
 		static $instance = false;
 
 		if ( !$instance ) {

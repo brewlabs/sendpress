@@ -200,7 +200,7 @@ class SendPress_Email {
 				"urlID"=> '0',
 				"view"=>"manage",
 				"listID"=>$this->list_id(),
-				"action"=>"unsubscribe"
+				"action"=>""
 			);
 			$code = SendPress_Data::encrypt( $link_data );
 			if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
@@ -297,7 +297,7 @@ class SendPress_Email {
 	}
 
 
-	function set_default_style( $id ){
+	static function set_default_style( $id ){
 		if( false == get_post_meta( $id , 'body_bg', true) ) {
 
 			$default_styles_id = SendPress_Data::get_template_id_by_slug( 'user-style' );

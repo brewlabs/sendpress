@@ -12,7 +12,7 @@
             spadmin.menu.init.call(spadmin.menu, $);
             spadmin.edit.init.call(spadmin.edit, $);
             spadmin.emailmanager.init.call(spadmin.emailmanager, $);
-
+            spadmin.confirmsend.init.call(spadmin.confirmsend, $);
             spadmin.notifications.init.call(spadmin.notifications, $);
             spadmin.log("SP Finished Started");
             spadmin.log(spvars);
@@ -316,6 +316,55 @@
             });
         }
     }
+
+
+    this.confirmsend = {
+
+        count: 0,
+        total: 0,
+        init: function($){
+
+            $area = $('#confirm-queue-add');
+            spadmin.confirmsend.total = parseInt($('#list-total').html());
+            if($area.length > 0){
+                spadmin.confirmsend.queuebatch( $('#post_ID').val() );
+            }
+        },
+         queuebatch: function(reportid){
+            $.post(
+                spvars.ajaxurl,
+                {
+                    action:'sendpress-queuebatch',
+                    spnonce: spvars.sendpressnonce,
+                    reportid: reportid,
+                }, 
+                function(data){
+                    spadmin.confirmsend.batchit(data);
+                }); 
+        }, batchit: function(response){
+            response = $.parseJSON(response);
+            spadmin.log(response);
+            if( response != undefined && parseInt(response.lastid) > 0){
+                spadmin.confirmsend.count = spadmin.confirmsend.count + parseInt(response.count);
+                var $qt =$("#queue-total");
+                $qt.html(spadmin.confirmsend.count);
+                $p = parseInt( spadmin.confirmsend.count / spadmin.confirmsend.total * 100 );
+                $('.sp-queueit').css('width', $p+'%');
+
+                 spadmin.confirmsend.queuebatch( $('#post_ID').val() );
+                spadmin.log('We should check for more emails');
+            } else {
+                 $('.sp-queueit').css('width', '100%');
+                window.location.href= window.location.href+"&finished=true";
+               // spadmin.confirmsend.closesend();
+                spadmin.log('Should die');
+            }
+            
+        },
+
+
+    }
+
 
     this.queue = {
         count: 0,
