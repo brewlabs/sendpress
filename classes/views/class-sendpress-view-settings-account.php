@@ -22,7 +22,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
         $options['emails-per-day'] = $_POST['emails-per-day'];
         $options['emails-per-hour'] = $_POST['emails-per-hour'];
          $options['email-charset'] = $_POST['email-charset'];
-        
+        $options['email-encoding'] = $_POST['email-encoding'];
 
         $options['phpmailer_error'] = '';
         $options['last_test_debug'] = '';
@@ -55,7 +55,6 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 
   function html( $sp ) {
     global  $sendpress_sender_factory;
-
     $senders = $sendpress_sender_factory->get_all_senders();
     ksort($senders);
     $method = SendPress_Option::get( 'sendmethod' );
@@ -161,7 +160,7 @@ $charsete = SendPress_Data::get_charset_types();
 </select><br>
 Squares or weird characters displaying in your emails select the charset for your language.
 <br><br>
-Encoding: <select name="email-charset" id="">
+Encoding: <select name="email-encoding" id="">
 <?php
  $charset = SendPress_Option::get('email-encoding','8bit');
 $charsete = SendPress_Data::get_encoding_types();

@@ -34,12 +34,12 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 
 <h1>Welcome to SendPress <?php echo SENDPRESS_VERSION; ?></h1>
 
-<div class="about-text">Thank you for updating to the latest version.</div>
+<div class="about-text">We have been working hard on bugs and updates for WordCamp Boston as we push to 1.0 by October. We appreciate your support and Thank you for updating to the latest version.</div>
 
 <div class="sp-badge">Version <?php echo SENDPRESS_VERSION; ?></div>
 
 <div class="changelog">
-	<h3>Show support and help keeps SendPress going</h3>
+	<h3>Show support and help keep SendPress free</h3>
 
 	<div class="feature-section col two-col">
 		<p style="padding: 5px;">

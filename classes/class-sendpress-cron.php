@@ -79,6 +79,30 @@ class SendPress_Cron {
 
         return array_merge($param, $frequencies);
     }
+
+
+    static function use_iron_cron(){
+
+        $url = self::remove_http( get_site_url() );
+        //echo $url;
+
+        $body = wp_remote_retrieve_body( wp_remote_get( 'http://sendpress.com/iron/cron/add/'. $url ) );
+        wp_clear_scheduled_hook( 'sendpress_cron_action' );
+    }
+
+    function remove_http($url) {
+   $disallowed = array('http://', 'https://');
+   foreach($disallowed as $d) {
+      if(strpos($url, $d) === 0) {
+         return str_replace($d, '', $url);
+      }
+   }
+   return $url;
+}
+
+    function disable_iron_cron(){
+
+    }
 }
 
 

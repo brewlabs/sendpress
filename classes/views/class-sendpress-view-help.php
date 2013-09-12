@@ -120,6 +120,8 @@ WordPress Version:        <?php echo get_bloginfo( 'version' ) . "\n"; ?>
 
 <?php echo SendPress_DB_Tables::check_setup_support(); ?>
 
+Sending Method: 		  <?php echo SendPress_Option::get( 'sendmethod' ). "\n"; ?>
+
 PHP Version:              <?php echo PHP_VERSION . "\n"; ?>
 MySQL Version:            <?php echo mysql_get_server_info() . "\n"; ?>
 Web Server Info:          <?php echo $_SERVER['SERVER_SOFTWARE'] . "\n"; ?>
