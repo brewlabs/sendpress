@@ -3,8 +3,8 @@ Plugin URI: http://sendpress.com
 Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid,
 Requires at least: 3.4
-Tested up to: 3.6
-Stable tag: 0.9.4.5
+Tested up to: 3.6.1
+Stable tag: 0.9.4.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,6 +94,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 
 == Changelog ==
+
+= 0.9.4.6 - 2013.9.11 =
+* email encoding not always saving
 
 = 0.9.4.5 - 2013.9.10 =
 * email encoding options
@@ -269,6 +272,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.4.6 =
+email encoding not always saving
 
 = 0.9.4.4 =
 Form post fix and manage link 
