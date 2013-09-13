@@ -79,6 +79,22 @@ class SendPress_Cron {
 
         return array_merge($param, $frequencies);
     }
+        static function stop(){
+        $upload_dir = wp_upload_dir();
+        $filename = $upload_dir['basedir'].'/sendpress.pause';
+        if (file_exists($filename)) {
+            return true;
+        }
+        return false;
+    }
+
+    static function start(){
+        $upload_dir = wp_upload_dir();
+        $filename = $upload_dir['basedir'].'/sendpress.pause';
+        if (file_exists($filename)) {
+            unlink($filename);
+        } 
+    }
 
 
     static function use_iron_cron(){
