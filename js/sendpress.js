@@ -39,6 +39,26 @@
               $(this).tab('show');
             });
 
+            $('#sp-enable-cron').click(function (event) {
+                event.preventDefault();
+                $.post( ajaxurl, {
+                            enable: true,
+                            action: 'sendpress-autocron'
+                        }); 
+                $('#sp-disable-cron').show();
+                $('#sp-enable-cron').hide();             
+            });
+
+            $('#sp-disable-cron').click(function (event) {
+                event.preventDefault();
+                $.post( ajaxurl, {
+                            
+                            action: 'sendpress-autocron'
+                  }); 
+                  $('#sp-disable-cron').hide();  
+                  $('#sp-enable-cron').show();             
+            });
+
             $('.sp-insert-code').click(function(e){
                 e.preventDefault();
                 html = $(this).data('code');

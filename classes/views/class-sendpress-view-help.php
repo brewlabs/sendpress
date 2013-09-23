@@ -250,7 +250,7 @@ if ( get_bloginfo( 'version' ) < '3.4' ) {
 
 
 	function html($sp){
-		
+		 SendPress_Tracking::event('Help Tab');
 		global $wp_version;
 $screen = get_current_screen();
 

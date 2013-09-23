@@ -308,6 +308,7 @@ class SendPress_Queue_Table extends WP_List_Table {
         if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
         //How many pages do we have in total?
         $totalpages = ceil($totalitems/$per_page);
+        $query.=' WHERE success = 0 ';
         //adjust the query to take pagination into account
         if(!empty($paged) && !empty($per_page)){
             $offset=($paged-1)*$per_page;

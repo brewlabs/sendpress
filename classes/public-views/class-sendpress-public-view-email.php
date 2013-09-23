@@ -19,12 +19,11 @@ class SendPress_Public_View_Email extends SendPress_Public_View{
 		if($this->data()->id){
 			$email_id = $this->data()->id;
 		} 
-
 		$post = get_post($email_id);
 		$inline = false;
-					if(isset($_GET['inline']) ){
-						$inline = true;
-					}
+		if(isset($_GET['inline']) ){
+			$inline = true;
+		}
 		echo SendPress_Template::get_instance()->render(false, true, $inline );
 	}
 

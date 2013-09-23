@@ -8,6 +8,33 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Manager {
 
+	static function limit_reached(){
+		global $wpdb;
+		$emails_per_hour = SendPress_Option::get('emails-per-hour');
+		$emails_per_day = SendPress_Option::get('emails-per-day');
+
+		$email_count_day = SendPress_Data::emails_sent_in_queue("day");
+		// Check our daily send limit
+		if($emails_per_day != false && $emails_per_day != 0 ){
+			if( intval($email_count_day) >= intval($emails_per_day)  ){
+				//We hit the daily limit
+				return true;
+			}
+		}
+		$email_count_hour = SendPress_Data::emails_sent_in_queue("hour");
+		// Check our hourly send limit
+		if($emails_per_hour != false && $emails_per_hour != 0 ){
+			if( intval($email_count_hour) >= intval($emails_per_hour)  ){
+				//We hit the hourly limit
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+
+
 	static function send_limit_reached(){
 
 		global $wpdb;
@@ -65,8 +92,8 @@ class SendPress_Manager {
 		$emails_per_day = SendPress_Option::get('emails-per-day');
 		$emails_per_hour = SendPress_Option::get('emails-per-hour');
 		$count = SendPress_Data::emails_in_queue();
-		$emails_this_hour = SendPress_Manager::emails_this_hour();
-		$emails_today = SendPress_Manager::emails_today();
+		$emails_this_hour = SendPress_Data::emails_sent_in_queue("hour");
+		$emails_today = SendPress_Data::emails_sent_in_queue("day");
 		$hour = $emails_per_hour - $emails_this_hour;
 		$day = $emails_per_day - $emails_today;
 
@@ -82,6 +109,24 @@ class SendPress_Manager {
 
 
 	}
+
+	static function public_url($code){
+		$permalinks = get_option('permalink_structure');
+		$pos = strpos($permalinks, "index.php");
+		$indexer ="";
+		if ($pos > 0) { // note: three equal signs
+			    $indexer = "index.php";
+		}
+		if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
+				$link = home_url("?sendpress=".$code);
+			} else {
+				$link = home_url("{$indexer}/sendpress/".$code."/");
+				
+			}
+		return $link;
+	}
+
+	
 
 
 	static function increase_email_count( $add = 1 ){

@@ -96,13 +96,26 @@ class SendPress_Cron {
         } 
     }
 
+    static function iron_url($url){
+        return  parse_url($url);
+        
+    }
+
 
     static function use_iron_cron(){
-
-        $url = self::remove_http( get_site_url() );
+        
+        $url =  SendPress_Manager::public_url('send');
+        $info = self::iron_url( $url );
+        $domain = base64_encode($info['host']);
+        $xpath = $info['path'];
+       
+        if(isset($info['query']) ){
+             $xpath .= "?".$info['query'];
+        }
+         $path = base64_encode(  $xpath );
         //echo $url;
-
-        $body = wp_remote_retrieve_body( wp_remote_get( 'http://sendpress.com/iron/cron/add/'. $url ) );
+        error_log('http://sendpress.com/iron/cron/add/'. $domain .'/'. $path);
+        $body = wp_remote_retrieve_body( wp_remote_get( 'http://sendpress.com/iron/cron/add/'. $domain .'/'.$path ) );
         wp_clear_scheduled_hook( 'sendpress_cron_action' );
     }
 

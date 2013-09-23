@@ -58,6 +58,7 @@ class SendPress_View_Pro extends SendPress_View{
 	
 	function html($sp){
 		//SendPress_Option::set('pro_plugins','');
+        SendPress_Tracking::event('Pro Tab');
         ?>
         <div class="pro-header" >
             <form method="post" id="post" style="float:right;">

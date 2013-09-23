@@ -34,6 +34,7 @@ class SendPress_Ajax_Loader{
 		add_action("wp_ajax_sendpress_subscribe_to_list", array(&$this,'subscribe_to_list') );
 		add_action("wp_ajax_nopriv_sendpress_subscribe_to_list", array(&$this,'subscribe_to_list') );
 
+		add_action('wp_ajax_sendpress-autocron', array(&$this, 'autocron'));
 		add_action('wp_ajax_sendpress-sendbatch', array(&$this, 'send_batch'));
 		add_action('wp_ajax_sendpress-queuebatch', array(&$this, 'queue_batch'));
 		add_action('wp_ajax_sendpress-stopcron', array(&$this, 'cron_stop'));
@@ -42,6 +43,7 @@ class SendPress_Ajax_Loader{
 		add_action('wp_ajax_sendpress-findpost', array(&$this, 'find_post'));
 		add_action('wp_ajax_sendpress-list-subscription', array(&$this,'list_subscription'));
 		add_action('wp_ajax_nopriv_sendpress-list-subscription', array(&$this,'list_subscription'));
+
 	}
 
 	function admin_scripts(){
@@ -188,6 +190,18 @@ class SendPress_Ajax_Loader{
 		// Serialize the response back as JSON
 		echo json_encode($response);
 		die();
+	}
+
+	function autocron(){
+		$enable = isset($_POST['enable']) ? $_POST['enable'] : false;
+		if($enable !== false){
+			SendPress_Option::set('autocron', 'yes');
+			SendPress_Option::set('allow_tracking', 'yes');
+			SendPress_Cron::use_iron_cron();
+		} else {
+			SendPress_Option::set('autocron', 'no');
+		}
+		exit();
 	}
 
 	function cron_stop(){

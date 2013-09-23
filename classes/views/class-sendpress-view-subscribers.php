@@ -28,7 +28,7 @@ class SendPress_View_Subscribers extends SendPress_View {
 	}
 	
 	function html($sp) {
-	
+	 SendPress_Tracking::event('Lists Tab');
 		//Create an instance of our package class...
 		$testListTable = new SendPress_Lists_Table();
 		//Fetch, prepare, sort, and filter our data...

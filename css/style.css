@@ -9,7 +9,10 @@ h2 small{
     font-size: 12px;
 }
 */
-
+.nav-tabs > .green > a, .nav-tabs > .green > a:hover{
+    color:#fff;
+    background-color: #0088cc;
+}
 
 a.btn:focus{
     color: inherit;

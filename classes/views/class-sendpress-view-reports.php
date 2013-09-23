@@ -26,7 +26,7 @@ class SendPress_View_Reports extends SendPress_View{
 
 
 	function html($sp){
-		
+		 SendPress_Tracking::event('Reports Tab');
 		//Create an instance of our package class...
 		$sp_reports_table = new SendPress_Reports_Table();
 		//Fetch, prepare, sort, and filter our data...

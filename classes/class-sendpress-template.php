@@ -258,6 +258,7 @@ class SendPress_Template {
 			$start_text = __("Not interested anymore?","sendpress");
 			$unsubscribe = __("Unsubscribe","sendpress");
 			$instantly = __("Instantly","sendpress");
+			$manage = __("Manage Subscription","sendpress");
 			if($render){
 				//RENDER IN BROWSER
 
@@ -265,8 +266,10 @@ class SendPress_Template {
 					$link = get_permalink(  $post->ID );
 					$browser = $display_correct.' <a style="color: '.$body_link.';" href="'.$link.'">'.$view.'</a>.';
 					$HtmlCode =str_replace("*|SP:BROWSER|*",$browser ,$HtmlCode);
-					$remove_me = $start_text . ' <a href="#"  style="color: '.$body_link.';" >'.$unsubscribe.'</a> '.$instantly.'.';
-			
+					$remove_me = ' <a href="#"  style="color: '.$body_link.';" >'.$unsubscribe.'</a> | ';
+				$manage = ' <a href="#"  style="color: '.$body_link.';" >'.$manage.'</a> ';
+
+					$HtmlCode =str_replace("*|SP:MANAGE|*",$manage,$HtmlCode);
 					$HtmlCode =str_replace("*|SP:UNSUBSCRIBE|*",$remove_me ,$HtmlCode);
 			
 				} else {
@@ -290,15 +293,9 @@ class SendPress_Template {
 				);
 				$code = SendPress_Data::encrypt( $open_info );
 
-				if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
-					$url = site_url() ."?sendpress=".trim($code)."";
-				} else {
-					$url = site_url() ."/sendpress/".trim($code) ."/";
-					
-				}
-				$link = $url;
-
-				$browser = $display_correct.' <a style="color: '.$body_link.';" href="'.$link.'">'.$view.'</a>.';
+				$xlink = SendPress_Manager::public_url($code);
+				error_log($xlink);
+				$browser = $display_correct.' <a style="color: '.$body_link.';" href="'.$xlink.'">'.$view.'</a>.';
 				$HtmlCode =str_replace("*|SP:BROWSER|*",$browser ,$HtmlCode);
 				
 				}else {

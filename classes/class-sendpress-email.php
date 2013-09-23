@@ -130,17 +130,23 @@ class SendPress_Email {
 			);
 			$code = SendPress_Data::encrypt( $open_info );
 
-			if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
-				$link = site_url() ."?sendpress=".$code;
-			} else {
-				$link = site_url() ."/sendpress/".$code."/";
-				
-			}
+			$link = SendPress_Manager::public_url($code);
 
 
 			$tracker = "<img src='". $link ."' width='1' height='1'/></body>";
 			$body_html = str_replace("</body>",$tracker , $body_html );
 			$body_link			=	get_post_meta( $this->id() , 'body_link', true );
+
+			$subscriber = SendPress_Data::get_subscriber($this->subscriber_id());
+
+			if (!is_null($subscriber)) {
+				$body_html = str_replace("*|FNAME|*", $subscriber->firstname , $body_html );
+				$body_html = str_replace("*|LNAME|*", $subscriber->lastname , $body_html );
+				$body_html = str_replace("*|EMAIL|*", $subscriber->email , $body_html );
+				$body_html = str_replace("*|ID|*", $subscriber->subscriberID , $body_html );
+			}
+				
+
 
 			//$pattern ="/(?<=href=(\"|'))[^\"']+(?=(\"|'))/";
 			//$body_html = preg_replace( $pattern , site_url() ."?sendpress=link&fxti=".$subscriber_key."&spreport=". $this->id ."&spurl=$0", $body_html );
@@ -182,12 +188,8 @@ class SendPress_Email {
 						"view"=>"link"
 					);
 					$code = SendPress_Data::encrypt( $link );
-					if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
-						$link = site_url() ."?sendpress=".$code;
-					} else {
-						$link = site_url() ."/sendpress/".$code."/";
-						
-					}
+					$link = SendPress_Manager::public_url($code);
+
 					$href = $link;
 					$aElement->setAttribute('href', $href);
 				}
@@ -203,12 +205,8 @@ class SendPress_Email {
 				"action"=>""
 			);
 			$code = SendPress_Data::encrypt( $link_data );
-			if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
-				$link = site_url() ."?sendpress=".$code;
-			} else {
-				$link = site_url() ."/sendpress/".$code."/";
-				
-			}
+			$link =  SendPress_Manager::public_url($code);
+
 
 
 
@@ -216,8 +214,7 @@ class SendPress_Email {
 
 			
 			
-			$subscriber = SendPress_Data::get_subscriber($this->subscriber_id());
-
+			
 			if( SendPress_Option::get('old_unsubscribe_link', false) === true ){
 				$start_text = __("Not interested anymore?","sendpress");
 				$unsubscribe = __("Unsubscribe","sendpress");
@@ -239,12 +236,8 @@ class SendPress_Email {
 					"action"=>""
 				);
 				$code = SendPress_Data::encrypt( $link_data );
-				if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
-					$manage_link = site_url() ."?sendpress=".$code;
-				} else {
-					$manage_link = site_url() ."/sendpress/".$code."/";
-					
-				}
+				$manage_link = SendPress_Manager::public_url($code);
+
 
 				$unsubscribe = __("Unsubscribe","sendpress");
 				$manage = __("Manage Subscription","sendpress");
@@ -258,12 +251,6 @@ class SendPress_Email {
 			}
 			
 			
-			if (!is_null($subscriber)) {
-				$body_html = str_replace("*|FNAME|*", $subscriber->firstname , $body_html );
-				$body_html = str_replace("*|LNAME|*", $subscriber->lastname , $body_html );
-				$body_html = str_replace("*|EMAIL|*", $subscriber->email , $body_html );
-				$body_html = str_replace("*|ID|*", $subscriber->subscriberID , $body_html );
-			}
 			
             $body_html = apply_filters('sendpress_post_render_email', $body_html);
 			//echo  $body_html;

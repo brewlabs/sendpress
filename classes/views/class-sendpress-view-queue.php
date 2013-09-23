@@ -45,7 +45,7 @@ class SendPress_View_Queue extends SendPress_View {
 	}
 
 	function html($sp) {
-
+		 SendPress_Tracking::event('Queue Tab');
 	if(isset($_GET['cron'])){
 		$sp->fetch_mail_from_queue();
 	}	
@@ -93,9 +93,10 @@ echo $time;//11:09
 
 echo $time;//11:09
 	*/
+
 	?>
 
-
+<br>
 	<div id="taskbar" class="lists-dashboard rounded group"> 
 
 	<div id="button-area">  
@@ -107,12 +108,12 @@ echo $time;//11:09
 			$emails_per_day = __('Unlimited','sendpress');
 		}
   $emails_per_hour =  SendPress_Option::get('emails-per-hour');
-  $emails_today = SendPress_Option::get('emails-today');
-  $emails_so_far = isset($emails_today[date("z")]) ? $emails_today[date("z")] : 0;
+  $hourly_emails = SendPress_Data::emails_sent_in_queue("hour");
+  $emails_so_far = SendPress_Data::emails_sent_in_queue("day");
 	?>
 		
-		<h2><strong><?php echo $emails_so_far; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_day; ?></strong> <?php _e('emails sent today','sendpress'); ?>.</h2>
-		<h2><strong><?php  echo SendPress_Manager::emails_this_hour(); ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_hour; ?></strong> <?php _e('emails sent this hour','sendpress'); ?>.</h2>
+		<h2><strong><?php echo $emails_so_far; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_day; ?></strong> <?php _e('emails sent in the last 24 hours','sendpress'); ?>.</h2>
+		<h2><strong><?php  echo $hourly_emails; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_hour; ?></strong> <?php _e('emails sent in the last hour','sendpress'); ?>.</h2>
 		<small>You can adjust these settings here: <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>">Settings > Sending Account</a>.</small>
  		<?php
 $offset = get_option( 'gmt_offset' ) * 60 * 60; // Time offset in seconds

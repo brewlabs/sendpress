@@ -65,7 +65,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	static function delete_queue_emails(){
 		$table = self::queue_table();
-		self::wpdbQuery("DELETE FROM $table", 'query');
+		self::wpdbQuery("DELETE FROM $table WHERE success = 0", 'query');
 	}
 
 	static function queue_email_process($id){
@@ -79,10 +79,31 @@ class SendPress_Data extends SendPress_DB_Tables {
 		global $wpdb;
 		$table = self::queue_table();
 		if($id == false){
-			$query = "SELECT COUNT(*) FROM $table";
+			$query = "SELECT COUNT(*) FROM $table where success = 0";
 		} else {
-			$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where emailID = %d", $id );
+			$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where emailID = %d and success = 0", $id );
 		}	
+		return $wpdb->get_var( $query );
+	}
+
+
+	static function emails_sent_in_queue($type = "hour" ){
+
+		global $wpdb;
+
+		if($type == "hour"){
+			$hour_ago = strtotime('-1 hour');
+			$time = date('Y-m-d H:i:s', $hour_ago);
+		}
+		if($type == "day"){
+			$hour_ago = strtotime('-1 day');
+			$time = date('Y-m-d H:i:s', $hour_ago);
+		}
+
+		
+		$table = self::queue_table();
+		$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where last_attempt > %s and success = %d", $time, 1 );
+			
 		return $wpdb->get_var( $query );
 	}
 
@@ -217,7 +238,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
  	static function get_url_by_id( $id ) {
  		global $wpdb;
-		$table = self::report_url_table();
+		$table = SendPress_Data::report_url_table();
 		$result = $wpdb->get_row( $wpdb->prepare("SELECT * FROM $table WHERE urlID = %d", $id) );
 		return $result;	
 	}

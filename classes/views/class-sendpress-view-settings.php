@@ -11,6 +11,7 @@ class SendPress_View_Settings extends SendPress_View {
 	
 
 	function sub_menu($sp = false){ 
+		 SendPress_Tracking::event('Settings Tab');
 	?>
 
 	<div class="navbar">

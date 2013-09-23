@@ -276,5 +276,24 @@ class SendPress_DB_Tables {
     }
 
 
+    static function update_tables_0947(){
+
+        global $wpdb;
+
+        $table_to_update = SendPress_DB_Tables::subscriber_table();
+        $wpdb->query("ALTER TABLE ". $table_to_update ." MODIFY registered  datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+        $wpdb->query("ALTER TABLE ". $table_to_update ." MODIFY join_date  datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+
+        $subscriber_queue = SendPress_DB_Tables::queue_table();
+
+        $wpdb->query("ALTER TABLE ". $subscriber_queue ." MODIFY date_published  datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+        $wpdb->query("ALTER TABLE ". $subscriber_queue ." MODIFY last_attempt  datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+        $wpdb->query("ALTER TABLE ". $subscriber_queue ." MODIFY date_sent  datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+        
+        $ls = SendPress_DB_Tables::list_subcribers_table();
+        $wpdb->query("ALTER TABLE ". $ls ." MODIFY updated  datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+    }
+
+
 }
 

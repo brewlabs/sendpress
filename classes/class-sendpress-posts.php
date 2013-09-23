@@ -154,6 +154,7 @@ class SendPress_Posts{
 		
 	}
 
+	
 	// Added 'exclude_from_search'=>true
 	static function template_post_type(){
 		register_post_type( 'sptemplates', array(
