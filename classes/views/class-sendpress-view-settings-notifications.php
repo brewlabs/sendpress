@@ -12,20 +12,33 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 		$options = SendPress_Option::get('notification_options');
 
 		$options['email'] = $post['toemail'];
-        $options['name'] = $post['toname'];
 
         $options['notifications-enable'] = ( array_key_exists('notifications-enable', $post) ) ? true : false;
 
         if( $options['notifications-enable'] ){
-        	$options['notifications-subscribed-instant'] = ( array_key_exists('notifications-subscribed-instant', $post) ) ? true : false;
-	        $options['notifications-subscribed-daily'] = ( array_key_exists('notifications-subscribed-daily', $post) ) ? true : false;
-	        $options['notifications-subscribed-weekly'] = ( array_key_exists('notifications-subscribed-weekly', $post) ) ? true : false;
-	        $options['notifications-subscribed-monthly'] = ( array_key_exists('notifications-subscribed-monthly', $post) ) ? true : false;
+        	$options['subscribed'] = $post['subscribed'];
+        	$options['unsubscribed'] = $post['unsubscribed'];
 
-	        $options['notifications-unsubscribed-instant'] = ( array_key_exists('notifications-unsubscribed-instant', $post) ) ? true : false;
-	        $options['notifications-unsubscribed-daily'] = ( array_key_exists('notifications-unsubscribed-daily', $post) ) ? true : false;
-	        $options['notifications-unsubscribed-weekly'] = ( array_key_exists('notifications-unsubscribed-weekly', $post) ) ? true : false;
-	        $options['notifications-unsubscribed-monthly'] = ( array_key_exists('notifications-unsubscribed-monthly', $post) ) ? true : false;
+        	$options['send-to-admins'] = ( array_key_exists('send-to-admins', $post) ) ? true : false;
+        	$options['enable-hipchat'] = ( array_key_exists('enable-hipchat', $post) ) ? true : false;
+        	$options['hipchat-api'] = $post['hipchat-api'];
+
+        	if( strlen($options['hipchat-api']) > 0 ){
+        		
+        		$options['hipchat-rooms'] = array();
+        		
+        		if( !array_key_exists('hipchat-rooms', $post) ){
+        			$post['hipchat-rooms'] = array();
+        		}
+
+    			global $hc;
+				$hc = new HipChat\HipChat($options['hipchat-api'], 'https://api.hipchat.com');
+
+				foreach ($hc->get_rooms() as $room) {
+					$options['hipchat-rooms'][$room->room_id] = ( array_key_exists($room->room_id, $post['hipchat-rooms']) ) ? true : false;
+				}
+        		
+        	}
         }
 
         SendPress_Option::set('notification_options', $options );
@@ -45,64 +58,62 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 					<div class="left"><label for="enable-notifications">Enable Notifications?</label></div>
 					<input class="ibutton" type="checkbox" value="<?php echo $options['notifications-enable']; ?>" name="notifications-enable" id="notifications-enable" <?php checked( $options['notifications-enable'], true ); ?>/> 
 				</p>
-				<h3>Notification E-mail</h3>
 				<!-- <a href="#" class="tooltip" rel="tooltip" data-toggle="tooltip" title="The name and e-mail you want notifications to be sent to."><i class="icon-question-sign"></i></a> -->
-				<div class="boxer form-box">
-					<div style="float: right; width: 45%;">
-						<h4 class="nomargin"><?php _e('E-mail','sendpress'); ?></h4>
-						<input name="toemail" tabindex=2 type="text" id="toemail" value="<?php echo $options['email']; ?>" class="regular-text sp-text">
-					</div>	
-					<div style="width: 45%; margin-right: 10%">
-						<h4 class="nomargin"><?php _e('To Name','sendpress'); ?></h4>
-						<input name="toname" tabindex=1 type="text" id="toname" value="<?php echo $options['name']; ?>" class="regular-text sp-text">
+				<div class="boxer form-box clearfix">
+					<div style="float:left; width:45%;">
+						<h4 class="nomargin"><?php _e('Notification E-mail','sendpress'); ?></h4>
+						<input name="toemail" tabindex=2 type="text" id="toemail" value="<?php echo $options['email']; ?>">
+						<br>
+						
+						<input type="checkbox" value="<?php echo $options['send-to-admins']; ?>" name="send-to-admins" id="send-to-admins" <?php checked( $options['send-to-admins'], true ); ?>/>
+						<?php _e('Send Notifications to all WordPress Administrators','sendpress'); ?>
+					</div>
+					<div style="float:right; width:45%;">
+						<h4 class="nomargin"><?php _e('HipChat Integration','sendpress'); ?></h4>
+						<input type="checkbox" value="<?php echo $options['enable-hipchat']; ?>" name="enable-hipchat" id="enable-hipchat" <?php checked( $options['enable-hipchat'], true ); ?>/>
+						<?php _e('Enable HipChat Notification','sendpress'); ?><br>
+						API Key: <input name="hipchat-api" tabindex=2 type="text" id="hipchat-api" value="<?php echo $options['hipchat-api']; ?>"><br><br>
+
+						<?php 
+							if( strlen($options['hipchat-api']) > 0 ){
+								global $hc;
+								$hc = new HipChat\HipChat($options['hipchat-api'], 'https://api.hipchat.com');
+								?><h4 class="nomargin"><?php _e('Select the rooms to send notifications to:','sendpress'); ?></h4><?php
+								foreach ($hc->get_rooms() as $room) {
+									?>
+									<input type="checkbox" value="<?php echo $options['hipchat-rooms'][$room->room_id]; ?>" name="hipchat-rooms[<?php echo $room->room_id; ?>]" id="hipchat-rooms[<?php echo $room->room_id; ?>]" <?php checked( $options['hipchat-rooms'][$room->room_id], true ); ?>/>
+									<?php echo $room->name; ?><br>
+									<?php
+								}
+							}
+						?>
 					</div>
 				</div>
 				<h3>Notification Settings</h3>
-				<p>Select the notifications you'd like to receive and how often you'd like to receive them.</p>
 				
-				<div class="half">
-					<div class="well">
-						<h4>User Subscribed:</h4>
+				<div class="well">
+					<p>Select the notifications you'd like to receive and how often you'd like to receive them.</p>
+					<h4>User Subscribed:</h4>
+					<input class="notifications-radio" type="radio" value="0" <?php if(intval($options['subscribed']) === 0){echo 'checked="checked"';} ?> name="subscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
+					Instant&nbsp;&nbsp;&nbsp;
+					<input class="notifications-radio" type="radio" value="1" <?php if(intval($options['subscribed']) === 1){echo 'checked="checked"';} ?> name="subscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
+					Daily&nbsp;&nbsp;&nbsp;
+					<input class="notifications-radio" type="radio" value="2" <?php if(intval($options['subscribed']) === 2){echo 'checked="checked"';} ?> name="subscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
+					Weekly&nbsp;&nbsp;&nbsp;
+					<input class="notifications-radio" type="radio" value="3" <?php if(intval($options['subscribed']) === 3){echo 'checked="checked"';} ?> name="subscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
+					Monthly&nbsp;&nbsp;&nbsp;
 
-						<div class="notification-container half">
-							<div class="left"><label for="notifications-subscribed-instant">Instantly</label></div>
-					  		<input class="ibutton optional-notifications" type="checkbox" value="<?php echo $options['notifications-subscribed-instant']; ?>" name="notifications-subscribed-instant" id="notifications-subscribed-instant" <?php checked( $options['notifications-subscribed-instant'], true ); ?><?php if(!$options['notifications-enable']){ echo ' disabled="disabled"'; }?>/> 
-						</div>
-						<div class="notification-container half right">
-					  		<div class="left"><label for="notifications-subscribed-daily">Daily</label></div>
-					  		<input class="ibutton optional-notifications" type="checkbox" value="<?php echo $options['notifications-subscribed-daily']; ?>" name="notifications-subscribed-daily" id="notifications-subscribed-daily" <?php checked( $options['notifications-subscribed-daily'], true ); ?><?php if(!$options['notifications-enable']){ echo ' disabled="disabled"'; }?>/> 
-					  	</div>
-						<div class="notification-container half">
-					  		<div class="left"><label for="notifications-subscribed-weekly">Weekly</label></div>
-					  		<input class="ibutton optional-notifications" type="checkbox" value="<?php echo $options['notifications-subscribed-weekly']; ?>" name="notifications-subscribed-weekly" id="notifications-subscribed-weekly" <?php checked( $options['notifications-subscribed-weekly'], true ); ?><?php if(!$options['notifications-enable']){ echo ' disabled="disabled"'; }?>/> 
-					  	</div>
-						<div class="notification-container half right">
-					  		<div class="left"><label for="notifications-subscribed-monthly">Monthly</label></div>
-					  		<input class="ibutton optional-notifications" type="checkbox" value="<?php echo $options['notifications-subscribed-monthly']; ?>" name="notifications-subscribed-monthly" id="notifications-subscribed-monthly" <?php checked( $options['notifications-subscribed-monthly'], true ); ?><?php if(!$options['notifications-enable']){ echo ' disabled="disabled"'; }?>/>
-					  	</div>
-					</div>
+					<h4>User Unsbscribed:</h4>
+					<input class="notifications-radio" type="radio" value="0" <?php if(intval($options['unsubscribed']) === 0){echo 'checked="checked"';} ?> name="unsubscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
+					Instant&nbsp;&nbsp;&nbsp;
+					<input class="notifications-radio" type="radio" value="1" <?php if(intval($options['unsubscribed']) === 1){echo 'checked="checked"';} ?> name="unsubscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
+					Daily&nbsp;&nbsp;&nbsp;
+					<input class="notifications-radio" type="radio" value="2" <?php if(intval($options['unsubscribed']) === 2){echo 'checked="checked"';} ?> name="unsubscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
+					Weekly&nbsp;&nbsp;&nbsp;
+					<input class="notifications-radio" type="radio" value="3" <?php if(intval($options['unsubscribed']) === 3){echo 'checked="checked"';} ?> name="unsubscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
+					Monthly&nbsp;&nbsp;&nbsp;
 				</div>
-				<div class="half right">
-					<div class="well">
-						<h4>User Unsbscribed:</h4>
-						<div class="notification-container half">
-							<div class="left"><label for="notifications-unsubscribed-instant">Instantly</label></div>
-						  	<input class="ibutton optional-notifications" type="checkbox" value="<?php echo $options['notifications-subscribed-instant']; ?>" name="notifications-unsubscribed-instant" id="notifications-unsubscribed-instant" <?php checked( $options['notifications-unsubscribed-instant'], true ); ?><?php if(!$options['notifications-enable']){ echo ' disabled="disabled"'; }?>/> 
-						</div>
-						<div class="notification-container half right">
-						<div class="left"><label for="notifications-unsubscribed-daily">Daily</label></div>
-					  	<input class="ibutton optional-notifications" type="checkbox" value="<?php echo $options['notifications-subscribed-daily']; ?>" name="notifications-unsubscribed-daily" id="notifications-unsubscribed-daily" <?php checked( $options['notifications-unsubscribed-daily'], true ); ?><?php if(!$options['notifications-enable']){ echo ' disabled="disabled"'; }?>/> 
-					  	</div>
-						<div class="notification-container half">
-					  	<div class="left"><label for="notifications-unsubscribed-weekly">Weekly</label></div>
-					  	<input class="ibutton optional-notifications" type="checkbox" value="<?php echo $options['notifications-subscribed-weekly']; ?>" name="notifications-unsubscribed-weekly" id="notifications-unsubscribed-weekly" <?php checked( $options['notifications-unsubscribed-weekly'], true ); ?><?php if(!$options['notifications-enable']){ echo ' disabled="disabled"'; }?>/> 
-					  	</div>
-						<div class="notification-container half right">
-					  	<div class="left"><label for="notifications-unsubscribed-monthly">Monthly</label></div>
-					  	<input class="ibutton optional-notifications" type="checkbox" value="<?php echo $options['notifications-subscribed-monthly']; ?>" name="notifications-unsubscribed-monthly" id="notifications-unsubscribed-monthly" <?php checked( $options['notifications-unsubscribed-monthly'], true ); ?><?php if(!$options['notifications-enable']){ echo ' disabled="disabled"'; }?>/> 
-					  	</div>
-					</div>
-				</div>
+				
 				<?php wp_nonce_field($sp->_nonce_value); ?>
 			</form>
 		</div>

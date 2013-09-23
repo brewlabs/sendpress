@@ -218,7 +218,7 @@ class SendPress_Manager {
    			return $senders[$method]->send_email($to, $subject, $body, $text, $test );
    		}
 
-	   	return  SendPress_Manager::old_send_email($to, $subject, $body, $text, $test );
+	   	return SendPress_Manager::old_send_email($to, $subject, $body, $text, $test );
 
 	}
 

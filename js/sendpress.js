@@ -429,22 +429,14 @@
 
     this.notifications = {
         init:function($){
-            $(".ibutton").iButton({
-                labelOn: "Yes", 
-                labelOff: "No",
-                change: function($input){
-                    $input.attr('value',($input.is(':checked')) ? 'true' : 'false');
-                    if( $input.attr('id') === 'notifications-enable' ){
-                        //toggle the lower buttons
-                        $('.optional-notifications').iButton('disable');
-                       
-                    }
+            $('#notifications-enable').on('change',function(e){
+                var $obj = $(this);
+                if( $obj.is(':checked') ){
+                    $('.notifications-radio').prop('disabled',false);
+                }else{
+                    $('.notifications-radio').prop('disabled',true);
                 }
-            }); 
-
-            // $('body').tooltip({
-            //     selector: 'a[rel="tooltip"], [data-toggle="tooltip"]'
-            // });
+            });
         }
     }
 

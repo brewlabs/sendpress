@@ -46,6 +46,8 @@ Push
 	
 	
 	require_once( SENDPRESS_PATH . 'inc/functions.php' );
+	require_once( SENDPRESS_PATH.'inc/HipChat/HipChat.php');
+
 	/*
 	require_once( SENDPRESS_PATH . 'classes/class-file-loader.php' );
 	$sp_loader = new File_Loader('SendPress Required Class');
@@ -676,10 +678,10 @@ Push
 			wp_enqueue_script('sendpress_ls');
 			//wp_localize_script( 'sendpress_js', 'sendpress', array( 'ajaxurl' => admin_url( 'admin-ajax.php', 'http' ) ) );
 
-			wp_register_style( 'sendpress_jquery_ibutton_css', SENDPRESS_URL . 'css/jquery.ibutton.css', false, SENDPRESS_VERSION );
-    		wp_enqueue_style( 'sendpress_jquery_ibutton_css' );
-    		wp_register_script('sendpress_jquery_ibutton_js', SENDPRESS_URL .'js/jquery.ibutton.min.js' ,'',SENDPRESS_VERSION);
-			wp_enqueue_script('sendpress_jquery_ibutton_js');
+			// wp_register_style( 'sendpress_jquery_ibutton_css', SENDPRESS_URL . 'css/jquery.ibutton.css', false, SENDPRESS_VERSION );
+   //  		wp_enqueue_style( 'sendpress_jquery_ibutton_css' );
+   //  		wp_register_script('sendpress_jquery_ibutton_js', SENDPRESS_URL .'js/jquery.ibutton.min.js' ,'',SENDPRESS_VERSION);
+			// wp_enqueue_script('sendpress_jquery_ibutton_js');
 
 			wp_register_style( 'sendpress_css_base', SENDPRESS_URL . 'css/style.css', false, SENDPRESS_VERSION );
     		wp_enqueue_style( 'sendpress_css_base' );

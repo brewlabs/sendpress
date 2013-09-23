@@ -29,122 +29,186 @@ class SendPress_Notifications_Manager {
 		return $instance;
 	}
 
-	function maybe_send_notification($type){
+	function maybe_send_notification($type, $data){
+		$options = SendPress_Option::get('notification_options');
+
 		//based on the type, check the options and build an e-mail to notify the admin.
-		if( $options['notifications-subscribed-daily'] ){
-			//get info
+		$subscribed = SendPress_Notifications_Manager::build_subscribed_notification($data);
+		//unsubscribed
+		$unsubscribed = SendPress_Notifications_Manager::build_unsibscribed_notification($data);
 
+		if( strlen($subscribed) === 0 && strlen($unsubscribed) === 0 ){
+			return;
 		}
 
-	}
+		$body = $text = $subscribed.$unsubscribed;
 
-	function build_notification($data){
-
-	}
-
-	function send_instant_notification($event_data){
-
-		$options = SendPress_Option::get('notification_options');
-		
-		if( isset($options['notifications-'.$event_data['type'].'-instant']) &&  $options['notifications-'.$event_data['type'].'-instant'] ){
-			//build the message and send it....
-			$list = SendPress_Data::get_list_details($event_data['urlID']);
-			$sub = SendPress_Data::get_subscriber($event_data['subscriberID']);
-			
-			$verbage = 'from';
-			if( $event_data['type'] === 'subscribed' ){
-				$verbage = 'to';
-			}
-
-			$body = $text = $sub->email.' has '.$event_data['type'].' '.$verbage.' your list '.$list->post_title.'.';
-
-			SendPress_Manager::send($options['email'], 'SendPress Instant Notification', $body, $text);
-		}
+		SendPress_Notifications_Manager::send_notification($body);
 
 	}
 
-	function daily_notification_check(){
+	function build_subscribed_notification($data){
+		$subscribe_body = '';
 		$options = SendPress_Option::get('notification_options');
 
-		if ( false === ( $sendpress_monthly_check = get_transient( 'sendpress_monthly_check' ) ) ) {
-			
-			if( intval(date('j')) === 1 ){
-				//check for the option
-				$subscribe_body = '';
-				$unsubscribe_body = '';
-				if( $options['notifications-subscribed-monthly'] ){
-					//get subscribers for for the last month
-					$count = SendPress_Data::get_subscriber_event_count_month(date('j', strtotime(date('j')." -1 month")),'subscribed');
-					$subscribe_body = 'You had '.$count.' new subscribers last month.<br><br>';
+		//subscribed check
+		switch($options['subscribed']){
+			case 0:
+				if( $data && $data['type'] === 'subscribed' ){
 					
-				}
-				if( $options['notifications-unsubscribed-monthly'] ){
-					$count = SendPress_Data::get_subscriber_event_count_month(date('j', strtotime(date('j')." -1 month")),'unsubscribed');
-					$unsubscribe_body = 'You had '.$count.' people unsubscribe last month.<br><br>';
-				}
+					$list = SendPress_Data::get_list_details($data['urlID']);
+					$sub = SendPress_Data::get_subscriber($data['subscriberID']);			
 
-				if( isset($subscribe_body) || isset($unsubscribe_body) ){
-					$body = $text = $subscribe_body.$unsubscribe_body;
-					SendPress_Manager::send($options['email'], 'SendPress Monthly Notification', $body, $text);
-					set_transient( 'sendpress_monthly_check', true, MONTH_IN_SECONDS );
+					$subscribe_body = $sub->email.' has subscribed to your list "'.$list->post_title.'".';
 				}
 				
-			}
-			
-		}
+				break;
+			case 1:
+				$count = SendPress_Data::get_subscriber_event_count_day(date('Y-m-d'),'subscribed');
+				$subscribe_body = 'You had '.$count.' new subscribers today.';
 
-		if ( false === ( $sendpress_weekly_check = get_transient( 'sendpress_weekly_check' ) ) ) {
-			// It wasn't there, so regenerate the data and save the transient
-			if( date('w') === get_option('start_of_week', 0) ){
-				$subscribe_body = '';
-				$unsubscribe_body = '';
-				if( $options['notifications-subscribed-weekly'] ){
-					$count = SendPress_Data::get_subscriber_event_count_week(date('Y-m-d', strtotime(date('Y-m-d')." -1 week -1 day")),date('Y-m-d', strtotime(date('Y-m-d')." +1 day")),'subscribed');
-					$subscribe_body = 'You had '.$count.' new subscribers last week.';
+				break;
+			case 2:
+				if ( false === ( $sendpress_weekly_check = get_transient( 'sendpress_weekly_subscribed_check' ) ) ) {
+					// It wasn't there, so regenerate the data and save the transient
+					if( date('w') === get_option('start_of_week', 0) ){
+						
+						$count = SendPress_Data::get_subscriber_event_count_week(date('Y-m-d', strtotime(date('Y-m-d')." -1 week -1 day")),date('Y-m-d', strtotime(date('Y-m-d')." +1 day")),'subscribed');
+						$subscribe_body = 'You had '.$count.' new subscribers last week.';
+					
+						set_transient( 'sendpress_weekly_subscribed_check', true, WEEK_IN_SECONDS );
+					}
+					
 				}
-				if( $options['notifications-unsubscribed-weekly'] ){
-					$count = SendPress_Data::get_subscriber_event_count_week(date('Y-m-d', strtotime(date('Y-m-d')." -1 week")),date('Y-m-d'),'unsubscribed');
-					$unsubscribe_body = 'You had '.$count.' people unsubscribe last week.';
+				break;
+			case 3:
+				if ( false === ( $sendpress_monthly_check = get_transient( 'sendpress_monthly_subscribed_check' ) ) ) {
+					if( intval(date('j')) === 1 ){
+						
+						//get subscribers for for the last month
+						$count = SendPress_Data::get_subscriber_event_count_month(date('j', strtotime(date('j')." -1 month")),'subscribed');
+						$subscribe_body = 'You had '.$count.' new subscribers last month.<br><br>';
+					
+						set_transient( 'sendpress_monthly_subscribed_check', true, MONTH_IN_SECONDS );
+					}
 				}
-
-				if( isset($subscribe_body) || isset($unsubscribe_body) ){
-					$body = $text = $subscribe_body.$unsubscribe_body;
-					SendPress_Manager::send($options['email'], 'SendPress Weekly Notification', $body, $text);
-					set_transient( 'sendpress_weekly_check', true, WEEK_IN_SECONDS );
-				}
-			}
-			
+				break;
 		}
 
-		//finally send the daily
-		$subscribe_body = '';
-		$unsubscribe_body = '';
-		if( $options['notifications-subscribed-daily'] ){
-			$count = SendPress_Data::get_subscriber_event_count_day(date('Y-m-d'),'subscribed');
-			$subscribe_body = 'You had '.$count.' new subscribers today.';
-		}
-		if( $options['notifications-unsubscribed-daily'] ){
-			$count = SendPress_Data::get_subscriber_event_count_day(date('Y-m-d'),'unsubscribed');
-			$subscribe_body = 'You had '.$count.' users unsubscribe today.';
-		}
-
-		if( isset($subscribe_body) || isset($unsubscribe_body) ){
-			$body = $text = $subscribe_body.$unsubscribe_body;
-			SendPress_Manager::send($options['email'], 'SendPress Daily Notification', $body, $text);
-		}
-
+		return $subscribe_body;
 	}
 
+	function build_unsibscribed_notification($data){
+		$unsubscribe_body = '';
+
+		$options = SendPress_Option::get('notification_options');
+
+		switch($options['unsubscribed']){
+			case 0:
+				if( $data && $data['type'] === 'unsubscribed' ){
+					
+					$list = SendPress_Data::get_list_details($data['urlID']);
+					$sub = SendPress_Data::get_subscriber($data['subscriberID']);			
+
+					$unsubscribe_body = $sub->email.' has unsubscribed from your list "'.$list->post_title.'".';
+				}
+				break;
+			case 1:
+				$count = SendPress_Data::get_subscriber_event_count_day(date('Y-m-d'),'unsubscribed');
+				$unsubscribe_body = 'You had '.$count.' users unsubscribe today.';
+				break;
+			case 2:
+				if ( false === ( $sendpress_weekly_check = get_transient( 'sendpress_weekly_unsubscribed_check' ) ) ) {
+					// It wasn't there, so regenerate the data and save the transient
+					if( date('w') === get_option('start_of_week', 0) ){
+					
+						$count = SendPress_Data::get_subscriber_event_count_week(date('Y-m-d', strtotime(date('Y-m-d')." -1 week")),date('Y-m-d'),'unsubscribed');
+						$unsubscribe_body = 'You had '.$count.' people unsubscribe last week.';
+					
+						set_transient( 'sendpress_weekly_unsubscribed_check', true, WEEK_IN_SECONDS );
+					}
+				}
+				break;
+			case 3:
+				if ( false === ( $sendpress_monthly_check = get_transient( 'sendpress_monthly_unsubscribed_check' ) ) ) {
+					if( intval(date('j')) === 1 ){
+						//get subscribers for for the last month
+						$count = SendPress_Data::get_subscriber_event_count_month(date('j', strtotime(date('j')." -1 month")),'unsubscribed');
+						$unsubscribe_body = 'You had '.$count.' people unsubscribe last month.<br><br>';
+					
+						set_transient( 'sendpress_monthly_unsubscribed_check', true, MONTH_IN_SECONDS );
+					}
+				}
+				break;
+		}
+
+		return $unsubscribe_body;
+	}
+
+	function send_instant_notification($data){
+
+		$options = SendPress_Option::get('notification_options');
+
+		$subscribed = '';
+		$unsubscribed = '';
+
+		if( intval($options['subscribed']) === 0 ){
+			//build instant subscribed
+			$subscribed = SendPress_Notifications_Manager::build_subscribed_notification($data);
+		}
+
+		if( intval($options['unsubscribed']) === 0 ){
+			//build instant subscribed
+			$unsubscribed = SendPress_Notifications_Manager::build_unsibscribed_notification($data);
+		}
+
+		$body = $text = $subscribed.$unsubscribed;
+
+		SendPress_Notifications_Manager::send_notification($body,$text);
+	}
+
+	function send_notification($body,$text){
+		$options = SendPress_Option::get('notification_options');
+
+		if( strlen($options['email']) > 0 ){
+			$senders[] = $options['email'];
+		}
+
+		if( $options['send-to-admins'] ){
+			$admins = new WP_User_Query( array( 'role' => 'Administrator' ) );
+			foreach ( $admins->results as $user ) {
+				if( $user->user_email !== $options['email'] ){
+					$senders[] = $user->user_email;
+				}
+			}
+		}
+
+		foreach($senders as $to){
+			SendPress_Manager::send($to, 'SendPress Instant Notification', $body, $text);
+		}
+
+		//hipchat
+		if( $options['enable-hipchat'] && strlen($options['hipchat-api']) > 0 ){
+			global $hc;
+			$hc = new HipChat\HipChat($options['hipchat-api'], 'https://api.hipchat.com');
+
+			foreach ($hc->get_rooms() as $room) {
+				if( $options['hipchat-rooms'][$room->room_id] ){
+					$hc->message_room($room->name, 'SendPress', $text, true, "purple", "text");
+				}
+			}
+		}
+	}
 
 	function _init(){
 
 		$options = SendPress_Option::get('notification_options');
 
-		if ( ! wp_next_scheduled( 'sendpress_notification_daily' ) && ($options['notifications-subscribed-daily'] || $options['notifications-unsubscribed-daily']) ) {
+		if ( ! wp_next_scheduled( 'sendpress_notification_daily' ) && ($options['subscribed'] > 0 || $options['unsubscribed'] > 0) ) {
 			wp_schedule_event( time(), 'daily', 'sendpress_notification_daily' );
 		}
 
-		add_action( 'sendpress_notification_daily', array( $this, 'daily_notification_check' ) );
+		add_action( 'sendpress_notification_daily', array( $this, 'maybe_send_notification' ) );
 	}
 
 }
