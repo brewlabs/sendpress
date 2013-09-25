@@ -82,7 +82,7 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 							<h4 class="nomargin"><?php _e('HipChat Integration','sendpress'); ?></h4>
 							<input type="checkbox" value="<?php echo $options['enable-hipchat']; ?>" name="enable-hipchat" id="enable-hipchat" <?php checked( $options['enable-hipchat'], true ); ?>/>
 							<?php _e('Enable HipChat Notification','sendpress'); ?><br>
-							API Key: <input name="hipchat-api" tabindex=2 type="text" id="hipchat-api" value="<?php echo $options['hipchat-api']; ?>"><br>
+							API Key: <input name="hipchat-api" tabindex=2 type="text" id="hipchat-api" value="<?php echo $options['hipchat-api']; ?>"><br><a href="https://sendpress.hipchat.com/admin/api" target="_blank">Where is my API key?</a><br>
 
 							<?php 
 								if( strlen($options['hipchat-api']) > 0 ){
