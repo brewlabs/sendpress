@@ -41,11 +41,11 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 				}catch(Exception $e){
 					$options['hipchat-room'] = $post['hipchat-room'];
 				}
-
-				
-        		
         	}
         }
+
+        $options = apply_filters('sendpress_notification_settings_save',$options, $post, $sp);
+
         SendPress_Option::set('notification_options', $options );
         SendPress_Admin::redirect('Settings_Notifications');
 	}
