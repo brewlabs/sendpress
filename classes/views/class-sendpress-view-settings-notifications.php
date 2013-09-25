@@ -65,8 +65,10 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 				<div class="well">
 
 					<?php $options = SendPress_Option::get('notification_options');?>
-					<p> 
-						<input class="ibutton" type="checkbox" value="<?php echo $options['notifications-enable']; ?>" name="notifications-enable" id="notifications-enable" <?php checked( $options['notifications-enable'], true ); ?>/><?php _e('Enable Notifications');?>
+					<p>
+						<h3 style="display:inline;">
+							<input class="ibutton" type="checkbox" value="<?php echo $options['notifications-enable']; ?>" name="notifications-enable" id="notifications-enable" <?php checked( $options['notifications-enable'], true ); ?>/><?php _e('Enable Notifications');?>
+						</h3>
 					</p>
 					<!-- <a href="#" class="tooltip" rel="tooltip" data-toggle="tooltip" title="The name and e-mail you want notifications to be sent to."><i class="icon-question-sign"></i></a> -->
 					<div class="clearfix">
@@ -77,6 +79,27 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 							
 							<input type="checkbox" value="<?php echo $options['send-to-admins']; ?>" name="send-to-admins" id="send-to-admins" <?php checked( $options['send-to-admins'], true ); ?>/>
 							<?php _e('Send Notifications to all WordPress Administrators','sendpress'); ?>
+							<br><br><hr>
+							<p>Select the notifications you'd like to receive and how often you'd like to receive them.</p>
+							<h4>User Subscribed:</h4>
+							<input class="notifications-radio" type="radio" value="0" <?php if(intval($options['subscribed']) === 0){echo 'checked="checked"';} ?> name="subscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
+							Instant&nbsp;&nbsp;&nbsp;
+							<input class="notifications-radio" type="radio" value="1" <?php if(intval($options['subscribed']) === 1){echo 'checked="checked"';} ?> name="subscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
+							Daily&nbsp;&nbsp;&nbsp;
+							<input class="notifications-radio" type="radio" value="2" <?php if(intval($options['subscribed']) === 2){echo 'checked="checked"';} ?> name="subscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
+							Weekly&nbsp;&nbsp;&nbsp;
+							<input class="notifications-radio" type="radio" value="3" <?php if(intval($options['subscribed']) === 3){echo 'checked="checked"';} ?> name="subscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
+							Monthly&nbsp;&nbsp;&nbsp;
+
+							<h4>User Unsbscribed:</h4>
+							<input class="notifications-radio" type="radio" value="0" <?php if(intval($options['unsubscribed']) === 0){echo 'checked="checked"';} ?> name="unsubscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
+							Instant&nbsp;&nbsp;&nbsp;
+							<input class="notifications-radio" type="radio" value="1" <?php if(intval($options['unsubscribed']) === 1){echo 'checked="checked"';} ?> name="unsubscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
+							Daily&nbsp;&nbsp;&nbsp;
+							<input class="notifications-radio" type="radio" value="2" <?php if(intval($options['unsubscribed']) === 2){echo 'checked="checked"';} ?> name="unsubscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
+							Weekly&nbsp;&nbsp;&nbsp;
+							<input class="notifications-radio" type="radio" value="3" <?php if(intval($options['unsubscribed']) === 3){echo 'checked="checked"';} ?> name="unsubscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
+							Monthly&nbsp;&nbsp;&nbsp;
 						</div>
 						<div style="float:right; width:45%;">
 							<h4 class="nomargin"><?php _e('HipChat Integration','sendpress'); ?></h4>
@@ -107,35 +130,12 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 										Room Name: <input name="hipchat-room" tabindex=2 type="text" id="hipchat-room" value="<?php echo $options['hipchat-room']; ?>">
 										<?php
 									}
-
-
-									
-
 									
 								}
 							?>
 						</div>
 					</div>
-					<p>Select the notifications you'd like to receive and how often you'd like to receive them.</p>
-					<h4>User Subscribed:</h4>
-					<input class="notifications-radio" type="radio" value="0" <?php if(intval($options['subscribed']) === 0){echo 'checked="checked"';} ?> name="subscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
-					Instant&nbsp;&nbsp;&nbsp;
-					<input class="notifications-radio" type="radio" value="1" <?php if(intval($options['subscribed']) === 1){echo 'checked="checked"';} ?> name="subscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
-					Daily&nbsp;&nbsp;&nbsp;
-					<input class="notifications-radio" type="radio" value="2" <?php if(intval($options['subscribed']) === 2){echo 'checked="checked"';} ?> name="subscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
-					Weekly&nbsp;&nbsp;&nbsp;
-					<input class="notifications-radio" type="radio" value="3" <?php if(intval($options['subscribed']) === 3){echo 'checked="checked"';} ?> name="subscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
-					Monthly&nbsp;&nbsp;&nbsp;
-
-					<h4>User Unsbscribed:</h4>
-					<input class="notifications-radio" type="radio" value="0" <?php if(intval($options['unsubscribed']) === 0){echo 'checked="checked"';} ?> name="unsubscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
-					Instant&nbsp;&nbsp;&nbsp;
-					<input class="notifications-radio" type="radio" value="1" <?php if(intval($options['unsubscribed']) === 1){echo 'checked="checked"';} ?> name="unsubscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
-					Daily&nbsp;&nbsp;&nbsp;
-					<input class="notifications-radio" type="radio" value="2" <?php if(intval($options['unsubscribed']) === 2){echo 'checked="checked"';} ?> name="unsubscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
-					Weekly&nbsp;&nbsp;&nbsp;
-					<input class="notifications-radio" type="radio" value="3" <?php if(intval($options['unsubscribed']) === 3){echo 'checked="checked"';} ?> name="unsubscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
-					Monthly&nbsp;&nbsp;&nbsp;
+					
 				</div>
 
 				<?php do_action('sendpress_notification_settings_bottom'); ?>
