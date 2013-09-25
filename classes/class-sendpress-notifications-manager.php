@@ -190,13 +190,18 @@ class SendPress_Notifications_Manager {
 		//hipchat
 		if( $options['enable-hipchat'] && strlen($options['hipchat-api']) > 0 ){
 			global $hc;
-			$hc = new HipChat\HipChat($options['hipchat-api'], 'https://api.hipchat.com');
+			$hc = new SendPress_HipChat($options['hipchat-api'], 'https://api.hipchat.com');
 
-			foreach ($hc->get_rooms() as $room) {
-				if( $options['hipchat-rooms'][$room->room_id] ){
-					$hc->message_room($room->name, 'SendPress', $text, true, "purple", "text");
+			try{
+				foreach ($hc->get_rooms() as $room) {
+					if( $options['hipchat-rooms'][$room->room_id] ){
+						$hc->message_room($room->name, 'SendPress', $text, true, "purple", "text");
+					}
 				}
+			}catch(Exception $e){
+				$hc->message_room($options['hipchat-room'], 'SendPress', $text, true, "purple", "text");
 			}
+			
 		}
 	}
 

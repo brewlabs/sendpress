@@ -46,7 +46,6 @@ Push
 	
 	
 	require_once( SENDPRESS_PATH . 'inc/functions.php' );
-	require_once( SENDPRESS_PATH.'inc/HipChat/HipChat.php');
 
 	/*
 	require_once( SENDPRESS_PATH . 'classes/class-file-loader.php' );

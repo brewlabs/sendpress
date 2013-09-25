@@ -1,13 +1,13 @@
 <?php
 
-namespace HipChat;
+//namespace SendPress_HipChat;
 
 /**
  * Library for interacting with the HipChat REST API.
  *
  * @see http://api.hipchat.com/docs/api
  */
-class HipChat {
+class SendPress_HipChat {
 
   const DEFAULT_TARGET = 'https://api.hipchat.com';
 
