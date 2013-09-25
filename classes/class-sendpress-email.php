@@ -202,7 +202,7 @@ class SendPress_Email {
 				"urlID"=> '0',
 				"view"=>"manage",
 				"listID"=>$this->list_id(),
-				"action"=>""
+				"action"=>"unsubscribe"
 			);
 			$code = SendPress_Data::encrypt( $link_data );
 			$link =  SendPress_Manager::public_url($code);
