@@ -1682,57 +1682,7 @@ Push
 		
 	}
 
-	function send_single_from_queue(){
-		
-		global $wpdb;
-		$limit =  1;//wp_rand(1, 3);
-		//$emails = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE success = 0 AND max_attempts != attempts LIMIT ".$limit,"get_results");
-		$count = 0;
-		$attempts = 0;
-
-		if( SendPress_Manager::limit_reached()  ){
-			return array('attempted'=> $attempts,'sent'=>$count);
-		}
-
-		for ($i=0; $i < $limit ; $i++) { 
-				$email = $this->wpdbQuery("SELECT * FROM ".SendPress_Data::queue_table()." WHERE (success = 0) AND (max_attempts != attempts) AND (inprocess = 0) ORDER BY id ASC LIMIT 1","get_results");
-				if( !empty($email) ){
-					$email = $email[0];
-					
-
-					if( SendPress_Manager::limit_reached() ){
-						return array('attempted'=> $attempts,'sent'=>$count);
-					}
-
-					$attempts++;
-					SendPress_Data::queue_email_process( $email->id );
-					$result = SendPress_Manager::send_email_from_queue( $email );
-					$email_count++;
-					
-					if ($result) {
-						$wpdb->update( SendPress_Data::queue_table() , array('success'=>1,'inprocess'=>3 ) , array('id'=> $email->id ));
-						$senddata = array(
-							'sendat' => date('Y-m-d H:i:s'),
-							'reportID' => $email->emailID,
-							'subscriberID' => $email->subscriberID
-						);
-
-						//$wpdb->insert( $this->subscriber_open_table(),  $senddata);
-						$count++;
-						SendPress_Data::update_report_sent_count( $email->emailID );
-					} else {
-						$wpdb->update( SendPress_Data::queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
-					}
-				} else{//We ran out of emails to process.
-					break;
-				}
-				
-		}
-
-		//SendPress_Manager::increase_email_count( $attempts );
-		return array('attempted'=> $attempts,'sent'=>$count);
-	}
-
+	
 
 
 	function add_email_to_queue($values){
@@ -1838,6 +1788,12 @@ Push
 	*	FUNCTIONS TO BE REMOVED PLEASE DO NOT USE
 	* 
 	*/
+	function send_single_from_queue(){
+		_deprecated_function( __FUNCTION__, '0.9.4.8', 'SendPress_Manager::send_single_from_queue()' );
+		return SendPress_Manager::send_single_from_queue();
+	}
+
+
 	function get_templates(){
 		_deprecated_function( __FUNCTION__, '0.8.7', 'SendPress_Template::get_instance()->info()' );
 		return SendPress_Template::get_instance()->info();

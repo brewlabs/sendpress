@@ -239,9 +239,8 @@ class SendPress_Ajax_Loader{
 	}
 
 	function send_batch(){
-		$sp = new SendPress;
-		$count = $sp->send_single_from_queue();
-		
+		$this->verify_ajax_call();
+		$count = SendPress_Manager::send_single_from_queue();
 		echo json_encode($count);
 		exit();
 	}
