@@ -189,7 +189,7 @@ class SendPress_Subscribers_Table extends WP_List_Table {
             'title' =>array('email',true), 
             'firstname' =>array('firstname',false),
             'lastname' =>array('lastname',false), 
-             'status' =>array('status',false), 
+             //'status' =>array('status',false), 
              'joindate' =>array('join_date',false),   //true means its already sorted
             /*
             'rating'    => array('rating',false),
@@ -237,6 +237,49 @@ class SendPress_Subscribers_Table extends WP_List_Table {
         }
         
     }
+     function email_finder(){
+        echo "<input type='text' value='' name='qs' />";
+    }
+
+
+    function status_select(){
+        $info = SendPress_Data::get_statuses();
+        echo '<select name="statusid">';
+         if(!isset($_GET['statusid']) ){
+                $cls = " selected='selected' ";
+            }
+        echo "<option cls value='-1' >Any Status</option>";
+        foreach ($info as $list) {
+            $cls = '';
+            if(isset($_GET['statusid']) && $_GET['statusid'] == $list->statusid){
+                $cls = " selected='selected' ";
+            }
+
+           echo "<option $cls value='".$list->statusid."'>".$list->status."</option>";
+        }
+
+        
+        echo '</select> ';
+    }
+
+    function extra_tablenav( $which ) {
+        global $cat;
+?>
+        <div class="alignleft actions">
+<?php
+        if ( 'top' == $which && !is_singular() ) {
+
+           $this->status_select();
+           $this->email_finder();
+           submit_button( __( 'Filter' ), 'button', false, false, array( 'id' => 'post-query-submit' ) );
+        }
+
+        
+?>
+        </div>
+<?php
+    }
+    
     
     
     /** ************************************************************************
@@ -263,20 +306,27 @@ class SendPress_Subscribers_Table extends WP_List_Table {
 
  
         /* -- Preparing your query -- */
-        if(isset($_GET["listID"])){
+        if(isset($_GET["listID"]) && $_GET["listID"] > 0){
         $query = "SELECT t1.*, t3.status FROM " .  $this->_sendpress->subscriber_table() ." as t1,". $this->_sendpress->list_subcribers_table()." as t2,". $this->_sendpress->subscriber_status_table()." as t3";
 
         
             $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND (t2.listID =  ". $_GET["listID"] .")";
         } else {
-            $query = "SELECT * FROM " .  $this->_sendpress->subscriber_table();
+            $query = "SELECT t1.*, t3.status FROM " .  $this->_sendpress->subscriber_table() ." as t1,". $this->_sendpress->list_subcribers_table()." as t2,". $this->_sendpress->subscriber_status_table()." as t3";
+             $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) ";
         }
         /* -- Ordering parameters -- */
         //Parameters that are going to be used to order the result
-        $orderby = !empty($_GET["orderby"]) ? mysql_real_escape_string($_GET["orderby"]) : 'ASC';
-        $order = !empty($_GET["order"]) ? mysql_real_escape_string($_GET["order"]) : '';
-        if(!empty($orderby) & !empty($order)){ $query.=' ORDER BY '.$orderby.' '.$order; }
+       
+        if(isset($_GET["statusid"] ) && $_GET["statusid"]  > 0){
+            $query .= ' AND statusid = '. $_GET["statusid"] ;
 
+        }
+
+        if(isset($_GET["qs"] )){
+            $query .= ' AND ( email LIKE "%'. $_GET["qs"] .'%" or firstname LIKE "%'. $_GET["qs"] .'%" or lastname LIKE "%'. $_GET["qs"] .'%" )';
+
+        }
         /* -- Pagination parameters -- */
         //Number of elements in your table?
         $totalitems = $wpdb->query($query); //return the total number of affected rows
@@ -303,11 +353,24 @@ class SendPress_Subscribers_Table extends WP_List_Table {
         if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
         //How many pages do we have in total?
         $totalpages = ceil($totalitems/$per_page);
+
+        $orderby = !empty($_GET["orderby"]) ? mysql_real_escape_string($_GET["orderby"]) : 'ASC';
+        $order = !empty($_GET["order"]) ? mysql_real_escape_string($_GET["order"]) : '';
+        if($orderby == 'status'){
+            $orderby = 't2.status';
+        }
+
+        if(!empty($orderby) & !empty($order)){ $query.=' ORDER BY '.$orderby.' '.$order; }
+        if(!isset($_GET["listID"]) ){
+            $query.= ' group by t1.email';
+
+        }
         //adjust the query to take pagination into account
         if(!empty($paged) && !empty($per_page)){
             $offset=($paged-1)*$per_page;
             $query.=' LIMIT '.(int)$offset.','.(int)$per_page;
         }
+
 
     /* -- Register the pagination -- */
         $this->set_pagination_args( array(

@@ -80,10 +80,35 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$table = self::queue_table();
 		if($id == false){
 			$query = "SELECT COUNT(*) FROM $table where success = 0";
+
+	        if(isset($_GET["listid"]) &&  $_GET["listid"]> 0 ){
+	            $query .= ' AND listID = '. $_GET["listid"];
+	        }
+
+	        if(isset($_GET["qs"] )){
+	            $query .= ' AND to_email LIKE "%'. $_GET["qs"] .'%"';
+
+	        }
+
 		} else {
 			$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where emailID = %d and success = 0", $id );
 		}	
 		return $wpdb->get_var( $query );
+	}
+
+
+	static function get_lists_in_queue(){
+		global $wpdb;
+		$table = self::queue_table();
+		$query = "SELECT listID FROM wp_sendpress_queue where success = 0 group by listID";
+		$id=$wpdb->get_results( $query );
+		$listdata = array();
+		foreach ($id as $list) {
+			$listdata[] = array('id'=>$list->listID,'title'=>get_the_title($list->listID));
+		}
+
+	
+		return $listdata;
 	}
 
 

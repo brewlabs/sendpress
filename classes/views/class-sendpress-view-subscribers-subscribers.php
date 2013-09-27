@@ -34,7 +34,7 @@ class SendPress_View_Subscribers_Subscribers extends SendPress_View_Subscribers 
 	function html($sp) {
 	
 		$list ='';
-if(isset($_GET['listID'])){
+if(isset($_GET['listID']) && $_GET['listID'] > 0 ){
 	//$listinfo = $this->getDetail( $this->lists_table(),'listID', $_GET['listID'] );	
 	$listinfo = get_post($_GET['listID']);
 	$list = '&listID='.$_REQUEST['listID'];
@@ -57,7 +57,11 @@ if(isset($_GET['listID'])){
 	<form id="movies-filter" method="get">
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	    <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+	    <?php if(isset($_GET['listID']) && $_GET['listID'] > 0 ){ ?>
 	    <input type="hidden" name="listID" value="<?php echo $_GET['listID']; ?>" />
+	    <?php  } ?>
+	    <input type="hidden" name="view" value="<?php echo $_GET['view']; ?>" />
+
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display() ?>
 	    <?php wp_nonce_field($sp->_nonce_value); ?>

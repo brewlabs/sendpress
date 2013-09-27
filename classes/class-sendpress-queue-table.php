@@ -27,7 +27,7 @@ class SendPress_Queue_Table extends WP_List_Table {
      * 
      * @var array 
      **************************************************************************/
-   
+    private $_list_title = array();
     private $_sendpress = '';
    
     /** ************************************************************************
@@ -78,24 +78,56 @@ class SendPress_Queue_Table extends WP_List_Table {
             case 'status':
                return $item->$column_name;
            */
-               case 'max_attempts':
-                return $item->max_attempts;
-                case 'attempts':
-                return $item->attempts;
+            case 'max_attempts':
+
+
+                return "<span class='badge '>$item->max_attempts</span>";
+            case 'attempts':
+                $cls = "badge-success";
+
+                if($item->attempts == 3 ){
+                    $cls = "badge-important";
+                }
+                if($item->attempts == 2 ){
+                    $cls = "badge-warning";
+                }
+                if($item->attempts == 1 ){
+                    $cls = "badge-success";
+                }
+                if($item->inprocess == 1){
+                    return 'in process';
+                }
+
+                 return "<span class='badge $cls'>$item->attempts</span>";
 
             case 'listid':
-                return $item->listID;
+                if(isset($this->_list_title[$item->listID] )){
+                    return $this->_list_title[$item->listID];
+
+                } else {
+                    $title = get_the_title($item->listID);
+                    $this->_list_title[$item->listID] = $title;
+                    return $title;
+                }
+
+
+                //return ;
             case 'gravatar':
                 return get_avatar($item->to_email, 30);
             case 'last_attemp':
-                 return date_i18n(get_option('date_format') , strtotime( $item->last_attempt ) );
 
-            case 'actions':
-                $buttons ='<a class="btn resend-btn" href="?page='.$_REQUEST['page'].'&action=queue-delete&emailID='. $item->id .'"><i class="icon-trash "></i> Delete</a> ';
-                if($item->attempts >= $item->max_attempts){
-                    $buttons .='<a class="btn resend-btn" href="?page='.$_REQUEST['page'].'&action=requeue&emailID='. $item->id .'"><i class="icon-repeat "></i> Requeue</a>';
+                if($item->last_attempt !== '0000-00-00 00:00:00'){
+                   return date_i18n("Y-m-d H:i:s" , strtotime( $item->last_attempt ) );
+                } else {
+                    return 'never';
                 }
 
+            case 'actions':
+                $buttons ='';
+                if($item->attempts >= $item->max_attempts){
+                    $buttons .='<a class="btn resend-btn btn-success" href="?page='.$_REQUEST['page'].'&action=requeue&emailID='. $item->id .'"><i class="icon-repeat icon-white"></i> Requeue</a> ';
+                }
+                $buttons .='<a class="btn resend-btn" href="?page='.$_REQUEST['page'].'&action=queue-delete&emailID='. $item->id .'"><i class="icon-trash "></i> Delete</a> ';
              return '<div class="inline-buttons">'.$buttons.'</div>';
            
             default:
@@ -172,9 +204,10 @@ class SendPress_Queue_Table extends WP_List_Table {
         $columns = array(
             'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
             'gravatar' => ' ',
-            'listid' => 'List Id',
-            
             'title' => 'Email',
+            'listid' => 'List',
+            
+            
             'max_attempts' => 'Max Attempts',
             'attempts' => 'Attempted',
             'last_attemp' => 'Last Attempt',
@@ -201,7 +234,10 @@ class SendPress_Queue_Table extends WP_List_Table {
      **************************************************************************/
     function get_sortable_columns() {
         $sortable_columns = array(
-            'title' =>array('email',true), 
+            'title' =>array('to_email',true), 
+            'attempts' =>array('attempts',true), 
+            'last_attemp' =>array('last_attempt',true), 
+           // 'listid' =>array('listID',true), 
             /*
             'rating'    => array('rating',false),
             'director'  => array('director',false)
@@ -229,10 +265,37 @@ class SendPress_Queue_Table extends WP_List_Table {
         $actions = array(
             'delete-email-queue' => 'Delete'
         );
+
+        
+
         return $actions;
     }
     
-    
+    function list_select(){
+        $info = SendPress_Data::get_lists_in_queue();
+        echo '<select name="listid">';
+         if(!isset($_GET['listid']) ){
+                $cls = " selected='selected' ";
+            }
+        echo "<option cls value='-1' >All Lists</option>";
+        foreach ($info as $list) {
+            $cls = '';
+            if(isset($_GET['listid']) && $_GET['listid'] == $list['id']){
+                $cls = " selected='selected' ";
+            }
+
+           echo "<option $cls value='".$list['id']."'>".$list['title']."</option>";
+        }
+
+        
+        echo '</select> ';
+    }
+
+
+    function email_finder(){
+        echo "<input type='text' value='' name='qs' />";
+    }
+
     /** ************************************************************************
      * Optional. You can handle your bulk actions anywhere or anyhow you prefer.
      * For this example package, we will handle it in the class to keep things
@@ -249,6 +312,24 @@ class SendPress_Queue_Table extends WP_List_Table {
         
     }
     
+
+    function extra_tablenav( $which ) {
+        global $cat;
+?>
+        <div class="alignleft actions">
+<?php
+        if ( 'top' == $which && !is_singular() ) {
+
+           $this->list_select();
+           $this->email_finder();
+           submit_button( __( 'Filter' ), 'button', false, false, array( 'id' => 'post-query-submit' ) );
+        }
+
+        
+?>
+        </div>
+<?php
+    }
     
     /** ************************************************************************
      * REQUIRED! This is where you prepare your data for display. This method will
@@ -276,12 +357,7 @@ class SendPress_Queue_Table extends WP_List_Table {
        
         $query = "SELECT * FROM " .  SendPress_Data::queue_table();
        
-        /* -- Ordering parameters -- */
-        //Parameters that are going to be used to order the result
-        $orderby = !empty($_GET["orderby"]) ? mysql_real_escape_string($_GET["orderby"]) : 'ASC';
-        $order = !empty($_GET["order"]) ? mysql_real_escape_string($_GET["order"]) : '';
-        if(!empty($orderby) & !empty($order)){ $query.=' ORDER BY '.$orderby.' '.$order; }
-
+       
         /* -- Pagination parameters -- */
         //Number of elements in your table?
         $totalitems = SendPress_Data::emails_in_queue();//$wpdb->query($query); //return the total number of affected rows
@@ -309,6 +385,21 @@ class SendPress_Queue_Table extends WP_List_Table {
         //How many pages do we have in total?
         $totalpages = ceil($totalitems/$per_page);
         $query.=' WHERE success = 0 ';
+
+        if(isset($_GET["listid"]) &&  $_GET["listid"]> 0 ){
+            $query .= ' AND listID = '. $_GET["listid"];
+        }
+
+        if(isset($_GET["qs"] )){
+            $query .= ' AND to_email LIKE "%'. $_GET["qs"] .'%"';
+
+        }
+         /* -- Ordering parameters -- */
+        //Parameters that are going to be used to order the result
+        $orderby = !empty($_GET["orderby"]) ? mysql_real_escape_string($_GET["orderby"]) : 'ASC';
+        $order = !empty($_GET["order"]) ? mysql_real_escape_string($_GET["order"]) : '';
+        if(!empty($orderby) & !empty($order)){ $query.=' ORDER BY '.$orderby.' '.$order; }
+
         //adjust the query to take pagination into account
         if(!empty($paged) && !empty($per_page)){
             $offset=($paged-1)*$per_page;
