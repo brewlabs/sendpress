@@ -381,6 +381,15 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return get_post( $id  );
 	}
 
+	static function get_lists(){
+		 $args = array(
+            'post_type' => 'sendpress_list',
+            'post_status' => array('publish','draft')
+            );
+            $query = new WP_Query( $args );
+            return $query;
+	}
+
 	/********************* END LIST static functionS ****************************/
 
 	/********************* SUBSCRIBER static functionS **************************/
@@ -472,9 +481,18 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return SendPress_Data::get_subscriber_list_status($listID, $subscriberID);
 	}
 
+	static function remove_subscriber_status( $list_id = false , $subscriberID = false){
+		if($list_id !== false && is_numeric( $list_id ) && $subscriberID !== false){
+			global $wpdb;
+			$table = self::list_subcribers_table();
+			$wpdb->query( $wpdb->prepare("DELETE FROM $table WHERE listID = %d AND subscriberID = %d ", $list_id, $subscriberID) );
+		}
+	}
+
+
 	static function get_subscriber_list_status( $listID,$subscriberID ) {
 		$table = SendPress_Data::list_subcribers_table();
-		$result = SendPress_Data::wpdbQuery("SELECT status,updated FROM $table WHERE subscriberID = $subscriberID AND listID = $listID", 'get_row');
+		$result = SendPress_Data::wpdbQuery("SELECT t3.status,t2.updated,t3.statusid FROM ". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 WHERE t2.subscriberID = $subscriberID AND t2.listID = $listID AND t2.status = t3.statusid ", 'get_row');
 		return $result;	
 	}
 

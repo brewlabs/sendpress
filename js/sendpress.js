@@ -34,6 +34,19 @@
             this.imagebox = $('#imageaddbox');
             this.textbox = $('#textaddbox');
 
+
+            $('#delete-this-user').click(function(){
+        $('#subscriber-save').val( $(this).is(':checked') ? 'This will delete this Subscriber!' : 'Save' );
+                if($(this).is(':checked')){
+                   $('#subscriber-save').removeClass("btn-primary");
+                   $('#subscriber-save').addClass("btn-danger");
+                } else {
+                     $('#subscriber-save').removeClass("btn-danger");
+                     $('#subscriber-save').addClass("btn-primary");
+                }
+
+        });
+
             $('#myTab a').click(function (e) {
               e.preventDefault();
               $(this).tab('show');

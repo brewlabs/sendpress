@@ -25,7 +25,7 @@ class SendPress_View_Subscribers extends SendPress_View {
 				    	<a href="<?php echo SendPress_Admin::link('Subscribers'); ?>"><i class="icon-list "></i> <?php _e('Lists','sendpress'); ?></a>
 				  	</li>
 					<li <?php if(isset($_GET['view']) && !isset($_GET['listID'])){ ?>class="active"<?php } ?> >
-				    	<a href="<?php echo SendPress_Admin::link('Subscribers_Subscribers'); ?>"><i class="icon-user "></i> <?php _e('All Subscribers','sendpress'); ?></a>
+				    	<a href="<?php echo SendPress_Admin::link('Subscribers_All'); ?>"><i class="icon-user "></i> <?php _e('All Subscribers','sendpress'); ?></a>
 				  	</li>
 				</ul>
 			</div>

@@ -245,6 +245,29 @@ a.spbutton:hover {
 }
 
 
+.spmedia .media-image {
+float: left;
+margin: .125em .9375em .125em .125em;
+} 
+.spmedia .media-image img{
+
+width: 110px;
+height: 110px;
+border: 1px solid #ccc;
+border-radius: 6px;
+padding: 4px;
+}
+.spmedia .media-body {
+overflow: hidden;
+_overflow: visible;
+zoom: 1;
+}
+.spmedia .media-body input.sp-text{
+    display: block;
+    width: 50%; 
+}
+
+
 
 a.spbutton:active {
     color: #000;

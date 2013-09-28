@@ -8,45 +8,142 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 
-	
+	function status_select($status, $listid){
+        $info = SendPress_Data::get_statuses();
+        echo '<select name="'.$listid.'-status">';
+        echo "<option cls value='-1' >No Status</option>";
+        foreach ($info as $list) {
+            $cls = '';
+            if($status == $list->statusid){
+                $cls = " selected='selected' ";
+            }
+
+           echo "<option $cls value='".$list->statusid."'>".$list->status."</option>";
+        }
+
+        
+        echo '</select> ';
+    }	
+
+    function save(){
+    	if($_POST['delete-this-user'] == 'yes'){
+
+    	}else {
+
+			global $post;
+	    	$args = array( 'post_type' => 'sendpress_list','post_status' => array('publish','draft'),'posts_per_page' => 100, 'order'=> 'ASC', 'orderby' => 'title' );
+			$postslist = get_posts( $args );
+			foreach ( $postslist as $post ) :
+			  setup_postdata( $post ); 
+
+				if(isset($_POST[$post->ID."-status"]) && $_POST[$post->ID."-status"] > 0 ){
+					SendPress_Data::update_subscriber_status( $post->ID,$_POST['subscriberID'],$_POST[$post->ID."-status"]  );
+				} else {
+					SendPress_Data::remove_subscriber_status($post->ID,$_POST['subscriberID']);
+				}
+
+
+			endforeach; 
+			wp_reset_postdata();
+
+		}
+		SendPress_Admin::redirect('Subscribers_Subscriber', array('subscriberID'=>$_POST['subscriberID'] ) );
+    	
+    }
+
+
 	function html($sp) {
 		?>
 	<div id="taskbar" class="lists-dashboard rounded group"> 
 	<h2><?php _e('Edit Subscriber','sendpress'); ?></h2>
 	</div>
 <?php
-	$sub = SendPress_Data::get_subscriber($_GET['subscriberID'],$_GET['listID']);
+	$sub = SendPress_Data::get_subscriber($_GET['subscriberID']);
 	
-	?>
+	?><div class="boxer">
+	<div class="boxer-inner">
+		<div class="spmedia">
+			<div class="media-image">
+		<?php
+		echo get_avatar( $sub->email, $size = '96' ); 
+		?>
+		</div>
+		<div class="media-body">
 	<form id="subscriber-edit" method="post">
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	    <input type="hidden" name="action" value="edit-subscriber" />
+	    <!--<input type="hidden" name="action" value="edit-subscriber" />-->
 	    <input type="hidden" name="listID" value="<?php echo $_GET['listID']; ?>" />
 	    <input type="hidden" name="subscriberID" value="<?php echo $_GET['subscriberID']; ?>" />
-	    <?php _e('Email','sendpress'); ?>: <input type="text" name="email" value="<?php echo $sub->email; ?>" /><br>
-	    <?php _e('Firstname','sendpress'); ?>: <input type="text" name="firstname" value="<?php echo $sub->firstname; ?>" /><br>
-	    <?php _e('Lastname','sendpress'); ?>: <input type="text" name="lastname" value="<?php echo $sub->lastname; ?>" /><br>
-	    <?php _e('Status','sendpress'); ?>: <select name="status">
-	    			<?php 
-	    				$results = $sp->getData($sp->subscriber_status_table());
-	    				foreach($results as $status){
-	    					$selected = '';
-	    					if($status->status == $sub->status){
-	    						$selected = 'selected';
-	    					}
-	    					echo "<option value='$status->statusid' $selected>$status->status</option>";
+	    <strong><?php _e('Email','sendpress'); ?></strong>: <input type="text" name="email" class="regular-text sp-text" value="<?php echo $sub->email; ?>" /><br><br>
+	    <strong><?php _e('Firstname','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="firstname" value="<?php echo $sub->firstname; ?>" /><br><br>
+	    <strong><?php _e('Lastname','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="lastname" value="<?php echo $sub->lastname; ?>" /><br>
+	    <br>
 
-	    				}
-
-
-	    			?>
-
-	    		</select>
-	    		<br>
-	   <input type="submit" value="<?php _e('submit','sendpress'); ?>"/>
+	  
 	   <?php wp_nonce_field($sp->_nonce_value); ?>
 
-	</form>
+	
+	</div></div>
+	<h3>Subscriptions</h3>
+	<div class="well">
+		<table class=" table table-bordered table-striped">
+			<tr>
+				<th>List Name</th>
+				<th>Status</th>
+			</tr>
+			<?php 
+		global $post;
+		$args = array( 'post_type' => 'sendpress_list','post_status' => array('publish','draft'),'posts_per_page' => 100, 'order'=> 'ASC', 'orderby' => 'title' );
+		$postslist = get_posts( $args );
+		foreach ( $postslist as $post ) :
+		  setup_postdata( $post ); ?> 
+			
+				<tr>
+					<td><?php the_title(); ?></td>
+					<td><?php $info = SendPress_Data::get_subscriber_list_status($post->ID, $_GET['subscriberID']);
+					if(isset($info) && $info !== false){
+						$cls = '';
+						if($info->statusid == 1){
+							$cls = 'badge-warning';
+						}
+						if($info->statusid == 2){
+							$cls = 'badge-success';
+						}
+						if($info->statusid == 3){
+							$cls = 'badge-important';
+						}
+						if($info->statusid == 4){
+							$cls = 'badge-inverse';
+						}
+						
+
+						echo "<span class='badge $cls'>&nbsp;</span> ";$this->status_select($info->statusid,$post->ID); 
+
+					} else {
+						echo '<span class="badge">&nbsp;</span> '; $this->status_select(0,$post->ID);
+					}
+
+					 ?> </td>
+				</tr>
+
+			</div>
+		<?php
+		endforeach; 
+		wp_reset_postdata();
+
+		?></table>
+
+
+	
+	    		 
+</div>
+<input type="checkbox" id="delete-this-user" name="delete-this-user" value="yes"/> Checking this box will remove this subscriber and all related data from the system.<br><br>
+<input type="submit" class="btn btn-primary btn-large " id="subscriber-save" value="<?php _e('Save','sendpress'); ?>"/></form>
+</div>
+</div>
+
+
+
 	<?php	
 	}
 
