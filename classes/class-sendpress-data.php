@@ -402,6 +402,35 @@ class SendPress_Data extends SendPress_DB_Tables {
 		}
 	}
 
+	static function delete_subscriber($subscriberID = false){
+		if($subscriberID != false){
+			global $wpdb;
+			$wpdb->query( 
+				$wpdb->prepare(
+					"DELETE FROM " .  SendPress_Data::subscriber_table() ." WHERE subscriberID = %d",
+					$subscriberID ) 
+				);
+			$wpdb->query( 
+				$wpdb->prepare(
+					"DELETE FROM " .  SendPress_Data::list_subcribers_table() ." WHERE subscriberID = %d",
+					$subscriberID ) 
+				);
+			$wpdb->query( 
+				$wpdb->prepare(
+					"DELETE FROM " .  SendPress_Data::subscriber_event_table() ." WHERE subscriberID = %d",
+					$subscriberID ) 
+				);
+		}
+
+	}
+
+	static function update_subscriber($subscriberID, $values){
+		$table = SendPress_Data::subscriber_table();
+		global $wpdb;
+		
+		$result = $wpdb->update($table,$values, array('subscriberID'=> $subscriberID) );
+	}
+
 
 	static function get_subscriber($subscriberID, $listID = false){
 		if($listID){
@@ -494,6 +523,28 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$table = SendPress_Data::list_subcribers_table();
 		$result = SendPress_Data::wpdbQuery("SELECT t3.status,t2.updated,t3.statusid FROM ". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 WHERE t2.subscriberID = $subscriberID AND t2.listID = $listID AND t2.status = t3.statusid ", 'get_row');
 		return $result;	
+	}
+
+	static function get_subscriber_events($sid){
+		global $wpdb;
+			$table  =SendPress_Data::subscriber_event_table();
+			return $wpdb->get_results( $wpdb->prepare("SELECT * FROM $table WHERE subscriberID = %d order by eventID DESC", $sid) );
+
+	}
+
+
+	static function register_event( $event='unknown_event_type' , $sid = null , $rid = null  ){
+		global $wpdb;
+
+		$event_data = array(
+			'eventdate'=>date('Y-m-d H:i:s'),
+			'subscriberID' => $sid,
+			'reportID' => $rid,
+			'type'=> $event
+		);
+		//error_log($event_data);
+		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $event_data);
+
 	}
 
 

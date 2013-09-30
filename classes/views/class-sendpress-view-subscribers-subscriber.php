@@ -27,10 +27,21 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 
     function save(){
     	if($_POST['delete-this-user'] == 'yes'){
+    		SendPress_Data::delete_subscriber( $_POST['subscriberID'] );
 
+    		SendPress_Admin::redirect( 'Subscribers_All' );
     	}else {
 
 			global $post;
+
+			$subscriber_info=array(
+				'email' => $_POST['email'],
+				'firstname' => $_POST['firstname'],
+				'lastname' => $_POST['lastname'],
+
+				);
+			SendPress_Data::update_subscriber($_POST['subscriberID'], $subscriber_info);
+
 	    	$args = array( 'post_type' => 'sendpress_list','post_status' => array('publish','draft'),'posts_per_page' => 100, 'order'=> 'ASC', 'orderby' => 'title' );
 			$postslist = get_posts( $args );
 			foreach ( $postslist as $post ) :
@@ -54,7 +65,12 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 
 	function html($sp) {
 		?>
-	<div id="taskbar" class="lists-dashboard rounded group"> 
+	<div id="taskbar" class="lists-dashboard rounded group">
+		<form id="subscriber-edit" method="post">
+	<div style="float:right;" >
+	<input type="submit" class="btn btn-primary btn-large " id="subscriber-save" value="<?php _e('Save','sendpress'); ?>"/>
+</div> 
+		
 	<h2><?php _e('Edit Subscriber','sendpress'); ?></h2>
 	</div>
 <?php
@@ -69,7 +85,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 		?>
 		</div>
 		<div class="media-body">
-	<form id="subscriber-edit" method="post">
+	
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	    <!--<input type="hidden" name="action" value="edit-subscriber" />-->
 	    <input type="hidden" name="listID" value="<?php echo $_GET['listID']; ?>" />
@@ -78,6 +94,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 	    <strong><?php _e('Firstname','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="firstname" value="<?php echo $sub->firstname; ?>" /><br><br>
 	    <strong><?php _e('Lastname','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="lastname" value="<?php echo $sub->lastname; ?>" /><br>
 	    <br>
+<input type="checkbox" id="delete-this-user" name="delete-this-user" value="yes"/> Checking this box will remove this subscriber and all related data from the system.<br><br>
 
 	  
 	   <?php wp_nonce_field($sp->_nonce_value); ?>
@@ -137,8 +154,37 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 	
 	    		 
 </div>
-<input type="checkbox" id="delete-this-user" name="delete-this-user" value="yes"/> Checking this box will remove this subscriber and all related data from the system.<br><br>
-<input type="submit" class="btn btn-primary btn-large " id="subscriber-save" value="<?php _e('Save','sendpress'); ?>"/></form>
+</form>
+<h3>Events</h3>
+	<div class="well">
+		<table class=" table table-bordered table-striped">
+			<tr>
+				<th>Event Type</th>
+				<th>Date</th>
+				<th>Info</th>
+			</tr>
+			<?php 
+			$events = SendPress_Data::get_subscriber_events($_GET['subscriberID']); 
+
+			foreach ( $events as $event ) {
+					print_r($event);
+				?><tr>
+
+					<td><?php echo $event->type; ?></td>
+					<td><?php echo $event->eventdate; ?></td>
+					<td><?php ?></td>
+				</tr><?php
+
+			}
+
+
+			?>
+		</table>
+	</div>
+
+	
+
+
 </div>
 </div>
 

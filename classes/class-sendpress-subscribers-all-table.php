@@ -114,10 +114,13 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
     function column_title($item){
         
         //Build row actions
+        //
+        /*
         $actions = array(
             'edit'      => sprintf('<a href="?page=%s&view=%s&subscriberID=%s&listID=%s">Edit</a>',$_REQUEST['page'],'subscriber',$item->subscriberID, $_GET["listID"] ),
             'delete'    => sprintf('<a href="?page=%s&action=%s&subscriberID=%s&listID=%s">Delete</a>',$_REQUEST['page'],'delete-subscriber',$item->subscriberID, $_GET["listID"] ),
         );
+        */
         
         //Return the title contents
         return sprintf('%1$s <span style="color:silver">(id:%2$s)</span>%3$s',
@@ -360,17 +363,18 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
         //How many pages do we have in total?
         $totalpages = ceil($totalitems/$per_page);
 
-        $orderby = !empty($_GET["orderby"]) ? mysql_real_escape_string($_GET["orderby"]) : 'ASC';
+        if(!isset($_GET["listID"]) ){
+            $query.= ' group by t1.email';
+
+        }
+         $orderby = !empty($_GET["orderby"]) ? mysql_real_escape_string($_GET["orderby"]) : 'ASC';
         $order = !empty($_GET["order"]) ? mysql_real_escape_string($_GET["order"]) : '';
         if($orderby == 'status'){
             $orderby = 't2.status';
         }
 
         if(!empty($orderby) & !empty($order)){ $query.=' ORDER BY '.$orderby.' '.$order; }
-        if(!isset($_GET["listID"]) ){
-            $query.= ' group by t1.email';
-
-        }
+       
         //adjust the query to take pagination into account
         if(!empty($paged) && !empty($per_page)){
             $offset=($paged-1)*$per_page;

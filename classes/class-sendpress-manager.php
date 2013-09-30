@@ -219,6 +219,7 @@ class SendPress_Manager {
 
 				//$wpdb->insert( $this->subscriber_open_table(),  $senddata);
 				$count++;
+				SendPress_Data::register_event( 'send', $email->subscriberID, $email->emailID );
 				SendPress_Data::update_report_sent_count( $email->emailID );
 			} else {
 				$wpdb->update($queue_table , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
@@ -278,6 +279,7 @@ class SendPress_Manager {
 			$text = str_replace("*|SP:CONFIRMLINK|*", $href , $text );
 			$text = nl2br($text);
 			$sub =  $message->subject();
+			SendPress_Data::register_event( 'confirm_sent', $subscriberID );			
 			SendPress_Manager::send( $subscriber->email, $sub , $html, $text, false );
 	}
 

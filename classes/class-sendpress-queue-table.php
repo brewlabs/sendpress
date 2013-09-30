@@ -368,6 +368,8 @@ class SendPress_Queue_Table extends WP_List_Table {
             $screen = get_current_screen();
             // retrieve the "per_page" option
            $per_page = 10;
+            $screen_option = $screen->get_option('per_page', 'option');
+           
             if(!empty( $screen_option)) {
                 // retrieve the value of the option stored for the current user
                 $per_page = get_user_meta($user, $screen_option, true);
@@ -403,8 +405,9 @@ class SendPress_Queue_Table extends WP_List_Table {
         //adjust the query to take pagination into account
         if(!empty($paged) && !empty($per_page)){
             $offset=($paged-1)*$per_page;
-            $query.=' LIMIT '.(int)$offset.','.(int)$per_page;
+             $query.=' LIMIT '.(int)$offset.','.(int)$per_page;
         }
+       
 
     /* -- Register the pagination -- */
         $this->set_pagination_args( array(
