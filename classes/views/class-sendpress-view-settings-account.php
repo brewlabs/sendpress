@@ -212,7 +212,7 @@ wp_nonce_field( $sp->_nonce_value );
 <input type="hidden" name="action" value="send-test-email" />
 <br class="clear">
 <div class="alert alert-success">
-  <?php _e( '<b>NOTE: </b>Remeber to check your spam folder if you do not seem to be recieving emails', 'sendpress' ); ?>.
+  <?php _e( '<b>NOTE: </b>Remember to check your Spam folder if you do not seem to be receiving emails', 'sendpress' ); ?>.
 </div>
 
 <h3><?php _e( 'Send Test Email', 'sendpress' ); ?></h3>

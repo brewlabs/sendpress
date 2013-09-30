@@ -97,6 +97,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 = 0.9.5 - 2013.9.30 =
 * 
+* Delete Subscriber from system
+* Better Queue Info and Stats
+* New "All Subscribers" View
+* Full text search of subscribers
+* Unsubscribe link not always working
 
 = 0.9.4.7 - 2013.9.23 =
 * Free SendPress Pro Autocron added
