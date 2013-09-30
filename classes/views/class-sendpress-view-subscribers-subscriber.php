@@ -155,31 +155,15 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 	    		 
 </div>
 </form>
-<h3>Events</h3>
+<h3>Subscriber Actions and Events</h3>
 	<div class="well">
-		<table class=" table table-bordered table-striped">
-			<tr>
-				<th>Event Type</th>
-				<th>Date</th>
-				<th>Info</th>
-			</tr>
-			<?php 
-			$events = SendPress_Data::get_subscriber_events($_GET['subscriberID']); 
-
-			foreach ( $events as $event ) {
-					print_r($event);
-				?><tr>
-
-					<td><?php echo $event->type; ?></td>
-					<td><?php echo $event->eventdate; ?></td>
-					<td><?php ?></td>
-				</tr><?php
-
-			}
-
-
-			?>
-		</table>
+		<?php
+		if(!defined("SENDPRESS_PRO_VERSION") ){
+			_e('This feature requires SendPress Pro.','sendpress');
+		} else {
+			do_action('sendpress_subscriber_events_view', $_GET['subscriberID'] );
+		}
+		?>
 	</div>
 
 	
