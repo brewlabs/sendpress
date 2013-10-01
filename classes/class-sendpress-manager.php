@@ -341,7 +341,7 @@ class SendPress_Manager {
 		//
 		
 		$charset = SendPress_Option::get('email-charset','UTF-8');
-		$encoding = SendPress_Option::get('email-encoding','UTF-8');
+		$encoding = SendPress_Option::get('email-encoding','8bit');
 		
 		$phpmailer->CharSet = $charset;
 		$phpmailer->Encoding = $encoding;
