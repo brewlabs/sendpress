@@ -84,19 +84,26 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Screenshots ==
 
-1. Post Insert.
-2. Email editor and styler.
-3. Template settings.
-4. Default styles setup.
-5. List Management.
-6. Subscriber Management.
-7. Reports.
-
+1. Email Lists.
+2. Email Edit Example.
+3. Send Screen.
+4. Confirm Send.
+5. Subscriber Lists.
+6. All Subscribers.
+7. Subscriber Edit.
+8. Settings & Style.
+9. Emails & Pages.
+10. Sending Account.	
+11. Permissions.
+12. Notifications.
+13. Reports.
+14. Queue.
+15. Pro Tab.
 
 == Changelog ==
 
 = 0.9.5 - 2013.9.30 =
-* 
+* Translation Updates
 * Delete Subscriber from system
 * Better Queue Info and Stats
 * New "All Subscribers" View
@@ -287,6 +294,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.5 =
+New subscriber screens and bug fixes
 
 = 0.9.4.7 =
 Free Pro Feature and Bug Fixes
