@@ -62,15 +62,15 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 		$phpmailer->ClearReplyTos();
 		//return $email;
 		
-
 		$charset = SendPress_Option::get('email-charset','UTF-8');
+		$encoding = SendPress_Option::get('email-encoding','8bit');
 		
 		$phpmailer->CharSet = $charset;
-		$phpmailer->Encoding = '8bit';
+		$phpmailer->Encoding = $encoding;
 
 
 		if($charset != 'UTF-8'){
-			 $html = $this->change($html,'UTF-8',$charset);
+             $html = $this->change($html,'UTF-8',$charset);
              $text = $this->change($text,'UTF-8',$charset);
              $subject = $this->change($subject,'UTF-8',$charset);
                     

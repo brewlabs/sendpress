@@ -5,7 +5,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 	die;
 }
 
-class SendPress_View_Subscribers_Subscribers extends SendPress_View_Subscribers {
+class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 	
 	function admin_init(){
 		add_action('load-sendpress_page_sp-subscribers',array($this,'screen_options'));
@@ -34,14 +34,14 @@ class SendPress_View_Subscribers_Subscribers extends SendPress_View_Subscribers 
 	function html($sp) {
 	
 		$list ='';
-if(isset($_GET['listID']) && $_GET['listID'] > 0 ){
-	//$listinfo = $this->getDetail( $this->lists_table(),'listID', $_GET['listID'] );	
-	$listinfo = get_post($_GET['listID']);
-	$list = '&listID='.$_REQUEST['listID'];
-	$listname = 'for '. $listinfo->post_title;
-}
+	if(isset($_GET['listID']) && $_GET['listID'] > 0 ){
+		//$listinfo = $this->getDetail( $this->lists_table(),'listID', $_GET['listID'] );	
+		$listinfo = get_post($_GET['listID']);
+		$list = '&listID='.$_REQUEST['listID'];
+		$listname = 'for '. $listinfo->post_title;
+	}
 	//Create an instance of our package class...
-	$testListTable = new SendPress_Subscribers_Table();
+	$testListTable = new SendPress_Subscribers_All_Table();
 	//Fetch, prepare, sort, and filter our data...
 	$testListTable->prepare_items();
 

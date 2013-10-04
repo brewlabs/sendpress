@@ -21,7 +21,7 @@ Push
 	define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
-	
+	define( 'SENDPRESS_IRON','http://sendpress.com/iron');
 	if(!defined('SENDPRESS_STORE_URL') ){
 		define( 'SENDPRESS_STORE_URL', 'http://sendpress.com' );
 	}
@@ -46,7 +46,6 @@ Push
 	
 	
 	require_once( SENDPRESS_PATH . 'inc/functions.php' );
-
 	/*
 	require_once( SENDPRESS_PATH . 'classes/class-file-loader.php' );
 	$sp_loader = new File_Loader('SendPress Required Class');
@@ -196,15 +195,31 @@ Push
 			SendPress_Pro_Manager::init();
 			SendPress_Cron::get_instance();
 			SendPress_Notifications_Manager::init();
+			SendPress_Tracking::init();
 			sendpress_register_sender('SendPress_Sender_Website');
 			sendpress_register_sender('SendPress_Sender_Gmail');
+
+
+			add_action( 'sendpress_event', array('SendPress_Tracking','event'), 1, 1 );
+
+			
 	
 			SendPress_Admin::add_cap('Emails_Send','sendpress_email_send');
-	
+			$indexer ="";
+			$permalinks = get_option('permalink_structure');
+			
+			if($permalinks){
+				$pos = strpos($permalinks, "index.php");
+
+				if ($pos > 0) { // note: three equal signs
+				    $indexer = "index.php/";
+				}
+			}
+
 			    add_rewrite_rule(  
-			        "sendpress/([^/]+)/?",  
-			        'index.php?sendpress=$matches[1]',  
-			        "top"); 
+        "^{$indexer}sendpress/([^/]+)/?",  
+        'index.php?sendpress=$matches[1]',  
+        "top"); 
 			
 			if(defined('WP_ADMIN') && WP_ADMIN == true){
 				$sendpress_screen_options = new SendPress_Screen_Options();
@@ -232,10 +247,14 @@ Push
 			
 			add_image_size( 'sendpress-max', 600, 600 );
 			add_filter( 'template_include', array( $this, 'template_include' ) );
+			wp_clear_scheduled_hook('sendpress_cron_action');
 			add_action( 'sendpress_cron_action', array( $this,'sendpress_cron_action_run') );
-			if ( !wp_next_scheduled( 'sendpress_cron_action' ) ) {
-				wp_schedule_event( time(), 'hourly', 'sendpress_cron_action' );
-				//wp_schedule_event( time(), 'hourly', 'my_hourly_event');
+			if ( wp_next_scheduled( 'sendpress_cron_action' ) === false && SendPress_Option::get('autocron','no' ) == 'no' ){
+				
+		  			wp_schedule_event( time()+ 3600, 'hourly', 'sendpress_cron_action' );  
+		
+			} else {
+					wp_clear_scheduled_hook('sendpress_cron_action');
 			}
 			
 			//using this for now, might find a different way to include things later
@@ -258,8 +277,13 @@ Push
 						foreach($caps as $cap){
 							$all[$cap] = 1;
 						}
+						
+	
 					}
+	
+	
 				}
+	
 			}
 			return $all;
 	
@@ -270,15 +294,15 @@ Push
 			load_plugin_textdomain( 'sendpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 		}
 	
-		/**
-		 * Register our widget.
-		 * 'SendPress_Signup_Widget' is the widget class used below.
-		 *
-		 * @since 1.0
-		 */
-		function load_widgets() {
-			register_widget( 'SendPress_Widget_Signup' );
-		}
+			/**
+	 * Register our widget.
+	 * 'SendPress_Signup_Widget' is the widget class used below.
+	 *
+	 * @since 1.0
+	 */
+			function load_widgets() {
+				register_widget( 'SendPress_Widget_Signup' );
+			}
 	
 	
 		function admin_notice(){
@@ -340,7 +364,9 @@ Push
 	 
 		// Hook into that action that'll fire weekly
 		function sendpress_cron_action_run() {
-			$this->fetch_mail_from_queue();
+			if(SendPress_Manager::limit_reached() ){
+				SendPress::fetch_mail_from_queue();
+			}
 		}
 	 
 		function cron_schedule( $schedules ) {
@@ -354,51 +380,7 @@ Push
 	
 		// Start of Presstrends Magic
 		function presstrends_plugin() {
-	
-			// PressTrends Account API Key
-			$api_key = 'eu1x95k67zut64gsjb5qozo7whqemtqiltzu';
-			$auth = 'j0nc5cpqb2nlv8xgn0ouo7hxgac5evn0o';
-	
-			// Start of Metrics
-			global $wpdb;
-			$data = get_transient( 'presstrends_data' );
-			if (!$data || $data == ''){
-				$api_base = 'http://api.presstrends.io/index.php/api/pluginsites/update/auth/';
-				$url = $api_base . $auth . '/api/' . $api_key . '/';
-				$data = array();
-				$count_posts = wp_count_posts();
-				$count_pages = wp_count_posts('page');
-				$comments_count = wp_count_comments();
-				$theme_data = get_theme_data(get_stylesheet_directory() . '/style.css');
-				$plugin_count = count(get_option('active_plugins'));
-				$all_plugins = get_plugins();
-				foreach($all_plugins as $plugin_file => $plugin_data) {
-				$plugin_name .= $plugin_data['Name'];
-				$plugin_name .= '&';}
-				$plugin_data = get_plugin_data( __FILE__ );
-				$plugin_version = $plugin_data['Version'];
-				$posts_with_comments = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}posts WHERE post_type='post' AND comment_count > 0");
-				$comments_to_posts = number_format(($posts_with_comments / $count_posts->publish) * 100, 0, '.', '');
-				$pingback_result = $wpdb->get_var('SELECT COUNT(comment_ID) FROM '.$wpdb->comments.' WHERE comment_type = "pingback"');
-				$data['url'] = stripslashes(str_replace(array('http://', '/', ':' ), '', site_url()));
-				$data['posts'] = $count_posts->publish;
-				$data['pages'] = $count_pages->publish;
-				$data['comments'] = $comments_count->total_comments;
-				$data['approved'] = $comments_count->approved;
-				$data['spam'] = $comments_count->spam;
-				$data['pingbacks'] = $pingback_result;
-				$data['post_conversion'] = $comments_to_posts;
-				$data['theme_version'] = $plugin_version;
-				$data['theme_name'] = urlencode($theme_data['Name']);
-				$data['site_name'] = str_replace( ' ', '', get_bloginfo( 'name' ));
-				$data['plugins'] = $plugin_count;
-				$data['plugin'] = urlencode($plugin_name);
-				$data['wpversion'] = get_bloginfo('version');
-				foreach ( $data as $k => $v ) {
-				$url .= $k . '/' . $v . '/';}
-				$response = wp_remote_get( $url );
-				set_transient('presstrends_data', $data, 60*60*24);
-			}
+			SendPress_Tracking::data();
 		}
 	
 		function template_include( $template ) { 
@@ -446,12 +428,12 @@ Push
 		} 
 		
 	    /**
-		 * has_identity_key
-		 * 
-		 * @access public
-		 *
-		 * @return mixed Value.
-		 */
+	 * has_identity_key
+	 * 
+	 * @access public
+	 *
+	 * @return mixed Value.
+	 */
 		function has_identity_key(){
 			$key = (get_query_var('fxti')) ? get_query_var('fxti') : false;
 			if(false == $key)
@@ -478,8 +460,6 @@ Push
 			SendPress_Posts::report_post_type( $this->_report_post_type );
 			SendPress_Posts::template_post_type();
 			SendPress_Posts::list_post_type();
-			SendPress_Posts::jobs_post_type();
-			do_action('sendpress_custom_post_types_created');
 		}
 	
 		
@@ -677,10 +657,10 @@ Push
 			wp_enqueue_script('sendpress_ls');
 			//wp_localize_script( 'sendpress_js', 'sendpress', array( 'ajaxurl' => admin_url( 'admin-ajax.php', 'http' ) ) );
 
-			// wp_register_style( 'sendpress_jquery_ibutton_css', SENDPRESS_URL . 'css/jquery.ibutton.css', false, SENDPRESS_VERSION );
-   //  		wp_enqueue_style( 'sendpress_jquery_ibutton_css' );
-   //  		wp_register_script('sendpress_jquery_ibutton_js', SENDPRESS_URL .'js/jquery.ibutton.min.js' ,'',SENDPRESS_VERSION);
-			// wp_enqueue_script('sendpress_jquery_ibutton_js');
+			wp_register_style( 'sendpress_jquery_ibutton_css', SENDPRESS_URL . 'css/jquery.ibutton.css', false, SENDPRESS_VERSION );
+    		wp_enqueue_style( 'sendpress_jquery_ibutton_css' );
+    		wp_register_script('sendpress_jquery_ibutton_js', SENDPRESS_URL .'js/jquery.ibutton.min.js' ,'',SENDPRESS_VERSION);
+			wp_enqueue_script('sendpress_jquery_ibutton_js');
 
 			wp_register_style( 'sendpress_css_base', SENDPRESS_URL . 'css/style.css', false, SENDPRESS_VERSION );
     		wp_enqueue_style( 'sendpress_css_base' );
@@ -901,8 +881,8 @@ Push
 	   add_submenu_page('sp-overview', __('Pro','sendpress'), __('Pro','sendpress'), $role, 'sp-pro', array(&$this,'render_view'));
 	   
 
-	   	if(SendPress_Option::get('feedback') == 'yes'){
-			$this->presstrends_plugin();
+	   	if(SendPress_Option::get('feedback') == 'yes' || SendPress_Option::get('allow_tracking') == 'yes'){
+			SendPress_Tracking::data();
 		}
 	}
 
@@ -1103,6 +1083,13 @@ Push
 			
 		}
 
+		if(version_compare( $current_version, '0.9.4.7', '<' )){
+			SendPress_Data::update_tables_0947();
+		}
+
+
+
+
 
 
 
@@ -1258,7 +1245,14 @@ Push
 		// Insert the post into the database
   		$new_id = wp_insert_post( $my_post );
   		update_post_meta($new_id,'public',$values['public']);
+		//add_post_meta($new_id,'last_send_date',$newlist->last_send_date);
+		//add_post_meta($new_id,'legacy_id',$newlist->listID);
+		//$this->upgrade_lists_new_id( $newlist->listID, $new_id);
+		//	$table = $this->lists_table();
+
 		
+		//$result = $this->wpdbQuery("INSERT INTO $table (name, created, public) VALUES( '" .$values['name'] . "', '" . date('Y-m-d H:i:s') . "','" .$values['public'] . "')", 'query');
+
 		return $new_id;	
 	}
 
@@ -1468,6 +1462,10 @@ Push
 
 			//}	
 		}
+
+
+		
+				
 		//Make sure we stop the old action from running
 		wp_clear_scheduled_hook('sendpress_cron_action_run');
 		flush_rewrite_rules();
@@ -1636,120 +1634,30 @@ Push
 		} 
 	}
 
-	function fetch_mail_from_queue(){
+	static function fetch_mail_from_queue(){
 		@ini_set('max_execution_time',0);
 		global $wpdb;
 		$count = SendPress_Option::get('emails-per-hour');
 		$emails_per_hour = SendPress_Option::get('emails-per-hour');
-		if($emails_per_hour != 0){
-			$rate = 3600 / $emails_per_hour;
-		}
-		if($rate > 8){
-			$rate = 8;
-		}
-		$emails_today =  SendPress_Option::get('emails-today');
-		$emails_per_day = SendPress_Option::get('emails-per-day');
-		$email_count = isset($emails_today[date("z")]) ? $emails_today[date("z")] : 0 ;
-		$attempts = 0;
-		if( SendPress_Manager::send_limit_reached()  ){
+		
+		if( SendPress_Manager::limit_reached()  ){
 			return;
 		}
 
 
 		for ($i=0; $i < $count ; $i++) { 
-			if($this->cron_stop() == false ){
 				$email = $this->wpdbQuery("SELECT * FROM ". SendPress_Data::queue_table() ." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 ORDER BY id LIMIT 1","get_row");
 				if($email != null){
 
-					if( SendPress_Manager::send_limit_reached() ){
+					if( SendPress_Manager::limit_reached()  ){
 						break;
 					}
-					SendPress_Manager::increase_email_count( 1 );
 					$attempts++;
 					SendPress_Data::queue_email_process( $email->id );
 					$result = SendPress_Manager::send_email_from_queue( $email );
 					$email_count++;
 					if ($result) {
-						$table = SendPress_Data::queue_table();
-						$wpdb->query( 
-							$wpdb->prepare( 
-								"DELETE FROM $table WHERE id = %d",
-							    $email->id  
-						    )
-						);
-						$senddata = array(
-							'sendat' => date('Y-m-d H:i:s'),
-							'reportID' => $email->emailID,
-							'subscriberID' => $email->subscriberID
-						);
-
-						//$wpdb->insert( $this->subscriber_open_table(),  $senddata);
-						SendPress_Data::update_report_sent_count( $email->emailID );
-					} else {
-						$wpdb->update( SendPress_Data::queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
-					}
-				} else{//We ran out of emails to process.
-					break;
-				}
-			} else{ //Stop was set.
-				break;
-			}
-			
-		}
-
-
-		
-		
-
-		
-	}
-
-	function send_single_from_queue(){
-		
-		global $wpdb;
-		$limit =  1; //wp_rand(1, 10);
-		$emails_per_hour = SendPress_Option::get('emails-per-hour');
-		if($emails_per_hour != 0){
-			$rate = 3600 / $emails_per_hour;
-		}
-		if($rate > 8){
-			$rate = 8;
-		}
-		$emails_today =  SendPress_Option::get('emails-today');
-		$emails_per_day = SendPress_Option::get('emails-per-day');
-		$email_count = isset($emails_today[date("z")]) ? $emails_today[date("z")] : 0 ;
-
-		//$emails = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE success = 0 AND max_attempts != attempts LIMIT ".$limit,"get_results");
-		$count = 0;
-		$attempts = 0;
-
-		if( SendPress_Manager::send_limit_reached()  ){
-			return array('attempted'=> $attempts,'sent'=>$count);
-		}
-
-		for ($i=0; $i < $limit ; $i++) { 
-				$email = $this->wpdbQuery("SELECT * FROM ".SendPress_Data::queue_table()." WHERE (success = 0) AND (max_attempts != attempts) AND (inprocess = 0) ORDER BY id ASC LIMIT 1","get_results");
-				if( !empty($email) ){
-					$email = $email[0];
-					
-
-					if( SendPress_Manager::send_limit_reached() ){
-						return array('attempted'=> $attempts,'sent'=>$count);
-					}
-
-					$attempts++;
-					SendPress_Data::queue_email_process( $email->id );
-					$result = SendPress_Manager::send_email_from_queue( $email );
-					$email_count++;
-					
-					if ($result) {
-						$table = SendPress_Data::queue_table();
-						$wpdb->query( 
-							$wpdb->prepare( 
-								"DELETE FROM $table WHERE id = %d",
-							    $email->id  
-						    )
-						);
+						$wpdb->update( SendPress_Data::queue_table() , array('success'=>1,'inprocess'=>3 ) , array('id'=> $email->id ));
 						$senddata = array(
 							'sendat' => date('Y-m-d H:i:s'),
 							'reportID' => $email->emailID,
@@ -1758,6 +1666,7 @@ Push
 
 						//$wpdb->insert( $this->subscriber_open_table(),  $senddata);
 						$count++;
+						SendPress_Data::register_event( 'send', $email->subscriberID, $email->emailID );
 						SendPress_Data::update_report_sent_count( $email->emailID );
 					} else {
 						$wpdb->update( SendPress_Data::queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
@@ -1765,13 +1674,16 @@ Push
 				} else{//We ran out of emails to process.
 					break;
 				}
-				
 		}
 
-		SendPress_Manager::increase_email_count( $attempts );
-		return array('attempted'=> $attempts,'sent'=>$count);
+
+		return;
+		
+
+		
 	}
 
+	
 
 
 	function add_email_to_queue($values){
@@ -1877,6 +1789,12 @@ Push
 	*	FUNCTIONS TO BE REMOVED PLEASE DO NOT USE
 	* 
 	*/
+	function send_single_from_queue(){
+		_deprecated_function( __FUNCTION__, '0.9.4.8', 'SendPress_Manager::send_single_from_queue()' );
+		return SendPress_Manager::send_single_from_queue();
+	}
+
+
 	function get_templates(){
 		_deprecated_function( __FUNCTION__, '0.8.7', 'SendPress_Template::get_instance()->info()' );
 		return SendPress_Template::get_instance()->info();

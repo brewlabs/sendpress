@@ -35,7 +35,9 @@ class SendPress_View {
 
 	}
 	
-	static function footer(){ ?>
+	static function footer(){ 
+		
+		?>
 		<div class="sp-footer">
 			<a href="<?php echo SendPress_Admin::link('Help_Whatsnew'); ?>">What's New</a> | <a href="http://sendpress.com/support/knowledgebase/" target="_blank">Knowledge Base</a> | <a href="http://sendpress.uservoice.com/" target="_blank">Feedback</a> | SendPress Version: <?php echo SENDPRESS_VERSION; ?> 
 		</div>
@@ -52,7 +54,13 @@ class SendPress_View {
 	 */
 
     
-	function init() {}
+	function init() {
+		//Remove this only on get methods
+		if ( !empty($_REQUEST['_wp_http_referer']) && !$_SERVER['REQUEST_METHOD'] === 'POST') {
+	 		wp_redirect( remove_query_arg( array('_wp_http_referer', '_wpnonce'), stripslashes($_SERVER['REQUEST_URI']) ) );
+	 		exit;
+		}
+	}
 
 	function page_start(){
 		echo '<div class="wrap">';

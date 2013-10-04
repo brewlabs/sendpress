@@ -24,6 +24,25 @@ class SendPress_View_Subscribers extends SendPress_View {
 		<?php
 	}
 
+	function sub_menu($sp){
+		?>
+		<div id="taskbar" class="lists-dashboard rounded group"> 
+			<div class="navbar" >
+			<div class="navbar-inner">
+				<ul class="nav">
+					<li <?php if(!isset($_GET['view']) ){ ?>class="active"<?php } ?> >
+				    	<a href="<?php echo SendPress_Admin::link('Subscribers'); ?>"><i class="icon-list "></i> <?php _e('Lists','sendpress'); ?></a>
+				  	</li>
+					<li <?php if(isset($_GET['view']) && !isset($_GET['listID'])){ ?>class="active"<?php } ?> >
+				    	<a href="<?php echo SendPress_Admin::link('Subscribers_All'); ?>"><i class="icon-user "></i> <?php _e('All Subscribers','sendpress'); ?></a>
+				  	</li>
+				</ul>
+			</div>
+		</div>
+		
+		<?php
+	}
+
 	function screen_options(){
 
 		$screen = get_current_screen();
@@ -46,7 +65,7 @@ class SendPress_View_Subscribers extends SendPress_View {
 	}
 	
 	function html($sp) {
-	
+	 SendPress_Tracking::event('Lists Tab');
 		//Create an instance of our package class...
 		$testListTable = new SendPress_Lists_Table();
 		//Fetch, prepare, sort, and filter our data...

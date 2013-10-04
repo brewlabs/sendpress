@@ -20,7 +20,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
  * 
  * Our theme for this list table is going to be movies.
  */
-class SendPress_Subscribers_Table extends WP_List_Table {
+class SendPress_Subscribers_All_Table extends WP_List_Table {
     
     /** ************************************************************************
      * Normally we would be querying data from a database and manipulating that
@@ -83,7 +83,12 @@ class SendPress_Subscribers_Table extends WP_List_Table {
                 return get_avatar($item->email, 30);
             case 'joindate':
                  return date_i18n(get_option('date_format') , strtotime( $item->join_date ) );
-           
+           case 'actions':
+                $a = '<div class="inline-buttons">';
+                $a .= '<a class="btn" href="'. SendPress_Admin::link('Subscribers_Subscriber', array('subscriberID'=>$item->subscriberID )) .'"><i class="icon-edit "></i> Edit</a> ';
+
+                $a .= '</div>';
+                return $a;
             default:
                 return print_r($item,true); //Show the whole array for troubleshooting purposes
         }
@@ -109,10 +114,13 @@ class SendPress_Subscribers_Table extends WP_List_Table {
     function column_title($item){
         
         //Build row actions
+        //
+        /*
         $actions = array(
             'edit'      => sprintf('<a href="?page=%s&view=%s&subscriberID=%s&listID=%s">Edit</a>',$_REQUEST['page'],'subscriber',$item->subscriberID, $_GET["listID"] ),
             'delete'    => sprintf('<a href="?page=%s&action=%s&subscriberID=%s&listID=%s">Delete</a>',$_REQUEST['page'],'delete-subscriber',$item->subscriberID, $_GET["listID"] ),
         );
+        */
         
         //Return the title contents
         return sprintf('%1$s <span style="color:silver">(id:%2$s)</span>%3$s',
@@ -161,8 +169,9 @@ class SendPress_Subscribers_Table extends WP_List_Table {
             'title' => 'Email',
             'firstname' => 'First Name',
             'lastname' => 'Last Name',
-            'status' => 'Status',
-            'joindate' => 'Date Joined'
+            //'status' => 'Status',
+            'joindate' => 'Date Joined',
+            'actions' => 'Actions'
             //'count_subscribers' => 'Subscribers'
 
             
@@ -269,7 +278,7 @@ class SendPress_Subscribers_Table extends WP_List_Table {
 <?php
         if ( 'top' == $which && !is_singular() ) {
 
-           $this->status_select();
+          // $this->status_select();
            $this->email_finder();
            submit_button( __( 'Filter' ), 'button', false, false, array( 'id' => 'post-query-submit' ) );
         }
@@ -354,17 +363,18 @@ class SendPress_Subscribers_Table extends WP_List_Table {
         //How many pages do we have in total?
         $totalpages = ceil($totalitems/$per_page);
 
-        $orderby = !empty($_GET["orderby"]) ? mysql_real_escape_string($_GET["orderby"]) : 'ASC';
+        if(!isset($_GET["listID"]) ){
+            $query.= ' group by t1.email';
+
+        }
+         $orderby = !empty($_GET["orderby"]) ? mysql_real_escape_string($_GET["orderby"]) : 'ASC';
         $order = !empty($_GET["order"]) ? mysql_real_escape_string($_GET["order"]) : '';
         if($orderby == 'status'){
             $orderby = 't2.status';
         }
 
         if(!empty($orderby) & !empty($order)){ $query.=' ORDER BY '.$orderby.' '.$order; }
-        if(!isset($_GET["listID"]) ){
-            $query.= ' group by t1.email';
-
-        }
+       
         //adjust the query to take pagination into account
         if(!empty($paged) && !empty($per_page)){
             $offset=($paged-1)*$per_page;

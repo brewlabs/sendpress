@@ -22,7 +22,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
         $options['emails-per-day'] = $_POST['emails-per-day'];
         $options['emails-per-hour'] = $_POST['emails-per-hour'];
          $options['email-charset'] = $_POST['email-charset'];
-        
+        $options['email-encoding'] = $_POST['email-encoding'];
 
         $options['phpmailer_error'] = '';
         $options['last_test_debug'] = '';
@@ -55,7 +55,6 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 
   function html( $sp ) {
     global  $sendpress_sender_factory;
-
     $senders = $sendpress_sender_factory->get_all_senders();
     ksort($senders);
     $method = SendPress_Option::get( 'sendmethod' );
@@ -93,7 +92,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
     <?php
     foreach ( $senders as $key => $sender ) {
       $class ='';
-      if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { $class = "class='active'"; }
+      if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { $class = "class='active green'"; }
       echo "<li $class><a href='#$key' data-toggle='tab'>";
       if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { echo '<i class="icon-ok"></i> '; }
       echo $sender->label();
@@ -124,9 +123,11 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 <p ><i class="icon-ok"></i> = Currently Active</p>
 <?php } ?>
 <br class="clear">
-
-<h2 >Advanced Sending Options</h2>
-<div class="well">
+<h3>Advanced Sending Options</h3>
+<div class="boxer form-box">
+  <div style="float: right; width: 45%;">
+    <h2>Email Sending Limits</h2>
+    
 <?php
   $emails_per_day = SendPress_Option::get('emails-per-day');
   $emails_per_hour =  SendPress_Option::get('emails-per-hour');
@@ -136,13 +137,13 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 $offset = get_option( 'gmt_offset' ) * 60 * 60; // Time offset in seconds
 $local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
 //print_r(wp_get_schedules());
-?>The cron will run again around: <?php
-echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $local_timestamp);
-?><br><br>
+?>
 You have sent <strong><?php echo $count_today; ?></strong> emails so far today.<br><br>
 <input type="text" size="6" name="emails-per-day" value="<?php echo $emails_per_day; ?>" /> Emails Per Day<br><br>
 <input type="text" size="6" name="emails-per-hour" value="<?php echo $emails_per_hour; ?>" /> Emails Per Hour 
-<br><br><?php
+<br><br>
+<h2>Email Encoding</h2>
+<?php
   $charset = SendPress_Option::get('email-charset','UTF-8');
  ?>Charset: 
 <select name="email-charset" id="">
@@ -161,7 +162,7 @@ $charsete = SendPress_Data::get_charset_types();
 </select><br>
 Squares or weird characters displaying in your emails select the charset for your language.
 <br><br>
-Encoding: <select name="email-charset" id="">
+Encoding: <select name="email-encoding" id="">
 <?php
  $charset = SendPress_Option::get('email-encoding','8bit');
 $charsete = SendPress_Data::get_encoding_types();
@@ -177,6 +178,26 @@ $charsete = SendPress_Data::get_encoding_types();
 </select><br>
 Older versions of SendPress used "quoted-printable"
 
+  <br class="clear">
+  </div>  
+  <div style="width: 45%; margin-right: 10%">
+    <?php $tl =  SendPress_Option::get('autocron','no'); ?>
+    <h2>SendPress Pro Auto Cron</h2>
+    <p>At least once every hour we visit your site, just like a "cron" job.<br>There's no setup involved. Easy and hassle free.</p>
+    <button id="sp-enable-cron" <?php if($tl == 'yes'){ echo "style='display:none;'";} ?> class="btn  btn-success">Enable Pro Auto Cron</button><button id="sp-disable-cron" <?php if($tl == 'no'){ echo "style='display:none;'";} ?> class="btn  btn-danger">Disable Pro Auto Cron</button>
+    <p>Get <a href="http://sendpress.com">SendPress Pro</a> to send even faster with connections every 15 minutes!</p>
+    <p>Pro Auto Cron "Free" does collect some data about your website and usage of SendPress. It will not track any user details, so your security and privacy are safe with us.</p>
+
+
+
+<!--
+  WordPress Cron: Next run @ <?php
+echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $local_timestamp);
+?><br><br>-->
+
+  <br class="clear">
+  </div>
+
 </div>
 
 
@@ -191,7 +212,7 @@ wp_nonce_field( $sp->_nonce_value );
 <input type="hidden" name="action" value="send-test-email" />
 <br class="clear">
 <div class="alert alert-success">
-  <?php _e( '<b>NOTE: </b>Remeber to check your spam folder if you do not seem to be recieving emails', 'sendpress' ); ?>.
+  <?php _e( '<b>NOTE: </b>Remember to check your Spam folder if you do not seem to be receiving emails', 'sendpress' ); ?>.
 </div>
 
 <h3><?php _e( 'Send Test Email', 'sendpress' ); ?></h3>

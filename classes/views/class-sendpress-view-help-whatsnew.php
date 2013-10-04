@@ -34,12 +34,12 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 
 <h1>Welcome to SendPress <?php echo SENDPRESS_VERSION; ?></h1>
 
-<div class="about-text">Thank you for updating to the latest version.</div>
+<div class="about-text">We have been working hard on bugs and updates for WordCamp Boston as we push to 1.0 by October. We appreciate your support and Thank you for updating to the latest version.</div>
 
 <div class="sp-badge">Version <?php echo SENDPRESS_VERSION; ?></div>
 
 <div class="changelog">
-	<h3>Show support and help keeps SendPress going</h3>
+	<h3>Show support and help keep SendPress free</h3>
 
 	<div class="feature-section col two-col">
 		<p style="padding: 5px;">
@@ -107,35 +107,35 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 	</div>
 </div>
 -->
-<!--
 <div class="changelog">
 	<h3>Smoother Experience</h3>
 
 	<div class="feature-section images-stagger-right">
-		<img alt="" src="http://joshlmbprd.whipplehill.com/wp2/wp-admin/images/screenshots/about-color-picker.png" class="image-30">
-		<h4>Better Accessibility</h4>
-		<p>WordPress supports more usage modes than ever before. Screenreaders, touch devices, and mouseless workflows all have improved ease of use and accessibility.</p>
+		<img alt="" src="<?php echo SENDPRESS_URL;?>/img/autocron.png" class="image-30">
+		<h4>Free! SendPress Pro AutoCron</h4>
+		<p>At least once every hour we visit your site, just like a "cron" job.
+There's no setup involved and it is FREE for all SendPress users.</p>
 
-		<h4>More Polish</h4>
-		<p>A number of screens and controls have been refined. For example, a new color picker makes it easier for you to choose that perfect shade of blue.</p>
+		<h4>Better Queue</h4>
+		<p>Along with the new AutoCron feature we have improved sending speed and how SendPress manages your queue.</p>
 	</div>
 </div>
--->
+
 <div class="changelog">
 	<h3>What's New</h3>
 
 	<div class="feature-section col three-col">
 		<div>
-			<h4>Email Character Encoding</h4>
-			<p>Select the character encoding of your emails to make sure they match your language.</p>
+			<h4>Improved Sending</h4>
+			<p>Updates to the way PHPMailer was being used to help speed up sending in some environments.</p>
 		</div>
 		<div>
-			<h4>Manage Subscription Link</h4>
-			<p>Added support for manage subscription link in footer of email.</p>
+			<h4>Template Fix</h4>
+			<p>Updated template to allow for custom fields in links.</p>
 		</div>
 		<div class="last-feature">
-			<h4>New Queue Builder</h4>
-			<p>Adds emails to sending queue in batches for large lists.</p>
+			<h4>Database Fix</h4>
+			<p>Patched tables so all datetime fields have a default value.</p>
 	
 		</div>
 	</div>
@@ -146,8 +146,8 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 			<p>Tell us how we are doing. We love to know what you think and it encourages us to make SendPress even better. Help us out and give us a <a href="http://wordpress.org/support/view/plugin-reviews/sendpress" target="_blank">review today</a>. It's easy and free :)</p>
 		</div>
 		<div>
-					<h4>Bug Fixes and Performance Updates</h4>
-			<p>With this release we fixed multiple small issues and worked to improve overall performance using plugins like <a href="http://wordpress.org/extend/plugins/p3-profiler/" target="_blank">P3 - Plugin Performance Profiler</a>.</p>
+					<h4>Presstrends.io Added</h4>
+			<p>Help us make SendPress better by enabling tracking in the advanced section. We collect no personal info but usage stats help us focus.</p>
 	
 
 		</div>

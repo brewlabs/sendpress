@@ -175,12 +175,7 @@ $open_info = array(
 );
 $code = SendPress_Data::encrypt( $open_info );
 
-if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
-    $url = site_url() ."?sendpress=".$code."";
-} else {
-    $url = site_url() ."/sendpress/".$code ."/";
-    
-}
+$url =  SendPress_Manager::public_url($code);
 
 $sep = strstr($url, '?') ? '&' : '?';
 $link = $url.$sep.'inline=true';

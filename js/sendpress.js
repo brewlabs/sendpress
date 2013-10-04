@@ -34,9 +34,42 @@
             this.imagebox = $('#imageaddbox');
             this.textbox = $('#textaddbox');
 
+
+            $('#delete-this-user').click(function(){
+        $('#subscriber-save').val( $(this).is(':checked') ? 'This will delete this Subscriber!' : 'Save' );
+                if($(this).is(':checked')){
+                   $('#subscriber-save').removeClass("btn-primary");
+                   $('#subscriber-save').addClass("btn-danger");
+                } else {
+                     $('#subscriber-save').removeClass("btn-danger");
+                     $('#subscriber-save').addClass("btn-primary");
+                }
+
+        });
+
             $('#myTab a').click(function (e) {
               e.preventDefault();
               $(this).tab('show');
+            });
+
+            $('#sp-enable-cron').click(function (event) {
+                event.preventDefault();
+                $.post( ajaxurl, {
+                            enable: true,
+                            action: 'sendpress-autocron'
+                        }); 
+                $('#sp-disable-cron').show();
+                $('#sp-enable-cron').hide();             
+            });
+
+            $('#sp-disable-cron').click(function (event) {
+                event.preventDefault();
+                $.post( ajaxurl, {
+                            
+                            action: 'sendpress-autocron'
+                  }); 
+                  $('#sp-disable-cron').hide();  
+                  $('#sp-enable-cron').show();             
             });
 
             $('.sp-insert-code').click(function(e){

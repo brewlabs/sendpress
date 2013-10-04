@@ -79,6 +79,59 @@ class SendPress_Cron {
 
         return array_merge($param, $frequencies);
     }
+        static function stop(){
+        $upload_dir = wp_upload_dir();
+        $filename = $upload_dir['basedir'].'/sendpress.pause';
+        if (file_exists($filename)) {
+            return true;
+        }
+        return false;
+    }
+
+    static function start(){
+        $upload_dir = wp_upload_dir();
+        $filename = $upload_dir['basedir'].'/sendpress.pause';
+        if (file_exists($filename)) {
+            unlink($filename);
+        } 
+    }
+
+    static function iron_url($url){
+        return  parse_url($url);
+        
+    }
+
+
+    static function use_iron_cron(){
+        
+        $url =  SendPress_Manager::public_url('send');
+        $info = self::iron_url( $url );
+        $domain = base64_encode($info['host']);
+        $xpath = $info['path'];
+       
+        if(isset($info['query']) ){
+             $xpath .= "?".$info['query'];
+        }
+         $path = base64_encode(  $xpath );
+        //echo $url;
+        error_log('http://sendpress.com/iron/cron/add/'. $domain .'/'. $path);
+        $body = wp_remote_retrieve_body( wp_remote_get( 'http://sendpress.com/iron/cron/add/'. $domain .'/'.$path ) );
+        wp_clear_scheduled_hook( 'sendpress_cron_action' );
+    }
+
+    function remove_http($url) {
+   $disallowed = array('http://', 'https://');
+   foreach($disallowed as $d) {
+      if(strpos($url, $d) === 0) {
+         return str_replace($d, '', $url);
+      }
+   }
+   return $url;
+}
+
+    function disable_iron_cron(){
+
+    }
 }
 
 

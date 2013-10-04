@@ -8,6 +8,33 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Manager {
 
+	static function limit_reached(){
+		global $wpdb;
+		$emails_per_hour = SendPress_Option::get('emails-per-hour');
+		$emails_per_day = SendPress_Option::get('emails-per-day');
+
+		$email_count_day = SendPress_Data::emails_sent_in_queue("day");
+		// Check our daily send limit
+		if($emails_per_day != false && $emails_per_day != 0 ){
+			if( intval($email_count_day) >= intval($emails_per_day)  ){
+				//We hit the daily limit
+				return true;
+			}
+		}
+		$email_count_hour = SendPress_Data::emails_sent_in_queue("hour");
+		// Check our hourly send limit
+		if($emails_per_hour != false && $emails_per_hour != 0 ){
+			if( intval($email_count_hour) >= intval($emails_per_hour)  ){
+				//We hit the hourly limit
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+
+
 	static function send_limit_reached(){
 
 		global $wpdb;
@@ -65,8 +92,8 @@ class SendPress_Manager {
 		$emails_per_day = SendPress_Option::get('emails-per-day');
 		$emails_per_hour = SendPress_Option::get('emails-per-hour');
 		$count = SendPress_Data::emails_in_queue();
-		$emails_this_hour = SendPress_Manager::emails_this_hour();
-		$emails_today = SendPress_Manager::emails_today();
+		$emails_this_hour = SendPress_Data::emails_sent_in_queue("hour");
+		$emails_today = SendPress_Data::emails_sent_in_queue("day");
 		$hour = $emails_per_hour - $emails_this_hour;
 		$day = $emails_per_day - $emails_today;
 
@@ -82,6 +109,24 @@ class SendPress_Manager {
 
 
 	}
+
+	static function public_url($code){
+		$permalinks = get_option('permalink_structure');
+		$pos = strpos($permalinks, "index.php");
+		$indexer ="";
+		if ($pos > 0) { // note: three equal signs
+			    $indexer = "index.php";
+		}
+		if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
+				$link = home_url("?sendpress=".$code);
+			} else {
+				$link = home_url("{$indexer}/sendpress/".$code."/");
+				
+			}
+		return $link;
+	}
+
+	
 
 
 	static function increase_email_count( $add = 1 ){
@@ -139,6 +184,55 @@ class SendPress_Manager {
 	}	
 	
 
+	static function send_single_from_queue(){
+		
+		global $wpdb;
+		//$emails = $this->wpdbQuery("SELECT * FROM ".$this->queue_table()." WHERE success = 0 AND max_attempts != attempts LIMIT ".$limit,"get_results");
+		$count = 0;
+		$attempts = 0;
+		$queue_table = SendPress_Data::queue_table();
+		if( SendPress_Manager::limit_reached()  ){
+			return array('attempted'=> $attempts,'sent'=>$count);
+		}
+
+		$email = $wpdb->get_results("SELECT * FROM ". $queue_table ." WHERE (success = 0) AND (max_attempts != attempts) AND (inprocess = 0) ORDER BY id ASC LIMIT 1");
+		if( !empty($email) ){
+			$email = $email[0];
+			
+
+			if( SendPress_Manager::limit_reached() ){
+				return array('attempted'=> $attempts,'sent'=>$count);
+			}
+
+			$attempts++;
+			SendPress_Data::queue_email_process( $email->id );
+			$result = SendPress_Manager::send_email_from_queue( $email );
+			$email_count++;
+			
+			if ($result) {
+				$wpdb->update( $queue_table , array('success'=>1,'inprocess'=>3 ) , array('id'=> $email->id ));
+				$senddata = array(
+					'sendat' => date('Y-m-d H:i:s'),
+					'reportID' => $email->emailID,
+					'subscriberID' => $email->subscriberID
+				);
+
+				//$wpdb->insert( $this->subscriber_open_table(),  $senddata);
+				$count++;
+				SendPress_Data::register_event( 'send', $email->subscriberID, $email->emailID );
+				SendPress_Data::update_report_sent_count( $email->emailID );
+			} else {
+				$wpdb->update($queue_table , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
+			}
+		} else{//We ran out of emails to process.
+			return array('attempted'=> $attempts,'sent'=>$count);
+		}
+
+		//SendPress_Manager::increase_email_count( $attempts );
+		return array('attempted'=> $attempts,'sent'=>$count);
+	}
+
+
 
 	static function send_optin($subscriberID, $listids, $lists){
 			$subscriber = SendPress_Data::get_subscriber( $subscriberID );
@@ -185,6 +279,7 @@ class SendPress_Manager {
 			$text = str_replace("*|SP:CONFIRMLINK|*", $href , $text );
 			$text = nl2br($text);
 			$sub =  $message->subject();
+			SendPress_Data::register_event( 'confirm_sent', $subscriberID );			
 			SendPress_Manager::send( $subscriber->email, $sub , $html, $text, false );
 	}
 
@@ -246,9 +341,10 @@ class SendPress_Manager {
 		//
 		
 		$charset = SendPress_Option::get('email-charset','UTF-8');
+		$encoding = SendPress_Option::get('email-encoding','8bit');
 		
 		$phpmailer->CharSet = $charset;
-		$phpmailer->Encoding = '8bit';
+		$phpmailer->Encoding = $encoding;
 
 
 		if($charset != 'UTF-8'){

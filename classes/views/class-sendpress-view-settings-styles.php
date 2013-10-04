@@ -126,7 +126,7 @@ $fn = __('From Name','sendpress');
 	<a href="<?php echo SendPress_Admin::link('Settings_Styles'); ?>" class="btn btn-large" ><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e('Save','sendpress'); ?></a>
 </div>
 <br class="clear">
-<h3>Requried Settings</h3>
+<h3>Required Settings</h3>
 <div class="boxer form-box">
 <div style="float: right; width: 45%;">
 	<h4 class="nomargin"><?php _e('From Email','sendpress'); ?></h4>
