@@ -381,7 +381,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return get_post( $id  );
 	}
 
-<<<<<<< HEAD
+
 
 	function get_lists($args = array(), $use_wpquery = true){
 
@@ -399,18 +399,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	/********************* END LIST FUNCTIONS ****************************/
 
-=======
-	static function get_lists(){
-		 $args = array(
-            'post_type' => 'sendpress_list',
-            'post_status' => array('publish','draft')
-            );
-            $query = new WP_Query( $args );
-            return $query;
-	}
-
-	/********************* END LIST static functionS ****************************/
->>>>>>> master
 
 	/********************* SUBSCRIBER static functionS **************************/
 

@@ -184,7 +184,7 @@ class SendPress_Notifications_Manager {
 		}
 
 		foreach($senders as $to){
-			SendPress_Manager::send($to, 'SendPress Instant Notification', $body, $text);
+			SendPress_Manager::send($to, 'SendPress Notification', $body, $text);
 		}
 
 		//hipchat

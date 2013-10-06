@@ -202,7 +202,7 @@ Push
 
 			add_action( 'sendpress_event', array('SendPress_Tracking','event'), 1, 1 );
 
-			
+			do_action('sendpress_init');
 	
 			SendPress_Admin::add_cap('Emails_Send','sendpress_email_send');
 			$indexer ="";
