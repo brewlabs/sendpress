@@ -69,7 +69,7 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 			</div>
 		</div>
 		
-		<h2>Create Email</h2>
+		<h2><?php _e('Create Email', 'sendpress'); ?></h2>
 		<div id="poststuff" class="metabox-holder"> 
 		<!--
 		has-right-sidebar">
