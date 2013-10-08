@@ -54,7 +54,7 @@ $list = explode(",",$lists );
     <div class="progress progress-striped active">
         <div class="bar sp-queueit" style="width: 0%;"></div>
     </div>
-    <span id="queue-total">0</span> of <span id="list-total"><?php print_r( SendPress_Data::get_active_subscribers_count(  $list ) );?></span>
+    <span id="queue-total">0</span> <?php _e('of', 'sendpres'); ?> <span id="list-total"><?php print_r( SendPress_Data::get_active_subscribers_count(  $list ) );?></span>
 </div>
 <script>
 jQuery()
