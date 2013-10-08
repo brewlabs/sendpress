@@ -75,12 +75,11 @@ class SendPress_Notifications_Manager {
 				if( $options['notifications-subscribed-monthly'] ){
 					//get subscribers for for the last month
 					$count = SendPress_Data::get_subscriber_event_count_month(date('j', strtotime(date('j')." -1 month")),'subscribed');
-					$subscribe_body = 'You had '.$count.' new subscribers last month.<br><br>';
-					
+					$subscribe_body = sprintf( _n('You had %d new subscriber last month.', 'You had %d new subscribers last month.', $count, 'sendpress'), $count) . '<br><br>';
 				}
 				if( $options['notifications-unsubscribed-monthly'] ){
 					$count = SendPress_Data::get_subscriber_event_count_month(date('j', strtotime(date('j')." -1 month")),'unsubscribed');
-					$unsubscribe_body = 'You had '.$count.' people unsubscribe last month.<br><br>';
+					$unsubscribe_body = sprintf( __('You had %d people unsubscribe last month.', 'sendpress'), $count) . '<br><br>';
 				}
 
 				if( isset($subscribe_body) || isset($unsubscribe_body) ){
@@ -100,11 +99,11 @@ class SendPress_Notifications_Manager {
 				$unsubscribe_body = '';
 				if( $options['notifications-subscribed-weekly'] ){
 					$count = SendPress_Data::get_subscriber_event_count_week(date('Y-m-d', strtotime(date('Y-m-d')." -1 week -1 day")),date('Y-m-d', strtotime(date('Y-m-d')." +1 day")),'subscribed');
-					$subscribe_body = 'You had '.$count.' new subscribers last week.';
+					$subscribe_body = sprintf( _n('You had %d new subscriber last week.', 'You had %d new subscribers last week.', $count, 'sendpress'), $count);
 				}
 				if( $options['notifications-unsubscribed-weekly'] ){
 					$count = SendPress_Data::get_subscriber_event_count_week(date('Y-m-d', strtotime(date('Y-m-d')." -1 week")),date('Y-m-d'),'unsubscribed');
-					$unsubscribe_body = 'You had '.$count.' people unsubscribe last week.';
+					$unsubscribe_body = sprintf( __('You had %d people unsubscribe last week.', 'sendpress'), $count);
 				}
 
 				if( isset($subscribe_body) || isset($unsubscribe_body) ){
@@ -121,11 +120,11 @@ class SendPress_Notifications_Manager {
 		$unsubscribe_body = '';
 		if( $options['notifications-subscribed-daily'] ){
 			$count = SendPress_Data::get_subscriber_event_count_day(date('Y-m-d'),'subscribed');
-			$subscribe_body = 'You had '.$count.' new subscribers today.';
+			$subscribe_body = sprintf( _n('You had %d new subscriber today.', 'You had %d new subscribers today.', $count, 'sendpress'), $count);
 		}
 		if( $options['notifications-unsubscribed-daily'] ){
 			$count = SendPress_Data::get_subscriber_event_count_day(date('Y-m-d'),'unsubscribed');
-			$subscribe_body = 'You had '.$count.' users unsubscribe today.';
+			$subscribe_body = sprintf( _n( 'You had %d user unsubscribe today.', 'You had %d users unsubscribe today.', $count, 'sendpress' ), $count );
 		}
 
 		if( isset($subscribe_body) || isset($unsubscribe_body) ){
