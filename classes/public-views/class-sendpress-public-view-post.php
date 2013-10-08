@@ -73,6 +73,15 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 		
 			$optin = SendPress_Option::is_double_optin();
 
+			if(isset($_POST['redirect']) && $_POST['redirect'] > 0 ){
+				$plink = get_permalink( $_POST['redirect'] );
+							if($plink != ""){
+								wp_redirect( $plink );
+								exit();
+							}
+			}
+
+
 			switch($post_responce){
 
 				case "json": //Respond to post with json data

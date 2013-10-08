@@ -18,6 +18,25 @@ if ( !defined('SENDPRESS_VERSION') ) {
 */
 class SendPress_Cron {
 	private static $instance;
+
+
+    /**
+     * Alternative function to the current wp_cron function that would usually executed on sanitize_comment_cookies
+     */
+    public function auto() {
+        // make sure we're in wp-cron.php
+        if ( false !== strpos( $_SERVER['REQUEST_URI'], '/wp-cron.php' ) ) {
+            // make sure a secret string is provided in the ur
+            if ( isset( $_GET['action'] ) && $_GET['action'] == 'sendpress' ) {
+                SendPress_Queue::send_mail();
+                $count= SendPress_Data::emails_in_queue();
+                echo json_encode(array( "queue"=>$count ));
+            }
+            
+        }
+
+      
+    }
 	
 	static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
@@ -28,6 +47,7 @@ class SendPress_Cron {
 	}
 
 	function __construct(){
+        $this->auto();
 		  /* some processing for cron management */
         add_filter( 'cron_schedules', array( $this , 'cron_schedules' ) );
  
@@ -104,22 +124,14 @@ class SendPress_Cron {
 
     static function use_iron_cron(){
         
-        $url =  SendPress_Manager::public_url('send');
-        $info = self::iron_url( $url );
-        $domain = base64_encode($info['host']);
-        $xpath = $info['path'];
-       
-        if(isset($info['query']) ){
-             $xpath .= "?".$info['query'];
-        }
-         $path = base64_encode(  $xpath );
-        //echo $url;
-        error_log('http://sendpress.com/iron/cron/add/'. $domain .'/'. $path);
-        $body = wp_remote_retrieve_body( wp_remote_get( 'http://sendpress.com/iron/cron/add/'. $domain .'/'.$path ) );
+        $url = SendPress_Cron::remove_http( site_url() );
+        $domain = base64_encode( $url );
+        error_log( 'http://sendpress.com/iron/cron/set/'. $domain .'/'. SENDPRESS_CRON);
+        $body = wp_remote_retrieve_body( wp_remote_get( 'http://sendpress.com/iron/cron/set/'. $domain .'/'. SENDPRESS_CRON ) );
         wp_clear_scheduled_hook( 'sendpress_cron_action' );
     }
 
-    function remove_http($url) {
+    static function remove_http($url) {
    $disallowed = array('http://', 'https://');
    foreach($disallowed as $d) {
       if(strpos($url, $d) === 0) {
