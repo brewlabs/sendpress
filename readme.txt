@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid,
 Requires at least: 3.4
 Tested up to: 3.6.1
-Stable tag: 0.9.5
+Stable tag: 0.9.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,13 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 0.9.5.1 - 2013.10.7 =
+* CSV Import
+* cron sending fixed
+* email sometimes missing body text fixed
+* AutoCron update 
+* New Screenshots
 
 = 0.9.5 - 2013.9.30 =
 * Translation Updates
@@ -294,6 +301,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.5.1 =
+CSV Import and cron fixes
 
 = 0.9.5 =
 New subscriber screens and bug fixes
