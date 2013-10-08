@@ -64,19 +64,19 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 			
 			<input class="footer-scripts-checkbox sendpress_checkbox" value="<?php echo $widget_options['load_scripts_in_footer']; ?>" type="checkbox" <?php if( $widget_options['load_scripts_in_footer'] == 1 ){ echo 'checked'; } ?> id="load_scripts_in_footer" name="load_scripts_in_footer"/>  <?php _e('Load Javascript in Footer','sendpress'); ?> 
 		
-			<h2>Permalink Settings</h2>
+			<h2><?php _e('Permalink Settings', 'sendpress'); ?></h2>
 			<?php $ctype = SendPress_Option::get('old_permalink'); ?>
-			<input type="checkbox" name="old_permalink" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> Use old permalink with ?sendpress=.
+			<input type="checkbox" name="old_permalink" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> <?php _e('Use old permalink with <code>?sendpress=</code>', 'sendpress'); ?>
 	
 
 	<br class="clear">
 	</div>	
 	<div style="width: 45%; margin-right: 10%">
-		<h2>Tracking</h2>
+		<h2><?php _e('Tracking' ,'sendpress'); ?></h2>
 		<?php $ctype = SendPress_Option::get('allow_tracking'); ?>
-	<input type="checkbox" name="allow_tracking" value="yes" <?php if($ctype=='yes'){echo "checked='checked'"; } ?> /> Allow tracking of this WordPress installs anonymous data.
+	<input type="checkbox" name="allow_tracking" value="yes" <?php if($ctype=='yes'){echo "checked='checked'"; } ?> /> <?php _e('Allow tracking of this WordPress installs anonymous data.', 'sendpress'); ?>
 		<p>	
-	To maintain a plugin as big as SendPress, we need to know what we're dealing: what kinds of other plugins our users are using, what themes, etc. Please allow us to track that data from your install. It will not track any user details, so your security and privacy are safe with us.</p>
+	<?php _e('To maintain a plugin as big as SendPress, we need to know what we&rsquo;re dealing: what kinds of other plugins our users are using, what themes, etc. Please allow us to track that data from your install. It will not track any user details, so your security and privacy are safe with us.' ,'sendpress'); ?></p>
 	<br class="clear">
 	</div>
 
