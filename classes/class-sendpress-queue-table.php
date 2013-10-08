@@ -125,9 +125,9 @@ class SendPress_Queue_Table extends WP_List_Table {
             case 'actions':
                 $buttons ='';
                 if($item->attempts >= $item->max_attempts){
-                    $buttons .='<a class="btn resend-btn btn-success" href="?page='.$_REQUEST['page'].'&action=requeue&emailID='. $item->id .'"><i class="icon-repeat icon-white"></i> Requeue</a> ';
+                    $buttons .='<a class="btn resend-btn btn-success" href="?page='.$_REQUEST['page'].'&action=requeue&emailID='. $item->id .'"><i class="icon-repeat icon-white"></i> ' . __('Requeue', 'sendpres') . '</a> ';
                 }
-                $buttons .='<a class="btn resend-btn" href="?page='.$_REQUEST['page'].'&action=queue-delete&emailID='. $item->id .'"><i class="icon-trash "></i> Delete</a> ';
+                $buttons .='<a class="btn resend-btn" href="?page='.$_REQUEST['page'].'&action=queue-delete&emailID='. $item->id .'"><i class="icon-trash "></i> ' . __('Delete', 'sendpres') . '</a> ';
              return '<div class="inline-buttons">'.$buttons.'</div>';
            
             default:
@@ -161,7 +161,7 @@ class SendPress_Queue_Table extends WP_List_Table {
         );
         
         //Return the title contents
-        return sprintf('%1$s <span style="color:silver">(subscriber id:%2$s)</span>%3$s',
+        return sprintf('%1$s <span style="color:silver">(' . __('subscriber' ,'sendpress') . ' id:%2$s)</span>%3$s',
             /*$1%s*/ $item->to_email,
             /*$2%s*/ $item->subscriberID,
             /*$3%s*/ $this->row_actions($actions)
@@ -204,14 +204,14 @@ class SendPress_Queue_Table extends WP_List_Table {
         $columns = array(
             'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
             'gravatar' => ' ',
-            'title' => 'Email',
-            'listid' => 'List',
+            'title' => __('Email', 'sendpress'),
+            'listid' => __('List', 'sendpress'),
             
             
-            'max_attempts' => 'Max Attempts',
-            'attempts' => 'Attempted',
-            'last_attemp' => 'Last Attempt',
-            'actions' => 'Actions'
+            'max_attempts' => __('Max Attempts', 'sendpress'),
+            'attempts' => __('Attempted', 'sendpress'),
+            'last_attemp' => __('Last Attempt', 'sendpress'),
+            'actions' => __('Actions', 'sendpress')
 
             
         );
@@ -277,7 +277,7 @@ class SendPress_Queue_Table extends WP_List_Table {
          if(!isset($_GET['listid']) ){
                 $cls = " selected='selected' ";
             }
-        echo "<option cls value='-1' >All Lists</option>";
+        echo "<option cls value='-1' >" . __('All Lists', 'sendpress') . "</option>";
         foreach ($info as $list) {
             $cls = '';
             if(isset($_GET['listid']) && $_GET['listid'] == $list['id']){
