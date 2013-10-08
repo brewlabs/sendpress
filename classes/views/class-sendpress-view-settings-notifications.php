@@ -42,10 +42,10 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 				<br class="clear">
 				<?php $options = SendPress_Option::get('notification_options');?>
 				<p> 
-					<div class="left"><label for="enable-notifications">Enable Notifications?</label></div>
+					<div class="left"><label for="enable-notifications"><?php _e('Enable Notifications?', 'sendpress'); ?></label></div>
 					<input class="ibutton" type="checkbox" value="<?php echo $options['notifications-enable']; ?>" name="notifications-enable" id="notifications-enable" <?php checked( $options['notifications-enable'], true ); ?>/> 
 				</p>
-				<h3>Notification E-mail</h3>
+				<h3><?php _e('Notification E-mail', 'sendpress'); ?></h3>
 				<!-- <a href="#" class="tooltip" rel="tooltip" data-toggle="tooltip" title="The name and e-mail you want notifications to be sent to."><i class="icon-question-sign"></i></a> -->
 				<div class="boxer form-box">
 					<div style="float: right; width: 45%;">
@@ -57,48 +57,48 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 						<input name="toname" tabindex=1 type="text" id="toname" value="<?php echo $options['name']; ?>" class="regular-text sp-text">
 					</div>
 				</div>
-				<h3>Notification Settings</h3>
-				<p>Select the notifications you'd like to receive and how often you'd like to receive them.</p>
+				<h3><?php _e('Notification Settings', 'sendpress'); ?></h3>
+				<p><?php _e('Select the notifications you&rsquo;d like to receive and how often you&rsquo;d like to receive them.', 'sendpress'); ?></p>
 				
 				<div class="half">
 					<div class="well">
-						<h4>User Subscribed:</h4>
+						<h4><?php _e('User Subscribed:', 'sendpress'); ?></h4>
 
 						<div class="notification-container half">
-							<div class="left"><label for="notifications-subscribed-instant">Instantly</label></div>
+							<div class="left"><label for="notifications-subscribed-instant"><?php _e('Instantly', 'sendpress'); ?></label></div>
 					  		<input class="ibutton optional-notifications" type="checkbox" value="<?php echo $options['notifications-subscribed-instant']; ?>" name="notifications-subscribed-instant" id="notifications-subscribed-instant" <?php checked( $options['notifications-subscribed-instant'], true ); ?><?php if(!$options['notifications-enable']){ echo ' disabled="disabled"'; }?>/> 
 						</div>
 						<div class="notification-container half right">
-					  		<div class="left"><label for="notifications-subscribed-daily">Daily</label></div>
+					  		<div class="left"><label for="notifications-subscribed-daily"><?php _e('Daily', 'sendpress'); ?></label></div>
 					  		<input class="ibutton optional-notifications" type="checkbox" value="<?php echo $options['notifications-subscribed-daily']; ?>" name="notifications-subscribed-daily" id="notifications-subscribed-daily" <?php checked( $options['notifications-subscribed-daily'], true ); ?><?php if(!$options['notifications-enable']){ echo ' disabled="disabled"'; }?>/> 
 					  	</div>
 						<div class="notification-container half">
-					  		<div class="left"><label for="notifications-subscribed-weekly">Weekly</label></div>
+					  		<div class="left"><label for="notifications-subscribed-weekly"><?php _e('Weekly', 'sendpress'); ?></label></div>
 					  		<input class="ibutton optional-notifications" type="checkbox" value="<?php echo $options['notifications-subscribed-weekly']; ?>" name="notifications-subscribed-weekly" id="notifications-subscribed-weekly" <?php checked( $options['notifications-subscribed-weekly'], true ); ?><?php if(!$options['notifications-enable']){ echo ' disabled="disabled"'; }?>/> 
 					  	</div>
 						<div class="notification-container half right">
-					  		<div class="left"><label for="notifications-subscribed-monthly">Monthly</label></div>
+					  		<div class="left"><label for="notifications-subscribed-monthly"><?php _e('Monthly', 'sendpress'); ?></label></div>
 					  		<input class="ibutton optional-notifications" type="checkbox" value="<?php echo $options['notifications-subscribed-monthly']; ?>" name="notifications-subscribed-monthly" id="notifications-subscribed-monthly" <?php checked( $options['notifications-subscribed-monthly'], true ); ?><?php if(!$options['notifications-enable']){ echo ' disabled="disabled"'; }?>/>
 					  	</div>
 					</div>
 				</div>
 				<div class="half right">
 					<div class="well">
-						<h4>User Unsbscribed:</h4>
+						<h4><?php _e('User Unsbscribed:', 'sendpress'); ?></h4>
 						<div class="notification-container half">
-							<div class="left"><label for="notifications-unsubscribed-instant">Instantly</label></div>
+							<div class="left"><label for="notifications-unsubscribed-instant"><?php _e('Instantly', 'sendpress'); ?></label></div>
 						  	<input class="ibutton optional-notifications" type="checkbox" value="<?php echo $options['notifications-subscribed-instant']; ?>" name="notifications-unsubscribed-instant" id="notifications-unsubscribed-instant" <?php checked( $options['notifications-unsubscribed-instant'], true ); ?><?php if(!$options['notifications-enable']){ echo ' disabled="disabled"'; }?>/> 
 						</div>
 						<div class="notification-container half right">
-						<div class="left"><label for="notifications-unsubscribed-daily">Daily</label></div>
+						<div class="left"><label for="notifications-unsubscribed-daily"><?php _e('Daily', 'sendpress'); ?></label></div>
 					  	<input class="ibutton optional-notifications" type="checkbox" value="<?php echo $options['notifications-subscribed-daily']; ?>" name="notifications-unsubscribed-daily" id="notifications-unsubscribed-daily" <?php checked( $options['notifications-unsubscribed-daily'], true ); ?><?php if(!$options['notifications-enable']){ echo ' disabled="disabled"'; }?>/> 
 					  	</div>
 						<div class="notification-container half">
-					  	<div class="left"><label for="notifications-unsubscribed-weekly">Weekly</label></div>
+					  	<div class="left"><label for="notifications-unsubscribed-weekly"><?php _e('Weekly', 'sendpress'); ?></label></div>
 					  	<input class="ibutton optional-notifications" type="checkbox" value="<?php echo $options['notifications-subscribed-weekly']; ?>" name="notifications-unsubscribed-weekly" id="notifications-unsubscribed-weekly" <?php checked( $options['notifications-unsubscribed-weekly'], true ); ?><?php if(!$options['notifications-enable']){ echo ' disabled="disabled"'; }?>/> 
 					  	</div>
 						<div class="notification-container half right">
-					  	<div class="left"><label for="notifications-unsubscribed-monthly">Monthly</label></div>
+					  	<div class="left"><label for="notifications-unsubscribed-monthly"><?php _e('Monthly', 'sendpress'); ?></label></div>
 					  	<input class="ibutton optional-notifications" type="checkbox" value="<?php echo $options['notifications-subscribed-monthly']; ?>" name="notifications-unsubscribed-monthly" id="notifications-unsubscribed-monthly" <?php checked( $options['notifications-unsubscribed-monthly'], true ); ?><?php if(!$options['notifications-enable']){ echo ' disabled="disabled"'; }?>/> 
 					  	</div>
 					</div>
