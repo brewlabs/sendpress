@@ -39,19 +39,19 @@ class SendPress_Signup_Shortcode{
 		}
 
 	    extract(shortcode_atts(array(
-			'firstname_label' => 'First Name',
-			'lastname_label' => 'Last Name',
-			'email_label' => 'EMail',
-			'list_label' => 'List Selection',
+			'firstname_label' => __('First Name', 'sendpress'),
+			'lastname_label' => __('Last Name', 'sendpress'),
+			'email_label' => __('Email', 'sendpress'),
+			'list_label' => __('List Selection', 'sendpress'),
 			'listids' => '',
 			'display_firstname' => false,
 			'display_lastname' => false,
 			'label_display' => false,
 			'desc' => '',
 			'label_width' => 100,
-			'thank_you'=>'Thank you for subscribing!',
-			'button_text' => 'Submit',
-			'no_list_error' => '<div><b>-- NO LIST HAS BEEN SET! --</b></div>'
+			'thank_you'=> __('Thank you for subscribing!', 'sendpress'),
+			'button_text' => __('Submit', 'sendpress'),
+			'no_list_error' => '<div><b>' . __('-- NO LIST HAS BEEN SET! --', 'sendpress') . '</b></div>'
 		), $attr));
 
 		$label = filter_var($label_display, FILTER_VALIDATE_BOOLEAN);
