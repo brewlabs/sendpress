@@ -40,7 +40,7 @@ class SendPress_View_Settings extends SendPress_View {
 		}
 	}
 	function html($sp) {
-		echo "Parent view needs a child.";
+		_e('Parent view needs a child.', 'sendpress');
 	}
 
 }
