@@ -24,19 +24,17 @@ class SendPress_Sender_Website extends SendPress_Sender {
 
 	}
 
-	function settings(){ ?>
-		This option uses your host's local mail server to send emails.
-
-		<?php 
-
-			$hosting = SendPress_Option::get('website-hosting-provider');
+	function settings(){
+		
+		_e("This option uses your host's local mail server to send emails." ,"sendpress");
 
 
+		$hosting = SendPress_Option::get('website-hosting-provider');
 
 		?>
 		<br><br>
 		<input type="checkbox" value="godaddy" name="hosting-provider" <?php if($hosting=="godaddy"){  echo "checked='checked'"; }  ?> /> GoDaddy Hosting<br>
-		This sets the smtp host to <b>relay-hosting.secureserver.net</b> for GoDaddy users.<br>GoDaddy limits emails to 1000 per day.
+		<?php _e('This sets the smtp host to <b>relay-hosting.secureserver.net</b> for GoDaddy users.<br>GoDaddy limits emails to 1000 per day.', 'sendpress'); ?>
 		<!--Send a max of <input type="text" name="emails-per-day" value="" class="sptext"  > Emails per day.-->
 
 
