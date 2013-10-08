@@ -85,7 +85,7 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
                  return date_i18n(get_option('date_format') , strtotime( $item->join_date ) );
            case 'actions':
                 $a = '<div class="inline-buttons">';
-                $a .= '<a class="btn" href="'. SendPress_Admin::link('Subscribers_Subscriber', array('subscriberID'=>$item->subscriberID )) .'"><i class="icon-edit "></i> Edit</a> ';
+                $a .= '<a class="btn" href="'. SendPress_Admin::link('Subscribers_Subscriber', array('subscriberID'=>$item->subscriberID )) .'"><i class="icon-edit "></i> ' . __('Edit', 'sendpress') . '</a> ';
 
                 $a .= '</div>';
                 return $a;
@@ -166,13 +166,13 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
         $columns = array(
             'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
             'gravatar' => '',
-            'title' => 'Email',
-            'firstname' => 'First Name',
-            'lastname' => 'Last Name',
-            //'status' => 'Status',
-            'joindate' => 'Date Joined',
-            'actions' => 'Actions'
-            //'count_subscribers' => 'Subscribers'
+            'title' => __('Email', 'sendpress'),
+            'firstname' => __('First Name', 'sendpress'),
+            'lastname' => __('Last Name', 'sendpress'),
+            //'status' => __('Status', 'sendpress'),
+            'joindate' => __('Date Joined', 'sendpress'),
+            'actions' => __('Actions', 'sendpress')
+            //'count_subscribers' => 'Subscribers', 'sendpress')
 
             
         );
@@ -257,7 +257,7 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
          if(!isset($_GET['statusid']) ){
                 $cls = " selected='selected' ";
             }
-        echo "<option cls value='-1' >Any Status</option>";
+        echo "<option cls value='-1' >" . __('Any Status', 'sendpress') . "</option>";
         foreach ($info as $list) {
             $cls = '';
             if(isset($_GET['statusid']) && $_GET['statusid'] == $list->statusid){
