@@ -38,7 +38,7 @@ if(isset($_GET['listID']) && $_GET['listID'] > 0 ){
 	//$listinfo = $this->getDetail( $this->lists_table(),'listID', $_GET['listID'] );	
 	$listinfo = get_post($_GET['listID']);
 	$list = '&listID='.$_REQUEST['listID'];
-	$listname = 'for '. $listinfo->post_title;
+	$listname = __('for', 'sendpress') . ' '. $listinfo->post_title;
 }
 	//Create an instance of our package class...
 	$testListTable = new SendPress_Subscribers_Table();
