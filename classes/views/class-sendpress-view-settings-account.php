@@ -208,7 +208,7 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
 //wp_nonce_field(  basename(__FILE__) ,'_spnonce' );
 wp_nonce_field( $sp->_nonce_value );
 ?>
-<input type="submit" class="btn btn-primary btn-large" value="<php _e('Save'); ?>"/> <a href="" class="btn btn-large"><i class="icon-remove"></i> <?php _e('Cancel'); ?></a>
+<input type="submit" class="btn btn-primary btn-large" value="<?php _e('Save'); ?>"/> <a href="" class="btn btn-large"><i class="icon-remove"></i> <?php _e('Cancel'); ?></a>
 </form>
 <form method="post" id="post" class="form-horizontal">
 <input type="hidden" name="action" value="send-test-email" />
