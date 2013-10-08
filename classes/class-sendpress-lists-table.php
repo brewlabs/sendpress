@@ -85,11 +85,11 @@ class SendPress_Lists_Table extends WP_List_Table {
                 return date('Y-m-d');        
             case 'actions':
                 return '<div class="inline-buttons">
-                    <a class="btn btn-info" href="?page='.$_REQUEST['page'].'&view=subscribers&listID='.$item->ID.'"><i class="icon-user icon-white "></i> View/Edit</a> 
-                    <a class="btn" href="?page='.$_REQUEST['page'].'&view=add&listID='. $item->ID .'"><i class="icon-user"></i> Import</a>
-                    <a class="btn" href="?page='.$_REQUEST['page'].'&action=export-list&listID='. $item->ID .'"><i class="icon-download"></i> Export</a>
-                    <a class="btn " href="?page='.$_REQUEST['page'].'&view=listedit&listID='. $item->ID .'"><i class="icon-wrench"></i> Settings</a>
-                    <a class="btn " href="'. SendPress_Admin::link('Subscribers_Listform', array('listID' => $item->ID)) .'"><i class="icon-list"></i> Form</a>
+                    <a class="btn btn-info" href="?page='.$_REQUEST['page'].'&view=subscribers&listID='.$item->ID.'"><i class="icon-user icon-white "></i> ' . __('View/Edit', 'sendpress') . '</a> 
+                    <a class="btn" href="?page='.$_REQUEST['page'].'&view=add&listID='. $item->ID .'"><i class="icon-user"></i> ' . __('Import', 'sendpress') . '</a>
+                    <a class="btn" href="?page='.$_REQUEST['page'].'&action=export-list&listID='. $item->ID .'"><i class="icon-download"></i> ' . __('Export', 'sendpress') . '</a>
+                    <a class="btn " href="?page='.$_REQUEST['page'].'&view=listedit&listID='. $item->ID .'"><i class="icon-wrench"></i> ' . __('Settings', 'sendpress') . '</a>
+                    <a class="btn " href="'. SendPress_Admin::link('Subscribers_Listform', array('listID' => $item->ID)) .'"><i class="icon-list"></i> ' . __('Form', 'sendpress') . '</a>
                     </div>';
             default:
                 return print_r($item,true); //Show the whole array for troubleshooting purposes
@@ -117,7 +117,7 @@ class SendPress_Lists_Table extends WP_List_Table {
         
         //Build row actions
         $actions = array(
-            'edit' => sprintf('<a href="?page=%s&view=%s&listID=%s">Edit</a>', 
+            'edit' => sprintf('<a href="?page=%s&view=%s&listID=%s">' . __('Edit', 'sendpress') . '</a>', 
                 /*$1%s*/ 'sp-subscribers',
                 /*$2%s*/ 'listedit', 
                 /*$3%s*/ $item->ID
@@ -183,11 +183,11 @@ class SendPress_Lists_Table extends WP_List_Table {
        
         $columns = array(
             'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
-            'title' => 'Name',
-            'count_subscribers' => 'Active',
-            'last_send_date' => 'Last Send',
-            //'count_bounced' => 'Bounced',
-            'actions'=> 'Subscribers'
+            'title' => __('Name', 'sendpress'),
+            'count_subscribers' => __('Active', 'sendpress'),
+            'last_send_date' => __('Last Send', 'sendpress'),
+            //'count_bounced' => __('Bounced', 'sendpress'),
+            'actions'=> __('Subscribers' 'sendpress'),
 
             
         );
