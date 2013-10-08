@@ -85,9 +85,9 @@ class SendPress_Reports_Table extends WP_List_Table {
                     $rec = get_post_meta($item->ID, '_send_count', true) + get_post_meta($item->ID, '_send_last_count', true)  . '';
                     $sent = get_post_meta($item->ID, '_sent_total', true) . '';
                     $queue = SendPress_Data::emails_in_queue($item->ID);
-                    $string = "Recipients: ". $rec ."<br>";
-                    $string .= "Sent: ". $sent ."<br>";
-                    $string .= "In Queue: ". $queue ."<br>";
+                    $string = __('Recipients:', 'sendpress') . ' ' . $rec ."<br>";
+                    $string .= __('Sent:', 'sendpress') . ' ' . $sent ."<br>";
+                    $string .= __('In Queue:', 'sendpress') . ' ' . $queue ."<br>";
 
                  return $string;
 
@@ -159,7 +159,7 @@ class SendPress_Reports_Table extends WP_List_Table {
                  return date_i18n(get_option('date_format') , strtotime( $item->post_date ) );
             
             case 'actions':
-                return '<div class="inline-buttons"><a class="spbutton left" href="'. get_permalink( $item->ID  ). '">View</a><a class="spbutton right" href="?page='.$_REQUEST['page'].'&view=edit-email&emailID='. $item->ID .'">Edit</a><a class="spbutton bluebtn" href="?page='.$_REQUEST['page'].'&view=send-email&emailID='. $item->ID .'">Send</a></div>';
+                return '<div class="inline-buttons"><a class="spbutton left" href="'. get_permalink( $item->ID  ). '">' . __('View', 'sendpress') . '</a><a class="spbutton right" href="?page='.$_REQUEST['page'].'&view=edit-email&emailID='. $item->ID .'">' . __('Edit', 'sendpress') . '</a><a class="spbutton bluebtn" href="?page='.$_REQUEST['page'].'&view=send-email&emailID='. $item->ID .'">' . __('Send', 'sendpress') . '</a></div>';
             default:
                 return apply_filters('sendpress_reports_column_'.$column_name, $item); //Show the whole array for troubleshooting purposes
         }
@@ -188,8 +188,8 @@ class SendPress_Reports_Table extends WP_List_Table {
         
         $actions = array(
            // 'edit'      => sprintf('<a href="?page=%s&view=%s&report=%s">Edit</a>',$_REQUEST['page'],'edit-email',$item->ID),
-            'view'      => sprintf('<a href="%s">View Email</a>',get_permalink( $item->ID  )),
-            'delete'    => sprintf('<a href="?page=%s&action=%s&reportID=%s">Delete</a>',$_REQUEST['page'],'delete-report',$item->ID),
+            'view'      => sprintf('<a href="%s">' . __('View Email', 'sendpress') . '</a>',get_permalink( $item->ID  )),
+            'delete'    => sprintf('<a href="?page=%s&action=%s&reportID=%s">' . __('Delete', 'sendpress') . '</a>',$_REQUEST['page'],'delete-report',$item->ID),
         );
         
         //Return the title contents
@@ -236,16 +236,16 @@ class SendPress_Reports_Table extends WP_List_Table {
        
         $columns = array(
             'cb' => '<input type="checkbox" />', //Render a checkbox instead of text
-            'title' => 'Subject',
-            'created' => 'Date Sent',
-            'count' => 'Info',
+            'title' => __('Subject', 'sendpress'),
+            'created' => __('Date Sent', 'sendpress'),
+            'count' => __('Info', 'sendpress'),
 
-            'sentto' => 'Lists',
-            'opens' => 'Opens ',
-            'clicks'=> 'Clicks',
-            'unsubscribe'=> 'Unsubscribes',
-            //'bounces' => 'Bounces'
-            //'count_subscribers' => 'Subscribers'
+            'sentto' => __('Lists', 'sendpress'),
+            'opens' => __('Opens ', 'sendpress'),
+            'clicks'=> __('Clicks', 'sendpress'),
+            'unsubscribe'=> __('Unsubscribes', 'sendpress')
+            //'bounces' => 'Bounces', 'sendpress')
+            //'count_subscribers' => 'Subscribers', 'sendpress')
 
             
         );
