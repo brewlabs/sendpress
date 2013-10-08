@@ -39,7 +39,7 @@ class SendPress_View {
 		
 		?>
 		<div class="sp-footer">
-			<a href="<?php echo SendPress_Admin::link('Help_Whatsnew'); ?>">What's New</a> | <a href="http://sendpress.com/support/knowledgebase/" target="_blank">Knowledge Base</a> | <a href="http://sendpress.uservoice.com/" target="_blank">Feedback</a> | SendPress Version: <?php echo SENDPRESS_VERSION; ?> 
+			<a href="<?php echo SendPress_Admin::link('Help_Whatsnew'); ?>"><?php _e('What&rsquo;s New' , 'sendpress'); ?></a> | <a href="http://sendpress.com/support/knowledgebase/" target="_blank"><?php _e('Knowledge Base' , 'sendpress'); ?></a> | <a href="http://sendpress.uservoice.com/" target="_blank"><?php _e('Feedback' , 'sendpress'); ?></a> | <?php _e('SendPress Version:' , 'sendpress'); ?> <?php echo SENDPRESS_VERSION; ?> 
 		</div>
 		<?php
 	}
@@ -136,10 +136,10 @@ class SendPress_View {
 	
 
 	function html($sp){
-		echo "Page not built yet.";
+		_e('Page not built yet.', 'sendpress');
 	}
 	function noaccess($sp){
-		echo "<div class='well well-large'><h3>Sorry. You dont have the ability to view this page.</h3></div>";
+		echo "<div class='well well-large'><h3>" . __('Sorry. You dont have the ability to view this page.', 'sendpress') . "</h3></div>";
 	}
 	//static  public function save(){}
 
