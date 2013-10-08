@@ -21,36 +21,27 @@ class SendPress_View_Help extends SendPress_View{
 	}
 
 	function help_editemail(){
-?>
-		<b>SendPress Editor Button</b>
-		<p>Look for this button <img src="<?php echo SENDPRESS_URL; ?>/js/icon.png" /> to open the popup for adding posts to an email and personilizing emails.</p>
-
-		
-
-<?php
+		$url_sendpress_icon = SENDPRESS_URL . '/js/icon.png';
+		_e('<b>SendPress Editor Button</b>', 'sendpress');
+		printf( __('<p>Look for this button <img src="%s" /> to open the popup for adding posts to an email and personilizing emails.</p>', 'sendpress'), $url_sendpress_icon);
 	}
 
 	function help_shortcodes(){
+		_e('<b>Signup Shortcode</b>', 'sendpress');
+		_e('<p>If you would rather add the SendPress signup form to a page, you can use the following short code.  If you want more detailed information on how to use the short code check out our <a href="http://sendpress.com/support/knowledgebase/how-to-use-the-sign-up-shortcode/" target="_blank">knowledge base</a>.</p>', 'sendpress');
 ?>
-		<b>Signup Shortcode</b>
-		<p>If you would rather add the SendPress signup form to a page, you can use the following short code.  If you want more detailed information on how to use the short code check out our <a href="http://sendpress.com/support/knowledgebase/how-to-use-the-sign-up-shortcode/" target="_blank">knowledge base</a>.</p>
 		<pre>[sendpress-signup listids='1']</pre>
-		
-
 <?php
 	}
 
 	function help_support(){
-	
-		
-?>
-	<b>Basic Support</b>
-	<p>You can get support for the FREE version of SendPress on the <a href="http://wordpress.org/support/plugin/sendpress" target="_blank">WordPress.org forums</a>.<br>Also check our <a href="http://sendpress.com/support" target="_blank">Knowledge Base</a> for help at <a href="http://sendpress.com/support" target="_blank">http://sendpress.com/support</a></p>
-	<br>
-	<b>Premium Support</b>
-	<p>Premium support is available if you have purchased SendPress Pro from SendPress.com. Premium support can be accessed via our support site: <a href="http://sendpress.com/support" target="_blank">http://sendpress.com/support</a> and requires a SendPress.com account.</p>
-	
-<?php
+
+		_e('<b>Basic Support</b>', 'sendpress');
+		_e('<p>You can get support for the FREE version of SendPress on the <a href="http://wordpress.org/support/plugin/sendpress" target="_blank">WordPress.org forums</a>.<br>Also check our <a href="http://sendpress.com/support" target="_blank">Knowledge Base</a> for help at <a href="http://sendpress.com/support" target="_blank">http://sendpress.com/support</a></p>', 'sendpress');
+		echo '<br>';
+		_e('<b>Premium Support</b>', 'sendpress');
+		_e('<p>Premium support is available if you have purchased SendPress Pro from SendPress.com. Premium support can be accessed via our support site: <a href="http://sendpress.com/support" target="_blank">http://sendpress.com/support</a> and requires a SendPress.com account.</p>', 'sendpress');
+
 	}
 
 	function help_debug(){
@@ -245,7 +236,7 @@ if ( get_bloginfo( 'version' ) < '3.4' ) {
 		</ul><?php
 	}
 	function help_knowledge_control(){
-		echo "Add Some settings";
+		_e('Add Some settings', 'sendpress');
 	}
 
 
