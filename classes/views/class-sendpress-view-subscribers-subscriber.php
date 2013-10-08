@@ -90,23 +90,23 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 	    <!--<input type="hidden" name="action" value="edit-subscriber" />-->
 	    <input type="hidden" name="listID" value="<?php echo $_GET['listID']; ?>" />
 	    <input type="hidden" name="subscriberID" value="<?php echo $_GET['subscriberID']; ?>" />
-	    <strong><?php _e('Email','sendpress'); ?></strong>: <input type="text" name="email" class="regular-text sp-text" value="<?php echo $sub->email; ?>" /><br><br>
-	    <strong><?php _e('Firstname','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="firstname" value="<?php echo $sub->firstname; ?>" /><br><br>
-	    <strong><?php _e('Lastname','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="lastname" value="<?php echo $sub->lastname; ?>" /><br>
+	    <strong><?php _e('Email:','sendpress'); ?></strong> <input type="text" name="email" class="regular-text sp-text" value="<?php echo $sub->email; ?>" /><br><br>
+	    <strong><?php _e('Firstname:','sendpress'); ?></strong> <input type="text" class="regular-text sp-text" name="firstname" value="<?php echo $sub->firstname; ?>" /><br><br>
+	    <strong><?php _e('Lastname:','sendpress'); ?></strong> <input type="text" class="regular-text sp-text" name="lastname" value="<?php echo $sub->lastname; ?>" /><br>
 	    <br>
-<input type="checkbox" id="delete-this-user" name="delete-this-user" value="yes"/> Checking this box will remove this subscriber and all related data from the system.<br><br>
+<input type="checkbox" id="delete-this-user" name="delete-this-user" value="yes"/> <?php _e('Checking this box will remove this subscriber and all related data from the system.', 'sendpress'); ?><br><br>
 
 	  
 	   <?php wp_nonce_field($sp->_nonce_value); ?>
 
 	
 	</div></div>
-	<h3>Subscriptions</h3>
+	<h3><?php _e('Subscriptions', 'sendpress'); ?></h3>
 	<div class="well">
 		<table class=" table table-bordered table-striped">
 			<tr>
-				<th>List Name</th>
-				<th>Status</th>
+				<th><?php _e('List Name', 'sendpress'); ?></th>
+				<th><?php _e('Status', 'sendpress'); ?></th>
 			</tr>
 			<?php 
 		global $post;
@@ -155,7 +155,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 	    		 
 </div>
 </form>
-<h3>Subscriber Actions and Events</h3>
+<h3><?php _e('Subscriber Actions and Events', 'sendpress'); ?></h3>
 	<div class="well">
 		<?php
 		if(!defined("SENDPRESS_PRO_VERSION") ){
