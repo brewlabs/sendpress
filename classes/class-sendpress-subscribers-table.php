@@ -248,7 +248,7 @@ class SendPress_Subscribers_Table extends WP_List_Table {
          if(!isset($_GET['statusid']) ){
                 $cls = " selected='selected' ";
             }
-        echo "<option cls value='-1' >Any Status</option>";
+        echo "<option cls value='-1' >" . __('Any Status' , 'sendpress') . "</option>";
         foreach ($info as $list) {
             $cls = '';
             if(isset($_GET['statusid']) && $_GET['statusid'] == $list->statusid){
