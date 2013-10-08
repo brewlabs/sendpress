@@ -187,7 +187,7 @@ class SendPress_Lists_Table extends WP_List_Table {
             'count_subscribers' => __('Active', 'sendpress'),
             'last_send_date' => __('Last Send', 'sendpress'),
             //'count_bounced' => __('Bounced', 'sendpress'),
-            'actions'=> __('Subscribers' 'sendpress'),
+            'actions'=> __('Subscribers', 'sendpress'),
 
             
         );
