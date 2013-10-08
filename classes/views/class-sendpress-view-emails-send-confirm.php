@@ -183,7 +183,7 @@ $admin_permalink = admin_url('options-permalink.php');
 ?>
 <iframe src="<?php echo $link; ?>" width="100%" height="600px"></iframe>
 
-<small><?php printf('Displaying a 404? Please try saving your permalinks <a href="%s">here</a>.', $admin_permalink); ?></small>
+<small><?php printf(__('Displaying a 404? Please try saving your permalinks <a href="%s">here</a>.', 'sendpress'), $admin_permalink); ?></small>
 </div>
 <?php wp_nonce_field($sp->_nonce_value); ?><br><br>
 </div>
