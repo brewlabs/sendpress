@@ -45,7 +45,7 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 <form id="post" method="post">
 
 <div class="boxer form-box">
-	<h2>HTML/Remote Post</h2>
+	<h2><?php _e('HTML/Remote Post', 'sendpress'); ?></h2>
 
 
 	<div style="float: right; width: 45%;"><br>
@@ -56,15 +56,15 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 	&lt;input type="hidden" name="sendpress" value="post" />
 	<div id="form-wrap">
 		<p name="email">
-			<label for="email">EMail:</label>
+			<label for="email"><?php _e('Email:', 'sendpress'); ?></label>
 			&lt;input type="text" value="" name="sp_email"/>
 		</p>
 		<p name="firstname">
-			<label for="email">First Name:</label>
+			<label for="email"><?php _e('First Name:', 'sendpress'); ?></label>
 			&lt;input type="text" value="" name="sp_firstname"/>
 		</p>
 		<p name="lastname">
-			<label for="email">Last Name:</label>
+			<label for="email"><?php _e('Last Name:', 'sendpress'); ?></label>
 			&lt;input type="text" value="" name="sp_lastname"/>
 		</p>
 		<p class="submit">
@@ -75,12 +75,12 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 		</textarea>
 	</div>	
 <div style="width: 45%; margin-right: 10%"><br>
-	Post URL
+	<?php _e('Post URL', 'sendpress'); ?>
 	<div class='well'>
 		<input type="hidden" name="listID" value="<?php echo $list_id ;?>" />
 	<input type="text" readonly value="<?php echo trailingslashit(site_url()); ?>" class="sp-text"/>
 </div>
-	Response Options
+	<?php _e('Response Options', 'sendpress'); ?>
 	<div class='well'>
 <?php $ctype = get_post_meta($list_id, 'post-page', true);
 	if($ctype == false){
@@ -88,8 +88,8 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 	}
 
  ?>
-<input type="radio" name="post-page" value="default" <?php if($ctype=='default'){echo "checked='checked'"; } ?> /> Show Default SendPress Page<br><br>
-			<input type="radio" name="post-page" value="custom"  <?php if($ctype=='custom'){echo "checked='checked'";} ?>/> Redirect to <select name="post-page-id"> 
+<input type="radio" name="post-page" value="default" <?php if($ctype=='default'){echo "checked='checked'"; } ?> /> <?php _e('Show Default SendPress Page', 'sendpress'); ?><br><br>
+			<input type="radio" name="post-page" value="custom"  <?php if($ctype=='custom'){echo "checked='checked'";} ?>/> <?php _e('Redirect to', 'sendpress'); ?> <select name="post-page-id"> 
  <option value="">
  	<?php $cpageid = get_post_meta($list_id,'post-page-id', true); ?>
 <?php echo esc_attr( __( 'Select page' ) ); ?></option> 
@@ -105,9 +105,9 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
   }
  ?>
 </select><br><br>
-<input type="radio" name="post-page" value="json" <?php if($ctype=='json'){echo "checked='checked'"; } ?> /> Return Json Data ie: { success: true/false, list: listid , name: listname, optin: true/false }<br><br>
+<input type="radio" name="post-page" value="json" <?php if($ctype=='json'){echo "checked='checked'"; } ?> /> <?php _e('Return Json Data ie:', 'sendpress'); ?> { success: true/false, list: listid , name: listname, optin: true/false }<br><br>
 <?php $link = get_post_meta($list_id,'post-redirect', true); ?>
-<input type="radio" name="post-page" value="redirect" <?php if($ctype=='redirect'){echo "checked='checked'"; } ?> /> Redirect to url entered below. <br><br><input type="text" name="post-redirect" class="sp-text" value="<?php echo $link ?>"><br><br>
+<input type="radio" name="post-page" value="redirect" <?php if($ctype=='redirect'){echo "checked='checked'"; } ?> /> <?php _e('Redirect to url entered below.', 'sendpress'); ?> <br><br><input type="text" name="post-redirect" class="sp-text" value="<?php echo $link ?>"><br><br>
 	
 
 </div>
