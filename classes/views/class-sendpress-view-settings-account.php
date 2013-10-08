@@ -138,7 +138,7 @@ $offset = get_option( 'gmt_offset' ) * 60 * 60; // Time offset in seconds
 $local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
 //print_r(wp_get_schedules());
 
-prinf( __('You have sent <strong>%s</strong> emails so far today.'), $count_today);
+printf( __('You have sent <strong>%s</strong> emails so far today.'), $count_today);
 ?>
 <br><br>
 <input type="text" size="6" name="emails-per-day" value="<?php echo $emails_per_day; ?>" /> <?php _e('Emails Per Day', 'sendpress'); ?><br><br>
