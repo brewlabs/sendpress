@@ -110,8 +110,8 @@ class SendPress_Subscribers_Table extends WP_List_Table {
         
         //Build row actions
         $actions = array(
-            'edit'      => sprintf('<a href="?page=%s&view=%s&subscriberID=%s&listID=%s">Edit</a>',$_REQUEST['page'],'subscriber',$item->subscriberID, $_GET["listID"] ),
-            'delete'    => sprintf('<a href="?page=%s&action=%s&subscriberID=%s&listID=%s">Delete</a>',$_REQUEST['page'],'delete-subscriber',$item->subscriberID, $_GET["listID"] ),
+            'edit'      => sprintf('<a href="?page=%s&view=%s&subscriberID=%s&listID=%s">' . __('Edit', 'sendpress') . '</a>',$_REQUEST['page'],'subscriber',$item->subscriberID, $_GET["listID"] ),
+            'delete'    => sprintf('<a href="?page=%s&action=%s&subscriberID=%s&listID=%s">' . __('Delete', 'sendpress') . '</a>',$_REQUEST['page'],'delete-subscriber',$item->subscriberID, $_GET["listID"] ),
         );
         
         //Return the title contents
@@ -158,11 +158,11 @@ class SendPress_Subscribers_Table extends WP_List_Table {
         $columns = array(
             'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
             'gravatar' => '',
-            'title' => 'Email',
-            'firstname' => 'First Name',
-            'lastname' => 'Last Name',
-            'status' => 'Status',
-            'joindate' => 'Date Joined'
+            'title' => __('Email', 'sendpress'),
+            'firstname' => __('First Name', 'sendpress'),
+            'lastname' => __('Last Name', 'sendpress'),
+            'status' => __('Status', 'sendpress'),
+            'joindate' => __('Date Joined', 'sendpress'),
             //'count_subscribers' => 'Subscribers'
 
             
@@ -271,7 +271,7 @@ class SendPress_Subscribers_Table extends WP_List_Table {
 
            $this->status_select();
            $this->email_finder();
-           submit_button( __( 'Filter' ), 'button', false, false, array( 'id' => 'post-query-submit' ) );
+           submit_button( __( 'Filter', 'sendpress' ), 'button', false, false, array( 'id' => 'post-query-submit' ) );
         }
 
         
