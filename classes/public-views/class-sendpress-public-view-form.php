@@ -71,7 +71,7 @@ class SendPress_Public_View_Form extends SendPress_Public_View{
 	function html() { ?>
 	<html>
 	<head>
-		<title>Subscribe to Newsletter</title>
+		<title><?php _e('Subscribe to Newsletter', 'sendpress'); ?></title>
 		<link rel='stylesheet' href="<?php echo SENDPRESS_URL;?>/css/public.0.8.7.bootstrap.min.css" type='text/css' media='all'/>
 		<link rel='stylesheet' href="<?php echo SENDPRESS_URL;?>/css/style.css" type='text/css' media='all'/>
 		<style>
@@ -92,19 +92,19 @@ class SendPress_Public_View_Form extends SendPress_Public_View{
 											
 					<?php if(isset($_GET['f'])) { ?>
 					<p name="firstname">
-						<label for="firstname">First Name:</label>
+						<label for="firstname"><?php _e('First Name:', 'sendpress'); ?></label>
 						<input class="sp-text" type="text" id="sp_firstname" orig="EMail" value="" name="sp_firstname">
 					</p>
 					<?php } ?>
 					<?php if(isset($_GET['l'])) { ?>
 					<p name="lastname">
-						<label for="lastname">Last Name:</label>
+						<label for="lastname"><?php _e('Last Name:', 'sendpress'); ?></label>
 						<input class="sp-text" type="text" id="sp_lastname" orig="EMail" value="" name="sp_lastname">
 					</p>
 					<?php } ?>
 
 					<p name="email">
-						<label for="email">EMail:</label>
+						<label for="email"><?php _e('Email:', 'sendpress'); ?></label>
 						<input class="sp-text" type="text" id="sp_email" orig="EMail" value="" name="sp_email">
 					</p>
 
