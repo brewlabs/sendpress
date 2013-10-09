@@ -14,7 +14,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 * @package  SendPress
 * @author   Jared Harbour
 * @license  See SENPRESS
-* @since 	0.9.2.3     
+* @since 	0.9.5.2     
 */
 class SendPress_Notifications_Manager {
 
@@ -31,12 +31,17 @@ class SendPress_Notifications_Manager {
 
 	function maybe_send_notification($type, $data){
 		$options = SendPress_Option::get('notification_options');
-
+		print_r($type);
 		//based on the type, check the options and build an e-mail to notify the admin.
-		$subscribed = SendPress_Notifications_Manager::build_subscribed_notification($data);
+		if( $type === $options['subscribed'] ){
+			$subscribed = SendPress_Notifications_Manager::build_subscribed_notification($data);
+		}
+		
 		//unsubscribed
-		$unsubscribed = SendPress_Notifications_Manager::build_unsibscribed_notification($data);
-
+		if( $type === $options['unsubscribed'] ){
+			$unsubscribed = SendPress_Notifications_Manager::build_unsibscribed_notification($data);
+		}
+		
 		if( strlen($subscribed) === 0 && strlen($unsubscribed) === 0 ){
 			return;
 		}
