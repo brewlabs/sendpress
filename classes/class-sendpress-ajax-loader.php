@@ -23,9 +23,6 @@ class SendPress_Ajax_Loader{
 		return $instance;
 	}
 
-	
-
-
 	function add_hooks(){
 		// register the ajax process function with wordpress
 		add_action("wp_ajax_sendpress_save_list", array(&$this,'save_list') );
@@ -258,37 +255,23 @@ class SendPress_Ajax_Loader{
 			$count_last = 0;
 		}
 
-
-
 		$x  = SendPress_Data::get_active_subscribers_lists_with_id( $list ,$last );
-
-
-
 
 		foreach($x as $email){
                    
-                     $go = array(
-                        'from_name' => 'queue',
-                        'from_email' => 'queue',
-                        'to_email' => $email->email,
-                        'emailID'=> $reportid,
-                        'subscriberID'=> $email->subscriberID,
-                        //'to_name' => $email->fistname .' '. $email->lastname,
-                        'subject' => '',
-                        'listID'=> $email->listid
-                        );
-                   
-                    SendPress_Data::add_email_to_queue($go);
-             
-                }
-
-
-
-
-
-
-
-
+             $go = array(
+                'from_name' => 'queue',
+                'from_email' => 'queue',
+                'to_email' => $email->email,
+                'emailID'=> $reportid,
+                'subscriberID'=> $email->subscriberID,
+                //'to_name' => $email->fistname .' '. $email->lastname,
+                'subject' => '',
+                'listID'=> $email->listid
+                );
+           
+            SendPress_Data::add_email_to_queue($go);
+        }
 
 		$count_last += count( $x );  
 		 update_post_meta($reportid,'_send_last_count',$count_last );
