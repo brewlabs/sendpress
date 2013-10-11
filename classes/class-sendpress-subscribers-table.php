@@ -327,9 +327,15 @@ class SendPress_Subscribers_Table extends WP_List_Table {
             $query .= ' AND ( email LIKE "%'. $_GET["qs"] .'%" or firstname LIKE "%'. $_GET["qs"] .'%" or lastname LIKE "%'. $_GET["qs"] .'%" )';
 
         }
+
+          $query_count = "SELECT count(*) FROM " .  $this->_sendpress->subscriber_table() ." as t1,". $this->_sendpress->list_subcribers_table()." as t2,". $this->_sendpress->subscriber_status_table()." as t3";
+
+        
+            $query_count .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND (t2.listID =  ". $_GET["listID"] .")";
         /* -- Pagination parameters -- */
         //Number of elements in your table?
-        $totalitems = $wpdb->query($query); //return the total number of affected rows
+        $totalitems = $wpdb->get_var($query_count);
+         //return the total number of affected rows
         //How many to display per page?
        // get the current user ID
             $user = get_current_user_id();

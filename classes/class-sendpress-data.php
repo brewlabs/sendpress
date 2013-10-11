@@ -500,7 +500,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $result;	
 	}
 	
-	static function update_subscriber_status( $listID, $subscriberID ,$status){
+	static function update_subscriber_status( $listID, $subscriberID ,$status, $event = true){
 		$table = SendPress_Data::list_subcribers_table();
 
 		$check = SendPress_Data::get_subscriber_list_status($listID, $subscriberID);
@@ -512,9 +512,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$result = $wpdb->update($table,array('status'=>$status,'updated'=>date('Y-m-d H:i:s')), array('subscriberID'=> $subscriberID,'listID'=>$listID) );
 		}
 
+		if($event == true){
 		//add event for notification tracking
 		SendPress_Data::add_subscribe_event($subscriberID, $listID, $status);
-
+		}
 		return SendPress_Data::get_subscriber_list_status($listID, $subscriberID);
 	}
 
@@ -679,6 +680,113 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		return $success;
 	}
+
+	static function read_file_to_str($file){
+		return file_get_contents($file);
+	}
+	static function import_csv_array($data, $map, $list){
+
+global $wpdb;
+		$query ="INSERT IGNORE INTO ". SendPress_Data::subscriber_table(). "(email,firstname,lastname,join_date,identity_key) VALUES ";
+		$total = count($data);
+		$emails_added = array();
+		$x = 0;
+		foreach($data as $key_line => $line){
+			$values ="";
+			if( in_array('email',$map) ){
+				
+				$email = $line[$map['email']];
+				if(is_email($email)){
+					$values.="'".mysql_real_escape_string($email,$wpdb->dbh)."',";
+					$emails_added[] = $email;
+					if(in_array('firstname',$map)){
+						$values.="'".mysql_real_escape_string(trim($line[$map['firstname']]),$wpdb->dbh)."',";
+					} else {
+						$values .= ",";
+					}
+					
+					if(in_array('lastname',$map)){
+						$values.="'".mysql_real_escape_string(trim($line[$map['lastname']]),$wpdb->dbh)."',";
+					} else {
+						$values .= ",";
+					}
+
+
+					$values .=  "'".date('Y-m-d H:i:s') ."',";
+					$values .= "'".SendPress_Data::random_code()."'";
+					
+					$query .= " ($values) ";
+
+				}
+
+
+			}
+			$x++;
+			if($total > $x && $values != ""){ $query .=",";}
+			
+			unset($data[$key_line]);
+		}
+		$query .=";";
+		$wpdb->query($query);
+		
+		$query_get = "SELECT subscriberID FROM ". SendPress_Data::subscriber_table(). " WHERE email in ('".implode("','", $emails_added)."')";
+		
+		$data = $wpdb->get_results($query_get);
+	
+		$query_update_status ="INSERT IGNORE INTO ". SendPress_Data::list_subcribers_table(). "(subscriberID,listID,status,updated ) VALUES ";
+		$total = count($data);
+		$x = 0;
+		foreach ($data as $value) {
+			$query_update_status .= "( ".$value->subscriberID . "," . $list . ",2,'" .date('Y-m-d H:i:s') . "') ";
+			$x++;
+			if($total > $x ){ $query_update_status .=",";}
+		}
+		$query_update_status .=";";
+		$wpdb->query($query_update_status);
+	}
+
+	static function csv_to_array($csv_file_content , $rows_to_read = 0 , $delimiter = ',' , $enclosure = '' ){
+        $data = array();
+
+        $csv_data_array = explode( "\n" , $csv_file_content );
+        $i=1;
+        foreach($csv_data_array as $csv_line){
+            if($rows_to_read!=0 && $i> $rows_to_read) return $data;
+
+            if(function_exists('str_getcsv')){
+				$data[] = str_getcsv($csv_line, $delimiter,$enclosure);
+                
+            }else{
+               $data[]= SendPress_Data::break_csv_apart($csv_line, $delimiter,$enclosure);
+            }
+
+            $i++;
+        }
+
+        return $data;
+    }
+
+
+    static function break_csv_apart($csv_line , $delimiter , $enclose , $preserve=false){
+        $response = array();
+        $n = 0;
+        if(empty($enclose)){
+            $response = explode($delimiter, $csv_line);
+        }else{
+            $dtx = explode($enclose, $csv_line);
+            foreach($dtx as $item){
+                if($n++%2){
+                    array_push($response, array_pop($response) . ($preserve ? $enclose : '') . $item.( $preserve ? $enclose : ''));
+                }else{
+                    $del = explode($delimiter, $item);
+                    array_push($response, array_pop($response) . array_shift($del));
+                    $response = array_merge($response, $del);
+                }
+            }
+        }
+
+        return $response;
+    }
 
 	static function random_code() {
 	    $now = time();

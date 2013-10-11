@@ -36,6 +36,7 @@ class SendPress_Signup_Shortcode{
 			'email_label' => 'EMail',
 			'list_label' => 'List Selection',
 			'listids' => '',
+			'redirect_page'=>false,
 			'display_firstname' => false,
 			'display_lastname' => false,
 			'label_display' => false,
@@ -56,11 +57,16 @@ class SendPress_Signup_Shortcode{
 				<?php 
 					if( $widget_options['load_ajax'] ){
 						echo '<input type="hidden" name="action" value="signup-user" />';
-						echo '<input type="hidden" name="redirect" value="'.get_permalink().'" />';
+						//echo '<input type="hidden" name="redirect" value="'.get_permalink().'" />';
 					}
 					if(empty($listids)){
 						echo $no_list_error;
 					}
+					if($redirect_page != false && $redirect_page > 0){
+						echo '<input type="hidden" name="redirect" value="'.$redirect_page.'" />';
+
+					}
+
 				?>
 					
 				<div id="error"><?php echo $sendpress_signup_error; ?></div>

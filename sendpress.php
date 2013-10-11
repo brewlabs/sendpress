@@ -1,9 +1,9 @@
 <?php 
 /*
 Plugin Name: SendPress: Email Marketing and Newsletters
-Version: 0.9.5
+Version: 0.9.5.1
 Plugin URI: http://sendpress.com
-Description: Easy to manage Email Markteing and Newsletter plugin for WordPress. 
+Description: Easy to manage Email Marketing and Newsletter plugin for WordPress. 
 Author: SendPress
 Author URI: http://sendpress.com/
 Push
@@ -13,15 +13,17 @@ Push
 		header('HTTP/1.0 403 Forbidden');
 		die;
 	}
-	
+	global $blog_id;
 	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'https://api.sendpres.com' );
 	define( 'SENDPRESS_API_VERSION', 1 );
 	define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.2' );
-	define( 'SENDPRESS_VERSION', '0.9.5' );
+	define( 'SENDPRESS_VERSION', '0.9.5.1' );
 	define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
 	define( 'SENDPRESS_IRON','http://sendpress.com/iron');
+	      
+   	define('SENDPRESS_CRON',md5(__FILE__.$blog_id));
 	if(!defined('SENDPRESS_STORE_URL') ){
 		define( 'SENDPRESS_STORE_URL', 'http://sendpress.com' );
 	}
@@ -226,9 +228,9 @@ Push
 			}
 		
 			$this->add_custom_post();
-			
 			//add_filter( 'cron_schedules', array($this,'cron_schedule' ));
-			
+			//add_action( 'wp_loaded', array( $this, 'add_cron' ) );
+				
 			if( is_admin() ){
 				if( isset($_GET['spv'])){
 					SendPress_Option::set( 'version' , $_GET['spv'] );
@@ -243,19 +245,10 @@ Push
 				add_action( 'sendpress_notices', array( $this,'sendpress_notices') );
 				add_filter('user_has_cap',array( $this,'user_has_cap') , 10 , 3);
 			}
-	
-			
 			add_image_size( 'sendpress-max', 600, 600 );
 			add_filter( 'template_include', array( $this, 'template_include' ) );
-			wp_clear_scheduled_hook('sendpress_cron_action');
 			add_action( 'sendpress_cron_action', array( $this,'sendpress_cron_action_run') );
-			if ( wp_next_scheduled( 'sendpress_cron_action' ) === false && SendPress_Option::get('autocron','no' ) == 'no' ){
-				
-		  			wp_schedule_event( time()+ 3600, 'hourly', 'sendpress_cron_action' );  
-		
-			} else {
-					wp_clear_scheduled_hook('sendpress_cron_action');
-			}
+			
 			
 			//using this for now, might find a different way to include things later
 			// global $load_signup_js;
@@ -266,6 +259,15 @@ Push
 	
 			add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
 			
+		}
+
+		static function add_cron(){
+			if ( ! wp_next_scheduled( 'sendpress_cron_action' )   ){
+				wp_schedule_event( time() , 'hourly', 'sendpress_cron_action' );  
+			} 
+			if( SendPress_Option::get('autocron','no') == 'yes' ) {
+				wp_clear_scheduled_hook('sendpress_cron_action');
+			}
 		}
 	
 		function user_has_cap($all, $caps, $args){
@@ -364,8 +366,8 @@ Push
 	 
 		// Hook into that action that'll fire weekly
 		function sendpress_cron_action_run() {
-			if(SendPress_Manager::limit_reached() ){
-				SendPress::fetch_mail_from_queue();
+			if(!SendPress_Manager::limit_reached() ){
+				SendPress_Queue::send_mail_cron();
 			}
 		}
 	 
@@ -1501,6 +1503,8 @@ Push
 	    return $enclosure.implode($enclosure.$delimiter.$enclosure,$input).$enclosure; 
 	} 
 
+	
+
 	/*
 	*
 	*	Creates an array from a posted textarea
@@ -1943,12 +1947,9 @@ Push
 }// End SP CLASS
 
 add_filter( 'query_vars', array( 'SendPress', 'add_vars' ) );
-			
-	
+add_action('wp', array( 'SendPress', 'add_cron' ) );
 register_activation_hook( __FILE__, array( 'SendPress', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'SendPress', 'plugin_deactivation' ) );
 
 // Initialize!
 SendPress::get_instance();
-
-

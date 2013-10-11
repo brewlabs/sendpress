@@ -24,7 +24,6 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 				d['status'] = rbutton.val();
 				d['spnonce'] = spdata.nonce;
 				d['action'] = 'sendpress-list-subscription';
-				console.log(d);
 				$.post(spdata.ajaxurl, d, function(response){
 					$('.alert').slideDown('slow');
 					console.log(response);
@@ -52,6 +51,13 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 			$info = NEW stdClass();
 			$info->id = 0;
 		}
+		if(isset($_GET['email'])){
+			$data = SendPress_Data::get_subscriber_by_email($_GET['email']);
+			if($data != false){
+				$info->id = $data;
+			}
+		}
+
 
 		/*
 		$link = array(
@@ -178,6 +184,7 @@ wp_reset_query();
 		<th  ><?php _e('Unsubscribed','sendpress'); ?></th>
 		<th  ><?php _e('List','sendpress'); ?></th>
 		<th class="hidden-phone">Updated</th>
+		<th class="hidden-phone">Other Info</th>
 	</tr>
 <?php
 
@@ -200,10 +207,11 @@ foreach($lists as $list){
 	?>
   	<tr>
   	<?php
-  	$checked = (isset($subscriber->status) && $subscriber->status == 2) ? 'checked' : '';
-		echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="2"></td>';
-		$checked = (empty($subscriber->status) || $subscriber->status == 3) ? 'checked' : '';
-		echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="3"></td>';
+
+  	$checked = (isset($subscriber->statusid) && $subscriber->statusid == 2) ? 'checked' : '';
+		echo '<td><input type="radio" class="xbutton" data-list="'.$my_query->post->ID.'" name="subscribe_'.$my_query->post->ID.'" '.$checked.' value="2"></td>';
+		$checked = (empty($subscriber->statusid) || $subscriber->statusid == 3) ? 'checked' : '';
+		echo '<td><input type="radio" class="xbutton" data-list="'.$my_query->post->ID.'" name="subscribe_'.$my_query->post->ID.'" '.$checked.' value="3"></td>';
   	?>
   	<td><?php echo $list->post_name; ?></td>
   	<td class="hidden-phone"><span id="list_<?php echo $list->ID;?>"><?php 
@@ -212,6 +220,9 @@ foreach($lists as $list){
 		 }
 		 ?></span>
 	</td>
+	<td><?php if($subscriber->statusid != 3 && $subscriber->statusid != 2){
+		echo $subscriber->status;
+	} ?></td>
   	<tr>	
     <?php
 }

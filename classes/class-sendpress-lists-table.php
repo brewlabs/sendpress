@@ -84,16 +84,16 @@ class SendPress_Lists_Table extends WP_List_Table {
             case 'last_send_date':
                 return date('Y-m-d');        
             case 'actions':
+                return '<div class="inline-buttons">
+                    <a class="btn btn-info" href="?page='.$_REQUEST['page'].'&view=subscribers&listID='.$item->ID.'"><i class="icon-user icon-white "></i> View/Edit</a>
+                    <a class="btn" href="?page='.$_REQUEST['page'].'&view=csvimport&listID='. $item->ID .'"><i class="icon-user"></i> Import</a> 
+                    <a class="btn" href="?page='.$_REQUEST['page'].'&view=add&listID='. $item->ID .'"><i class="icon-user"></i> Add</a>
+                    <a class="btn" href="?page='.$_REQUEST['page'].'&action=export-list&listID='. $item->ID .'"><i class="icon-download"></i> Export</a>
+                    
+                    <a class="btn " href="'. SendPress_Admin::link('Subscribers_Listform', array('listID' => $item->ID)) .'"><i class="icon-list"></i> Form</a>
+                    <a class="btn " href="?page='.$_REQUEST['page'].'&view=listedit&listID='. $item->ID .'"><i class="icon-cog"></i></a>
+                    </div>';
 
-                $btnActions = apply_filters('sendpress_list_table_actions',array(
-                    'view'=>'<a class="btn btn-info" href="?page='.$_REQUEST['page'].'&view=subscribers&listID='.$item->ID.'"><i class="icon-user icon-white "></i> View/Edit</a>',
-                    'import'=>'<a class="btn" href="?page='.$_REQUEST['page'].'&view=add&listID='. $item->ID .'"><i class="icon-user"></i> Import</a>',
-                    'export'=>'<a class="btn" href="?page='.$_REQUEST['page'].'&action=export-list&listID='. $item->ID .'"><i class="icon-download"></i> Export</a>',
-                    'settings'=>'<a class="btn " href="?page='.$_REQUEST['page'].'&view=listedit&listID='. $item->ID .'"><i class="icon-wrench"></i> Settings</a>',
-                    'form'=>'<a class="btn " href="'. SendPress_Admin::link('Subscribers_Listform', array('listID' => $item->ID)) .'"><i class="icon-list"></i> Form</a>'
-                ));
-                
-                return '<div class="inline-buttons">'.implode($btnActions).'</div>';
             default:
                 return print_r($item,true); //Show the whole array for troubleshooting purposes
         }

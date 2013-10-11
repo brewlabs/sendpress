@@ -55,7 +55,7 @@ class SendPress_Widget_Signup extends WP_Widget {
 		$args.= 'lastname_label="'.$instance['last_label'].'" ';
 		$args.= 'email_label="'.$instance['email_label'].'" ';
 		$args.= 'list_label="'.$instance['list_label'].'" ';
-		
+		$args.= 'redirect_page="'.$instance['redirect_page'].'" ';
 		$args.= 'button_text="'.$instance['button_text'].'" ';
 		$args.= 'thank_you="'.$instance['thank_you'].'" ';
 		$args.= 'label_display="'.$instance['label_display'].'" ';
@@ -112,7 +112,7 @@ class SendPress_Widget_Signup extends WP_Widget {
 		$instance['show_first'] = $new_instance['show_first'];
 		$instance['show_last'] = $new_instance['show_last'];
 		$instance['label_display'] = $new_instance['label_display'];
-
+		$instance['redirect_page'] = $new_instance['redirect_page'];
 		$args = array( 
 	   		'post_type' 	=> 'sendpress_list',
 	   		'numberposts'   => -1,
@@ -151,6 +151,7 @@ class SendPress_Widget_Signup extends WP_Widget {
 			'email_label' => __('E-Mail', 'sendpress'), 
 			'list_label' => __('List Selection', 'sendpress'), 
 			'desc' => '',
+			'redirect_page'=>false,
 			'button_text' => __('Submit', 'sendpress'),
 			'thank_you' => __('Check your inbox now to confirm your subscription.', 'sendpress')
 		);
@@ -242,7 +243,31 @@ class SendPress_Widget_Signup extends WP_Widget {
 		<p>
 			<label for="<?php echo $this->get_field_id( 'thank_you' ); ?>"><?php _e('Thank you message:', 'sendpress'); ?></label>
 			<textarea rows="5" type="text" class="widefat" id="<?php echo $this->get_field_id( 'thank_you' ); ?>" name="<?php echo $this->get_field_name( 'thank_you' ); ?>"><?php echo $instance['thank_you']; ?></textarea>
+
 		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'redirect_page' ); ?>"><?php _e('Thank You Page (AJAX OFF ONLY):', 'sendpress'); ?></label>
+			<select name="<?php echo $this->get_field_name( 'redirect_page' ); ?>" id="<?php echo $this->get_field_id( 'redirect_page' ); ?>"> 
+ <option value="0">
+ 	<?php $cpageid = $instance['redirect_page']; 
+ 	?>
+<?php echo esc_attr( __( 'Default' ) ); ?></option> 
+ <?php 
+  $pages = get_pages(); 
+  foreach ( $pages as $page ) {
+  	$s ='';
+  	if($cpageid == $page->ID){ $s =  "selected"; }
+  	$option = '<option value="' . $page->ID .'" ' .$s. '>';
+	$option .= $page->post_title;
+	$option .= '</option>';
+	echo $option;
+  }
+ ?>
+</select>
+
+		</p>
+
+		
 		<?php
 		
 	}
