@@ -17,7 +17,7 @@ class SendPress_Posts{
 	/**
 	 * Create a Duplicate post
 	 */
-	static function copy($post, $post_title ='',$post_name='', $post_type= '') {
+	static function copy($post, $post_title ='',$post_name='', $post_type= 'sp_report') {
 
 		// We don't want to clone revisions
 		if ($post->post_type == 'revision') return;
