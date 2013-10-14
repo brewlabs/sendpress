@@ -112,7 +112,7 @@ $subject = SendPress_Option::get('current_send_subject_'.$post->ID ,true);
   </div>
 </div>
 <div id="sp-cancel-btn" style="float:right; margin-top: 5px;">
-<a class="btn" href="<?php echo '?page='.$_GET['page']. '&view=send-email&emailID='. $_GET['emailID']; ?>"><?php _e('Cancel Send','sendpress'); ?></a>&nbsp;
+<a class="btn" href="<?php echo '?page='.$_GET['page']. '&view=send&emailID='. $_GET['emailID']; ?>"><?php _e('Cancel Send','sendpress'); ?></a>&nbsp;
 </div>
 <h2><?php _e('Confirm Send','sendpress'); ?></h2>
 

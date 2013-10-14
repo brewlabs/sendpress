@@ -131,14 +131,15 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 <?php
   $emails_per_day = SendPress_Option::get('emails-per-day');
   $emails_per_hour =  SendPress_Option::get('emails-per-hour');
-  $emails_today = SendPress_Option::get('emails-today');
-  $count_today = isset( $emails_today[date("z")] ) ? $emails_today[date("z")] : 0 ;
+ 
+  $hourly_emails = SendPress_Data::emails_sent_in_queue("hour");
+  $emails_so_far = SendPress_Data::emails_sent_in_queue("day");
 ?><?php
 $offset = get_option( 'gmt_offset' ) * 60 * 60; // Time offset in seconds
 $local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
 //print_r(wp_get_schedules());
 ?>
-You have sent <strong><?php echo $count_today; ?></strong> emails so far today.<br><br>
+You have sent <strong><?php echo $emails_so_far; ?></strong> emails so far today.<br><br>
 <input type="text" size="6" name="emails-per-day" value="<?php echo $emails_per_day; ?>" /> Emails Per Day<br><br>
 <input type="text" size="6" name="emails-per-hour" value="<?php echo $emails_per_hour; ?>" /> Emails Per Hour 
 <br><br>
@@ -184,9 +185,18 @@ Older versions of SendPress used "quoted-printable"
     <?php $tl =  SendPress_Option::get('autocron','no'); ?>
     <h2>SendPress Pro Auto Cron</h2>
     <p>At least once every hour we visit your site, just like a "cron" job.<br>There's no setup involved. Easy and hassle free.</p>
+
     <button id="sp-enable-cron" <?php if($tl == 'yes'){ echo "style='display:none;'";} ?> class="btn  btn-success">Enable Pro Auto Cron</button><button id="sp-disable-cron" <?php if($tl == 'no'){ echo "style='display:none;'";} ?> class="btn  btn-danger">Disable Pro Auto Cron</button>
-    <p>Get <a href="http://sendpress.com">SendPress Pro</a> to send even faster with connections every 15 minutes!</p>
-    <p>Pro Auto Cron "Free" does collect some data about your website and usage of SendPress. It will not track any user details, so your security and privacy are safe with us.</p>
+    <br>
+    <p class="alert alert-error">
+      <strong>Without SendPress Pro</strong><br>
+      Auto Cron is limited to a max of <strong>3,000*</strong> emails per day at a max rate of <strong>125*</strong> emails per hour.
+      <br><br>
+      <strong>With SendPress Pro</strong><br>
+      Auto Cron starts at a max of <strong>12,000*</strong> emails per day at a max rate of <strong>500*</strong> emails per hour. Sending of up to <strong>30,000*</strong> emails a day available provided your server can handle it. <br><br><br>
+      <strong>*</strong>Auto Cron will not send faster then your <strong>Email Sending Limits</strong> to the right.<br>Please make sure you follow the rules of your hosting provider or upgrade to <strong><a href="http://sendpress.com">SendPress Pro</a></strong> to user a third-party service.
+    </p>
+    <small>Pro Auto Cron does collect some data about your website and usage of SendPress. It will not track any user details, so your security and privacy are safe with us.</small>
 
 
 

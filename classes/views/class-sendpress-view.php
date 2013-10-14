@@ -55,11 +55,7 @@ class SendPress_View {
 
     
 	function init() {
-		//Remove this only on get methods
-		if ( !empty($_REQUEST['_wp_http_referer']) && !$_SERVER['REQUEST_METHOD'] === 'POST') {
-	 		wp_redirect( remove_query_arg( array('_wp_http_referer', '_wpnonce'), stripslashes($_SERVER['REQUEST_URI']) ) );
-	 		exit;
-		}
+		
 	}
 
 	function page_start(){

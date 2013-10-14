@@ -49,7 +49,8 @@ if($wpdb->get_var("show tables like '$subscriber_list_subscribers'") != $subscri
 		  PRIMARY KEY (`id`),
 		  KEY (`listID`) ,
 		  KEY (`subscriberID`) ,
-		  KEY (`status`) 
+		  KEY (`status`) ,
+		  UNIQUE KEY `listsub` (`subscriberID`,`listID`)
 		)";
 
 	dbDelta($sql3);
@@ -78,7 +79,12 @@ if($wpdb->get_var("show tables like '$subscriber_queue'") != $subscriber_queue) 
 	  PRIMARY KEY (`id`),
 	  KEY `to_email` (`to_email`),
 	  KEY `subscriberID` (`subscriberID`),
-	  KEY `listID` (`listID`)
+	  KEY `listID` (`listID`),
+	  KEY `inprocess` (`inprocess`),
+	  KEY `success` (`success`),
+	  KEY `max_attempts` (`max_attempts`),
+	  KEY `attempts` (`attempts`),
+	  KEY `last_attempt` (`last_attempt`)
 	)";
 
 	dbDelta($sql5);

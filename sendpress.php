@@ -1,7 +1,7 @@
 <?php 
 /*
 Plugin Name: SendPress: Email Marketing and Newsletters
-Version: 0.9.5.1
+Version: 0.9.5.2
 Plugin URI: http://sendpress.com
 Description: Easy to manage Email Marketing and Newsletter plugin for WordPress. 
 Author: SendPress
@@ -17,7 +17,7 @@ Push
 	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'https://api.sendpres.com' );
 	define( 'SENDPRESS_API_VERSION', 1 );
 	define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.2' );
-	define( 'SENDPRESS_VERSION', '0.9.5.1' );
+	define( 'SENDPRESS_VERSION', '0.9.5.2' );
 	define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -244,6 +244,8 @@ Push
 				add_filter( 'gettext', array($this, 'change_button_text'), null, 2 );
 				add_action( 'sendpress_notices', array( $this,'sendpress_notices') );
 				add_filter('user_has_cap',array( $this,'user_has_cap') , 10 , 3);
+			} else{
+				
 			}
 			add_image_size( 'sendpress-max', 600, 600 );
 			add_filter( 'template_include', array( $this, 'template_include' ) );
@@ -535,7 +537,10 @@ Push
 	function admin_init(){
 		$this->set_template_default();
 		$this->add_caps();
-
+		if ( !empty($_GET['_wp_http_referer']) ) {
+			wp_redirect( remove_query_arg( array('_wp_http_referer', '_wpnonce'), stripslashes($_SERVER['REQUEST_URI']) ) );
+	 		exit;
+		}
 
 
 
@@ -991,9 +996,7 @@ Push
 	function maybe_upgrade() {
 
 		$current_version = SendPress_Option::get('version', '0' );
-		//$current_version = '0.9.3';
-		//echo $current_version;
-		//error_log($current_version);
+		//SendPress_Error::log($current_version);
 
 		if ( version_compare( $current_version, SENDPRESS_VERSION, '==' ) )
 			return;
@@ -1087,6 +1090,9 @@ Push
 
 		if(version_compare( $current_version, '0.9.4.7', '<' )){
 			SendPress_Data::update_tables_0947();
+		}
+		if(version_compare( $current_version, '0.9.5.2', '<' )){
+			SendPress_Data::update_tables_0952();
 		}
 
 
@@ -1696,10 +1702,6 @@ Push
 		$messageid = $this->unique_message_id();
 		$values["messageID"] = $messageid;
 		$values["date_published"] = date('Y-m-d H:i:s');
-		//$q = $wpdb->prepare("INSERT INTO $table (subscriberID, from_name,from_email,to_email, subject, messageID, date_published, emailID, listID) VALUES( '" .$values['subscriberID'] . "','" .$values['from_name'] . "', '" .$values['from_email'] .  "', '" .$values['to_email'] . "', '" .$values['subject'] . "', '" .$messageid . "', '". date('Y-m-d H:i:s') . "', '" .$values['emailID']. "', '" .$values['listID'] ."' )");
-		//error_log($q);
-		//$result = $this->wpdbQuery($q, 'query');
-
 		$wpdb->insert( $table, $values);
 	}
 

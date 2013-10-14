@@ -96,11 +96,23 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $wpdb->get_var( $query );
 	}
 
+	static function emails_stuck_in_queue($id = false){
+		global $wpdb;
+		$table = self::queue_table();
+		$hour_ago = strtotime('-1 hour');
+		$hour = date('Y-m-d H:i:s', $hour_ago);
+		$query = "SELECT COUNT(*) FROM $table where success = 0 and (( inprocess = 1 and last_attempt < %s and last_attempt != '0000-00-00 00:00:00') or (max_attempts = attempts) ) ";
+		return $wpdb->get_var( $wpdb->prepare($query,  $hour) );
+	}
+
+
 
 	static function get_lists_in_queue(){
 		global $wpdb;
 		$table = self::queue_table();
-		$query = "SELECT listID FROM wp_sendpress_queue where success = 0 group by listID";
+		$hour_ago = strtotime('-1 hour');
+		$hour = date('Y-m-d H:i:s', $hour_ago);
+		$query = "SELECT listID FROM wp_sendpress_queue where success = 0 group by listID ";
 		$id=$wpdb->get_results( $query );
 		$listdata = array();
 		foreach ($id as $list) {
@@ -111,6 +123,23 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $listdata;
 	}
 
+	static function clean_queue_table(){
+		global $wpdb;
+
+		
+		$hour_ago = strtotime('-1 hour');
+		$hour = date('Y-m-d H:i:s', $hour_ago);
+		$hour_ago = strtotime('-1 day');
+		$day = date('Y-m-d H:i:s', $hour_ago);
+		
+		$table = self::queue_table();
+		$query = $wpdb->prepare("DELETE FROM $table where last_attempt < %s and success = %d", $day, 1 );
+		$wpdb->query( $query );
+		$query = $wpdb->prepare("UPDATE $table set inprocess = 0 where last_attempt < %s and success = %d and inprocess = %d", $hour, 0 ,1 );
+		$wpdb->query( $query );
+
+
+	}
 
 	static function emails_sent_in_queue($type = "hour" ){
 
@@ -123,6 +152,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if($type == "day"){
 			$hour_ago = strtotime('-1 day');
 			$time = date('Y-m-d H:i:s', $hour_ago);
+			
 		}
 
 		
@@ -186,10 +216,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$messageid = SendPress_Data::unique_message_id();
 		$values["messageID"] = $messageid;
 		$values["date_published"] = date('Y-m-d H:i:s');
-		//$q = $wpdb->prepare("INSERT INTO $table (subscriberID, from_name,from_email,to_email, subject, messageID, date_published, emailID, listID) VALUES( '" .$values['subscriberID'] . "','" .$values['from_name'] . "', '" .$values['from_email'] .  "', '" .$values['to_email'] . "', '" .$values['subject'] . "', '" .$messageid . "', '". date('Y-m-d H:i:s') . "', '" .$values['emailID']. "', '" .$values['listID'] ."' )");
-		//error_log($q);
-		//$result = $this->wpdbQuery($q, 'query');
-
 		$wpdb->insert( $table, $values);
 	}
 
@@ -507,7 +533,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if($event == true){
 		//add event for notification tracking
 		SendPress_Data::add_subscribe_event($subscriberID, $listID, $status);
-		}
+		} 
 		return SendPress_Data::get_subscriber_list_status($listID, $subscriberID);
 	}
 
@@ -526,6 +552,17 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $result;	
 	}
 
+	static function is_subsriber_on_list($lid,$sid){
+		global $wpdb;
+		$table = SendPress_Data::list_subcribers_table();
+		$id = $wpdb->get_var( $wpdb->prepare("SELECT id FROM $table WHERE listID = %d AND subscriberID = %d ", $lid, $sid) );
+		if($id > 0 ){
+			return true;
+		}
+		return false;
+	}
+
+
 	static function get_subscriber_events($sid){
 		global $wpdb;
 			$table  =SendPress_Data::subscriber_event_table();
@@ -543,13 +580,12 @@ class SendPress_Data extends SendPress_DB_Tables {
 			'reportID' => $rid,
 			'type'=> $event
 		);
-		//error_log($event_data);
 		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $event_data);
 
 	}
 
 
-	static function add_subscriber_event( $sid, $rid, $lid, $ip , $device_type, $device ){
+	static function add_subscriber_event( $sid, $rid, $lid, $ip , $device_type, $device, $type='confirm' ){
 		global $wpdb;
 
 		$event_data = array(
@@ -560,7 +596,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 			'ip'=>$ip,
 			'devicetype'=> $device_type,
 			'device'=> $device,
-			'type'=>'confirm'
+			'type'=>$type
 		);
 		
 		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $event_data);
@@ -571,17 +607,22 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		$event_type = 'unknown_event_type';
 		if( is_numeric($type) ){
+
 			if($type == 2){
 				$event_type = 'subscribed';
 			}elseif($type == 3){
 				$event_type = 'unsubscribed';
+			}elseif($type==4){
+				$event_type = 'bounce';
+			}elseif($type==1){
+				$event_type = 'optin';
 			}
 		}
 
 		$event_data = array(
 			'eventdate'=>date('Y-m-d H:i:s'),
 			'subscriberID' => $sid,
-			'urlID'=>$lid,
+			'listID'=>$lid,
 			'type'=>$event_type
 		);
 		
@@ -631,6 +672,34 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
+	static function bounce_email($email){
+		$id = SendPress_Data::get_subscriber_by_email($email);
+		if($id !== false){
+			$lists = SendPress_Data::get_lists_for_subscriber($id);
+			foreach ($lists as $list) {
+				if($list->status == 2){
+					SendPress_Data::update_subscriber_status($list->listID, $id, 4 , false);
+					SendPress_Data::add_subscriber_event( $id, 0, $list->listID,0, 0, 0, 'bounce');
+				}
+			}
+
+		}
+
+	}
+
+	static function get_lists_for_subscriber( $value ) {
+		global $wpdb;
+		$table = SendPress_Data::list_subcribers_table();
+		$result = $wpdb->get_results("SELECT * FROM $table WHERE subscriberID = '$value'");
+		return $result;	
+	}
+	static function get_list_ids_for_subscriber( $value ) {
+		global $wpdb;
+		$table = SendPress_Data::list_subcribers_table();
+		$result = $wpdb->get_results("SELECT listID FROM $table WHERE subscriberID = '$value'");
+		return $result;	
+	}
+
 
 	static function subscribe_user($listid, $email, $first, $last, $status = 2){
 		
@@ -640,7 +709,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if( false === $subscriberID ){
 			return false;
 		}
-		error_log('id ' . $subscriberID);
 		$args = array( 'post_type' => 'sendpress_list','numberposts'  => -1,
 	    'offset'          => 0,
 	    'orderby'         => 'post_title',
@@ -678,29 +746,31 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 	static function import_csv_array($data, $map, $list){
 
-global $wpdb;
+		global $wpdb;
 		$query ="INSERT IGNORE INTO ". SendPress_Data::subscriber_table(). "(email,firstname,lastname,join_date,identity_key) VALUES ";
 		$total = count($data);
 		$emails_added = array();
 		$x = 0;
 		foreach($data as $key_line => $line){
 			$values ="";
-			if( in_array('email',$map) ){
-				
+
+			if( array_key_exists('email',$map)  ){
 				$email = $line[$map['email']];
+				
 				if(is_email($email)){
+
 					$values.="'".mysql_real_escape_string($email,$wpdb->dbh)."',";
 					$emails_added[] = $email;
-					if(in_array('firstname',$map)){
+					if(array_key_exists('firstname',$map)){
 						$values.="'".mysql_real_escape_string(trim($line[$map['firstname']]),$wpdb->dbh)."',";
 					} else {
-						$values .= ",";
+						$values .= "'',";
 					}
 					
-					if(in_array('lastname',$map)){
+					if(array_key_exists('lastname',$map)){
 						$values.="'".mysql_real_escape_string(trim($line[$map['lastname']]),$wpdb->dbh)."',";
 					} else {
-						$values .= ",";
+						$values .= "'',";
 					}
 
 
@@ -728,13 +798,16 @@ global $wpdb;
 		$query_update_status ="INSERT IGNORE INTO ". SendPress_Data::list_subcribers_table(). "(subscriberID,listID,status,updated ) VALUES ";
 		$total = count($data);
 		$x = 0;
+		if($total > 0){
 		foreach ($data as $value) {
-			$query_update_status .= "( ".$value->subscriberID . "," . $list . ",2,'" .date('Y-m-d H:i:s') . "') ";
 			$x++;
+			$query_update_status .= "( ".$value->subscriberID . "," . $list . ",2,'" .date('Y-m-d H:i:s') . "') ";
 			if($total > $x ){ $query_update_status .=",";}
 		}
 		$query_update_status .=";";
 		$wpdb->query($query_update_status);
+		}
+		
 	}
 
 	static function csv_to_array($csv_file_content , $rows_to_read = 0 , $delimiter = ',' , $enclosure = '' ){

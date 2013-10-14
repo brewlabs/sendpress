@@ -8,6 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Help extends SendPress_View{
 	function prerender($sp = false){
+		
 		wp_enqueue_script( 'dashboard' );
 		sp_add_help_widget( 'help_support', 'Contact Us', array(&$this,'help_support'));
 		sp_add_help_widget( 'help_knowledge', 'Recent Knowledge Base Articles', array(&$this,'help_knowledge'),'side' );

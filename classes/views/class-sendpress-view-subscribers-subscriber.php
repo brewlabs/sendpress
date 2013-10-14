@@ -28,8 +28,11 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
     function save(){
     	if($_POST['delete-this-user'] == 'yes'){
     		SendPress_Data::delete_subscriber( $_POST['subscriberID'] );
-
+    		if($_GET['listID']){
+    			SendPress_Admin::redirect( 'Subscribers_Subscribers',array('listID'=>$_GET['listID']) );
+    		}else {
     		SendPress_Admin::redirect( 'Subscribers_All' );
+    		}
     	}else {
 
 			global $post;

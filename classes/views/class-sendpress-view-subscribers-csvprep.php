@@ -11,8 +11,9 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
   
 
 	function save(){
-		     $file= SendPress_Data::read_file_to_str(get_post_meta($_GET['listID'],'csv_import',true));
+		$file= trim(SendPress_Data::read_file_to_str(get_post_meta($_GET['listID'],'csv_import',true)));
     $subscribers = SendPress_Data::csv_to_array($file);
+   
     $total = count($subscribers);
     $map = array();
     $i = 0;
@@ -50,7 +51,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
             unset($file_chunks[$key_chunk]);
         }
 
-        SendPress_Admin::redirect('Subscribers_Subscribers',array('listID'=> $_POST['listID']));
+        SendPress_Admin::redirect('Subscribers_Subscribers',array('listID'=> $_GET['listID']));
 
 
 	}
@@ -58,11 +59,13 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
   function dropdown($value,$id){
     
     $match = array_search($value,$this->_import_fields);
+
+
     $return = "<select name='colmatch{$id}'>";
     $found = false;
     foreach ($this->_import_fields as $field) {
         $selected = "";
-        if($value == $field){
+        if($value == $field || strpos($value, $field) !== false ){
           $found = true;
           $selected = " selected='selected'";
         }
@@ -92,7 +95,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
     $row = 1;
     $header = array();
 
-    $file= SendPress_Data::read_file_to_str(get_post_meta($_GET['listID'],'csv_import',true));
+    $file= trim(SendPress_Data::read_file_to_str(get_post_meta($_GET['listID'],'csv_import',true)));
     $subscribers = SendPress_Data::csv_to_array($file);
     $total = count($subscribers);
     ?>
@@ -139,15 +142,21 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
   for ($i=0; $i < $loop; $i++) { 
     $line = '<tr>';
     $line .="<td>$i</td>";
+    $cols = 0;
     foreach ($subscribers[$i] as $key => $value) {
+      $cols ++;
       $line .= "<td>$value</td>";
-      # 
+      
     }
     $line .="</tr>";
     echo $line;
   }
   if($placeholder == true){
-    echo "<tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>";
+    echo "<tr>";
+     for ($i=0; $i <= $cols; $i++) {
+        echo "<td>...</td>";
+     }
+    echo"</tr>";
     $last = end($subscribers);
     if(empty($last[0])){
        $total--;

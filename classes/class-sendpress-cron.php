@@ -30,7 +30,15 @@ class SendPress_Cron {
             if ( isset( $_GET['action'] ) && $_GET['action'] == 'sendpress' ) {
                 SendPress_Queue::send_mail();
                 $count= SendPress_Data::emails_in_queue();
-                echo json_encode(array( "queue"=>$count ));
+                $pro = false;
+                if(defined('SENDPRESS_PRO_VERSION')){
+                    $pro = SENDPRESS_PRO_VERSION;
+                }
+                $stuck = SendPress_Data::emails_stuck_in_queue();
+                $limit = SendPress_Manager::limit_reached();
+
+                echo json_encode(array( "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit ));
+                //die();
             }
             
         }
@@ -126,7 +134,7 @@ class SendPress_Cron {
         
         $url = SendPress_Cron::remove_http( site_url() );
         $domain = base64_encode( $url );
-        error_log( 'http://sendpress.com/iron/cron/set/'. $domain .'/'. SENDPRESS_CRON);
+        SendPress_Error::log( 'http://sendpress.com/iron/cron/set/'. $domain .'/'. SENDPRESS_CRON);
         $body = wp_remote_retrieve_body( wp_remote_get( 'http://sendpress.com/iron/cron/set/'. $domain .'/'. SENDPRESS_CRON ) );
         wp_clear_scheduled_hook( 'sendpress_cron_action' );
     }

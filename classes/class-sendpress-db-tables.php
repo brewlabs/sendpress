@@ -294,6 +294,24 @@ class SendPress_DB_Tables {
         $wpdb->query("ALTER TABLE ". $ls ." MODIFY updated  datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
     }
 
+    static function update_tables_0952(){
+         global $wpdb;
+         $ls = SendPress_DB_Tables::list_subcribers_table();
+         $wpdb->query("ALTER IGNORE TABLE `". $ls ."` ADD UNIQUE INDEX `listsub` (`subscriberID`,`listID`)");
+
+         $subscriber_queue = SendPress_DB_Tables::queue_table();
+         $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `to_email` (`to_email`)");
+         $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `subscriberID` (`subscriberID`)");
+         $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `listID` (`listID`)");
+         $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `inprocess` (`inprocess`)");
+         $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `success` (`success`)");
+         $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `max_attempts` (`max_attempts`)");
+         $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `attempts` (`attempts`)");
+         $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `last_attempt` (`last_attempt`)");
+
+        }
+
+
 
 }
 

@@ -44,9 +44,7 @@ $list = explode(",",$lists );
 ?>
         <div id="taskbar" class="lists-dashboard rounded group"> 
 
-    <div id="button-area">  
-    <a id="send-now" class="btn btn-primary btn-large " data-toggle="modal" href="#sendpress-sending"   ><i class="icon-white icon-refresh"></i> <?php _e('Send Emails Now','sendpress');?></a>
-    </div>
+    
 </div><input type="hidden" id="post_ID" name="post_ID" value="<?php echo $post->ID; ?>" /><input type="hidden" id="reporttoqueue" name="reporttoqueue" value="<?php echo $lists; ?>" />
 <div class='well' id="confirm-queue-add">
     <h2><strong><?php _e('Adding Subscribers to Queue','sendpress'); ?></strong></h2><br>

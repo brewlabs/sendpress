@@ -40,7 +40,6 @@ class SendPress_View_Pro extends SendPress_View{
     function module_deactivate_sendpress_pro(){
         $path = $_POST['plugin_path'];
         $pro_options = SendPress_Option::get('pro_plugins');
-error_log('wtf');
         if( !preg_match('/sendpress-pro.php/i',$path) ){
             if( preg_match('/sendpress-pro/i',$path) ){
                 //make sure the plugin loads from sendpress pro

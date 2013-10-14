@@ -318,20 +318,24 @@ class SendPress_Subscribers_Table extends WP_List_Table {
         /* -- Ordering parameters -- */
         //Parameters that are going to be used to order the result
        
-        if(isset($_GET["statusid"] ) && $_GET["statusid"]  > 0){
-            $query .= ' AND statusid = '. $_GET["statusid"] ;
+        
 
-        }
-
-        if(isset($_GET["qs"] )){
-            $query .= ' AND ( email LIKE "%'. $_GET["qs"] .'%" or firstname LIKE "%'. $_GET["qs"] .'%" or lastname LIKE "%'. $_GET["qs"] .'%" )';
-
-        }
-
+       
           $query_count = "SELECT count(*) FROM " .  $this->_sendpress->subscriber_table() ." as t1,". $this->_sendpress->list_subcribers_table()." as t2,". $this->_sendpress->subscriber_status_table()." as t3";
 
         
             $query_count .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND (t2.listID =  ". $_GET["listID"] .")";
+            if(isset($_GET["statusid"] ) && $_GET["statusid"]  > 0){
+            $query .= ' AND statusid = '. $_GET["statusid"] ;
+             $query_count .=' AND statusid = '. $_GET["statusid"] ;
+        }
+
+        if(isset($_GET["qs"] )){
+            $query .= ' AND ( email LIKE "%'. $_GET["qs"] .'%" or firstname LIKE "%'. $_GET["qs"] .'%" or lastname LIKE "%'. $_GET["qs"] .'%" )';
+             $query_count .= ' AND ( email LIKE "%'. $_GET["qs"] .'%" or firstname LIKE "%'. $_GET["qs"] .'%" or lastname LIKE "%'. $_GET["qs"] .'%" )';
+        }
+
+
         /* -- Pagination parameters -- */
         //Number of elements in your table?
         $totalitems = $wpdb->get_var($query_count);

@@ -39,7 +39,7 @@ class SendPress_Helper {
 					$log_message .= '\n';
 					SELF::append_log($log_message);
 				}else{
-					//error_log($log_message);
+					
 				}
 				
 			}

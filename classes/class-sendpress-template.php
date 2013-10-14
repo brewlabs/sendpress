@@ -237,9 +237,6 @@ class SendPress_Template {
 				$iTags = $dom->getElementsByTagName('img');
 				foreach ($iTags as $iElement) {
 					$class = $iElement->getAttribute('class');
-					//error_log($class);
-					//$href = site_url() ."?sendpress=link&fxti=".$subscriber_key."&spreport=". $email->emailID ."&spurl=".urlencode($href);
-					//$aElement->setAttribute('href', $href);
 				}
 				$body_html = $dom->saveHtml();
 
@@ -294,7 +291,6 @@ class SendPress_Template {
 				$code = SendPress_Data::encrypt( $open_info );
 
 				$xlink = SendPress_Manager::public_url($code);
-				error_log($xlink);
 				$browser = $display_correct.' <a style="color: '.$body_link.';" href="'.$xlink.'">'.$view.'</a>.';
 				$HtmlCode =str_replace("*|SP:BROWSER|*",$browser ,$HtmlCode);
 				
