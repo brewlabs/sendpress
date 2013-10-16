@@ -112,6 +112,17 @@ class SendPress_Public_View {
 	<?php
 	}
 
+	static function redirect( $link ){
+		
+		if ( headers_sent() ) {
+			echo "<script>document.location.href='".$link."';</script>"; 
+		}
+		else {
+			wp_redirect(  $link ); 
+		}
+		exit;
+	}
+
 	function _public_before(){
 		$theme = wp_get_theme();
 		if( isset($theme->Parent ) ){
@@ -242,11 +253,13 @@ class SendPress_Public_View {
     			
 
     	}
+    	$this->startup();
 
 	}
+	function startup(){}
 
 	function page_start(){
-
+		
 		$try_theme = SendPress_Option::use_theme_style();
 		if($try_theme){
 			get_header();

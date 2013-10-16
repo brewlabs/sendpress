@@ -585,14 +585,14 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
-	static function add_subscriber_event( $sid, $rid, $lid, $ip , $device_type, $device, $type='confirm' ){
+	static function add_subscriber_event( $sid, $rid, $uid, $ip , $device_type, $device, $type='confirm' ){
 		global $wpdb;
 
 		$event_data = array(
 			'eventdate'=>date('Y-m-d H:i:s'),
 			'subscriberID' => $sid,
 			'reportID' => $rid,
-			'urlID'=>$lid,
+			'urlID'=>$uid,
 			'ip'=>$ip,
 			'devicetype'=> $device_type,
 			'device'=> $device,

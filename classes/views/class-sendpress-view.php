@@ -32,7 +32,7 @@ class SendPress_View {
 			return;
 		}
 		add_action('in_admin_footer',array('SendPress_View','footer'));
-
+		
 	}
 	
 	static function footer(){ 

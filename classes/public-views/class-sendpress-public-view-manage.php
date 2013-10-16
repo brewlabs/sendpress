@@ -8,7 +8,30 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Public_View_Manage extends SendPress_Public_View {
 	
+	function startup(){
+		
+	}
+
 	function prerender(){
+		$info = $this->data();
+		if ( isset($info->action) && $info->action == 'unsubscribe' ) {
+		//$sid, $rid, $lid
+		SendPress_Data::unsubscribe_from_list( $info->id , $info->report, $info->listID  );
+
+			$link_data = array(
+				"id"=>$info->id,
+				"report"=>$info->report,
+				"urlID"=> '0',
+				"view"=>"manage",
+				"listID"=>$info->listID,
+				"action"=>""
+			);
+			$code = SendPress_Data::encrypt( $link_data );
+			$link =  SendPress_Manager::public_url($code);
+			$this->redirect(  $link ); 
+			exit;
+
+		}	
 		add_action('sendpress_public_view_scripts', array(&$this,'scripts'));		
 	}
 
@@ -46,6 +69,7 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 
 	function html() {
 		$info = $this->data();
+
 
 		if(!isset($info->id)){
 			$info = NEW stdClass();
@@ -86,11 +110,7 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 		echo '</h2>';
 		echo "</div>";
 		
-	if ( isset($info->action) && $info->action == 'unsubscribe' ) {
-		//$sid, $rid, $lid
-		SendPress_Data::unsubscribe_from_list( $info->id , $info->report, $info->listID  );
-	}
-
+	
 	$subscriber = SendPress_Data::get_subscriber( $info->id );
 
 	if($subscriber == false){

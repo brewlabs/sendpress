@@ -50,7 +50,7 @@ class SendPress_View_Queue extends SendPress_View {
 
 	function html($sp) {
 
-		
+		SendPress_Error::log('Show message and function where it is found');
 		 SendPress_Tracking::event('Queue Tab');
 	if(isset($_GET['cron'])){
 		$sp->fetch_mail_from_queue();
