@@ -1,10 +1,10 @@
 === SendPress: Email Marketing and Newsletters ===
 Plugin URI: http://sendpress.com
 Contributors: brewlabs
-Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid,
+Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.4
 Tested up to: 3.6.1
-Stable tag: 0.9.5.1
+Stable tag: 0.9.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,10 +24,9 @@ Features of the plugin include:
 
 * Simple editor. With an html-free experience
 * Easy to use theme styler with ability to create a default style
-* Stat tracking for each email: clicks, opens and unsubscribes. Bounces and report details will be available as [add-ons](http://sendpress.com/) soon.
+* Stat tracking for each email: clicks, opens and unsubscribes. Bounce handling and report details with [SendPress Pro](http://sendpress.com/).
 * Add a subscription form as a sidebar widget or in your pages
-* Send with your web host or Gmail with more to come.
-* Extensible with many [add-ons](http://sendpress.com/). Coming Soon.
+* Send with your web host or Gmail for free (Mandrill, Sendgrid, Amazon SES and more with PRO).
 * Developer friendly with dozens of actions and filters
 
 More information at [SendPress.com](http://sendpress.com/).
@@ -101,6 +100,14 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 0.9.5.2 - 2013.10.16 =
+* Improved CSV import for different column formats
+* Auto Cron now more stable
+* Unsubscribe link redirects to manage page
+* New Error Loggin Class
+* Added new indexes to Custom Tables
+* WebHook for Bounce Handling Event- requires Pro
 
 = 0.9.5.1 - 2013.10.7 =
 * CSV Import
@@ -301,6 +308,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.5.2 =
+Better sending and import updates
 
 = 0.9.5.1 =
 CSV Import and cron fixes

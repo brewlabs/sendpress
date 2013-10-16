@@ -108,16 +108,15 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 </div>
 -->
 <div class="changelog">
-	<h3>Smoother Experience</h3>
+	<h3>CSV Import</h3>
 
 	<div class="feature-section images-stagger-right">
-		<img alt="" src="<?php echo SENDPRESS_URL;?>/img/autocron.png" class="image-30">
-		<h4>Free! SendPress Pro AutoCron</h4>
-		<p>At least once every hour we visit your site, just like a "cron" job.
-There's no setup involved and it is FREE for all SendPress users.</p>
+		<img alt="" src="<?php echo SENDPRESS_URL;?>/img/import.png" class="image-30">
+		<h4>Import CSV files from any other list</h4>
+		<p>The new import function makes it easy to bring in lists from MailChimp, Constant Contact, Etc.</p>
 
 		<h4>Better Queue</h4>
-		<p>Along with the new AutoCron feature we have improved sending speed and how SendPress manages your queue.</p>
+		<p>Auto Cron updated for smoother sending. We can easily help you send your emails reliably.</p>
 	</div>
 </div>
 
@@ -127,15 +126,15 @@ There's no setup involved and it is FREE for all SendPress users.</p>
 	<div class="feature-section col three-col">
 		<div>
 			<h4>Improved Sending</h4>
-			<p>Updates to the way PHPMailer was being used to help speed up sending in some environments.</p>
+			<p>Better management of background sending to prevent timeouts.</p>
 		</div>
 		<div>
-			<h4>Template Fix</h4>
-			<p>Updated template to allow for custom fields in links.</p>
+			<h4>Subscriber Search</h4>
+			<p>Easily find subscribers by email, name or status.</p>
 		</div>
 		<div class="last-feature">
-			<h4>Database Fix</h4>
-			<p>Patched tables so all datetime fields have a default value.</p>
+			<h4>Pro Bounce handling for Mandrill</h4>
+			<p>Get the latest version of SendPress Pro to have your bounces automatically marked.</p>
 	
 		</div>
 	</div>
