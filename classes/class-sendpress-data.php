@@ -407,16 +407,24 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return get_post( $id  );
 	}
 
-	static function get_lists(){
-		 $args = array(
-            'post_type' => 'sendpress_list',
-            'post_status' => array('publish','draft')
-            );
-            $query = new WP_Query( $args );
-            return $query;
+
+
+	function get_lists($args = array(), $use_wpquery = true){
+
+		$args = apply_filters('sendpress_get_lists',array_merge($args, array(
+			'numberposts'     => -1,
+	    	'offset'          => 0,
+	    	'orderby'         => 'post_title',
+	    	'order'           => 'DESC'
+	    )));
+		//set the post type after filter so our function name always makes sense ;)
+	    $args['post_type'] = 'sendpress_list';
+
+		return ( $use_wpquery ) ? new WP_Query( $args ) : get_posts( $args );
 	}
 
-	/********************* END LIST static functionS ****************************/
+	/********************* END LIST FUNCTIONS ****************************/
+
 
 	/********************* SUBSCRIBER static functionS **************************/
 

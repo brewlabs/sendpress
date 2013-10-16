@@ -38,8 +38,10 @@ switch ( $this->_current_action ) {
         }
       
         $this->updateList($listid, array( 'name'=>$name, 'public'=>$public ) );
+
+        $page = apply_filters('sendpress_edit_list_redirect',$_GET['page']);
       
-        wp_redirect( '?page='.$_GET['page'] );
+        wp_redirect( '?page='.$page );
     
     break;
 

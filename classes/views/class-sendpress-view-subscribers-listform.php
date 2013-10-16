@@ -32,10 +32,12 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 		$list_id = $_GET['listID'];
 		$listinfo = get_post( $_GET['listID'] );
 	}
+
+	$backLink = apply_filters('sendpress_back_to_lists_link', 'Subscribers');
 	?>	
 		<div id="taskbar">
 		<div id="button-area" >
-			<a href="<?php echo SendPress_Admin::link('Subscribers'); ?>" class="btn btn-large" ><i class="icon-backward"></i> <?php _e('Back to Lists','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><?php _e('Save','sendpress'); ?></a>
+			<a href="<?php echo SendPress_Admin::link($backLink); ?>" class="btn btn-large" ><i class="icon-backward"></i> <?php _e('Back to Lists','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><?php _e('Save','sendpress'); ?></a>
 		</div>
 		<h2><?php _e('Form Settings for List ','sendpress'); echo ':' . $listinfo->post_title; ?></h2>
 		</div>

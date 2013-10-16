@@ -1,113 +1,105 @@
 ;(function ( $, window, document, undefined ) {
 
 
-$(document).ready(function($) {
-	var $signups = $('.sendpress-signup');
-    
-    $signups.each(function(){
-        $form = $(this),
-        $error = $form.find('#error'),
-        $thanks = $form.find('#thanks');
-
-        $error.hide();
-        $thanks.hide();
-    });
-
-	$signups.submit(function(e){
-        e.preventDefault();
-
-        var signup = {},
+    $(document).ready(function($) {
+    	var $signups = $('.sendpress-signup');
+        
+        $signups.each(function(){
             $form = $(this),
             $error = $form.find('#error'),
-            $thanks = $form.find('#thanks'),
-            $formwrap = $form.find('#form-wrap'),
-            $submit = $form.find('#submit'),
-            
-            submit_ok = true,
-            emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-         $error.hide();
+            $thanks = $form.find('#thanks');
 
-        signup['first'] = $form.find('.sp_firstname').val();
-        signup['last'] = $form.find('.sp_lastname').val();
-        signup['email'] = $form.find('.sp_email').val();
-        signup['listid'] = "";//$form.find('.sp_list').val();
+            $error.hide();
+            $thanks.hide();
+        });
 
-        $form.find("input:checkbox.sp_list:checked").each(function()
-{
-    signup['listid'] += $(this).val() +",";
-});
-        if(signup['listid'] === ""){
-            signup['listid'] = $form.find('.sp_list').val();
-        }
+    	$signups.submit(function(e){
+            e.preventDefault();
 
+            var signup = {},
+                $form = $(this),
+                $error = $form.find('#error'),
+                $thanks = $form.find('#thanks'),
+                $formwrap = $form.find('#form-wrap'),
+                $submit = $form.find('#submit'),
+                
+                submit_ok = true,
+                emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+             $error.hide();
 
-        signup['action'] = 'sendpress_subscribe_to_list';
+            signup['first'] = $form.find('.sp_firstname').val();
+            signup['last'] = $form.find('.sp_lastname').val();
+            signup['email'] = $form.find('.sp_email').val();
+            signup['listid'] = "";//$form.find('.sp_list').val();
 
-        if( signup.email.length === 0 ){
-            $error.show();
-            $error.html('<div class="item">*'+sendpress.missingemail+'.</div>');
-            submit_ok = false;
-        }else if(!emailReg.test(signup.email)) {
-            $error.show();
-            $error.html('<div class="item">'+sendpress.invalidemail+'.</div>');
-            submit_ok = false;
-        }
-
-        if(submit_ok){
-            $submit.attr("disabled", "disabled");
-            jQuery.post(sendpress.ajaxurl, signup, function(response){
-            
-                try {
-                    response = JSON.parse(response);
-                } catch (err) {
-                    // Invalid JSON.
-                    $submit.removeAttr("disabled");
-                    if(!jQuery.trim(response).length) {
-                        response = { error: 'Server returned empty response during charge attempt'};
-                    } else {
-                        response = {error: 'Server returned invalid response:<br /><br />' + response};
-                    }
-                }
-
-                if(response['success']){
-                    $error.hide();
-                    $formwrap.hide();
-                    $thanks.show();
-                }else{
-                    //possibly display an error here
-                }
+            $form.find("input:checkbox.sp_list:checked").each(function(){
+                signup['listid'] += $(this).val() +",";
             });
+            if(signup['listid'] === ""){
+                signup['listid'] = $form.find('.sp_list').val();
+            }
 
-        }
+            signup['action'] = 'sendpress_subscribe_to_list';
 
-        return false;
-        
+            if( signup.email.length === 0 ){
+                $error.show();
+                $error.html('<div class="item">*'+sendpress.missingemail+'.</div>');
+                submit_ok = false;
+            }else if(!emailReg.test(signup.email)) {
+                $error.show();
+                $error.html('<div class="item">'+sendpress.invalidemail+'.</div>');
+                submit_ok = false;
+            }
+
+            if(submit_ok){
+                $submit.attr("disabled", "disabled");
+                jQuery.post(sendpress.ajaxurl, signup, function(response){
+                
+                    try {
+                        response = JSON.parse(response);
+                    } catch (err) {
+                        // Invalid JSON.
+                        $submit.removeAttr("disabled");
+                        if(!jQuery.trim(response).length) {
+                            response = { error: 'Server returned empty response during charge attempt'};
+                        } else {
+                            response = {error: 'Server returned invalid response:<br /><br />' + response};
+                        }
+                    }
+
+                    if(response['success']){
+                        $error.hide();
+                        $formwrap.hide();
+                        $thanks.show();
+                    }else{
+                        //possibly display an error here
+                    }
+                });
+
+            }
+
+            return false;
+            
+        });
+
+    	$('.sendpress-signup input').bind('focus blur',function(e){
+    		var $obj = $(this),
+    			$value = $obj.val(),
+    			$orig = $obj.attr('orig');
+
+    		if(e.type === "focus"){
+    			if($value === $orig){
+    				$obj.val('');
+    			}
+    		}else{
+    			if($value === ''){
+    				$obj.val($orig);
+    			}
+    		}
+
+    	});
+
     });
-
-	$('.sendpress-signup input').bind('focus blur',function(e){
-		var $obj = $(this),
-			$value = $obj.val(),
-			$orig = $obj.attr('orig');
-
-		if(e.type === "focus"){
-			if($value === $orig){
-				$obj.val('');
-			}
-		}else{
-			if($value === ''){
-				$obj.val($orig);
-			}
-		}
-
-		
-
-	});
-
-	
-
-});
-
-
 
 }).call( window.sendpress=window.sendpress || {}, jQuery, window, document );
 

@@ -93,6 +93,7 @@ class SendPress_Lists_Table extends WP_List_Table {
                     <a class="btn " href="'. SendPress_Admin::link('Subscribers_Listform', array('listID' => $item->ID)) .'"><i class="icon-list"></i> Form</a>
                     <a class="btn " href="?page='.$_REQUEST['page'].'&view=listedit&listID='. $item->ID .'"><i class="icon-cog"></i></a>
                     </div>';
+
             default:
                 return print_r($item,true); //Show the whole array for troubleshooting purposes
         }
@@ -123,30 +124,30 @@ class SendPress_Lists_Table extends WP_List_Table {
                 /*$1%s*/ 'sp-subscribers',
                 /*$2%s*/ 'listedit', 
                 /*$3%s*/ $item->ID
-            ),
-            // 'quick-edit' => sprintf('<a href="%s" class="edit-list" listid="%s" name="%s" public="%s">Quick Edit</a>', 
-            //     /*$1%s*/ SENDPRESS_URL.'inc/helpers/edit-list.php',
-            //     /*$2%s*/ $item->listID, 
-            //     /*$3%s*/ $item->name,
-            //     /*$4%s*/ $item->public
-            // ),
-            //'delete'    => sprintf('<a href="?page=%s&action=%s&listID=%s">Delete</a>',$_REQUEST['page'],'delete-list',$item->listID),
+            )
         );
+
         if(get_post_meta($item->ID,'public',true))  {
             $p = 'public';
         } else {
             $p = 'private';
         }
 
-     
+        $title = apply_filters('sendpress_list_table_title_actions',array(
+            'title' =>$item->post_title,
+            'id' => ' <span style="color:silver">( id:'.$item->ID .' - ' .$p.' )</span>',
+            'actions' => $this->row_actions($actions)
+        ));
         
+        return implode($title);
+
         //Return the title contents
-        return sprintf('%1$s <span style="color:silver">( id:%2$s )</span>%3$s',
-             $item->post_title,
-             $item->ID .' - ' .$p,
+        // return sprintf('%1$s <span style="color:silver">( id:%2$s )</span>%3$s',
+        //      $item->post_title,
+        //      $item->ID .' - ' .$p,
     
-             $this->row_actions($actions)
-        );
+             
+        // );
         
     }
     
@@ -237,9 +238,11 @@ class SendPress_Lists_Table extends WP_List_Table {
      * @return array An associative array containing all the bulk actions: 'slugs'=>'Visible Titles'
      **************************************************************************/
     function get_bulk_actions() {
-        $actions = array(
+        $actions = apply_filters('sendpress_list_table_bulk_actions',array(
             'delete-lists-bulk'    => 'Delete'
-        );
+        ));
+
+
         return $actions;
     }
     
@@ -293,11 +296,15 @@ class SendPress_Lists_Table extends WP_List_Table {
              $sortable = $this->get_sortable_columns();
              $this->_column_headers = array($columns, $hidden, $sortable);
         /* -- Fetch the items -- */
-            $args = array(
-            'post_type' => 'sendpress_list',
-            'post_status' => array('publish','draft')
-            );
-            $query = new WP_Query( $args );
+            // $args = array(
+            // 'post_type' => 'sendpress_list',
+            // 'post_status' => array('publish','draft')
+            // );
+
+            //$args = apply_filters('sendpress_list_table_query',array('post_type' => 'sendpress_list','post_status' => array('publish','draft')));
+
+            $query = SendPress_Data::get_lists(array('post_status' => array('publish','draft')));
+            //$query = new WP_Query( $args );
             /*
             echo '<pre>';
             print_r($query);
@@ -370,8 +377,11 @@ class SendPress_Lists_Table extends WP_List_Table {
 
             }
             
+            //$args = apply_filters('sendpress_list_table_query',$args);
 
-            $query2 = new WP_Query( $args );
+            $query2 = SendPress_Data::get_lists($args);
+
+            // $query2 = new WP_Query( $args );
 
             $this->items = $query2->posts;
         }

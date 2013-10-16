@@ -13,6 +13,7 @@ class SendPress_View_Subscribers extends SendPress_View {
 
 	function admin_init(){
 		add_action('load-sendpress_page_sp-subscribers',array($this,'screen_options'));
+		add_action('sendpress-subscribers-sub-menu', array('SendPress_View_Subscribers','default_header'));
 	}
 
 	function sub_menu($sp){
@@ -24,7 +25,8 @@ class SendPress_View_Subscribers extends SendPress_View {
 					<li <?php if(!isset($_GET['view']) ){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Subscribers'); ?>"><i class="icon-list "></i> <?php _e('Lists','sendpress'); ?></a>
 				  	</li>
-					<li <?php if(isset($_GET['view']) && !isset($_GET['listID'])){ ?>class="active"<?php } ?> >
+				  	<?php do_action('sendpress-add-submenu-item',$sp);?>
+					<li <?php if(isset($_GET['view']) && $_GET['view'] === 'all'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Subscribers_All'); ?>"><i class="icon-user "></i> <?php _e('All Subscribers','sendpress'); ?></a>
 				  	</li>
 				</ul>
@@ -45,6 +47,15 @@ class SendPress_View_Subscribers extends SendPress_View {
 		);
 		add_screen_option( 'per_page', $args );
 	}
+
+	function default_header(){
+	?>
+		<div id="button-area">  
+			<a class="btn btn-primary btn-large" href="?page=<?php echo $_REQUEST['page']; ?>&view=listcreate"><?php _e('Create List','sendpress'); ?></a>
+		</div>
+		<h2><?php _e('Subscribers','sendpress'); ?></h2>
+	<?php
+	}
 	
 	function html($sp) {
 	 SendPress_Tracking::event('Lists Tab');
@@ -54,14 +65,8 @@ class SendPress_View_Subscribers extends SendPress_View {
 		$testListTable->prepare_items();
 
 		?>
-		<div id="taskbar" class="lists-dashboard rounded group"> 
-			<div id="button-area">  
-				<a class="btn btn-primary btn-large" href="?page=<?php echo $_REQUEST['page']; ?>&view=listcreate"><?php _e('Create List','sendpress'); ?></a>
-			</div>
-			<h2><?php _e('Subscribers','sendpress'); ?></h2>
-		</div>
 		<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
-		<form id="movies-filter" method="get">
+		<form id="sendpress-lists" method="get">
 			<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 		    <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
 		    <!-- Now we can render the completed list table -->

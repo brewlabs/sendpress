@@ -131,47 +131,47 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 	echo '</div>';
 	$c = ' hide ';
 if ( !empty($_POST) && check_admin_referer($this->_nonce_value) ){
-$args=array(
-  'meta_key'=>'public',
-  'meta_value'=> 1,
-  'post_type' => 'sendpress_list',
-  'post_status' => 'publish',
-  'posts_per_page' => -1,
-  'ignore_sticky_posts'=> 1
-);
-$my_query = new WP_Query($args);
-if( $my_query->have_posts() ) {
+	$args=array(
+	  'meta_key'=>'public',
+	  'meta_value'=> 1,
+	  'post_type' => 'sendpress_list',
+	  'post_status' => 'publish',
+	  'posts_per_page' => -1,
+	  'ignore_sticky_posts'=> 1
+	);
+	$my_query = new WP_Query($args);
+	if( $my_query->have_posts() ) {
 
-  while ($my_query->have_posts()) : $my_query->the_post(); 	
+	  while ($my_query->have_posts()) : $my_query->the_post(); 	
 
-	
+		
 
-	$list_id = $my_query->post->ID;
+		$list_id = $my_query->post->ID;
 
-	if(isset($_POST['subscribe_'.$list_id ])){
-				$list_status = SendPress_Data::get_subscriber_list_status( $list_id , $info->id );
-				if(isset($list_status->status)){
-					SendPress_Data::update_subscriber_status( $list_id , $info->id , $_POST[ 'subscribe_'.$list_id ] );
-				} elseif( $_POST['subscribe_'. $list_id ] == '2' ){
-					SendPress_Data::update_subscriber_status( $list_id , $info->id, $_POST[ 'subscribe_'.$list_id ] );
-				}
-			} 
+		if(isset($_POST['subscribe_'.$list_id ])){
+					$list_status = SendPress_Data::get_subscriber_list_status( $list_id , $info->id );
+					if(isset($list_status->status)){
+						SendPress_Data::update_subscriber_status( $list_id , $info->id , $_POST[ 'subscribe_'.$list_id ] );
+					} elseif( $_POST['subscribe_'. $list_id ] == '2' ){
+						SendPress_Data::update_subscriber_status( $list_id , $info->id, $_POST[ 'subscribe_'.$list_id ] );
+					}
+				} 
 
-			$c = '';
-	/*
-	$lists = $this->getDetail($this->lists_table(),'public',1);
-	if ( !empty($_POST) && check_admin_referer($this->_nonce_value) ){
-		$lists_susbscriber = $this->getSubscriberLists( $subscriber[0]->subscriberID  );
-		foreach ($lists as $list_loop) {
-			
+				$c = '';
+		/*
+		$lists = $this->getDetail($this->lists_table(),'public',1);
+		if ( !empty($_POST) && check_admin_referer($this->_nonce_value) ){
+			$lists_susbscriber = $this->getSubscriberLists( $subscriber[0]->subscriberID  );
+			foreach ($lists as $list_loop) {
+				
+				
+			}
 			
 		}
+		*/
 		
+	  endwhile;
 	}
-	*/
-	
-  endwhile;
-}
 }
 wp_reset_query();
 	?>
@@ -207,29 +207,34 @@ wp_reset_query();
 		<th class="hidden-phone">Other Info</th>
 	</tr>
 <?php
-	$args=array(
-  'meta_key'=>'public',
-  'meta_value'=> 1,
-  'post_type' => 'sendpress_list',
-  'post_status' => 'publish',
-  'posts_per_page' => -1,
-  'ignore_sticky_posts'=> 1
+
+$lists = SendPress_Data::get_lists(
+	apply_filters( 'sendpress_modify_manage_lists', 
+		array('meta_query' => array(
+			array(
+				'key' => 'public',
+				'value' => true
+				)
+			)
+		) 
+	),
+	false
 );
-$my_query = new WP_Query($args);
-if( $my_query->have_posts() ) {
- 
-  while ($my_query->have_posts()) : $my_query->the_post(); 
-  $subscriber = SendPress_Data::get_subscriber_list_status($my_query->post->ID, $info->id);
-  ?>
+
+foreach($lists as $list){
+	//print_r($list);
+	$subscriber = SendPress_Data::get_subscriber_list_status($list->ID, $info->id);
+	?>
   	<tr>
   	<?php
+
   	$checked = (isset($subscriber->statusid) && $subscriber->statusid == 2) ? 'checked' : '';
 		echo '<td><input type="radio" class="xbutton" data-list="'.$my_query->post->ID.'" name="subscribe_'.$my_query->post->ID.'" '.$checked.' value="2"></td>';
 		$checked = (empty($subscriber->statusid) || $subscriber->statusid == 3) ? 'checked' : '';
 		echo '<td><input type="radio" class="xbutton" data-list="'.$my_query->post->ID.'" name="subscribe_'.$my_query->post->ID.'" '.$checked.' value="3"></td>';
   	?>
-  	<td><?php the_title(); ?></td>
-  	<td class="hidden-phone"><span id="list_<?php echo $my_query->post->ID;?>"><?php 
+  	<td><?php echo $list->post_name; ?></td>
+  	<td class="hidden-phone"><span id="list_<?php echo $list->ID;?>"><?php 
   	if(isset($subscriber->updated)) { echo $subscriber->updated; } else {
 		 	_e('Never Subscribed','sendpress');
 		 }
@@ -240,37 +245,16 @@ if( $my_query->have_posts() ) {
 	} ?></td>
   	<tr>	
     <?php
-  endwhile;
 }
-wp_reset_query();
-
-
-/*
-
-	foreach ($lists as $list) {
-		echo "<tr>";
-		$info = $this->getSubscriberListsStatus($list->listID, $subscriber[0]->subscriberID);
-		$checked = (isset($info->status) && $info->status == 2) ? 'checked' : '';
-		echo '<td><input type="radio" name="subscribe_'.$list->listID.'" '.$checked.' value="2"></td>';
-		$checked = (empty($info->status) || $info->status == 3) ? 'checked' : '';
-		echo '<td><input type="radio" name="subscribe_'.$list->listID.'" '.$checked.' value="3"></td>';
-		echo '<td>'. $list->name. '</td>';
-		echo '<td>';
-		 if(isset($info->updated)) { echo $info->updated; } else {
-		 	echo 'Never Subscribed';
-		 }
-
-		 echo '</td>';
-		echo "</tr>";
-	}
-
-*/
 	?>
 
 </table>
 <br>
+<?php do_action( 'sendpress_manage_notifications',$info);?>
 <input type="submit" class="btn btn-primary" value="<?php _e('Save My Settings','sendpress'); ?>"/>
 </form>
+
+
 	<br>
 	<a  href="<?php echo site_url(); ?>"><i class="icon-hand-left"></i> <?php _e('Return to','sendpress'); ?> <?php echo $name; ?></a>
 

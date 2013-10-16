@@ -17,7 +17,7 @@ class SendPress_Posts{
 	/**
 	 * Create a Duplicate post
 	 */
-	static function copy($post, $post_title ='',$post_name='', $post_type= '') {
+	static function copy($post, $post_title ='',$post_name='', $post_type= 'sp_report') {
 
 		// We don't want to clone revisions
 		if ($post->post_type == 'revision') return;
@@ -194,7 +194,25 @@ class SendPress_Posts{
 		) );
 
 	}
+	// Added 'exclude_from_search'=>true
+	function jobs_post_type(){
+		register_post_type( 'sendpress_jobs', array(
+			'labels' => array(
+				'name' => __( 'SendPress Jobs', 'sendpress' ),
+			),
+			'public' => false,
+			'show_ui' => false,
+			'capability_type' => 'post',
+			'hierarchical' => false,
+			'rewrite' => false,
+			'supports' => array( 'title', 'editor' ),
+			'query_var' => false,
+			'can_export' => false,
+			'show_in_nav_menus' => false,
+			'exclude_from_search'=>'true',
+		) );
 
+	}
 
 	/*
 	Unused for now

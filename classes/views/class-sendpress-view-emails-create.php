@@ -46,11 +46,10 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 	}
 	
 	function html($sp) {
-			do_action('sendpress_event','Create Email');
+		do_action('sendpress_event','Create Email');
 		$post = get_default_post_to_edit( $sp->_email_post_type, true );
 		$post_ID = $post->ID;
 	
-
 		global $current_user;
 
 		wp_enqueue_script('post');
