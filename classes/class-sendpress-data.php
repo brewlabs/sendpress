@@ -112,7 +112,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$table = self::queue_table();
 		$hour_ago = strtotime('-1 hour');
 		$hour = date('Y-m-d H:i:s', $hour_ago);
-		$query = "SELECT listID FROM wp_sendpress_queue where success = 0 group by listID ";
+		$query = "SELECT listID FROM $table where success = 0 group by listID ";
 		$id=$wpdb->get_results( $query );
 		$listdata = array();
 		foreach ($id as $list) {
