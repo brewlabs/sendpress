@@ -154,22 +154,25 @@ class SendPress_Notifications_Manager {
 
 		$options = SendPress_Option::get('notification_options');
 
-		$subscribed = '';
-		$unsubscribed = '';
+		if( $options['notifications-enable'] ){
+			$subscribed = '';
+			$unsubscribed = '';
 
-		if( intval($options['subscribed']) === 0 ){
-			//build instant subscribed
-			$subscribed = SendPress_Notifications_Manager::build_subscribed_notification($data);
+			if( intval($options['subscribed']) === 0 ){
+				//build instant subscribed
+				$subscribed = SendPress_Notifications_Manager::build_subscribed_notification($data);
+			}
+
+			if( intval($options['unsubscribed']) === 0 ){
+				//build instant subscribed
+				$unsubscribed = SendPress_Notifications_Manager::build_unsibscribed_notification($data);
+			}
+
+			$body = $text = $subscribed.$unsubscribed;
+
+			SendPress_Notifications_Manager::send_notification($body,$text);
 		}
-
-		if( intval($options['unsubscribed']) === 0 ){
-			//build instant subscribed
-			$unsubscribed = SendPress_Notifications_Manager::build_unsibscribed_notification($data);
-		}
-
-		$body = $text = $subscribed.$unsubscribed;
-
-		SendPress_Notifications_Manager::send_notification($body,$text);
+		
 	}
 
 	function send_notification($body,$text){
@@ -214,10 +217,12 @@ class SendPress_Notifications_Manager {
 
 		$options = SendPress_Option::get('notification_options');
 
-		if ( ! wp_next_scheduled( 'sendpress_notification_daily' ) && ($options['subscribed'] > 0 || $options['unsubscribed'] > 0) ) {
-			wp_schedule_event( time(), 'daily', 'sendpress_notification_daily' );
+		if( is_array($options) ){
+			if ( ! wp_next_scheduled( 'sendpress_notification_daily' ) && ($options['subscribed'] > 0 || $options['unsubscribed'] > 0) ) {
+				wp_schedule_event( time(), 'daily', 'sendpress_notification_daily' );
+			}
 		}
-
+		
 		add_action( 'sendpress_notification_daily', array( $this, 'maybe_send_notification' ) );
 	}
 

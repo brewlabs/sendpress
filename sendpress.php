@@ -462,6 +462,8 @@ Push
 			SendPress_Posts::report_post_type( $this->_report_post_type );
 			SendPress_Posts::template_post_type();
 			SendPress_Posts::list_post_type();
+
+			do_action('sendpress_custom_post_types_created',$this);
 		}
 	
 		
@@ -1089,11 +1091,31 @@ Push
 			SendPress_Data::update_tables_0947();
 		}
 
+		if(version_compare( $current_version, '0.9.6', '<' )){
 
+			$options = SendPress_Option::get('notification_options');
 
+			$new_options = array(
+				'email' => '',
+				'notifications-enable' => false,
+				'subscribed' => 1,
+				'unsubscribed' => 1,
+				'send-to-admins' => false,
+				'enable-hipchat' => false,
+				'hipchat-api' => '',
+				'hipchat-room' => '',
+				'post-notifications-enable' => false,
+				'post-notification-subject' => ''
+			);
 
+			if($options === false || $options === ''){
+		        SendPress_Option::set('notification_options', $new_options );
+			} else if( is_array($options) ){
+				$result = array_merge($options, $new_options);
+				SendPress_Option::set('notification_options', $result );
+			}
 
-
+		}
 
 		SendPress_Option::set( 'version' , SENDPRESS_VERSION );
 	}	
