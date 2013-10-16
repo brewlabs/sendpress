@@ -207,7 +207,7 @@ class SendPress_Manager {
 			$attempts++;
 			SendPress_Data::queue_email_process( $email->id );
 			$result = SendPress_Manager::send_email_from_queue( $email );
-			$email_count++;
+			
 			
 			if ($result) {
 				$wpdb->update( $queue_table , array('success'=>1,'inprocess'=>3 ) , array('id'=> $email->id ));
