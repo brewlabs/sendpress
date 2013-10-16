@@ -299,25 +299,25 @@ class SendPress_Manager {
 	   	$subject = $message->subject();
 	   	$to = $email->to_email;
 	   	$text = $message->text();
-	   	return SendPress_Manager::send($to , $subject, $body, $text);
+	   	return SendPress_Manager::send($to , $subject, $body, $text, false, $email->subscriberID ,$email->listID, $email->emailID );
 	   
 	}
 
-	static function send($to , $subject, $body, $text, $test = false){
+	static function send($to , $subject, $body, $text, $test = false, $sid=0 ,$list_id = 0, $report_id = 0 ){
 
 		global $sendpress_sender_factory;
 	   	$senders = $sendpress_sender_factory->get_all_senders();
    		$method = SendPress_Option::get( 'sendmethod' );
 
    		if( array_key_exists( $method , $senders) && is_a( $senders[$method] , 'SendPress_Sender') ){
-   			return $senders[$method]->send_email($to, $subject, $body, $text, $test );
+   			return $senders[$method]->send_email( $to, $subject, $body, $text, $test, $sid , $list_id, $report_id );
    		}
 
-	   	return  SendPress_Manager::old_send_email($to, $subject, $body, $text, $test );
+	   	return  SendPress_Manager::old_send_email($to, $subject, $body, $text, $test ,$sid , $list_id, $report_id );
 
 	}
 
-	static function old_send_email($to, $subject, $html, $text, $istest = false ){
+	static function old_send_email($to, $subject, $html, $text, $istest = false , $sid ,$list_id, $report_id ){
 		global $phpmailer, $wpdb;
 		// (Re)create it, if it's gone missing
 		if ( !is_object( $phpmailer ) || !is_a( $phpmailer, 'PHPMailer' ) ) {

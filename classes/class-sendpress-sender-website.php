@@ -44,7 +44,7 @@ class SendPress_Sender_Website extends SendPress_Sender {
 
 }	
 
-	function send_email($to, $subject, $html, $text, $istest = false ){
+	function send_email($to, $subject, $html, $text, $istest = false, $sid , $list_id, $report_id ){
 		global $phpmailer, $wpdb;
 
 
@@ -127,6 +127,9 @@ class SendPress_Sender_Website extends SendPress_Sender {
 		$phpmailer->AddCustomHeader(sprintf( 'X-SMTPAPI: %s', $hdr->asJSON() ) );
 		$phpmailer->AddCustomHeader('X-SP-METHOD: website');
 		// Set SMTPDebug to 2 will collect dialogue between us and the mail server
+		$phpmailer->AddCustomHeader('X-SP-LIST: ' . $list_id );
+		$phpmailer->AddCustomHeader('X-SP-REPORT: ' . $report_id );
+		$phpmailer->AddCustomHeader('X-SP-SUBSCRIBER: '. $sid );
 		if($istest == true){
 			$phpmailer->SMTPDebug = 2;
 		

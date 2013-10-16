@@ -677,13 +677,23 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if($id !== false){
 			$lists = SendPress_Data::get_lists_for_subscriber($id);
 			foreach ($lists as $list) {
-				if($list->status == 2){
+				if( $list->status == 2 ) {
+					$report_id = SendPress_Data::get_last_send( $id );
 					SendPress_Data::update_subscriber_status($list->listID, $id, 4 , false);
-					SendPress_Data::add_subscriber_event( $id, 0, $list->listID,0, 0, 0, 'bounce');
+					//( $sid, $rid, $uid, $ip , $device_type, $device, $type='confirm' )
+					SendPress_Data::add_subscriber_event( $id,$report_id,0 ,0, '', '', 'bounce');
 				}
 			}
 
 		}
+
+	}
+
+	static function get_last_send( $sid ){
+		global $wpdb;
+		$table = SendPress_Data::subscriber_event_table();//SELECT * FROM table_name WHERE MONTH(date_column) = 4;
+		$result = $wpdb->get_var( $wpdb->prepare("SELECT reportID FROM $table WHERE type = 'send' AND subscriberID = %d ORDER BY eventdate DESC",$sid));
+		return $result;
 
 	}
 

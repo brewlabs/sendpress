@@ -33,7 +33,7 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 	}
 
 
-	function send_email($to, $subject, $html, $text, $istest = false ){
+	function send_email($to, $subject, $html, $text, $istest = false ,$sid , $list_id, $report_id ){
 		global $phpmailer, $wpdb;
 
 		// (Re)create it, if it's gone missing
@@ -125,6 +125,9 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 		$hdr->addFilterSetting('dkim', 'domain', SendPress_Manager::get_domain_from_email($from_email) );
 		$phpmailer->AddCustomHeader(sprintf( 'X-SMTPAPI: %s', $hdr->asJSON() ) );
 		$phpmailer->AddCustomHeader('X-SP-METHOD: Gmail');
+		$phpmailer->AddCustomHeader('X-SP-LIST: ' . $list_id );
+		$phpmailer->AddCustomHeader('X-SP-REPORT: ' . $report_id );
+		$phpmailer->AddCustomHeader('X-SP-SUBSCRIBER: '. $sid );
 		$phpmailer->AddCustomHeader('List-Unsubscribe: <mailto:'.$from_email.'>');
 		
 		// Set SMTPDebug to 2 will collect dialogue between us and the mail server
