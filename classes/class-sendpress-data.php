@@ -630,7 +630,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$event_data = array(
 			'eventdate'=>date('Y-m-d H:i:s'),
 			'subscriberID' => $sid,
-			'listID'=>$lid,
+			//'listID'=>$lid,
 			'type'=>$event_type
 		);
 		
