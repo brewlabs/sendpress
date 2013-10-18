@@ -48,7 +48,7 @@ class SendPress_Notifications_Manager {
 		
 		if( isset($options['notifications-'.$event_data['type'].'-instant']) &&  $options['notifications-'.$event_data['type'].'-instant'] ){
 			//build the message and send it....
-			$list = SendPress_Data::get_list_details($event_data['urlID']);
+			$list = SendPress_Data::get_list_details($event_data['listID']);
 			$sub = SendPress_Data::get_subscriber($event_data['subscriberID']);
 			
 			$verbage = 'from';
