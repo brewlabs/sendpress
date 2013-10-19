@@ -105,7 +105,7 @@ switch ( $this->_current_action ) {
 
             $result = $this->addSubscriber( array('firstname'=> $fname ,'email'=> $email,'lastname'=>$lname ) );
 
-            $this->linkListSubscriber($listID, $result, $status);
+            SendPress_Data::update_subscriber_status($listID, $result, $status ,false);
 
         }
 
