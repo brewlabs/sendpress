@@ -31,6 +31,9 @@ class SendPress_Notifications_Manager {
 
 	function maybe_send_notification($type, $data){
 		$options = SendPress_Option::get('notification_options');
+		$subscribed = '';
+		$unsubscribed = '';
+
 		//based on the type, check the options and build an e-mail to notify the admin.
 		if( $type === $options['subscribed'] ){
 			$subscribed = SendPress_Notifications_Manager::build_subscribed_notification($data);
@@ -54,17 +57,6 @@ class SendPress_Notifications_Manager {
 	function build_subscribed_notification($data){
 		$subscribe_body = '';
 		$options = SendPress_Option::get('notification_options');
-
-		
-		if( isset($options['notifications-'.$event_data['type'].'-instant']) &&  $options['notifications-'.$event_data['type'].'-instant'] ){
-			//build the message and send it....
-			$list = SendPress_Data::get_list_details($event_data['listID']);
-			$sub = SendPress_Data::get_subscriber($event_data['subscriberID']);
-			
-			$verbage = 'from';
-			if( $event_data['type'] === 'subscribed' ){
-				$verbage = 'to';
-			}
 
 		//subscribed check
 		switch($options['subscribed']){
@@ -109,7 +101,7 @@ class SendPress_Notifications_Manager {
 				}
 				break;
 		}
-}
+
 		return $subscribe_body;
 	}
 
@@ -233,7 +225,7 @@ class SendPress_Notifications_Manager {
 			}
 		}
 		
-		//add_action( 'sendpress_notification_daily', array( $this, 'maybe_send_notification' ) );
+		add_action( 'sendpress_notification_daily', array( 'SendPress_Notifications_Manager', 'maybe_send_notification' ) );
 	}
 
 }
