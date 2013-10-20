@@ -14,7 +14,7 @@ Push
 		die;
 	}
 	global $blog_id;
-	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpres.com' );
+	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 	define( 'SENDPRESS_API_VERSION', 1 );
 	define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.2' );
 	define( 'SENDPRESS_VERSION', '0.9.6' );
