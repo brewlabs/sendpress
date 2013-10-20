@@ -593,13 +593,14 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
-	static function add_subscriber_event( $sid, $rid, $uid, $ip , $device_type, $device, $type='confirm' ){
+	static function add_subscriber_event( $sid, $rid, $lid=null, $uid=null, $ip=null, $device_type=null, $device=null, $type='confirm' ){
 		global $wpdb;
 
 		$event_data = array(
 			'eventdate'=>date('Y-m-d H:i:s'),
 			'subscriberID' => $sid,
 			'reportID' => $rid,
+			'listID'=>$lid,
 			'urlID'=>$uid,
 			'ip'=>$ip,
 			'devicetype'=> $device_type,
@@ -689,7 +690,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 					$report_id = SendPress_Data::get_last_send( $id );
 					SendPress_Data::update_subscriber_status($list->listID, $id, 4 , false);
 					//( $sid, $rid, $uid, $ip , $device_type, $device, $type='confirm' )
-					SendPress_Data::add_subscriber_event( $id,$report_id,0 ,0, '', '', 'bounce');
+					//( $sid, $rid, $lid=null, $uid=null, $ip=null, $device_type=null, $device=null, $type='confirm' )
+					SendPress_Data::add_subscriber_event( $id,$report_id,$list->listID,null ,null, null, null, 'bounce');
 				}
 			}
 

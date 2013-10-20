@@ -21,6 +21,7 @@ if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_
     `subscriberID` int(11) unsigned NOT NULL,
     `reportID` int(11) unsigned DEFAULT NULL,
     `urlID` int(11) unsigned DEFAULT NULL,
+    `listID` int(11) unsigned DEFAULT NULL,
     `eventdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
     `ip`  varchar(400) DEFAULT NULL,
     `devicetype`  varchar(50) DEFAULT NULL,
@@ -30,6 +31,7 @@ if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_
     KEY `subscriberID` (`subscriberID`),
     KEY `reportID` (`reportID`),
     KEY `urlID` (`urlID`),
+    KEY `listID` (`listID`),
     KEY `eventdate` (`eventdate`),
     KEY `type` (`type`)
   )"; 

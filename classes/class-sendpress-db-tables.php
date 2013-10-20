@@ -300,7 +300,6 @@ class SendPress_DB_Tables {
          $wpdb->query("ALTER IGNORE TABLE `". $ls ."` ADD UNIQUE INDEX `listsub` (`subscriberID`,`listID`)");
 
          $subscriber_queue = SendPress_DB_Tables::queue_table();
-         $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `to_email` (`to_email`)");
          $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `subscriberID` (`subscriberID`)");
          $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `listID` (`listID`)");
          $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `inprocess` (`inprocess`)");
@@ -311,6 +310,15 @@ class SendPress_DB_Tables {
 
         }
 
+        static function update_tables_0954(){
+         global $wpdb;
+         $table_to_update = SendPress_DB_Tables::subscriber_event_table();
+         if( $wpdb->get_var("SHOW COLUMNS FROM ". $table_to_update ." LIKE 'listID'") == false) {
+            $wpdb->query("ALTER TABLE ". $table_to_update ." ADD COLUMN `listID` int(11) DEFAULT NULL");
+            $wpdb->query("ALTER TABLE ". $table_to_update ." ADD UNIQUE KEY `listID` (`listID`)");
+            }
+
+        }
 
 
 }
