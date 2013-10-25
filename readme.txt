@@ -36,7 +36,7 @@ More information at [SendPress.com](http://sendpress.com/).
 
 Please check out our support site [http://sendpress.com/support/knowledgebase/](http://sendpress.com/support/) if you need help with anything.
 
-
+https://www.codeship.io/projects/797186c0-1fa4-0131-c737-22bb51795562/status
 
 == Installation ==
 
