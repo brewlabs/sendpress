@@ -1,44 +1,37 @@
-# Travis CI Configuration File
-
-# Tell Travis CI we're using PHP
+script: phpunit
+after_script: 
+- php vendor/bin/coveralls -v
+php: 
+- "5.3"
+- "5.4"
 language: php
-
-# Versions of PHP to test against
-php:
-    - "5.3"
-    - "5.4"
-#    - "5.5"
-
-# Specify versions of WordPress to test against
-# WP_VERSION = WordPress version number (use "master" for SVN trunk)
-# WP_MULTISITE = whether to test multisite (use either "0" or "1")
-env:
-    - WP_VERSION=master WP_MULTISITE=0
-    - WP_VERSION=3.6 WP_MULTISITE=0
-    - WP_VERSION=3.5.2 WP_MULTISITE=0
-    - WP_VERSION=master WP_MULTISITE=1
-    - WP_VERSION=3.6 WP_MULTISITE=1
-    - WP_VERSION=3.5.2 WP_MULTISITE=1
-
-before_script:
+notifications: 
+  hipchat: 
+    rooms: 
+      secure: VAdYhhXqaIdU+J4hca0fQydOHsWmtSbyupgOkvwT0akzslc5uGliodWkqkFuHCP+rGmeJIsoa/s9tj7YbmD7dlku7vva6d7KcX6W4jmHKlydBkEFzpO2N7w4ZGR501o428ZfLor/MVEKF/+FwRkMTT3RBDLNjcYOhFDGrvf2CyY=
+branches: 
+  except: 
+  - setup
+before_script: 
 - echo "extension = xdebug.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 - curl http://cs.sensiolabs.org/get/php-cs-fixer.phar -o php-cs-fixer.phar
 - curl -s http://getcomposer.org/installer | php
 - php composer.phar install --dev --no-interaction --prefer-source
-#Coveralls support
 - mkdir -p build/logs
 - mkdir -p build/cov
-
 - wget https://raw.github.com/tierra/wordpress-plugin-tests/setup/setup.sh
 - source setup.sh
-
-script: phpunit
-
-after_script:
-- php vendor/bin/coveralls -v 
-
-# wordpress-plugin-tests specific config
-# Tells Travis CI not to run unit tests against the setup branch
-branches:
-    except:
-        - setup
+env: 
+- WP_VERSION=master WP_MULTISITE=0
+- WP_VERSION=3.6 WP_MULTISITE=0
+- WP_VERSION=3.5.2 WP_MULTISITE=0
+- WP_VERSION=master WP_MULTISITE=1
+- WP_VERSION=3.6 WP_MULTISITE=1
+- WP_VERSION=3.5.2 WP_MULTISITE=1
+deploy: 
+  provider: s3
+  bucket: sendpress-downloads
+  access_key_id: AKIAJZQBYUA4XGE7UXVQ
+  secret_access_key: 
+    secure: VlwfXc/KTvvXiepnszfqC5oDB3OHWu4fzCC5Ah1Y8M9hQwiCDc0Tf1981fefeZlntcM4fbxU6Hhx2eTIpRGCi3CjUw9eQVKm5Zd0KfGKsnqBXsEXSX7AdHRZGJT6CQ5/6F9qX//1n2czWEpEjGYhm4CzhtyHK6ftyVDzW5aYDrE=
+  skip_cleanup: true
