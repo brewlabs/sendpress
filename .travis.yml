@@ -19,13 +19,22 @@ env:
     - WP_VERSION=master WP_MULTISITE=1
     - WP_VERSION=3.6 WP_MULTISITE=1
     - WP_VERSION=3.5.2 WP_MULTISITE=1
-   
-# Grab the setup script and execute
+
 before_script:
-    - wget https://raw.github.com/tierra/wordpress-plugin-tests/setup/setup.sh
-    - source setup.sh
+- curl http://cs.sensiolabs.org/get/php-cs-fixer.phar -o php-cs-fixer.phar
+- curl -s http://getcomposer.org/installer | php
+- php composer.phar install --dev --no-interaction --prefer-source
+#Coveralls support
+- mkdir -p build/logs
+- mkdir -p build/cov
+
+- wget https://raw.github.com/tierra/wordpress-plugin-tests/setup/setup.sh
+- source setup.sh
 
 script: phpunit
+
+after_script:
+- php vendor/bin/coveralls -v --dry-run
 
 # wordpress-plugin-tests specific config
 # Tells Travis CI not to run unit tests against the setup branch
