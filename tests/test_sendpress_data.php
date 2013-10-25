@@ -1,5 +1,5 @@
 <?php
-require_once '../sendpress.php';
+require_once '../../sendpress.php';
 /**
 * Test For SendPress Data
  */
