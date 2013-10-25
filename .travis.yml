@@ -5,9 +5,9 @@ language: php
 
 # Versions of PHP to test against
 php:
-    - "5.2"
     - "5.3"
     - "5.4"
+    - "5.5"
 
 # Specify versions of WordPress to test against
 # WP_VERSION = WordPress version number (use "master" for SVN trunk)
@@ -21,6 +21,7 @@ env:
     - WP_VERSION=3.5.2 WP_MULTISITE=1
 
 before_script:
+echo "extension = xdebug.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 - curl http://cs.sensiolabs.org/get/php-cs-fixer.phar -o php-cs-fixer.phar
 - curl -s http://getcomposer.org/installer | php
 - php composer.phar install --dev --no-interaction --prefer-source
