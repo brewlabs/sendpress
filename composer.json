@@ -1,5 +1,5 @@
 {
-        "name": "sendpress/sendpress",
+        "name": "brewlabs/sendpress",
                 "type": "plugin",
                 "description": "WordPress Newsletters",
                 "keywords": ["wordpress","plugins"],
