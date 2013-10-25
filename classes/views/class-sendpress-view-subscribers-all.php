@@ -51,7 +51,7 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 			
 			<a class="btn btn-primary btn-large" href="?page=<?php echo $_REQUEST['page']; ?>&view=add<?php echo $list; ?>"><?php _e('Add Subscriber','sendpress'); ?></a>
 		</div>
-		<h2><?php _e('Subscribers','sendpress'); ?> <?php echo $listname; ?> </h2>
+		<h2><?php _e('Subscribers','sendpress'); ?></h2>
 	</div>
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="movies-filter" method="get">

@@ -34,6 +34,8 @@ class SendPress_View_Subscribers extends SendPress_View {
 		</div>
 		
 		<?php
+
+		do_action('sendpress-subscribers-sub-menu');
 	}
 
 	function screen_options(){

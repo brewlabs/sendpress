@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.4
 Tested up to: 3.6.1
-Stable tag: 0.9.5.2
+Stable tag: 0.9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -102,11 +102,20 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
+= 0.9.5.4 - 2013.10.19 =
+* Fix for notifications
+* Fix for events being saved
+
+= 0.9.5.3 - 2013.10.16 =
+* Bug with 'Send Emails Now' fixed
+* Fixed bad table name in SendPress_Data
+
+
 = 0.9.5.2 - 2013.10.16 =
 * Improved CSV import for different column formats
 * Auto Cron now more stable
 * Unsubscribe link redirects to manage page
-* New Error Loggin Class
+* New Error Logging Class
 * Added new indexes to Custom Tables
 * WebHook for Bounce Handling Event- requires Pro
 
@@ -309,6 +318,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.5.3 =
+Bug fix for Send Email Now stopping
 
 = 0.9.5.2 =
 Better sending and import updates

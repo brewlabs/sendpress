@@ -1,7 +1,7 @@
 <?php 
 /*
 Plugin Name: SendPress: Email Marketing and Newsletters
-Version: 0.9.5.2
+Version: 0.9.6
 Plugin URI: http://sendpress.com
 Description: Easy to manage Email Marketing and Newsletter plugin for WordPress. 
 Author: SendPress
@@ -14,10 +14,10 @@ Push
 		die;
 	}
 	global $blog_id;
-	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'https://api.sendpres.com' );
+	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 	define( 'SENDPRESS_API_VERSION', 1 );
 	define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.2' );
-	define( 'SENDPRESS_VERSION', '0.9.5.2' );
+	define( 'SENDPRESS_VERSION', '0.9.6' );
 	define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -1093,8 +1093,12 @@ Push
 		if(version_compare( $current_version, '0.9.4.7', '<' )){
 			SendPress_Data::update_tables_0947();
 		}
-		if(version_compare( $current_version, '0.9.5.2', '<' )){
-			SendPress_Data::update_tables_0952();
+			if(version_compare( $current_version, '0.9.5.2', '<' )){
+				SendPress_Data::update_tables_0952();
+			}
+
+			if(version_compare( $current_version, '0.9.5.4', '<' )){
+			SendPress_Data::update_tables_0954();
 		}
 
 		if(version_compare( $current_version, '0.9.6', '<' )){
@@ -1122,6 +1126,7 @@ Push
 			}
 
 		}
+
 
 		SendPress_Option::set( 'version' , SENDPRESS_VERSION );
 	}	

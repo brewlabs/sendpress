@@ -31,7 +31,9 @@ class SendPress_Notifications_Manager {
 
 	function maybe_send_notification($type, $data){
 		$options = SendPress_Option::get('notification_options');
-		print_r($type);
+		$subscribed = '';
+		$unsubscribed = '';
+
 		//based on the type, check the options and build an e-mail to notify the admin.
 		if( $type === $options['subscribed'] ){
 			$subscribed = SendPress_Notifications_Manager::build_subscribed_notification($data);
@@ -223,8 +225,7 @@ class SendPress_Notifications_Manager {
 			}
 		}
 		
-		add_action( 'sendpress_notification_daily', array( $this, 'maybe_send_notification' ) );
+		add_action( 'sendpress_notification_daily', array( 'SendPress_Notifications_Manager', 'maybe_send_notification' ) );
 	}
 
 }
-

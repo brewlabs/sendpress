@@ -168,6 +168,8 @@ class SendPress_Ajax_Loader{
 			$email = isset($_POST['email']) ? $_POST['email'] : '';
 			$listid = isset($_POST['listid']) ? $_POST['listid'] : '';
 
+			SendPress_Data::subscribe_user($listid, $email, $first, $last);
+
 			$success = $s->subscribe_user($listid,$email,$first,$last);
 
 			if( false !== $success ){

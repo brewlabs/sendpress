@@ -122,11 +122,11 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
         );
         */
         
-        //Return the title contents
+        //Return the title contents - $this->row_actions($actions) was in %3
         return sprintf('%1$s <span style="color:silver">(id:%2$s)</span>%3$s',
             /*$1%s*/ $item->email,
             /*$2%s*/ $item->subscriberID,
-            /*$3%s*/ $this->row_actions($actions)
+            /*$3%s*/ ''
         );
     }
     
