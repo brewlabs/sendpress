@@ -7,7 +7,7 @@ language: php
 php:
     - "5.3"
     - "5.4"
-    - "5.5"
+#    - "5.5"
 
 # Specify versions of WordPress to test against
 # WP_VERSION = WordPress version number (use "master" for SVN trunk)
@@ -35,7 +35,7 @@ before_script:
 script: phpunit
 
 after_script:
-- php vendor/bin/coveralls -v --dry-run
+- php vendor/bin/coveralls -v 
 
 # wordpress-plugin-tests specific config
 # Tells Travis CI not to run unit tests against the setup branch
