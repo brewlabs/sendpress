@@ -28,7 +28,7 @@
         <echo msg="Creating archive..." />
 
         <tar destfile="./build/sendpress.tar.gz" compression="gzip">
-            <fileset dir="./build">
+            <fileset dir="./classes">
                 <include name="*" />
             </fileset>
         </tar>

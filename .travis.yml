@@ -30,8 +30,8 @@ env:
 - WP_VERSION=3.5.2 WP_MULTISITE=1
 deploy: 
   provider: s3
-  bucket: sendpress-downloads
+  bucket: sendpress-downloads/sendpress
   access_key_id: AKIAJZQBYUA4XGE7UXVQ
   secret_access_key: 
     secure: VlwfXc/KTvvXiepnszfqC5oDB3OHWu4fzCC5Ah1Y8M9hQwiCDc0Tf1981fefeZlntcM4fbxU6Hhx2eTIpRGCi3CjUw9eQVKm5Zd0KfGKsnqBXsEXSX7AdHRZGJT6CQ5/6F9qX//1n2czWEpEjGYhm4CzhtyHK6ftyVDzW5aYDrE=
-  skip_cleanup: true
+  skip_cleanup: false
