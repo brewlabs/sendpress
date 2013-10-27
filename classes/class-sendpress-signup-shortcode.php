@@ -13,7 +13,7 @@ class SendPress_Signup_Shortcode{
 		add_shortcode('sendpress-signup', array('SendPress_Signup_Shortcode','load_form'));
 	}
 
-	function load_form( $attr, $content = null ) {
+	static function load_form( $attr, $content = null ) {
 
 		global $load_signup_js, $sendpress_show_thanks, $sendpress_signup_error;
 		$load_signup_js = true;
