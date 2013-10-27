@@ -72,7 +72,7 @@ class SendPress_Sender {
 		return $domain;
 	}
 
-	function send_email($to, $subject, $html, $text, $istest = false ){
+	function send_email($to, $subject, $html, $text, $istest = false, $sid, $list_id, $report_id){
 		return false;
 	}
 
