@@ -539,7 +539,7 @@ Push
 	function admin_init(){
 		$this->set_template_default();
 		$this->add_caps();
-		if ( !empty($_GET['_wp_http_referer']) ) {
+		if ( !empty($_GET['_wp_http_referer']) && (isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)) ) {
 			wp_redirect( remove_query_arg( array('_wp_http_referer', '_wpnonce'), stripslashes($_SERVER['REQUEST_URI']) ) );
 	 		exit;
 		}
