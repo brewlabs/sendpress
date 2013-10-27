@@ -63,6 +63,12 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	/********************* QUEUE static functionS **************************/
 
+	static function get_single_email_from_queue(){
+		global $wpdb;
+		return $wpdb->get_row("SELECT * FROM ". SendPress_Data::queue_table() ." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 ORDER BY id LIMIT 1");
+
+	}
+
 	static function delete_queue_emails(){
 		$table = self::queue_table();
 		self::wpdbQuery("DELETE FROM $table WHERE success = 0", 'query');
