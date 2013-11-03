@@ -201,10 +201,10 @@ table.wp-list-table{
 
 .leftcol{
     float:left;
-    width: 220px;
+    width: 240px;
 }
 .widerightcol{
-   margin-left: 230px;
+   margin-left: 250px;
 }
 .boxer {
     -moz-border-radius: 4px;
