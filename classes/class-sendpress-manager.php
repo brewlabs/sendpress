@@ -194,20 +194,20 @@ class SendPress_Manager {
 		if( SendPress_Manager::limit_reached()  ){
 			return array('attempted'=> $attempts,'sent'=>$count);
 		}
-
-		$email = $wpdb->get_results("SELECT * FROM ". $queue_table ." WHERE (success = 0) AND (max_attempts != attempts) AND (inprocess = 0) ORDER BY id ASC LIMIT 1");
-		if( !empty($email) ){
-			$email = $email[0];
+		SendPress_Error::log('here');
+		$email = SendPress_Data::get_single_email_from_queue();
+		if( is_object($email) ){
+			//$email = $email[0];
 			
 
 			if( SendPress_Manager::limit_reached() ){
 				return array('attempted'=> $attempts,'sent'=>$count);
 			}
-
+			SendPress_Error::log('here 2');
 			$attempts++;
 			SendPress_Data::queue_email_process( $email->id );
 			$result = SendPress_Manager::send_email_from_queue( $email );
-			
+			SendPress_Error::log('here 3');
 			
 			if ($result) {
 				$wpdb->update( $queue_table , array('success'=>1,'inprocess'=>3 ) , array('id'=> $email->id ));

@@ -65,8 +65,18 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	static function get_single_email_from_queue(){
 		global $wpdb;
-		return $wpdb->get_row("SELECT * FROM ". SendPress_Data::queue_table() ." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 ORDER BY id LIMIT 1");
+		$date = date_i18n('Y-m-d H:i:s');
+		$info =  $wpdb->get_row($wpdb->prepare("SELECT * FROM ". SendPress_Data::queue_table() ." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 and ( date_sent = '0000-00-00 00:00:00' or date_sent < %s ) ORDER BY id LIMIT 1", $date));
 
+		error_log(print_r( $info,true) );
+		return $info;
+
+	}
+
+	static function remove_from_queue($id){
+		global $wpdb;
+		$table = self::queue_table();
+		$wpdb->query( $wpdb->prepare("DELETE FROM $table WHERE emailID = %d", $id ) );
 	}
 
 	static function delete_queue_emails(){
@@ -86,7 +96,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$table = self::queue_table();
 		if($id == false){
 			$query = "SELECT COUNT(*) FROM $table where success = 0";
-
+			 $query.=" AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s')."') ";
+       
 	        if(isset($_GET["listid"]) &&  $_GET["listid"]> 0 ){
 	            $query .= ' AND listID = '. $_GET["listid"];
 	        }
@@ -857,6 +868,38 @@ class SendPress_Data extends SendPress_DB_Tables {
         return $data;
     }
 
+
+	/*
+	*
+	*	Creates an array from a posted textarea
+	*	
+	*	expects 3 fields or less: @sendpress.me, fname, lname
+	*
+	*/
+	static function subscriber_csv_post_to_array($csv, $delimiter = ',', $enclosure = '"', $escape = '\\', $terminator = "\n") { 
+	    $r = array(); 
+	    $rows = explode($terminator,trim($csv)); 
+	    $names = array_shift($rows); 
+	    $names = explode(',', $names);
+		$nc = count($names);
+ 
+	    foreach ($rows as $row) { 
+	        if (trim($row)) { 
+	        	$needle = substr_count($row, ',');
+	        	if($needle == false){
+	        		$row .=',,';
+	        	} 
+	        	if($needle == 1){
+	        		$row .=',';
+	        	} 
+
+	            $values = explode(',' , $row);
+	            if (!$values) $values = array_fill(0,$nc,null); 
+	            $r[] = array_combine($names,$values); 
+	        } 
+	    } 
+	    return $r; 
+	} 
 
     static function break_csv_apart($csv_line , $delimiter , $enclose , $preserve=false){
         $response = array();

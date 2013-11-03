@@ -54,9 +54,7 @@ $list = explode(",",$lists );
     </div>
     <span id="queue-total">0</span> of <span id="list-total"><?php print_r( SendPress_Data::get_active_subscribers_count(  $list ) );?></span>
 </div>
-<script>
-jQuery()
-</script>
+
 		<?php
 	} 
 

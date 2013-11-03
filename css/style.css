@@ -201,10 +201,10 @@ table.wp-list-table{
 
 .leftcol{
     float:left;
-    width: 210px;
+    width: 220px;
 }
 .widerightcol{
-   margin-left: 225px;
+   margin-left: 230px;
 }
 .boxer {
     -moz-border-radius: 4px;
@@ -270,7 +270,10 @@ zoom: 1;
     display: block;
     width: 50%; 
 }
-
+.style-unit input.fifty,.fifty{
+    width: 45%;
+    margin: 0;
+}
 
 
 a.spbutton:active {

@@ -8,6 +8,92 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Emails_Style extends SendPress_View_Emails {
 	
+	function save(){
+		  $saveid = $_POST['post_ID'];
+        $bodybg = $_POST['body_bg'];
+        $bodytext = $_POST['body_text'];
+        $bodylink = $_POST['body_link'];
+        $contentbg = $_POST['content_bg'];
+        $contenttext = $_POST['content_text'];
+        $contentlink = $_POST['sp_content_link_color'];
+        $contentborder = $_POST['content_border'];
+        $upload_image = $_POST['upload_image'];
+        
+        $headerbg = $_POST['header_bg'];
+        $headertextcolor = $_POST['header_text_color'];
+        $headertext = $_POST['header_text'];
+
+        $headerlink = $_POST['header_link'];
+        $imageheaderurl = $_POST['image_header_url'];
+        $subheadertext = $_POST['sub_header_text'];
+
+        $activeHeader = $_POST['active_header'];
+
+        $_POST['post_type'] = 'sp_newsletters';
+        // Update post 37
+
+        $my_post = _wp_translate_postdata(true);
+        /*            
+        $my_post['ID'] = $_POST['post_ID'];
+        $my_post['post_content'] = $_POST['content'];
+        $my_post['post_title'] = $_POST['post_title'];
+        */
+       /*
+        $str = $my_post['post_content'];
+        $DOM = new DOMDocument;
+        $DOM->loadHTML($str);
+           //get all H1
+        $aTags = $DOM->getElementsByTagName('a');
+
+        foreach ($aTags as $aElement) {
+            $style = $aElement->getAttribute('style');
+
+                if($style == ""){
+                    $aElement->setAttribute('style', 'color: '. $contentlink);
+                }
+        }
+
+        $body_html = $DOM->saveHtml();
+        $my_post['post_content']  = $body_html;
+    */
+        $my_post['post_status'] = 'publish';
+        // Update the post into the database
+        wp_update_post( $my_post );
+        update_post_meta( $my_post['ID'], '_sendpress_subject', $_POST['post_subject'] );
+        update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
+        update_post_meta( $my_post['ID'], '_sendpress_status', 'private');
+
+        SendPress_Email::set_default_style($my_post['ID']);
+        //clear the cached file.
+        delete_transient( 'sendpress_email_html_'. $my_post['ID'] );
+
+        update_post_meta($saveid ,'body_bg', $bodybg);
+        update_post_meta($saveid ,'body_text', $bodytext );
+        update_post_meta($saveid ,'body_link', $bodylink );
+        update_post_meta($saveid ,'content_bg', $contentbg );
+        update_post_meta($saveid ,'content_text', $contenttext );
+        update_post_meta($saveid ,'sp_content_link_color', $contentlink );
+        update_post_meta($saveid ,'content_border', $contentborder );
+        update_post_meta($saveid ,'upload_image', $upload_image );
+
+        update_post_meta($saveid ,'header_bg', $headerbg );
+        update_post_meta($saveid ,'header_text_color', $headertextcolor );
+        update_post_meta($saveid ,'header_text', $headertext );
+
+        update_post_meta($saveid ,'header_link', $headerlink );
+        update_post_meta($saveid ,'image_header_url', $imageheaderurl );
+        update_post_meta($saveid ,'sub_header_text', $subheadertext );
+
+        update_post_meta($saveid ,'active_header', $activeHeader );
+        
+        if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
+        	SendPress_Admin::redirect('Emails_Send', array('emailID'=>$_GET['emailID'] ));
+        } else {
+        	SendPress_Admin::redirect('Emails_Style', array('emailID'=>$_GET['emailID'] ));
+        }
+
+       
+	}
 	function admin_init(){
 		remove_filter('the_editor',					'qtrans_modifyRichEditor');
 	}
@@ -28,13 +114,21 @@ class SendPress_View_Emails_Style extends SendPress_View_Emails {
 
 
 		?>
-		<form action="admin.php?page=<?php echo $sp->_page; ?>" method="POST" name="post" id="post">
+		<form method="POST" name="post" id="post">
 		<!--
 		<div style="float:left">
 			<a href="?page=sp-emails" class="spbutton supersize" >Edit Content</a>
 		</div>
 		-->
-		<?php $sp->styler_menu('style'); ?>	
+		<div style="float:right;" class="btn-group">
+  <button class="btn btn-primary btn-large " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Update','sendpress'); ?></button>
+				<?php if( SendPress_Admin::access('Emails_Send') ) { ?>
+				<button class="btn btn-primary btn-large " type="submit" value="save-next" name="submit"><i class="icon-envelope icon-white"></i> <?php echo __('Send','sendpress'); ?></button>
+	<?php } ?>
+</div>
+<div id="sp-cancel-btn" style="float:right; margin-top: 5px;">
+				<a href="?page=<?php echo $_GET['page']; ?>" id="cancel-update" class="btn"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+			</div>
 		<?php require_once( SENDPRESS_PATH. 'inc/forms/email-style.2.0.php' ); ?>
 		</form>
 	<?php

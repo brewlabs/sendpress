@@ -156,7 +156,16 @@ class SendPress_Reports_Table extends WP_List_Table {
                 }
                 return '';
             case 'created':
-                 return date_i18n(get_option('date_format') , strtotime( $item->post_date ) );
+                    $canceled = get_post_meta($item->ID, '_canceled', true);
+                    if($canceled == true){
+                        return "CANCELED";
+                    }
+                    $info = get_post_meta($item->ID, '_send_time', true);
+                    if($info == '0000-00-00 00:00:00' || $info < date_i18n('Y-m-d H:i:s') ){
+                        return date_i18n(get_option('date_format') , strtotime( $item->post_date ) );
+                    }
+                    return "Scheduled for ".date_i18n('Y/m/d @ h:i A' , strtotime( $info ) ) . "<br><a href='".SendPress_Admin::link('Emails_Send_Cancel',array('emailID'=>$item->ID ))."'>Cancel Send</a>";
+
             
             case 'actions':
                 return '<div class="inline-buttons"><a class="spbutton left" href="'. get_permalink( $item->ID  ). '">View</a><a class="spbutton right" href="?page='.$_REQUEST['page'].'&view=edit-email&emailID='. $item->ID .'">Edit</a><a class="spbutton bluebtn" href="?page='.$_REQUEST['page'].'&view=send-email&emailID='. $item->ID .'">Send</a></div>';

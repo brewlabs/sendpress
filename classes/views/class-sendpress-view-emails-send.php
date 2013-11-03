@@ -6,7 +6,39 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class SendPress_View_Emails_Send extends SendPress_View_Emails {
+
+	function save(){
+
+        if(isset($_POST['send-date']) && $_POST['send-date'] == 'later'){
+            $send_at = $_POST['date-pickit'] . " " . $_POST['send-later-time'];
+        } else {
+            $send_at = '0000-00-00 00:00:00';
+        }
+
+		$csvadd ="email,firstname,lastname\n" . trim($_POST['test-add']);
+    	$data=  SendPress_Data::subscriber_csv_post_to_array($csvadd);
+        $listids = isset($_POST['listIDS']) ? $_POST['listIDS'] : array();
+        SendPress_Option::set('current_send_'. $_POST['post_ID'], array(
+            'listIDS' =>  $listids,
+            'testemails'=> $data,
+            'send_at' => $send_at
+            ));
+        SendPress_Option::set('current_send_subject_'. $_POST['post_ID'],$_POST['post_subject']);
+
+        if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
+        	 SendPress_Admin::redirect('Emails_Send_Confirm', array('emailID'=>$_GET['emailID'] ));
+        } else {
+        	SendPress_Admin::redirect('Emails_Style', array('emailID'=>$_GET['emailID'] ));
+        }
+       
+	}
 	
+	function admin_init(){
+		wp_enqueue_script('jquery-ui-datepicker');
+		wp_register_style( 'sendpress_css_jquery-ui', SENDPRESS_URL . 'css/smoothness/jquery-ui-1.10.3.custom.min.css', false, SENDPRESS_VERSION );
+    		wp_enqueue_style( 'sendpress_css_jquery-ui' );
+	}
+
 	function html($sp) {
 
 global $current_user;
@@ -27,12 +59,19 @@ $post_type = $sp->_email_post_type;
 $post_type_object = get_post_type_object($sp->_email_post_type);
 
 ?>
-<form action="admin.php?page=<?php echo $sp->_page; ?>" method="POST" name="post" id="post">
-<?php $sp->styler_menu('send'); ?>	
-<input type="hidden" value="save-confirm-send" name="save-action" id="save-action" />
-<input type="hidden" value="save-send" name="action" />
+<form method="POST" name="sendpress_post" id="sendpress_post">
+<div style="float:right;" class="btn-group">
+  <button class="btn btn-primary btn-large " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Edit','sendpress'); ?></button>
+<button class="btn btn-primary btn-large " type="submit" value="save-next" name="submit"><i class="icon-envelope icon-white"></i> <?php echo __('Send','sendpress'); ?></button>
+
+</div>
+<div id="sp-cancel-btn" style="float:right; margin-top: 5px;">
+				<a href="?page=<?php echo $_GET['page']; ?>"  class="btn"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+			</div>
 <input type="hidden" id="user-id" name="user_ID" value="<?php echo $current_user->ID; ?>" />
 <input type="hidden" id="post_ID" name="post_ID" value="<?php echo $post->ID; ?>" />
+<input type="hidden" id="post_type" name="post_type" value="sp_newsletters" />
+
 <h2><?php _e('Send Email','sendpress'); ?></h2>
 <div class="boxer">
 <div class="boxer-inner">
@@ -41,8 +80,62 @@ $post_type_object = get_post_type_object($sp->_email_post_type);
 <p><input type="text" name="post_subject" size="30" tabindex="1" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" /></p>
 <br>
 <div class="leftcol">
-		
+<div class="style-unit">
+<h4><?php _e('Date & Time','sendpress'); ?></h4>
+<input type="radio" name="send-date" value="now" checked/> Start Sending Now<br>
+<input type="radio" name="send-date" value="later"/> Send Later<br>
+<div class="date-holder" style="display:none">
+	<br>
+<input type="text" name="date-pickit" id="date-pickit" class=" fifty float-left" value="<?php echo date_i18n('Y/m/d'); ?>"/>&nbsp;at
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+$(".date-holder").hide();
+
+$('input[type=radio][name=send-date]').change(function() {
+        if (this.value == 'now') {
+            $(".date-holder").hide();
+        }
+        else if (this.value == 'later') {
+           $(".date-holder").show();
+        }
+    });
+$('#date-pickit').datepicker({
+dateFormat : 'yy/mm/dd'
+});
+});
+</script>
+<select name="send-later-time" id="datepicker-time" class="fifty">
+<option value="00:00:00">12:00 am</option>
+<option value="01:00:00">1:00 am</option>
+<option value="02:00:00">2:00 am</option>
+<option value="03:00:00">3:00 am</option>
+<option value="04:00:00">4:00 am</option>
+<option value="05:00:00">5:00 am</option>
+<option value="06:00:00">6:00 am</option>
+<option value="07:00:00">7:00 am</option>
+<option value="08:00:00">8:00 am</option>
+<option value="09:00:00">9:00 am</option>
+<option value="10:00:00">10:00 am</option>
+<option value="11:00:00">11:00 am</option>
+<option value="12:00:00">12:00 pm</option>
+<option value="13:00:00">1:00 pm</option>
+<option value="14:00:00">2:00 pm</option>
+<option value="15:00:00">3:00 pm</option>
+<option value="16:00:00">4:00 pm</option>
+<option value="17:00:00">5:00 pm</option>
+<option value="18:00:00">6:00 pm</option>
+<option value="19:00:00">7:00 pm</option>
+<option value="20:00:00">8:00 pm</option>
+<option value="21:00:00">9:00 pm</option>
+<option value="22:00:00">10:00 pm</option>
+<option value="23:00:00">11:00 pm</option>
+</select>
+<br>
+</div>
+
+</div>
 		<div class="style-unit">
+
 <h4><?php _e('Lists','sendpress'); ?></h4>
 <?php
 $post_args = array( 'post_type' => 'sendpress_list','numberposts'     => -1,
@@ -58,12 +151,10 @@ foreach($current_lists as $list){
 </div>
 <div class="style-unit">
 <h4><?php _e('Test Emails','sendpress'); ?></h4>
-<textarea name="test-add" cols='26' rows='10'></textarea>
-<?php wp_nonce_field($sp->_nonce_value); ?><br><br>
-
-
-
+<textarea name="test-add" cols='26' rows='6'></textarea>
+<?php wp_nonce_field($sp->_nonce_value); ?>
 </div>
+
 </div>
 <div class="widerightcol">
 <?php

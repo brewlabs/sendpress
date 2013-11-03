@@ -248,7 +248,7 @@ class SendPress_Ajax_Loader{
 		$this->verify_ajax_call();
 		$reportid = isset($_POST['reportid']) ? $_POST['reportid'] : 0;
 		$lists = get_post_meta($reportid, '_send_lists', true);
-	
+		$time = get_post_meta($reportid, '_send_time', true);
 		$list = explode(",",$lists );
 		$last = get_post_meta($reportid, '_send_last', true);
 		$count_last = get_post_meta($reportid, '_send_last_count', true);
@@ -269,6 +269,7 @@ class SendPress_Ajax_Loader{
                 'subscriberID'=> $email->subscriberID,
                 //'to_name' => $email->fistname .' '. $email->lastname,
                 'subject' => '',
+                'date_sent' => $time,
                 'listID'=> $email->listid
                 );
            

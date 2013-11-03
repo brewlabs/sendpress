@@ -1546,28 +1546,7 @@ Push
 	*
 	*/
 	function subscriber_csv_post_to_array($csv, $delimiter = ',', $enclosure = '"', $escape = '\\', $terminator = "\n") { 
-	    $r = array(); 
-	    $rows = explode($terminator,trim($csv)); 
-	    $names = array_shift($rows); 
-	    $names = explode(',', $names);
-		$nc = count($names);
- 
-	    foreach ($rows as $row) { 
-	        if (trim($row)) { 
-	        	$needle = substr_count($row, ',');
-	        	if($needle == false){
-	        		$row .=',,';
-	        	} 
-	        	if($needle == 1){
-	        		$row .=',';
-	        	} 
-
-	            $values = explode(',' , $row);
-	            if (!$values) $values = array_fill(0,$nc,null); 
-	            $r[] = array_combine($names,$values); 
-	        } 
-	    } 
-	    return $r; 
+	   return SendPress_Data::subscriber_csv_post_to_array($csv, $delimiter, $enclosure, $escape , $terminator);
 	} 
 
 	

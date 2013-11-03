@@ -340,6 +340,7 @@ switch ( $this->_current_action ) {
     break;
 
     case 'save-send':
+    /*
     $csvadd ="email,firstname,lastname\n" . trim($_POST['test-add']);
     $data=   $this->subscriber_csv_post_to_array($csvadd);
     $listids = isset($_POST['listIDS']) ? $_POST['listIDS'] : array();
@@ -352,6 +353,7 @@ switch ( $this->_current_action ) {
 
 
         $this->save_redirect( $_POST  );
+        */
     break;   
     case 'save-style':
 

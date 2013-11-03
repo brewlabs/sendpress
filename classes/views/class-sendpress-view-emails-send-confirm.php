@@ -23,7 +23,7 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
         $new_id = SendPress_Posts::copy($email_post, $subject, $slug, $sp->_report_post_type );
         SendPress_Posts::copy_meta_info($new_id, $saveid);
         $lists = implode(',', $info['listIDS']);
-
+        update_post_meta($new_id,'_send_time',  $info['send_at'] );
         update_post_meta($new_id,'_send_lists', $lists );
         $count = 0;    
 
@@ -123,7 +123,15 @@ $subject = SendPress_Option::get('current_send_subject_'.$post->ID ,true);
 <div class="boxer-inner">
 <h2><strong><?php _e('Subject','sendpress'); ?></strong>: <?php echo stripslashes(esc_attr( htmlspecialchars( $subject ) )); ?></h2><br>
 <div class="leftcol">
-    
+    <div class="style-unit">
+<h4><?php _e('Send Time','sendpress'); ?></h4>
+<?php if($info['send_at'] == '0000-00-00 00:00:00') {
+    echo "Your email will start sending right away!";
+} else {
+    echo "Your email will start sending on " .date('Y/m/d',strtotime($info['send_at'])) . " at " .date('h:i A',strtotime($info['send_at']))  ;
+}?>
+</div>
+
     <div class="style-unit">
 <h4><?php _e('Lists','sendpress'); ?></h4>
 

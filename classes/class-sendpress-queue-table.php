@@ -387,7 +387,7 @@ class SendPress_Queue_Table extends WP_List_Table {
         //How many pages do we have in total?
         $totalpages = ceil($totalitems/$per_page);
         $query.=' WHERE success = 0 ';
-
+        $query.="AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s')."') ";
         if(isset($_GET["listid"]) &&  $_GET["listid"]> 0 ){
             $query .= ' AND listID = '. $_GET["listid"];
         }
