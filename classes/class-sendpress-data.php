@@ -423,8 +423,47 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function get_list_details($id){
 		return get_post( $id  );
 	}
+	static function create_list($values){
+		// Create post object
+		  $my_post = array(
+		     'post_title' => $values['name'],
+		     'post_content' => '',
+		     'post_status' => 'publish',
+		     'post_type'=>'sendpress_list'
+		  );
 
+		// Insert the post into the database
+  		$new_id = wp_insert_post( $my_post );
+  		update_post_meta($new_id,'public',$values['public']);
+		//add_post_meta($new_id,'last_send_date',$newlist->last_send_date);
+		//add_post_meta($new_id,'legacy_id',$newlist->listID);
+		//$this->upgrade_lists_new_id( $newlist->listID, $new_id);
+		//	$table = $this->lists_table();
 
+		
+		//$result = $this->wpdbQuery("INSERT INTO $table (name, created, public) VALUES( '" .$values['name'] . "', '" . date('Y-m-d H:i:s') . "','" .$values['public'] . "')", 'query');
+
+		return $new_id;	
+	}
+	
+	static function update_list($listID, $values){
+		global $wpdb;
+
+		//$table = $this->lists_table();
+
+		//$result = $wpdb->update($table,$values, array('listID'=> $listID) );
+		
+		$my_post = array(
+		    'post_title' => $values['name'],
+		    'ID'=> $listID,     
+		);
+
+		// Insert the post into the database
+  		$new_id = wp_update_post( $my_post );
+  		update_post_meta($new_id,'public',$values['public']);
+
+		return $new_id;
+	}
 
 	function get_lists($args = array(), $use_wpquery = true){
 
@@ -475,11 +514,48 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 
+	static function sync_emails_to_list($listid, $emails){
+		global $wpdb;
+
+
+		$query_get = "SELECT subscriberID FROM ". SendPress_Data::subscriber_table(). " WHERE email in ('".implode("','", $emails)."')";
+		$data = $wpdb->get_results($query_get);
+	
+		$query_update_status ="INSERT IGNORE INTO ". SendPress_Data::list_subcribers_table(). "(subscriberID,listID,status,updated ) VALUES ";
+		$total = count($data);
+		$x = 0;
+		if($total > 0){
+			$good_ids =array();
+			foreach ($data as $value) {
+				$x++;
+				$good_ids[] = $value->subscriberID;
+				$query_update_status .= "( ".$value->subscriberID . "," . $listid . ",2,'" .date('Y-m-d H:i:s') . "') ";
+				if($total > $x ){ $query_update_status .=",";}
+			}
+			$query_update_status .=";";
+			$wpdb->query($query_update_status);
+			
+			$clean_list_query =  "DELETE FROM "	.SendPress_Data::list_subcribers_table(). " WHERE listID = ".$listid." AND subscriberID not in ('".implode("','", $good_ids)."')";
+			$wpdb->query($clean_list_query);	
+
+		}
+	}
+
 	static function update_subscriber($subscriberID, $values){
 		$table = SendPress_Data::subscriber_table();
 		global $wpdb;
 		
 		$result = $wpdb->update($table,$values, array('subscriberID'=> $subscriberID) );
+	}
+	static function update_subscriber_by_email($email, $values){
+		$table = SendPress_Data::subscriber_table();
+		global $wpdb;
+		$key = SendPress_Data::random_code();
+		$id = SendPress_Data::get_subscriber_by_email($email);
+		$q = "INSERT INTO $table (email,wp_user_id,identity_key,join_date) VALUES (%s,%d,%s,%s) ON DUPLICATE KEY UPDATE wp_user_id=%d";
+		$q = $wpdb->prepare($q,$email,$values['wp_user_id'],$key,date('Y-m-d H:i:s'),$values['wp_user_id']);
+		$result = $wpdb->query($q);
+		//$result = $wpdb->update($table, $values, array('email'=> $email) );
 	}
 
 

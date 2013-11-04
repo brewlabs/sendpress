@@ -1269,45 +1269,11 @@ Push
 
 	// GET DETAIL (RETURN X WHERE Y = Z)
 	function createList($values) {
-		// Create post object
-		  $my_post = array(
-		     'post_title' => $values['name'],
-		     'post_content' => '',
-		     'post_status' => 'publish',
-		     'post_type'=>'sendpress_list'
-		  );
-
-		// Insert the post into the database
-  		$new_id = wp_insert_post( $my_post );
-  		update_post_meta($new_id,'public',$values['public']);
-		//add_post_meta($new_id,'last_send_date',$newlist->last_send_date);
-		//add_post_meta($new_id,'legacy_id',$newlist->listID);
-		//$this->upgrade_lists_new_id( $newlist->listID, $new_id);
-		//	$table = $this->lists_table();
-
-		
-		//$result = $this->wpdbQuery("INSERT INTO $table (name, created, public) VALUES( '" .$values['name'] . "', '" . date('Y-m-d H:i:s') . "','" .$values['public'] . "')", 'query');
-
-		return $new_id;	
+		return SendPress_Data::create_list($values);
 	}
 
 	function updateList($listID, $values){
-		global $wpdb;
-
-		//$table = $this->lists_table();
-
-		//$result = $wpdb->update($table,$values, array('listID'=> $listID) );
-		
-		$my_post = array(
-		    'post_title' => $values['name'],
-		    'ID'=> $listID,     
-		);
-
-		// Insert the post into the database
-  		$new_id = wp_update_post( $my_post );
-  		update_post_meta($new_id,'public',$values['public']);
-
-		return $new_id;
+		return SendPress_Data::update_list($listID, $values);
 	}
 
 	function requeue_email($emailid){

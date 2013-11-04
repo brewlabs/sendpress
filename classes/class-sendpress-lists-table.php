@@ -76,7 +76,13 @@ class SendPress_Lists_Table extends WP_List_Table {
             case 'director':
                 return $item[$column_name];
             case 'count_subscribers':
-                return  $this->_sendpress->countSubscribers($item->ID) ;
+                $role = get_post_meta($item->ID,'sync_role',true);
+                $add = '';
+                if($role != 'none' && $role != false){
+                    $add = " - <a href='". SendPress_Admin::link('Subscribers_Sync') . "&listID=".$item->ID."'>Sync</a>";
+                }
+
+                return  $this->_sendpress->countSubscribers($item->ID) . $add ;
             case 'count_unsubscribes':
                 return  $this->_sendpress->countSubscribers($item->ID, 3);
             case 'count_bounced':
@@ -133,9 +139,18 @@ class SendPress_Lists_Table extends WP_List_Table {
             $p = 'private';
         }
 
+         $role = get_post_meta($item->ID,'sync_role',true);
+        // $add = '';
+        global $wp_roles;
+        $names = $wp_roles->get_names();
+         if($role != 'none' && $role != false && isset($names[$role]) ){
+            $role_info=get_role($role);
+            $p = translate_user_role( $names[$role] );
+         }
+
         $title = apply_filters('sendpress_list_table_title_actions',array(
             'title' =>$item->post_title,
-            'id' => ' <span style="color:silver">( id:'.$item->ID .' - ' .$p.' )</span>',
+            'id' => ' <span style="color:silver">( id:'.$item->ID .' - ' .$p .' )</span>',
             'actions' => $this->row_actions($actions)
         ));
         

@@ -7,6 +7,22 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
+
+	function save(){
+		$listid = $_POST['listID'];
+        $name = $_POST['name'];
+        $public = 0;
+        if(isset($_POST['public']) && $_POST['sync_role'] == 'none'){
+            $public = $_POST['public'];
+        }
+      
+        SendPress_Data::update_list($listid, array( 'name'=>$name, 'public'=>$public ) );
+        $roles_list = array();
+       
+
+		update_post_meta($listid, 'sync_role', $_POST['sync_role']);
+      	SendPress_Admin::redirect('Subscribers');
+	}
 	
 	function html($sp) {
 		
@@ -18,18 +34,43 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
 		$listname = 'for '. $listinfo->post_title;
 	}
 	?>
-	<div id="taskbar" class="lists-dashboard rounded group"> 
-	<h2><?php _e('Edit List','sendpress'); ?></h2>
-	</div>
-	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="list-edit" method="post">
+	<div id="button-area">  
+		<input type="submit" value="<?php _e('Save List','sendpress'); ?>" class="btn btn-large btn-primary"/>
+	</div>
+	<h2><?php _e('Edit List','sendpress'); ?></h2>
+	
+	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
+	
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	    <input type="hidden" name="action" value="edit-list" />
+	   
 	    <input type="hidden" name="listID" value="<?php echo $_GET['listID']; ?>" />
 	    <p><input type="text" name="name" value="<?php echo $listinfo->post_title; ?>" /></p>
 	    <p><input type="checkbox" class="edit-list-checkbox" name="public" value="<?php echo get_post_meta($listinfo->ID,'public',true); ?>" <?php if( get_post_meta($listinfo->ID,'public',true) == 1 ){ echo 'checked'; } ?> /><label for="public"><?php _e('Allow user to sign up to this list','sendpress'); ?></label></p>
 	    <!-- Now we can render the completed list table -->
-	   	<input type="submit" value="<?php _e('save','sendpress'); ?>" class="button-primary"/>
+	   	<p><b>Sync List to WordPress Role</b></p>
+	   	 <?php 
+
+	   	$roles = get_post_meta($listinfo->ID, 'sync_role', true);
+	   	if($roles == false){
+	   		$roles = 'none';
+	   	}
+	   	$d ='';
+	   	if( $roles == 'none'){
+	   	 		$d = 'checked';
+	   	 	}
+	   	?>
+	   	<input type="radio" name="sync_role" value="none" <?php echo $d; ?> /> Not Linked<br>
+	   	<?php
+	   	 foreach (get_editable_roles() as $role_name => $role_info):
+	   	 	$d ='';
+	   	 	if( $role_name == $roles ){
+	   	 		$d = 'checked';
+	   	 	} ?>
+    		<input type="radio" name="sync_role" value="<?php echo $role_name ?>" <?php echo $d; ?> /> <?php echo translate_user_role($role_info['name']); ?><br>
+    		
+       
+  <?php endforeach; ?>
 	   	<?php wp_nonce_field($sp->_nonce_value); ?>
 	</form>
 	<?php
