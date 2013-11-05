@@ -17,7 +17,13 @@ class SendPress_Module_Pro extends SendPress_Module{
 		// SendPress_Helper::log('API Key = '.SendPress_Option::get('api_key'));
 		// SendPress_Helper::log('API State = '.get_transient( 'sendpress_key_state' ));
 		
-	?>
+		$key = SendPress_Option::get('api_key');
+		if(empty($key) || $key == '' ){
+			$key_active = false;
+			delete_transient( 'sendpress_key_state' );
+		}
+
+		?>
 		<h4><?php _e('SendPress API Key','sendpress');?></h4>
 		
 
@@ -31,7 +37,7 @@ class SendPress_Module_Pro extends SendPress_Module{
 			<?php if( !$key_active ): ?>
 				<a href="#" class="save-api-key btn-success btn-large btn"><?php _e('Register Key','sendpress');?></a>
 			<?php else: ?>
-				<a href="#" class="save-api-key btn-danger btn"><?php _e('Remove Key','sendpress');?></a>
+				<a href="#" class="save-api-key btn-danger btn-large btn"><?php _e('Remove Key','sendpress');?></a>
 			<?php endif; ?>
 			<div class="description">
 				<?php echo sprintf(	__( 'Enter your API key to enable premium support and automatic updates. Get your API key by logging into <a href="%s">SendPress.com</a>.','sendpress' ), 'http://sendpress.com' ); ?>

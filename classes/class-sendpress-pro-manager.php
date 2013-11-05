@@ -30,6 +30,7 @@ class SendPress_Pro_Manager {
 	}
 
 	function _init(){
+		add_filter('plugins_api', array( $this, 'plugins_api' ),10,3);
 		add_filter('plugins_api_result', array( $this, 'get_pro_details' ),10,3);
 		add_action( 'admin_head', array( $this, 'check_api_key' ) );
 	}
@@ -42,11 +43,11 @@ class SendPress_Pro_Manager {
      *
      * @return SENDPRESS_PRO_{state} 
      */
-	function get_pro_state(){
+	static function get_pro_state(){
 		if ( false === ( $state = get_transient( 'sendpress_key_state' ) ) ) {
 		    // It wasn't there, so regenerate the data and save the transient
-		    $sendpress_key_state = $this->try_check_key();
-			$this->set_pro_state($sendpress_key_state);
+		    $sendpress_key_state = SendPress_Pro_Manager::try_check_key();
+			SendPress_Pro_Manager::set_pro_state($sendpress_key_state);
 			//set_transient( 'sendpress_key_state', $sendpress_key_state['state'], $sendpress_key_state['transient_time'] );
 			$state = $sendpress_key_state['state'];
 		    
@@ -54,7 +55,7 @@ class SendPress_Pro_Manager {
 		return $state;
 	}
 
-	function set_pro_state($data){
+	static function set_pro_state($data){
 		if( is_array($data) ){
 			set_transient( 'sendpress_key_state', $data['state'], $data['transient_time'] );
 		}else{
@@ -62,10 +63,10 @@ class SendPress_Pro_Manager {
 		}
 	}
 
-	function check_api_key(){
+	static function check_api_key(){
 		if( class_exists('SendPress_Option') ){
 			$key = SendPress_Option::get('api_key');
-			$state = $this->get_pro_state();
+			$state = SendPress_Pro_Manager::get_pro_state();
 			
 			if( $state !== 'valid' && !empty($key) ){
 				add_action('sendpress_notices', array($this, 'key_notice'));
@@ -74,7 +75,7 @@ class SendPress_Pro_Manager {
 		}
 	}
 
-	function activate_key($key,$name){
+	static function activate_key($key,$name){
 
 		$api_params = array( 
             'edd_action'=> 'activate_license', 
@@ -83,7 +84,7 @@ class SendPress_Pro_Manager {
         );
 
         // Call the custom API.
-        $response = wp_remote_get( add_query_arg( $api_params, SENDPRESS_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
+        $response = wp_remote_post( SENDPRESS_STORE_URL , array( 'body'=>$api_params ,'timeout' => 15, 'sslverify' => false ) );
 
         // make sure the response came back okay
         if ( is_wp_error( $response ) )
@@ -105,7 +106,7 @@ class SendPress_Pro_Manager {
     	return false;
 	}
 
-	function try_activate_key($key){
+	static function try_activate_key($key){
 
 		//$key = SendPress_Option::get('api_key');
 		global $pro_names;
@@ -115,7 +116,7 @@ class SendPress_Pro_Manager {
 
 	}
 
-	function deactivate_key($key, $name){
+	static function deactivate_key($key, $name){
 
         // data to send in our API request
         $api_params = array( 
@@ -123,17 +124,14 @@ class SendPress_Pro_Manager {
             'license'   => $key, 
             'item_name' => urlencode( $name ) // the name of our product in EDD
         );
-        
         // Call the custom API.
-        $response = wp_remote_get( add_query_arg( $api_params, SENDPRESS_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
-
+        $response = wp_remote_post( SENDPRESS_STORE_URL , array( 'body'=>$api_params ,'timeout' => 15, 'sslverify' => false ) );
         // make sure the response came back okay
         if ( is_wp_error( $response ) )
             return false;
 
         // decode the license data
         $license_data = json_decode( wp_remote_retrieve_body( $response ) );
-
         // $license_data->license will be either "deactivated" or "failed"
         if( $license_data->license === SENDPRESS_PRO_DEACTIVATED || $license_data->license === SENDPRESS_PRO_FAILED ){
             SendPress_Option::set('api_key','');
@@ -143,7 +141,7 @@ class SendPress_Pro_Manager {
         return false;
 	}
 
-	function try_deactivate_key(){
+	static function try_deactivate_key(){
 		$key = SendPress_Option::get('api_key');
 		global $pro_names;
 		foreach($pro_names as $name){
@@ -167,7 +165,7 @@ class SendPress_Pro_Manager {
         );
         
         // Call the custom API.
-        $response = wp_remote_get( add_query_arg( $api_params, SENDPRESS_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
+        $response = wp_remote_post( add_query_arg( $api_params, SENDPRESS_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
 
         // make sure the response came back okay
         // if response didn't come back, lets set the transient and try again in a day.
@@ -223,9 +221,15 @@ class SendPress_Pro_Manager {
 	    echo '</div>';
 	}
 	
-	function get_pro_details( $res, $action, $args ){
+	function plugins_api( $res, $action, $args ){
+		if( $action === 'plugin_information' && isset($args->slug) &&$args->slug === 'sendpress-pro' ){
+			return $args;
+		}
+		return false;
+	}
 
-	
+	function get_pro_details( $res, $action, $args ){
+		
 		if( $action === 'plugin_information' && $args->slug === 'sendpress-pro' ){
 
 			if( class_exists('SendPress_Option') ){

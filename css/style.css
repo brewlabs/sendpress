@@ -175,7 +175,9 @@ outline: none;
     border-style: solid;
     border-width: 1px;
 }
-
+.reports .scheduled{
+    background-color: #d9edf7;
+}
 table.wp-list-table{
     min-width: 820px;
 }

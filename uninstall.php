@@ -20,7 +20,7 @@ define( 'SENDPRESS_VERSION', '0.9.2' );
 delete_option( 'sendpress_options' );
 delete_option( 'sendpress_db_version' );
 
-
+SendPress_Pro_Manager::try_deactivate_key();
 
 
 /** Delete All the Custom Post Types */
