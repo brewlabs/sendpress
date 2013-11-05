@@ -1084,7 +1084,7 @@ Push
 				
 		        SendPress_Option::set('notification_options', $new_options );
 			} else if( is_array($options) ){
-				$result = array_merge($options, $new_options);
+				$result = array_merge( $new_options , $options);
 				SendPress_Option::set('notification_options', $result );
 			}
 			
@@ -1121,7 +1121,7 @@ Push
 			if($options === false || $options === ''){
 		        SendPress_Option::set('notification_options', $new_options );
 			} else if( is_array($options) ){
-				$result = array_merge($options, $new_options);
+				$result = array_merge($new_options , $options);
 				SendPress_Option::set('notification_options', $result );
 			}
 
