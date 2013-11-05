@@ -229,8 +229,7 @@ class SendPress_Pro_Manager {
 	}
 
 	function get_pro_details( $res, $action, $args ){
-		
-		if( $action === 'plugin_information' && $args->slug === 'sendpress-pro' ){
+		if( $action === 'plugin_information'&& is_object($args) && $args->slug === 'sendpress-pro' ){
 
 			if( class_exists('SendPress_Option') ){
 				$license = SendPress_Option::get('api_key');

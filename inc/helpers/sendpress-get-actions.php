@@ -12,7 +12,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 *   Handles saving data and other user actions.
 *
 **/
-echo "s";
+
 switch ( $this->_current_action ) {
             case 'delete-email-queue':
                 $email_delete = $_GET['qemail'];

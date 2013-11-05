@@ -90,16 +90,31 @@ class SendPress_Lists_Table extends WP_List_Table {
             case 'last_send_date':
                 return date('Y-m-d');        
             case 'actions':
-                return '<div class="inline-buttons">
-                    <a class="btn btn-info" href="?page='.$_REQUEST['page'].'&view=subscribers&listID='.$item->ID.'"><i class="icon-user icon-white "></i> View/Edit</a>
-                    <a class="btn" href="?page='.$_REQUEST['page'].'&view=csvimport&listID='. $item->ID .'"><i class="icon-user"></i> Import</a> 
-                    <a class="btn" href="?page='.$_REQUEST['page'].'&view=add&listID='. $item->ID .'"><i class="icon-user"></i> Add</a>
-                    <a class="btn" href="?page='.$_REQUEST['page'].'&action=export-list&listID='. $item->ID .'"><i class="icon-download"></i> Export</a>
-                    
-                    <a class="btn " href="'. SendPress_Admin::link('Subscribers_Listform', array('listID' => $item->ID)) .'"><i class="icon-list"></i> Form</a>
-                    <a class="btn " href="?page='.$_REQUEST['page'].'&view=listedit&listID='. $item->ID .'"><i class="icon-cog"></i></a>
-                    </div>';
+                $role = get_post_meta($item->ID,'sync_role',true);
+                $add = '';
+                if($role != 'none' && $role != false){
+                    $add = " - <a href='". SendPress_Admin::link('Subscribers_Sync') . "&listID=".$item->ID."'>Sync</a>";
+                }
 
+
+                $str = '<div class="inline-buttons">
+                    <a class="btn btn-info" href="?page='.$_REQUEST['page'].'&view=subscribers&listID='.$item->ID.'"><i class="icon-user icon-white "></i> View/Edit</a> ';
+                $role = get_post_meta($item->ID,'sync_role',true);
+                $add = '';
+                if($role != 'none' && $role != false){
+                    $str .= "<a class='btn' href='". SendPress_Admin::link('Subscribers_Sync') . "&listID=".$item->ID."'><i class='icon-refresh'></i> Sync</a> ";
+                } else {
+                    $str .=  '<a class="btn" href="?page='.$_REQUEST['page'].'&view=csvimport&listID='. $item->ID .'"><i class="icon-user"></i> Import</a> ';
+                    $str .= '<a class="btn" href="?page='.$_REQUEST['page'].'&view=add&listID='. $item->ID .'"><i class="icon-user"></i> Add</a> ';
+                     $str .='<a class="btn" href="?page='.$_REQUEST['page'].'&action=export-list&listID='. $item->ID .'"><i class="icon-download"></i> Export</a> ';
+                    
+                $str .=    '<a class="btn " href="'. SendPress_Admin::link('Subscribers_Listform', array('listID' => $item->ID)) .'"><i class="icon-list"></i> Form</a> ';
+                }
+
+               
+                 $str .=   '<a class="btn " href="?page='.$_REQUEST['page'].'&view=listedit&listID='. $item->ID .'"><i class="icon-cog"></i></a>
+                    </div>';
+                return $str;
             default:
                 return print_r($item,true); //Show the whole array for troubleshooting purposes
         }
