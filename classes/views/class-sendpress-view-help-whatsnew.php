@@ -113,6 +113,7 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 	</div>
 </div>
 -->
+
 <div class="changelog">
 	<h3>Major New Features</h3>
 
@@ -125,9 +126,11 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 
 			<h4>Scheduled Sends</h4>
 			<p>Now you can create your email days or weeks ahead and schedule it to be sent out at a specific time. SendPress handles everything in the background.</p>
+
 		</div>
 	</div>
 </div>
+
 <div class="changelog">
 	<h3>Help Us Out</h3>
 	<div class="feature-section col two-col">
@@ -210,15 +213,14 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 
 
 <div class="return-to-dashboard">
-		Back to SendPress: <a href="<?php echo SendPress_Admin::link('Emails'); ?>">Emails</a> |
+		SendPress: <a href="<?php echo SendPress_Admin::link('Emails'); ?>">Emails</a> |
 		<a href="<?php echo SendPress_Admin::link('Reports'); ?>">Reports</a> |
 		<a href="<?php echo SendPress_Admin::link('Subscribers'); ?>">Subscribers</a> |
 		<a href="<?php echo SendPress_Admin::link('Queue'); ?>">Queue</a> |
 		<a href="<?php echo SendPress_Admin::link('Settings'); ?>">Settings</a> 
-		<?php if( SendPress_Option::get('beta') ) { ?>
+		
 		|
-		<a href="<?php echo SendPress_Admin::link('Pro'); ?>">Pro Add-ons</a> 
-		<?php } ?>
+		<a href="<?php echo SendPress_Admin::link('Pro'); ?>">Pro</a>
 </div>
 <br>
 </div>
