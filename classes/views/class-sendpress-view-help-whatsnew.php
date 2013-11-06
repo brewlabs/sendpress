@@ -35,6 +35,10 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 					margin-left: 146px;
 					background-color: #dcdcd7;
 				}
+				.mp6 #wpcontent{
+					margin-left: 151px;
+					background-color: #dcdcd7;
+				}
 				.about-wrap .feature-section.two-col p::before{
 					display: none;
 				}

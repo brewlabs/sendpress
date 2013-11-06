@@ -3,14 +3,12 @@ Plugin URI: http://sendpress.com
 Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.4
-Tested up to: 3.6.1
+Tested up to: 3.7.1
 Stable tag: 0.9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-
 Easily create, send, manage and track your newsletters and emails right from WordPress.
-
 
 == Description ==
 
@@ -30,6 +28,8 @@ Features of the plugin include:
 * Add a subscription form as a sidebar widget or in your pages
 * Send with your web host or Gmail for free (Mandrill, Sendgrid, Amazon SES and more with PRO).
 * Developer friendly with dozens of actions and filters
+* Scheduled Sending of emails
+* Sync Lists to WordPress Roles
 
 More information at [SendPress.com](http://sendpress.com/).
 
@@ -102,6 +102,14 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 0.9.6 - 2013.11.6 =
+* WordPress role sync
+* Scheduled Sending
+* Better character encoding support
+* Fix for bulk actions
+* Support for MP6 UI
+* New Logos added
 
 = 0.9.5.4 - 2013.10.19 =
 * Fix for notifications
@@ -319,6 +327,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.6 =
+WordPress role syncing and Scheduled sending
 
 = 0.9.5.3 =
 Bug fix for Send Email Now stopping
