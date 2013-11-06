@@ -239,11 +239,7 @@ Push
 				if(isset($_GET['sp-admin-code']) && current_user_can('manage_options') ){
 					switch ( $_GET['sp-admin-code'] ) {
 						case 'install-tables':
-
-							require_once(SENDPRESS_PATH .'inc/db/tables.php');
-		    				require_once(SENDPRESS_PATH .'inc/db/status.table.php');
-		    				require_once(SENDPRESS_PATH .'inc/db/open.click.table.php');
-
+							$this->install_tables();
 						break;
 						case 'remove-key':
 							SendPress_Option::set('api_key','');
@@ -1015,42 +1011,24 @@ Push
 		$result = $wpdb->update($table,$values, array('listID'=> $old) );
 		//return $result;
 	}
+	
 
 	function maybe_upgrade() {
 
 		$current_version = SendPress_Option::get('version', '0' );
 		//SendPress_Error::log($current_version);
+		//
+		
+		if(version_compare( $current_version, '0', '==' )){
+			SendPress_DB_Tables::install();
+		}	
 
 		if ( version_compare( $current_version, SENDPRESS_VERSION, '==' ) )
 			return;
 
 		SendPress_Option::set('whatsnew','show');
 
-		if(version_compare( $current_version, '0.6.2', '==' )){
-			require_once(SENDPRESS_PATH . 'inc/db/status.table.php');
-		}
 
-		if(version_compare( $current_version, '0.6.5', '<' )){
-			$this->update_option( 'install_date' , time() );
-		}
-
-		if(version_compare( $current_version, '0.7', '<' )){
-			$this->update_option( 'sendmethod' , 'website' );
-		}
-
-		if(version_compare( $current_version, '0.7.5', '<' )){
-			require_once(SENDPRESS_PATH . 'inc/db/open.click.table.php');
-		}
-		
-		if(version_compare( $current_version, '0.8.1', '<' )){
-			require_once(SENDPRESS_PATH . 'inc/db/alter-lists-subs.php');
-		}
-		if(version_compare( $current_version, '0.8.3', '<' )){
-			$this->update_option( 'feedback' , 'no' );
-		}
-		if(version_compare( $current_version, '0.8.4', '<' )){
-			require_once(SENDPRESS_PATH . 'inc/db/alter-list.php');
-		}
 		if(version_compare( $current_version, '0.8.6', '<' )){
 			$widget_options =  array();
 
@@ -1058,7 +1036,7 @@ Push
         	$widget_options['widget_options']['load_ajax'] = 0;
         	$widget_options['widget_options']['load_scripts_in_footer'] = 0;
 
-        	$this->update_options($widget_options);   
+        	SendPress_Option::set($widget_options);   
 		}
 	
 		if(version_compare( $current_version, '0.8.6.5', '<' )){
@@ -1066,7 +1044,8 @@ Push
 		}
 
 		if(version_compare( $current_version, '0.8.6.7', '<' )){
-			require_once(SENDPRESS_PATH . 'inc/db/alter-tracking.php');
+			//Make sure this version has the right tables
+			SendPress_DB_Tables::install();
 			SendPress_Option::set('sendpress_ignore_087', 'false');
 		}
 		
@@ -1477,9 +1456,7 @@ Push
 		} else {
 		    //if( SendPress_Option::get('version','0') == '0' ){
 		    	SendPress_Option::set('sendpress_ignore_087', 'true');
-		    	require_once(SENDPRESS_PATH .'inc/db/tables.php');
-		    	require_once(SENDPRESS_PATH .'inc/db/status.table.php');
-		    	require_once(SENDPRESS_PATH .'inc/db/open.click.table.php');
+		    	SendPress_DB_Tables::install();
 		    	SendPress_Option::set( 'version' , SENDPRESS_VERSION );
 
 			//}	

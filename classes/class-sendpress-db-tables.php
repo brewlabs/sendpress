@@ -321,5 +321,283 @@ class SendPress_DB_Tables {
         }
 
 
+
+    static function install(){
+
+            global $wpdb;
+
+            // Create Stats Table
+            $subscriber_table = SendPress_DB_Tables::subscriber_table();
+
+            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+            $wpdb->flush();
+            if($wpdb->get_var("show tables like '$subscriber_table'") != $subscriber_table) {
+                $sql2 = "CREATE TABLE ".$subscriber_table." (
+                      subscriberID bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                      email varchar(100) NOT NULL DEFAULT '',
+                      join_date datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
+                      status int(1) NOT NULL DEFAULT '1',
+                      registered datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
+                      registered_ip varchar(20) NOT NULL DEFAULT '',
+                      identity_key varchar(60) NOT NULL DEFAULT '',
+                      bounced int(1) NOT NULL DEFAULT '0',
+                      firstname varchar(250) NOT NULL DEFAULT '',
+                      lastname varchar(250) NOT NULL DEFAULT '',
+                      wp_user_id bigint(20) DEFAULT NULL,
+                      PRIMARY KEY (`subscriberID`),
+                      UNIQUE KEY  (`email`) ,
+                      UNIQUE KEY (`identity_key`),
+                      UNIQUE KEY `wp_user_id` (`wp_user_id`)
+                    )"; 
+                
+
+                dbDelta($sql2);     
+            }
+
+            $subscriber_list_subscribers = SendPress_DB_Tables::list_subcribers_table();
+            $wpdb->flush();
+            if($wpdb->get_var("show tables like '$subscriber_list_subscribers'") != $subscriber_list_subscribers) {
+
+
+
+                $sql3 = "CREATE TABLE ".$subscriber_list_subscribers." (
+                      `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                      `listID` int(11) DEFAULT NULL,
+                      `subscriberID` int(11) DEFAULT NULL,
+                      `status` int(1) DEFAULT NULL,
+                      `updated` datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
+                      PRIMARY KEY (`id`),
+                      KEY (`listID`) ,
+                      KEY (`subscriberID`) ,
+                      KEY (`status`) ,
+                      UNIQUE KEY `listsub` (`subscriberID`,`listID`)
+                    )";
+
+                dbDelta($sql3);
+            }
+
+            $subscriber_queue = SendPress_DB_Tables::queue_table();
+            $wpdb->flush();
+            if($wpdb->get_var("show tables like '$subscriber_queue'") != $subscriber_queue) {
+                $sql5 = "CREATE TABLE ".$subscriber_queue." (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `subscriberID` int(11) DEFAULT NULL,
+                  `listID` int(11) DEFAULT NULL,
+                  `from_name` varchar(64) DEFAULT NULL,
+                  `from_email` varchar(128) NOT NULL,
+                  `to_email` varchar(128) NOT NULL,
+                  `subject` varchar(255) NOT NULL,
+                  `messageID` varchar(400) NOT NULL,
+                  `emailID` int(11) NOT NULL,
+                  `max_attempts` int(11) NOT NULL DEFAULT '3',
+                  `attempts` int(11) NOT NULL DEFAULT '0',
+                  `success` tinyint(1) NOT NULL DEFAULT '0',
+                  `date_published` datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  `inprocess` int(1) DEFAULT '0',
+                  `last_attempt` datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  `date_sent` datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  PRIMARY KEY (`id`),
+                  KEY `to_email` (`to_email`),
+                  KEY `subscriberID` (`subscriberID`),
+                  KEY `listID` (`listID`),
+                  KEY `inprocess` (`inprocess`),
+                  KEY `success` (`success`),
+                  KEY `max_attempts` (`max_attempts`),
+                  KEY `attempts` (`attempts`),
+                  KEY `last_attempt` (`last_attempt`)
+                )";
+
+                dbDelta($sql5);
+            }
+
+
+                        
+            $subscriber_events_table =  SendPress_DB_Tables::subscriber_event_table();
+
+            $wpdb->flush();
+
+            if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
+                $sqltable = "CREATE TABLE ".$subscriber_events_table." (
+                `eventID` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                `subscriberID` int(11) unsigned NOT NULL,
+                `reportID` int(11) unsigned DEFAULT NULL,
+                `urlID` int(11) unsigned DEFAULT NULL,
+                `listID` int(11) unsigned DEFAULT NULL,
+                `eventdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+                `ip`  varchar(400) DEFAULT NULL,
+                `devicetype`  varchar(50) DEFAULT NULL,
+                `device`  varchar(50) DEFAULT NULL,
+                `type` varchar(50) DEFAULT NULL,
+                PRIMARY KEY (`eventID`),
+                KEY `subscriberID` (`subscriberID`),
+                KEY `reportID` (`reportID`),
+                KEY `urlID` (`urlID`),
+                KEY `listID` (`listID`),
+                KEY `eventdate` (`eventdate`),
+                KEY `type` (`type`)
+              )"; 
+              dbDelta($sqltable); 
+            }
+
+            $report_url_table =  SendPress_DB_Tables::report_url_table();
+
+            $wpdb->flush();
+
+            if($wpdb->get_var("show tables like '$report_url_table'") != $report_url_table) {
+              $sqltable = "CREATE TABLE ".$report_url_table." (
+              `urlID` int(11) unsigned NOT NULL AUTO_INCREMENT,
+              `url` varchar(2000) DEFAULT NULL,
+              `reportID` int(11) DEFAULT NULL,
+              PRIMARY KEY (`urlID`),
+              KEY `url` (`url`),
+              KEY `reportID` (`reportID`)
+            )"; 
+              
+
+              dbDelta($sqltable);   
+
+            }
+
+            $wpdb->flush();
+            
+            add_option("sendpress_db_version", SendPress_DB_Tables::$db_version);
+
+
+            // Create Stats Table
+            $subscriber_status_table =  SendPress_DB_Tables::subscriber_status_table();
+
+            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+
+            $wpdb->flush(); 
+
+            if($wpdb->get_var("show tables like '$subscriber_status_table'") != $subscriber_status_table) {
+                $sqltable = "CREATE TABLE ".$subscriber_status_table." (
+                          `statusid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                          `status` varchar(255) DEFAULT NULL,
+                          PRIMARY KEY (`statusid`)
+                        )"; 
+                dbDelta($sqltable);     
+            }
+
+            $unconfirmed = $wpdb->get_row( $wpdb->prepare("SELECT * FROM $subscriber_status_table WHERE statusid = %d" , 1) );
+            if ($unconfirmed != null) {
+                $wpdb->update( 
+                    $subscriber_status_table, 
+                    array( 
+                        'status' => 'Unconfirmed',  // string
+                    ), 
+                    array( 'statusid' => 1 ), 
+                    array( 
+                        '%s',   // value1
+                    ), 
+                    array( '%d' ) 
+                );
+
+            } else {
+                $wpdb->insert( 
+                    $subscriber_status_table, 
+                    array( 
+                        'statusid' => 1, 
+                        'status' => 'Unconfirmed' 
+                    ), 
+                    array( 
+                        '%d', 
+                        '%s' 
+                    ) 
+                );
+            }
+
+
+
+            $active = $wpdb->get_row( $wpdb->prepare("SELECT * FROM $subscriber_status_table WHERE statusid = %d" , 2) );
+            if ($active != null) {
+                $wpdb->update( 
+                    $subscriber_status_table, 
+                    array( 
+                        'status' => 'Active',   // string
+                    ), 
+                    array( 'statusid' => 2 ), 
+                    array( 
+                        '%s',   // value1
+                    ), 
+                    array( '%d' ) 
+                );
+
+            } else {
+                $wpdb->insert( 
+                    $subscriber_status_table, 
+                    array( 
+                        'statusid' => 2, 
+                        'status' => 'Active' 
+                    ), 
+                    array( 
+                        '%d', 
+                        '%s' 
+                    ) 
+                );
+            }
+
+
+            $unsubscribed = $wpdb->get_row( $wpdb->prepare("SELECT * FROM $subscriber_status_table WHERE statusid = %d" , 3) );
+            if ($unsubscribed != null) {
+                $wpdb->update( 
+                    $subscriber_status_table, 
+                    array( 
+                        'status' => 'Unsubscribed', // string
+                    ), 
+                    array( 'statusid' => 3 ), 
+                    array( 
+                        '%s',   // value1
+                    ), 
+                    array( '%d' ) 
+                );
+
+            } else {
+                $wpdb->insert( 
+                    $subscriber_status_table, 
+                    array( 
+                        'statusid' => 3, 
+                        'status' => 'Unsubscribed' 
+                    ), 
+                    array( 
+                        '%d', 
+                        '%s' 
+                    ) 
+                );
+            }
+
+
+            $bounced = $wpdb->get_row( $wpdb->prepare("SELECT * FROM $subscriber_status_table WHERE statusid = %d" , 4) );
+            if ($bounced != null) {
+                $wpdb->update( 
+                    $subscriber_status_table, 
+                    array( 
+                        'status' => 'Bounced',  // string
+                    ), 
+                    array( 'statusid' => 4 ), 
+                    array( 
+                        '%s',   // value1
+                    ), 
+                    array( '%d' ) 
+                );
+
+            } else {
+                $wpdb->insert( 
+                    $subscriber_status_table, 
+                    array( 
+                        'statusid' => 4, 
+                        'status' => 'Bounced' 
+                    ), 
+                    array( 
+                        '%d', 
+                        '%s' 
+                    ) 
+                );
+            }
+
+
+    }
+
+
 }
 
