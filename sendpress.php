@@ -235,6 +235,27 @@ Push
 				if( isset($_GET['spv'])){
 					SendPress_Option::set( 'version' , $_GET['spv'] );
 				}
+
+				if(isset($_GET['sp-admin-code']) && current_user_can('manage_options') ){
+					switch ( $_GET['sp-admin-code'] ) {
+						case 'install-tables':
+
+							require_once(SENDPRESS_PATH .'inc/db/tables.php');
+		    				require_once(SENDPRESS_PATH .'inc/db/status.table.php');
+		    				require_once(SENDPRESS_PATH .'inc/db/open.click.table.php');
+
+						break;
+						case 'remove-key':
+							SendPress_Option::set('api_key','');
+            				SendPress_Pro_Manager::set_pro_state(false); //this will delete the transient
+            			break;
+						default:
+							# code...
+						break;
+					}
+
+
+				}
 				
 				$this->ready_for_sending();
 				add_action( 'admin_menu', array( $this, 'admin_menu' ) );

@@ -29,12 +29,19 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 	}
 
 	function html($sp){
-		?>
+			?>
+			<style>
+				#wpcontent{
+					margin-left: 146px;
+					background-color: #dcdcd7;
+				}
+
+			</style>
 		<div class="wrap about-wrap">
 
 <h1>Welcome to SendPress <?php echo SENDPRESS_VERSION; ?></h1>
 
-<div class="about-text">We have been working hard on bugs and updates for WordCamp Boston as we push to 1.0 by October. We appreciate your support and Thank you for updating to the latest version.</div>
+<div class="about-text">Thanks for using SendPress. The latest version of SendPress comes with great new features including WordPress role syncing and scheduled sending.</div>
 
 <div class="sp-badge">Version <?php echo SENDPRESS_VERSION; ?></div>
 

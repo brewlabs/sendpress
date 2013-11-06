@@ -84,9 +84,9 @@ class SendPress_Sender {
 		if ($input == 'UTF-8' && $output == 'ISO-8859-1'){
 			$data = str_replace(array('€','„','“'),array('EUR','"','"'),$data);
 		}
-		if (function_exists('iconv')){
+		if ( function_exists('iconv') ){
 			set_error_handler('sendpress_encoding_error_handler');
-			$encodedData = iconv($input, $output."//IGNORE", $data);
+			$encodedData = iconv($input, $output."//TRANSLIT", $data);
 			restore_error_handler();
 			if(!sendpress_encoding_error_handler('result')){
 				return $encodedData;

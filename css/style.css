@@ -574,16 +574,17 @@ overflow: auto;
 }
 
 .sp-badge {
-padding-top: 142px;
+padding-top: 160px;
 height: 50px;
 width: 173px;
 font-weight: bold;
 font-size: 14px;
 text-align: center;
 margin: 0 -5px;
-background: #f9f9f9 url('../img/sp-badge.png?ver=20111120') no-repeat;
+background: #dcdcd7 url('../img/sendpress.jpg') no-repeat center top;
 float: left;
 margin-bottom: 20px;
+
 }
 
 
@@ -616,9 +617,20 @@ text-shadow: none;
 background: none;
 }
 .sp-badge {
-color: white;
-text-shadow: 0 -1px 0 rgba(22, 57, 81, 0.3);
+color:#d04329;
+/*text-shadow: 0 -1px 0 rgba(22, 57, 81, 0.3);*/
+border-radius: 5px;
+  -moz-box-shadow:    inset 0 0 10px #999;
+   -webkit-box-shadow: inset 0 0 10px #999;
+   box-shadow:         inset 0 0 10px #999;
 }
+
+.sendpress_page_sp-help .sp-badge{
+  -moz-box-shadow:    none;
+   -webkit-box-shadow:  none;
+   box-shadow:          none;
+}
+
 .sp-welcome-panel h3 {
 text-shadow: 1px 1px 1px white;
 }
