@@ -891,7 +891,7 @@ Push
 			$role = "manage_options";
 		}
 		$queue = SendPress_Data::emails_in_queue();
-		add_menu_page(__('SendPress','sendpress'), __('SendPress','sendpress'), $role,'sp-overview',  array(&$this,'render_view') , SENDPRESS_URL.'img/icon.png');
+		add_menu_page(__('SendPress','sendpress'), __('SendPress','sendpress'), $role,'sp-overview',  array(&$this,'render_view') , SENDPRESS_URL.'img/sendpress-bg-16.png');
 	    add_submenu_page('sp-overview', __('Overview','sendpress'), __('Overview','sendpress'), $role, 'sp-overview', array(&$this,'render_view'));
 	    $main = add_submenu_page('sp-overview', __('Emails','sendpress'), __('Emails','sendpress'), $role, 'sp-emails', array(&$this,'render_view'));
 	    

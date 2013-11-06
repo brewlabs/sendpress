@@ -35,25 +35,24 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 					margin-left: 146px;
 					background-color: #dcdcd7;
 				}
-
+				.about-wrap .feature-section.two-col p::before{
+					display: none;
+				}
 			</style>
 		<div class="wrap about-wrap">
 
 <h1>Welcome to SendPress <?php echo SENDPRESS_VERSION; ?></h1>
 
-<div class="about-text">Thanks for using SendPress. The latest version of SendPress comes with great new features including WordPress role syncing and scheduled sending.</div>
+<div class="about-text">Thanks for using SendPress. The latest version of SendPress comes with a few great new features including WordPress role syncing and scheduled sending.</div>
 
 <div class="sp-badge">Version <?php echo SENDPRESS_VERSION; ?></div>
-
+<!--
 <div class="changelog">
 	<h3>Show support and help keep SendPress free</h3>
 
 	<div class="feature-section col two-col">
-		<p style="padding: 5px;">
-		</p>
 		<div>
 			<a href="http://wordpress.org/support/view/plugin-reviews/sendpress" target="_blank"><img alt="" src="<?php echo SENDPRESS_URL;?>/img/ratethis.png" class="image-100"></a>
-		
 		</div>
 		<div class="last-feature">
 			<h4>Please give us a Review</h4>
@@ -67,12 +66,12 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 </div>
 
 <h2 class="nav-tab-wrapper">
-	<a href="#" class="nav-tab nav-tab-active">
-		What’s New	</a><!--<a href="credits.php" class="nav-tab">
+	<a href="#" class="nav-tab nav-tab-active">What’s New</a>
+	<a href="credits.php" class="nav-tab">
 		Credits	</a><a href="freedoms.php" class="nav-tab">
-		Freedoms	</a>-->
+		Freedoms	</a>
 </h2>
-<!--
+
 <div class="changelog">
 	<h3>New Pro Options</h3>
 
@@ -90,7 +89,7 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 		</div>
 	</div>
 </div>
-<!--
+
 <div class="changelog">
 	<h3>Pro Add-ons</h3>
 
@@ -115,20 +114,42 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 </div>
 -->
 <div class="changelog">
-	<h3>CSV Import</h3>
+	<h3>Major New Features</h3>
 
-	<div class="feature-section images-stagger-right">
-		<img alt="" src="<?php echo SENDPRESS_URL;?>/img/import.png" class="image-30">
-		<h4>Import CSV files from any other list</h4>
-		<p>The new import function makes it easy to bring in lists from MailChimp, Constant Contact, Etc.</p>
+	<div class="feature-section col two-col">
+		<div>
+			<h4>WordPress Role Sync</h4>
+			<p>Easily sync any list to a role in WordPress. Custom roles from plugins like WooCommerce and Easy Digital Downloads are also supported.</p>
+		</div>
+		<div class="last-feature">
 
-		<h4>Better Queue</h4>
-		<p>Auto Cron updated for smoother sending. We can easily help you send your emails reliably.</p>
+			<h4>Scheduled Sends</h4>
+			<p>Now you can create your email days or weeks ahead and schedule it to be sent out at a specific time. SendPress handles everything in the background.</p>
+		</div>
+	</div>
+</div>
+<div class="changelog">
+	<h3>Help Us Out</h3>
+	<div class="feature-section col two-col">
+		<div>
+			<a href="http://wordpress.org/support/view/plugin-reviews/sendpress" target="_blank"><img alt="" src="<?php echo SENDPRESS_URL;?>/img/ratethis.png" class="spimage-100"></a>
+		</div>
+		<div class="last-feature">
+
+			<h4>Give us a Review</h4>
+			<p>We love feedback so please let us know how we are doing.<br>Add your <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/sendpress">★★★★★</a> on <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/sendpress">wordpress.org</a></p>
+
+			<h4>Help Translate</h4>
+			<p>You can help translate on <a href="https://www.transifex.com/projects/p/sendpress/">Transifex</a>.</p>
+
+			<h4>Report and Fix bugs</h4>
+			<p>SendPress is on <a href="http://wordpress.org/support/plugin/sendpress">GitHub</a> feel free to patch bugs you find or please report them on the <a href="http://wordpress.org/support/plugin/sendpress">forum</a>.</p>
+		</div>
 	</div>
 </div>
 
 <div class="changelog">
-	<h3>What's New</h3>
+	<h3>Other Recent Updates</h3>
 
 	<div class="feature-section col three-col">
 		<div>
@@ -171,15 +192,15 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 	<div class="feature-section col three-col">
 		<div>
 			<h4>Post Notifications</h4>
-			<p>Subscribers will be able to get your new post's via email.</p>
+			<p>Subscribers will be able to get your new post's via email. Post Notifications will only be available with SendPress Pro.</p>
 		</div>
 		<div>
-			<h4>Send to WordPress Roles</h4>
-			<p>We are working on sending emails to your WordPress users.</p>
+			<h4>Autoresponders</h4>
+			<p>Automatically send emails to subscribers based on actions like link clicks, subscribe to list or email opens.</p>
 		</div>
 		<div class="last-feature">
-			<h4>Admin Notifications</h4>
-			<p>Get emails when someone subscribers or unsubscribes from your lists.</p>
+			<h4>Custom fields</h4>
+			<p>Add your own information to subscribers and collect the data you need.</p>
 	
 		</div>
 	</div>

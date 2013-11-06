@@ -297,16 +297,34 @@ class SendPress_DB_Tables {
     static function update_tables_0952(){
          global $wpdb;
          $ls = SendPress_DB_Tables::list_subcribers_table();
-         $wpdb->query("ALTER IGNORE TABLE `". $ls ."` ADD UNIQUE INDEX `listsub` (`subscriberID`,`listID`)");
+        if( $wpdb->get_var("SHOW INDEX FROM ". $ls ." WHERE Key_name = 'listsub'") == false) {
+            $wpdb->query("ALTER IGNORE TABLE `". $ls ."` ADD UNIQUE INDEX `listsub` (`subscriberID`,`listID`)");
+        }
 
          $subscriber_queue = SendPress_DB_Tables::queue_table();
-         $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `subscriberID` (`subscriberID`)");
-         $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `listID` (`listID`)");
-         $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `inprocess` (`inprocess`)");
-         $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `success` (`success`)");
-         $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `max_attempts` (`max_attempts`)");
-         $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `attempts` (`attempts`)");
-         $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `last_attempt` (`last_attempt`)");
+
+         
+            if( $wpdb->get_var("SHOW INDEX FROM ". $subscriber_queue ." WHERE Key_name = 'subscriberID'") == false) {
+                $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `subscriberID` (`subscriberID`)");
+            }
+            if( $wpdb->get_var("SHOW INDEX FROM ". $subscriber_queue ." WHERE Key_name = 'listID'") == false) {
+                $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `listID` (`listID`)");
+            }
+            if( $wpdb->get_var("SHOW INDEX FROM ". $subscriber_queue ." WHERE Key_name = 'inprocess'") == false) {
+                $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `inprocess` (`inprocess`)");
+            }
+            if( $wpdb->get_var("SHOW INDEX FROM ". $subscriber_queue ." WHERE Key_name = 'success'") == false) {
+                $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `success` (`success`)");
+            }
+            if( $wpdb->get_var("SHOW INDEX FROM ". $subscriber_queue ." WHERE Key_name = 'max_attempts'") == false) {
+                $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `max_attempts` (`max_attempts`)");
+            }
+            if( $wpdb->get_var("SHOW INDEX FROM ". $subscriber_queue ." WHERE Key_name = 'attempts'") == false) {
+                $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `attempts` (`attempts`)");
+            }
+            if( $wpdb->get_var("SHOW INDEX FROM ". $subscriber_queue ." WHERE Key_name = 'last_attempt'") == false) {
+                $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `last_attempt` (`last_attempt`)");
+            }
 
         }
 
@@ -411,7 +429,7 @@ class SendPress_DB_Tables {
             }
 
 
-                        
+
             $subscriber_events_table =  SendPress_DB_Tables::subscriber_event_table();
 
             $wpdb->flush();
@@ -459,7 +477,7 @@ class SendPress_DB_Tables {
             }
 
             $wpdb->flush();
-            
+
             add_option("sendpress_db_version", SendPress_DB_Tables::$db_version);
 
 

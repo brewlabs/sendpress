@@ -31,9 +31,26 @@ p{
     font-size: 20px;
     line-height: 22px;
 }
-.sp-icons {
-	background:url('../img/sendpress.png') no-repeat;
+.spimage-100{
+    width: 100%;
 }
+.sp-icons {
+	background:url('../img/sendpress-32.png') no-repeat;
+}
+@media only screen and (-moz-min-device-pixel-ratio: 1.5),only screen and (-o-min-device-pixel-ratio: 3/2),only screen and (-webkit-min-device-pixel-ratio: 1.5),only screen and (min-device-pixel-ratio: 1.5) {
+    .sp-icons {
+        background: url('../img/sendpress-160.png') no-repeat;
+        background-size: 32px 32px;
+        background-color: blue;
+    }
+}
+ .sp-icons {
+        background: url('../img/sendpress-160.png') no-repeat;
+        background-size: 34px 34px;
+        background-color: blue;
+    }
+
+
 .nav-sp{
   min-width: 820px; 
   margin: 0 0 20px;  
@@ -1628,8 +1645,6 @@ line-height: 30px;
     display: block;
     clear:both;
 }
-
-
 
 
 
