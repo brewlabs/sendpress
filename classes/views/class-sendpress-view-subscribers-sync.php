@@ -24,7 +24,7 @@ class SendPress_View_Subscribers_Sync extends SendPress_View_Subscribers {
 		$email_list = array();
 		echo "<h2>Sync WordPress users ". $listname."</h2>";
 		foreach ($blogusers as $user) {
-			SendPress_Data::update_subscriber_by_email( $user->user_email , array('wp_user_id'=>$user->ID) );
+			SendPress_Data::update_subscriber_by_email( $user->user_email , array('wp_user_id'=>$user->ID,'firstname'=>$user->first_name,'lastname'=>$user->last_name) );
         	$email_list[] = $user->user_email;
        	}
        	echo "<p>Synced ". count($blogusers) . " users.</p>";

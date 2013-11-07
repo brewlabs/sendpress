@@ -551,9 +551,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$table = SendPress_Data::subscriber_table();
 		global $wpdb;
 		$key = SendPress_Data::random_code();
-		$id = SendPress_Data::get_subscriber_by_email($email);
-		$q = "INSERT INTO $table (email,wp_user_id,identity_key,join_date) VALUES (%s,%d,%s,%s) ON DUPLICATE KEY UPDATE wp_user_id=%d";
-		$q = $wpdb->prepare($q,$email,$values['wp_user_id'],$key,date('Y-m-d H:i:s'),$values['wp_user_id']);
+		//$id = SendPress_Data::get_subscriber_by_email($email);
+		$q = "INSERT INTO $table (email,wp_user_id,identity_key,join_date,firstname,lastname) VALUES (%s,%d,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE wp_user_id=%d,firstname=%s,lastname=%s";
+		$q = $wpdb->prepare($q,$email,$values['wp_user_id'],$key,date('Y-m-d H:i:s'),$values['firstname'],$values['lastname'],$values['wp_user_id'],$values['firstname'],$values['lastname']);
 		$result = $wpdb->query($q);
 		//$result = $wpdb->update($table, $values, array('email'=> $email) );
 	}
