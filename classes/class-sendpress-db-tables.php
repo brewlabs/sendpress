@@ -344,13 +344,27 @@ class SendPress_DB_Tables {
 
             global $wpdb;
 
+            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+          
+            $wpdb->hide_errors();
+
+            $collate = '';
+
+            if ( $wpdb->has_cap( 'collation' ) ) {
+                if( ! empty($wpdb->charset ) )
+                    $collate .= "DEFAULT CHARACTER SET $wpdb->charset";
+                if( ! empty($wpdb->collate ) )
+                    $collate .= " COLLATE $wpdb->collate";
+            }
+
+
+
+
             // Create Stats Table
             $subscriber_table = SendPress_DB_Tables::subscriber_table();
 
-            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-            $wpdb->flush();
-            if($wpdb->get_var("show tables like '$subscriber_table'") != $subscriber_table) {
-                $sql2 = "CREATE TABLE ".$subscriber_table." (
+            $command ='';
+            $command .= " CREATE TABLE $subscriber_table (
                       subscriberID bigint(20) unsigned NOT NULL AUTO_INCREMENT,
                       email varchar(100) NOT NULL DEFAULT '',
                       join_date datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -366,54 +380,42 @@ class SendPress_DB_Tables {
                       UNIQUE KEY  (`email`) ,
                       UNIQUE KEY (`identity_key`),
                       UNIQUE KEY `wp_user_id` (`wp_user_id`)
-                    )"; 
-                
-
-                dbDelta($sql2);     
-            }
-
+                    ) $collate;"; 
+             
             $subscriber_list_subscribers = SendPress_DB_Tables::list_subcribers_table();
-            $wpdb->flush();
-            if($wpdb->get_var("show tables like '$subscriber_list_subscribers'") != $subscriber_list_subscribers) {
-
-
-
-                $sql3 = "CREATE TABLE ".$subscriber_list_subscribers." (
-                      `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-                      `listID` int(11) DEFAULT NULL,
-                      `subscriberID` int(11) DEFAULT NULL,
-                      `status` int(1) DEFAULT NULL,
-                      `updated` datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
+            $command .= " CREATE TABLE $subscriber_list_subscribers (
+                      id int(11) unsigned NOT NULL AUTO_INCREMENT,
+                      listID int(11) DEFAULT NULL,
+                      subscriberID int(11) DEFAULT NULL,
+                      status int(1) DEFAULT NULL,
+                      updated datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
                       PRIMARY KEY (`id`),
                       KEY (`listID`) ,
                       KEY (`subscriberID`) ,
                       KEY (`status`) ,
                       UNIQUE KEY `listsub` (`subscriberID`,`listID`)
-                    )";
+                    ) $collate;";
 
-                dbDelta($sql3);
-            }
+            
 
             $subscriber_queue = SendPress_DB_Tables::queue_table();
-            $wpdb->flush();
-            if($wpdb->get_var("show tables like '$subscriber_queue'") != $subscriber_queue) {
-                $sql5 = "CREATE TABLE ".$subscriber_queue." (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `subscriberID` int(11) DEFAULT NULL,
-                  `listID` int(11) DEFAULT NULL,
-                  `from_name` varchar(64) DEFAULT NULL,
-                  `from_email` varchar(128) NOT NULL,
-                  `to_email` varchar(128) NOT NULL,
-                  `subject` varchar(255) NOT NULL,
-                  `messageID` varchar(400) NOT NULL,
-                  `emailID` int(11) NOT NULL,
-                  `max_attempts` int(11) NOT NULL DEFAULT '3',
-                  `attempts` int(11) NOT NULL DEFAULT '0',
-                  `success` tinyint(1) NOT NULL DEFAULT '0',
-                  `date_published` datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
-                  `inprocess` int(1) DEFAULT '0',
-                  `last_attempt` datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
-                  `date_sent` datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
+            $command .=" CREATE TABLE $subscriber_queue (
+                  id int(11) NOT NULL AUTO_INCREMENT,
+                  subscriberID int(11) DEFAULT NULL,
+                  listID int(11) DEFAULT NULL,
+                  from_name varchar(64) DEFAULT NULL,
+                  from_email varchar(128) NOT NULL,
+                  to_email varchar(128) NOT NULL,
+                  subject varchar(255) NOT NULL,
+                  messageID varchar(400) NOT NULL,
+                  emailID int(11) NOT NULL,
+                  max_attempts int(11) NOT NULL DEFAULT '3',
+                  attempts int(11) NOT NULL DEFAULT '0',
+                  success tinyint(1) NOT NULL DEFAULT '0',
+                  date_published datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  inprocess int(1) DEFAULT '0',
+                  last_attempt datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  date_sent datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
                   PRIMARY KEY (`id`),
                   KEY `to_email` (`to_email`),
                   KEY `subscriberID` (`subscriberID`),
@@ -423,29 +425,20 @@ class SendPress_DB_Tables {
                   KEY `max_attempts` (`max_attempts`),
                   KEY `attempts` (`attempts`),
                   KEY `last_attempt` (`last_attempt`)
-                )";
-
-                dbDelta($sql5);
-            }
-
-
-
+                ) $collate;";
+            
             $subscriber_events_table =  SendPress_DB_Tables::subscriber_event_table();
-
-            $wpdb->flush();
-
-            if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
-                $sqltable = "CREATE TABLE ".$subscriber_events_table." (
-                `eventID` int(11) unsigned NOT NULL AUTO_INCREMENT,
-                `subscriberID` int(11) unsigned NOT NULL,
-                `reportID` int(11) unsigned DEFAULT NULL,
-                `urlID` int(11) unsigned DEFAULT NULL,
-                `listID` int(11) unsigned DEFAULT NULL,
-                `eventdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-                `ip`  varchar(400) DEFAULT NULL,
-                `devicetype`  varchar(50) DEFAULT NULL,
-                `device`  varchar(50) DEFAULT NULL,
-                `type` varchar(50) DEFAULT NULL,
+            $command .= " CREATE TABLE $subscriber_events_table (
+                eventID int(11) unsigned NOT NULL AUTO_INCREMENT,
+                subscriberID int(11) unsigned NOT NULL,
+                reportID int(11) unsigned DEFAULT NULL,
+                urlID int(11) unsigned DEFAULT NULL,
+                listID int(11) unsigned DEFAULT NULL,
+                eventdate datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+                ip  varchar(400) DEFAULT NULL,
+                devicetype  varchar(50) DEFAULT NULL,
+                device  varchar(50) DEFAULT NULL,
+                type varchar(50) DEFAULT NULL,
                 PRIMARY KEY (`eventID`),
                 KEY `subscriberID` (`subscriberID`),
                 KEY `reportID` (`reportID`),
@@ -453,49 +446,29 @@ class SendPress_DB_Tables {
                 KEY `listID` (`listID`),
                 KEY `eventdate` (`eventdate`),
                 KEY `type` (`type`)
-              )"; 
-              dbDelta($sqltable); 
-            }
-
+              ) $collate;";
+             
             $report_url_table =  SendPress_DB_Tables::report_url_table();
-
-            $wpdb->flush();
-
-            if($wpdb->get_var("show tables like '$report_url_table'") != $report_url_table) {
-              $sqltable = "CREATE TABLE ".$report_url_table." (
-              `urlID` int(11) unsigned NOT NULL AUTO_INCREMENT,
-              `url` varchar(2000) DEFAULT NULL,
-              `reportID` int(11) DEFAULT NULL,
+            $command .= " CREATE TABLE $report_url_table (
+              urlID int(11) unsigned NOT NULL AUTO_INCREMENT,
+              url varchar(2000) DEFAULT NULL,
+              reportID int(11) DEFAULT NULL,
               PRIMARY KEY (`urlID`),
               KEY `url` (`url`),
               KEY `reportID` (`reportID`)
-            )"; 
+            ) $collate;"; 
+              
+            $subscriber_status_table =  SendPress_DB_Tables::subscriber_status_table();
+            $command .= "CREATE TABLE $subscriber_status_table (
+                          statusid int(11) unsigned NOT NULL AUTO_INCREMENT,
+                          status varchar(255) DEFAULT NULL,
+                          PRIMARY KEY (`statusid`)
+                        ) $collate;"; 
               
 
-              dbDelta($sqltable);   
-
-            }
-
-            $wpdb->flush();
-
-            add_option("sendpress_db_version", SendPress_DB_Tables::$db_version);
+            dbDelta($command);   
 
 
-            // Create Stats Table
-            $subscriber_status_table =  SendPress_DB_Tables::subscriber_status_table();
-
-            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-
-            $wpdb->flush(); 
-
-            if($wpdb->get_var("show tables like '$subscriber_status_table'") != $subscriber_status_table) {
-                $sqltable = "CREATE TABLE ".$subscriber_status_table." (
-                          `statusid` int(11) unsigned NOT NULL AUTO_INCREMENT,
-                          `status` varchar(255) DEFAULT NULL,
-                          PRIMARY KEY (`statusid`)
-                        )"; 
-                dbDelta($sqltable);     
-            }
 
             $unconfirmed = $wpdb->get_row( $wpdb->prepare("SELECT * FROM $subscriber_status_table WHERE statusid = %d" , 1) );
             if ($unconfirmed != null) {
@@ -612,6 +585,8 @@ class SendPress_DB_Tables {
                     ) 
                 );
             }
+
+
 
 
     }

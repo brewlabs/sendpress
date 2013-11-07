@@ -17,6 +17,7 @@ class SendPress_View_Overview extends SendPress_View{
 	
 	function html($sp){
 		 SendPress_Tracking::event('Overview Tab');
+		 
 global $wp_version;
 
 $classes = 'sp-welcome-panel';
