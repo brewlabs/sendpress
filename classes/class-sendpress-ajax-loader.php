@@ -160,8 +160,6 @@ class SendPress_Ajax_Loader{
 		);
 
 		if($_POST) {
-			$s = NEW SendPress;
-
 			// get the credit card details submitted by the form
 			$first = isset($_POST['first']) ? $_POST['first'] : '';
 			$last = isset($_POST['last']) ? $_POST['last'] : '';

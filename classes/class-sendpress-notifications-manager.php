@@ -63,7 +63,7 @@ class SendPress_Notifications_Manager {
 			case 0:
 				if( $data && $data['type'] === 'subscribed' ){
 					
-					$list = SendPress_Data::get_list_details($data['urlID']);
+					$list = SendPress_Data::get_list_details($data['listID']);
 					$sub = SendPress_Data::get_subscriber($data['subscriberID']);			
 
 					$subscribe_body = $sub->email.' has subscribed to your list "'.$list->post_title.'".';
