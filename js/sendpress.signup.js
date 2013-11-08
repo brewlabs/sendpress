@@ -22,10 +22,12 @@
                 $thanks = $form.find('#thanks'),
                 $formwrap = $form.find('#form-wrap'),
                 $submit = $form.find('#submit'),
-                
+                $ajaxInd = $form.find('.ajaxloader'),
                 submit_ok = true,
                 emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-             $error.hide();
+             
+            $error.hide();
+            $ajaxInd.show();
 
             signup['first'] = $form.find('.sp_firstname').val();
             signup['last'] = $form.find('.sp_lastname').val();

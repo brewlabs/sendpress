@@ -3,7 +3,7 @@
 
 /* container for the signup form */
 .sendpress-signup-form{
-
+	position:relative;
 	}
 	/* labels in the sing up form */
 	.sendpress-signup-form label{
@@ -32,4 +32,9 @@
 	.signup-fields-bottom label{
 		/*float:left;*/
 		display:inline;
+	}
+
+	.ajaxloader{
+		margin-left:5px;
+		display:none;
 	}

@@ -120,7 +120,7 @@ class SendPress_Signup_Shortcode{
 					</p>
 
 					<p class="submit">
-						<input value="<?php echo $button_text; ?>" class="sendpress-submit" type="submit"  id="submit" name="submit">
+						<input value="<?php echo $button_text; ?>" class="sendpress-submit" type="submit"  id="submit" name="submit"><img class="ajaxloader" src="<?php echo SENDPRESS_URL; ?>/img/ajax-loader.gif" />
 					</p>
 				</div>
 			</form>
