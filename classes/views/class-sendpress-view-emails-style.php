@@ -87,10 +87,20 @@ class SendPress_View_Emails_Style extends SendPress_View_Emails {
         update_post_meta($saveid ,'active_header', $activeHeader );
         
         if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
-        	SendPress_Admin::redirect('Emails_Send', array('emailID'=>$_GET['emailID'] ));
+            SendPress_Admin::redirect('Emails_Send', array('emailID'=>$_GET['emailID'] ));
+        } else if (isset($_POST['submit']) && $_POST['submit'] == 'send-test'){
+            $email = new stdClass;
+            $email->emailID  = $my_post['ID'];
+            $email->subscriberID = 0;
+            $email->listID = 0;
+            $email->to_email = $_POST['test-email'];
+            $d =SendPress_Manager::send_test_email( $email );
+            //print_r($d);
+            SendPress_Admin::redirect('Emails_Style', array('emailID'=>$_GET['emailID'] ));
         } else {
-        	SendPress_Admin::redirect('Emails_Style', array('emailID'=>$_GET['emailID'] ));
+            SendPress_Admin::redirect('Emails_Style', array('emailID'=>$_GET['emailID'] ));
         }
+
 
        
 	}
@@ -130,7 +140,13 @@ class SendPress_View_Emails_Style extends SendPress_View_Emails {
 				<a href="?page=<?php echo $_GET['page']; ?>" id="cancel-update" class="btn"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
 			</div>
 		<?php require_once( SENDPRESS_PATH. 'inc/forms/email-style.2.0.php' ); ?>
-		</form>
+		
+        <div class="well">
+            <h2>Test This Email</h2>
+            <p><input type="text" name="test-email" value="" class="sp-text" placeholder="Email to send test to." /></p>
+            <button class="btn btn-success" name="submit" type="submit" value="send-test"><i class=" icon-white icon-inbox"></i> Send Test</button>
+        </div>
+        </form>
 	<?php
 	}
 

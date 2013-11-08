@@ -96,6 +96,18 @@ class SendPress_DB_Tables {
 	}
 
     /**
+     * subscriber_meta_table
+     * 
+     * @access public
+     *
+     * @return mixed Value.
+     */
+    function subscriber_meta_table(){
+        global $wpdb;
+        return $wpdb->prefix . self::$prefix . "subscribers_meta";
+    }
+
+    /**
      * subscriber_open_table
      * 
      * @access public
@@ -270,8 +282,8 @@ class SendPress_DB_Tables {
         global $wpdb;
         $table_to_update = SendPress_DB_Tables::subscriber_table();
         if( $wpdb->get_var("SHOW COLUMNS FROM ". $table_to_update ." LIKE 'wp_user_id'") == false) {
-            $wpdb->query("ALTER TABLE ". $table_to_update ." ADD COLUMN `wp_user_id` bigint(20) DEFAULT NULL");
-            $wpdb->query("ALTER TABLE ". $table_to_update ." ADD UNIQUE KEY `wp_user_id` (`wp_user_id`)");
+            $wpdb->query("ALTER TABLE ". $table_to_update ." ADD COLUMN wp_user_id bigint(20) DEFAULT NULL");
+            $wpdb->query("ALTER TABLE ". $table_to_update ." ADD UNIQUE KEY wp_user_id (wp_user_id)");
         }
     }
 
@@ -298,32 +310,32 @@ class SendPress_DB_Tables {
          global $wpdb;
          $ls = SendPress_DB_Tables::list_subcribers_table();
         if( $wpdb->get_var("SHOW INDEX FROM ". $ls ." WHERE Key_name = 'listsub'") == false) {
-            $wpdb->query("ALTER IGNORE TABLE `". $ls ."` ADD UNIQUE INDEX `listsub` (`subscriberID`,`listID`)");
+            $wpdb->query("ALTER IGNORE TABLE ". $ls ." ADD UNIQUE INDEX listsub (subscriberID,listID)");
         }
 
          $subscriber_queue = SendPress_DB_Tables::queue_table();
 
          
             if( $wpdb->get_var("SHOW INDEX FROM ". $subscriber_queue ." WHERE Key_name = 'subscriberID'") == false) {
-                $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `subscriberID` (`subscriberID`)");
+                $wpdb->query("ALTER IGNORE TABLE ". $subscriber_queue ." ADD KEY subscriberID (subscriberID)");
             }
             if( $wpdb->get_var("SHOW INDEX FROM ". $subscriber_queue ." WHERE Key_name = 'listID'") == false) {
-                $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `listID` (`listID`)");
+                $wpdb->query("ALTER IGNORE TABLE ". $subscriber_queue ." ADD KEY listID (listID)");
             }
             if( $wpdb->get_var("SHOW INDEX FROM ". $subscriber_queue ." WHERE Key_name = 'inprocess'") == false) {
-                $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `inprocess` (`inprocess`)");
+                $wpdb->query("ALTER IGNORE TABLE ". $subscriber_queue ." ADD KEY inprocess (inprocess)");
             }
             if( $wpdb->get_var("SHOW INDEX FROM ". $subscriber_queue ." WHERE Key_name = 'success'") == false) {
-                $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `success` (`success`)");
+                $wpdb->query("ALTER IGNORE TABLE ". $subscriber_queue ." ADD KEY success (success)");
             }
             if( $wpdb->get_var("SHOW INDEX FROM ". $subscriber_queue ." WHERE Key_name = 'max_attempts'") == false) {
-                $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `max_attempts` (`max_attempts`)");
+                $wpdb->query("ALTER IGNORE TABLE ". $subscriber_queue ." ADD KEY max_attempts (max_attempts)");
             }
             if( $wpdb->get_var("SHOW INDEX FROM ". $subscriber_queue ." WHERE Key_name = 'attempts'") == false) {
-                $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `attempts` (`attempts`)");
+                $wpdb->query("ALTER IGNORE TABLE ". $subscriber_queue ." ADD KEY attempts (attempts)");
             }
             if( $wpdb->get_var("SHOW INDEX FROM ". $subscriber_queue ." WHERE Key_name = 'last_attempt'") == false) {
-                $wpdb->query("ALTER IGNORE TABLE `". $subscriber_queue ."` ADD KEY `last_attempt` (`last_attempt`)");
+                $wpdb->query("ALTER IGNORE TABLE ". $subscriber_queue ." ADD KEY last_attempt (last_attempt)");
             }
 
         }
@@ -332,8 +344,8 @@ class SendPress_DB_Tables {
          global $wpdb;
          $table_to_update = SendPress_DB_Tables::subscriber_event_table();
          if( $wpdb->get_var("SHOW COLUMNS FROM ". $table_to_update ." LIKE 'listID'") == false) {
-            $wpdb->query("ALTER TABLE ". $table_to_update ." ADD COLUMN `listID` int(11) DEFAULT NULL");
-            $wpdb->query("ALTER TABLE ". $table_to_update ." ADD UNIQUE KEY `listID` (`listID`)");
+            $wpdb->query("ALTER TABLE ". $table_to_update ." ADD COLUMN listID int(11) DEFAULT NULL");
+            $wpdb->query("ALTER TABLE ". $table_to_update ." ADD UNIQUE KEY listID (listID)");
             }
 
         }
@@ -376,11 +388,11 @@ class SendPress_DB_Tables {
                       firstname varchar(250) NOT NULL DEFAULT '',
                       lastname varchar(250) NOT NULL DEFAULT '',
                       wp_user_id bigint(20) DEFAULT NULL,
-                      PRIMARY KEY (`subscriberID`),
-                      UNIQUE KEY  (`email`) ,
-                      UNIQUE KEY (`identity_key`),
-                      UNIQUE KEY `wp_user_id` (`wp_user_id`)
-                    ) $collate;"; 
+                      PRIMARY KEY (subscriberID),
+                      UNIQUE KEY  (email) ,
+                      UNIQUE KEY (identity_key),
+                      UNIQUE KEY wp_user_id (wp_user_id)
+                    ) $collate;\n"; 
              
             $subscriber_list_subscribers = SendPress_DB_Tables::list_subcribers_table();
             $command .= " CREATE TABLE $subscriber_list_subscribers (
@@ -389,12 +401,12 @@ class SendPress_DB_Tables {
                       subscriberID int(11) DEFAULT NULL,
                       status int(1) DEFAULT NULL,
                       updated datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
-                      PRIMARY KEY (`id`),
-                      KEY (`listID`) ,
-                      KEY (`subscriberID`) ,
-                      KEY (`status`) ,
-                      UNIQUE KEY `listsub` (`subscriberID`,`listID`)
-                    ) $collate;";
+                      PRIMARY KEY (id),
+                      KEY (listID) ,
+                      KEY (subscriberID) ,
+                      KEY (status) ,
+                      UNIQUE KEY listsub (subscriberID,listID)
+                    ) $collate;\n";
 
             
 
@@ -416,16 +428,16 @@ class SendPress_DB_Tables {
                   inprocess int(1) DEFAULT '0',
                   last_attempt datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
                   date_sent datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
-                  PRIMARY KEY (`id`),
-                  KEY `to_email` (`to_email`),
-                  KEY `subscriberID` (`subscriberID`),
-                  KEY `listID` (`listID`),
-                  KEY `inprocess` (`inprocess`),
-                  KEY `success` (`success`),
-                  KEY `max_attempts` (`max_attempts`),
-                  KEY `attempts` (`attempts`),
-                  KEY `last_attempt` (`last_attempt`)
-                ) $collate;";
+                  PRIMARY KEY (id),
+                  KEY to_email (to_email),
+                  KEY subscriberID (subscriberID),
+                  KEY listID (listID),
+                  KEY inprocess (inprocess),
+                  KEY success (success),
+                  KEY max_attempts (max_attempts),
+                  KEY attempts (attempts),
+                  KEY last_attempt (last_attempt)
+                ) $collate;\n";
             
             $subscriber_events_table =  SendPress_DB_Tables::subscriber_event_table();
             $command .= " CREATE TABLE $subscriber_events_table (
@@ -439,32 +451,35 @@ class SendPress_DB_Tables {
                 devicetype  varchar(50) DEFAULT NULL,
                 device  varchar(50) DEFAULT NULL,
                 type varchar(50) DEFAULT NULL,
-                PRIMARY KEY (`eventID`),
-                KEY `subscriberID` (`subscriberID`),
-                KEY `reportID` (`reportID`),
-                KEY `urlID` (`urlID`),
-                KEY `listID` (`listID`),
-                KEY `eventdate` (`eventdate`),
-                KEY `type` (`type`)
-              ) $collate;";
+                PRIMARY KEY (eventID),
+                KEY subscriberID (subscriberID),
+                KEY reportID (reportID),
+                KEY urlID (urlID),
+                KEY listID (listID),
+                KEY eventdate (eventdate),
+                KEY type (type)
+              ) $collate;\n";
              
             $report_url_table =  SendPress_DB_Tables::report_url_table();
             $command .= " CREATE TABLE $report_url_table (
               urlID int(11) unsigned NOT NULL AUTO_INCREMENT,
               url varchar(2000) DEFAULT NULL,
               reportID int(11) DEFAULT NULL,
-              PRIMARY KEY (`urlID`),
-              KEY `url` (`url`),
-              KEY `reportID` (`reportID`)
-            ) $collate;"; 
+              PRIMARY KEY (urlID),
+              KEY url (url),
+              KEY reportID (reportID)
+            ) $collate;\n"; 
               
             $subscriber_status_table =  SendPress_DB_Tables::subscriber_status_table();
             $command .= "CREATE TABLE $subscriber_status_table (
                           statusid int(11) unsigned NOT NULL AUTO_INCREMENT,
                           status varchar(255) DEFAULT NULL,
-                          PRIMARY KEY (`statusid`)
-                        ) $collate;"; 
+                          PRIMARY KEY (statusid)
+                        ) $collate;\n"; 
               
+            
+           
+
 
             dbDelta($command);   
 

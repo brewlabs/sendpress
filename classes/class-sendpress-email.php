@@ -266,7 +266,11 @@ class SendPress_Email {
 			    if(!$this->post_info){
 			    	$this->post_info = get_post( $this->id() );
 				}
-			    $email_subject =  $this->post_info->post_title;
+				if($this->post_info->post_type == 'sp_newsletters'){
+					$email_subject =  get_post_meta($this->id(),'_sendpress_subject',true );
+				} else {
+			    	$email_subject =  $this->post_info->post_title;
+				}
 				
 			    $email_subject = SendPress_Template::tag_replace($email_subject);
 				set_transient( 'sendpress_report_subject_'. $this->id(), $email_subject , 60*60*2);

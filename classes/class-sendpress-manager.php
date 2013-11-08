@@ -303,6 +303,26 @@ class SendPress_Manager {
 	   
 	}
 
+	/**
+	* Used to add Overwrite send info for testing. 
+	*
+	* @return boolean true if mail sent successfully, false if an error
+	*/
+    static function send_test_email( $email ) {
+
+	   	$message = new SendPress_Email();
+	   	$message->id( $email->emailID );
+	   	$message->purge( true );
+	   	$message->subscriber_id( $email->subscriberID );
+	   	$message->list_id( $email->listID );
+	   	$body = $message->html();
+	   	$subject = $message->subject();
+	   	$to = $email->to_email;
+	   	$text = $message->text();
+	   	return SendPress_Manager::send($to , $subject, $body, $text, true, $email->subscriberID ,$email->listID, $email->emailID );
+	   
+	}
+
 	static function send($to , $subject, $body, $text, $test = false, $sid=0 ,$list_id = 0, $report_id = 0 ){
 
 		global $sendpress_sender_factory;
