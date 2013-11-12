@@ -36,8 +36,14 @@ class SendPress_Cron {
                 }
                 $stuck = SendPress_Data::emails_stuck_in_queue();
                 $limit = SendPress_Manager::limit_reached();
+                $emails_per_day = SendPress_Option::get('emails-per-day');
+                $emails_per_hour =  SendPress_Option::get('emails-per-hour');
+                $hourly_emails = SendPress_Data::emails_sent_in_queue("hour");
+                $emails_so_far = SendPress_Data::emails_sent_in_queue("day");
+                
+                $limits = array('dl'=>$emails_per_day,'hl'=>$emails_per_hour,'ds'=>$emails_so_far,'hs'=>$hourly_emails);
 
-                echo json_encode(array( "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit ));
+                echo json_encode(array( "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits  ));
                 //die();
             }
             
