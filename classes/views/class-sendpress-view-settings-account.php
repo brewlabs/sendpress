@@ -18,10 +18,11 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 
        
         $options['sendmethod'] = $_POST['sendpress-sender'];
-
-        $options['emails-per-day'] = $_POST['emails-per-day'];
-        $options['emails-per-hour'] = $_POST['emails-per-hour'];
-         $options['email-charset'] = $_POST['email-charset'];
+        // Provides: Hll Wrld f PHP
+        $chars = array(".", ",", " ", ":", ";", "$", "%", "*", "-", "=");
+        $options['emails-per-day'] =  str_replace($chars,"",$_POST['emails-per-day']);
+        $options['emails-per-hour'] = str_replace($chars,"",$_POST['emails-per-hour']);
+        $options['email-charset'] = $_POST['email-charset'];
         $options['email-encoding'] = $_POST['email-encoding'];
 
         $options['phpmailer_error'] = '';
