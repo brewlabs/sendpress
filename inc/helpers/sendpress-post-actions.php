@@ -330,8 +330,8 @@ switch ( $this->_current_action ) {
         foreach( $newsubscribers as $subscriberx){
             if( is_email( trim($subscriberx['email'] ) ) ){
           
-            $result = $this->addSubscriber( array('firstname'=> trim($subscriberx['firstname']) ,'email'=> trim($subscriberx['email']),'lastname'=> trim($subscriberx['lastname']) ) );
-            $this->linkListSubscriber($listID, $result, 2);
+            $result = SendPress_Data::add_subscriber( array('firstname'=> trim($subscriberx['firstname']) ,'email'=> trim($subscriberx['email']),'lastname'=> trim($subscriberx['lastname']) ) );
+            SendPress_Data::update_subscriber_status($listID, $result, 2, false);
             }
         }
     

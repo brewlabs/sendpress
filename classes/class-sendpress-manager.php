@@ -266,9 +266,9 @@ class SendPress_Manager {
 			$code = SendPress_Data::encrypt( $code );
 
 			if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
-				$link = site_url() ."?sendpress=".$code;
+				$link = home_url() ."?sendpress=".$code;
 			} else {
-				$link = site_url() ."/sendpress/".$code;
+				$link = home_url() ."/sendpress/".$code;
 			}
 			
 			$href = $link;
