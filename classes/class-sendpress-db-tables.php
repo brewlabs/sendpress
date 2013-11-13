@@ -408,7 +408,18 @@ class SendPress_DB_Tables {
                       UNIQUE KEY listsub (subscriberID,listID)
                     ) $collate;\n";
 
-            
+            $subscriber_meta = SendPress_DB_Tables::subscriber_meta_table();
+            $command .= "  CREATE TABLE $subscriber_meta (
+                      smeta_id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                      subscriberID bigint(20) unsigned NOT NULL DEFAULT '0',
+                      listID bigint(20) unsigned NULL DEFAULT '0',
+                      meta_key varchar(255) DEFAULT NULL,
+                      meta_value longtext,
+                      PRIMARY KEY (smeta_id),
+                      KEY listID (listID),
+                      KEY subscriberID (subscriberID),
+                      KEY meta_key (meta_key)
+                    ) $collate;\n";
 
             $subscriber_queue = SendPress_DB_Tables::queue_table();
             $command .=" CREATE TABLE $subscriber_queue (
