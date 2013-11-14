@@ -68,7 +68,7 @@ class SendPress_View_Subscribers extends SendPress_View {
 		<div id="button-area">  
 			<a class="btn btn-primary btn-large" href="?page=<?php echo $_REQUEST['page']; ?>&view=listcreate"><?php _e('Create List','sendpress'); ?></a>
 		</div>
-		<h2><?php _e('Subscribers','sendpress'); ?></h2>
+		<h2><?php _e('Lists','sendpress'); ?></h2>
 		<form id="sendpress-lists" method="get">
 			<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 		    <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
