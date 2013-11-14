@@ -102,7 +102,7 @@ class SendPress_DB_Tables {
      *
      * @return mixed Value.
      */
-    function subscriber_meta_table(){
+    static function subscriber_meta_table(){
         global $wpdb;
         return $wpdb->prefix . self::$prefix . "subscribers_meta";
     }
