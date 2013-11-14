@@ -276,7 +276,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 	/********************* QUEUE static functionS **************************/
 
+	/********************* POST NOTIFICATION static functionS ***************/
 
+	static function get_encoding_types(){
+		return array("instant", "daily", "weekly");
+	}
+
+	/********************* POST NOTIFICATION static functionS ***************/
 
 
 
