@@ -277,17 +277,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	/********************* QUEUE static functionS **************************/
 
 
-	/*************** Post Notifications static functionS *******************/
 
-	static function get_post_notification_types(){
-		return array('instant', 'daily', 'weekly');
-	}
-	
-
-
-
-
-	/*************** Post Notifications static functionS *******************/
 
 
 	/********************* REPORTS static functionS **************************/	
@@ -569,7 +559,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
-	static function get_subcriber_by_meta($meta_key = false, $meta_value = false, $list_id= false){
+	static function get_subcribers_by_meta($meta_key = false, $meta_value = false, $list_id= false){
+		
 		if($meta_key == false){
 			return false;
 		}
@@ -579,7 +570,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$subscriber_table = SendPress_Data::subscriber_table();
 		$list_table = SendPress_Data::list_subcribers_table();
 		if($list_id == false){
-			$query = "SELECT t2.*,t1.meta_value,t1.listID FROM $meta_table as t1, $subscriber_table as t2  WHERE (t1.subscriberID = t2.subscriberID) ";
+			$query = "SELECT t2.*,t1.* FROM $meta_table as t1, $subscriber_table as t2  WHERE (t1.subscriberID = t2.subscriberID) ";
 		} else {
 		$query = "SELECT t2.*,t1.meta_value,t1.listID FROM $meta_table as t1, $subscriber_table as t2 , $list_table as t3 WHERE (t1.subscriberID = t2.subscriberID) AND (t2.subscriberID = t3.subscriberID) ";
 		}
@@ -590,13 +581,74 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if($meta_value != false){
 			$query .=  $wpdb->prepare(" AND t1.meta_value = %s", $meta_value); 
 		}
+
 		if($list_id != false){
-			$query .=  $wpdb->prepare(" AND t3.listID = %d", $list_id); 
+			$query .=  $wpdb->prepare(" AND t3.subscriberID = t1.subscriberID AND t3.listID = %d AND t3.status = 2 ", $list_id); 
+		}
+
+		return $wpdb->get_results($query);
+
+
+	}
+
+	static function get_subscriber_meta($subscriber_id =false, $meta_key =false, $list_id = false, $multi = false){
+		if($subscriber_id == false){
+			return false;
+		}
+
+		global $wpdb;
+		$meta_table = SendPress_Data::subscriber_meta_table();
+		$subscriber_table = SendPress_Data::subscriber_table();
+		$list_table = SendPress_Data::list_subcribers_table();
+		if($meta_key == false){
+			$query = $wpdb->prepare("SELECT meta_key,meta_value FROM $meta_table WHERE subscriberID = %s",$subscriber_id);
+			if($list_id != false){
+				$query .= $wpdb->prepare(" AND listID = %s ", $list_id );
+			}
+		} else {
+			$query = $wpdb->prepare("SELECT meta_value FROM $meta_table WHERE subscriberID = %d AND meta_key = %s ",$subscriber_id, $meta_key);
+			if($list_id != false){
+				$query .= $wpdb->prepare(" AND listID = %s ", $list_id );
+			}
+			if($multi == false){
+				$query .= " ORDER BY smeta_id DESC LIMIT 1";
+				return $wpdb->get_var($query);
+			} else {
+				$query .= " ORDER BY smeta_id DESC ";
+			}
+
+		}
+
+		
+
+		return $wpdb->get_results($query);
+
+	}
+	static function add_subscriber_meta($subscriber_id,$meta_key,$meta_value,$list_id = false){
+		global $wpdb;
+		$meta_table = SendPress_Data::subscriber_meta_table();
+		
+		if($list_id == false){
+			$list_id = 0;
+		}
+
+		return $wpdb->insert( $meta_table, array('subscriberID'=>$subscriber_id,'meta_key' => $meta_key , 'meta_value' => $meta_value ,'listID'=>$list_id) );
+	}
+
+	static function update_subscriber_meta($subscriber_id,$meta_key,$meta_value,$list_id = false){
+		global $wpdb;
+		$meta_table = SendPress_Data::subscriber_meta_table();
+		$has_data = SendPress_Data::get_subscriber_meta( $subscriber_id, $meta_key, $list_id, true );
+		if(empty($has_data)){
+			return SendPress_Data::add_subscriber_meta( $subscriber_id, $meta_key, $meta_value, $list_id );
+		} else {
+			return $wpdb->update( $meta_table, array('meta_value'=>$meta_value), array('subscriberID'=>$subscriber_id,'meta_key' => $meta_key , 'meta_value' => $has_data[0]->meta_value ) );
 		}
 
 
-		return $wpdb->get_results($query);
 	}
+
+
 
 
 	static function get_subscriber($subscriberID, $listID = false){
@@ -646,6 +698,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 
         return count($x);
 	}
+
+
 
 	static function set_subscriber_status($listID, $subscriberID, $status = 0) {
 		$table = self::list_subcribers_table();
