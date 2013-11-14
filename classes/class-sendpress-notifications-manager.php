@@ -29,7 +29,7 @@ class SendPress_Notifications_Manager {
 		return $instance;
 	}
 
-	function maybe_send_notification($type, $data){
+	function maybe_send_notification($type = 'daily', $data){
 		$options = SendPress_Option::get('notification_options');
 		$subscribed = '';
 		$unsubscribed = '';

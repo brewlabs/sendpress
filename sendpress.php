@@ -555,7 +555,7 @@ Author URI: http://sendpress.com/
 
 
 	function admin_init(){
-		$this->set_template_default();
+		
 		$this->add_caps();
 		if ( !empty($_GET['_wp_http_referer']) && (isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)) ) {
 			wp_redirect( remove_query_arg( array('_wp_http_referer', '_wpnonce'), stripslashes($_SERVER['REQUEST_URI']) ) );
@@ -892,7 +892,7 @@ Author URI: http://sendpress.com/
 		} else {
 			$role = "manage_options";
 		}
-		$queue = SendPress_Data::emails_in_queue();
+		$queue = 0;//SendPress_Data::emails_in_queue();
 		add_menu_page(__('SendPress','sendpress'), __('SendPress','sendpress'), $role,'sp-overview',  array(&$this,'render_view') , SENDPRESS_URL.'img/sendpress-bg-16.png');
 	    add_submenu_page('sp-overview', __('Overview','sendpress'), __('Overview','sendpress'), $role, 'sp-overview', array(&$this,'render_view'));
 	    $main = add_submenu_page('sp-overview', __('Emails','sendpress'), __('Emails','sendpress'), $role, 'sp-emails', array(&$this,'render_view'));
@@ -1024,7 +1024,10 @@ Author URI: http://sendpress.com/
 			return;
 
 		SendPress_Option::set('whatsnew','show');
-		
+		//On version change update default template
+		$this->set_template_default();	
+
+
 		if(version_compare( $current_version, '0.8.6', '<' )){
 			$widget_options =  array();
 
