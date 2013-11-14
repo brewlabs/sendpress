@@ -190,6 +190,8 @@ Author URI: http://sendpress.com/
 	
 		function init() {
 			$this->maybe_upgrade();
+
+
 			SendPress_Ajax_Loader::init();
 			SendPress_Signup_Shortcode::init();
 			SendPress_Sender::init();
@@ -217,7 +219,7 @@ Author URI: http://sendpress.com/
 				}
 			}
 
-			    add_rewrite_rule(  
+			 add_rewrite_rule(  
         "^{$indexer}sendpress/([^/]+)/?",  
         'index.php?sendpress=$matches[1]',  
         "top"); 
@@ -1022,8 +1024,7 @@ Author URI: http://sendpress.com/
 			return;
 
 		SendPress_Option::set('whatsnew','show');
-		SendPress_DB_Tables::install();
-
+		
 		if(version_compare( $current_version, '0.8.6', '<' )){
 			$widget_options =  array();
 
@@ -1046,6 +1047,8 @@ Author URI: http://sendpress.com/
 			$pro_plugins['pro_plugins']['setup_value'] = false;
 			SendPress_Option::set($pro_plugins);
 		}
+
+			
 
 		if(version_compare( $current_version, '0.9.3', '<' )){
 	
@@ -1074,6 +1077,18 @@ Author URI: http://sendpress.com/
 			}
 			
 		}
+
+		if(version_compare( $current_version, '0.9.4.7', '<' )){
+			SendPress_Data::update_tables_0947();
+		}
+		if(version_compare( $current_version, '0.9.5.2', '<' )){
+			SendPress_Data::update_tables_0952();
+		}
+
+		if(version_compare( $current_version, '0.9.5.4', '<' )){
+			SendPress_Data::update_tables_0954();
+		}
+
 
 	
 		if(version_compare( $current_version, '0.9.6', '<' )){

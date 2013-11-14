@@ -373,8 +373,7 @@ class SendPress_DB_Tables {
                    
             }
 
-
-
+ 
 
             // Create Stats Table
             $subscriber_table = SendPress_DB_Tables::subscriber_table();
@@ -510,11 +509,13 @@ class SendPress_DB_Tables {
                           PRIMARY KEY (statusid)
                         ) $collate;\n"; 
               
+             dbDelta($command);   
+
             }
            
 
 
-            dbDelta($command);   
+           
 
 
 

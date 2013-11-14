@@ -140,6 +140,8 @@ if ( !empty($_POST) && check_admin_referer($this->_nonce_value) ){
 	  'ignore_sticky_posts'=> 1
 	);
 	$my_query = new WP_Query($args);
+
+
 	if( $my_query->have_posts() ) {
 
 	  while ($my_query->have_posts()) : $my_query->the_post(); 	
@@ -222,25 +224,24 @@ $lists = SendPress_Data::get_lists(
 );
 
 foreach($lists as $list){
-	//print_r($list);
 	$subscriber = SendPress_Data::get_subscriber_list_status($list->ID, $info->id);
 	?>
   	<tr>
   	<?php
 
-  	$checked = (isset($subscriber->statusid) && $subscriber->statusid == 2) ? 'checked' : '';
-		echo '<td><input type="radio" class="xbutton" data-list="'.$my_query->post->ID.'" name="subscribe_'.$my_query->post->ID.'" '.$checked.' value="2"></td>';
-		$checked = (empty($subscriber->statusid) || $subscriber->statusid == 3) ? 'checked' : '';
-		echo '<td><input type="radio" class="xbutton" data-list="'.$my_query->post->ID.'" name="subscribe_'.$my_query->post->ID.'" '.$checked.' value="3"></td>';
+  		$checked = (isset($subscriber->statusid) && $subscriber->statusid == 2) ? 'checked' : '';
+		echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="2"></td>';
+		$checked = (isset($subscriber->statusid) && $subscriber->statusid == 3) ? 'checked' : '';
+		echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="3"></td>';
   	?>
-  	<td><?php echo $list->post_name; ?></td>
+  	<td><?php echo $list->post_title; ?></td>
   	<td class="hidden-phone"><span id="list_<?php echo $list->ID;?>"><?php 
   	if(isset($subscriber->updated)) { echo $subscriber->updated; } else {
 		 	_e('Never Subscribed','sendpress');
 		 }
 		 ?></span>
 	</td>
-	<td><?php if($subscriber->statusid != 3 && $subscriber->statusid != 2){
+	<td class="hidden-phone"><?php if($subscriber->statusid != 3 && $subscriber->statusid != 2){
 		echo $subscriber->status;
 	} ?></td>
   	<tr>	
@@ -250,13 +251,13 @@ foreach($lists as $list){
 
 </table>
 <br>
-<?php do_action( 'sendpress_manage_notifications',$info);?>
+<?php do_action( 'sendpress_manage_notifications', $info );?>
 <input type="submit" class="btn btn-primary" value="<?php _e('Save My Settings','sendpress'); ?>"/>
 </form>
 
 
 	<br>
-	<a  href="<?php echo site_url(); ?>"><i class="icon-hand-left"></i> <?php _e('Return to','sendpress'); ?> <?php echo $name; ?></a>
+	<a  href="<?php echo home_url(); ?>"><i class="icon-hand-left"></i> <?php _e('Return to','sendpress'); ?> <?php echo $name; ?></a>
 
 	<?php
 

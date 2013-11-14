@@ -473,7 +473,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	function get_lists($args = array(), $use_wpquery = true){
 
-		$args = apply_filters('sendpress_get_lists',array_merge($args, array(
+		$args = apply_filters('sendpress_get_lists', array_merge($args, array(
 			'numberposts'     => -1,
 	    	'offset'          => 0,
 	    	'orderby'         => 'post_title',
