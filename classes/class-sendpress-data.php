@@ -559,6 +559,38 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
+	static function get_subcriber_by_meta($meta_key = false, $meta_value = false, $list_id= false){
+		if($meta_key == false){
+			return false;
+		}
+
+		global $wpdb;
+		$meta_table = SendPress_Data::subscriber_meta_table();
+		$subscriber_table = SendPress_Data::subscriber_table();
+		$list_table = SendPress_Data::list_subcribers_table();
+		if($list_id == false){
+			$query = "SELECT t2.*,t1.meta_value,t1.listID FROM $meta_table as t1, $subscriber_table as t2  WHERE (t1.subscriberID = t2.subscriberID) ";
+		} else {
+		$query = "SELECT t2.*,t1.meta_value,t1.listID FROM $meta_table as t1, $subscriber_table as t2 , $list_table as t3 WHERE (t1.subscriberID = t2.subscriberID) AND (t2.subscriberID = t3.subscriberID) ";
+		}
+
+
+		$query .= $wpdb->prepare(" AND t1.meta_key = %s", $meta_key );
+		
+		if($meta_value != false){
+			$query .=  $wpdb->prepare(" AND t1.meta_value = %s", $meta_value); 
+		}
+		if($list_id != false){
+			$query .=  $wpdb->prepare(" AND t3.listID = %d", $list_id); 
+		}
+
+
+		return $wpdb->get_results($query);
+
+
+	}
+
+
 	static function get_subscriber($subscriberID, $listID = false){
 		if($listID){
         	$query = "SELECT t1.*, t3.status FROM " .  self::subscriber_table() ." as t1,". self::list_subcribers_table()." as t2,". self::subscriber_status_table()." as t3 " ;
