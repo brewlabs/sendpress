@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.4
 Tested up to: 3.7.1
-Stable tag: 0.9.6
+Stable tag: 0.9.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -102,6 +102,14 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 0.9.6.1 - 2013.11.13 =
+* WordPress role sync first and last name
+* fix blank confirmation email
+* fix confirm email link now uses home_url
+* New send test email for edit screen
+* ajax loading image for widgets
+* Update script now uses dbDelta
 
 = 0.9.6 - 2013.11.6 =
 * WordPress role sync
@@ -327,6 +335,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.6.1 =
+Confirmation email fix and role sync first and last names
 
 = 0.9.6 =
 WordPress role syncing and Scheduled sending
