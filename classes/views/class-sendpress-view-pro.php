@@ -68,7 +68,7 @@ class SendPress_View_Pro extends SendPress_View{
             <input class="action" type="hidden" name="action" value="module-activate-sendpress-pro" />
             <?php wp_nonce_field($sp->_nonce_value); ?>
         </form>
-<img src="<?php echo SENDPRESS_URL;?>/img/logopro.png" height="50px" />
+    <h1 style="font-size:35px;">SendPress Pro</h1>
     <?php if( is_plugin_active('sendpress-pro/sendpress-pro.php') ){ ?>
         <p class="lead">Thanks for using <b>SendPress Pro</b>.</p>
     <?php } else { ?> 

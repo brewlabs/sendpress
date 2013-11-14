@@ -140,8 +140,8 @@ class SendPress_Cron {
         
         $url = SendPress_Cron::remove_http( site_url() );
         $domain = base64_encode( $url );
-        SendPress_Error::log( 'http://sendpress.com/iron/cron/set/'. $domain .'/'. SENDPRESS_CRON);
-        $body = wp_remote_retrieve_body( wp_remote_get( 'http://sendpress.com/iron/cron/set/'. $domain .'/'. SENDPRESS_CRON ) );
+        //SendPress_Error::log( 'http://api.sendpress.com/set/'. $domain .'/'. SENDPRESS_CRON);
+        $body = wp_remote_retrieve_body( wp_remote_get( 'http://api.sendpress.com/set/'. $domain .'/'. SENDPRESS_CRON ) );
         wp_clear_scheduled_hook( 'sendpress_cron_action' );
     }
 
