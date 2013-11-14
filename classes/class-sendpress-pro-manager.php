@@ -31,8 +31,8 @@ class SendPress_Pro_Manager {
 
 	function _init(){
 		
-			add_filter('plugins_api', array( $this, 'plugins_api' ),10,3);
-			add_filter('plugins_api_result', array( $this, 'get_pro_details' ),10,3);
+		add_filter('plugins_api', array( $this, 'plugins_api' ),10,3);
+		add_filter('plugins_api_result', array( $this, 'get_pro_details' ),10,3);
 		if(defined('SENDPRESS_PRO_VERSION')){	
 			add_action( 'admin_head', array( $this, 'check_api_key' ) );
 		}
