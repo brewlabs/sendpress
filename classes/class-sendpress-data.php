@@ -277,7 +277,17 @@ class SendPress_Data extends SendPress_DB_Tables {
 	/********************* QUEUE static functionS **************************/
 
 
+	/*************** Post Notifications static functionS *******************/
 
+	static function get_post_notification_types(){
+		return array('instant', 'daily', 'weekly');
+	}
+	
+
+
+
+
+	/*************** Post Notifications static functionS *******************/
 
 
 	/********************* REPORTS static functionS **************************/	
@@ -586,8 +596,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 		return $wpdb->get_results($query);
-
-
 	}
 
 
@@ -638,8 +646,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 
         return count($x);
 	}
-
-
 
 	static function set_subscriber_status($listID, $subscriberID, $status = 0) {
 		$table = self::list_subcribers_table();
