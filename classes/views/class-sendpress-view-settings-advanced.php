@@ -67,7 +67,11 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 			<h2>Permalink Settings</h2>
 			<?php $ctype = SendPress_Option::get('old_permalink'); ?>
 			<input type="checkbox" name="old_permalink" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> Use old permalink with ?sendpress=.
-	
+			<br><br>
+			<h2>Table Info</h2>
+			<pre><?php echo SendPress_DB_Tables::check_setup_support(); ?></pre>
+			<a class="btn btn-danger" href="<? echo SendPress_Admin::link('Settings_Install'); ?>">Install Missing Tables</a>
+			
 
 	<br class="clear">
 	</div>	

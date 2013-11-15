@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Error {
 
-	function log($args) {
+	static function log($args) {
 		//Only Log data if not in production
 		if( defined('WP_DEBUG') && WP_DEBUG === true || defined("SENDPRESS_LOG_ERROR") ){
 			if ( isset($args) ) {
@@ -24,7 +24,7 @@ class SendPress_Error {
 		}
 	}
 
-	function getFunc() {
+	static function getFunc() {
 		  $stack = debug_backtrace();
 		  $n = 0;
 		  // Skip over own functions.

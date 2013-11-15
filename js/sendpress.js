@@ -336,6 +336,34 @@
                 e.preventDefault();
                 $(this).parents('#post').submit();
             });
+        
+
+
+            if( $('#queue-count-menu-tab') ){
+            $.post(
+                spvars.ajaxurl,
+                {
+                    action:'sendpress-sendcount',
+                    spnonce: spvars.sendpressnonce
+                }, function(response) {
+                    try {
+                        
+                        response = $.parseJSON(response);
+                     
+                        var $qt = $("#queue-count-menu");
+                        $qt.html(response.total);
+                         var $qt = $("#queue-count-menu-tab");
+                        $qt.html(response.total);
+                         
+                    } catch (err) {
+                        spadmin.log(err);
+                    }
+
+                    
+                 }
+            );
+        }
+
 
         }
     }

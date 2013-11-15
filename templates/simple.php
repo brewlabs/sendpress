@@ -247,7 +247,7 @@ global $post;
 		<td valign="top"> 
 		<table cellpadding="0" cellspacing="0" border="0" align="center">
 			<tr>
-				<td width="600" valign="top" style="text-align:center;" class="browserContent">
+				<td width="602" valign="top" style="text-align:center;" class="browserContent">
 					<table cellpadding="20" cellspacing="0"  width="100%" border="0" align="center">
 						<tr>
 							<td width="100%" valign="top" style="font-size: 13px; font-family: arial,sans-serif; color: *|SP:BODYTEXT|*;">
@@ -261,7 +261,7 @@ global $post;
 		<!-- Tables are the most common way to format your email consistently. Set your table widths inside cells and in most cases reset cellpadding, cellspacing, and border to zero. Use nested tables as a way to space effectively in your message. -->
 		<table cellpadding="0" cellspacing="0" border="0" align="center" style="border: solid 1px *|SP:CONTENTBORDER|*; background-color: *|SP:CONTENTBG|*; color: *|SP:CONTENTTEXT|*;">
 			<tr>
-				<td width="600" valign="top" class="bodyContent">
+				<td width="602" valign="top" class="bodyContent">
 					<table cellpadding="0" cellspacing="0"  width="100%" border="0" align="center" style="font-size: 13px; font-family: arial,sans-serif;  background-color: *|SP:HEADERBG|*; color: *|SP:HEADERTEXT|*;">
 									<tr>
 										<td width="100%" valign="top" align="center"  >
@@ -286,7 +286,7 @@ global $post;
 		</table>
 		<table cellpadding="0" cellspacing="0" border="0" align="center">
 			<tr>
-				<td width="600" valign="top" style="text-align:center;" class="footerContent">
+				<td width="602" valign="top" style="text-align:center;" class="footerContent">
 					<table cellpadding="10" cellspacing="0"  width="100%" border="0" align="center">
 						<tr>
 							<td width="100%" valign="top" style="font-size: 13px; font-family: arial,sans-serif; color: *|SP:BODYTEXT|*;">

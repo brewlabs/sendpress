@@ -308,7 +308,7 @@ class SendPress_Template {
 		}
 	}
 
-	function tag_replace($HtmlCode){
+	static function tag_replace($HtmlCode){
 			$HtmlCode = str_replace('*|SITE:URL|*', get_option('home'), $HtmlCode);
 	        $HtmlCode = str_replace('*|SITE:TITLE|*', get_option('blogname'), $HtmlCode);
 	        $HtmlCode = str_replace('*|DATE|*', date_i18n(get_option('date_format')), $HtmlCode);
