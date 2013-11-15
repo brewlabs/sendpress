@@ -103,7 +103,7 @@ class SendPress_Posts{
 				'hierarchical' => false,
 				'rewrite' => array('slug' => 'emails','with_front'=>false),
 				'supports' => array('title','editor'),
-				'has_archive' => 'emails',
+				//'has_archive' => 'emails',
 				'labels' => array (
 				'name' => 'emails',
 				'singular_name' => 'email',
@@ -132,7 +132,7 @@ class SendPress_Posts{
 			'query_var' => true,
 			'exclude_from_search'=>true,
 			'capability_type' => 'post',
-			'has_archive' => 'send',
+			//'has_archive' => 'send',
 			'hierarchical' => false,
 			'rewrite' => array('slug' => 'send','with_front'=>false),
 			'supports' => array('title','editor'),

@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.4
 Tested up to: 3.7.1
-Stable tag: 0.9.6.2
+Stable tag: 0.9.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,14 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
+= 0.9.6.3 - 2013.11.15 =
+* Fix: unsubscribe not being register in some cases
+* Fix: admin notifications sometimes creating error
+* Fix: DB updates faster and better on large lists
+* Fix: call to static function SendPress_Error::log
+* Fix: Pro activation checking without Pro installed
+* New: Option to try and install missing tables added to Advanced
+
 = 0.9.6.2 - 2013.11.14 =
 * Fix Update timeout on 100K+ subscriber lists
 
@@ -129,7 +137,6 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 = 0.9.5.3 - 2013.10.16 =
 * Bug with 'Send Emails Now' fixed
 * Fixed bad table name in SendPress_Data
-
 
 = 0.9.5.2 - 2013.10.16 =
 * Improved CSV import for different column formats
@@ -160,7 +167,6 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * DB Tables updated for Windows
 * Switched front-end pages to check home_url()
 
-
 = 0.9.4.6 - 2013.9.11 =
 * email encoding not always saving
 
@@ -169,7 +175,6 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * forms and iframe updates
 * s2member conflict fix
 * sending speed saving
-
 
 = 0.9.4.4 - 2013.9.4 =
 * forms not posting emails correctly
@@ -192,7 +197,6 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 = 0.9.4.1 - 2013.6.19 =
 * Fix for Send Confirm Screen
-
 
 = 0.9.4 - 2013.6.12 =
 * SendPress Pro Amazon SES Enabled
@@ -229,7 +233,6 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * Sign-up Post fix
 * New View access controls
 
-
 = 0.9.2 - 2013.3.6 =
 * Pro tab activated
 * Email HTML filter
@@ -239,7 +242,6 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 = 0.9.1 - 2013.2.3 =
 * Fix for cron not sending on some hosts
-
 
 = 0.9 - 2013.1.31 =
 * New Qeueue manager for emails per day and per hour
@@ -253,7 +255,6 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * HTML Support in Widget description
 * Insert Post with title links back to post
 * Multilple other bug fixes and code updates
-
 
 = 0.8.8.1 =
 * uninstall file error fixed.
@@ -327,17 +328,18 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * Bug Fix: Special characters in the subject line get distorted  
 * added exclude_from_search to custom post types
 
-
 = 0.8.3 =
 * removed use of str_getcsv
 * added unofficial support of WP 3.2+
 * added opt-in feedback option
 
-
 = 0.8.2 =
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.6.3 =
+Minor bug fixes
 
 = 0.9.6.2 =
 Fix for db timeout in 0.9.6.1
