@@ -15,11 +15,12 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ){
 
 global $wpdb, $wp_roles;
 
-define( 'SENDPRESS_VERSION', '0.9.2' );
+define( 'SENDPRESS_VERSION', '0.9.6.3' );
 //Remove settings
 delete_option( 'sendpress_options' );
 delete_option( 'sendpress_db_version' );
 
+require_once plugin_dir_path( __FILE__ )  . 'classes/class-pro-manager.php';
 SendPress_Pro_Manager::try_deactivate_key();
 
 

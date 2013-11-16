@@ -103,7 +103,7 @@ class SendPress_Notifications_Manager {
 			case 0:
 				if( $data && $data['type'] === 'unsubscribed' ){
 					
-					$list = SendPress_Data::get_list_details($data['urlID']);
+					$list = SendPress_Data::get_list_details($data['listID']);
 					$sub = SendPress_Data::get_subscriber($data['subscriberID']);			
 
 					$unsubscribe_body = $sub->email.' has unsubscribed from your list "'.$list->post_title.'".';
