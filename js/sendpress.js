@@ -104,7 +104,7 @@
                 deferRequestBy: 0, //miliseconds
                 params: {
                         action:'sendpress-findpost',
-                        spnonce: spvars.sendpressnonce,
+                        spnonce: spvars.sendpressnonce
                 }, //aditional parameters
                 noCache: true, //default is false, set to true to disable caching
                 // callback function:
