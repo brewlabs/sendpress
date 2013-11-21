@@ -468,10 +468,11 @@ class SendPress_Data extends SendPress_DB_Tables {
   		$new_id = wp_update_post( $my_post );
   		update_post_meta($new_id,'public',$values['public']);
 
+
 		return $new_id;
 	}
 
-	function get_lists($args = array(), $use_wpquery = true){
+	static function get_lists($args = array(), $use_wpquery = true){
 
 		$args = apply_filters('sendpress_get_lists', array_merge($args, array(
 			'numberposts'     => -1,

@@ -573,7 +573,7 @@ Author URI: http://sendpress.com/
 		if ( isset($_GET['sendpress_ignore_087']) && '0' == $_GET['sendpress_ignore_087'] ) {
 		    SendPress_Option::set('sendpress_ignore_087', 'true');
 		}
-		add_action('admin_notices', array($this,'sendpress_ignore_087'));
+		//dadd_action('admin_notices', array($this,'sendpress_ignore_087'));
 
 		if( SendPress_Option::get('sendmethod') == false ){
 			SendPress_Option::set('sendmethod','website');
@@ -1192,7 +1192,7 @@ Author URI: http://sendpress.com/
 	}
 
 	function getUrl($report, $url) {
-		$table = $this->report_url_table();
+		$table = SendPress_Data::report_url_table();
 		$result = $this->wpdbQuery("SELECT * FROM $table WHERE reportID = '$report' AND url = '$url'", 'get_results');
 		return $result;	
 	}
@@ -1200,47 +1200,47 @@ Author URI: http://sendpress.com/
 
 	
 	function get_opens_unique_count($rid){
-		$table = $this->subscriber_event_table();
+		$table = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery("SELECT COUNT( DISTINCT subscriberID ) FROM $table WHERE reportID = '$rid' AND type = 'open';", 'get_var');
 		return $result;
 	}
 	function get_opens_unique($rid){
-		$table = $this->subscriber_event_table();
+		$table = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery("SELECT * FROM $table WHERE reportID = '$rid' AND type = 'open' GROUP BY subscriberID ORDER BY eventID DESC; ", 'get_results');
 		return $result;
 	}
 	function get_opens($rid){
-		$table = $this->subscriber_event_table();
+		$table = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery("SELECT * FROM $table WHERE reportID = '$rid' AND type = 'open'  ORDER BY eventID DESC;", 'get_results');
 		return $result;
 	}
 	function get_opens_count($rid){
-		$table = $this->subscriber_event_table();
+		$table = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery("SELECT COUNT(1) as count FROM $table WHERE reportID = '$rid' AND type = 'open';", 'get_var');
 		return $result;
 	}
 	function get_clicks_unique_count($rid){
-		$table = $this->subscriber_event_table();
+		$table = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery("SELECT COUNT( DISTINCT subscriberID )  FROM $table WHERE reportID = '$rid' AND type = 'click';", 'get_var');
 		return $result;
 	}
 	function get_clicks_unique($rid){
-		$table = $this->subscriber_event_table();
+		$table = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery("SELECT * FROM $table WHERE reportID = '$rid' AND type = 'click' GROUP BY subscriberID ORDER BY eventID DESC;", 'get_results');
 		return $result;
 	}
 	function get_clicks($rid){
-		$table = $this->subscriber_event_table();
+		$table = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery("SELECT * FROM $table WHERE reportID = '$rid' AND type = 'click'  ORDER BY eventID DESC;", 'get_results');
 		return $result;
 	}
 	function get_clicks_count($rid){
-		$table = $this->subscriber_event_table();
+		$table = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery("SELECT COUNT(1) FROM $table WHERE reportID = '$rid' AND type = 'click';", 'get_var');
 		return $result;
 	}
 	function get_clicks_and_opens($rid){
-		$table = $this->subscriber_event_table();
+		$table = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery("SELECT * FROM $table WHERE reportID = '$rid' ORDER BY eventID DESC;", 'get_results');
 		return $result;
 	}
@@ -1250,7 +1250,7 @@ Author URI: http://sendpress.com/
 		//$table = $this->lists_table();
 		//$result = $this->wpdbQuery("DELETE FROM $table WHERE listID = '$listID'", 'query');
 		wp_delete_post( $listID, true);
-		$table = $this->list_subcribers_table();
+		$table = SendPress_Data::list_subcribers_table();
 		$result = $this->wpdbQuery("DELETE FROM $table WHERE listID = '$listID'", 'query');
 
 		return $result;	
@@ -1258,7 +1258,7 @@ Author URI: http://sendpress.com/
 
 	// GET DETAIL (RETURN X WHERE Y = Z)
 	function delete_queue_email( $emailID ) {
-		$table = $this->queue_table();
+		$table = SendPress_Data::queue_table();
 		$result = $this->wpdbQuery("DELETE FROM $table WHERE id = '$emailID'", 'query');
 
 		return $result;	

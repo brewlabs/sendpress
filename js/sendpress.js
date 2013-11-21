@@ -589,7 +589,7 @@ jQuery(document).ready(function($) {
             // $.farbtastic('#'+ id +'_colorpicker').linkTo( cb  );
             
             if( $element.attr('iframe') == 'true' ) {
-                console.log( $element.val() );
+                //console.log( $element.val() );
                 // $('#content').html('data fix');
                     
                 //$('#content a').attr('style','color:' + $element.val() ).attr('data-mce-style','color:' + $element.val() );

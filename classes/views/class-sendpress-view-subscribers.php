@@ -16,7 +16,7 @@ class SendPress_View_Subscribers extends SendPress_View {
 		//add_action('sendpress-subscribers-sub-menu', array('SendPress_View_Subscribers','default_header'));
 	}
 
-	function sub_menu($sp){
+	function sub_menu($sp = false){
 		?>
 		<div id="taskbar" class="lists-dashboard rounded group"> 
 			<div class="navbar" >
