@@ -632,12 +632,7 @@ Author URI: http://sendpress.com/
 		*/
 		
 
-		if( ( isset($_GET['page']) && $_GET['page'] == 'sp-templates' ) || (isset( $_GET['view'] ) && $_GET['view'] == 'style-email' )) {
-			wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' ,'', SENDPRESS_VERSION);
-			wp_enqueue_script('sendpress_js_styler');
-		}
-		wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', false, SENDPRESS_VERSION );
-    	wp_enqueue_style( 'sendpress_css_admin' );
+	
 		//MAKE SURE WE ARE ON AN ADMIN PAGE
 		if(isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)){
 
@@ -645,7 +640,12 @@ Author URI: http://sendpress.com/
 				SendPress_Option::set('whatsnew','hide');
 				SendPress_Admin::redirect('Help_Whatsnew');
 			}
-
+				if( ( isset($_GET['page']) && $_GET['page'] == 'sp-templates' ) || (isset( $_GET['view'] ) && $_GET['view'] == 'style-email' )) {
+			wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' ,'', SENDPRESS_VERSION);
+			wp_enqueue_script('sendpress_js_styler');
+		}
+		wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', false, SENDPRESS_VERSION );
+    	wp_enqueue_style( 'sendpress_css_admin' );
 
 			$this->_page = $_GET['page'];
 			add_filter('tiny_mce_before_init',  array($this,'myformatTinyMCE') );
@@ -871,7 +871,7 @@ Author URI: http://sendpress.com/
 
 				var continueHref = continueButton.attr( 'href' );
 
-				continueHref = continueHref + '&is_woothemes=yes';
+				continueHref = continueHref + '&is_sendpress=yes';
 
 				continueButton.attr( 'href', continueHref );
 			} );

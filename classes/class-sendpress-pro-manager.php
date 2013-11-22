@@ -153,7 +153,7 @@ class SendPress_Pro_Manager {
 		}
 	}
 
-	function check_key($key,$name){
+	static function check_key($key,$name){
 
 		if(empty($key)){
 			return array('state'=>SENDPRESS_PRO_DEACTIVATED, 'transient_time'=>YEAR_IN_SECONDS,'sp_state'=>'passed');
@@ -186,7 +186,7 @@ class SendPress_Pro_Manager {
     	return $failed;
 	}
 
-	function try_check_key(){
+	static function try_check_key(){
 
 		$key = SendPress_Option::get('api_key');
 		global $pro_names;

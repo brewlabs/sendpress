@@ -29,7 +29,7 @@ class SendPress_Notifications_Manager {
 		return $instance;
 	}
 
-	function maybe_send_notification($type = 'daily', $data = false){
+	static function maybe_send_notification($type = 'daily', $data = false){
 		$options = SendPress_Option::get('notification_options');
 		$subscribed = SendPress_Notifications_Manager::build_subscribed_notification($data);
 		$unsubscribed = SendPress_Notifications_Manager::build_unsibscribed_notification($data);
@@ -38,24 +38,24 @@ class SendPress_Notifications_Manager {
 			return;
 		}
 
-		$body = $text = $subscribed.$unsubscribed;
-
+		$body = $text = $subscribed . $unsubscribed;
+		
 		SendPress_Notifications_Manager::send_notification($body);
 	}
 
-	function build_subscribed_notification($data){
+	static function build_subscribed_notification($data){
 		$subscribe_body = '';
 		$options = SendPress_Option::get('notification_options');
-
 		//subscribed check
 		switch($options['subscribed']){
 			case 0:
 				if( $data && $data['type'] === 'subscribed' ){
-					
+					error_log( 'data' );
 					$list = SendPress_Data::get_list_details($data['listID']);
 					$sub = SendPress_Data::get_subscriber($data['subscriberID']);			
 
 					$subscribe_body = $sub->email.' has subscribed to your list "'.$list->post_title.'".';
+					error_log($subscribe_body);
 				}
 				
 				break;
@@ -94,7 +94,7 @@ class SendPress_Notifications_Manager {
 		return $subscribe_body;
 	}
 
-	function build_unsibscribed_notification($data){
+	static function build_unsibscribed_notification($data){
 		$unsubscribe_body = '';
 
 		$options = SendPress_Option::get('notification_options');
@@ -141,7 +141,7 @@ class SendPress_Notifications_Manager {
 		return $unsubscribe_body;
 	}
 
-	function send_instant_notification($data){
+	static function send_instant_notification($data){
 
 		$options = SendPress_Option::get('notification_options');
 
@@ -159,14 +159,17 @@ class SendPress_Notifications_Manager {
 				$unsubscribed = SendPress_Notifications_Manager::build_unsibscribed_notification($data);
 			}
 
+			if( strlen($subscribed) === 0 && strlen($unsubscribed) === 0 ){
+				return;
+			}
 			$body = $text = $subscribed.$unsubscribed;
-
+		
 			SendPress_Notifications_Manager::send_notification($body,$text);
 		}
 		
 	}
 
-	function send_notification($body,$text){
+	static function send_notification($body,$text){
 		$options = SendPress_Option::get('notification_options');
 
 		if( strlen($options['email']) > 0 ){
