@@ -130,7 +130,7 @@ class SendPress_Widget_Signup extends WP_Widget {
 			}
 		}
 
-		return $instance;
+		return apply_filters( 'sendpress_post_notifications_widget_save', $instance );
 	}
 
 	/**
@@ -239,6 +239,8 @@ class SendPress_Widget_Signup extends WP_Widget {
 				<?php
 			}
 		}
+
+		do_action('sendpress_post_notification_widget_form',$lists, $instance, $this);
 		?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'thank_you' ); ?>"><?php _e('Thank you message:', 'sendpress'); ?></label>
