@@ -279,7 +279,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	/********************* POST NOTIFICATION static functionS ***************/
 
 	static function get_post_notification_types(){
-		return array("instant", "daily", "weekly");
+		return array("pn-instant" => "Instant", "pn-daily" => "Daily", "pn-weekly" => "Weekly");
 	}
 
 	/********************* POST NOTIFICATION static functionS ***************/

@@ -25,17 +25,32 @@
     this.widget = {
         init:function($){
             
-            var $lists = $('.post_notifications_list');
+            var $lists = $('.post_notifications_list'),
+            	$allbuttons = $('.meta_radio_button');
 
             $lists.on('click',function(e){
-            	var $list = $(this);
-					$buttons = $list.closest('.widget-content').find('.meta_for_list_'+$list.data('listid')+'[type=radio]');
+            	var $list = $(this),
+					$rcontainer = $list.closest('.meta-radio-buttons'),
+					$buttons = $rcontainer.find('.meta_radio_button');
+
+				console.debug($rcontainer);
 
 				if( $list.is(':checked') ){
 					$buttons.removeAttr('disabled');
 				}else{
 					$buttons.attr('disabled', 'disabled');
 				}
+            });
+
+            $allbuttons.on('click',function(e){
+            	var $radio = $(this),
+            		$wbuttons = $radio.closest('.meta-radio-buttons').find('.meta_radio_button');
+            	
+            	console.debug('testing');
+            	$wbuttons.removeAttr('checked');
+            	$radio.attr('checked', 'checked');
+
+
             });
 
         }

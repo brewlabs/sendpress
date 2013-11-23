@@ -61,17 +61,16 @@ class SendPress_Widget_Signup extends WP_Widget {
 		$args.= 'label_display="'.$instance['label_display'].'" ';
 		$args.= 'desc="'.$instance['desc'].'" ';
 		$args.= 'no_list_error="<div><b>-- NO LIST HAS BEEN SELECTED IN SENDPRESS WIDGET SETTINGS --</b></div>" ';
-
 	
-		$post_args = array( 
-	   		'post_type' 	=> 'sendpress_list',
-	   		'numberposts'   => -1,
-    		'offset'        => 0,
-    		'orderby'       => 'post_title',
-    		'order'         => 'DESC'
-    	);
-		$lists = get_posts( $post_args );
-	    //$lists = $s->getData($s->lists_table());
+		$lists = SendPress_Data::get_lists(
+			array('meta_query' => array(
+				array(
+					'key' => 'public',
+					'value' => true
+				)
+			)),
+			false
+		);
 	    $listids = array();
 
 		foreach($lists as $list){
@@ -81,6 +80,8 @@ class SendPress_Widget_Signup extends WP_Widget {
 				}
 			}
 		}
+
+		apply_filters('sendpress_signup_widget_args', $args, $instance);
 	
 		$args.= 'listids="'.implode(',',$listids).'" ';
 		
@@ -97,6 +98,9 @@ class SendPress_Widget_Signup extends WP_Widget {
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
+		// print_r($old_instance);
+		// die();
+
 		/* Strip tags for title and name to remove HTML (important for text inputs). */
 		$instance['title'] = strip_tags( $new_instance['title'] );
 		// $instance['desc'] = strip_tags( $new_instance['desc'] );
@@ -109,10 +113,11 @@ class SendPress_Widget_Signup extends WP_Widget {
 		( strlen($new_instance['button_text']) !== 0 ) ? $instance['button_text'] = strip_tags( $new_instance['button_text'] ) : $instance['button_text'] = 'Submit';
 		( strlen($new_instance['thank_you']) !== 0 ) ? $instance['thank_you'] = strip_tags( $new_instance['thank_you'] ) : $instance['thank_you'] = 'Thank you for subscribing!';
 
-		$instance['show_first'] = $new_instance['show_first'];
-		$instance['show_last'] = $new_instance['show_last'];
-		$instance['label_display'] = $new_instance['label_display'];
-		$instance['redirect_page'] = $new_instance['redirect_page'];
+		( !array_key_exists('show_first',$new_instance) ) ? $instance['show_first'] = false : $instance['show_first'] = $new_instance['show_first'];
+		( !array_key_exists('show_last',$new_instance) ) ? $instance['show_last'] = false : $instance['show_last'] = $new_instance['show_last'];
+		( !array_key_exists('label_display',$new_instance) ) ? $instance['label_display'] = false : $instance['label_display'] = $new_instance['label_display'];
+		( !array_key_exists('redirect_page',$new_instance) ) ? $instance['redirect_page'] = false : $instance['redirect_page'] = $new_instance['redirect_page'];
+
 		$args = array( 
 	   		'post_type' 	=> 'sendpress_list',
 	   		'numberposts'   => -1,
@@ -126,11 +131,11 @@ class SendPress_Widget_Signup extends WP_Widget {
 
 		foreach($lists as $list){
 			if( get_post_meta($list->ID,'public',true) == 1 ){
-				$instance['list_'.$list->ID] = $new_instance['list_'.$list->ID];
+				( !array_key_exists('list_'.$list->ID,$new_instance) ) ? $instance['list_'.$list->ID] = false : $instance['list_'.$list->ID] = $new_instance['list_'.$list->ID];
 			}
 		}
 
-		return apply_filters( 'sendpress_post_notifications_widget_save', $instance );
+		return apply_filters( 'sendpress_post_notifications_widget_save', $instance, $new_instance );
 	}
 
 	/**
