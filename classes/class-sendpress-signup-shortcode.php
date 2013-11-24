@@ -89,7 +89,10 @@ class SendPress_Signup_Shortcode{
 					} else { ?>
 						<input type="hidden" name="sp_list" id="list" class="sp_list" value="<?php echo $listids; ?>" />
 
-					<?php } ?>
+					<?php } 
+
+					do_action('sendpress_add_post_notification_list',$listids);
+					?>
 
 					<?php if( filter_var($display_firstname, FILTER_VALIDATE_BOOLEAN)  ): ?>
 						<p name="firstname">
@@ -116,7 +119,7 @@ class SendPress_Signup_Shortcode{
 						<input type="text" class="sp_email" orig="<?php echo $email_label; ?>" value="<?php if($label){ echo $email_label; } ?>" name="sp_email" />
 					</p>
 					<p name="extra_fields" class="signup-fields-bottom">
-						<?php do_action('sendpress_signup_form'); ?>
+						<?php do_action('sendpress_signup_form_bottom'); ?>
 					</p>
 
 					<p class="submit">
