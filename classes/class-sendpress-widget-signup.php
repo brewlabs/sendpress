@@ -80,11 +80,10 @@ class SendPress_Widget_Signup extends WP_Widget {
 				}
 			}
 		}
-
-		apply_filters('sendpress_signup_widget_args', $args, $instance);
 	
 		$args.= 'listids="'.implode(',',$listids).'" ';
 		
+		$args = apply_filters('sendpress_signup_widget_args', $args, $instance);
 		//do_shortcode goes here
 		echo do_shortcode('[sendpress-signup '.$args.']');
 

@@ -166,7 +166,9 @@ class SendPress_Ajax_Loader{
 			$email = isset($_POST['email']) ? $_POST['email'] : '';
 			$listid = isset($_POST['listid']) ? $_POST['listid'] : '';
 
-			$success = SendPress_Data::subscribe_user($listid, $email, $first, $last);
+			$custom = apply_filters('sendpress_subscribe_to_list_custom_fields', array(), $_POST);
+
+			$success = SendPress_Data::subscribe_user($listid, $email, $first, $last, 2, $custom);
 
 			//$success = $s->subscribe_user($listid,$email,$first,$last);
 

@@ -166,7 +166,7 @@ class SendPress_Notifications_Manager {
 		
 	}
 
-	function send_notification($body,$text){
+	function send_notification($body,$text = ''){
 		$options = SendPress_Option::get('notification_options');
 
 		if( strlen($options['email']) > 0 ){
