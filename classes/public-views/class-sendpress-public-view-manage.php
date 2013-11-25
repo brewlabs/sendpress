@@ -174,6 +174,8 @@ if ( !empty($_POST) && check_admin_referer($this->_nonce_value) ){
 		
 	  endwhile;
 	}
+
+	do_action('sendpress_public_view_manage_save', $_POST);
 }
 wp_reset_query();
 	?>
@@ -241,9 +243,15 @@ foreach($lists as $list){
 		 }
 		 ?></span>
 	</td>
-	<td class="hidden-phone"><?php if($subscriber->statusid != 3 && $subscriber->statusid != 2){
-		echo $subscriber->status;
-	} ?></td>
+	<td class="hidden-phone">
+		<?php 
+			if( is_object($subscriber) ){
+				if($subscriber->statusid != 3 && $subscriber->statusid != 2){
+					echo $subscriber->status;
+				} 
+			}
+		?>
+	</td>
   	<tr>	
     <?php
 }
