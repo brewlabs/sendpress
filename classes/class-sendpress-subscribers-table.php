@@ -307,12 +307,12 @@ class SendPress_Subscribers_Table extends WP_List_Table {
  
         /* -- Preparing your query -- */
         if(isset($_GET["listID"]) && $_GET["listID"] > 0){
-        $query = "SELECT t1.*, t3.status FROM " .  $this->_sendpress->subscriber_table() ." as t1,". $this->_sendpress->list_subcribers_table()." as t2,". $this->_sendpress->subscriber_status_table()." as t3";
+        $query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3";
 
         
             $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND (t2.listID =  ". $_GET["listID"] .")";
         } else {
-            $query = "SELECT t1.*, t3.status FROM " .  $this->_sendpress->subscriber_table() ." as t1,". $this->_sendpress->list_subcribers_table()." as t2,". $this->_sendpress->subscriber_status_table()." as t3";
+            $query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3";
              $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) ";
         }
         /* -- Ordering parameters -- */
@@ -321,7 +321,7 @@ class SendPress_Subscribers_Table extends WP_List_Table {
         
 
        
-          $query_count = "SELECT count(*) FROM " .  $this->_sendpress->subscriber_table() ." as t1,". $this->_sendpress->list_subcribers_table()." as t2,". $this->_sendpress->subscriber_status_table()." as t3";
+          $query_count = "SELECT count(*) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3";
 
         
             $query_count .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND (t2.listID =  ". $_GET["listID"] .")";
