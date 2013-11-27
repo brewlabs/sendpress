@@ -174,9 +174,9 @@ class SendPress_Manager {
 
 
 	static function send_test(){
-		$text= __('This is text only alternative body.','sendpress');
+		$text= __('This is text only alternative body. öğşiç etc.','sendpress');
 		$subject = __('A Test Email from SendPress.','sendpress');
-		$body= __( 'SendPress test email :).','sendpres' );
+		$body= __( 'SendPress test email :). öğşiç etc.','sendpres' );
 		$testemails = explode(',' , SendPress_Option::get('testemail') );
 		foreach ($testemails as $emailadd) {
 			 SendPress_Manager::send($emailadd, $subject, $body, $text, true );
@@ -379,10 +379,11 @@ class SendPress_Manager {
         $html = str_replace(chr(194),chr(32),$html);
 		$text = str_replace(chr(194),chr(32),$text);
 		
-		$phpmailer->MsgHTML( $html );
+		
 		$phpmailer->AddAddress( trim( $to ) );
 		$phpmailer->AltBody= $text;
 		$phpmailer->Subject = $subject;
+		$phpmailer->MsgHTML( $html );
 		$content_type = 'text/html';
 		$phpmailer->ContentType = $content_type;
 		// Set whether it's plaintext, depending on $content_type

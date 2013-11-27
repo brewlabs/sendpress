@@ -88,11 +88,12 @@ class SendPress_Sender_Website extends SendPress_Sender {
         $html = str_replace(chr(194),chr(32),$html);
 		$text = str_replace(chr(194),chr(32),$text);
 		//return $email;
-		$phpmailer->MsgHTML( $html );
+		
 		$phpmailer->AddAddress( trim( $to ) );
 		$phpmailer->AltBody= $text;
 		$phpmailer->Subject = $subject;
 		$content_type = 'text/html';
+		$phpmailer->MsgHTML( $html );
 		$phpmailer->ContentType = $content_type;
 		// Set whether it's plaintext, depending on $content_type
 		//if ( 'text/html' == $content_type )
