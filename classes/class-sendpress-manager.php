@@ -174,9 +174,9 @@ class SendPress_Manager {
 
 
 	static function send_test(){
-		$text= __('This is text only alternative body. öğşiç etc.','sendpress');
+		$text= __('This is text only alternative body.','sendpress');
 		$subject = __('A Test Email from SendPress.','sendpress');
-		$body= __( 'SendPress test email :). öğşiç etc.','sendpres' );
+		$body= __( 'SendPress test email :).','sendpres' );
 		$testemails = explode(',' , SendPress_Option::get('testemail') );
 		foreach ($testemails as $emailadd) {
 			 SendPress_Manager::send($emailadd, $subject, $body, $text, true );
