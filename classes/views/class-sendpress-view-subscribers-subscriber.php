@@ -23,10 +23,40 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 
         
         echo '</select> ';
-    }	
+    }
+
+
+    function pn_select( $sub_id, $listid ){
+    	$pro_list = SendPress_Option::get('pro_notification_lists');
+    	if(isset($pro_list['post_notifications']['id']) && $listid == $pro_list['post_notifications']['id'] ) {
+		$current = SendPress_Data::get_subscriber_meta($sub_id,'post_notifications',$listid);
+		$info = SendPress_Data::get_post_notification_types();				
+		echo '<select name="'.$listid.'-pn">';
+        echo "<option cls value='-1' >No Status</option>";
+        foreach ($info as $key => $value) {
+
+            $cls = '';
+            if($current == $key){
+                $cls = " selected='selected' ";
+            }
+
+           echo "<option $cls value='".$key."'>".$value."</option>";
+        }
+
+        
+        echo '</select> ';
+
+
+
+
+		}
+
+
+    }
+
 
     function save(){
-    	if($_POST['delete-this-user'] == 'yes'){
+    	if(isset($_POST['delete-this-user']) && $_POST['delete-this-user'] == 'yes'){
     		SendPress_Data::delete_subscriber( $_POST['subscriberID'] );
     		if($_GET['listID']){
     			SendPress_Admin::redirect( 'Subscribers_Subscribers',array('listID'=>$_GET['listID']) );
@@ -54,6 +84,10 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 					SendPress_Data::update_subscriber_status( $post->ID,$_POST['subscriberID'],$_POST[$post->ID."-status"]  );
 				} else {
 					SendPress_Data::remove_subscriber_status($post->ID,$_POST['subscriberID']);
+				}
+				$notifications = SendPress_Data::get_post_notification_types();
+				if(isset($_POST[$post->ID."-pn"]) && array_key_exists($_POST[$post->ID."-pn"], $notifications) ){
+					SendPress_Data::update_subscriber_meta($_POST['subscriberID'], 'post_notifications',$_POST[$post->ID."-pn"], $post->ID );
 				}
 
 
@@ -104,6 +138,10 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 
 	
 	</div></div>
+	<?php 
+	
+	?>
+
 	<h3>Subscriptions</h3>
 	<div class="well">
 		<table class=" table table-bordered table-striped">
@@ -136,8 +174,12 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 							$cls = 'badge-inverse';
 						}
 						
+						
 
-						echo "<span class='badge $cls'>&nbsp;</span> ";$this->status_select($info->statusid,$post->ID); 
+
+						echo "<span class='badge $cls'>&nbsp;</span> ";
+						$this->status_select($info->statusid,$post->ID);
+						$this->pn_select( $_GET['subscriberID'] , $post->ID);
 
 					} else {
 						echo '<span class="badge">&nbsp;</span> '; $this->status_select(0,$post->ID);
