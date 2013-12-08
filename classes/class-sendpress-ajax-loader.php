@@ -36,6 +36,7 @@ class SendPress_Ajax_Loader{
 		add_action('wp_ajax_sendpress-queuebatch', array(&$this, 'queue_batch'));
 		add_action('wp_ajax_sendpress-stopcron', array(&$this, 'cron_stop'));
 		add_action('wp_ajax_sendpress-sendcount', array(&$this, 'sendcount'));
+		add_action('wp_ajax_sendpress-queuecount', array(&$this, 'queue_count'));
 		add_action('sendpress_admin_scripts',array(&$this,'admin_scripts'));
 		add_action('wp_ajax_sendpress-findpost', array(&$this, 'find_post'));
 		add_action('wp_ajax_sendpress-list-subscription', array(&$this,'list_subscription'));
@@ -236,6 +237,22 @@ class SendPress_Ajax_Loader{
 		echo json_encode($response);
 		exit();
 	}
+
+
+	function queue_count(){
+		$this->verify_ajax_call();
+		// Create the response array
+		// 
+		$count = SendPress_Data::emails_in_queue();
+		//$sp = new SendPress;
+		$response = array(
+			'total' => $count
+		);
+		echo json_encode($response);
+		exit();
+
+	}
+
 
 	function send_batch(){
 		$this->verify_ajax_call();

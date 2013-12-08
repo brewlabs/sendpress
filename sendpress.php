@@ -282,11 +282,13 @@ Author URI: http://sendpress.com/
 		}
 
 		static function add_cron(){
-			if ( ! wp_next_scheduled( 'sendpress_cron_action' )   ){
-				wp_schedule_event( time() , 'hourly', 'sendpress_cron_action' );  
-			} 
-			if( SendPress_Option::get('autocron','no') == 'yes' ) {
+			
+			if( SendPress_Option::get('autocron','no') == 'yes' && wp_next_scheduled( 'sendpress_cron_action' ) ) {
 				wp_clear_scheduled_hook('sendpress_cron_action');
+			} else {
+				if ( ! wp_next_scheduled( 'sendpress_cron_action' )   ){
+					wp_schedule_event( time() , 'hourly', 'sendpress_cron_action' );  
+				} 
 			}
 		}
 	
@@ -386,6 +388,9 @@ Author URI: http://sendpress.com/
 	 
 		// Hook into that action that'll fire weekly
 		function sendpress_cron_action_run() {
+			if( SendPress_Option::get('autocron','no') == 'yes'){
+				return;
+			}
 			if(!SendPress_Manager::limit_reached() ){
 				SendPress_Queue::send_mail_cron();
 			}
