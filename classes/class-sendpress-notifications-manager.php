@@ -38,7 +38,7 @@ class SendPress_Notifications_Manager {
 			return;
 		}
 
-		$body = $text = $subscribed.$unsubscribed;
+		$body = $text = $subscribed . $unsubscribed;
 
 		SendPress_Notifications_Manager::send_notification($body);
 	}
