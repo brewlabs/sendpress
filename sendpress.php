@@ -637,9 +637,7 @@ Author URI: http://sendpress.com/
 		*/
 		
 
-<<<<<<< HEAD
-	
-=======
+
 		if( ( isset($_GET['page']) && $_GET['page'] == 'sp-templates' ) || (isset( $_GET['view'] ) && $_GET['view'] == 'style-email' )) {
 			wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' ,'', SENDPRESS_VERSION);
 			wp_enqueue_script('sendpress_js_styler');
@@ -654,7 +652,6 @@ Author URI: http://sendpress.com/
 			wp_enqueue_script('sendpress-widget-js');
     	}
 
->>>>>>> release-0-9-7
 		//MAKE SURE WE ARE ON AN ADMIN PAGE
 		if(isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)){
 
