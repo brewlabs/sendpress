@@ -66,7 +66,7 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 
 					<?php $options = SendPress_Option::get('notification_options');?>
 					<h3 style="display:inline;">
-						<input class="ibutton" type="checkbox" value="<?php echo $options['notifications-enable']; ?>" name="notifications-enable" id="notifications-enable" <?php checked( $options['notifications-enable'], true ); ?>/>&nbsp;<?php _e('Enable Notifications');?>
+						<input class="ibutton" type="checkbox" value="<?php echo $options['notifications-enable']; ?>" name="notifications-enable" id="notifications-enable" <?php checked( $options['notifications-enable'], true ); ?>/>&nbsp;<?php _e('Send Subscription Notifications');?>
 					</h3><br><br>
 					<!-- <a href="#" class="tooltip" rel="tooltip" data-toggle="tooltip" title="The name and e-mail you want notifications to be sent to."><i class="icon-question-sign"></i></a> -->
 					<div class="clearfix">

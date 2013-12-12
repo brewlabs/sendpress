@@ -29,7 +29,9 @@ switch ( $this->_current_action ) {
         $email = isset($_POST['email']) ? $_POST['email'] : '';
         $listid = isset($_POST['list']) ? $_POST['list'] : '';
 
-        $success = $s->subscribe_user($listid,$email,$first,$last);
+        $custom = apply_filters('sendpress_subscribe_to_list_custom_fields',array(), $_POST);
+
+        $success = SendPress_Data::subscribe_user($listid, $email, $first, $last, 2, $custom);
 
         //need to do stuff with the form on the page
         //var_dump($success);

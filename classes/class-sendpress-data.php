@@ -279,7 +279,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	/********************* POST NOTIFICATION static functionS ***************/
 
 	static function get_post_notification_types(){
-		return array("instant", "daily", "weekly");
+		return array("pn-instant" => "Instant", "pn-daily" => "Daily", "pn-weekly" => "Weekly");
 	}
 
 	/********************* POST NOTIFICATION static functionS ***************/
@@ -913,7 +913,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
-	static function subscribe_user($listid, $email, $first, $last, $status = 2){
+	static function subscribe_user($listid, $email, $first, $last, $status = 2, $custom = array()){
 		
 		$success = false;
 		$subscriberID = SendPress_Data::add_subscriber(array('firstname' => $first,'lastname' => $last,'email' => $email));
@@ -948,6 +948,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 					$success = true;
 				}
 			}
+		}
+
+		foreach ($custom as $key => $value) {
+			SendPress_Data::update_subscriber_meta($subscriberID,$key,$value,$listid);
 		}
 
 		return $success;

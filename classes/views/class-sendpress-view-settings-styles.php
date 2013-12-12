@@ -99,7 +99,7 @@ class SendPress_View_Settings_Styles extends SendPress_View_Settings {
         SendPress_Option::set('twitter', $twitter);
         SendPress_Option::set('fromemail', $fromemail );
         SendPress_Option::set('fromname', $fromname );
-        SendPress_Option::set('unsubscribetext', $unsubtext);
+       // SendPress_Option::set('unsubscribetext', $unsubtext);
 
         SendPress_Admin::redirect('Settings_Styles');
 	}

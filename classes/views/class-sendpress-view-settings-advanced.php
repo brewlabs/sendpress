@@ -43,6 +43,12 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
         SendPress_Admin::redirect('Settings_Advanced');
 	}
 
+	function reset_transients(){
+		delete_transient('sendpress_weekly_post_notification_check');
+		delete_transient('sendpress_daily_post_notification_check');
+		delete_transient('sendpress_post_notification_check');
+	}
+
 	function html($sp) {
 		?><form method="post" id="post">
 <div style="float:right;" >
@@ -81,7 +87,10 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 	<input type="checkbox" name="allow_tracking" value="yes" <?php if($ctype=='yes'){echo "checked='checked'"; } ?> /> Allow tracking of this WordPress installs anonymous data.
 		<p>	
 	To maintain a plugin as big as SendPress, we need to know what we're dealing: what kinds of other plugins our users are using, what themes, etc. Please allow us to track that data from your install. It will not track any user details, so your security and privacy are safe with us.</p>
+
+	<?php do_action('sendpress_advanced_settings'); ?>
 	<br class="clear">
+	
 	</div>
 
 </div>

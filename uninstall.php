@@ -20,7 +20,7 @@ define( 'SENDPRESS_VERSION', '0.9.6.3' );
 delete_option( 'sendpress_options' );
 delete_option( 'sendpress_db_version' );
 
-require_once plugin_dir_path( __FILE__ )  . 'classes/class-pro-manager.php';
+require_once plugin_dir_path( __FILE__ )  . 'classes/class-sendpress-pro-manager.php';
 SendPress_Pro_Manager::try_deactivate_key();
 
 

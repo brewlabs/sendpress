@@ -107,6 +107,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * Fix: error on uninstall
 * Fix: notification showing wrong text
 * Fix: console.log in script file
+= 0.9.7 - 2013.12.9 =
+* Fix: Queue count being off
+* Fix: Unistall fixed
+* Fix: Character encoding fixes
+* Fix: Notification sometimes showing wrong list name
+
 
 = 0.9.6.3 - 2013.11.15 =
 * Fix: unsubscribe not being register in some cases

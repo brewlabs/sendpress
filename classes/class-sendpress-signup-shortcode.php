@@ -20,7 +20,7 @@ class SendPress_Signup_Shortcode{
 
 	    ob_start();
 
-	   $lists = SendPress_Data::get_lists(
+	   	$lists = SendPress_Data::get_lists(
 			array('meta_query' => array(
 				array(
 					'key' => 'public',
@@ -44,7 +44,9 @@ class SendPress_Signup_Shortcode{
 			'label_width' => 100,
 			'thank_you'=>'Thank you for subscribing!',
 			'button_text' => 'Submit',
-			'no_list_error' => '<div><b>-- NO LIST HAS BEEN SET! --</b></div>'
+			'no_list_error' => '<div><b>-- NO LIST HAS BEEN SET! --</b></div>',
+			'postnotification' => '', 
+			'pnlistid' => 0
 		), $attr));
 
 		$label = filter_var($label_display, FILTER_VALIDATE_BOOLEAN);
@@ -64,7 +66,6 @@ class SendPress_Signup_Shortcode{
 					}
 					if($redirect_page != false && $redirect_page > 0){
 						echo '<input type="hidden" name="redirect" value="'.$redirect_page.'" />';
-
 					}
 
 				?>
@@ -89,7 +90,13 @@ class SendPress_Signup_Shortcode{
 					} else { ?>
 						<input type="hidden" name="sp_list" id="list" class="sp_list" value="<?php echo $listids; ?>" />
 
-					<?php } ?>
+					<?php } 
+
+					if( strlen($postnotification) > 0 ){
+						do_action('sendpress_add_post_notification_list', $postnotification, $pnlistid);
+					}
+					
+					?>
 
 					<?php if( filter_var($display_firstname, FILTER_VALIDATE_BOOLEAN)  ): ?>
 						<p name="firstname">
@@ -116,7 +123,7 @@ class SendPress_Signup_Shortcode{
 						<input type="text" class="sp_email" orig="<?php echo $email_label; ?>" value="<?php if($label){ echo $email_label; } ?>" name="sp_email" />
 					</p>
 					<p name="extra_fields" class="signup-fields-bottom">
-						<?php do_action('sendpress_signup_form'); ?>
+						<?php do_action('sendpress_signup_form_bottom'); ?>
 					</p>
 
 					<p class="submit">

@@ -343,7 +343,7 @@
             $.post(
                 spvars.ajaxurl,
                 {
-                    action:'sendpress-sendcount',
+                    action:'sendpress-queuecount',
                     spnonce: spvars.sendpressnonce
                 }, function(response) {
                     try {

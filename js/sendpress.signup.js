@@ -41,6 +41,11 @@
                 signup['listid'] = $form.find('.sp_list').val();
             }
 
+            $form.find('.custom-field').each(function(){
+                var $obj = $(this);
+                signup[$obj.attr('id')] = $obj.val();
+            });
+
             signup['action'] = 'sendpress_subscribe_to_list';
 
             if( signup.email.length === 0 ){
@@ -100,6 +105,19 @@
     		}
 
     	});
+
+        $('.sendpress-signup .post-notifications-list').on('click', function(e){
+            var $obj = $(this),
+                $form = $obj.closest('form.sendpress-signup'),
+                type = $obj.data('type'),
+                hidden = "<input class='post-notifications custom-field' type='hidden' value='"+type+"' name='post_notifications' id='post_notifications'/>";
+
+            if($obj.is(':checked')){
+                $form.append(hidden);
+            }else{
+                $form.find('.post-notifications').remove();
+            }
+        });
 
     });
 

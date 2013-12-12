@@ -30,7 +30,7 @@ class SendPress_Cron {
             if ( isset( $_GET['action'] ) && $_GET['action'] == 'sendpress' ) {
                 SendPress_Queue::send_mail();
                 $count= SendPress_Data::emails_in_queue();
-                $pro = false;
+                $pro = 0;
                 if(defined('SENDPRESS_PRO_VERSION')){
                     $pro = SENDPRESS_PRO_VERSION;
                 }

@@ -82,10 +82,11 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
         $html = str_replace(chr(194),chr(32),$html);
 		$text = str_replace(chr(194),chr(32),$text);
 		
-		$phpmailer->MsgHTML( $html );
+		
 		$phpmailer->AddAddress( trim( $to ) );
 		$phpmailer->AltBody= $text;
 		$phpmailer->Subject = $subject;
+		$phpmailer->MsgHTML( $html );
 		$content_type = 'text/html';
 		$phpmailer->ContentType = $content_type;
 		// Set whether it's plaintext, depending on $content_type

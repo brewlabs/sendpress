@@ -88,7 +88,7 @@ static function send_mail(){
 
 
 		for ($i=0; $i < $count ; $i++) { 
-				$email = $wpdb->get_row("SELECT * FROM ". SendPress_Data::queue_table() ." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 ORDER BY id LIMIT 1");
+				$email = SendPress_Data::get_single_email_from_queue();
 				if($email != null){
 
 					if( SendPress_Manager::limit_reached()  ){
