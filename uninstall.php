@@ -17,14 +17,16 @@ global $wpdb, $wp_roles;
 
 define( 'SENDPRESS_VERSION', '0.9.6.3' );
 //Remove settings
+/*
 delete_option( 'sendpress_options' );
 delete_option( 'sendpress_db_version' );
+
 
 require_once plugin_dir_path( __FILE__ )  . 'classes/class-sendpress-pro-manager.php';
 SendPress_Pro_Manager::try_deactivate_key();
 
 
-/** Delete All the Custom Post Types */
+
 $sp_post_types = array( 'sp_newsletters', 'sp_report', 'sptemplates', 'sendpress_list' );
 foreach ( $sp_post_types as $post_type ) {
 
@@ -43,3 +45,4 @@ foreach ( $sp_post_types as $post_type ) {
 //This could use an updated for Multisite
 require_once plugin_dir_path( __FILE__ )  . 'classes/class-sendpress-db-tables.php';
 SendPress_DB_Tables::remove_all_data();
+*/
