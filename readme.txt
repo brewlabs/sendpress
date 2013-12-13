@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.4
 Tested up to: 3.7.1
-Stable tag: 0.9.6.4
+Stable tag: 0.9.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,16 +103,17 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
-= 0.9.6.4 - 2013.11.21 =
-* Fix: error on uninstall
-* Fix: notification showing wrong text
-* Fix: console.log in script file
+
 = 0.9.7 - 2013.12.9 =
 * Fix: Queue count being off
 * Fix: Unistall fixed
 * Fix: Character encoding fixes
 * Fix: Notification sometimes showing wrong list name
 
+= 0.9.6.4 - 2013.11.21 =
+* Fix: error on uninstall
+* Fix: notification showing wrong text
+* Fix: console.log in script file
 
 = 0.9.6.3 - 2013.11.15 =
 * Fix: unsubscribe not being register in some cases
@@ -348,6 +349,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.7 =
+Multiple bug fixes
 
 = 0.9.6.4 =
 Uninstall bug fix

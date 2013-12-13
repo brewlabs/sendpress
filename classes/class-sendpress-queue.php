@@ -32,15 +32,15 @@ static function send_mail(){
 
 
 		for ($i=0; $i < $day_count ; $i++) { 
-			set_time_limit(30);
+			//set_time_limit(30);
 				$email = SendPress_Data::get_single_email_from_queue();
 				if($email != null){
-					set_time_limit(30);
+					//set_time_limit(30);
 					if( SendPress_Manager::limit_reached()  ){
 						return;
 					}
 					$attempts++;
-					set_time_limit(30);
+					//set_time_limit(30);
 					SendPress_Data::queue_email_process( $email->id );
 					$result = SendPress_Manager::send_email_from_queue( $email );
 					$email_count++;
@@ -53,7 +53,7 @@ static function send_mail(){
 						);
 
 						//$wpdb->insert( $this->subscriber_open_table(),  $senddata);
-						set_time_limit(30);
+						//set_time_limit(30);
 						SendPress_Data::update_report_sent_count( $email->emailID );
 					} else {
 						$wpdb->update( SendPress_Data::queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));

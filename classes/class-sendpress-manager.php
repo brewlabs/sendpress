@@ -365,14 +365,15 @@ class SendPress_Manager {
 		$phpmailer->CharSet = $charset;
 		$phpmailer->Encoding = $encoding;
 
-
+		
 		if($charset != 'UTF-8'){
-             $html = $this->change($html,'UTF-8',$charset);
-             $text = $this->change($text,'UTF-8',$charset);
-             $subject = $this->change($subject,'UTF-8',$charset);
+			$sender = new SendPress_Sender;
+            $html = $sender->change($html,'UTF-8',$charset);
+            $text = $sender->change($text,'UTF-8',$charset);
+            $subject = $sender->change($subject,'UTF-8',$charset);
                     
-            }
-
+        }
+		
             
 
         $subject = str_replace(array('â€™','â€œ','â€�','â€“'),array("'",'"','"','-'),$subject);
