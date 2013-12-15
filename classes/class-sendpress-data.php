@@ -567,7 +567,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 	static function get_subcribers_by_meta($meta_key = false, $meta_value = false, $list_id= false){
-		
+
 		if($meta_key == false){
 			return false;
 		}

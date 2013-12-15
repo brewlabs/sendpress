@@ -47,6 +47,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 		delete_transient('sendpress_weekly_post_notification_check');
 		delete_transient('sendpress_daily_post_notification_check');
 		delete_transient('sendpress_post_notification_check');
+		wp_clear_scheduled_hook('sendpress_post_notification_check');
 	}
 
 	function html($sp) {
