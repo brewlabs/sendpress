@@ -37,6 +37,7 @@ class SendPress_Signup_Shortcode{
 			'list_label' => 'List Selection',
 			'listids' => '',
 			'redirect_page'=>false,
+			'lists_checked'=>true,
 			'display_firstname' => false,
 			'display_lastname' => false,
 			'label_display' => false,
@@ -81,7 +82,7 @@ class SendPress_Signup_Shortcode{
 						<label for="list"><?php echo $list_label; ?>:</label>
 						<?php
 						foreach ($list_ids as $id) { ?>
-							<input type="checkbox" name="sp_list[]" class="sp_list" id="list<?php echo $id; ?>" value="<?php echo $id; ?>" checked /> <?php echo get_the_title($id); ?><br>
+							<input type="checkbox" name="sp_list[]" class="sp_list" id="list<?php echo $id; ?>" value="<?php echo $id; ?>" <?php if($lists_checked){ echo 'checked'; }?> /> <?php echo get_the_title($id); ?><br>
 						<?php
 						} ?>	
 						</p>
