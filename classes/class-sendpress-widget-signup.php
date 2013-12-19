@@ -120,6 +120,8 @@ class SendPress_Widget_Signup extends WP_Widget {
 
 		( !array_key_exists('lists_checked',$new_instance) ) ? $instance['lists_checked'] = false : $instance['lists_checked'] = $new_instance['lists_checked'];
 
+		$instance['lists_checked'] = true;
+
 		$args = array( 
 	   		'post_type' 	=> 'sendpress_list',
 	   		'numberposts'   => -1,
@@ -152,7 +154,7 @@ class SendPress_Widget_Signup extends WP_Widget {
 			'title' => '', 
 			'show_first' => false,
 			'show_last' => false,
-			'lists_checked' => false,
+			'lists_checked' => true,
 			'label_display' => 0,
 			'first_label' => __('First Name', 'sendpress'), 
 			'last_label' => __('Last Name', 'sendpress'), 
@@ -209,11 +211,12 @@ class SendPress_Widget_Signup extends WP_Widget {
 			<input type="radio" name="<?php echo $this->get_field_name( 'label_display' ); ?>" value="1"<?php echo $instance['label_display'] == 1 ? ' checked' : ''; ?> /> Yes
 			<input type="radio" name="<?php echo $this->get_field_name( 'label_display' ); ?>" value="0"<?php echo $instance['label_display'] == 0 ? ' checked' : ''; ?> /> No
 		</p>
-
+		<!--
 		<p>
 			<input class="checkbox" type="checkbox" <?php checked( $instance['lists_checked'], 'on' ); ?> id="<?php echo $this->get_field_id( 'lists_checked' ); ?>" name="<?php echo $this->get_field_name( 'lists_checked' ); ?>" /> 
 			<label for="<?php echo $this->get_field_id( 'lists_checked' ); ?>"><?php _e('Check all lists by default', 'sendpress'); ?></label>
 		</p> 
+		-->
 
 		<p>
 			<label for="<?php echo $this->get_field_id( 'first_label' ); ?>"><?php _e('First Name Label:', 'sendpress'); ?></label>
