@@ -38,7 +38,7 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
 	    <p><input type="checkbox" class="edit-list-checkbox" name="public" value="1" checked /><label for="public"><?php _e('Allow user to sign up to this list','sendpress'); ?></label> <small>( synced lists will be made private )</small></p>
 	    <!-- Now we can render the completed list table -->
 	     <!-- Now we can render the completed list table -->
-	   	<p><b>Sync List to WordPress Role</b></p>
+	   	
 	   	 <?php 
 
 	   	$roles = get_post_meta($listinfo->ID, 'sync_role', true);
@@ -50,8 +50,10 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
 	   	 		$d = 'checked';
 	   	 	}
 	   	?>
+	   	<p><H4>Select List Type</h4>
+	   		Pick SendPress list if you want to use SendPress to manage your subscribers. Pick a WordPress Role if you want to send emails to your users. <br>Synced lists can only have users that have a login to your WordPress site.</p>
 	   	<p>
-	   	<input type="radio" name="sync_role" value="none" <?php echo $d; ?> /> Not Linked<br>
+	   	<input type="radio" name="sync_role" value="none" <?php echo $d; ?> /> SendPress List ( Use this to have subscribers sign up, import csv, etc.  )<br><br>
 	   	<?php
 	   	 foreach (get_editable_roles() as $role_name => $role_info):
 	   	 	$d ='';
