@@ -56,6 +56,7 @@ class SendPress_Widget_Signup extends WP_Widget {
 		$args.= 'email_label="'.$instance['email_label'].'" ';
 		$args.= 'list_label="'.$instance['list_label'].'" ';
 		$args.= 'redirect_page="'.$instance['redirect_page'].'" ';
+		$args.= 'lists_checked="'.$instance['lists_checked'].'" ';
 		$args.= 'button_text="'.$instance['button_text'].'" ';
 		$args.= 'thank_you="'.$instance['thank_you'].'" ';
 		$args.= 'label_display="'.$instance['label_display'].'" ';
@@ -117,6 +118,10 @@ class SendPress_Widget_Signup extends WP_Widget {
 		( !array_key_exists('label_display',$new_instance) ) ? $instance['label_display'] = false : $instance['label_display'] = $new_instance['label_display'];
 		( !array_key_exists('redirect_page',$new_instance) ) ? $instance['redirect_page'] = false : $instance['redirect_page'] = $new_instance['redirect_page'];
 
+		( !array_key_exists('lists_checked',$new_instance) ) ? $instance['lists_checked'] = false : $instance['lists_checked'] = $new_instance['lists_checked'];
+
+		$instance['lists_checked'] = true;
+
 		$args = array( 
 	   		'post_type' 	=> 'sendpress_list',
 	   		'numberposts'   => -1,
@@ -149,6 +154,7 @@ class SendPress_Widget_Signup extends WP_Widget {
 			'title' => '', 
 			'show_first' => false,
 			'show_last' => false,
+			'lists_checked' => true,
 			'label_display' => 0,
 			'first_label' => __('First Name', 'sendpress'), 
 			'last_label' => __('Last Name', 'sendpress'), 
@@ -205,6 +211,12 @@ class SendPress_Widget_Signup extends WP_Widget {
 			<input type="radio" name="<?php echo $this->get_field_name( 'label_display' ); ?>" value="1"<?php echo $instance['label_display'] == 1 ? ' checked' : ''; ?> /> Yes
 			<input type="radio" name="<?php echo $this->get_field_name( 'label_display' ); ?>" value="0"<?php echo $instance['label_display'] == 0 ? ' checked' : ''; ?> /> No
 		</p>
+		<!--
+		<p>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['lists_checked'], 'on' ); ?> id="<?php echo $this->get_field_id( 'lists_checked' ); ?>" name="<?php echo $this->get_field_name( 'lists_checked' ); ?>" /> 
+			<label for="<?php echo $this->get_field_id( 'lists_checked' ); ?>"><?php _e('Check all lists by default', 'sendpress'); ?></label>
+		</p> 
+		-->
 
 		<p>
 			<label for="<?php echo $this->get_field_id( 'first_label' ); ?>"><?php _e('First Name Label:', 'sendpress'); ?></label>
