@@ -224,7 +224,9 @@ table.wp-list-table{
     width: 240px;
 }
 .widerightcol{
-   margin-left: 250px;
+   
+   float:left;
+   width: 100%;
 }
 .boxer {
     -moz-border-radius: 4px;

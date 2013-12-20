@@ -236,7 +236,7 @@ if(strlen($active_header['value']) > 0){
 		</div>
 
 
-
+	<div style="margin-left: 250px;">
 	<div class="widerightcol">
 		<div id="imageaddbox" class="inputbox">
 			
@@ -368,7 +368,7 @@ $manage = __("Manage Subscription","sendpress");
 
 
 </div>
-</div>
+</div></div>
 
 <div class="modal hide fade" id="sendpress-helper">
 	<div class="modal-header">

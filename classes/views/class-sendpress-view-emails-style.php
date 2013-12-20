@@ -141,7 +141,7 @@ class SendPress_View_Emails_Style extends SendPress_View_Emails {
 			</div>
 		<?php require_once( SENDPRESS_PATH. 'inc/forms/email-style.2.0.php' ); ?>
 		
-        <div class="well">
+        <div class="well clear">
             <h2>Test This Email</h2>
             <p><input type="text" name="test-email" value="" class="sp-text" placeholder="Email to send test to." /></p>
             <button class="btn btn-success" name="submit" type="submit" value="send-test"><i class=" icon-white icon-inbox"></i> Send Test</button>
