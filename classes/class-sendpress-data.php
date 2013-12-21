@@ -23,6 +23,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return 'sp_report';
 	}
 
+	static function gmdate(){
+		return gmdate('Y-m-d H:i:s');
+	}
+
 	/********************* BASE static functionS **************************/	
 
 	static function wpdbQuery($query, $type) {
@@ -68,7 +72,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$date = date_i18n('Y-m-d H:i:s');
 		$info =  $wpdb->get_row($wpdb->prepare("SELECT * FROM ". SendPress_Data::queue_table() ." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 and ( date_sent = '0000-00-00 00:00:00' or date_sent < %s ) ORDER BY id LIMIT 1", $date));
 
-		error_log(print_r( $info,true) );
 		return $info;
 
 	}
@@ -763,7 +766,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	static function get_subscriber_events($sid){
 		global $wpdb;
-			$table  =SendPress_Data::subscriber_event_table();
+			$table  = SendPress_Data::subscriber_event_table();
 			return $wpdb->get_results( $wpdb->prepare("SELECT * FROM $table WHERE subscriberID = %d order by eventID DESC", $sid) );
 
 	}
@@ -773,7 +776,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		global $wpdb;
 
 		$event_data = array(
-			'eventdate'=>date('Y-m-d H:i:s'),
+			'eventdate'=>SendPress_Data::gmdate(),
 			'subscriberID' => $sid,
 			'reportID' => $rid,
 			'type'=> $event
@@ -787,7 +790,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		global $wpdb;
 
 		$event_data = array(
-			'eventdate'=>date('Y-m-d H:i:s'),
+			'eventdate'=>SendPress_Data::gmdate(),
 			'subscriberID' => $sid,
 			'reportID' => $rid,
 			'listID'=>$lid,
@@ -819,7 +822,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		}
 
 		$event_data = array(
-			'eventdate'=>date('Y-m-d H:i:s'),
+			'eventdate'=>SendPress_Data::gmdate(),
 			'subscriberID' => $sid,
 			'listID'=>$lid,
 			'type'=>$event_type
@@ -851,7 +854,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$email = $values['email'];
 
 		if(!isset($values['join_date'])){
-			$values['join_date'] =  date('Y-m-d H:i:s');
+			$values['join_date'] = SendPress_Data::gmdate();
 		}
 		if(!isset($values['identity_key'])){
 			$values['identity_key'] =  SendPress_Data::random_code();
