@@ -11,3 +11,29 @@ letter-spacing: -3px;
 display: none;
 }
 
+
+
+.bslabel {
+    padding: 1px 3px 2px;
+    font-size: 9.75px;
+    font-weight: bold;
+    color: #ffffff;
+    text-transform: uppercase;
+    white-space: nowrap;
+    background-color: #bfbfbf;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.bslabel.important {
+    background-color: #c43c35;
+}
+.bslabel.warning {
+    background-color: #f89406;
+}
+.bslabel.success {
+    background-color: #46a546;
+}
+.bslabel.notice {
+    background-color: #62cffc;
+}
