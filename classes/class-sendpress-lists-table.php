@@ -104,11 +104,14 @@ class SendPress_Lists_Table extends WP_List_Table {
                 if($role != 'none' && $role != false){
                     $str .= "<a class='btn' href='". SendPress_Admin::link('Subscribers_Sync') . "&listID=".$item->ID."'><i class='icon-refresh'></i> Sync</a> ";
                 } else {
-                    $str .=  '<a class="btn" href="?page='.$_REQUEST['page'].'&view=csvimport&listID='. $item->ID .'"><i class="icon-user"></i> Import</a> ';
-                    $str .= '<a class="btn" href="?page='.$_REQUEST['page'].'&view=add&listID='. $item->ID .'"><i class="icon-user"></i> Add</a> ';
-                     $str .='<a class="btn" href="?page='.$_REQUEST['page'].'&action=export-list&listID='. $item->ID .'"><i class="icon-download"></i> Export</a> ';
+                    if(apply_filters( 'sendpress_show_import_button', true, $this->_sendpress )){
+                         $str .=  '<a class="list-import btn" href="?page='.$_REQUEST['page'].'&view=csvimport&listID='. $item->ID .'"><i class="icon-user"></i> Import</a> ';
+                    }
                     
-                $str .=    '<a class="btn " href="'. SendPress_Admin::link('Subscribers_Listform', array('listID' => $item->ID)) .'"><i class="icon-list"></i> Form</a> ';
+                    $str .= '<a class="btn" href="?page='.$_REQUEST['page'].'&view=add&listID='. $item->ID .'"><i class="icon-user"></i> Add</a> ';
+                    $str .='<a class="btn" href="?page='.$_REQUEST['page'].'&action=export-list&listID='. $item->ID .'"><i class="icon-download"></i> Export</a> ';
+                    
+                    $str .=    '<a class="btn " href="'. SendPress_Admin::link('Subscribers_Listform', array('listID' => $item->ID)) .'"><i class="icon-list"></i> Form</a> ';
                 }
 
                
