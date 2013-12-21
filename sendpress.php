@@ -192,6 +192,9 @@ Author URI: http://sendpress.com/
 			$this->maybe_upgrade();
 
 
+			//add_action('register_form',array( $this , 'add_registration_fields'));
+
+
 			SendPress_Ajax_Loader::init();
 			SendPress_Signup_Shortcode::init();
 			SendPress_Sender::init();
@@ -279,6 +282,21 @@ Author URI: http://sendpress.com/
 	
 			add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
 			
+		}
+
+
+		function add_registration_fields() {
+
+		    //Get and set any values already sent
+		    $user_extra = ( isset( $_POST['user_extra'] ) ) ? $_POST['user_extra'] : '';
+		    ?>
+
+		    <p>
+		        <label for="user_extra">
+		        <input type="checkbox" name="user_extra" id="user_extra"  value="<?php echo esc_attr(stripslashes($user_extra)); ?>" /> <?php _e('Join our mailing List.','sendpres'); ?></label><br>
+		    </p><br>
+
+		    <?php
 		}
 
 		static function add_cron(){
@@ -655,6 +673,13 @@ Author URI: http://sendpress.com/
 		//MAKE SURE WE ARE ON AN ADMIN PAGE
 		if(isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)){
 
+
+			remove_filter( 'mce_external_plugins', 'cforms_plugin');
+				remove_filter( 'mce_buttons', 'cforms_button');
+remove_filter("mce_plugins", "cforms_plugin");
+				remove_filter('mce_buttons', 'cforms_button');
+				remove_filter('tinymce_before_init','cforms_button_script');
+
 			if(SendPress_Option::get('whatsnew','show') == 'show'){
 				SendPress_Option::set('whatsnew','hide');
 				SendPress_Admin::redirect('Help_Whatsnew');
@@ -683,7 +708,10 @@ Author URI: http://sendpress.com/
 			$tiny = new SendPress_TinyMCE();
 	   		$this->_current_view = isset( $_GET['view'] ) ? $_GET['view'] : '' ;
 
-			wp_enqueue_script(array('jquery', 'editor', 'thickbox', 'media-upload','dashboard'));
+			wp_enqueue_script(array('jquery', 'editor', 'thickbox', 'media-upload'));
+			if($this->_page == 'help'){
+				wp_enqueue_script( 'dashboard' );
+			}
 			wp_enqueue_style('thickbox');
 			wp_register_script('spfarb', SENDPRESS_URL .'js/farbtastic.js' ,'', SENDPRESS_VERSION );
 			wp_enqueue_script( 'spfarb' );

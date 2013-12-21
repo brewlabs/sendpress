@@ -290,11 +290,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 
    
     static function update_report_sent_count( $id ) {
-    	if( $sent=get_post_meta($id , '_sent_total', true)){
-    		$sent++;
-    	} else {
-    		$sent = 1;
-    	}
+    	$sent  =  get_post_meta($id , '_sent_total', 1);
+    	$sent++;
+    	
    		update_post_meta( $id ,'_sent_total' , $sent );
     }
 
