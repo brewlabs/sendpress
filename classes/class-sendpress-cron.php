@@ -23,14 +23,16 @@ class SendPress_Cron {
     /**
      * Alternative function to the current wp_cron function that would usually executed on sanitize_comment_cookies
      */
-    public function auto() {
+    static public function auto() {
         // make sure we're in wp-cron.php
         if ( false !== strpos( $_SERVER['REQUEST_URI'], '/wp-cron.php' ) ) {
             // make sure a secret string is provided in the ur
             if ( isset( $_GET['action'] ) && $_GET['action'] == 'sendpress' ) {
+                
                 SendPress_Queue::send_mail();
                 $count= SendPress_Data::emails_in_queue();
                 $pro = 0;
+                
                 if(defined('SENDPRESS_PRO_VERSION')){
                     $pro = SENDPRESS_PRO_VERSION;
                 }
@@ -40,7 +42,6 @@ class SendPress_Cron {
                 $emails_per_hour =  SendPress_Option::get('emails-per-hour');
                 $hourly_emails = SendPress_Data::emails_sent_in_queue("hour");
                 $emails_so_far = SendPress_Data::emails_sent_in_queue("day");
-                
                 $limits = array('dl'=>$emails_per_day,'hl'=>$emails_per_hour,'ds'=>$emails_so_far,'hs'=>$hourly_emails);
 
                 echo json_encode(array( "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits  ));
@@ -61,7 +62,7 @@ class SendPress_Cron {
 	}
 
 	function __construct(){
-        $this->auto();
+        //$this->auto();
 		  /* some processing for cron management */
         add_filter( 'cron_schedules', array( $this , 'cron_schedules' ) );
  

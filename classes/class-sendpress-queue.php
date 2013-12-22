@@ -20,27 +20,21 @@ class SendPress_Queue extends SendPress_Base {
 
 
 static function send_mail(){
-		@ini_set('max_execution_time',0);
 		global $wpdb;
-		$day_count = SendPress_Option::get('emails-per-hour');
 		$day_count = 25;
 
-		
-		if( SendPress_Manager::limit_reached()  ){
-			return;
-		}
-
-
-		for ($i=0; $i < $day_count ; $i++) { 
-			//set_time_limit(30);
+		if( !SendPress_Manager::limit_reached()  ){
+		$count= SendPress_Data::emails_in_queue();
+		$email_count = 0;
+		$attempts = 0;
+		if($count > 0 ){
+		for ($i=0; $i < $day_count; $i++) { 
 				$email = SendPress_Data::get_single_email_from_queue();
 				if($email != null){
-					//set_time_limit(30);
 					if( SendPress_Manager::limit_reached()  ){
-						return;
+						break;
 					}
 					$attempts++;
-					//set_time_limit(30);
 					SendPress_Data::queue_email_process( $email->id );
 					$result = SendPress_Manager::send_email_from_queue( $email );
 					$email_count++;
@@ -52,8 +46,6 @@ static function send_mail(){
 							'subscriberID' => $email->subscriberID
 						);
 
-						//$wpdb->insert( $this->subscriber_open_table(),  $senddata);
-						//set_time_limit(30);
 						SendPress_Data::update_report_sent_count( $email->emailID );
 					} else {
 						$wpdb->update( SendPress_Data::queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
@@ -62,9 +54,11 @@ static function send_mail(){
 				
 				
 		}
+		}
 
 
 		
+		}
 
 
 		

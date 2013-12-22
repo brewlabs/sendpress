@@ -191,7 +191,6 @@ Author URI: http://sendpress.com/
 		function init() {
 			$this->maybe_upgrade();
 
-
 			//add_action('register_form',array( $this , 'add_registration_fields'));
 
 
@@ -200,6 +199,7 @@ Author URI: http://sendpress.com/
 			SendPress_Sender::init();
 			SendPress_Pro_Manager::init();
 			SendPress_Cron::get_instance();
+			SendPress_Cron::auto();
 			SendPress_Notifications_Manager::init();
 			SendPress_Tracking::init();
 			sendpress_register_sender('SendPress_Sender_Website');
