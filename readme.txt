@@ -103,6 +103,14 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
+= 0.9.7.1 - 2913.12.22 =
+* Fix: 3.8 display issues
+* Fix: Shortcode for signup
+* Fix: List create and Role sync settings
+* Fix: Report counts and times
+* Fix: AutoCron causing empty entry in error logs
+* Fix: uninstall errors
+* Fix: PHPmailer email encoding 
 
 = 0.9.7 - 2013.12.9 =
 * Fix: Queue count being off
@@ -349,6 +357,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.7.1 +
+Various Bug Fixes
 
 = 0.9.7 =
 Multiple bug fixes
