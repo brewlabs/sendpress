@@ -30,19 +30,7 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 
 	function html($sp){
 			?>
-			<style>
-				#wpcontent{
-					margin-left: 146px;
-					background-color: #dcdcd7;
-				}
-				.mp6 #wpcontent{
-					margin-left: 151px;
-					background-color: #dcdcd7;
-				}
-				.about-wrap .feature-section.two-col p::before{
-					display: none;
-				}
-			</style>
+			
 		<div class="wrap about-wrap">
 
 <h1>Welcome to SendPress <?php echo SENDPRESS_VERSION; ?></h1>
@@ -137,10 +125,8 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 
 <div class="changelog">
 	<h3>Help Us Out</h3>
-	<div class="feature-section col two-col">
-		<div>
-			<a href="http://wordpress.org/support/view/plugin-reviews/sendpress" target="_blank"><img alt="" src="<?php echo SENDPRESS_URL;?>/img/ratethis.png" class="spimage-100"></a>
-		</div>
+	<div class="feature-section col">
+		
 		<div class="last-feature">
 
 			<h4>Give us a Review</h4>

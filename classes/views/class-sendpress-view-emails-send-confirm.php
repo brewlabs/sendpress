@@ -170,6 +170,7 @@ if( !empty($info['testemails']) ){
 ?>
 </div>
 </div>
+<div style="margin-left: 250px;">
 <div class="widerightcol">
 <?php
 $link =  get_permalink( $post->ID ); 
@@ -195,7 +196,8 @@ $link = $url.$sep.'inline=true';
 <?php wp_nonce_field($sp->_nonce_value); ?><br><br>
 </div>
 </div>
-	
+<br class="clear" />
+	</div>
 	</form>
 	<?php	
 	} 

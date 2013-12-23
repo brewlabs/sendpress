@@ -149,13 +149,19 @@ foreach($current_lists as $list){
 }
 ?>
 </div>
+<!--
 <div class="style-unit">
-<h4><?php _e('Test Emails','sendpress'); ?></h4>
+<h4><?php _e('Settings','sendpress'); ?></h4>
+<input type="checkbox" name="test-send" value="1" /> Mark as Test
+
 <textarea name="test-add" cols='26' rows='6'></textarea>
-<?php wp_nonce_field($sp->_nonce_value); ?>
-</div>
+
 
 </div>
+-->
+<?php wp_nonce_field($sp->_nonce_value); ?>
+</div>
+<div style="margin-left: 250px;">
 <div class="widerightcol">
 <?php
 $url = get_site_url();
@@ -174,7 +180,10 @@ $link = $url.$sep.'inline=true';
 ?>
 <iframe src="<?php echo $link; ?>" width="100%" height="600px"></iframe>
 <small>Displaying a 404? Please try saving your permalinks <a href="<?php echo admin_url('options-permalink.php'); ?>">here</a>.</small>
+
 </div>
+</div>
+<br class="clear" />
 </div>
 </form>
 <?php

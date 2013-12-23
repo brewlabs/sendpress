@@ -1,4 +1,4 @@
-.mp6 #adminmenu .toplevel_page_sp-overview .wp-menu-image:before {
+.wp-core-ui #adminmenu .toplevel_page_sp-overview .wp-menu-image:before {
 content: 'SP';
 font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif !important;
 font-size: 18px !important;
@@ -7,7 +7,7 @@ letter-spacing: -3px;
 
 }
 
-.mp6 #adminmenu .toplevel_page_sp-overview .wp-menu-image img {
+.wp-core-ui #adminmenu .toplevel_page_sp-overview .wp-menu-image img {
 display: none;
 }
 
