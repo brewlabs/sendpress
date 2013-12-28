@@ -266,7 +266,8 @@ class SendPress_Email {
 			    if(!$this->post_info){
 			    	$this->post_info = get_post( $this->id() );
 				}
-				if($this->post_info->post_type == 'sp_newsletters'){
+
+				if($this->post_info->post_type == 'sp_newsletters' || $this->post_info->post_type == 'sp_report'){
 					$email_subject =  get_post_meta($this->id(),'_sendpress_subject',true );
 				} else {
 			    	$email_subject =  $this->post_info->post_title;

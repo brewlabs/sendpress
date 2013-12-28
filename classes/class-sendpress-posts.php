@@ -39,8 +39,8 @@ class SendPress_Posts{
 		//'post_parent' =>  $post->parent_id,
 		'post_password' => $post->post_password,
 		'post_status' => $post->post_status,
-		'post_title' => $new_post_type = (empty($post_title))? $post->post_title: $post_title, 
-		'post_type' => $new_post_type = (empty($post_type))? $post->post_type: $post_type, 
+		'post_title' => (empty($post_title))? $post->post_title: $post_titles, 
+		'post_type' => (empty($post_type))? $post->post_type: $post_type, 
 		);
 
 		if($post_name != ''){
