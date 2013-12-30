@@ -149,7 +149,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		
 		$hour_ago = strtotime('-1 hour');
 		$hour = date('Y-m-d H:i:s', $hour_ago);
-		$hour_ago = strtotime('-1 day');
+		$hour_ago = strtotime('-7 day');
 		$day = date('Y-m-d H:i:s', $hour_ago);
 		
 		$table = self::queue_table();
