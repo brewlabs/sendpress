@@ -500,6 +500,20 @@ class SendPress_Data extends SendPress_DB_Tables {
 		}
 	}
 
+
+	static function delete_all_subscribers(){
+		global $wpdb;
+			$wpdb->query( 
+					"DELETE FROM " .  SendPress_Data::subscriber_table() ." "
+				);
+			$wpdb->query(
+					"DELETE FROM " .  SendPress_Data::list_subcribers_table() ." "
+				);
+			$wpdb->query( 
+				"DELETE FROM " .  SendPress_Data::subscriber_event_table() ." " 
+				);
+	}
+
 	static function delete_subscriber($subscriberID = false){
 		if($subscriberID != false){
 			global $wpdb;

@@ -26,8 +26,8 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 	
 
 	function remove_subscribers( $get, $sp ){
-		SendPress_Data::remove_all_subscribers( $get['listID'] );
-		SendPress_Admin::redirect('Subscribers_Subscribers', array('listID'=> $get['listID'] ));
+		SendPress_Data::delete_all_subscribers( );
+		SendPress_Admin::redirect('Subscribers_All' );
 	}
 
 	static function delete_subscribers_bulk_all(){
@@ -36,7 +36,7 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 				SendPress_Data::delete_subscriber( $value );
 			}
 		}
-		SendPress_Admin::redirect('Subscribers_Subscribers', array('view'=> 'all' ));
+		SendPress_Admin::redirect('Subscribers_All' );
 	}
 
 
@@ -77,10 +77,10 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 	</form>
 	<form  method='get'>
 		<input type='hidden' value="<?php echo $_GET['page']; ?>" name="page" />
-		
+		<br>
 		<input type='hidden' value="unlink-lisk" name="action" />
 		<input type='hidden' name="listid" value="<?php echo $_GET['listID'] ?>" />
-		<a class="btn btn-large " data-toggle="modal" href="#sendpress-empty-list" ><i class="icon-warning-sign "></i> <?php _e('Remove All Subscribers from List','sendpress'); ?></a>
+		<a class="btn btn-large " data-toggle="modal" href="#sendpress-empty-list" ><i class="icon-warning-sign "></i> <?php _e('Remove All Subscribers','sendpress'); ?></a>
 		<?php wp_nonce_field($sp->_nonce_value); ?>
 	</form>
 <div class="modal hide fade" id="sendpress-empty-list">
@@ -92,7 +92,7 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 		<p><?php _e('This will remove all subscribers from the list','sendpress');?>.</p>
 	</div>
 	<div class="modal-footer">
-	<a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('No! I was Joking','sendpress');?></a><a href="<?php echo SendPress_Admin::link('Subscribers_Subscribers') . $list ; ?>&action=remove-subscribers" id="confirm-delete" class="btn btn-danger" ><?php _e('Yes! Remove All Subscribers','sendpress');?></a>
+	<a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('No! I was Joking','sendpress');?></a><a href="<?php echo SendPress_Admin::link('Subscribers_All'); ?>&action=remove-subscribers" id="confirm-delete" class="btn btn-danger" ><?php _e('Yes! Remove All Subscribers','sendpress');?></a>
 	</div>
 </div>
 	<?php
