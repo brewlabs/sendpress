@@ -225,7 +225,7 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
      **************************************************************************/
     function get_bulk_actions() {
         $actions = array(
-            'delete-subscribers-bulk'    => 'Delete'
+            'delete-subscribers-bulk-all'    => 'Delete'
         );
         return $actions;
     }
@@ -316,12 +316,12 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
  
         /* -- Preparing your query -- */
         if(isset($_GET["listID"]) && $_GET["listID"] > 0){
-        $query = "SELECT t1.*, t3.status FROM " .  $this->_sendpress->subscriber_table() ." as t1,". $this->_sendpress->list_subcribers_table()." as t2,". $this->_sendpress->subscriber_status_table()." as t3";
+        $query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3";
 
         
             $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND (t2.listID =  ". $_GET["listID"] .")";
         } else {
-            $query = "SELECT t1.*, t3.status FROM " .  $this->_sendpress->subscriber_table() ." as t1,". $this->_sendpress->list_subcribers_table()." as t2,". $this->_sendpress->subscriber_status_table()." as t3";
+            $query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3";
              $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) ";
         }
         /* -- Ordering parameters -- */
@@ -337,7 +337,7 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
 
         }
 
-         $query_count = "SELECT count(*) FROM " .  $this->_sendpress->subscriber_table();
+         $query_count = "SELECT count(*) FROM " .  SendPress_Data::subscriber_table();
         /* -- Pagination parameters -- */
         //Number of elements in your table?
         $totalitems = $wpdb->get_var($query_count); //return the total number of affected rows

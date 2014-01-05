@@ -53,7 +53,7 @@ switch ( $this->_current_action ) {
                 wp_redirect( '?page='.$_GET['page'] .'&view=subscribers&listID='.$_GET['listID']);
             break;
 
-             case 'delete-subscribers-bulk':
+            case 'delete-subscribers-bulk':
                  $subscriber_delete = $_GET['subscriber'];
 
                 foreach ($subscriber_delete as $subscriberID) {

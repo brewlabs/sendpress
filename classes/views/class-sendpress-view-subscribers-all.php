@@ -30,6 +30,15 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 		SendPress_Admin::redirect('Subscribers_Subscribers', array('listID'=> $get['listID'] ));
 	}
 
+	static function delete_subscribers_bulk_all(){
+		if( isset($_GET['subscriber']) && is_array($_GET['subscriber']) ) {
+			foreach ($_GET['subscriber'] as $value) {
+				SendPress_Data::delete_subscriber( $value );
+			}
+		}
+		SendPress_Admin::redirect('Subscribers_Subscribers', array('view'=> 'all' ));
+	}
+
 
 	function html($sp) {
 	
