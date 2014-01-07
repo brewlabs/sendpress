@@ -3,8 +3,8 @@ Plugin URI: http://sendpress.com
 Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.4
-Tested up to: 3.7.1
-Stable tag: 0.9.7.1
+Tested up to: 3.8
+Stable tag: 0.9.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,7 +103,13 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
-= 0.9.7.1 - 2913.12.22 =
+= 0.9.7.2 - 2014.1.6 =
+* Fix: 3.8 display issue
+* Fix: Delete Subscribers fixed
+* Fix: Notifications Update
+* New: Hipchat notifications
+
+= 0.9.7.1 - 2013.12.22 =
 * Fix: 3.8 display issues
 * Fix: Shortcode for signup
 * Fix: List create and Role sync settings
@@ -358,7 +364,10 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Upgrade Notice ==
 
-= 0.9.7.1 +
+= 0.9.7.2 =
+Delete Subscriber fix
+
+= 0.9.7.1 =
 Various Bug Fixes
 
 = 0.9.7 =
