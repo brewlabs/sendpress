@@ -162,7 +162,8 @@ class SendPress_Notifications_Manager {
 			if( strlen($subscribed) === 0 && strlen($unsubscribed) === 0 ){
 				return;
 			}
-			$body = $text = $subscribed.$unsubscribed;
+			$body = $subscribed.$unsubscribed;
+			$text = $subscribed.$unsubscribed;
 		
 			SendPress_Notifications_Manager::send_notification($body,$text);
 		}
