@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.4
 Tested up to: 3.8
-Stable tag: 0.9.7.2
+Stable tag: 0.9.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -102,6 +102,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 0.9.7.3 - 2013.1.14 =
+* Fix: Reports missing title
+* Fix: Variable assignment causing errors
+* New: Faster AutoCron
 
 = 0.9.7.2 - 2014.1.6 =
 * Fix: 3.8 display issue
@@ -363,6 +368,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.7.3 +
+Missing Report title fix
 
 = 0.9.7.2 =
 Delete Subscriber fix
