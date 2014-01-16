@@ -37,3 +37,13 @@ display: none;
 .bslabel.notice {
     background-color: #62cffc;
 }
+
+.tab-content{
+    padding: 20px;
+    background-color: #fff;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}

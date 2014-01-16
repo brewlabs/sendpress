@@ -14,9 +14,19 @@ class SendPress_View_Settings extends SendPress_View {
 		 SendPress_Tracking::event('Settings Tab');
 	?>
 
-	<div class="navbar">
-		<div class="navbar-inner">
-		<ul class="nav">
+	<div class="navbar navbar-default" >
+		<div class="navbar-header">
+			  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+
+    </button>
+    <a class="navbar-brand" href="#">Settings</a>
+</div>
+		 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		<ul class="nav navbar-nav">
 			<!--
 		  <li <?php if($sp->_current_view == ''){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings'); ?>"><i class="icon-envelope"></i> <?php _e('Basic Setup','sendpress'); ?></a></li>
 		 -->

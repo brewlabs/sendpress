@@ -41,12 +41,18 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		<form method="post" id="post">
 
 		<div style="float:right;" >
-			<a href=" " class="btn btn-large" ><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e('Save','sendpress'); ?></a>
+			<a href=" " class="btn btn-large btn-default" ><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e('Save','sendpress'); ?></a>
 		</div>
 		<br class="clear">
 		<br class="clear">
+		<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Public Page Settings</h3>
+  </div>
+  <div class="panel-body">
 <div class="boxer form-box">
-	<h2>Public Page Settings</h2>
+	
+
 	<br><b>Use theme styles:&nbsp;&nbsp;&nbsp;<input type="radio" value="yes" <?php if(SendPress_Option::get('try-theme')=='yes'){ echo "checked='checked'"; } ?> name="try-theme"> Yes&nbsp;&nbsp;&nbsp;<input type="radio" value="no" <?php if(SendPress_Option::get('try-theme')=='no'){ echo "checked='checked'"; } ?> name="try-theme"> No</b>
 	<br>This will attempt to use the WordPress theme functions <code>get_header</code> and <code>get_footer</code> to build the SendPress default public pages.
 	<br><br><b>View the default pages below to see how they look.</b>
@@ -59,9 +65,15 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 
 </div>
 	
-		
+	</div></div>
+
+	<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Double Opt-in Email</h3>
+  </div>
+  <div class="panel-body">	
 <div class="boxer form-box">
-	<h2>Double Opt-in Email</h2>
+	
 	<div style="float: right; width: 45%;"><br>
 		<b>Subject</b><br>
 		<input type="text" name="subject" class="regular-text sp-text" style="width: 100%;" value="<?php echo  stripcslashes($dpost->post_title); ?>"/>
@@ -120,7 +132,7 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		<br class="clear">
 
 	</div>
-</div>
+</div></div></div>
 <!--
 <div class="boxer form-box">
 	<h2>General Form Post Settings</h2>

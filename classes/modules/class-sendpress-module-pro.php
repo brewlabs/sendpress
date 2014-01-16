@@ -35,9 +35,9 @@ class SendPress_Module_Pro extends SendPress_Module{
 			}?>
 			<input <?php if($key_active){ echo 'disabled'; } ?> name="api_key" type="text" id="api_key" value="<?php echo SendPress_Option::get('api_key'); ?>" class="regular-text sp-text">
 			<?php if( !$key_active ): ?>
-				<a href="#" class="save-api-key btn-success btn-large btn"><?php _e('Register Key','sendpress');?></a>
+				<a href="#" class="save-api-key btn-success  btn"><?php _e('Register Key','sendpress');?></a>
 			<?php else: ?>
-				<a href="#" class="save-api-key btn-danger btn-large btn"><?php _e('Remove Key','sendpress');?></a>
+				<a href="#" class="save-api-key btn-danger btn"><?php _e('Remove Key','sendpress');?></a>
 			<?php endif; ?>
 			<div class="description">
 				<?php echo sprintf(	__( 'Enter your API key to enable premium support and automatic updates. Get your API key by logging into <a href="%s">SendPress.com</a>.','sendpress' ), 'http://sendpress.com' ); ?>
@@ -70,7 +70,7 @@ class SendPress_Module_Pro extends SendPress_Module{
 				break;
 			case 'activated':
 				$button = array(
-					'class' => 'btn module-deactivate-plugin', 
+					'class' => 'btn btn-default module-deactivate-plugin', 
 					'href' => '#', 
 					'target' => '', 
 					'text' => __('Deactivate','sendpress')

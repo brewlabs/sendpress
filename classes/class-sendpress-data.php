@@ -94,6 +94,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 
+	static function requeue_emails(){
+		$table = self::queue_table();
+		global $wpdb;
+		$result = $wpdb->update( $table ,array('attempts'=>'0'), array('attempts'=> '3' ,'success'=>'0') );
+
+	}
+
 	static function emails_in_queue($id = false){
 		global $wpdb;
 		$table = self::queue_table();

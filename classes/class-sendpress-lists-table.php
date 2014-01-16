@@ -98,20 +98,20 @@ class SendPress_Lists_Table extends WP_List_Table {
 
 
                 $str = '<div class="inline-buttons">
-                    <a class="btn btn-info" href="?page='.$_REQUEST['page'].'&view=subscribers&listID='.$item->ID.'"><i class="icon-user icon-white "></i> View/Edit</a> ';
+                    <a class="btn btn-info" href="?page='.$_REQUEST['page'].'&view=subscribers&listID='.$item->ID.'"><span class="glyphicon glyphicon-edit"></span> View/Edit</a> ';
                 $role = get_post_meta($item->ID,'sync_role',true);
                 $add = '';
                 if($role != 'none' && $role != false){
-                    $str .= "<a class='btn' href='". SendPress_Admin::link('Subscribers_Sync') . "&listID=".$item->ID."'><i class='icon-refresh'></i> Sync</a> ";
+                    $str .= "<a class='btn btn-primary' href='". SendPress_Admin::link('Subscribers_Sync') . "&listID=".$item->ID."'><span class='glyphicon glyphicon-refresh'></span> Sync</a> ";
                 } else {
                     if(apply_filters( 'sendpress_show_import_button', true, $this->_sendpress )){
-                         $str .=  '<a class="list-import btn" href="?page='.$_REQUEST['page'].'&view=csvimport&listID='. $item->ID .'"><i class="icon-user"></i> Import</a> ';
+                         $str .=  '<a class="list-import btn btn-primary" href="?page='.$_REQUEST['page'].'&view=csvimport&listID='. $item->ID .'"><span class="glyphicon glyphicon-upload"></span> Import</a> ';
                     }
                     
-                    $str .= '<a class="btn" href="?page='.$_REQUEST['page'].'&view=add&listID='. $item->ID .'"><i class="icon-user"></i> Add</a> ';
-                    $str .='<a class="btn" href="?page='.$_REQUEST['page'].'&action=export-list&listID='. $item->ID .'"><i class="icon-download"></i> Export</a> ';
+                    $str .= '<a class="btn btn-primary" href="?page='.$_REQUEST['page'].'&view=add&listID='. $item->ID .'"><span class="glyphicon glyphicon-user"></span> Add</a> ';
+                    $str .='<a class="btn btn-primary" href="?page='.$_REQUEST['page'].'&action=export-list&listID='. $item->ID .'"><span class="glyphicon glyphicon-download"></span> Export</a> ';
                     
-                    $str .=    '<a class="btn " href="'. SendPress_Admin::link('Subscribers_Listform', array('listID' => $item->ID)) .'"><i class="icon-list"></i> Form</a> ';
+                    $str .=    '<a class="btn btn-primary" href="'. SendPress_Admin::link('Subscribers_Listform', array('listID' => $item->ID)) .'"><span class="glyphicon glyphicon-list"></span> Form</a> ';
                 }
 
                

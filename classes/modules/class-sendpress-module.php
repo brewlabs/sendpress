@@ -75,7 +75,7 @@ class SendPress_Module {
 			case 'not-installed':
 			case 'installed':
 				$button = array(
-					'class' => 'btn disabled btn-activate', 
+					'class' => 'btn disabled btn-default btn-activate', 
 					'href' => '#',
 					'target' => '', 'text' => __('Activate','sendpress')
 				);
@@ -98,7 +98,7 @@ class SendPress_Module {
 						$pro_options = SendPress_Option::get('pro_plugins');
 					}
 					if( $pro_options[$plugin_path] ){
-						$button['class'] = 'btn module-deactivate-plugin';
+						$button['class'] = 'btn btn-default module-deactivate-plugin';
 						$button['text'] = __('Deactivate','sendpress');
 
 					}
@@ -112,7 +112,7 @@ class SendPress_Module {
 				echo '<div class="inline-buttons">'.$btn.'</div>';
 			
 			} else {
-				echo "<br><div class='btn disabled btn-activate inline-buttons' style='margin: 0px;'>Requires Pro v".$this->_pro_version."</div>"; 
+				echo "<br><div class='btn disabled btn-activate btn-default inline-buttons' style='margin: 0px;'>Requires Pro v".$this->_pro_version."</div>"; 
 			
 
 			}
@@ -123,7 +123,7 @@ class SendPress_Module {
 	function get_button($path, $from_pro = false){
 		_deprecated_function( __FUNCTION__, '0.9', 'SendPress_Module::buttons()' );
 		
-		$button = array('class' => 'btn module-deactivate-plugin', 'href' => '#', 'target' => '', 'text' => __('Deactivate','sendpress') );
+		$button = array('class' => 'btn btn-default module-deactivate-plugin', 'href' => '#', 'target' => '', 'text' => __('Deactivate','sendpress') );
 		if( $from_pro ){
 			$pro_options = SendPress_Option::get('pro_plugins');
 			$reg_plugin = substr($path, 14, strlen($path));
@@ -144,6 +144,7 @@ class SendPress_Module {
 				//$button['id'] = 'module-activate-plugin';
 				$button['text'] = 'Activate';
 			}else{
+				$button['class'] = ' btn-default btn';
 				$button['text'] = __('Deactivate','sendpress');
 			}
 
@@ -159,6 +160,7 @@ class SendPress_Module {
 				//$button['id'] = 'module-activate-plugin';
 				$button['text'] = 'Activate';
 			}else{
+					$button['class'] = ' btn-default btn';
 				$button['text'] = 'Deactivate';
 			}
 		}

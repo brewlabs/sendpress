@@ -85,7 +85,7 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
                  return date_i18n(get_option('date_format') , strtotime( $item->join_date ) );
            case 'actions':
                 $a = '<div class="inline-buttons">';
-                $a .= '<a class="btn" href="'. SendPress_Admin::link('Subscribers_Subscriber', array('subscriberID'=>$item->subscriberID )) .'"><i class="icon-edit "></i> Edit</a> ';
+                $a .= '<a class="btn btn-primary" href="'. SendPress_Admin::link('Subscribers_Subscriber', array('subscriberID'=>$item->subscriberID )) .'"><span class="glyphicon glyphicon-pencil"></span>  Edit</a> ';
 
                 $a .= '</div>';
                 return $a;

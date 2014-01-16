@@ -123,7 +123,7 @@ $fn = __('From Name','sendpress');
 		<form method="post" id="post">
 	<br class="clear">
 <div style="float:right;" >
-	<a href="<?php echo SendPress_Admin::link('Settings_Styles'); ?>" class="btn btn-large" ><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e('Save','sendpress'); ?></a>
+	<a href="<?php echo SendPress_Admin::link('Settings_Styles'); ?>" class="btn btn-default btn-large" ><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e('Save','sendpress'); ?></a>
 </div>
 <br class="clear">
 <h3>Required Settings</h3>

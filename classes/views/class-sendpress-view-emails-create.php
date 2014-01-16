@@ -61,10 +61,10 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 		<form method="POST" name="post" id="post">
 		<div id="styler-menu">
 			<div style="float:right;" class="btn-group">
-				<input type="submit" value="<?php _e('Save & Next','sendpress'); ?>" class="btn btn-primary btn-large" />
+				<input type="submit" value="<?php _e('Save & Next','sendpress'); ?>" class="btn btn-primary" />
 			</div>
-			<div id="sp-cancel-btn" style="float:right; margin-top: 5px;">
-				<a href="<?php echo SendPress_Admin::link('Emails'); ?>" id="cancel-update" class="btn"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+			<div id="sp-cancel-btn" style="float:right; ">
+				<a href="<?php echo SendPress_Admin::link('Emails'); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
 			</div>
 		</div>
 		

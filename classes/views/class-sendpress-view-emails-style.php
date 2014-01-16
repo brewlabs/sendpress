@@ -137,7 +137,7 @@ class SendPress_View_Emails_Style extends SendPress_View_Emails {
 	<?php } ?>
 </div>
 <div id="sp-cancel-btn" style="float:right; margin-top: 5px;">
-				<a href="?page=<?php echo $_GET['page']; ?>" id="cancel-update" class="btn"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+				<a href="?page=<?php echo $_GET['page']; ?>" id="cancel-update" class="btn btn-sm btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
 			</div>
 		<?php require_once( SENDPRESS_PATH. 'inc/forms/email-style.2.0.php' ); ?>
 		

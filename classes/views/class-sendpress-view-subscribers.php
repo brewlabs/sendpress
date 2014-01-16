@@ -18,10 +18,19 @@ class SendPress_View_Subscribers extends SendPress_View {
 
 	function sub_menu($sp = false){
 		?>
-		<div id="taskbar" class="lists-dashboard rounded group"> 
-			<div class="navbar" >
-			<div class="navbar-inner">
-				<ul class="nav">
+		<div class="navbar navbar-default" >
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+
+    </button>
+    <a class="navbar-brand" href="#">Subscribers</a>
+</div>
+		 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		<ul class="nav navbar-nav">
 					<li <?php if(!isset($_GET['view']) ){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Subscribers'); ?>"><i class="icon-list "></i> <?php _e('Lists','sendpress'); ?></a>
 				  	</li>

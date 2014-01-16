@@ -716,7 +716,7 @@ jQuery(document).ready(function($) {
 
 
 
-    $('#sendpress-sending').on('show',function(){
+    $('#sendpress-sending').on('shown.bs.modal',function(){
         $.post(
             spvars.ajaxurl,
             {
@@ -739,11 +739,11 @@ jQuery(document).ready(function($) {
             }
 
         );
-    }).on('hidden', function () {
+    }).on('hidden.bs.modal', function () {
         $('#sendbar-inner').css('width', '100%');
         location.reload();
         // do something…
-    }).on('shown', function(){ 
+    }).on('shown.bs.modal', function(){ 
         spadmin.queue.count = 0;
         $('#sendbar-inner').css('width', '0%');
     });

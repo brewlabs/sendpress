@@ -61,10 +61,14 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
     $method = SendPress_Option::get( 'sendmethod' );
 ?>
 <div style="float:right;" >
-  <a href="" class="btn btn-large" ><i class="icon-remove"></i> <?php _e( 'Cancel', 'sendpress' ); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e( 'Save', 'sendpress' ); ?></a>
+  <a href="" class="btn btn-large btn-default" ><i class="icon-remove"></i> <?php _e( 'Cancel', 'sendpress' ); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e( 'Save', 'sendpress' ); ?></a>
 </div>
-  <h2>Sending Account Setup</h2>
-  <br class="clear">
+<br class="clear"><br class="clear">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Sending Account Setup</h3>
+  </div>
+  <div class="panel-body">
 
 <form method="post" id="post">
   <input type="hidden" name="action" value="account-setup" />
@@ -93,9 +97,9 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
     <?php
     foreach ( $senders as $key => $sender ) {
       $class ='';
-      if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { $class = "class='active green'"; }
+      if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { $class = "class='active'"; }
       echo "<li $class><a href='#$key' data-toggle='tab'>";
-      if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { echo '<i class="icon-ok"></i> '; }
+      if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { echo '<span class="glyphicon glyphicon-ok-sign"></span> '; }
       echo $sender->label();
       echo "</a></li>";
     }
@@ -121,10 +125,17 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 </div>
 
 
-<p ><i class="icon-ok"></i> = Currently Active</p>
+<p > <span class="glyphicon glyphicon-ok-sign"></span> = Currently Active</p>
 <?php } ?>
+
+</div>
+</div>
 <br class="clear">
-<h3>Advanced Sending Options</h3>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Advanced Sending Options</h3>
+  </div>
+  <div class="panel-body">
 <div class="boxer form-box">
   <div style="float: right; width: 45%;">
     <h2>Email Sending Limits</h2>
@@ -189,7 +200,7 @@ Older versions of SendPress used "quoted-printable"
 
     <button id="sp-enable-cron" <?php if($tl == 'yes'){ echo "style='display:none;'";} ?> class="btn  btn-success">Enable Pro Auto Cron</button><button id="sp-disable-cron" <?php if($tl == 'no'){ echo "style='display:none;'";} ?> class="btn  btn-danger">Disable Pro Auto Cron</button>
     <br>
-    <p class="alert alert-error">
+    <p class="well">
       <strong>Without SendPress Pro</strong><br>
       Auto Cron is limited to a max of <strong>3,000*</strong> emails per day at a max rate of <strong>125*</strong> emails per hour.
       <br><br>
@@ -208,7 +219,8 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
 
   <br class="clear">
   </div>
-
+</div>
+</div>
 </div>
 
 
@@ -217,21 +229,27 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
 //wp_nonce_field(  basename(__FILE__) ,'_spnonce' );
 wp_nonce_field( $sp->_nonce_value );
 ?>
-<input type="submit" class="btn btn-primary btn-large" value="Save"/> <a href="" class="btn btn-large"><i class="icon-remove"></i> Cancel</a>
+<input type="submit" class="btn btn-primary" value="Save"/> <a href="" class="btn btn-default"><i class="icon-remove"></i> Cancel</a>
 </form>
-<form method="post" id="post" class="form-horizontal">
+<form method="post" id="post" class="form-inline">
 <input type="hidden" name="action" value="send-test-email" />
 <br class="clear">
 <div class="alert alert-success">
   <?php _e( '<b>NOTE: </b>Remember to check your Spam folder if you do not seem to be receiving emails', 'sendpress' ); ?>.
 </div>
 
-<h3><?php _e( 'Send Test Email', 'sendpress' ); ?></h3>
-<input name="testemail" type="text" id="appendedInputButton" value="<?php echo SendPress_Option::get( 'testemail' ); ?>" style="width:100%;" />
-<button class="btn btn-primary" type="submit"><?php _e( 'Send Test!', 'sendpress' ); ?></button><button class="btn" data-toggle="modal" data-target="#debugModal" type="button"><?php _e( 'Debug Info', 'sendpress' ); ?></button>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><?php _e( 'Send Test Email', 'sendpress' ); ?></h3>
+  </div>
+  <div class="panel-body">
+<div class="form-group">
+<input name="testemail" type="text" id="appendedInputButton" value="<?php echo SendPress_Option::get( 'testemail' ); ?>" class="form-control"/>
+</div>
+<button class="btn btn-primary" type="submit"><?php _e( 'Send Test!', 'sendpress' ); ?></button><button class="btn btn-danger" data-toggle="modal" data-target="#debugModal" type="button"><?php _e( 'Debug Info', 'sendpress' ); ?></button>
 <br class="clear">
 
-
+</div></div>
 
 <?php 
 //Page Nonce
@@ -259,7 +277,10 @@ wp_nonce_field( $sp->_nonce_value );
 
 ?>
 
-<div class="modal hide fade" id="debugModal">
+
+<div class="modal fade" id="debugModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">×</button>
     <h3><?php _e( 'SMTP Debug Info', 'sendpress' ); ?></h3>
@@ -320,7 +341,7 @@ wp_nonce_field( $sp->_nonce_value );
     <a href="#" class="btn" data-dismiss="modal"><?php _e( 'Close', 'sendpress' ); ?></a>
   </div>
 </div>
-
+</div></div>
 <?php
   }
 
