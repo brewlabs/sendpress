@@ -57,10 +57,15 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 					<a href="<?php echo SendPress_Admin::link('Settings_Notifications'); ?>" class="btn btn-large" ><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e('Save','sendpress'); ?></a>
 				</div>
 				<br class="clear">
-
+					<br class="clear">
 				<?php do_action('sendpress_notification_settings_top'); ?>
 				
-				<h3>Admin Notification Settings</h3>
+				<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Admin Notification Settings</h3>
+  </div>
+  <div class="panel-body">
+
 				
 				<div class="well">
 
@@ -72,17 +77,17 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 					<div class="clearfix">
 						<div style="float:left; width:45%;">
 							<h4 class="nomargin"><?php _e('Notification E-mail','sendpress'); ?></h4>
-							<input name="toemail" tabindex=2 type="text" id="toemail" value="<?php echo $options['email']; ?>">
+							<input name="toemail" class="form-control" tabindex=2 type="text" id="toemail" value="<?php echo $options['email']; ?>">
 							<br>
 							
-							<input type="checkbox" value="<?php echo $options['send-to-admins']; ?>" name="send-to-admins" id="send-to-admins" <?php checked( $options['send-to-admins'], true ); ?>/>
+							<input type="checkbox" class="form-control" value="<?php echo $options['send-to-admins']; ?>" name="send-to-admins" id="send-to-admins" <?php checked( $options['send-to-admins'], true ); ?>/>
 							<?php _e('Send Notifications to all WordPress Administrators','sendpress'); ?>
 						</div>
 						<div style="float:right; width:45%;">
 							<h4 class="nomargin"><?php _e('HipChat Integration','sendpress'); ?></h4>
-							<input type="checkbox" value="<?php echo $options['enable-hipchat']; ?>" name="enable-hipchat" id="enable-hipchat" <?php checked( $options['enable-hipchat'], true ); ?>/>
+							<input class="form-control" type="checkbox" value="<?php echo $options['enable-hipchat']; ?>" name="enable-hipchat" id="enable-hipchat" <?php checked( $options['enable-hipchat'], true ); ?>/>
 							<?php _e('Enable HipChat Notification','sendpress'); ?><br>
-							API Key: <input name="hipchat-api" tabindex=2 type="text" id="hipchat-api" value="<?php echo $options['hipchat-api']; ?>"><br><a href="https://sendpress.hipchat.com/admin/api" target="_blank">Where is my API key?</a><br>
+							API Key: <input class="form-control" name="hipchat-api" tabindex=2 type="text" id="hipchat-api" value="<?php echo $options['hipchat-api']; ?>"><br><a href="https://sendpress.hipchat.com/admin/api" target="_blank">Where is my API key?</a><br>
 
 							<?php 
 								if( strlen($options['hipchat-api']) > 0 ){
@@ -97,14 +102,14 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 										<?php
 										foreach ($rooms as $room) {
 											?>
-											<input type="checkbox" value="<?php echo $options['hipchat-rooms'][$room->room_id]; ?>" name="hipchat-rooms[<?php echo $room->room_id; ?>]" id="hipchat-rooms[<?php echo $room->room_id; ?>]" <?php checked( $options['hipchat-rooms'][$room->room_id], true ); ?>/>
+											<input type="checkbox" class="form-control" value="<?php echo $options['hipchat-rooms'][$room->room_id]; ?>" name="hipchat-rooms[<?php echo $room->room_id; ?>]" id="hipchat-rooms[<?php echo $room->room_id; ?>]" <?php checked( $options['hipchat-rooms'][$room->room_id], true ); ?>/>
 											<?php echo $room->name; ?><br>
 											<?php
 										}
 									}
 									catch (Exception $e){
 										?>
-										Room Name: <input name="hipchat-room" tabindex=2 type="text" id="hipchat-room" value="<?php echo $options['hipchat-room']; ?>">
+										Room Name: <input class="form-control" name="hipchat-room" tabindex=2 type="text" id="hipchat-room" value="<?php echo $options['hipchat-room']; ?>">
 										<?php
 									}
 
@@ -143,6 +148,8 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 				<?php wp_nonce_field($sp->_nonce_value); ?>
 			</form>
 		</div>
+			</div>
+					</div>
 		<?php
 	}
 
