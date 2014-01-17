@@ -37,7 +37,7 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 	?>	
 		<div id="taskbar">
 		<div id="button-area" >
-			<a href="<?php echo SendPress_Admin::link($backLink); ?>" class="btn btn-large" ><i class="icon-backward"></i> <?php _e('Back to Lists','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><?php _e('Save','sendpress'); ?></a>
+			<a href="<?php echo SendPress_Admin::link($backLink); ?>" class="btn btn-large btn-default" ><i class="icon-backward"></i> <?php _e('Back to Lists','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><?php _e('Save','sendpress'); ?></a>
 		</div>
 		<h2><?php _e('Form Settings for List ','sendpress'); echo ':' . $listinfo->post_title; ?></h2>
 		</div>
@@ -45,9 +45,13 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 
 
 <form id="post" method="post">
-
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">HTML/Remote Post</h3>
+  </div>
+  <div class="panel-body">
 <div class="boxer form-box">
-	<h2>HTML/Remote Post</h2>
+	
 
 
 	<div style="float: right; width: 45%;"><br>
@@ -110,15 +114,20 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 <input type="radio" name="post-page" value="json" <?php if($ctype=='json'){echo "checked='checked'"; } ?> /> Return Json Data ie: { success: true/false, list: listid , name: listname, optin: true/false }<br><br>
 <?php $link = get_post_meta($list_id,'post-redirect', true); ?>
 <input type="radio" name="post-page" value="redirect" <?php if($ctype=='redirect'){echo "checked='checked'"; } ?> /> Redirect to url entered below. <br><br><input type="text" name="post-redirect" class="sp-text" value="<?php echo $link ?>"><br><br>
-	
-
+	</div>
+</div>
 </div>
 </div>
 	<br class="clear">
 </div>	
 <br class="clear">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">iFrame</h3>
+  </div>
+  <div class="panel-body">
 <div class="boxer form-box">
-	<h2>iFrame</h2>
+	
 	<div style="float: right; width: 45%;"><br>
 		<b>HTML</b><br>
 		<textarea style="width:100%; padding: 8px;" rows="21" name="post-page-text"><iframe  width="100%" scrolling="no" frameborder="0"  src="<?php echo site_url(); ?>?sendpress=form&list=<?php echo $_GET['listID']; ?>" vspace="0" tabindex="0" style="position: static; top: 0pt; margin: 0px; border-style: none; height: 130px; left: 0pt; visibility: visible;" marginwidth="0" marginheight="0" hspace="0" allowtransparency="true" title="Subscription SendPress" ></iframe></textarea>
@@ -131,6 +140,9 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 </div>
 	<br class="clear">
 </div>
+</div>
+</div>
+
 
 	
 

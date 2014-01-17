@@ -66,7 +66,7 @@ $post_type_object = get_post_type_object($sp->_email_post_type);
 
 </div>
 <div id="sp-cancel-btn" style="float:right; margin-top: 5px;">
-				<a href="?page=<?php echo $_GET['page']; ?>"  class="btn"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+				<a href="?page=<?php echo $_GET['page']; ?>"  class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
 			</div>
 <input type="hidden" id="user-id" name="user_ID" value="<?php echo $current_user->ID; ?>" />
 <input type="hidden" id="post_ID" name="post_ID" value="<?php echo $post->ID; ?>" />

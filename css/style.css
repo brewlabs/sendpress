@@ -55,15 +55,17 @@ p{
 
 
 .nav-sp{
+    /*
   min-width: 820px; 
+  */
   margin: 0 0 20px;  
 }
 .spwrap{
 	 /*padding: 22px 0;*/
-    min-width: 820px;
+    /*min-width: 820px;*/
 }
 .nav-tab-wrapper{
-    min-width: 820px;
+   /* min-width: 820px;*/
 }
 
 #html-header img{
