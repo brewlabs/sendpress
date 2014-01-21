@@ -173,9 +173,9 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
                 case 'unsubscribe':
                 $clicks = get_post_meta($item->ID, '_unsubscribe_count', true);
                     if($clicks) { 
-                        return '<span class="label label-important">'. $clicks .'</span>';
+                        return '<span class="label label-danger">'. $clicks .'</span>';
                      }
-                     return '<span class="label label-important">0</span>';
+                     return '<span class="label label-danger">0</span>';
              
 
                case 'subject':

@@ -258,6 +258,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
+
 	static function get_charset_types(){
 		return array(
 				"UTF-8",
@@ -294,8 +295,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	/********************* POST NOTIFICATION static functionS ***************/
 
-
-
 	/********************* REPORTS static functionS **************************/	
 
    
@@ -305,6 +304,14 @@ class SendPress_Data extends SendPress_DB_Tables {
     	
    		update_post_meta( $id ,'_sent_total' , $sent );
     }
+
+    static function get_last_report(){
+    	$f = get_posts(array('post_type' => 'sp_report','posts_per_page'   => 1));
+    	return $f[0];
+
+    }
+
+
 
  	/**
      * Get url's in the database by the report and url string
@@ -677,6 +684,15 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 
+	static function get_most_active_subscriber( $limit = 10 ){
+		global $wpdb;
+		$table  = SendPress_Data::subscriber_event_table();
+		$query = "select count(subscriberID), subscriberID  from $table group by subscriberID order by count(subscriberID) DESC LIMIT $limit";
+		return $wpdb->get_results( $query );
+	}
+
+	
+
 
 
 
@@ -792,6 +808,12 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 
+	static function get_optin_events($limit = 10){
+		global $wpdb;
+		$table  = SendPress_Data::subscriber_event_table();
+		return $wpdb->get_results( $wpdb->prepare("SELECT * FROM $table WHERE type = 'optin' order by eventID DESC LIMIT %d", $limit) );
+
+	}
 
 	static function register_event( $event='unknown_event_type' , $sid = null , $rid = null  ){
 		global $wpdb;
@@ -858,7 +880,11 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function unsubscribe_from_list( $sid, $rid, $lid ) {
 		global $wpdb;
 		$stat = get_post_meta($rid, '_unsubscribe_count', true );
-		$stat++;
+		if($stat ==''){
+			$stat = 1;
+		} else{
+			$stat++;
+		}
 		update_post_meta($rid, '_unsubscribe_count', $stat );
 		$wpdb->update( SendPress_Data::list_subcribers_table() , array('status'=> 3) , array('listID'=> $lid,'subscriberID'=>$sid ));
 	}
@@ -1139,18 +1165,24 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 	// COUNT DATA
-	static function get_count_subscribers($listID, $status = 2) {
+	static function get_count_subscribers($listID = false, $status = 2) {
 		global $wpdb;
 		$table = SendPress_Data::list_subcribers_table();
 
 		$query = "SELECT COUNT(*) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3";
 
         
-            $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND(t2.status = %d) AND (t2.listID =  %d)";
+            $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND(t2.status = %d) ";
+            if($listID  !== false){
+            	$query .= "AND (t2.listID =  %d)";
+            }
+
           //  "SELECT COUNT(*) FROM $table WHERE listID = $listID AND status = $status"
 		$count = $wpdb->get_var( $wpdb->prepare( $query, $status, $listID));
 		return $count;
 	}
+
+
 
 
 	/********************* END SUBSCRIBER static functionS **************************/

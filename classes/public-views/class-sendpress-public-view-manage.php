@@ -16,6 +16,7 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 		$info = $this->data();
 		if ( isset($info->action) && $info->action == 'unsubscribe' ) {
 		//$sid, $rid, $lid
+		//SendPress_Data::update_subscriber_status( $list_id , $info->id , $_POST[ 'subscribe_'.$list_id ] );
 		SendPress_Data::unsubscribe_from_list( $info->id , $info->report, $info->listID  );
 
 			$link_data = array(
