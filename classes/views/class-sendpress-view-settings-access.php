@@ -29,7 +29,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 			if($role != 'administrator'){
 			$sp_view = false;
 
-			$role = str_replace(" ","_", strtolower( $role)  );
+			//$role = str_replace(" ","_", strtolower( $role)  );
 
 			
 			$pos = strrpos($role, "s2member");
@@ -139,7 +139,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 		{
 			if($role != 'administrator'){
 				
-			$role = str_replace(" ","_", strtolower( $role)  );
+			//$role = str_replace(" ","_", strtolower( $role)  );
 
 			
 			$pos = strrpos($role, "s2member");
