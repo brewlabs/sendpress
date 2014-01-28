@@ -56,7 +56,7 @@ $list = explode(",",$lists );
     <h2><strong><?php _e('Adding Subscribers to Queue','sendpress'); ?></strong></h2><br>
    <!-- <p>email:  <?php echo stripslashes(esc_attr( htmlspecialchars( $subject ) )); ?></p>-->
     <div class="progress progress-striped active">
-        <div class="bar sp-queueit" style="width: 0%;"></div>
+        <div class="progress-bar sp-queueit" style="width: 0%;"></div>
     </div>
     <span id="queue-total">0</span> of <span id="list-total"><?php print_r( SendPress_Data::get_active_subscribers_count(  $list ) );?></span>
 </div>

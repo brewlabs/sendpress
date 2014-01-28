@@ -180,7 +180,7 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
   <div class="modal-body">
     <div id="sendbar" class="progress progress-striped
      active">
-  <div id="sendbar-inner" class="bar"
+  <div id="sendbar-inner" class="progress-bar"
        style="width: 40%;"></div>
 </div>
 	Sent <span id="queue-sent">-</span> <?php _e('of','sendpress');?> <span id="queue-total">-</span> emails.<br>

@@ -17,7 +17,7 @@ class SendPress_Public_View_Open extends SendPress_Public_View{
 		$info = $this->data();
 		$link = SendPress_Data::track_open($info->id , $info->report , $ip , $this->_device_type, $this->_device );
 		header('Content-type: image/gif'); 
-		include(SENDPRESS_PATH. 'img/clear.gif'); 	
+		//include(SENDPRESS_PATH. 'img/clear.gif'); 	
 	}
 
 }
