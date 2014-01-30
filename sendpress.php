@@ -31,7 +31,7 @@ Author URI: http://sendpress.com/
 	}
 
 	global $pro_names;
-	$pro_names = array('SendPress Pro','Pro3','Pro20');
+	$pro_names = array('Pro1','Pro3','Pro20');
 	
 	/*
 	*
