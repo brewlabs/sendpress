@@ -195,7 +195,9 @@ list( $display_version ) = explode( '-', $wp_version );
         if(property_exists($item,'eventdate')){
   			   echo date_i18n("m.d.Y" ,strtotime($item->eventdate) );
         }
+        if(property_exists($d,'email')){
   			echo "<span class='sp-email'>" . $d->email . "</span>";
+        }
   			echo "</li>";
   		  }
       }
