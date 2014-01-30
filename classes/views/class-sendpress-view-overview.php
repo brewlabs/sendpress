@@ -188,12 +188,15 @@ list( $display_version ) = explode( '-', $wp_version );
   	<?php 
   		$recent = SendPress_Data::get_optin_events();
   		foreach($recent as $item){
-  			echo "<li>";
+  			if(property_exists($item,'subscriberID')){
+        echo "<li>";
+
   			$d = 	SendPress_Data::get_subscriber($item->subscriberID);
   			echo date_i18n("m.d.Y" ,strtotime($item->eventdate) );
   			echo "<span class='sp-email'>" . $d->email . "</span>";
   			echo "</li>";
-  		}
+  		  }
+      }
 
   		
 
@@ -212,10 +215,12 @@ list( $display_version ) = explode( '-', $wp_version );
 	  	<?php
 	  	$recent = SendPress_Data::get_most_active_subscriber();
   		foreach($recent as $item){
+        if(property_exists($item,'subscriberID')){
   			echo "<li>";
   			$d = 	SendPress_Data::get_subscriber($item->subscriberID);
   			echo  $d->email;
   			echo "</li>";
+      }
   		}
 	  	?>
 	  	</ul>
