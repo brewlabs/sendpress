@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.4
 Tested up to: 3.8
-Stable tag: 0.9.7.4
+Stable tag: 0.9.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -102,6 +102,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 0.9.8 - 2013.1.29 =
+* Fix: Pro Activation
+* Fix: Reque Buttons fixed
+* New: Admin UI Upgrade
+* New: New Overview Page
 
 = 0.9.7.3 - 2013.1.14 =
 * Fix: Reports missing title
@@ -369,7 +375,10 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Upgrade Notice ==
 
-= 0.9.7.3 +
+= 0.9.8 =
+New UI and bug fixes
+
+= 0.9.7.3 =
 Missing Report title fix
 
 = 0.9.7.2 =
