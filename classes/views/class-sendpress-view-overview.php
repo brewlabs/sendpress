@@ -192,7 +192,9 @@ list( $display_version ) = explode( '-', $wp_version );
         echo "<li>";
 
   			$d = 	SendPress_Data::get_subscriber($item->subscriberID);
-  			echo date_i18n("m.d.Y" ,strtotime($item->eventdate) );
+        if(property_exists($item,'eventdate')){
+  			   echo date_i18n("m.d.Y" ,strtotime($item->eventdate) );
+        }
   			echo "<span class='sp-email'>" . $d->email . "</span>";
   			echo "</li>";
   		  }
@@ -218,7 +220,9 @@ list( $display_version ) = explode( '-', $wp_version );
         if(property_exists($item,'subscriberID')){
   			echo "<li>";
   			$d = 	SendPress_Data::get_subscriber($item->subscriberID);
-  			echo  $d->email;
+        if(property_exists($d,'email')){
+  		    echo  $d->email;
+        }
   			echo "</li>";
       }
   		}
