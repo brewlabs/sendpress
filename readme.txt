@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.4
 Tested up to: 3.8
-Stable tag: 0.9.8
+Stable tag: 0.9.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -102,6 +102,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 0.9.8.1 - 2013.1.31 =
+* Fix: SendPress editor button not working
 
 = 0.9.8 - 2013.1.29 =
 * Fix: Pro Activation
@@ -374,6 +377,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.8.1 =
+Editor Button Fixed
 
 = 0.9.8 =
 New UI and bug fixes
