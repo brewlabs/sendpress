@@ -370,7 +370,11 @@ $manage = __("Manage Subscription","sendpress");
 </div>
 </div></div>
 
-<div class="modal hide fade" id="sendpress-helper">
+
+
+<div class="modal fade bs-modal-lg" id="sendpress-helper" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	<div class="modal-content">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">×</button>
 		<ul class="nav nav-tabs" id="myTab">
@@ -457,17 +461,17 @@ $manage = __("Manage Subscription","sendpress");
     <tr>
     	<td>First Name</td>
       	<td>*|FNAME|*</td>
-      	<td class="text-right"><button class="btn btn-mini btn-success sp-insert-code" data-code="*|FNAME|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|FNAME|*">Insert</button></td>
     </tr>
     <tr>
     	<td>Last Name</td>
       	<td>*|LNAME|*</td>
-      	<td class="text-right"><button class="btn btn-mini btn-success sp-insert-code" data-code="*|LNAME|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|LNAME|*">Insert</button></td>
     </tr>
     <tr>
     	<td>Email</td>
       	<td>*|EMAIL|*</td>
-      	<td class="text-right"><button class="btn btn-mini btn-success sp-insert-code"  data-code="*|EMAIL|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code"  data-code="*|EMAIL|*">Insert</button></td>
     </tr>
 
   </tbody>
@@ -486,17 +490,17 @@ $manage = __("Manage Subscription","sendpress");
     <tr>
     	<td>Website URL</td>
       	<td>*|SITE:URL|*</td>
-      	<td class="text-right"><button class="btn btn-mini btn-success sp-insert-code" data-code="*|SITE:URL|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|SITE:URL|*">Insert</button></td>
     </tr>
     <tr>
     	<td>Website Title</td>
       	<td>*|SITE:TITLE|*</td>
-      	<td class="text-right"><button class="btn btn-mini btn-success sp-insert-code" data-code="*|SITE:TITLE|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|SITE:TITLE|*">Insert</button></td>
     </tr>
     <tr>
     	<td>Website Description</td>
       	<td>*|SITE:DECRIPTION|*</td>
-      	<td class="text-right"><button class="btn btn-mini btn-success sp-insert-code"  data-code="*|SITE:DESCRIPTION|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code"  data-code="*|SITE:DESCRIPTION|*">Insert</button></td>
     </tr>
     
   </tbody>
@@ -515,17 +519,17 @@ $manage = __("Manage Subscription","sendpress");
     <tr>
     	<td>Current Date<br><small>Format based on WordPress settings.</small></td>
       	<td>*|DATE|*</td>
-      	<td class="text-right"><button class="btn btn-mini btn-success sp-insert-code" data-code="*|DATE|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|DATE|*">Insert</button></td>
     </tr>
      <tr>
     	<td>Current Time<br><small>5:16 pm</small></td>
       	<td>*|DATE:g:i a|*</td>
-      	<td class="text-right"><button class="btn btn-mini btn-success sp-insert-code" data-code="*|DATE:g:i a|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|DATE:g:i a|*">Insert</button></td>
     </tr>
     <tr>
     	<td>Custom Date<br><small>March 10, 2001, 5:16 pm</small></td>
       	<td>*|DATE:F j, Y, g:i a|*</td>
-      	<td class="text-right"><button class="btn btn-mini btn-success sp-insert-code" data-code="*|DATE:F j, Y, g:i a|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|DATE:F j, Y, g:i a|*">Insert</button></td>
     </tr>
   
     
@@ -542,6 +546,8 @@ $manage = __("Manage Subscription","sendpress");
 	<div class="modal-footer">
 	 	<a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>
 	</div>
+</div>
+</div>
 </div>
 
 
