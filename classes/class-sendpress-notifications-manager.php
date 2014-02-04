@@ -38,9 +38,9 @@ class SendPress_Notifications_Manager {
 			return;
 		}
 
-		$body = $text = $subscribed . $unsubscribed;
-		
-		SendPress_Notifications_Manager::send_notification($body);
+		$body = $subscribed . $unsubscribed;
+		$text = $subscribed . $unsubscribed;
+		SendPress_Notifications_Manager::send_notification($body, $text);
 	}
 
 	static function build_subscribed_notification($data){

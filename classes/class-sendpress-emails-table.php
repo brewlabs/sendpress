@@ -99,7 +99,7 @@ class SendPress_Emails_Table extends WP_List_Table {
 				$a .= '<a class="btn btn-primary" href="?page='.$_REQUEST['page'].'&view=style&emailID='. $item->ID .'"><span class="glyphicon glyphicon-edit"></span> Edit</a> ';
 				$a = apply_filters('sendpress_email_table', $a, $item);
 				if( SendPress_Admin::access('Emails_Send') ) { 
-				$a .= '<a class="btn  btn-success " href="'. SendPress_Admin::link('Emails_Send').'&emailID='. $item->ID .'"><span class="glyphicon glyphicon-envelope"></span> Send</a>';
+				$a .= '<a class="btn  btn-success " href="'. SendPress_Admin::link('Emails_Send').'&emailID='. $item->ID .'"><span class="glyphicon glyphicon-send"></span> Send</a>';
 				}
 
 				$a .= '</div>';
