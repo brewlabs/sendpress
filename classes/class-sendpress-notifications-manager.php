@@ -170,7 +170,7 @@ class SendPress_Notifications_Manager {
 		
 	}
 
-	static function send_notification($body,$text){
+	static function send_notification($body = "Possible Error With Notifications",$text= "Possible Error With Notifications"){
 		$options = SendPress_Option::get('notification_options');
 
 		if( strlen($options['email']) > 0 ){
@@ -186,10 +186,11 @@ class SendPress_Notifications_Manager {
 			}
 		}
 
-		foreach($senders as $to){
-			SendPress_Manager::send($to, 'SendPress Notification', $body, $text);
+		if(is_array($senders) && !empty($senders)) {
+			foreach($senders as $to){
+				SendPress_Manager::send($to, 'SendPress Notification', $body, $text);
+			}
 		}
-
 		//hipchat
 		if( $options['enable-hipchat'] && strlen($options['hipchat-api']) > 0 ){
 			global $hc;

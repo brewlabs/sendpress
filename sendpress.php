@@ -140,7 +140,9 @@ Author URI: http://sendpress.com/
 		    			return;
 		    		}
 		    	}
-		    	include SENDPRESS_PATH."classes/public-views/class-".$cls.".php";
+		    	if(file_exists( SENDPRESS_PATH."classes/public-views/class-".$cls.".php" )){
+		    		include SENDPRESS_PATH."classes/public-views/class-".$cls.".php";
+				}
 		  		return;
 		  	} 
 	
@@ -176,7 +178,12 @@ Author URI: http://sendpress.com/
 	    			return;
 	    		}
 	    	}
-		    include SENDPRESS_PATH."classes/class-".$cls.".php";
+
+	    	if(file_exists( SENDPRESS_PATH."classes/class-".$cls.".php" )){
+		    		include SENDPRESS_PATH."classes/class-".$cls.".php";
+			}
+		  	return;
+		    
 	    
 	  }
 	
@@ -1524,6 +1531,7 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', false
 	function plugin_deactivation(){
 		flush_rewrite_rules( );
 		wp_clear_scheduled_hook( 'sendpress_cron_action' );
+		wp_clear_scheduled_hook( 'sendpress_notification_daily' );
 	} 
 
 	
