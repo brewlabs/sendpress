@@ -1169,12 +1169,14 @@ class SendPress_Data extends SendPress_DB_Tables {
 		global $wpdb;
 		$table = SendPress_Data::list_subcribers_table();
 
-		$query = "SELECT COUNT(*) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3";
+		$query = "SELECT COUNT(t1.subscriberID) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3";
 
         
             $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND(t2.status = %d) ";
             if($listID  !== false){
             	$query .= "AND (t2.listID =  %d)";
+            } else {
+            	 $query .= "";
             }
 
           //  "SELECT COUNT(*) FROM $table WHERE listID = $listID AND status = $status"
@@ -1182,6 +1184,22 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $count;
 	}
 
+
+ 	static function bd_nice_number($n) {
+        // first strip any formatting;
+        $n = (0+str_replace(",","",$n));
+        
+        // is this a number?
+        if(!is_numeric($n)) return false;
+        
+        // now filter it;
+        if($n>1000000000000) return round(($n/1000000000000),1).' trillion';
+        else if($n>1000000000) return round(($n/1000000000),1).' billion';
+        else if($n>1000000) return round(($n/1000000),1).' million';
+        else if($n>99999) return round(($n/1000),0).'K';
+        
+        return number_format($n);
+    }
 
 
 

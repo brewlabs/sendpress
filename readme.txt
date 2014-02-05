@@ -3,8 +3,8 @@ Plugin URI: http://sendpress.com
 Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.4
-Tested up to: 3.8
-Stable tag: 0.9.8.1
+Tested up to: 3.8.1
+Stable tag: 0.9.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,16 +103,23 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
-= 0.9.8.1 - 2013.1.31 =
+= 0.9.8.2 - 2014.2.4 =
+* Fix: Error being logged for notifications
+* Fix: Errors when trying to view email that has been deleted
+* Fix: Missing UI styles from bootstrap3 update
+* Fix: Subscriber Total on overview
+* New: Shortcode now allows for lists unchecked by default
+
+= 0.9.8.1 - 2014.1.31 =
 * Fix: SendPress editor button not working
 
-= 0.9.8 - 2013.1.29 =
+= 0.9.8 - 2014.1.29 =
 * Fix: Pro Activation
 * Fix: Reque Buttons fixed
 * New: Admin UI Upgrade
 * New: New Overview Page
 
-= 0.9.7.3 - 2013.1.14 =
+= 0.9.7.3 - 2014.1.14 =
 * Fix: Reports missing title
 * Fix: Variable assignment causing errors
 * New: Faster AutoCron
@@ -377,6 +384,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.8.2 =
+Maintenance and Bug Fixes
 
 = 0.9.8.1 =
 Editor Button Fixed

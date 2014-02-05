@@ -52,7 +52,7 @@ list( $display_version ) = explode( '-', $wp_version );
                    <span class="glyphicon glyphicon-user fa-5x"></span>
                   </div>
                   <div class="w-50 pull-left text-right">
-                    <p class="announcement-heading"><?php echo SendPress_Data::get_count_subscribers(); ?></p>
+                    <p class="announcement-heading"><?php echo SendPress_Data::bd_nice_number(SendPress_Data::get_count_subscribers()); ?></p>
                     <p class="announcement-text">Subscribers</p>
                   </div>
                   	<br class="clear">
