@@ -73,7 +73,7 @@ class SendPress_Pro_Manager {
 			$state = SendPress_Pro_Manager::get_pro_state();
 			
 			if( $state !== 'valid' && !empty($key) ){
-				add_action('sendpress_notices', array($this, 'key_notice'));
+				add_action('sendpress_notices', array(&$this, 'key_notice'));
 				//SendPress_Option::set('api_key','');
 			}
 		}

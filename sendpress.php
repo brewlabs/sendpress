@@ -193,7 +193,6 @@ Author URI: http://sendpress.com/
 
 			//add_action('register_form',array( $this , 'add_registration_fields'));
 
-
 			SendPress_Ajax_Loader::init();
 			SendPress_Signup_Shortcode::init();
 			SendPress_Sender::init();
@@ -202,9 +201,9 @@ Author URI: http://sendpress.com/
 			SendPress_Cron::auto();
 			SendPress_Notifications_Manager::init();
 			SendPress_Tracking::init();
+			SendPress_Videos::init();
 			sendpress_register_sender('SendPress_Sender_Website');
 			sendpress_register_sender('SendPress_Sender_Gmail');
-
 
 			add_action( 'sendpress_event', array('SendPress_Tracking','event'), 1, 1 );
 
@@ -283,7 +282,6 @@ Author URI: http://sendpress.com/
 			add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
 			
 		}
-
 
 		function add_registration_fields() {
 
