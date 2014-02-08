@@ -24,12 +24,12 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 
 	function save() {
 		  
-		foreach ($this->get_editable_roles() as $role) 
+		foreach ($this->get_editable_roles() as $role => $role_name) 
 		{
-			if($role != 'Administrator'){
+			if($role != 'administrator'){
 			$sp_view = false;
 
-			$role = str_replace(" ","_", strtolower( $role)  );
+			//$role = str_replace(" ","_", strtolower( $role)  );
 
 			
 			$pos = strrpos($role, "s2member");
@@ -135,11 +135,11 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 
 
 		<?php
-		foreach ($this->get_editable_roles() as $role) 
+		foreach ($this->get_editable_roles() as $role => $role_name) 
 		{
-			if($role != 'Administrator'){
+			if($role != 'administrator'){
 				
-			$role = str_replace(" ","_", strtolower( $role)  );
+			//$role = str_replace(" ","_", strtolower( $role)  );
 
 			
 			$pos = strrpos($role, "s2member");
@@ -152,7 +152,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 
 
 				$listrole = get_role( str_replace(" ","_", strtolower( $role)  ) );
-				$role =  str_replace(" ","_", strtolower( $role)  );
+				//$role =  str_replace(" ","_", strtolower( $role)  );
 				$checked = '';
 
 
@@ -160,7 +160,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 
 				if(false !== get_class($listrole)){
 				echo "<tr>";
-				echo "<td>". $role . "</td>";
+				echo "<td>". $role_name . "</td>";
 				
 				
 				
