@@ -31,13 +31,13 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 
 			//$role = str_replace(" ","_", strtolower( $role)  );
 
-			
+			/*
 			$pos = strrpos($role, "s2member");
 
 			if($pos !== false){
-				$role = $this->str_lreplace("_", "", $role);
+				$role = $this->str_lreplace(" ", "", $role);
 			}
-
+			*/
 			$saverole  = get_role( $role );
 					
 
@@ -141,12 +141,15 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 				
 			//$role = str_replace(" ","_", strtolower( $role)  );
 
-			
+			/*
 			$pos = strrpos($role, "s2member");
 		
 			if($pos !== false){
 				$role = $this->str_lreplace("_", "", $role);
 			}
+
+			echo $role . "<br>";
+			*/
 			//$saverole  = get_role( $role );
 				
 

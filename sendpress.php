@@ -1502,7 +1502,7 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', false
      *
      * @return mixed Value.
      */
-	function plugin_activation(){
+	static function plugin_activation(){
 		if ( version_compare( $GLOBALS['wp_version'], SENDPRESS_MINIMUM_WP_VERSION, '<' ) ) {
 			deactivate_plugins( __FILE__ );
 	    	wp_die( sprintf( __('SendPress requires WordPress version %s or later.', 'sendpress'), SENDPRESS_MINIMUM_WP_VERSION) );
@@ -1526,7 +1526,7 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', false
 	*	Nothing going on here yet
 	*	@static
 	*/
-	function plugin_deactivation(){
+	static function plugin_deactivation(){
 		flush_rewrite_rules( );
 		wp_clear_scheduled_hook( 'sendpress_cron_action' );
 		wp_clear_scheduled_hook( 'sendpress_notification_daily' );

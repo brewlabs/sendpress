@@ -387,128 +387,128 @@ class SendPress_DB_Tables {
             $subscriber_table = SendPress_DB_Tables::subscriber_table();
             //if($wpdb->get_var("show tables like '$subscriber_table'") != $subscriber_table) {
             $command ='';
-            $command .= " CREATE TABLE $subscriber_table (
-                      subscriberID bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-                      email varchar(100) NOT NULL DEFAULT '',
-                      join_date datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
-                      status int(1) NOT NULL DEFAULT '1',
-                      registered datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
-                      registered_ip varchar(20) NOT NULL DEFAULT '',
-                      identity_key varchar(60) NOT NULL DEFAULT '',
-                      bounced int(1) NOT NULL DEFAULT '0',
-                      firstname varchar(250) NOT NULL DEFAULT '',
-                      lastname varchar(250) NOT NULL DEFAULT '',
-                      wp_user_id bigint(20) DEFAULT NULL,
-                      PRIMARY KEY  (subscriberID),
-                      UNIQUE KEY  email (email) ,
-                      UNIQUE KEY  identity_key (identity_key),
-                      UNIQUE KEY  wp_user_id (wp_user_id)
-                    ) $collate;\n"; 
+$command .= " CREATE TABLE $subscriber_table (
+subscriberID bigint(20) unsigned NOT NULL AUTO_INCREMENT, 
+email varchar(100) NOT NULL DEFAULT '', 
+join_date datetime  NOT NULL DEFAULT '0000-00-00 00:00:00', 
+status int(1) NOT NULL DEFAULT '1', 
+registered datetime  NOT NULL DEFAULT '0000-00-00 00:00:00', 
+registered_ip varchar(20) NOT NULL DEFAULT '', 
+identity_key varchar(60) NOT NULL DEFAULT '', 
+bounced int(1) NOT NULL DEFAULT '0', 
+firstname varchar(250) NOT NULL DEFAULT '', 
+lastname varchar(250) NOT NULL DEFAULT '', 
+wp_user_id bigint(20) DEFAULT NULL, 
+PRIMARY KEY  (subscriberID), 
+UNIQUE KEY email (email) , 
+UNIQUE KEY identity_key (identity_key), 
+UNIQUE KEY wp_user_id (wp_user_id)
+) $collate;\n"; 
              //dbDelta($command);  
             //}
-            $subscriber_list_subscribers = SendPress_DB_Tables::list_subcribers_table();
-            $command .= " CREATE TABLE $subscriber_list_subscribers (
-                      id int(11) unsigned NOT NULL AUTO_INCREMENT,
-                      listID int(11) DEFAULT NULL,
-                      subscriberID int(11) DEFAULT NULL,
-                      status int(1) DEFAULT NULL,
-                      updated datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
-                      PRIMARY KEY  (id),
-                      KEY  listID (listID) ,
-                      KEY  subscriberID (subscriberID) ,
-                      KEY  status (status) ,
-                      UNIQUE KEY  listsub (subscriberID,listID)
-                    ) $collate;\n";
+$subscriber_list_subscribers = SendPress_DB_Tables::list_subcribers_table();
+$command .= " CREATE TABLE $subscriber_list_subscribers (
+id int(11) unsigned NOT NULL AUTO_INCREMENT, 
+listID int(11) DEFAULT NULL, 
+subscriberID int(11) DEFAULT NULL, 
+status int(1) DEFAULT NULL, 
+updated datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
+PRIMARY KEY  (id), 
+KEY listID (listID) , 
+KEY subscriberID (subscriberID) , 
+KEY status (status), 
+UNIQUE KEY listsub (subscriberID,listID)
+) $collate;\n";
             //dbDelta($command);  
           
             $subscriber_meta = SendPress_DB_Tables::subscriber_meta_table();
             
-            $command .= "  CREATE TABLE $subscriber_meta (
-                      smeta_id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-                      subscriberID bigint(20) unsigned NOT NULL DEFAULT '0',
-                      listID bigint(20) unsigned NULL DEFAULT '0',
-                      meta_key varchar(255) DEFAULT NULL,
-                      meta_value longtext,
-                      PRIMARY KEY  (smeta_id),
-                      KEY  listID (listID),
-                      KEY  subscriberID (subscriberID),
-                      KEY  meta_key (meta_key)
-                    ) $collate;\n";
+$command .= " CREATE TABLE $subscriber_meta (
+smeta_id bigint(20) unsigned NOT NULL AUTO_INCREMENT, 
+subscriberID bigint(20) unsigned NOT NULL DEFAULT '0', 
+listID bigint(20) unsigned NULL DEFAULT '0', 
+meta_key varchar(255) DEFAULT NULL, 
+meta_value longtext, 
+PRIMARY KEY  (smeta_id), 
+KEY listID (listID), 
+KEY subscriberID (subscriberID), 
+KEY meta_key (meta_key)
+) $collate;\n";
                 //dbDelta($command);  
                 
                  $subscriber_queue = SendPress_DB_Tables::queue_table();
            
-            $command .=" CREATE TABLE $subscriber_queue (
-                  id int(11) NOT NULL AUTO_INCREMENT,
-                  subscriberID int(11) DEFAULT NULL,
-                  listID int(11) DEFAULT NULL,
-                  from_name varchar(64) DEFAULT NULL,
-                  from_email varchar(128) NOT NULL,
-                  to_email varchar(128) NOT NULL,
-                  subject varchar(255) NOT NULL,
-                  messageID varchar(400) NOT NULL,
-                  emailID int(11) NOT NULL,
-                  max_attempts int(11) NOT NULL DEFAULT '3',
-                  attempts int(11) NOT NULL DEFAULT '0',
-                  success tinyint(1) NOT NULL DEFAULT '0',
-                  date_published datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
-                  inprocess int(1) DEFAULT '0',
-                  last_attempt datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
-                  date_sent datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
-                  PRIMARY KEY  (id),
-                  KEY  to_email (to_email),
-                  KEY  subscriberID (subscriberID),
-                  KEY  listID (listID),
-                  KEY  inprocess (inprocess),
-                  KEY  success (success),
-                  KEY  max_attempts (max_attempts),
-                  KEY  attempts (attempts),
-                  KEY  last_attempt (last_attempt)
-                ) $collate;\n";
-               // dbDelta($command); 
+$command .=" CREATE TABLE $subscriber_queue (
+id int(11) NOT NULL AUTO_INCREMENT, 
+subscriberID int(11) DEFAULT NULL, 
+listID int(11) DEFAULT NULL, 
+from_name varchar(64) DEFAULT NULL, 
+from_email varchar(128) NOT NULL, 
+to_email varchar(128) NOT NULL, 
+subject varchar(255) NOT NULL, 
+messageID varchar(400) NOT NULL, 
+emailID int(11) NOT NULL, 
+max_attempts int(11) NOT NULL DEFAULT '3', 
+attempts int(11) NOT NULL DEFAULT '0', 
+success tinyint(1) NOT NULL DEFAULT '0', 
+date_published datetime  NOT NULL DEFAULT '0000-00-00 00:00:00', 
+inprocess int(1) DEFAULT '0', 
+last_attempt datetime  NOT NULL DEFAULT '0000-00-00 00:00:00', 
+date_sent datetime  NOT NULL DEFAULT '0000-00-00 00:00:00', 
+PRIMARY KEY  (id), 
+KEY to_email (to_email), 
+KEY subscriberID (subscriberID), 
+KEY listID (listID), 
+KEY inprocess (inprocess), 
+KEY success (success), 
+KEY max_attempts (max_attempts), 
+KEY attempts (attempts), 
+KEY last_attempt (last_attempt)
+) $collate;\n";
+// dbDelta($command); 
             
 
-            $subscriber_events_table =  SendPress_DB_Tables::subscriber_event_table();
-            $command .= " CREATE TABLE $subscriber_events_table (
-                eventID int(11) unsigned NOT NULL AUTO_INCREMENT,
-                subscriberID int(11) unsigned NOT NULL,
-                reportID int(11) unsigned DEFAULT NULL,
-                urlID int(11) unsigned DEFAULT NULL,
-                listID int(11) unsigned DEFAULT NULL,
-                eventdate datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-                ip  varchar(400) DEFAULT NULL,
-                devicetype  varchar(50) DEFAULT NULL,
-                device  varchar(50) DEFAULT NULL,
-                type varchar(50) DEFAULT NULL,
-                PRIMARY KEY  (eventID),
-                KEY  subscriberID (subscriberID),
-                KEY  reportID (reportID),
-                KEY  urlID (urlID),
-                KEY  listID (listID),
-                KEY  eventdate (eventdate),
-                KEY  type (type)
-              ) $collate;\n";
+$subscriber_events_table =  SendPress_DB_Tables::subscriber_event_table();
+$command .= " CREATE TABLE $subscriber_events_table (
+eventID int(11) unsigned NOT NULL AUTO_INCREMENT, 
+subscriberID int(11) unsigned NOT NULL, 
+reportID int(11) unsigned DEFAULT NULL, 
+urlID int(11) unsigned DEFAULT NULL, 
+listID int(11) unsigned DEFAULT NULL, 
+eventdate datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
+ip  varchar(400) DEFAULT NULL, 
+devicetype  varchar(50) DEFAULT NULL, 
+device  varchar(50) DEFAULT NULL, 
+type varchar(50) DEFAULT NULL, 
+PRIMARY KEY  (eventID), 
+KEY subscriberID (subscriberID), 
+KEY reportID (reportID), 
+KEY urlID (urlID), 
+KEY listID (listID), 
+KEY eventdate (eventdate), 
+KEY type (type)
+) $collate;\n";
              //dbDelta($command);  
             
-            $report_url_table =  SendPress_DB_Tables::report_url_table();
-            $command .= " CREATE TABLE $report_url_table (
-              urlID int(11) unsigned NOT NULL AUTO_INCREMENT,
-              url varchar(2000) DEFAULT NULL,
-              reportID int(11) DEFAULT NULL,
-              PRIMARY KEY  (urlID),
-              KEY  url (url),
-              KEY  reportID (reportID)
-            ) $collate;\n"; 
+$report_url_table =  SendPress_DB_Tables::report_url_table();
+$command .= " CREATE TABLE $report_url_table (
+urlID int(11) unsigned NOT NULL AUTO_INCREMENT, 
+url varchar(2000) DEFAULT NULL, 
+reportID int(11) DEFAULT NULL, 
+PRIMARY KEY  (urlID), 
+KEY reportID (reportID), 
+KEY url (url(255))
+) $collate;\n"; 
             //  dbDelta($command); 
               
 
-            $subscriber_status_table =  SendPress_DB_Tables::subscriber_status_table();
-            $command .= " CREATE TABLE $subscriber_status_table (
-                          statusid int(11) unsigned NOT NULL AUTO_INCREMENT,
-                          status varchar(255) DEFAULT NULL,
-                          PRIMARY KEY  (statusid)
-                        ) $collate;\n"; 
-              
+$subscriber_status_table =  SendPress_DB_Tables::subscriber_status_table();
+$command .= " CREATE TABLE $subscriber_status_table (
+statusid int(11) unsigned NOT NULL AUTO_INCREMENT, 
+status varchar(255) DEFAULT NULL, 
+PRIMARY KEY  (statusid)
+) $collate;\n"; 
+
              dbDelta($command);   
 
             
