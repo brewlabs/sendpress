@@ -96,7 +96,7 @@ switch ( $this->_current_action ) {
     break;
 
     case 'create-subscriber':
-    
+        /*
         $email = $_POST['email'];
         $fname = $_POST['firstname'];
         $lname = $_POST['lastname'];
@@ -112,6 +112,7 @@ switch ( $this->_current_action ) {
         }
 
         wp_redirect( '?page='.$_GET['page']. "&view=subscribers&listID=".$listID );
+        */
     
     break;
     case 'edit-subscriber':

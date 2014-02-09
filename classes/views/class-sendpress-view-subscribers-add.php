@@ -8,6 +8,28 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Subscribers_Add extends SendPress_View_Subscribers {
 	
+	function create_subscriber(){
+
+		$email = $_POST['email'];
+        $fname = $_POST['firstname'];
+        $lname = $_POST['lastname'];
+        $listID = $_POST['listID'];
+        $status = $_POST['status'];
+
+        if( is_email($email) ){
+
+            $result = SendPress_Data::add_subscriber( array('firstname'=> $fname ,'email'=> $email,'lastname'=>$lname ) );
+
+            SendPress_Data::update_subscriber_status($listID, $result, $status ,false);
+
+        }
+
+        wp_redirect( '?page='.$_GET['page']. "&view=subscribers&listID=".$listID );
+
+	}
+
+
+
 	function html($sp) { ?>
 	<div id="taskbar" class="lists-dashboard rounded group"> 
 	<h2><?php _e('Add Subscriber','sendpress'); ?></h2>

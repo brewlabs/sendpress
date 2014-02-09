@@ -1,7 +1,7 @@
 <?php 
 /*
 Plugin Name: SendPress: Email Marketing and Newsletters
-Version: 0.9.8.2
+Version: 0.9.8.3-Beta
 Plugin URI: http://sendpress.com
 Description: Easy to manage Email Marketing and Newsletter plugin for WordPress. 
 Author: SendPress
@@ -16,7 +16,7 @@ Author URI: http://sendpress.com/
 	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 	define( 'SENDPRESS_API_VERSION', 1 );
 	define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.2' );
-	define( 'SENDPRESS_VERSION', '0.9.8.2' );
+	define( 'SENDPRESS_VERSION', '0.9.8.3-Beta' );
 	define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -298,7 +298,7 @@ Author URI: http://sendpress.com/
 
 		    <p>
 		        <label for="user_extra">
-		        <input type="checkbox" name="user_extra" id="user_extra"  value="<?php echo esc_attr(stripslashes($user_extra)); ?>" /> <?php _e('Join our mailing List.','sendpres'); ?></label><br>
+		        <input type="checkbox" name="user_extra" id="user_extra"  value="<?php echo esc_attr(stripslashes($user_extra)); ?>" /> <?php _e('Join our mailing List.','sendpress'); ?></label><br>
 		    </p><br>
 
 		    <?php
@@ -1814,6 +1814,8 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', false
 	*	FUNCTIONS TO BE REMOVED PLEASE DO NOT USE
 	* 
 	*/
+
+	/*
 	function send_single_from_queue(){
 		_deprecated_function( __FUNCTION__, '0.9.4.8', 'SendPress_Manager::send_single_from_queue()' );
 		return SendPress_Manager::send_single_from_queue();
@@ -1959,6 +1961,7 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', false
 		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Manager::send_test()' );
 		SendPress_Manager::send_test();
 	}
+	*/
 	/*
 	*
 	*	END FUNCTIONS TO BE REMOVED PLEASE DO NOT USE

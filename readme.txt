@@ -103,6 +103,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
+= 0.9.8.3 - XXXX =
+* Fix: Permissions on custom roles
+* Fix: dbDelta duplicate key warning
+* Fix: static missing from plugin activation function
+
+
 = 0.9.8.2 - 2014.2.4 =
 * Fix: Error being logged for notifications
 * Fix: Errors when trying to view email that has been deleted
@@ -384,6 +390,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.8.3 =
+Bug Fixes
 
 = 0.9.8.2 =
 Maintenance and Bug Fixes
