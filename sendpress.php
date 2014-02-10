@@ -111,6 +111,9 @@ Author URI: http://sendpress.com/
 		
 		
 		function __construct() {
+
+			$this->spdb = new SendPress_Database();
+
 			add_action( 'init', array( $this, 'init' ) );
 			add_action( 'widgets_init', array( $this,'load_widgets') );
 			add_action('plugins_loaded',array( $this, 'load_plugin_language'));
