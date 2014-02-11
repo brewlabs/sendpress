@@ -48,6 +48,10 @@ class SendPress_Widget_Signup extends WP_Widget {
 
 		/* Display name from widget settings if one was input. */
 
+		if( !array_key_exists('lists_checked', $instance) ){
+			$instance['lists_checked'] = false;
+		}
+
 		$args = "";
 		$args.= 'display_firstname="'.$instance['show_first'].'" ';
 		$args.= 'display_lastname="'.$instance['show_last'].'" ';
