@@ -1815,7 +1815,7 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', false
 	* 
 	*/
 
-	/*
+	
 	function send_single_from_queue(){
 		_deprecated_function( __FUNCTION__, '0.9.4.8', 'SendPress_Manager::send_single_from_queue()' );
 		return SendPress_Manager::send_single_from_queue();
@@ -1961,7 +1961,7 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', false
 		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Manager::send_test()' );
 		SendPress_Manager::send_test();
 	}
-	*/
+	
 	/*
 	*
 	*	END FUNCTIONS TO BE REMOVED PLEASE DO NOT USE

@@ -107,6 +107,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * Fix: Permissions on custom roles
 * Fix: dbDelta duplicate key warning
 * Fix: static missing from plugin activation function
+* Fix: Widget not saving info
+* New: Youtube and Vimeo videos converted to images
+
 
 
 = 0.9.8.2 - 2014.2.4 =
@@ -392,7 +395,7 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Upgrade Notice ==
 
 = 0.9.8.3 =
-Bug Fixes
+Video embed as images support added
 
 = 0.9.8.2 =
 Maintenance and Bug Fixes
