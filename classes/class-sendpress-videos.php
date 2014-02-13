@@ -28,11 +28,32 @@ class SendPress_Videos{
 
     function fix_video( $return, $data, $url ){
 
+        $output = '';
+
         if ($data->provider_name == 'YouTube' || $data->provider_name == 'Vimeo') {
-            return "<a href='{$url}' target='_blank'><img src='{$data->thumbnail_url}'></a>";
+            return $this->get_video($url, $data->thumbnail_url);
+            //return "<a href='{$url}' target='_blank'><img src='{$data->thumbnail_url}'></a>";
         }
         return $return;
 
+    }
+
+    function get_video($url, $img){
+        ob_start();
+        ?>
+        
+        <table  width="580" align="center" cellpadding="0" cellspacing="0">
+            <tr>
+                <td align="center">
+                    <a href='<?php echo $url; ?>' target='_blank'><img src='<?php echo $img; ?>'></a>
+                </td>
+            </tr>    
+        </table>
+        
+        <?php
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
     }
 
 }

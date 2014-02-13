@@ -73,7 +73,7 @@ class SendPress_Pro_Manager {
 			$state = SendPress_Pro_Manager::get_pro_state();
 			
 			if( $state !== 'valid' && !empty($key) ){
-				add_action('sendpress_notices', array(&$this, 'key_notice'));
+				add_action('sendpress_notices', array('SendPress_Pro_Manager', 'key_notice'));
 				//SendPress_Option::set('api_key','');
 			}
 		}
@@ -204,8 +204,8 @@ class SendPress_Pro_Manager {
 	}
 
 
-	function key_notice(){
-		echo '<div class="alert alert-error">';
+	static function key_notice(){
+		echo '<div class="alert alert-danger">';
 			echo "<b>";
 			_e('Alert','sendpress');
 			echo "</b>&nbsp;-&nbsp;";
@@ -214,13 +214,13 @@ class SendPress_Pro_Manager {
 	}
 
 	function deactivate_key_notice(){
-		echo '<div class="alert alert-error">';
+		echo '<div class="alert alert-danger">';
 			printf(__('There was a problem deactivating your API key.  Try again in a few minutes or visit <a href="http://sendpress.com/support/">SendPress Support</a>','sendpress') );
 	    echo '</div>';
 	}
 
 	function activate_key_notice(){
-		echo '<div class="alert alert-error">';
+		echo '<div class="alert alert-danger">';
 			printf(__('There was a problem activating your API key.  Try again in a few minutes or visit <a href="http://sendpress.com/support/">SendPress Support</a>','sendpress') );
 	    echo '</div>';
 	}
