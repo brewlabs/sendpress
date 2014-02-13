@@ -78,9 +78,9 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 
             
 
-        $subject = str_replace(array('â€™','â€œ','â€�','â€“'),array("'",'"','"','-'),$subject);
-        $html = str_replace(chr(194),chr(32),$html);
-		$text = str_replace(chr(194),chr(32),$text);
+        //$subject = str_replace(array('â€™','â€œ','â€�','â€“'),array("'",'"','"','-'),$subject);
+        //$html = str_replace(chr(194),chr(32),$html);
+		//$text = str_replace(chr(194),chr(32),$text);
 		
 		
 		$phpmailer->AddAddress( trim( $to ) );

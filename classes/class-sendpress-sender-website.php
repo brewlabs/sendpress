@@ -84,9 +84,9 @@ class SendPress_Sender_Website extends SendPress_Sender {
 
             
 
-        $subject = str_replace(array('â€™','â€œ','â€�','â€“'),array("'",'"','"','-'),$subject);
-        $html = str_replace(chr(194),chr(32),$html);
-		$text = str_replace(chr(194),chr(32),$text);
+        //$subject = str_replace(array('â€™','â€œ','â€�','â€“'),array("'",'"','"','-'),$subject);
+        //$html = str_replace(chr(194),chr(32),$html);
+		//$text = str_replace(chr(194),chr(32),$text);
 		//return $email;
 		
 		$phpmailer->AddAddress( trim( $to ) );
