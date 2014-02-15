@@ -13,6 +13,7 @@
             spadmin.edit.init.call(spadmin.edit, $);
             spadmin.emailmanager.init.call(spadmin.emailmanager, $);
             spadmin.confirmsend.init.call(spadmin.confirmsend, $);
+            spadmin.syncroles.init.call(spadmin.syncroles, $);
             spadmin.notifications.init.call(spadmin.notifications, $);
             spadmin.log("SP Finished Started");
             spadmin.log(spvars);
@@ -425,6 +426,55 @@
 
 
     }
+
+     this.syncroles = {
+
+        count: 0,
+        total: 0,
+        init: function($){
+
+            $area = $('#sync-wordpress-roles');
+            spadmin.syncroles.total = parseInt($('#list-total').html());
+            if($area.length > 0){
+                spadmin.syncroles.queuebatch( $('#post_ID').val() );
+            }
+        },
+         queuebatch: function(listid){
+            $.post(
+                spvars.ajaxurl,
+                {
+                    action:'sendpress-synclist',
+                    spnonce: spvars.sendpressnonce,
+                    listid: listid,
+                    offset: spadmin.syncroles.count,
+                }, 
+                function(data){
+                    spadmin.syncroles.batchit(data);
+                }); 
+        }, batchit: function(response){
+            response = $.parseJSON(response);
+            spadmin.log(response);
+            if( response != undefined && parseInt(response.count) > 0){
+                spadmin.syncroles.count = spadmin.syncroles.count + parseInt(response.count);
+                var $qt =$("#queue-total");
+                $qt.html(spadmin.syncroles.count);
+                $p = parseInt( spadmin.syncroles.count / spadmin.syncroles.total * 100 );
+                $('.sp-queueit').css('width', $p+'%');
+                spadmin.syncroles.queuebatch( $('#post_ID').val() );
+                spadmin.log('We should check for more emails');
+            } else {
+                $('.sp-queueit').css('width', '100%');
+                window.location.href= window.location.href+"&finished=true";
+                // spadmin.syncroles.closesend();
+                spadmin.log('Should die');
+            }
+            
+        },
+
+
+    }
+
+
 
 
     this.queue = {

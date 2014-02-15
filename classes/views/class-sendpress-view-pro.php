@@ -21,6 +21,10 @@ class SendPress_View_Pro extends SendPress_View{
         }
     }
 
+    function remove_key(){
+        SendPress_Option::set('api_key','');
+    }
+
     function module_activate_sendpress_pro(){
         $path = $_POST['plugin_path'];
         $pro_options = SendPress_Option::get('pro_plugins');

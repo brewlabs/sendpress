@@ -40,10 +40,10 @@ $sp->send_optin(1,array('1','2','3'),$lists);
 list( $display_version ) = explode( '-', $wp_version );
 
 
-
-
 ?>
 <br>
+
+
 <div class="sp-row">
 <div class="w-25 sp-first">
 <div class="panel panel-success">
@@ -248,7 +248,6 @@ list( $display_version ) = explode( '-', $wp_version );
 	</div>
 </div>
 </div>
-
 
 
 <!--

@@ -42,6 +42,8 @@ class SendPress_Ajax_Loader{
 		add_action('wp_ajax_sendpress-list-subscription', array(&$this,'list_subscription'));
 		add_action('wp_ajax_nopriv_sendpress-list-subscription', array(&$this,'list_subscription'));
 
+		add_action("wp_ajax_sendpress-synclist", array(&$this,'sync_list') );
+
 	}
 
 	function admin_scripts(){
@@ -260,6 +262,24 @@ class SendPress_Ajax_Loader{
 		echo json_encode($count);
 		exit();
 	}
+
+	function sync_list(){
+		$this->verify_ajax_call();
+		$listid = isset($_POST['listid']) ? $_POST['listid'] : 0;
+		$offset = isset($_POST['offset']) ? $_POST['offset'] : 0;
+		$role = get_post_meta( $listid,'sync_role',true);
+		$blogusers = get_users( 'role=' . $role .'&number=200&offset='. $offset );
+		$email_list = array();
+		foreach ($blogusers as $user) {
+		SendPress_Data::update_subscriber_by_email( $user->user_email , array('wp_user_id'=>$user->ID,'firstname'=>$user->first_name,'lastname'=>$user->last_name) );
+        	$email_list[] = $user->user_email;
+       	}
+       	SendPress_Data::sync_emails_to_list($listid , $email_list );
+
+    	echo json_encode( array( "count" =>count( $blogusers ) ,"role" => $role,"offset"=>$offset ) );
+		exit();
+	}
+
 
 	function queue_batch(){
 		$this->verify_ajax_call();

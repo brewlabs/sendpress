@@ -570,12 +570,32 @@ class SendPress_Data extends SendPress_DB_Tables {
 			}
 			$query_update_status .=";";
 			$wpdb->query($query_update_status);
-			
+			/*
 			$clean_list_query =  "DELETE FROM "	.SendPress_Data::list_subcribers_table(). " WHERE listID = ".$listid." AND subscriberID not in ('".implode("','", $good_ids)."')";
+			$wpdb->query($clean_list_query);	
+			*/
+		}
+	}
+
+
+	static function drop_active_subscribers_for_sync( $listid  = false ) {
+		if( $listid != false ){
+			global $wpdb;
+			$clean_list_query =  "DELETE FROM "	.SendPress_Data::list_subcribers_table(). " WHERE listID = ".$listid." AND status = 2";
 			$wpdb->query($clean_list_query);	
 
 		}
+
 	}
+
+
+	static function sync_lists_micro( $listid, $emails ) {
+
+
+
+	}
+
+
 
 	static function update_subscriber($subscriberID, $values){
 		$table = SendPress_Data::subscriber_table();

@@ -108,6 +108,8 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * Fix: dbDelta duplicate key warning
 * Fix: static missing from plugin activation function
 * Fix: Widget not saving info
+* Fix: ' sometimes showing odd characters in emails
+* Fix: lists_checked not always set
 * New: Youtube and Vimeo videos converted to images
 
 
