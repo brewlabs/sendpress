@@ -110,6 +110,7 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * Fix: Widget not saving info
 * Fix: ' sometimes showing odd characters in emails
 * Fix: lists_checked not always set
+* Fix: WordPress role sync now AJAX based
 * New: Youtube and Vimeo videos converted to images
 
 

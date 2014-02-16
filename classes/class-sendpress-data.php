@@ -712,7 +712,19 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 	
+	function export_subscirbers($listID = false){
+		global $wpdb;
+		if($listID){
+        $query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
 
+        
+            $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.listID =  ". $listID .")";
+        } else {
+            $query = "SELECT * FROM " .  SendPress_Data::subscriber_table();
+        }
+
+        return $wpdb->get_results( $query );
+	}
 
 
 

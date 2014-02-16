@@ -11,6 +11,20 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 		add_action('load-sendpress_page_sp-subscribers',array($this,'screen_options'));
 	}
 
+	function export_all(){
+
+                $items = SendPress_Data::export_subscirbers();
+                    
+                header("Content-type:text/octect-stream");
+                header("Content-Disposition:attachment;filename=SendPressAll.csv");
+                print "email,firstname,lastname \n";
+                foreach($items as $user) {
+                    print  $user->email . ",". $user->firstname.",". $user->lastname."\n" ;
+                }
+                exit;
+
+	}
+
 	function screen_options(){
 
 		$screen = get_current_screen();
@@ -75,15 +89,22 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 	    <?php $testListTable->display() ?>
 	    <?php wp_nonce_field($sp->_nonce_value); ?>
 	</form>
+
 	<form  method='get'>
 		<input type='hidden' value="<?php echo $_GET['page']; ?>" name="page" />
 		<br>
 		<input type='hidden' value="unlink-lisk" name="action" />
 		<input type='hidden' name="listid" value="<?php echo $_GET['listID'] ?>" />
-		<a class="btn btn-large " data-toggle="modal" href="#sendpress-empty-list" ><i class="icon-warning-sign "></i> <?php _e('Remove All Subscribers','sendpress'); ?></a>
+		<div class="btn-group">
+		<a class="btn btn-danger " data-toggle="modal" href="#sendpress-empty-list" ><i class="icon-warning-sign "></i> <?php _e('Remove All Subscribers','sendpress'); ?></a>
+		<a class="btn btn-primary " data-toggle="modal" href="<?php echo SendPress_Admin::link('Subscribers_All'); ?>&action=export_all" ><i class="icon-warning-sign "></i> <?php _e('Export All Subscribers','sendpress'); ?></a>
+	</div>
 		<?php wp_nonce_field($sp->_nonce_value); ?>
 	</form>
-<div class="modal hide fade" id="sendpress-empty-list">
+<div class="modal  fade" id="sendpress-empty-list" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+	<div class="modal-dialog">
+		<div class="modal-content">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">×</button>
 		<h3><?php _e('Really? Remove All Subscribers from this list.','sendpress');?></h3>
@@ -94,6 +115,8 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 	<div class="modal-footer">
 	<a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('No! I was Joking','sendpress');?></a><a href="<?php echo SendPress_Admin::link('Subscribers_All'); ?>&action=remove-subscribers" id="confirm-delete" class="btn btn-danger" ><?php _e('Yes! Remove All Subscribers','sendpress');?></a>
 	</div>
+</div>
+</div>
 </div>
 	<?php
 

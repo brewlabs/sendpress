@@ -71,19 +71,26 @@ if(isset($_GET['listID']) && $_GET['listID'] > 0 ){
 		
 		<input type='hidden' value="unlink-lisk" name="action" />
 		<input type='hidden' name="listid" value="<?php echo $_GET['listID'] ?>" />
-		<a class="btn btn-large " data-toggle="modal" href="#sendpress-empty-list" ><i class="icon-warning-sign "></i> <?php _e('Remove All Subscribers from List','sendpress'); ?></a>
+
+		<br>
+		<a class="btn btn-danger " data-toggle="modal" href="#sendpress-empty-list" ><i class="icon-warning-sign "></i> <?php _e('Remove All Subscribers from List','sendpress'); ?></a>
 		<?php wp_nonce_field($sp->_nonce_value); ?>
 	</form>
-<div class="modal hide fade" id="sendpress-empty-list">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">×</button>
-		<h3><?php _e('Really? Remove All Subscribers from this list.','sendpress');?></h3>
-	</div>
-	<div class="modal-body">
-		<p><?php _e('This will remove all subscribers from the list','sendpress');?>.</p>
-	</div>
-	<div class="modal-footer">
-	<a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('No! I was Joking','sendpress');?></a><a href="<?php echo SendPress_Admin::link('Subscribers_Subscribers') . $list ; ?>&action=remove-subscribers" id="confirm-delete" class="btn btn-danger" ><?php _e('Yes! Remove All Subscribers','sendpress');?></a>
+<div class="modal  fade" id="sendpress-empty-list" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">×</button>
+				<h3><?php _e('Really? Remove All Subscribers from this list.','sendpress');?></h3>
+			</div>
+			<div class="modal-body">
+				<p><?php _e('This will remove all subscribers from the list','sendpress');?>.</p>
+			</div>
+			<div class="modal-footer">
+			<a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('No! I was Joking','sendpress');?></a><a href="<?php echo SendPress_Admin::link('Subscribers_Subscribers') . $list ; ?>&action=remove-subscribers" id="confirm-delete" class="btn btn-danger" ><?php _e('Yes! Remove All Subscribers','sendpress');?></a>
+			</div>
+		</div>
 	</div>
 </div>
 	<?php

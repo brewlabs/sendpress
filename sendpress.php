@@ -678,10 +678,10 @@ Author URI: http://sendpress.com/
 		//MAKE SURE WE ARE ON AN ADMIN PAGE
 		if(isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)){
 
-
-			remove_filter( 'mce_external_plugins', 'cforms_plugin');
+				remove_action('admin_init', 'Zotpress_add_meta_box', 1);
+				remove_filter( 'mce_external_plugins', 'cforms_plugin');
 				remove_filter( 'mce_buttons', 'cforms_button');
-remove_filter("mce_plugins", "cforms_plugin");
+				remove_filter("mce_plugins", "cforms_plugin");
 				remove_filter('mce_buttons', 'cforms_button');
 				remove_filter('tinymce_before_init','cforms_button_script');
 
