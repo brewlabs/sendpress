@@ -12,11 +12,15 @@ class SendPress_View_Subscribers_Sync extends SendPress_View_Subscribers {
 		
 	}
 	
+	function admin_init(){
+		if(isset($_GET['finished']) ){
+	        SendPress_Admin::redirect('Subscribers');
+	    }
+	}
+
 	function html($sp) {
 
-		if(isset($_GET['finished']) ){
-           SendPress_Admin::redirect('Subscribers');
-        }
+		
 		/*
 		if(isset($_GET['listID'])){
 			//$listinfo = $this->getDetail( $this->lists_table(),'listID', $_GET['listID'] );	
@@ -40,10 +44,16 @@ class SendPress_View_Subscribers_Sync extends SendPress_View_Subscribers {
        	echo "<a class='btn' href='".SendPress_Admin::link('Subscribers')."'>Back to Lists</a> <a href='".SendPress_Admin::link('Subscribers_Subscribers',array('listID'=>$_GET['listID'])) ."' class='btn'>View Subscribers</a>";
     	SendPress_Data::sync_emails_to_list( $_GET['listID'] , $email_list );
 		*/
-		$role = get_post_meta($_GET['listID'],'sync_role',true);
+		$role_to_sync = get_post_meta($_GET['listID'],'sync_role',true);
 		SendPress_Data::drop_active_subscribers_for_sync( $_GET['listID'] );
-		$blogusers = get_users( 'role=' . $role );
-	//	echo count($blogusers);
+		$result = count_users();
+			foreach($result['avail_roles'] as $role => $count){
+				if($role == $role_to_sync){
+					$blogusers = $count;
+				}
+			}
+		//$blogusers = get_users( 'role=' . $role );
+		//echo count($blogusers);
     	?>
 <div id="taskbar" class="lists-dashboard rounded group"> 
 
@@ -57,7 +67,7 @@ class SendPress_View_Subscribers_Sync extends SendPress_View_Subscribers {
 <div class="progress progress-striped active">
 	<div class="progress-bar sp-queueit" style="width: 0%;"></div>
 </div>
-<span id="queue-total">0</span> of <span id="list-total"><?php echo count($blogusers); ?></span>
+<span id="queue-total">0</span> of <span id="list-total"><?php echo $blogusers; ?></span>
 </div>
 <?php
 
