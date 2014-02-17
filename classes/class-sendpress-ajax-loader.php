@@ -268,7 +268,7 @@ class SendPress_Ajax_Loader{
 		$listid = isset($_POST['listid']) ? $_POST['listid'] : 0;
 		$offset = isset($_POST['offset']) ? $_POST['offset'] : 0;
 		$role = get_post_meta( $listid,'sync_role',true);
-		$blogusers = get_users( 'role=' . $role .'&number=200&offset='. $offset );
+		$blogusers = get_users( 'role=' . $role .'&number=25&offset='. $offset );
 		$email_list = array();
 		foreach ($blogusers as $user) {
 		SendPress_Data::update_subscriber_by_email( $user->user_email , array('wp_user_id'=>$user->ID,'firstname'=>$user->first_name,'lastname'=>$user->last_name) );
