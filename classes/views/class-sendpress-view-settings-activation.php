@@ -55,13 +55,51 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 
 	<br><b>Use theme styles:&nbsp;&nbsp;&nbsp;<input type="radio" value="yes" <?php if(SendPress_Option::get('try-theme')=='yes'){ echo "checked='checked'"; } ?> name="try-theme"> Yes&nbsp;&nbsp;&nbsp;<input type="radio" value="no" <?php if(SendPress_Option::get('try-theme')=='no'){ echo "checked='checked'"; } ?> name="try-theme"> No</b>
 	<br>This will attempt to use the WordPress theme functions <code>get_header</code> and <code>get_footer</code> to build the SendPress default public pages.
-	<br><br><b>View the default pages below to see how they look.</b>
-	<ul class="nomargin">
-		<li><a href="<?php echo site_url(); ?>?sendpress=confirm">Confirmation Page</a></li>
-		<li><a href="<?php echo site_url(); ?>?sendpress=manage">Manage Page</a></li>
-		<li><a href="<?php echo site_url(); ?>?sendpress=post">Post Page</a></li>
-	</ul>
+	<br><hr>
+	<div class="sp-row">
+			<div class="sp-33 sp-first"><b>Manage Page</b><br>
+				<div class='well'>
+					This is the page subscribers are directed to to manage their subscriptions to your lists.
+					<br><br>
+					<a class="btn btn-default" href="<?php echo site_url(); ?>?sendpress=manage">View Page</a>
+				</div>
 
+			</div>
+
+			<div class="sp-33"><b>Confirmation Page</b><br>
+			<div class='well'>
+			Select the page a new subcriber will be redirected to after they click the confirmation link in the Double Opt-in Email.<br><br>
+			<?php $ctype = SendPress_Option::get('confirm-page'); ?>
+			<input type="radio" name="confirm-page" value="default" <?php if($ctype=='default'){echo "checked='checked'"; } ?> /> Use Default SendPress Page<br><br>
+			<input type="radio" name="confirm-page" value="custom"  <?php if($ctype=='custom'){echo "checked='checked'";} ?>/> Redirect to <select name="confirm-page-id"> 
+ <option value="">
+ 	<?php $cpageid = SendPress_Option::get('confirm-page-id');?>
+<?php echo esc_attr( __( 'Select page' ) ); ?></option> 
+ <?php 
+  $pages = get_pages(); 
+  foreach ( $pages as $page ) {
+  	$s ='';
+  	if($cpageid == $page->ID){ $s =  "selected"; }
+  	$option = '<option value="' . $page->ID .'" ' .$s. '>';
+	$option .= $page->post_title;
+	$option .= '</option>';
+	echo $option;
+  }
+ ?>
+</select><br><br>
+<a class="btn btn-default" href="<?php echo site_url(); ?>?sendpress=confirm">View Page</a>
+</div></div>
+
+			<div class="sp-33"><b>Post Page</b><br>
+				<div class='well'>
+					This is the page shown by default if you are using a custom form to post subscriber data. This can also be set per list on each lists form page.
+					<br><br>
+					<a class="btn btn-default" href="<?php echo site_url(); ?>?sendpress=post">View Page</a>
+				</div>
+
+			</div>
+
+	</div>
 
 </div>
 	
@@ -92,28 +130,7 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		<br><b>Send Double Opt-in Email:&nbsp;&nbsp;&nbsp;<input type="radio" value="yes" <?php if(SendPress_Option::get('send_optin_email')=='yes'){ echo "checked='checked'"; } ?> name="optin"> Yes&nbsp;&nbsp;&nbsp;<input type="radio" value="no" <?php if(SendPress_Option::get('send_optin_email')=='no'){ echo "checked='checked'"; } ?> name="optin"> No</b>
 			<br>Keep the spammers, robots and other riff-raff off your list. <br>Read more about why to use double opt-in on out support site.
 			<br><br><br>
-			<b>Confirmation Page</b><br>
-			<div class='well'>
-			Select the page a new subcriber will be redirected to after they click the confirmation link in the Double Opt-in Email.<br><br>
-			<?php $ctype = SendPress_Option::get('confirm-page'); ?>
-			<input type="radio" name="confirm-page" value="default" <?php if($ctype=='default'){echo "checked='checked'"; } ?> /> Use Default SendPress Page<br><br>
-			<input type="radio" name="confirm-page" value="custom"  <?php if($ctype=='custom'){echo "checked='checked'";} ?>/> Redirect to <select name="confirm-page-id"> 
- <option value="">
- 	<?php $cpageid = SendPress_Option::get('confirm-page-id');?>
-<?php echo esc_attr( __( 'Select page' ) ); ?></option> 
- <?php 
-  $pages = get_pages(); 
-  foreach ( $pages as $page ) {
-  	$s ='';
-  	if($cpageid == $page->ID){ $s =  "selected"; }
-  	$option = '<option value="' . $page->ID .'" ' .$s. '>';
-	$option .= $page->post_title;
-	$option .= '</option>';
-	echo $option;
-  }
- ?>
-</select>
-</div>
+			
 
 
 			<br>

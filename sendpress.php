@@ -202,6 +202,7 @@ Author URI: http://sendpress.com/
 
 			SendPress_Ajax_Loader::init();
 			SendPress_Signup_Shortcode::init();
+			SendPress_Shortcode_Manage::init();
 			SendPress_Sender::init();
 			SendPress_Pro_Manager::init();
 			SendPress_Cron::get_instance();
@@ -498,6 +499,7 @@ Author URI: http://sendpress.com/
 		static function add_vars($public_query_vars) {
 			$public_query_vars[] = 'fxti';
 			$public_query_vars[] = 'sendpress';
+			$public_query_vars[] = 'spmanage';
 			$public_query_vars[] = 'splist';
 			$public_query_vars[] = 'spreport';
 			$public_query_vars[] = 'spurl';
