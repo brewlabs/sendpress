@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 3.8.1
-Stable tag: 0.9.8.2
+Stable tag: 0.9.8.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,7 +103,7 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
-= 0.9.8.3 - XXXX =
+= 0.9.8.3 - 2014.2.17 =
 * Fix: Permissions on custom roles
 * Fix: dbDelta duplicate key warning
 * Fix: static missing from plugin activation function
@@ -111,8 +111,10 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * Fix: ' sometimes showing odd characters in emails
 * Fix: lists_checked not always set
 * Fix: WordPress role sync now AJAX based
+* New: Export option on all subscribers screen
+* New: Advanced Settings for fine tuning SendPress install
 * New: Youtube and Vimeo videos converted to images
-
+* New: increased Minimum required WordPress version to 3.7 
 
 
 = 0.9.8.2 - 2014.2.4 =
