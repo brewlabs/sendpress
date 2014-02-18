@@ -154,7 +154,19 @@ class SendPress_View {
 		$this->_title = $title;
 	}
 
-	
+	function select($id='sp-select', $value = 25 , $values=array(25,50,100,250,500,1000) ){
+		echo " <select id='$id' name='$id' >";
+		foreach ($values as $item) {
+			$active = '';
+			if($value == $item ){
+				$active = 'selected';
+			}
+			echo "<option value='$item' $active> $item</option>";
+			# code...
+		}
+		echo "</select>";
+
+	}
 
 
 }

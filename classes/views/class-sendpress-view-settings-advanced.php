@@ -23,6 +23,10 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 		SendPress_Option::set('old_permalink', false );
 	}
 
+	SendPress_Option::set('sync-per-call', $post['sync-per-call'] );
+	SendPress_Option::set('autocron-per-call', $post['autocron-per-call'] );
+	SendPress_Option::set('wpcron-per-call', $post['wpcron-per-call'] );
+
 	$widget_options =  array();
 
         $widget_options['widget_options']['load_css'] = 0;
@@ -42,6 +46,8 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 
         SendPress_Admin::redirect('Settings_Advanced');
 	}
+
+
 
 	function reset_transients(){
 		delete_transient('sendpress_weekly_post_notification_check');
@@ -109,6 +115,22 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 		<p>	
 	To maintain a plugin as big as SendPress, we need to know what we're dealing: what kinds of other plugins our users are using, what themes, etc. Please allow us to track that data from your install. It will not track any user details, so your security and privacy are safe with us.</p>
 </div></div>
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+			<h3 class="panel-title">Execution Limits</h3>
+	  </div>
+		<div class="panel-body">
+			<p>Please take care when changing these settings. We have attempted to set these to work on almost all servers. If you have a faster server you may be able to increase the limits below or if you are having troubles you may need to decrease the settings.</p>
+			<hr>
+			Users to Sync per ajax call: <?php $this->select('sync-per-call',SendPress_Option::get('sync-per-call',250) ); ?> Default: 250
+			<hr>
+			Emails sent per AutoCron execution: <?php $this->select('autocron-per-call',SendPress_Option::get('autocron-per-call',25), array(15,25,30,35,40,45,50) ); ?> Default: 25<br>
+			<small>If AutoCron errors it will shut itself off.</small>
+			<hr>
+			WordPress cron emails sent per execution: <?php $this->select('wpcron-per-call',SendPress_Option::get('wpcron-per-call',25), array(15,25,30,35,40,45,50,100,250,500,1000) ); ?>
+			
+		</div>
+	</div>
 	<?php do_action('sendpress_advanced_settings'); ?>
 		
 	

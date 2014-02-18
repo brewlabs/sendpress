@@ -21,7 +21,7 @@ class SendPress_Queue extends SendPress_Base {
 
 static function send_mail(){
 		global $wpdb;
-		$day_count = 25;
+		$day_count = SendPress_Option::get('autocron-per-call',25);
 
 		if( !SendPress_Manager::limit_reached()  ){
 		$count= SendPress_Data::emails_in_queue();
@@ -72,7 +72,7 @@ static function send_mail(){
 		//@ini_set('max_execution_time',0);
 		global $wpdb;
 		$count = SendPress_Option::get('emails-per-hour');
-		$count = $count;
+		$count = SendPress_Option::get('wpcron-per-call',25);
 
 
 
