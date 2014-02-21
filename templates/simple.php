@@ -272,7 +272,9 @@ global $post;
 					<table cellpadding="10" cellspacing="0"  width="100%" border="0" align="left">
 						<tr>
 							<td width="100%" valign="top" style="font-size: 13px; font-family: arial,sans-serif; color: *|SP:CONTENTTEXT|*;">
-								<?php $content = apply_filters('the_content', $post->post_content);
+								<?php 
+									add_filter('the_content', 'do_shortcode', 11);
+									$content = apply_filters('the_content', $post->post_content);
 									$content = str_replace(']]>', ']]&gt;', $content);
 									echo $content;
 									//echo nl2br($content);

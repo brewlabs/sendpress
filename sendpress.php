@@ -1,7 +1,7 @@
 <?php 
 /*
 Plugin Name: SendPress: Email Marketing and Newsletters
-Version: 0.9.8.3
+Version: 0.9.8.4
 Plugin URI: http://sendpress.com
 Description: Easy to manage Email Marketing and Newsletter plugin for WordPress. 
 Author: SendPress
@@ -16,7 +16,7 @@ Author URI: http://sendpress.com/
 	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 	define( 'SENDPRESS_API_VERSION', 1 );
 	define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-	define( 'SENDPRESS_VERSION', '0.9.8.3' );
+	define( 'SENDPRESS_VERSION', '0.9.8.4' );
 	define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -204,6 +204,7 @@ Author URI: http://sendpress.com/
 			SendPress_Signup_Shortcode::init();
 			SendPress_Shortcode_Manage::init();
 			SendPress_Sender::init();
+			SendPress_Shortcodes::init();
 			SendPress_Pro_Manager::init();
 			SendPress_Cron::get_instance();
 			SendPress_Cron::auto();
@@ -954,8 +955,12 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', false
 		if(isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)){
 			$queue = '(<span id="queue-count-menu">-</span>)';//SendPress_Data::emails_in_queue();
 		}
+		$plugin_name = __('SendPress','sendpress');
+		if(defined('SENDPRESS_PRO_VERSION')){
+			$plugin_name .= " ". __('Pro','sendpress');
+		}
 
-		add_menu_page(__('SendPress','sendpress'), __('SendPress','sendpress'), $role,'sp-overview',  array(&$this,'render_view') , SENDPRESS_URL.'img/sendpress-bg-16.png');
+		add_menu_page($plugin_name, $plugin_name, $role,'sp-overview',  array(&$this,'render_view') , SENDPRESS_URL.'img/sendpress-bg-16.png');
 	    add_submenu_page('sp-overview', __('Overview','sendpress'), __('Overview','sendpress'), $role, 'sp-overview', array(&$this,'render_view'));
 	    $main = add_submenu_page('sp-overview', __('Emails','sendpress'), __('Emails','sendpress'), $role, 'sp-emails', array(&$this,'render_view'));
 	    

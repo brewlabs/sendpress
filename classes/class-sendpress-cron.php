@@ -24,7 +24,29 @@ class SendPress_Cron {
      * Alternative function to the current wp_cron function that would usually executed on sanitize_comment_cookies
      */
     static public function auto() {
-        // make sure we're in wp-cron.php
+      
+
+      
+    }
+	
+	static function get_instance() {
+		if ( ! isset( self::$instance ) ) {
+			$class_name = __CLASS__;
+			self::$instance = new $class_name;
+		}
+		return self::$instance;
+	}
+
+	function __construct(){
+        //$this->auto();
+		  /* some processing for cron management */
+        add_action( 'wp_loaded', array( $this , 'auto_cron' ) );
+        add_filter( 'cron_schedules', array( $this , 'cron_schedules' ) );
+ 
+	}
+	
+    function auto_cron(){
+          // make sure we're in wp-cron.php
         if ( false !== strpos( $_SERVER['REQUEST_URI'], '/wp-cron.php' ) ) {
             // make sure a secret string is provided in the ur
             if ( isset( $_GET['action'] ) && $_GET['action'] == 'sendpress' ) {
@@ -45,29 +67,12 @@ class SendPress_Cron {
                 $limits = array('dl'=>$emails_per_day,'hl'=>$emails_per_hour,'ds'=>$emails_so_far,'hs'=>$hourly_emails);
 
                 echo json_encode(array( "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits  ));
-                //die();
+                die();
             }
             
         }
-
-      
     }
-	
-	static function get_instance() {
-		if ( ! isset( self::$instance ) ) {
-			$class_name = __CLASS__;
-			self::$instance = new $class_name;
-		}
-		return self::$instance;
-	}
 
-	function __construct(){
-        //$this->auto();
-		  /* some processing for cron management */
-        add_filter( 'cron_schedules', array( $this , 'cron_schedules' ) );
- 
-	}
-	
     function cron_schedules( $param ) {
         $frequencies=array(
             'one_min' => array(

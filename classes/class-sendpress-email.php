@@ -121,7 +121,13 @@ class SendPress_Email {
 			    set_transient( 'sendpress_report_body_html_'. $this->id(), $body_html , 60*60*2 );
 
 			}
-			
+			$subscriber = SendPress_Data::get_subscriber($this->subscriber_id());
+			if (!is_null($subscriber)) {
+				$body_html = str_replace("*|FNAME|*", $subscriber->firstname , $body_html );
+				$body_html = str_replace("*|LNAME|*", $subscriber->lastname , $body_html );
+				$body_html = str_replace("*|EMAIL|*", $subscriber->email , $body_html );
+				$body_html = str_replace("*|ID|*", $subscriber->subscriberID , $body_html );
+			}
 
 			$open_info = array(
 				"id"=>$this->subscriber_id(),
@@ -137,14 +143,9 @@ class SendPress_Email {
 			$body_html = str_replace("</body>",$tracker , $body_html );
 			$body_link			=	get_post_meta( $this->id() , 'body_link', true );
 
-			$subscriber = SendPress_Data::get_subscriber($this->subscriber_id());
+			
 
-			if (!is_null($subscriber)) {
-				$body_html = str_replace("*|FNAME|*", $subscriber->firstname , $body_html );
-				$body_html = str_replace("*|LNAME|*", $subscriber->lastname , $body_html );
-				$body_html = str_replace("*|EMAIL|*", $subscriber->email , $body_html );
-				$body_html = str_replace("*|ID|*", $subscriber->subscriberID , $body_html );
-			}
+			
 				
 
 
@@ -249,7 +250,12 @@ class SendPress_Email {
 				$body_html = str_replace("*|SP:MANAGE|*", $manage , $body_html );
 
 			}
-			
+			if (!is_null($subscriber)) {
+				$body_html = str_replace("*|FNAME|*", $subscriber->firstname , $body_html );
+				$body_html = str_replace("*|LNAME|*", $subscriber->lastname , $body_html );
+				$body_html = str_replace("*|EMAIL|*", $subscriber->email , $body_html );
+				$body_html = str_replace("*|ID|*", $subscriber->subscriberID , $body_html );
+			}
 			
 			
             $body_html = apply_filters('sendpress_post_render_email', $body_html);
