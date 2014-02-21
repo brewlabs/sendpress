@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 3.8.1
-Stable tag: 0.9.8.3
+Stable tag: 0.9.8.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -102,6 +102,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 0.9.8.4 - 2014.2.20 =
+* Fix: Shortcodes not running with AutoCron
+* Update: Added higher limits for AutoCron sending
+* Update: Menu item says `SendPress Pro` if pro is installed	
+* New: [sendpress-posts] shortcode 
 
 = 0.9.8.3 - 2014.2.17 =
 * Fix: Permissions on custom roles
