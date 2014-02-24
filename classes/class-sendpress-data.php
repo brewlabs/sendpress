@@ -189,6 +189,21 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $wpdb->get_var( $query );
 	}
 
+	static function emails_sent_in_queue_for_report($id = false){
+
+		global $wpdb;
+
+		if($id == false){
+			return 0;
+		}
+
+		
+		$table = self::queue_table();
+		$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where emailID = %d AND success = %d", $id, 1 );
+			
+		return $wpdb->get_var( $query );
+	}
+
 
 	static function process_with_iron( $id ){
 		global $wpdb;
@@ -297,12 +312,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	/********************* REPORTS static functionS **************************/	
 
-   
+   	//TO BE REMOVED
     static function update_report_sent_count( $id ) {
-    	$sent  =  get_post_meta($id , '_sent_total', 1);
-    	$sent++;
-    	
-   		update_post_meta( $id ,'_sent_total' , $sent );
+    	return;
     }
 
     static function get_last_report(){

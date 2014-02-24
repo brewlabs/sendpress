@@ -5,6 +5,17 @@ if ( !defined('SENDPRESS_VERSION') ) {
 	die;
 }
 
+global $post_ID, $post;
+if(isset($_GET['emailID'])){
+			$emailID = $_GET['emailID'];
+			$post = get_post( $_GET['emailID'] );
+			$post_ID = $post->ID;
+} else {
+	SendPress_Admin::redirect('Emails');
+}
+	
+
+
 $default_styles_id = SendPress_Data::get_template_id_by_slug('user-style');
 
 if( isset($emailID) ){
@@ -14,11 +25,11 @@ if( isset($emailID) ){
 	}
 
 	$display_content = $post->post_content;
-	$display_content = apply_filters('the_content', $display_content);
-	$display_content = str_replace(']]>', ']]>', $display_content);
+	//$display_content = apply_filters('the_content', $display_content);
+	//$display_content = str_replace(']]>', ']]>', $display_content);
 
 } else {
-	global $post_id;
+	
 	$post =  get_post( $default_styles_id );
 	$post_id = $post->ID;
 	$default_styles_id =  SendPress_Data::get_template_id_by_slug('default-style');

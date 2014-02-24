@@ -289,7 +289,7 @@ class SendPress_Ajax_Loader{
 		$time = get_post_meta($reportid, '_send_time', true);
 		$list = explode(",",$lists );
 		$last = get_post_meta($reportid, '_send_last', true);
-		$count_last = get_post_meta($reportid, '_send_last_count', true);
+		//$count_last = get_post_meta($reportid, '_send_last_count', true);
 		if($last == false){
 			$last = 0;
 			$count_last = 0;
@@ -314,8 +314,6 @@ class SendPress_Ajax_Loader{
             SendPress_Data::add_email_to_queue($go);
         }
 
-		$count_last += count( $x );  
-		 update_post_meta($reportid,'_send_last_count',$count_last );
 		//if()
 		if(count( $x ) == 1000){
 			

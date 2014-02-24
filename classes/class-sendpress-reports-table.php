@@ -115,8 +115,34 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
 
                 case 'count':
                     $rec = get_post_meta($item->ID, '_send_count', true) + get_post_meta($item->ID, '_send_last_count', true)  . '';
-                    $sent = get_post_meta($item->ID, '_sent_total', true) . '';
+                    $sentold = get_post_meta($item->ID, '_sent_total', true);
+                    $queue = 0;
+                    $sent = $sentold;
+                    if($sentold == false){
+                        $sent = get_post_meta($item->ID, '_send_total', true);
+                        $inqueue = get_post_meta($item->ID, '_in_queue', true);
+
+                        if($inqueue !== 'none'){
+                            $queue = SendPress_Data::emails_in_queue($item->ID);
+
+                            $sentindb =  SendPress_Data::emails_sent_in_queue_for_report($item->ID);
+                            if($sentindb > $sent){
+                                update_post_meta($item->ID, '_send_total', $sentindb);
+                                $sent = $sentindb;
+                            }
+                            if($queue = 0){
+                                update_post_meta($item->ID, '_in_queue', 'none');
+                            }
+
+
+                        } 
+
+
+                  
+
+
                     $queue = SendPress_Data::emails_in_queue($item->ID);
+                    }
                     $string = "Recipients: ". $rec ."<br>";
                     $string .= "Sent: ". $sent ."<br>";
                     $string .= "In Queue: ". $queue ."<br>";
@@ -157,6 +183,7 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
                     $ou = $this->_sendpress->get_opens_unique_count($item->ID);
                     $ou = $ou ? $ou : '-';
 
+                   
                     $ot = $this->_sendpress->get_opens_count($item->ID);
                     $ot = $ot ? $ot : '-';
 

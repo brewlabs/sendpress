@@ -122,6 +122,10 @@ class SendPress_View_Emails_Style extends SendPress_View_Emails {
 		}
 	
 
+        if($post->post_type !== 'sp_newsletters'){
+            SendPress_Admin::redirect('Emails');
+        }
+
 
 		?>
 		<form method="POST" name="post" id="post">

@@ -28,6 +28,8 @@ $list ='';
 
         ?><?php
 update_post_meta($post->ID,'_send_last',0);
+
+
 $info = get_post_meta($post->ID, '_send_data', true);
 $lists = get_post_meta($post->ID, '_send_lists', true);
 $subject =$post->post_title;
@@ -45,8 +47,9 @@ $list = explode(",",$lists );
             }
         }
 
+$subs = SendPress_Data::get_active_subscribers_count(  $list );
 
-        
+ update_post_meta($post->ID,'_send_last_count', $subs );       
 ?>
         <div id="taskbar" class="lists-dashboard rounded group"> 
 
@@ -58,7 +61,7 @@ $list = explode(",",$lists );
     <div class="progress progress-striped active">
         <div class="progress-bar sp-queueit" style="width: 0%;"></div>
     </div>
-    <span id="queue-total">0</span> of <span id="list-total"><?php print_r( SendPress_Data::get_active_subscribers_count(  $list ) );?></span>
+    <span id="queue-total">0</span> of <span id="list-total"><?php echo $subs;?></span>
 </div>
 
 		<?php
