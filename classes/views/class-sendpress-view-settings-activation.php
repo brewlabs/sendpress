@@ -22,12 +22,18 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 
 
 		$optin = SendPress_Data::get_template_id_by_slug('double-optin');
+		/*
 		$dpost = get_post($optin);
 		$dpost->post_content = $_POST['body'];
 		$dpost->post_title = $_POST['subject'];
-			
-		
-		wp_update_post($dpost);
+		*/	
+		 $my_post = array(
+	      'ID'           => $optin,
+	      'post_content' => $_POST['body'],
+	      'post_title' => $_POST['subject']
+	  	);
+
+		wp_update_post($my_post);
 
 		
 		SendPress_Admin::redirect('Settings_Activation');

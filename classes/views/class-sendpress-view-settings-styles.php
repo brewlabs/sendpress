@@ -142,7 +142,9 @@ $fn = __('From Name','sendpress');
 
 <br class="clear">
 <h3>Optional Settings</h3>
-		<?php require_once( SENDPRESS_PATH. 'inc/forms/email-style.2.0.php' ); ?>
+		<?php 
+        define('SENDPRESS_STYLER_PAGE',true);
+        require_once( SENDPRESS_PATH. 'inc/forms/email-style.2.0.php' ); ?>
 		
 <br class="clear">
 

@@ -11,7 +11,9 @@ if(isset($_GET['emailID'])){
 			$post = get_post( $_GET['emailID'] );
 			$post_ID = $post->ID;
 } else {
-	SendPress_Admin::redirect('Emails');
+	if(!defined('SENDPRESS_STYLER_PAGE')){
+		SendPress_Admin::redirect('Emails');
+	}
 }
 	
 

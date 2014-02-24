@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 3.8.1
-Stable tag: 0.9.8.4
+Stable tag: 0.9.8.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -102,6 +102,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 0.9.8.5 - 2014.2.24 =
+* Fix: Shortcodes from WooCommerce causing conflict
+* Update: Reports sending and queue totals more accurate
+* Update: Message sending should be slightly faster ( Less DB calls per message )
+
 
 = 0.9.8.4 - 2014.2.20 =
 * Fix: Shortcodes not running with AutoCron
