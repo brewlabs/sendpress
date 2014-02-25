@@ -156,8 +156,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 		
 		$hour_ago = strtotime('-1 hour');
 		$hour = date('Y-m-d H:i:s', $hour_ago);
-		$hour_ago = strtotime('-7 day');
-		$day = date('Y-m-d H:i:s', $hour_ago);
+		$days_to_save = SendPress_Option::get('queue-history',7);
+		$x_days_past = strtotime('-'.$days_to_save.' day');
+		$day = date('Y-m-d H:i:s', $x_days_past);
 		
 		$table = self::queue_table();
 		$query = $wpdb->prepare("DELETE FROM $table where last_attempt < %s and success = %d", $day, 1 );
@@ -181,11 +182,16 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$time = date('Y-m-d H:i:s', $hour_ago);
 			
 		}
-
-		
 		$table = self::queue_table();
-		$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where last_attempt > %s and success = %d", $time, 1 );
+		if($type = "All"){
+
+			$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where success = %d", 1 );
 			
+			return $wpdb->get_var( $query );
+
+		}
+		
+		$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where last_attempt > %s and success = %d", $time, 1 );
 		return $wpdb->get_var( $query );
 	}
 

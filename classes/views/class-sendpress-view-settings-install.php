@@ -8,10 +8,13 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Settings_Install extends SendPress_View_Settings {
 	
-	
+	function events_repair(){
+		SendPress_DB_Tables::repair_events_table();
+		SendPress_Admin::redirect('Settings_Install');
+	}	
 
 	function html($sp) {
-		echo "<h2>Attempting to install missing data</h2><br>";
+		echo "<h2>Attempting to install or repair missing data</h2><br>";
 
 		SendPress_Data::install();
 

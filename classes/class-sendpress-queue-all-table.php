@@ -17,7 +17,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
  * 
  * Our theme for this list table is going to be movies.
  */
-class SendPress_Queue_Table extends WP_List_Table {
+class SendPress_Queue_All_Table extends WP_List_Table {
     
     /** ************************************************************************
      * Normally we would be querying data from a database and manipulating that
@@ -128,7 +128,7 @@ class SendPress_Queue_Table extends WP_List_Table {
                     $buttons .='<a class="btn resend-btn btn-success" href="?page='.$_REQUEST['page'].'&action=requeue&emailID='. $item->id .'"><i class="icon-repeat icon-white"></i> Requeue</a> ';
                 }
                 $buttons .='<a class="btn resend-btn btn-primary" href="?page='.$_REQUEST['page'].'&action=queue-delete&emailID='. $item->id .'"><i class="icon-trash "></i> Delete</a> ';
-             return '<div class="inline-buttons">'.$buttons.'</div>';
+            // return '<div class="inline-buttons">'.$buttons.'</div>';
            
             default:
                 return print_r($item,true); //Show the whole array for troubleshooting purposes
@@ -210,8 +210,8 @@ class SendPress_Queue_Table extends WP_List_Table {
             
             'max_attempts' => 'Max&nbsp;Attempts',
             'attempts' => 'Attempted',
-            'last_attemp' => 'Last&nbsp;Attempt',
-            'actions' => 'Actions'
+            'last_attemp' => 'Sent',
+            //'actions' => 'Actions'
 
             
         );
@@ -263,7 +263,7 @@ class SendPress_Queue_Table extends WP_List_Table {
      **************************************************************************/
     function get_bulk_actions() {
         $actions = array(
-            'delete-email-queue' => 'Delete'
+           // 'delete-email-queue' => 'Delete'
         );
 
         
@@ -360,7 +360,7 @@ class SendPress_Queue_Table extends WP_List_Table {
        
         /* -- Pagination parameters -- */
         //Number of elements in your table?
-        $totalitems = SendPress_Data::emails_in_queue();//$wpdb->query($query); //return the total number of affected rows
+        $totalitems = SendPress_Data::emails_sent_in_queue('All');//$wpdb->query($query); //return the total number of affected rows
         //How many to display per page?
         // get the current user ID
             $user = get_current_user_id();
@@ -386,8 +386,8 @@ class SendPress_Queue_Table extends WP_List_Table {
         if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
         //How many pages do we have in total?
         $totalpages = ceil($totalitems/$per_page);
-        $query.=' WHERE success = 0 ';
-        $query.="AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s')."') ";
+        $query.=' WHERE success = 1 ';
+        //$query.="AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s')."') ";
         if(isset($_GET["listid"]) &&  $_GET["listid"]> 0 ){
             $query .= ' AND listID = '. $_GET["listid"];
         }

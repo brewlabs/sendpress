@@ -26,7 +26,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 	SendPress_Option::set('sync-per-call', $post['sync-per-call'] );
 	SendPress_Option::set('autocron-per-call', $post['autocron-per-call'] );
 	SendPress_Option::set('wpcron-per-call', $post['wpcron-per-call'] );
-
+	SendPress_Option::set('queue-history', $post['queue-history'] );
 	$widget_options =  array();
 
         $widget_options['widget_options']['load_css'] = 0;
@@ -101,7 +101,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 	<h2>Table Info</h2>
 		<pre><?php echo SendPress_DB_Tables::check_setup_support(); ?></pre>
 		<a class="btn btn-danger" href="<? echo SendPress_Admin::link('Settings_Install'); ?>">Install Missing Tables</a>
-
+		<a class="btn btn-warning" href="<? echo SendPress_Admin::link('Settings_Install',array('action'=>'events-repair')); ?>">Repair Events Tables</a>
 
 	</div>	
 	<div class="sp-50">
@@ -117,7 +117,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 </div></div>
 	<div class="panel panel-default">
 	  <div class="panel-heading">
-			<h3 class="panel-title">Execution Limits</h3>
+			<h3 class="panel-title">System Limits</h3>
 	  </div>
 		<div class="panel-body">
 			<p>Please take care when changing these settings. We have attempted to set these to work on almost all servers. If you have a faster server you may be able to increase the limits below or if you are having troubles you may need to decrease the settings.</p>
@@ -128,6 +128,8 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 			<small>If AutoCron errors it will shut itself off.</small>
 			<hr>
 			WordPress cron emails sent per execution: <?php $this->select('wpcron-per-call',SendPress_Option::get('wpcron-per-call',25), array(15,25,30,35,40,45,50,100,250,500,1000) ); ?> Default: 25<br>
+			<hr>
+			Queue History:  <?php $this->select('queue-history',SendPress_Option::get('queue-history',7), array(1,7,14,21,28,35,42,49) ); ?> Days <br><small>Default: 7 Days<small>
 			
 		</div>
 	</div>

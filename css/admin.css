@@ -135,7 +135,9 @@ width: 25%;
 .w-25 .panel-heading{
     border-bottom: 0px;
 }
-
+.qemails .column-actions{
+  width: auto;
+}
 
 
 @media (max-width: 767px) {
