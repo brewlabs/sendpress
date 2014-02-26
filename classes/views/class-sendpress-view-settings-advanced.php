@@ -129,7 +129,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 			<hr>
 			WordPress cron emails sent per execution: <?php $this->select('wpcron-per-call',SendPress_Option::get('wpcron-per-call',25), array(15,25,30,35,40,45,50,100,250,500,1000) ); ?> Default: 25<br>
 			<hr>
-			Queue History:  <?php $this->select('queue-history',SendPress_Option::get('queue-history',7), array(1,7,14,21,28,35,42,49) ); ?> Days <br><small>Default: 7 Days<small>
+			Queue History:  <?php $this->select('queue-history',SendPress_Option::get('queue-history',7), array(7,14,21,28,35,42,49) ); ?> Days <br><small>Default: 7 Days<small>
 			
 		</div>
 	</div>

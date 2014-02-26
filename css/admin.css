@@ -11,7 +11,9 @@ letter-spacing: -3px;
 display: none;
 }
 
-
+.panel-title{
+  font-weight: normal;
+}
 
 .bslabel {
     padding: 1px 3px 2px;

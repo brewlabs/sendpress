@@ -73,6 +73,26 @@
                   $('#sp-enable-cron').show();             
             });
 
+            $('#sp-send-next').click(function(e){
+                var $list = $('.sp-send-lists:checked');
+                if($list.length == 0 ){
+                    e.preventDefault();
+                    var $btn = $(this);
+                    $btn.blur();
+                    $('.alert').removeClass('hide').addClass('in');
+                }
+
+            });
+            
+            $('.sp-send-lists').click(function(e){
+                var $list = $('.sp-send-lists:checked');
+                if($list.length > 0 ){
+                    $('.alert').addClass('hide');
+                }
+
+            });
+
+
             $('.sp-insert-code').click(function(e){
                 e.preventDefault();
                 html = $(this).data('code');

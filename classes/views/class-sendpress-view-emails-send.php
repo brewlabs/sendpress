@@ -59,10 +59,13 @@ $post_type = $sp->_email_post_type;
 $post_type_object = get_post_type_object($sp->_email_post_type);
 
 ?>
+<div class="alert alert-danger fade hide">
+  <?php _e('<strong>Notice!</strong> You must select a list below before an email can be sent.','sendpress'); ?>
+</div>
 <form method="POST" name="sendpress_post" id="sendpress_post">
 <div style="float:right;" class="btn-group">
   <button class="btn btn-primary btn-large " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Edit','sendpress'); ?></button>
-<button class="btn btn-primary btn-large " type="submit" value="save-next" name="submit"><i class="icon-envelope icon-white"></i> <?php echo __('Send','sendpress'); ?></button>
+<button class="btn btn-primary btn-large " type="submit" value="save-next" id="sp-send-next" name="submit"><i class="icon-envelope icon-white"></i> <?php echo __('Send','sendpress'); ?></button>
 
 </div>
 <div id="sp-cancel-btn" style="float:right; margin-top: 5px;">
@@ -73,15 +76,15 @@ $post_type_object = get_post_type_object($sp->_email_post_type);
 <input type="hidden" id="post_type" name="post_type" value="sp_newsletters" />
 
 <h2><?php _e('Send Email','sendpress'); ?></h2>
+<br>
 <div class="boxer">
 <div class="boxer-inner">
 
-<h2><?php _e('Subject','sendpress'); ?></h2>
-<p><input type="text" name="post_subject" size="30" tabindex="1" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" /></p>
-<br>
+<?php $this->panel_start('<span class="glyphicon glyphicon-inbox"></span> '. __('Subject','sendpress')); ?>
+<input type="text" name="post_subject" size="30" tabindex="1" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
+<?php $this->panel_end(); ?>
 <div class="leftcol">
-<div class="style-unit">
-<h4><?php _e('Date & Time','sendpress'); ?></h4>
+<?php $this->panel_start( '<span class="glyphicon glyphicon-calendar"></span> '. __('Date & Time','sendpress')); ?>
 <input type="radio" name="send-date" value="now" checked/> Start Sending Now<br>
 <input type="radio" name="send-date" value="later"/> Send Later<br>
 <div class="date-holder" style="display:none">
@@ -130,14 +133,11 @@ dateFormat : 'yy/mm/dd'
 <option value="22:00:00">10:00 pm</option>
 <option value="23:00:00">11:00 pm</option>
 </select>
-<br>
 </div>
+<?php 
+$this->panel_end();
 
-</div>
-		<div class="style-unit">
-
-<h4><?php _e('Lists','sendpress'); ?></h4>
-<?php
+$this->panel_start('<span class="glyphicon glyphicon-list"></span> '. __('Lists','sendpress'));
 $post_args = array( 'post_type' => 'sendpress_list','numberposts'     => -1,
     	'offset'          => 0,
     	'orderby'         => 'post_title',
@@ -145,10 +145,12 @@ $post_args = array( 'post_type' => 'sendpress_list','numberposts'     => -1,
 		
 $current_lists = get_posts( $post_args );
 foreach($current_lists as $list){
-	echo "<input name='listIDS[]' type='checkbox' id='listIDS' value=" . $list->ID. "> ".$list->post_title . " <small>(".SendPress_Data::get_count_subscribers($list->ID). ")</small><br>";
+	echo "<input name='listIDS[]' type='checkbox' id='listIDS' class='sp-send-lists' value=" . $list->ID. "> ".$list->post_title . " <small>(".SendPress_Data::get_count_subscribers($list->ID). ")</small><br>";
 }
+
+$this->panel_end();
 ?>
-</div>
+
 <!--
 <div class="style-unit">
 <h4><?php _e('Settings','sendpress'); ?></h4>

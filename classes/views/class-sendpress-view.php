@@ -44,6 +44,29 @@ class SendPress_View {
 		<?php
 	}
 
+
+
+	function panel_start($title = false){ ?>
+		<div class="panel panel-default">
+			<?php if($title !== false ){ ?>
+		  <div class="panel-heading">
+				<h3 class="panel-title"><?php echo $title; ?></h3>
+		  </div>
+		  <?php } ?>
+		<div class="panel-body">
+		<?php
+	}
+
+	function panel_end($footer = false){ ?>
+		</div>
+		<?php if($footer !== false) { ?>
+		<div class="panel-footer"><?php echo $footer; ?></div>
+		<?php } ?>
+		</div>
+	<?php
+	}
+
+
 	function admin_init(){}
 
 

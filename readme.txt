@@ -103,6 +103,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
+= 0.9.8.6 - 2014.2.26 =
+* New: Queue History Tab - see what has been sent
+* Fix: Added option to repair events table
+* 
+
+
 = 0.9.8.5 - 2014.2.24 =
 * Fix: Shortcodes from WooCommerce causing conflict
 * Update: Reports sending and queue totals more accurate
