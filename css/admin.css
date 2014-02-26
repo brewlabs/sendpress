@@ -15,6 +15,10 @@ display: none;
   font-weight: normal;
 }
 
+button{
+  margin: 0;
+}
+
 .bslabel {
     padding: 1px 3px 2px;
     font-size: 9.75px;

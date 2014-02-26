@@ -63,14 +63,19 @@ $post_type_object = get_post_type_object($sp->_email_post_type);
   <?php _e('<strong>Notice!</strong> You must select a list below before an email can be sent.','sendpress'); ?>
 </div>
 <form method="POST" name="sendpress_post" id="sendpress_post">
-<div style="float:right;" class="btn-group">
-  <button class="btn btn-primary btn-large " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Edit','sendpress'); ?></button>
-<button class="btn btn-primary btn-large " type="submit" value="save-next" id="sp-send-next" name="submit"><i class="icon-envelope icon-white"></i> <?php echo __('Send','sendpress'); ?></button>
+<div style="float:right;"  class="btn-toolbar">
+<div id="sp-cancel-btn" class="btn-group">
+<a href="?page=<?php echo $_GET['page']; ?>"  class="btn btn-default "><?php echo __('Cancel','sendpress'); ?></a>
+</div> 
 
+<div class="btn-group">
+    
+
+    <button class="btn btn-default " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Edit','sendpress'); ?></button>
+    <button class="btn btn-primary " type="submit" value="save-next" id="sp-send-next" name="submit"><i class="icon-envelope icon-white"></i> <?php echo __('Send','sendpress'); ?></button>
 </div>
-<div id="sp-cancel-btn" style="float:right; margin-top: 5px;">
-				<a href="?page=<?php echo $_GET['page']; ?>"  class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
-			</div>
+</div>
+
 <input type="hidden" id="user-id" name="user_ID" value="<?php echo $current_user->ID; ?>" />
 <input type="hidden" id="post_ID" name="post_ID" value="<?php echo $post->ID; ?>" />
 <input type="hidden" id="post_type" name="post_type" value="sp_newsletters" />

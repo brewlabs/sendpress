@@ -17,6 +17,7 @@ if ( !class_exists( 'SendPress_Tracking' ) ) {
 		}
 
 		static function data() {
+			/*
 		    // PressTrends Account API Key
 		    $api_key = 'eu1x95k67zut64gsjb5qozo7whqemtqiltzu';
 		    $auth    = 'j0nc5cpqb2nlv8xgn0ouo7hxgac5evn0o';
@@ -65,10 +66,13 @@ if ( !class_exists( 'SendPress_Tracking' ) ) {
 		        wp_remote_get( $url );
 		        set_transient( 'presstrends_cache_data', $data, 60 * 60 * 24 );
 		    }
+		    */
 		}
 
 		// Setup Events
 		static function event($event_name) {
+			return;
+			/*
 			// PressTrends Account API Key & Theme/Plugin Unique Auth Code
 			$api_key 		= 'eu1x95k67zut64gsjb5qozo7whqemtqiltzu';
 			$auth 			= 'j0nc5cpqb2nlv8xgn0ouo7hxgac5evn0o';
@@ -77,6 +81,7 @@ if ( !class_exists( 'SendPress_Tracking' ) ) {
 			$site_url 		= base64_encode(site_url());
 		    $event_string	= $api_string . 'name/' . urlencode($event_name) . '/url/' . $site_url . '/';
 			wp_remote_get( $event_string );
+			*/
 		}
 
 		function presstrends_theme_options() {
@@ -96,35 +101,13 @@ if ( !class_exists( 'SendPress_Tracking' ) ) {
 
 
 
-function presstrends_theme_init(){
-	register_setting( 'presstrends_theme_opt', 'presstrends_theme_opt');	
-	add_settings_section('presstrends_top', '', 'presstrends_top_text', 'presstrends_top');	
-	add_settings_field('presstrends_opt_in', 'Turn on PressTrends', 'presstrends_opt_string', 'presstrends_top', 'presstrends_top');
-}
-
-// PressTrends Section Text
-function presstrends_top_text() {
-	echo '<p style="width:120px;float:left;"><img src="http://www.presstrends.io/_inc/images/presstrends_logo_prple.png" width="100px"/></p><p style="width:500px;float:left;color:#555;padding-top:10px;"><a href="http://www.presstrends.io" title="PressTrends" target="_blank">PressTrends</a> helps theme and plugin developers build better products and provide awesome support by retrieving aggregated stats about their products. PressTrends also provides a <a href="http://wordpress.org/extend/plugins/presstrends/" title="PressTrends Plugin for WordPress" target="_blank">sites plugin</a> that delivers stats on how your site is performing against the web and similar sites like yours with the data we aggregate. <a href="http://www.presstrends.io" title="PressTrends" target="_blank">Learn more about PressTrends</a> and our mission to make the web a better place.</p>';
-}
-
-// PressTrends Opt-In Option
-function presstrends_opt_string() {
-	$current_key = get_option('presstrends_theme_opt');
-	$opt = $current_key['activated'];
-	if($opt == 'on') {
-		echo "<input id='presstrends_opt_in' name='presstrends_theme_opt[activated]' checked type='checkbox' />";
-	} else {
-		echo "<input id='presstrends_opt_in' name='presstrends_theme_opt[activated]' type='checkbox' />";
-	}
-}
-
 // Add PressTrends Pointer
 static function be_password_pointer_enqueue( $hook_suffix ) {
 	$enqueue = false;
 
 	$dismissed = explode( ',', (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
 
-	if ( ! in_array( 'activate_autocron', $dismissed ) ) {
+	if ( ! in_array( 'activate_autocron', $dismissed ) && SendPress_Option::get('autocron') == 'no' ) {
 		$enqueue = true;
 		add_action( 'admin_print_footer_scripts', array('SendPress_Tracking','be_password_pointer_print_admin_bar') );
 	}
