@@ -131,6 +131,7 @@ p{
 table {
 border-collapse: separate;
 }
+/*
 #email-subject {
     border-color: #CCC;
     padding: 3px 8px;
@@ -139,6 +140,7 @@ border-collapse: separate;
     width: 100%;
     outline: none;
 }
+*/
 .nomargin{
     margin: 0;
 }

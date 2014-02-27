@@ -201,38 +201,39 @@ if(strlen($active_header['value']) > 0){
 <?php } ?>
 <div class="boxer">
 <div class="boxer-inner">
-	<?php if( isset($emailID) ){ ?>
-<h2>Subject</h2>
-	<p><input type="text" name="post_subject" size="30" tabindex="1" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" /></p><br>
+	<?php if( isset($emailID) ){ ?><br>
+	<?php $this->panel_start('<span class="glyphicon glyphicon-envelope"></span> '.  __('Subject','sendpress') ); ?>
+	<input type="text" name="post_subject" size="30" tabindex="1" class="form-control" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
+	<?php $this->panel_end(  ); ?>
 <?php } ?>
 
 
 	<div class="leftcol">
+		<?php $this->panel_start( '<span class=" glyphicon glyphicon-tint"></span> '. __('Body Styles','sendpress') ); ?>
 		
-		<div class="style-unit">
-		<h4>Body Styles</h4>
-		Background
-		<p><?php $sp->create_color_picker( array('id'=>'body_bg','value'=>$body_bg['value'],'std'=>$body_bg['std'], 'link'=>'#html-view' ,'css'=>'background-color' ) ); ?></p>
-		
+		Background<br>
+		<?php $sp->create_color_picker( array('id'=>'body_bg','value'=>$body_bg['value'],'std'=>$body_bg['std'], 'link'=>'#html-view' ,'css'=>'background-color' ) ); ?>
+		<br><br>
 		Body Text Color<br>
 		<?php $sp->create_color_picker( array('id'=>'body_text','value'=>$body_text['value'],'std'=>$body_text['std'], 'link'=>'.html-view-outer-text' ,'css'=>'color' ) ); ?>
 		<br><br>
 		Body Link Color<br>
 		<?php $sp->create_color_picker( array('id'=>'body_link','value'=>$body_link['value'],'std'=>$body_link['std'], 'link'=>'.html-view-outer-text a' ,'css'=>'color' ) ); ?>
-		</div>
+		<?php $this->panel_end(); ?>
 		
-		<div class="style-unit">
-			<h4>Header Styles</h4>
-		 Background
-		<p><?php $sp->create_color_picker( array('id'=>'header_bg','value'=>$header_bg['value'],'std'=>$header_bg['std'], 'link'=>'#html-header' ,'css'=>'background-color' ) ); ?></p>
+		<?php $this->panel_start('<span class=" glyphicon glyphicon-tint"></span> '.  __('Header Styles','sendpress') ); ?>
+			
+		 Background<br>
+		<?php $sp->create_color_picker( array('id'=>'header_bg','value'=>$header_bg['value'],'std'=>$header_bg['std'], 'link'=>'#html-header' ,'css'=>'background-color' ) ); ?>
+		<br><br>
 		
 		 Text Color<br>
 		<?php $sp->create_color_picker( array('id'=>'header_text_color','value'=>$header_text_color['value'],'std'=>$header_text_color['std'], 'link'=>'#html-header' ,'css'=>'color' ) ); ?>
 
-		</div>
+		<?php $this->panel_end(); ?>
 		
-		<div class="style-unit">
-			<h4>Content Styles</h4>
+		<?php $this->panel_start('<span class=" glyphicon glyphicon-tint"></span> '.  __('Content Styles','sendpress') ); ?>
+			
 		 Background<br>
 		<?php $sp->create_color_picker( array('id'=>'content_bg','value'=>$content_bg['value'],'std'=>$content_bg['std'], 'link'=>'#html-content','css'=>'background-color' ) ); ?>
 		<br><br>
@@ -245,7 +246,7 @@ if(strlen($active_header['value']) > 0){
 		Link Color<br>
 		<?php $sp->create_color_picker_iframe( array('id'=>'sp_content_link_color','value'=>$content_link['value'],'std'=>$content_link['std'],'link'=>'#html-content a' ,'css'=>'color' ,'iframe'=>'a') ); ?>
 		
-		</div>
+		<?php $this->panel_end(); ?>
 		</div>
 
 

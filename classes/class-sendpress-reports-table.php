@@ -128,6 +128,7 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
                             $sentindb =  SendPress_Data::emails_sent_in_queue_for_report($item->ID);
                             if($sentindb > $sent){
                                 update_post_meta($item->ID, '_send_total', $sentindb);
+                                update_post_meta($item->ID, '_send_last_count', $sentindb);
                                 $sent = $sentindb;
                             }
                             if($queue = 0){

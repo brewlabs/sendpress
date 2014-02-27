@@ -134,15 +134,17 @@ class SendPress_View_Emails_Style extends SendPress_View_Emails {
 			<a href="?page=sp-emails" class="spbutton supersize" >Edit Content</a>
 		</div>
 		-->
-		<div style="float:right;" class="btn-group">
-  <button class="btn btn-primary btn-large " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Update','sendpress'); ?></button>
-				<?php if( SendPress_Admin::access('Emails_Send') ) { ?>
-				<button class="btn btn-primary btn-large " type="submit" value="save-next" name="submit"><i class="icon-envelope icon-white"></i> <?php echo __('Send','sendpress'); ?></button>
-	<?php } ?>
-</div>
-<div id="sp-cancel-btn" style="float:right; margin-top: 5px;">
-				<a href="?page=<?php echo $_GET['page']; ?>" id="cancel-update" class="btn btn-sm btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
-			</div>
+		<div style="float:right;" class="btn-toolbar">
+            <div id="sp-cancel-btn" class="btn-group">
+                <a href="?page=<?php echo $_GET['page']; ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+            </div>
+            <div class="btn-group">
+            <button class="btn btn-default " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Update','sendpress'); ?></button>
+            <?php if( SendPress_Admin::access('Emails_Send') ) { ?>
+            <button class="btn btn-primary " type="submit" value="save-next" name="submit"><i class="icon-envelope icon-white"></i> <?php echo __('Send','sendpress'); ?></button>
+            <?php } ?>
+            </div>
+        </div>
 		<?php require_once( SENDPRESS_PATH. 'inc/forms/email-style.2.0.php' ); ?>
 		
         <div class="well clear">
