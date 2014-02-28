@@ -105,7 +105,10 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 = 0.9.8.6 - 2014.2.26 =
 * New: Queue History Tab - see what has been sent
 * Fix: Added option to repair events table
-* 
+* Fix: Bugs from updated UI
+* Fix: Pro missing send count on reports
+* Fix: removed Presstrends Code
+* New: Sending alert so you have to pick list
 
 
 = 0.9.8.5 - 2014.2.24 =
@@ -415,6 +418,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.8.6 =
+Queue History and Bug Fixes
 
 = 0.9.8.3 =
 Video embed as images support added
