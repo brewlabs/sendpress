@@ -102,7 +102,7 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
-= 0.9.8.6 - 2014.2.26 =
+= 0.9.8.6 - 2014.2.28 =
 * New: Queue History Tab - see what has been sent
 * Fix: Added option to repair events table
 * Fix: Bugs from updated UI
