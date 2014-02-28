@@ -1,9 +1,9 @@
 <?php 
 /*
-Plugin Name: SendPress: Email Marketing and Newsletters
+Plugin Name: SendPress Newsletters
 Version: 0.9.8.6
 Plugin URI: http://sendpress.com
-Description: Easy to manage Email Marketing and Newsletter plugin for WordPress. 
+Description: Easy to manage Newsletters for WordPress. 
 Author: SendPress
 Author URI: http://sendpress.com/
 */
@@ -538,7 +538,7 @@ Author URI: http://sendpress.com/
 	function create_color_picker_iframe( $value ) { ?>	
 		<input class="cpcontroller" iframe="true" data-id="<?php echo $value['id']; ?>" css-id="<?php echo $value['css']; ?>" target="<?php echo $value['iframe']; ?>" link-id="<?php echo $value['link']; ?>" name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>" type="text" value="<?php  echo isset($value['value']) ? $value['value'] : $value['std'] ; ?>" />
 		<input type='hidden' value='<?php echo $value['std'];?>' id='default_<?php echo $value['id']; ?>'/>
-		<a href="#" class="btn btn-mini reset-line" data-type="cp" data-id="<?php echo $value['id']; ?>" >Reset</a>
+		<a href="#" class="btn btn-default btn-xs reset-line" data-type="cp" data-id="<?php echo $value['id']; ?>" >Reset</a>
 		<div id="pickholder_<?php echo $value['id']; ?>" class="colorpick clearfix" style="display:none;">
 			<a class="close-picker">x</a>
 			<div id="<?php echo $value['id']; ?>_colorpicker" class="colorpicker_space"></div>
