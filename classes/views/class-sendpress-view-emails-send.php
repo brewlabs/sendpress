@@ -24,7 +24,11 @@ class SendPress_View_Emails_Send extends SendPress_View_Emails {
             'send_at' => $send_at
             ));
         SendPress_Option::set('current_send_subject_'. $_POST['post_ID'],$_POST['post_subject']);
-
+        if(isset($_POST['test_report'])){
+            update_post_meta($_POST['post_ID'],'istest', true);
+        } else {
+             update_post_meta($_POST['post_ID'],'istest', false);
+        }
         if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
         	 SendPress_Admin::redirect('Emails_Send_Confirm', array('emailID'=>$_GET['emailID'] ));
         } else {
@@ -86,7 +90,7 @@ $post_type_object = get_post_type_object($sp->_email_post_type);
 <div class="boxer-inner">
 
 <?php $this->panel_start('<span class="glyphicon glyphicon-inbox"></span> '. __('Subject','sendpress')); ?>
-<input type="text" name="post_subject" size="30" tabindex="1" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
+<input type="text" class="form-control" name="post_subject" size="30" tabindex="1" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
 <?php $this->panel_end(); ?>
 <div class="leftcol">
 <?php $this->panel_start( '<span class="glyphicon glyphicon-calendar"></span> '. __('Date & Time','sendpress')); ?>
@@ -150,10 +154,26 @@ $post_args = array( 'post_type' => 'sendpress_list','numberposts'     => -1,
 		
 $current_lists = get_posts( $post_args );
 foreach($current_lists as $list){
-	echo "<input name='listIDS[]' type='checkbox' id='listIDS' class='sp-send-lists' value=" . $list->ID. "> ".$list->post_title . " <small>(".SendPress_Data::get_count_subscribers($list->ID). ")</small><br>";
+
+     $t = '';
+     $tlist = '';
+        if( get_post_meta($list->ID,'_test_list',true) == 1 ){ 
+           $t = '  <span class="label label-info">Test List</span>';
+           $tlist = ' test-list-add';
+        } 
+	echo "<input name='listIDS[]' type='checkbox' id='listIDS' class='sp-send-lists ". $tlist ."' value=" . $list->ID. "> ".$list->post_title . " <small>(".SendPress_Data::get_count_subscribers($list->ID). ")</small>$t<br>";
 }
 
 $this->panel_end();
+
+
+$this->panel_start('<span class="glyphicon glyphicon-tag"></span> '. __('Mark as Test','sendpress'));
+
+    echo "<input name='test_report' type='checkbox' id='test_report' value='1'> Test<br>";
+    echo "<small class='text-muted'>This puts the report into the Test tab on the Reports screen.</small>";
+
+$this->panel_end();
+
 ?>
 
 <!--

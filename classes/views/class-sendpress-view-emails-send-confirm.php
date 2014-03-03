@@ -26,7 +26,9 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
         update_post_meta($new_id,'_send_time',  $info['send_at'] );
         update_post_meta($new_id,'_send_lists', $lists );
         $count = 0;    
-
+        if(get_post_meta($saveid ,'istest',true) == true ){
+            update_post_meta($new_id,'_report_type', 'test' );
+        }
         /*
 
         if(isset($info['listIDS'])){
@@ -121,19 +123,21 @@ $subject = SendPress_Option::get('current_send_subject_'.$post->ID ,true);
 <input type="hidden" id="post_ID" name="post_ID" value="<?php echo $post->ID; ?>" />
 <div class="boxer">
 <div class="boxer-inner">
-<h2><strong><?php _e('Subject','sendpress'); ?></strong>: <?php echo stripslashes(esc_attr( htmlspecialchars( $subject ) )); ?></h2><br>
+<?php $this->panel_start('<span class="glyphicon glyphicon-inbox"></span> '. __('Subject','sendpress')); ?>
+<input type="text" class="form-control" value="<?php echo stripslashes(esc_attr( htmlspecialchars( $subject ) )); ?>" disabled />
+<?php $this->panel_end(); ?>
 <div class="leftcol">
-    <div class="style-unit">
-<h4><?php _e('Send Time','sendpress'); ?></h4>
+<?php $this->panel_start( '<span class="glyphicon glyphicon-calendar"></span> '. __('Date & Time','sendpress')); ?>
 <?php if($info['send_at'] == '0000-00-00 00:00:00') {
     echo "Your email will start sending right away!";
 } else {
     echo "Your email will start sending on " .date('Y/m/d',strtotime($info['send_at'])) . " at " .date('h:i A',strtotime($info['send_at']))  ;
 }?>
-</div>
+<?php $this->panel_end(); 
+$this->panel_start('<span class="glyphicon glyphicon-list"></span> '. __('Lists','sendpress'));
+?>
 
-    <div class="style-unit">
-<h4><?php _e('Lists','sendpress'); ?></h4>
+
 
 <?php
 
@@ -150,25 +154,19 @@ if( !empty($info['listIDS']) ){
 
 
 ?>
-</div>
-<div class="style-unit">
-<h4><?php _e('Test Emails','sendpress') ?></h4>
+<?php $this->panel_end(); ?>
 <?php
+$this->panel_start('<span class="glyphicon glyphicon-tag"></span> '. __('Mark as Test','sendpress'));
+    $sel = '';
+    if(get_post_meta($post_ID ,'istest',true) == true ){
+        $sel = 'checked';
+    }
+    echo "<input $sel name='test_report' type='checkbox' id='test_report' value='1' disabled> Test<br>";
+    echo "<small class='text-muted'>This puts the report into the Test tab on the Reports screen.</small>";
 
-
-if( !empty($info['testemails']) ){
-    foreach($info['testemails'] as $test){
-       echo $test['email'] .'<br>';   
-
-    } 
-} else {
-    _e('No Test Emails added','sendpress');
-    echo "<br>";
-}
-
-
+$this->panel_end();
 ?>
-</div>
+
 </div>
 <div style="margin-left: 250px;">
 <div class="widerightcol">

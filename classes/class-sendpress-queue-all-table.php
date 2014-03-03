@@ -78,10 +78,14 @@ class SendPress_Queue_All_Table extends WP_List_Table {
             case 'status':
                return $item->$column_name;
            */
+            case 'subject':
+                return get_the_title($item->emailID);
+                break;
             case 'max_attempts':
 
 
                 return "<span class='badge '>$item->max_attempts</span>";
+                break;
             case 'attempts':
                 $cls = "badge-success";
 
@@ -99,21 +103,27 @@ class SendPress_Queue_All_Table extends WP_List_Table {
                 }
 
                  return "<span class='badge $cls'>$item->attempts</span>";
+                 break;
 
             case 'listid':
                 if(isset($this->_list_title[$item->listID] )){
                     return $this->_list_title[$item->listID];
 
                 } else {
-                    $title = get_the_title($item->listID);
+                    $t = '';
+                    if( get_post_meta($item->listID,'_test_list',true) == 1 ){ 
+                        $t = '  <span class="label label-info">Test List</span>';
+                    } 
+                    $title = get_the_title($item->listID) . $t;
                     $this->_list_title[$item->listID] = $title;
                     return $title;
                 }
 
-
+                break;
                 //return ;
             case 'gravatar':
                 return get_avatar($item->to_email, 30);
+                break;
             case 'last_attemp':
 
                 if($item->last_attempt !== '0000-00-00 00:00:00'){
@@ -121,7 +131,7 @@ class SendPress_Queue_All_Table extends WP_List_Table {
                 } else {
                     return 'never';
                 }
-
+                break;
             case 'actions':
                 $buttons ='';
                 if($item->attempts >= $item->max_attempts){
@@ -129,7 +139,7 @@ class SendPress_Queue_All_Table extends WP_List_Table {
                 }
                 $buttons .='<a class="btn resend-btn btn-primary" href="?page='.$_REQUEST['page'].'&action=queue-delete&emailID='. $item->id .'"><i class="icon-trash "></i> Delete</a> ';
             // return '<div class="inline-buttons">'.$buttons.'</div>';
-           
+            break;
             default:
                 return print_r($item,true); //Show the whole array for troubleshooting purposes
         }
@@ -207,9 +217,9 @@ class SendPress_Queue_All_Table extends WP_List_Table {
             'title' => 'Email',
             'listid' => 'List',
             
-            
-            'max_attempts' => 'Max&nbsp;Attempts',
-            'attempts' => 'Attempted',
+            'subject' => 'Subject',
+            //'max_attempts' => 'Max&nbsp;Attempts',
+            //'attempts' => 'Attempted',
             'last_attemp' => 'Sent',
             //'actions' => 'Actions'
 

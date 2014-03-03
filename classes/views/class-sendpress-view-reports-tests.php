@@ -6,7 +6,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 	die;
 }
 
-class SendPress_View_Reports extends SendPress_View{
+class SendPress_View_Reports_Tests extends SendPress_View_Reports{
 	
 	function admin_init(){
 		add_action('load-sendpress_page_sp-reports',array($this,'screen_options'));
@@ -24,49 +24,16 @@ class SendPress_View_Reports extends SendPress_View{
 		add_screen_option( 'per_page', $args );
 	}
 
-
-
- function sub_menu($sp = false){
- 		?>
-		<div class="navbar navbar-default" >
-			<div class="navbar-header">
-			  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-
-    </button>
-    <a class="navbar-brand" href="#">Reports</a>
-	</div>
-		 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		<ul class="nav navbar-nav">
-					<li <?php if(!isset($_GET['view']) ){ ?>class="active"<?php } ?> >
-				    	<a href="<?php echo SendPress_Admin::link('Reports'); ?>"><?php _e('Newsletters','sendpress'); ?></a>
-				  	</li>
-				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'tests'){ ?>class="active"<?php } ?> >
-				    	<a href="<?php echo SendPress_Admin::link('Reports_Tests'); ?>"><?php _e('Tests','sendpress'); ?></a>
-				  	</li>
-				  	
-				</ul>
-			</div>
-		</div>
-		
-		<?php
-
-		do_action('sendpress-reports-sub-menu');
-		
-	}	
+	
 
 	function html($sp){
-		 SendPress_Tracking::event('Reports Tab');
 		//Create an instance of our package class...
-		$sp_reports_table = new SendPress_Reports_Table();
+		$sp_reports_table = new SendPress_Reports_Tests_Table	();
 		//Fetch, prepare, sort, and filter our data...
 		$sp_reports_table->prepare_items();
 		?>
 		<div id="taskbar" class="lists-dashboard rounded group"> 
-			<h2><?php _e('Newsletter Reports','sendpress'); ?></h2>
+			<h2><?php _e('Test Reports','sendpress'); ?></h2>
 		</div>
 		<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 		<form id="email-filter" method="get">

@@ -17,7 +17,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
  * 
  * Our theme for this list table is going to be movies.
  */
-class SendPress_Reports_Table extends WP_List_Table {
+class SendPress_Reports_Tests_Table extends WP_List_Table {
     
     /** ************************************************************************
      * Normally we would be querying data from a database and manipulating that
@@ -433,8 +433,8 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
                 'meta_query'             => array(
                    array(
                         'key'       => '_report_type',
-                       'compare' => 'not exists',
-                    
+                       'compare' => '=',
+                        'value' => 'test'
                     ),
                 ),
             );
@@ -501,8 +501,9 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
 
                 'meta_query'             => array(
                     array(
-                        'key'       => '_report_type',
-                       'compare' => 'not exists',
+                         'key'       => '_report_type',
+                       'compare' => '=',
+                        'value' => 'test'
                     
                     ),
                 ),

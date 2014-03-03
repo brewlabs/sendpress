@@ -48,6 +48,13 @@
 
         });
 
+            $('.test-list-add').click(function(){
+                $('#test_report').prop('checked', true);
+
+            });
+            
+
+
             $('#myTab a').click(function (e) {
               e.preventDefault();
               $(this).tab('show');

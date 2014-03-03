@@ -156,6 +156,10 @@ class SendPress_Lists_Table extends WP_List_Table {
         } else {
             $p = 'private';
         }
+        $t = '';
+        if( get_post_meta($item->ID,'_test_list',true) == 1 ){ 
+           $t = '  <span class="label label-info">Test List</span>';
+        } 
 
          $role = get_post_meta($item->ID,'sync_role',true);
         // $add = '';
@@ -167,7 +171,7 @@ class SendPress_Lists_Table extends WP_List_Table {
          }
 
         $title = apply_filters('sendpress_list_table_title_actions',array(
-            'title' =>$item->post_title,
+            'title' =>$item->post_title . $t,
             'id' => ' <span style="color:silver">( id:'.$item->ID .' - ' .$p .' )</span>',
             'actions' => $this->row_actions($actions)
         ));
