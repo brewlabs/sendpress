@@ -29,6 +29,9 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
         if(get_post_meta($saveid ,'istest',true) == true ){
             update_post_meta($new_id,'_report_type', 'test' );
         }
+
+         update_post_meta($new_id ,'_sendpress_subject', $subject );
+
         /*
 
         if(isset($info['listIDS'])){

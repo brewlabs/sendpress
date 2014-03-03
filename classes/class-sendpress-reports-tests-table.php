@@ -215,7 +215,7 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
                     return date_i18n(get_option('date_format') ,strtotime($date) );
                 }
                 return '';
-            case 'created':
+                case 'created':
                     $canceled = get_post_meta($item->ID, '_canceled', true);
                     if($canceled == true){
                         return "CANCELED";
