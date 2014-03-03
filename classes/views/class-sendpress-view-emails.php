@@ -49,8 +49,8 @@ class SendPress_View_Emails extends SendPress_View{
 				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'all'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails_Auto'); ?>"><?php _e('Autoresponders','sendpress'); ?></a>
 				  	</li>
-				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'templates'){ ?>class="active"<?php } ?> >
-				    	<a href="<?php echo SendPress_Admin::link('Emails_Auto'); ?>"><?php _e('Templates','sendpress'); ?></a>
+				  	<li <?php if(isset($_GET['view']) && ( $_GET['view'] === 'templates' || $_GET['view'] === 'tempedit' )){ ?>class="active"<?php } ?> >
+				    	<a href="<?php echo SendPress_Admin::link('Emails_Templates'); ?>"><?php _e('Templates','sendpress'); ?></a>
 				  	</li>
 				</ul>
 			</div>

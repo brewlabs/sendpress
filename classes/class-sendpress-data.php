@@ -183,7 +183,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 			
 		}
 		$table = self::queue_table();
-		if($type = "All"){
+		if($type == "All"){
 
 			$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where success = %d", 1 );
 			

@@ -145,6 +145,10 @@ width: 25%;
   width: auto;
 }
 
+.CodeMirror{
+  height: 800px;
+}
+
 
 @media (max-width: 767px) {
   .w-25{
