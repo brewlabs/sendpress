@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 3.8.1
-Stable tag: 0.9.8.6
+Stable tag: 0.9.8.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 0.9.8.7 - 2014.3.3 =
+* Fix: Hourly and Daily send count being off
+* New: Mark lists and Reports as tests
+* New: Added tabs to Reports section to support tests
 
 = 0.9.8.6 - 2014.2.28 =
 * New: Queue History Tab - see what has been sent
@@ -418,6 +423,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.8.7 =
+Queue Hourly and Daily send counts fix
 
 = 0.9.8.6 =
 Queue History and Bug Fixes
