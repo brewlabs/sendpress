@@ -115,7 +115,7 @@ Author URI: http://sendpress.com/
 			add_action( 'init', array( $this, 'init' ) );
 			add_action( 'widgets_init', array( $this,'load_widgets') );
 			add_action('plugins_loaded',array( $this, 'load_plugin_language'));
-				
+			add_action('wp', array($this,'wp'));
 			do_action( 'sendpress_loaded' );
 		}
 	
@@ -195,17 +195,21 @@ Author URI: http://sendpress.com/
 			}
 			return self::$instance;
 		}
-	
-		function init() {
-			$this->maybe_upgrade();
 
-			//add_action('register_form',array( $this , 'add_registration_fields'));
+		function wp(){
 			sendpress_register_template(
 				array('path'=> SENDPRESS_PATH.'templates/original.html', 'name'=> 'SendPress Original')
 				);
 			sendpress_register_template(
 				array('path'=> SENDPRESS_PATH.'templates/2columns-to-rows.html', 'name'=> '2 Column Top - Wide Bottom - Responsive')
 				);
+		}
+	
+		function init() {
+			$this->maybe_upgrade();
+
+			//add_action('register_form',array( $this , 'add_registration_fields'));
+			
 			SendPress_Ajax_Loader::init();
 			SendPress_Signup_Shortcode::init();
 			SendPress_Shortcode_Manage::init();

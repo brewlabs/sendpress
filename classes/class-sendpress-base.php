@@ -31,4 +31,3 @@ class SendPress_Base {
     }
 
 }
-
