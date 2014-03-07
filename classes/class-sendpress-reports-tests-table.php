@@ -112,45 +112,38 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
            */
                case 'bounces':
                 return '<span class="label">Coming Soon</span>';
-
+                break;
                 case 'count':
                     $rec = get_post_meta($item->ID, '_send_count', true) + get_post_meta($item->ID, '_send_last_count', true)  . '';
                     $sentold = get_post_meta($item->ID, '_sent_total', true);
+
                     $queue = 0;
-                    $sent = $sentold;
-                    if($sentold == false){
-                        $sent = get_post_meta($item->ID, '_send_total', true);
-                        $inqueue = get_post_meta($item->ID, '_in_queue', true);
+                    $sent = get_post_meta($item->ID, '_send_total', true);
+                    $inqueue = get_post_meta($item->ID, '_in_queue', true);
+                    if($inqueue !== 'none'){
+                        $queue = SendPress_Data::emails_in_queue($item->ID);
+                        $sentindb =  SendPress_Data::emails_sent_in_queue_for_report($item->ID);
+                        if($sentindb > $sent){
+                            update_post_meta($item->ID, '_send_total', $sentindb);
+                            $sent = $sentindb;
+                        }
+                        if($queue == 0){
+                           update_post_meta($item->ID, '_in_queue', 'none');
+                        }
+                    } 
 
-                        if($inqueue !== 'none'){
-                            $queue = SendPress_Data::emails_in_queue($item->ID);
-
-                            $sentindb =  SendPress_Data::emails_sent_in_queue_for_report($item->ID);
-                            if($sentindb > $sent){
-                                update_post_meta($item->ID, '_send_total', $sentindb);
-                                update_post_meta($item->ID, '_send_last_count', $sentindb);
-                                $sent = $sentindb;
-                            }
-                            if($queue = 0){
-                                update_post_meta($item->ID, '_in_queue', 'none');
-                            }
-
-
-                        } 
 
 
                   
 
 
-                    $queue = SendPress_Data::emails_in_queue($item->ID);
-                    }
                     $string = "Recipients: ". $rec ."<br>";
                     $string .= "Sent: ". $sent ."<br>";
                     $string .= "In Queue: ". $queue ."<br>";
 
                  return $string;
 
-                
+                break;
                case'sentto':
                 $display = '';
                 $info = get_post_meta($item->ID, '_send_data', true);
@@ -179,7 +172,7 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
                 }
 
                 return $display;
-                
+                 break;
                 case 'opens':
                     $ou = $this->_sendpress->get_opens_unique_count($item->ID);
                     $ou = $ou ? $ou : '-';
@@ -197,7 +190,7 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
                     $ot = $ot ? $ot : '-';
 
                     return '<span class="label label-success">'. $ou .'</span> <span class="label label-info">'. $ot .'</span>';
-                    
+                   break;  
                 case 'unsubscribe':
                 $clicks = get_post_meta($item->ID, '_unsubscribe_count', true);
                     if($clicks) { 
@@ -205,7 +198,7 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
                      }
                      return '<span class="label label-danger">0</span>';
              
-
+ break;
                case 'subject':
                 $sub = get_post_meta($item->ID, "_sendpress_subject", true);
                 return $sub;
@@ -215,6 +208,7 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
                     return date_i18n(get_option('date_format') ,strtotime($date) );
                 }
                 return '';
+                break;
                 case 'created':
                     $canceled = get_post_meta($item->ID, '_canceled', true);
                     if($canceled == true){
@@ -226,7 +220,7 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
                     }
                     return "Scheduled for ".date_i18n('Y/m/d @ h:i A' , strtotime( $info ) ) . "<br><a href='".SendPress_Admin::link('Emails_Send_Cancel',array('emailID'=>$item->ID ))."'>Cancel Send</a>";
 
-            
+             break;
             case 'actions':
                 return '<div class="inline-buttons"><a class="spbutton left" href="'. get_permalink( $item->ID  ). '">View</a><a class="spbutton right" href="?page='.$_REQUEST['page'].'&view=edit-email&emailID='. $item->ID .'">Edit</a><a class="spbutton bluebtn" href="?page='.$_REQUEST['page'].'&view=send-email&emailID='. $item->ID .'">Send</a></div>';
             default:

@@ -22,6 +22,31 @@ function sendpress_unregister_sender( $classname ){
 }
 
 
+/**
+ * 
+ * 
+ *  array('path'=>SENDPRESS_PATH . '/templates/original.html' , 'name' => 'SP Original'  )
+ */
+global $sendpress_html_templates;
+$sendpress_html_templates = array();
+function sendpress_register_template($html_template = array()){
+	global $sendpress_html_templates;
+	$id = SendPress_Data::get_template_id_by_slug( sanitize_title( $html_template['name'] ) );
+
+	$content = file_get_contents($html_template['path']);
+	$my_post = array(
+	'ID'           => $id,
+	'post_content' => $content,
+	'post_title' => $html_template['name']
+	);
+
+	// Update the post into the database
+	wp_update_post( $my_post );
+
+	$html_template['ID'] = $id;
+	$sendpress_html_templates[$id] = $html_template;
+}
+
 
 /**
  * Private

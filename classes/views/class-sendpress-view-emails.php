@@ -27,8 +27,8 @@ class SendPress_View_Emails extends SendPress_View{
 		add_screen_option( 'per_page', $args );
 	}
 
- function sub_menu($sp = false){
- 		if(SendPress_Option::get('beta')){
+ 	function sub_menu($sp = false){
+ 		if(SendPress_Option::get('prerelease_templates') == 'yes'){
 		?>
 		<div class="navbar navbar-default" >
 			<div class="navbar-header">
@@ -51,6 +51,9 @@ class SendPress_View_Emails extends SendPress_View{
 				  	</li>
 				  	<li <?php if(isset($_GET['view']) && ( $_GET['view'] === 'templates' || $_GET['view'] === 'tempedit' )){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails_Templates'); ?>"><?php _e('Templates','sendpress'); ?></a>
+				  	</li>
+				  	<li <?php if(isset($_GET['view']) && ( $_GET['view'] === 'temp' || $_GET['view'] === 'tempstyle' )){ ?>class="active"<?php } ?> >
+				    	<a href="<?php echo SendPress_Admin::link('Emails_Temp'); ?>"><span class="sp-label">SP</span>   <?php _e('Templates','sendpress'); ?></a>
 				  	</li>
 				</ul>
 			</div>

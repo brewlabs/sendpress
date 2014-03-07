@@ -194,7 +194,6 @@ class SendPress_Manager {
 		if( SendPress_Manager::limit_reached()  ){
 			return array('attempted'=> $attempts,'sent'=>$count);
 		}
-		SendPress_Error::log('here');
 		$email = SendPress_Data::get_single_email_from_queue();
 		if( is_object($email) ){
 			//$email = $email[0];
@@ -203,24 +202,22 @@ class SendPress_Manager {
 			if( SendPress_Manager::limit_reached() ){
 				return array('attempted'=> $attempts,'sent'=>$count);
 			}
-			SendPress_Error::log('here 2');
 			$attempts++;
 			SendPress_Data::queue_email_process( $email->id );
 			$result = SendPress_Manager::send_email_from_queue( $email );
-			SendPress_Error::log('here 3');
 			
 			if ($result) {
-				$wpdb->update( $queue_table , array('success'=>1,'inprocess'=>3 ) , array('id'=> $email->id ));
-				$senddata = array(
-					'sendat' => date('Y-m-d H:i:s'),
-					'reportID' => $email->emailID,
-					'subscriberID' => $email->subscriberID
-				);
-
-				//$wpdb->insert( $this->subscriber_open_table(),  $senddata);
+				if($result === true){
+					$wpdb->update( SendPress_Data::queue_table() , array('success'=>1,'inprocess'=>3 ) , array('id'=> $email->id ));
+					//( $sid, $rid, $lid=null, $uid=null, $ip=null, $device_type=null, $device=null, $type='confirm' )
+					SendPress_Data::add_subscriber_event($email->subscriberID, $email->emailID, $email->listID,null,null,null,null, 'send');
+				} else {
+					$wpdb->update( SendPress_Data::queue_table() , array('success'=>2,'inprocess'=>3 ) , array('id'=> $email->id ));
+					SendPress_Data::add_subscriber_event($email->subscriberID, $email->emailID, $email->listID,null,null,null,null, 'bounce');
+					SendPress_Data::bounce_subscriber_by_id( $email->subscriberID );
+				}
 				$count++;
-				SendPress_Data::register_event( 'send', $email->subscriberID, $email->emailID );
-				//SendPress_Data::update_report_sent_count( $email->emailID );
+			
 			} else {
 				$wpdb->update($queue_table , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
 			}

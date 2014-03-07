@@ -16,7 +16,35 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 
         $options =  array();
 
+        if(isset($_POST['fromname'])){
+            $fromname= $_POST['fromname'];
+        }
+
+        // From email and name
+        // If we don't have a name from the input headers
+        if ( !isset( $fromname ) || $fromname == '' ){
+            $fromname = get_bloginfo('name'); 
+        }
+        
+        if(isset($_POST['fromemail'])){
+            $fromemail= $_POST['fromemail'];
+        }
+
+
+        if ( !isset( $fromemail )  || $fromemail == '') {
+            // Get the site domain and get rid of www.
+            $sitename = strtolower( $_SERVER['SERVER_NAME'] );
+            if ( substr( $sitename, 0, 4 ) == 'www.' ) {
+                $sitename = substr( $sitename, 4 );
+            }
+
+            $fromemail = 'wordpress@' . $sitename;
+        }
        
+
+        SendPress_Option::set('fromemail', $fromemail );
+        SendPress_Option::set('fromname', $fromname );
+        
         $options['sendmethod'] = $_POST['sendpress-sender'];
         // Provides: Hll Wrld f PHP
         $chars = array(".", ",", " ", ":", ";", "$", "%", "*", "-", "=");
@@ -59,18 +87,37 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
     $senders = $sendpress_sender_factory->get_all_senders();
     ksort($senders);
     $method = SendPress_Option::get( 'sendmethod' );
+
+$fe = __('From Email','sendpress'); 
+$fn = __('From Name','sendpress'); 
 ?>
 <div style="float:right;" >
   <a href="" class="btn btn-large btn-default" ><i class="icon-remove"></i> <?php _e( 'Cancel', 'sendpress' ); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e( 'Save', 'sendpress' ); ?></a>
 </div>
+
+
+
+<form method="post" id="post">
 <br class="clear"><br class="clear">
+
+<br class="clear">
+<?php $this->panel_start( '<span class="glyphicon glyphicon-user"></span> '. __('Sending Email','sendpress') ); ?>
+<div class="form-group">
+<label for="fromname"><?php _e('From Name','sendpress'); ?></label>
+<input name="fromname" tabindex=1 type="text" id="fromname" value="<?php echo SendPress_Option::get('fromname'); ?>" class="form-control">
+</div>
+<div class="form-group">
+<label for="fromemail"><?php _e('From Email','sendpress'); ?></label>
+<input name="fromemail" tabindex=2 type="text" id="fromemail" value="<?php echo SendPress_Option::get('fromemail'); ?>" class="form-control">
+</div>
+
+   <?php $this->panel_end(); ?>
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Sending Account Setup</h3>
   </div>
   <div class="panel-body">
 
-<form method="post" id="post">
   <input type="hidden" name="action" value="account-setup" />
 
   <?php if( count($senders) < 3 ){

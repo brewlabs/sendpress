@@ -51,7 +51,7 @@ class SendPress_View_Emails_Templates extends SendPress_View_Emails{
 		<div id="taskbar" class="lists-dashboard rounded group"> 
 
 		<div id="button-area">  
-			<a class="btn btn-primary btn-large" href="?page=<?php echo $_REQUEST['page']; ?>&view=create"><?php _e('Create Email','sendpress'); ?></a>
+			<a class="btn btn-primary btn-large" href="?page=<?php echo $_REQUEST['page']; ?>&view=tempcreate"><?php _e('Create Template','sendpress'); ?></a>
 		</div>
 		<h2><?php _e('Templates','sendpress'); ?></h2>
 	</div>

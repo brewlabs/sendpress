@@ -39,12 +39,15 @@ static function send_mail(){
 					$result = SendPress_Manager::send_email_from_queue( $email );
 					$email_count++;
 					if ($result) {
-						$wpdb->update( SendPress_Data::queue_table() , array('success'=>1,'inprocess'=>3 ) , array('id'=> $email->id ));
-						$senddata = array(
-							'sendat' => date('Y-m-d H:i:s'),
-							'reportID' => $email->emailID,
-							'subscriberID' => $email->subscriberID
-						);
+						if($result === true){
+							$wpdb->update( SendPress_Data::queue_table() , array('success'=>1,'inprocess'=>3 ) , array('id'=> $email->id ));
+							//( $sid, $rid, $lid=null, $uid=null, $ip=null, $device_type=null, $device=null, $type='confirm' )
+							SendPress_Data::add_subscriber_event($email->subscriberID, $email->emailID, $email->listID,null,null,null,null, 'send');
+						} else {
+							$wpdb->update( SendPress_Data::queue_table() , array('success'=>2,'inprocess'=>3 ) , array('id'=> $email->id ));
+							SendPress_Data::add_subscriber_event($email->subscriberID, $email->emailID, $email->listID,null,null,null,null, 'bounce');
+							SendPress_Data::bounce_subscriber_by_id( $email->subscriberID );
+						}
 
 						//SendPress_Data::update_report_sent_count( $email->emailID );
 					} else {
@@ -94,12 +97,15 @@ static function send_mail(){
 					$result = SendPress_Manager::send_email_from_queue( $email );
 					$email_count++;
 					if ($result) {
-						$wpdb->update( SendPress_Data::queue_table() , array('success'=>1,'inprocess'=>3 ) , array('id'=> $email->id ));
-						$senddata = array(
-							'sendat' => date('Y-m-d H:i:s'),
-							'reportID' => $email->emailID,
-							'subscriberID' => $email->subscriberID
-						);
+						if($result === true){
+							$wpdb->update( SendPress_Data::queue_table() , array('success'=>1,'inprocess'=>3 ) , array('id'=> $email->id ));
+							//( $sid, $rid, $lid=null, $uid=null, $ip=null, $device_type=null, $device=null, $type='confirm' )
+							SendPress_Data::add_subscriber_event($email->subscriberID, $email->emailID, $email->listID,null,null,null,null, 'send');
+						} else {
+							$wpdb->update( SendPress_Data::queue_table() , array('success'=>2,'inprocess'=>3 ) , array('id'=> $email->id ));
+							SendPress_Data::add_subscriber_event($email->subscriberID, $email->emailID, $email->listID,null,null,null,null, 'bounce');
+							SendPress_Data::bounce_subscriber_by_id( $email->subscriberID );
+						}
 
 						//$wpdb->insert( $this->subscriber_open_table(),  $senddata);
 						$count++;

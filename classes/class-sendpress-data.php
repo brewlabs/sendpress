@@ -19,6 +19,11 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function email_post_type(){
 		return 'sp_newsletters';
 	}
+	
+	static function template_post_type(){
+		return 'sptemplates';
+	}
+
 	static function report_post_type(){
 		return 'sp_report';
 	}
@@ -205,7 +210,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		
 		$table = self::queue_table();
-		$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where emailID = %d AND success = %d", $id, 1 );
+		$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where emailID = %d AND success >= %d", $id, 1 );
 			
 		return $wpdb->get_var( $query );
 	}
@@ -301,6 +306,75 @@ class SendPress_Data extends SendPress_DB_Tables {
 				"Windows-1251",
 				"Windows-1252");
 
+	}
+
+	static function build_social(){
+		$link = SendPress_Option::get('socailicons');
+		$socailsize = SendPress_Option::get('socailsize','large');
+		$px = '32px';
+		switch($socailsize){
+			case  'small':
+				$px = '16px';
+			break;
+			case 'text':
+				$px = 'text';
+				break;
+
+
+		}
+		$output ='';
+		foreach($link as $key => $url ){
+			$output .= '<a href="'. $url .'" ><img src="'.  SENDPRESS_URL .'img/'. $px .'/'. $key .'.png" alt="'. $key .'" /></a> ';
+				
+			}
+			return $output;
+	}
+
+	static function social_icons(){
+		return array(
+    		'500px' => 'e.g. http://500px.com/username',
+			'AddThis' => 'e.g. http://www.addthis.com',
+			'Behance' => 'e.g. http://www.behance.net/username',
+			'Blogger' => 'e.g. http://username.blogspot.com',
+			'Mail' => 'e.g. mailto:user@name.com',
+			'Delicious' => 'e.g. http://delicious.com/username',
+			'DeviantART' => 'e.g. http://username.deviantart.com/',
+			'Digg' => 'e.g. http://digg.com/username',
+			'Dopplr' => 'e.g. http://www.dopplr.com/traveller/username',
+			'Dribbble' => 'e.g. http://dribbble.com/username',
+			'Evernote' => 'e.g. http://www.evernote.com',
+			'Facebook' => 'e.g. http://www.facebook.com/username',
+			'Flickr' => 'e.g. http://www.flickr.com/photos/username',
+			'Forrst' => 'e.g. http://forrst.me/username',
+			'GitHub' => 'e.g. https://github.com/username',
+			'Google+' => 'e.g. http://plus.google.com/userID',
+			'Grooveshark' => 'e.g. http://grooveshark.com/username',
+			'Instagram' => 'e.g. http://instagr.am/p/picID',
+			'Lastfm' => 'e.g. http://www.last.fm/user/username',
+			'LinkedIn' => 'e.g. http://www.linkedin.com/in/username',
+			'MySpace' => 'e.g. http://www.myspace.com/userID',
+			'Path' => 'e.g. https://path.com/p/picID',
+			'PayPal' => 'e.g. mailto:email@address',
+			'Picasa' => 'e.g. https://picasaweb.google.com/userID',
+			'Pinterest' => 'e.g. http://pinterest.com/username',
+			'Posterous' => 'e.g. http://username.posterous.com',
+			'Reddit' => 'e.g. http://www.reddit.com/user/username',
+			'RSS' => 'e.g. http://example.com/feed',
+			'ShareThis' => 'e.g. http://sharethis.com',
+			'Skype' => 'e.g. skype:username',
+			'Soundcloud' => 'e.g. http://soundcloud.com/username',
+			'Spotify' => 'e.g. http://open.spotify.com/user/username',
+			'StumbleUpon' => 'e.g. http://www.stumbleupon.com/stumbler/username',
+			'Tumblr' => 'e.g. http://username.tumblr.com',
+			'Twitter' => 'e.g. http://twitter.com/username',
+			'Viddler' => 'e.g. http://www.viddler.com/explore/username',
+			'Vimeo' => 'e.g. http://vimeo.com/username',
+			'Virb' => 'e.g. http://username.virb.com',
+			'Windows' => 'e.g. http://www.apple.com',
+			'WordPress' => 'e.g. http://username.wordpress.com',
+			'YouTube' => 'e.g. http://www.youtube.com/user/username',
+			'Zerply' => 'e.g. http://zerply.com/username'
+    	);
 	}
 
 	static function get_encoding_types(){
@@ -982,6 +1056,22 @@ class SendPress_Data extends SendPress_DB_Tables {
 					//( $sid, $rid, $uid, $ip , $device_type, $device, $type='confirm' )
 					//( $sid, $rid, $lid=null, $uid=null, $ip=null, $device_type=null, $device=null, $type='confirm' )
 					SendPress_Data::add_subscriber_event( $id,$report_id,$list->listID,null ,null, null, null, 'bounce');
+				}
+			}
+
+		}
+
+	}
+
+
+	static function bounce_subscriber_by_id($sid = false){
+		if($sid !== false){
+			$lists = SendPress_Data::get_lists_for_subscriber($sid);
+			foreach ($lists as $list) {
+				if( $list->status == 2 ) {
+					SendPress_Data::update_subscriber_status($list->listID, $sid, 4 , false);
+					//( $sid, $rid, $uid, $ip , $device_type, $device, $type='confirm' )
+					//( $sid, $rid, $lid=null, $uid=null, $ip=null, $device_type=null, $device=null, $type='confirm' )
 				}
 			}
 

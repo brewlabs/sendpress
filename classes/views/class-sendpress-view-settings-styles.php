@@ -97,8 +97,7 @@ class SendPress_View_Settings_Styles extends SendPress_View_Settings {
         SendPress_Option::set('linkedin', $linkedin);
         SendPress_Option::set('facebook', $facebook);
         SendPress_Option::set('twitter', $twitter);
-        SendPress_Option::set('fromemail', $fromemail );
-        SendPress_Option::set('fromname', $fromname );
+       
        // SendPress_Option::set('unsubscribetext', $unsubtext);
 
         SendPress_Admin::redirect('Settings_Styles');
@@ -116,32 +115,17 @@ class SendPress_View_Settings_Styles extends SendPress_View_Settings {
 			$post = get_post( $_GET['emailID'] );
 			$post_ID = $post->ID;
 		}
-	
-$fe = __('From Email','sendpress'); 
-$fn = __('From Name','sendpress'); 
+
 		?>
 		<form method="post" id="post">
 	<br class="clear">
 <div style="float:right;" >
 	<a href="<?php echo SendPress_Admin::link('Settings_Styles'); ?>" class="btn btn-default btn-large" ><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e('Save','sendpress'); ?></a>
 </div>
-<br class="clear">
-<h3>Required Settings</h3>
-<div class="boxer form-box">
-<div style="float: right; width: 45%;">
-	<h4 class="nomargin"><?php _e('From Email','sendpress'); ?></h4>
-	<input name="fromemail" tabindex=2 type="text" id="fromemail" value="<?php echo SendPress_Option::get('fromemail'); ?>" class="regular-text sp-text">
 
-</div>	
-<div style="width: 45%; margin-right: 10%">
-	<h4 class="nomargin"><?php _e('From Name','sendpress'); ?></h4>
-	<input name="fromname" tabindex=1 type="text" id="fromname" value="<?php echo SendPress_Option::get('fromname'); ?>" class="regular-text sp-text">
-
-</div>
-</div>
 
 <br class="clear">
-<h3>Optional Settings</h3>
+
 		<?php 
         define('SENDPRESS_STYLER_PAGE',true);
         require_once( SENDPRESS_PATH. 'inc/forms/email-style.2.0.php' ); ?>

@@ -49,7 +49,8 @@ $list = explode(",",$lists );
 
 $subs = SendPress_Data::get_active_subscribers_count(  $list );
 
- update_post_meta($post->ID,'_send_last_count', $subs );       
+ update_post_meta($post->ID,'_send_last_count', $subs );  
+ update_post_meta($post->ID,'_sendpress_report','new' );      
 ?>
         <div id="taskbar" class="lists-dashboard rounded group"> 
 

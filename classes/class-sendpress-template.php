@@ -229,6 +229,7 @@ class SendPress_Template {
 				}
 				$social .= "<a href='$ld'  style='color: $body_link;'>LinkedIn</a>";
 			}
+			$social = SendPress_Data::build_social();
 			$HtmlCode = str_replace("*|SP:SOCIAL|*",$social ,$HtmlCode);
 
 			$dom = new DomDocument();

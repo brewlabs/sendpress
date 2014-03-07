@@ -94,14 +94,17 @@ class SendPress_Email_Templates_Table extends WP_List_Table {
 				 return date_i18n(get_option('date_format') , strtotime( $item->post_date ) );
 			
 			case 'actions':
-				$a = '<div class="inline-buttons">';
+				$a = '<div class="inline-buttons" style="text-align:right;">';
+				/*
 				$a .= '<a class="btn btn-default view-btn" title="'.  get_post_meta($item->ID, "_sendpress_subject", true) . '" href="'. get_permalink( $item->ID  ). '"><span class="glyphicon  glyphicon-eye-open"></span> View</a> ';
-				$a .= '<a class="btn btn-primary" href="?page='.$_REQUEST['page'].'&view=style&emailID='. $item->ID .'"><span class="glyphicon glyphicon-edit"></span> Edit</a> ';
+				*/
+				$a .= '<a class="btn btn-primary" href="?page='.$_REQUEST['page'].'&view=tempedit&templateID='. $item->ID .'"><span class="glyphicon glyphicon-edit"></span> Edit</a> ';
+				/*
 				$a = apply_filters('sendpress_email_table', $a, $item);
 				if( SendPress_Admin::access('Emails_Send') ) { 
 				$a .= '<a class="btn  btn-success " href="'. SendPress_Admin::link('Emails_Send').'&emailID='. $item->ID .'"><span class="glyphicon glyphicon-send"></span> Send</a>';
 				}
-
+				*/
 				$a .= '</div>';
 				return $a;
 			default:
@@ -180,9 +183,9 @@ class SendPress_Email_Templates_Table extends WP_List_Table {
 		$columns = array(
 			'cb' => '<input type="checkbox" />', //Render a checkbox instead of text
 			'title' => 'Template',
-			'subject' => __('Subject','sendpress'),
+			//'subject' => __('Subject','sendpress'),
 			'created' => __('Created','sendpress'),
-			'lastsend' => __('Last Send','sendpress'),
+			//'lastsend' => __('Last Send','sendpress'),
 			'actions' => ''
 			//'count_subscribers' => 'Subscribers'
 

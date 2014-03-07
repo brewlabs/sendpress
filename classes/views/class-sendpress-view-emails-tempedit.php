@@ -23,6 +23,16 @@ wp_enqueue_style( 'sendpress_codemirror_css' );
 */
 	}
 
+	function save(){
+
+		$template = get_post($_POST['post_ID']);
+		$template->post_content = $_POST['template-content'];
+		$template->post_title = $_POST['post_subject'];
+ 		wp_update_post( $template );
+
+		SendPress_Admin::redirect('Emails_Tempedit', array('templateID'=>$_GET['templateID'] ));
+	}
+
 	function screen_options(){
 
 		$screen = get_current_screen();
@@ -66,39 +76,133 @@ wp_enqueue_style( 'sendpress_codemirror_css' );
 <script src="<?php echo SENDPRESS_URL ?>codemirror/mode/htmlmixed/htmlmixed.js"></script>
 
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
-	<form id="email-filter" method="get">
-		<div id="taskbar" class="lists-dashboard rounded group"> 
+	<?php 
+		$template = get_post($_GET['templateID']);
+		
+	?>
+	<form id="template-editor" method="POST">
+	<input type="hidden" id="post_ID" name="post_ID" value="<?php echo $template->ID; ?>" />
 
-		<div id="button-area">  
-			<a class="btn btn-primary btn-large" href="?page=<?php echo $_REQUEST['page']; ?>&view=create"><?php _e('Create Email','sendpress'); ?></a>
-		</div>
-		<h2><?php _e('Templates','sendpress'); ?></h2>
-	</div>
-
-	<textarea id="asdf">
-
-</textarea>
+	
+	<h2>Edit Template</h2>
+	<br><br>
+	<div class="sp-row">
+	
+	<div class="sp-75 sp-first">
+	<div class="alert alert-danger fade hide">
+  <?php _e('<strong>Notice!</strong> You must have an {unsubscribe-link} in your template.','sendpress'); ?>
+</div>
+	<div><iframe id="iframe1" style="width: 100%;"></iframe></div>
+	<textarea id="template-content" name="template-content"><?php echo stripcslashes($template->post_content); ?></textarea>
 	<script>
-	var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("asdf"), {
-    lineNumbers: true,
-    styleActiveLine: true,
-    matchBrackets: true,
-    mode: "text/html",
-    extraKeys: {"Tab": "autocomplete"}
-  });
 
-	jQuery(document).ready(function(){
-		var x = jQuery('#wpbody').height();
-		console.log(x);
-		myCodeMirror.setSize('100%',(x - 90));
+		
+
+	jQuery(document).ready(function($){
+		var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("template-content"), {
+		    lineNumbers: true,
+		    styleActiveLine: true,
+		    matchBrackets: true,
+		    mode: "text/html",
+		    extraKeys: {"Tab": "autocomplete"}
+		  }); 
+		$('#template-editor').submit(function(e){
+			myCodeMirror.save();
+			var txt = $('#template-content').val();
+			var unsub = txt.indexOf('{unsubscribe-link}') != -1;
+			if(unsub == false){
+					e.preventDefault();
+				$('.alert').removeClass('hide').addClass('in');  
+   			}
+			
+		});
+		$('#iframe1').hide();
+		$("#code-edit").click(function(e){
+			reset_buttons();
+			$(this).addClass('active');
+			e.preventDefault();
+			$('.CodeMirror').show();
+			$('#iframe1').hide();
+		});
+
+
+		$("#code-preview").click(function(e){
+			e.preventDefault();
+			reset_buttons();
+			$(this).addClass('active');
+			$('.CodeMirror').hide();
+			$('#iframe1').show();
+			myCodeMirror.save();
+			$('#iframe1').contents().find('html').html( $('#template-content').val() );
+		});
+
+		$("#code-preview-live").click(function(e){
+			reset_buttons();
+			e.preventDefault();
+			$(this).addClass('active');
+			$('.CodeMirror').hide();
+			$('#iframe1').show();
+			myCodeMirror.save();
+			$('#iframe1').contents().find('html').html( $('#template-content').val() );
+		});
+
+		function reset_buttons(){
+			$("#code-edit-buttons button").removeClass('active');
+		}
+
+		
+		var x = $( window ).height(); //jQuery('#wpbody').height();
+		
+		$('.btn-group .btn').tooltip({container: 'body'});
+		$('#iframe1').height((x - 350));
+		myCodeMirror.setSize('100%',(x - 350));
 	});
 	</script>
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	    <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
 	    <!-- Now we can render the completed list table -->
 	    <?php //$testListTable->display(); ?>
-	    <?php //wp_nonce_field($this->_nonce_value); ?>
-	</form>
+	    <?php wp_nonce_field($this->_nonce_value); ?>
+	
+	</div>
+	<div class="sp-25 ">
+		<div class="btn-group btn-group-justified " style="float:right;"  >
+      
+            </div>
+            
+		<div  class="btn-toolbar">
+
+			<div class="btn-group btn-group-justified" id="code-edit-buttons" >
+				<div class="btn-group">
+				<button id="code-edit" class="btn btn-lg btn-default active" data-toggle="tooltip" data-placement="top" title="Code Editor"><span class="glyphicon glyphicon-pencil"></span></button>
+				</div>
+<div class="btn-group">
+				<button id="code-preview" class="btn btn-lg btn-default" data-toggle="tooltip" data-placement="top" title="Preview"><span class="glyphicon glyphicon-eye-close"></span></button>
+				<!--<button id="code-preview-live" class="btn btn-lg btn-default" data-toggle="tooltip" data-placement="top" title="Preview with Example Data"><span class="glyphicon glyphicon-eye-open"></span></button>-->
+				</div>
+				    <a href="<?php echo SendPress_Admin::link('Emails_Templates'); ?>" id="cancel-update" class="btn btn-lg btn-default" data-toggle="tooltip" data-placement="top" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a>
+            <div class="btn-group">
+            	<button class="btn btn-default btn-lg " type="submit" value="save" name="submit"  data-toggle="tooltip" data-placement="top" title="Save"><span class="glyphicon glyphicon-floppy-disk"></span></button></div>
+			</div>
+			   
+        </div>
+	<br><br>
+	<?php $this->panel_start('<span class="glyphicon glyphicon-list-alt"></span> '. __('Template Name','sendpress')); ?>
+
+	<input type="text" name="post_subject" id="post_subject" size="30" tabindex="1" class="form-control" value="<?php echo esc_attr( htmlspecialchars( $template->post_title )); ?>"  autocomplete="off" />
+		<?php $this->panel_end(); ?>
+
+		<?php $this->panel_start('<span class="glyphicon glyphicon-tags"></span> '. __('Template Tags','sendpress')); ?>
+			<p><code>{browser-link}</code> Link to browser version</p>
+			<p><code>{header-content}</code> Content from editor</p>
+			<p><code>{main-content}</code> Content from editor</p>
+			<p><code>{canspam}</code> CANSPAM from settings</p>
+			<p><code>{unsubscribe-link}</code> Link to Unsubscribe</p>
+			<p><code>{manage-link}</code> Link to Manage Subscription</p>
+
+
+		<?php $this->panel_end(); ?>
+	</div>
+</div></form>
 	<?php
 	}
 

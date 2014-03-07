@@ -199,7 +199,12 @@ Author URI: http://sendpress.com/
 			$this->maybe_upgrade();
 
 			//add_action('register_form',array( $this , 'add_registration_fields'));
-
+			sendpress_register_template(
+				array('path'=> SENDPRESS_PATH.'templates/original.html', 'name'=> 'SendPress Original')
+				);
+			sendpress_register_template(
+				array('path'=> SENDPRESS_PATH.'templates/2columns-to-rows.html', 'name'=> '2 Column Top - Wide Bottom - Responsive')
+				);
 			SendPress_Ajax_Loader::init();
 			SendPress_Signup_Shortcode::init();
 			SendPress_Shortcode_Manage::init();
