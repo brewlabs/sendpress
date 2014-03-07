@@ -6,7 +6,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
     die;
 }
 
-class SendPress_Base extends wpdb {
+class SendPress_Base {
 
 	 /**
      * Encrypt text data
