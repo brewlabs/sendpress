@@ -69,10 +69,6 @@ class SendPress_Posts{
 	}
 
 
-   
-
-
-
 	static function copy_meta_info($new_id, $old_id) {
 		$post_meta_keys = get_post_custom_keys($old_id);
 		if (empty($post_meta_keys)) return;
@@ -90,15 +86,16 @@ class SendPress_Posts{
 	// Added 'exclude_from_search'=>true
 	static function email_post_type($name){
 
+		$sp_debug_post_type = false;
+
 		register_post_type( $name , array(	
-				'show_in_menu' => false,
-				'public' => false,
+				'show_in_menu' => $sp_debug_post_type,
+				'public' => $sp_debug_post_type,
 				'publicly_queryable' =>true,
-				'show_ui' => false,
+				'show_ui' => $sp_debug_post_type,
 				'query_var' => true,
 				'exclude_from_search'=>true,
 				'_edit_link' => 'sendpress.php',
-				'show_ui' => false,
 				'capability_type' => 'post',
 				'hierarchical' => false,
 				'rewrite' => array('slug' => 'emails','with_front'=>false),
@@ -124,11 +121,13 @@ class SendPress_Posts{
 
 	// Added 'exclude_from_search'=>true
 	static function report_post_type($name){
+		$sp_debug_post_type = false;
+
 		register_post_type( $name , array(	
-			'show_in_menu' => false,
-			'public' => false,
+			'show_in_menu' => $sp_debug_post_type,
+			'public' => $sp_debug_post_type,
 			'publicly_queryable' =>true,
-			'show_ui' => false,
+			'show_ui' => $sp_debug_post_type,
 			'query_var' => true,
 			'exclude_from_search'=>true,
 			'capability_type' => 'post',
