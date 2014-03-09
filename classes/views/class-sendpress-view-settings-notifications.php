@@ -53,9 +53,11 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 	function html($sp) {?>
 		<div class="notifications">
 			<form method="post" id="post">
+				<!--
 				<div style="float:right;" >
 					<a href="<?php echo SendPress_Admin::link('Settings_Notifications'); ?>" class="btn btn-large btn-default" ><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e('Save','sendpress'); ?></a>
 				</div>
+				-->
 				<br class="clear">
 					<br class="clear">
 				<?php do_action('sendpress_notification_settings_top'); ?>

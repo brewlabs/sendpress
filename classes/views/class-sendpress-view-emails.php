@@ -28,7 +28,7 @@ class SendPress_View_Emails extends SendPress_View{
 	}
 
  	function sub_menu($sp = false){
- 		if(SendPress_Option::get('prerelease_templates') == 'yes'){
+ 		
 		?>
 		<div class="navbar navbar-default" >
 			<div class="navbar-header">
@@ -46,6 +46,7 @@ class SendPress_View_Emails extends SendPress_View{
 					<li <?php if(!isset($_GET['view']) ){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails'); ?>"><?php _e('Newsletters','sendpress'); ?></a>
 				  	</li>
+				  	<?php if(SendPress_Option::get('prerelease_templates') == 'yes') { ?>
 				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'all'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails_Auto'); ?>"><?php _e('Autoresponders','sendpress'); ?></a>
 				  	</li>
@@ -55,14 +56,18 @@ class SendPress_View_Emails extends SendPress_View{
 				  	<li <?php if(isset($_GET['view']) && ( $_GET['view'] === 'temp' || $_GET['view'] === 'tempstyle' )){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails_Temp'); ?>"><span class="sp-label">SP</span>   <?php _e('Templates','sendpress'); ?></a>
 				  	</li>
+				  	<?php } ?>
+				  	<li <?php if(isset($_GET['view']) &&  $_GET['view'] === 'social'){ ?>class="active"<?php } ?> >
+				    	<a href="<?php echo SendPress_Admin::link('Emails_Social'); ?>"><?php _e('Social Icons','sendpress'); ?></a>
+				  	</li>
 				</ul>
 			</div>
 		</div>
 		
 		<?php
 
-		do_action('sendpress-queue-sub-menu');
-		}
+		
+		
 	}	
 
 
@@ -88,7 +93,7 @@ class SendPress_View_Emails extends SendPress_View{
 		<div id="button-area">  
 			<a class="btn btn-primary btn-large" href="?page=<?php echo $_REQUEST['page']; ?>&view=create"><?php _e('Create Email','sendpress'); ?></a>
 		</div>
-		<h2><?php _e('Emails','sendpress'); ?></h2>
+		
 	</div>
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	    <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />

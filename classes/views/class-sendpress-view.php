@@ -44,6 +44,11 @@ class SendPress_View {
 		<?php
 	}
 
+	function view_buttons(){
+		?>
+		<button class="btn btn-default" id="save-menu-cancel">Cancel</button><button class="btn btn-primary" id="save-menu-post">Save</button>
+		<?php
+	}
 
 
 	function panel_start($title = false){ ?>
@@ -57,6 +62,7 @@ class SendPress_View {
 		<?php
 	}
 
+	
 	function panel_end($footer = false){ ?>
 		</div>
 		<?php if($footer !== false) { ?>

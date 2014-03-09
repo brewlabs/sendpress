@@ -49,6 +49,8 @@ class SendPress_View_Reports extends SendPress_View{
 				  	</li>
 				  	
 				</ul>
+
+				
 			</div>
 		</div>
 		
@@ -65,9 +67,7 @@ class SendPress_View_Reports extends SendPress_View{
 		//Fetch, prepare, sort, and filter our data...
 		$sp_reports_table->prepare_items();
 		?>
-		<div id="taskbar" class="lists-dashboard rounded group"> 
-			<h2><?php _e('Newsletter Reports','sendpress'); ?></h2>
-		</div>
+		<br>
 		<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 		<form id="email-filter" method="get">
 			<!-- For plugins, we also need to ensure that the form posts back to our current page -->

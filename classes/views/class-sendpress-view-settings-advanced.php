@@ -65,9 +65,11 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 
 	function html($sp) {
 		?><form method="post" id="post">
+		<!--
 <div style="float:right;" >
 	<a href="<?php echo SendPress_Admin::link('Settings_Advanced'); ?>" class="btn btn-large btn-default" ><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e('Save','sendpress'); ?></a>
 </div>
+-->
 <br class="clear">
 		<br class="clear">
 <div class="sp-row">

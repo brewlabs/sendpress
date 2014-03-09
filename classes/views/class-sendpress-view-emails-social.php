@@ -6,7 +6,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 	die;
 }
 
-class SendPress_View_Settings_Shared extends SendPress_View_Settings {
+class SendPress_View_Emails_Social extends SendPress_View_Emails {
 	
 	function save($post, $sp){
 		$icon_list = SendPress_Data::social_icons();
@@ -30,13 +30,14 @@ class SendPress_View_Settings_Shared extends SendPress_View_Settings {
 		$socialsize = SendPress_Option::get('socialsize','large');
 ?>
 <form method="post" id="post" role="form">
-<!--
+<div  >
 	<div id="button-area">  
 		<input type="submit" value="<?php _e('Save','sendpress'); ?>" class="btn btn-large btn-primary"/>
 	</div>
-	-->
+
+</div>
 <br><br><br>
-<?php $this->panel_start( '<span class="glyphicon glyphicon-share"></span> '. __('Social Icons','sendpress') ); ?>
+<?php $this->panel_start(  ); ?>
 
 <div class="sp-row">
 <div class="sp-50 sp-first">
@@ -143,3 +144,6 @@ foreach ($secondhalf as $key => $value) {
 	}
 
 }
+
+
+SendPress_Admin::add_cap('Emails_Social','sendpress_email');

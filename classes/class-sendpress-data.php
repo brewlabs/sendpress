@@ -308,11 +308,11 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 
-	static function build_social(){
-		$link = SendPress_Option::get('socailicons');
-		$socailsize = SendPress_Option::get('socailsize','large');
+	static function build_social($color = ''){
+		$link = SendPress_Option::get('socialicons');
+		$socialsize = SendPress_Option::get('socialsize','large');
 		$px = '32px';
-		switch($socailsize){
+		switch($socialsize){
 			case  'small':
 				$px = '16px';
 			break;
@@ -323,9 +323,22 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		}
 		$output ='';
+		$c = 1;
+		if($color !== ''){
+			$color = 'style="color: '.$color.';"';
+		} 
+
 		foreach($link as $key => $url ){
-			$output .= '<a href="'. $url .'" ><img src="'.  SENDPRESS_URL .'img/'. $px .'/'. $key .'.png" alt="'. $key .'" /></a> ';
-				
+				if($px !== 'text'){
+					$output .= '<a href="'. $url .'" ><img src="'.  SENDPRESS_URL .'img/'. $px .'/'. $key .'.png" alt="'. $key .'" /></a> ';
+				} else {
+					if($c > 1){
+						$output .= ' | ';
+					}
+
+					$output .= '<a href="'. $url .'" '.$color.'>'. $key .'</a>';
+				}
+				$c++;
 			}
 			return $output;
 	}

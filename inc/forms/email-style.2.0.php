@@ -345,10 +345,13 @@ if(strlen($active_header['value']) > 0){
 								}
 								$social .= "<a href='$ld'  style='color: $bg;'>LinkedIn</a>";
 							}
-							echo $social;
+							//echo $social;
+							echo SendPress_Data::build_social();
 						} else {
+						
+echo SendPress_Data::build_social();
 						?>
-						<a href="#" >Twitter</a> | <a href="#" >Facebook</a> | <a href="#" >LinkedIn</a></div>
+						
 						<?php } ?>
 					 <div id="can-spam-template">
 					 	<?php
@@ -371,7 +374,7 @@ $manage = __("Manage Subscription","sendpress");
                                <?php } ?>
 				</div>
 		  </div>
-
+</div>
 		</div>
 		<?php if( method_exists($this,'text_settings')){
 			$this->text_settings();
@@ -563,6 +566,7 @@ $manage = __("Manage Subscription","sendpress");
 </div>
 </div>
 </div>
+
 
 
 

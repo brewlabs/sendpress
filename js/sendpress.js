@@ -34,7 +34,15 @@
             //Make sure header editors are hidden to start
             this.imagebox = $('#imageaddbox');
             this.textbox = $('#textaddbox');
+            $('#save-menu-post').click(function(e){
+                e.preventDefault();
+                $('#post').submit();
+            });
 
+            $('#save-menu-cancel').click(function(e){
+                e.preventDefault();
+                location.reload();
+            });
 
             $('#delete-this-user').click(function(){
         $('#subscriber-save').val( $(this).is(':checked') ? 'This will delete this Subscriber!' : 'Save' );
