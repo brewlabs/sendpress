@@ -77,6 +77,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
         
         SendPress_Option::set($options);
         SendPress_Manager::send_test();
+         SendPress_Admin::redirect('Settings_Account');
        // $this->send_test();
        // $this->redirect();
   }
@@ -101,6 +102,8 @@ $fn = __('From Name','sendpress');
 <form method="post" id="post">
 <br class="clear">
 <br class="clear">
+<div class="sp-row">
+  <div class="sp-50 sp-first">
 <?php $this->panel_start( '<span class="glyphicon glyphicon-user"></span> '. __('Sending Email','sendpress') ); ?>
 <div class="form-group">
 <label for="fromname"><?php _e('From Name','sendpress'); ?></label>
@@ -112,6 +115,27 @@ $fn = __('From Name','sendpress');
 </div>
 
    <?php $this->panel_end(); ?>
+   </div >
+   <div class="sp-50">
+<?php $this->panel_start( '<span class="glyphicon glyphicon-inbox"></span> '. __('Test Email','sendpress') ); ?>
+
+<div class="form-group">
+<input name="testemail" type="text" id="test-email-main" value="<?php echo SendPress_Option::get( 'testemail' ); ?>" class="form-control"/>
+</div>
+<div class="sp-row">
+<div class="sp-50 sp-first">
+<button class="btn btn-primary btn-block" id="send-test-email-btn" type="submit"><?php _e( 'Send Test!', 'sendpress' ); ?></button>
+</div>
+ <div class="sp-50">
+<button class="btn btn-danger btn-block" data-toggle="modal" data-target="#debugModal" type="button"><?php _e( 'Debug Info', 'sendpress' ); ?></button>
+</div>
+</div>
+
+
+<?php $this->panel_end(); ?>
+   </div>
+</div>
+
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Sending Account Setup</h3>
@@ -278,25 +302,14 @@ wp_nonce_field( $sp->_nonce_value );
 ?>
 <input type="submit" class="btn btn-primary" value="Save"/> <a href="" class="btn btn-default"><i class="icon-remove"></i> Cancel</a>
 </form>
-<form method="post" id="post" class="form-inline">
+<form method="post" id="post-test" class="form-inline">
 <input type="hidden" name="action" value="send-test-email" />
-<br class="clear">
-<div class="alert alert-success">
-  <?php _e( '<b>NOTE: </b>Remember to check your Spam folder if you do not seem to be receiving emails', 'sendpress' ); ?>.
-</div>
+<input name="testemail" type="hidden" id="test-email-form" value="<?php echo SendPress_Option::get( 'testemail' ); ?>" class="form-control"/>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title"><?php _e( 'Send Test Email', 'sendpress' ); ?></h3>
-  </div>
-  <div class="panel-body">
-<div class="form-group">
-<input name="testemail" type="text" id="appendedInputButton" value="<?php echo SendPress_Option::get( 'testemail' ); ?>" class="form-control"/>
-</div>
-<button class="btn btn-primary" type="submit"><?php _e( 'Send Test!', 'sendpress' ); ?></button><button class="btn btn-danger" data-toggle="modal" data-target="#debugModal" type="button"><?php _e( 'Debug Info', 'sendpress' ); ?></button>
 <br class="clear">
 
-</div></div>
+
+
 
 <?php 
 //Page Nonce

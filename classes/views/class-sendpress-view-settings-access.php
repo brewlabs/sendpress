@@ -123,7 +123,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 -->
 		<br class="clear">
 		<br class="clear">
-		<table class=" table table-bordered table-striped">
+		<table class="table table-bordered table-striped">
 			<tr>
 				<th><?php _e('Role','sendpress'); ?></th>
 				<th><?php _e('Emails','sendpress'); ?></th>
@@ -132,7 +132,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 				<th><?php _e('Settings','sendpress'); ?></th>
 				<th><?php _e('Queue','sendpress'); ?></th>
 				<th><?php _e('Add-ons','sendpress'); ?></th>
-			<tr>
+			</tr>
 
 
 		<?php

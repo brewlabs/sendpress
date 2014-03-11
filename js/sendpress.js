@@ -56,6 +56,14 @@
 
         });
 
+
+            $('#send-test-email-btn').click(function(e){
+                e.preventDefault();
+                $('#test-email-form').val($('#test-email-main').val());
+                $('#post-test').submit();
+            });
+
+
             $('.test-list-add').click(function(){
                 $('#test_report').prop('checked', true);
 

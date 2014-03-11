@@ -74,6 +74,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 		<br class="clear">
 <div class="sp-row">
 	<div class="sp-50 sp-first">
+	<!--
 	<?php $this->panel_start('<span class="glyphicon glyphicon-list-alt"></span> '. __('Pre-Release Template Activation','sendpress')); ?>
 		<p>We are rolling out a completely new Template system for SendPress. If you would like to start using it before it is offically released, you can opt in below.</p>
 		<?php $ctype = SendPress_Option::get('prerelease_templates'); ?>
@@ -81,6 +82,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 	
 
 	<?php $this->panel_end(); ?>
+	-->
 	<div class="panel panel-default">
 	  <div class="panel-heading">
 	    <h3 class="panel-title">Javascript & CSS</h3>
