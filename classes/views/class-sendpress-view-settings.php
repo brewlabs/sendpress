@@ -35,7 +35,7 @@ class SendPress_View_Settings extends SendPress_View {
 			<!--
 		  <li <?php if($sp->_current_view == ''){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings'); ?>"><i class="icon-envelope"></i> <?php _e('Basic Setup','sendpress'); ?></a></li>
 		 -->
-		  <li <?php if($sp->_current_view == 'styles'){ ?>class="active"<?php } ?> >
+		  <li <?php if($sp->_current_view == 'styles'){ ?>class="active wp-ui-primary"<?php } ?> >
 		    <a href="<?php echo SendPress_Admin::link('Settings_Styles'); ?>"><i class="icon-pencil "></i> <?php _e('Styles','sendpress'); ?></a>
 		  </li>
 		  <!--
@@ -43,7 +43,7 @@ class SendPress_View_Settings extends SendPress_View {
 		    <a href="<?php echo SendPress_Admin::link('Settings_Shared'); ?>"><i class="icon-pencil "></i> <?php _e('Shared Content','sendpress'); ?></a>
 		  </li>
 		  -->
-		<li <?php if($sp->_current_view == 'activation'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings_Activation'); ?>"><i class=" icon-bullhorn"></i> <?php _e('Confirmation','sendpress'); ?></a></li>
+		<li <?php if($sp->_current_view == 'activation'){ ?>class="active"<?php } ?> ><a <?php if($sp->_current_view == 'activation'){ ?>class="wp-ui-primary"<?php } ?>  href="<?php echo SendPress_Admin::link('Settings_Activation'); ?>"><i class=" icon-bullhorn"></i> <?php _e('Confirmation','sendpress'); ?></a></li>
 		<li <?php if($sp->_current_view == 'account'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>"><i class="icon-envelope "></i> <?php _e('Sending','sendpress'); ?></a></li>
 		<li <?php if($sp->_current_view == 'access'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings_Access'); ?>"><i class="icon-user "></i> <?php _e('Permissions','sendpress'); ?></a></li>
 		<li <?php if($sp->_current_view == 'notifications'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings_Notifications'); ?>"><i class="icon-bell"></i> <?php _e('Notifications','sendpress'); ?></a></li>	

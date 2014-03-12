@@ -43,7 +43,7 @@ class SendPress_View_Emails extends SendPress_View{
 	</div>
 		 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav">
-					<li <?php if(!isset($_GET['view']) ){ ?>class="active"<?php } ?> >
+					<li <?php if(!isset($_GET['view']) || isset($_GET['view']) && $_GET['view'] === 'style' || isset($_GET['view']) && $_GET['view'] === 'create' || isset($_GET['view']) && $_GET['view'] === 'send' || isset($_GET['view']) && $_GET['view'] === 'send-confirm'  || isset($_GET['view']) && $_GET['view'] === 'send-queue'  ){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails'); ?>"><?php _e('Newsletters','sendpress'); ?></a>
 				  	</li>
 				  	<?php if(SendPress_Option::get('prerelease_templates') == 'yes') { ?>

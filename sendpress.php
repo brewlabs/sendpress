@@ -756,10 +756,10 @@ Author URI: http://sendpress.com/
 			wp_enqueue_script('sendpress_jquery_ibutton_js');
 			*/
 
-			wp_register_style( 'sendpress_css_base', SENDPRESS_URL . 'css/style.css', false, SENDPRESS_VERSION );
+			wp_register_style( 'sendpress_css_base', SENDPRESS_URL . 'css/style.css', array('sendpress_bootstrap_css'), SENDPRESS_VERSION );
     		wp_enqueue_style( 'sendpress_css_base' );
-wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', false, SENDPRESS_VERSION );
-    	wp_enqueue_style( 'sendpress_css_admin' );
+			wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array('sendpress_bootstrap_css'), SENDPRESS_VERSION );
+    		wp_enqueue_style( 'sendpress_css_admin' );
 	    	do_action('sendpress_admin_scripts');
 	    	$view_class = $this->get_view_class($this->_page, $this->_current_view);
 			$view_class = NEW $view_class;

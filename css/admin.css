@@ -184,6 +184,75 @@ width: 25%;
   margin-right:15px;
 }
 
+
+
+.admin-color-midnight .navbar-default .navbar-nav > .active > a, .admin-color-midnight .navbar-default .navbar-nav > .active > a:hover, .admin-color-midnight .navbar-default .navbar-nav > .active > a:focus{
+  background-color: #e14d43;
+  color: #fff;
+}
+
+.admin-color-fresh .navbar-default .navbar-nav > .active > a, .admin-color-fresh .navbar-default .navbar-nav > .active > a:hover, .admin-color-fresh .navbar-default .navbar-nav > .active > a:focus{
+  background-color: #0074a2;
+  color: #fff;
+}
+
+.admin-color-blue .navbar-default .navbar-nav > .active > a, .admin-color-blue .navbar-default .navbar-nav > .active > a:hover, .admin-color-blue .navbar-default .navbar-nav > .active > a:focus{
+  background-color: #096484;
+  color: #fff;
+}
+
+.admin-color-coffee .navbar-default .navbar-nav > .active > a, .admin-color-coffee .navbar-default .navbar-nav > .active > a:hover, .admin-color-coffee .navbar-default .navbar-nav > .active > a:focus{
+  background-color: #c7a589;
+  color: #fff;
+}
+.admin-color-ectoplasm .navbar-default .navbar-nav > .active > a, .admin-color-ectoplasm .navbar-default .navbar-nav > .active > a:hover, .admin-color-ectoplasm .navbar-default .navbar-nav > .active > a:focus{
+  background-color: #a3b745;
+  color: #fff;
+}
+.admin-color-ocean .navbar-default .navbar-nav > .active > a, .admin-color-ocean .navbar-default .navbar-nav > .active > a:hover, .admin-color-ocean .navbar-default .navbar-nav > .active > a:focus{
+  background-color: #9ebaa0;
+  color: #fff;
+}
+.admin-color-sunrise .navbar-default .navbar-nav > .active > a, .admin-color-sunrise .navbar-default .navbar-nav > .active > a:hover, .admin-color-sunrise .navbar-default .navbar-nav > .active > a:focus{
+  background-color: #dd823b;
+  color: #fff;
+}
+.admin-color-light .navbar-default .navbar-nav > .active > a, .admin-color-light .navbar-default .navbar-nav > .active > a:hover, .admin-color-light .navbar-default .navbar-nav > .active > a:focus{
+  background-color: #04a4cc;
+  color: #fff;
+}
+h1, h2, h3, h4, h5, h6 {
+   font-family: "Open Sans", sans-serif !important;
+} 
+
+h2 .nav-tab{
+   font-weight: normal !important;
+   font-family: "Open Sans", sans-serif;
+   }
+/*
+.admin-color-coffee .nav-tab-active{
+  background-color: #c7a589;
+  color: #fff;
+}
+
+.admin-color-light h2.nav-tab-wrapper,.admin-color-light h3.nav-tab-wrapper{
+  border-bottom-color: #04a4cc;
+}
+
+.admin-color-coffee h2.nav-tab-wrapper,.admin-color-coffee h3.nav-tab-wrapper{
+  border-bottom-color: #c7a589;
+}
+
+.admin-color-coffee .nav-tab {
+color: #cdcbc9;
+border-color: #46403c;
+background: #59524c;
+}
+.admin-color-coffee .about-wrap h2 .nav-tab-active, .admin-color-coffee .nav-tab-active, .nav-tab-active:hover{
+border-bottom-color: #f7f7f7;
+}
+*/
+
 @media (max-width: 767px) {
   .w-25{
     width: 48.4%;
