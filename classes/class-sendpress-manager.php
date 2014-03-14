@@ -329,7 +329,8 @@ class SendPress_Manager {
    		if( array_key_exists( $method , $senders) && is_a( $senders[$method] , 'SendPress_Sender') ){
    			return $senders[$method]->send_email( $to, $subject, $body, $text, $test, $sid , $list_id, $report_id );
    		}
-	   	return  SendPress_Manager::old_send_email($to, $subject, $body, $text, $test ,$sid , $list_id, $report_id );
+   		$website = new SendPress_Sender_Website();
+   		return  $website->send_email( $to, $subject, $body, $text, $test, $sid , $list_id, $report_id );
 
 	}
 

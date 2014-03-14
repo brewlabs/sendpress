@@ -616,7 +616,7 @@ Author URI: http://sendpress.com/
 		//dadd_action('admin_notices', array($this,'sendpress_ignore_087'));
 
 		if( SendPress_Option::get('sendmethod') == false ){
-			SendPress_Option::set('sendmethod','website');
+			SendPress_Option::set('sendmethod','SendPress_Sender_Website');
 		}
 
 		if( SendPress_Option::get('send_optin_email') == false ){
@@ -643,7 +643,7 @@ Author URI: http://sendpress.com/
 		//Removed in 0.9.2
 		//$this->create_initial_list();
 		
-
+		/*
 		if( SendPress_Option::get('emails-today') == false ){
 			$emails_today = array( date("z") => '0' );
 			SendPress_Option::set('emails-today', $emails_today);
@@ -653,8 +653,8 @@ Author URI: http://sendpress.com/
 		$emails_today[date("z") + 1 ] = '0';
 
 		SendPress_Option::set('emails-today', $emails_today);
-
-
+		*/
+		SendPress_Option::set('emails-today', '');
 		//SendPress_Option::set('allow_tracking', '');
 		//wp_clear_scheduled_hook( 'sendpress_cron_action' );
 		// Schedule an action if it's not already scheduled

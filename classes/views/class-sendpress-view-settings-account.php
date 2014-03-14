@@ -45,7 +45,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
         SendPress_Option::set('fromemail', $fromemail );
         SendPress_Option::set('fromname', $fromname );
         
-        $options['sendmethod'] = $_POST['sendpress-sender'];
+        $options['sendmethod'] = '';//$_POST['sendpress-sender'];
         // Provides: Hll Wrld f PHP
         $chars = array(".", ",", " ", ":", ";", "$", "%", "*", "-", "=");
         $options['emails-per-day'] =  str_replace($chars,"",$_POST['emails-per-day']);
@@ -88,7 +88,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
     $senders = $sendpress_sender_factory->get_all_senders();
     ksort($senders);
     $method = SendPress_Option::get( 'sendmethod' );
-
+    print_r($method);
 $fe = __('From Email','sendpress'); 
 $fn = __('From Name','sendpress'); 
 ?>
