@@ -1137,8 +1137,8 @@ line-height: 30px;
 
 .btn-pro {
   color: #ffffff;
-  background-color: #343838;
-  border-color: #2e3232;
+  background-color: #1fbfff;
+  border-color: #12b3ff;
 }
 
 .btn-pro:hover,
@@ -1147,8 +1147,8 @@ line-height: 30px;
 .btn-pro.active,
 .open .dropdown-toggle.btn-pro {
   color: #ffffff;
-  background-color: #494e4e;
-  border-color: #2e3232;
+  background-color: #12b3ff;
+  border-color: #12b3ff;
 }
 
 .btn-pro:active,

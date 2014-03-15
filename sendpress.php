@@ -111,10 +111,11 @@ Author URI: http://sendpress.com/
 		
 		
 		function __construct() {
+			add_action( 'wp_loaded' , array( $this , 'wp' ) );
 			add_action( 'init', array( $this , 'init' ) );
 			add_action( 'widgets_init', array( $this , 'load_widgets' ) );
 			add_action( 'plugins_loaded', array( $this , 'load_plugin_language' ) );
-			add_action( 'wp' , array( $this , 'wp' ) );
+			
 			do_action( 'sendpress_loaded' );
 		}
 	

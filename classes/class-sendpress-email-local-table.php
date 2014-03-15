@@ -236,7 +236,7 @@ class SendPress_Email_Local_Table extends WP_List_Table {
 	 **************************************************************************/
 	function get_bulk_actions() {
 		
-		return '';
+		return array();
 	}
 	
 	
