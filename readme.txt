@@ -102,6 +102,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
+= 0.9.9 - 2014.3.16 =
+* Fix: Error sending when no social icons set
+* Fix: Error message on CSV Import
+* Fix: Template no saving correctly
+
 = 0.9.9 - 2014.3.14 =
 * Fix: Default Sender no longer set to old
 * Update: Settings tabs renamed
@@ -430,6 +435,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.9.1 =
+Bug fix for sending and csv import
 
 = 0.9.9 =
 New Socail Icons and bug fixes
