@@ -327,7 +327,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if($color !== ''){
 			$color = 'style="color: '.$color.';"';
 		} 
-
+		if( is_array( $link ) && !empty($link) ) {
 		foreach($link as $key => $url ){
 				if($px !== 'text'){
 					$output .= '<a href="'. $url .'" ><img src="'.  SENDPRESS_URL .'img/'. $px .'/'. $key .'.png" alt="'. $key .'" /></a> ';
@@ -340,6 +340,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 				}
 				$c++;
 			}
+		}
 			return $output;
 	}
 

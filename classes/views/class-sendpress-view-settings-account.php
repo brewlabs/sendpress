@@ -88,7 +88,6 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
     $senders = $sendpress_sender_factory->get_all_senders();
     ksort($senders);
     $method = SendPress_Option::get( 'sendmethod' );
-    print_r($method);
 $fe = __('From Email','sendpress'); 
 $fn = __('From Name','sendpress'); 
 ?>
