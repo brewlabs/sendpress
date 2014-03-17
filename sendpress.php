@@ -111,7 +111,7 @@ Author URI: http://sendpress.com/
 		
 		
 		function __construct() {
-			add_action( 'wp_loaded' , array( $this , 'wp' ) );
+			add_action( 'plugins_loaded' , array( $this , 'wp' ) );
 			add_action( 'init', array( $this , 'init' ) );
 			add_action( 'widgets_init', array( $this , 'load_widgets' ) );
 			add_action( 'plugins_loaded', array( $this , 'load_plugin_language' ) );
@@ -197,14 +197,14 @@ Author URI: http://sendpress.com/
 		}
 
 		function wp(){
-			/*
+			
 			sendpress_register_template(
 				array('path'=> SENDPRESS_PATH.'templates/original.html', 'name'=> 'SendPress Original')
 				);
 			sendpress_register_template(
 				array('path'=> SENDPRESS_PATH.'templates/2columns-to-rows.html', 'name'=> '2 Column Top - Wide Bottom - Responsive')
 				);
-				*/
+			
 		}
 	
 		function init() {
