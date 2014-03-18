@@ -1,7 +1,7 @@
 <?php 
 /*
 Plugin Name: SendPress Newsletters
-Version: 0.9.9
+Version: 0.9.9.1
 Plugin URI: http://sendpress.com
 Description: Easy to manage Newsletters for WordPress. 
 Author: SendPress
@@ -16,7 +16,7 @@ Author URI: http://sendpress.com/
 	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 	define( 'SENDPRESS_API_VERSION', 1 );
 	define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-	define( 'SENDPRESS_VERSION', '0.9.9' );
+	define( 'SENDPRESS_VERSION', '0.9.9.1' );
 	define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -111,10 +111,11 @@ Author URI: http://sendpress.com/
 		
 		
 		function __construct() {
+			add_action( 'admin_init' , array( $this , 'wp' ) );
 			add_action( 'init', array( $this , 'init' ) );
 			add_action( 'widgets_init', array( $this , 'load_widgets' ) );
 			add_action( 'plugins_loaded', array( $this , 'load_plugin_language' ) );
-			add_action( 'wp' , array( $this , 'wp' ) );
+			
 			do_action( 'sendpress_loaded' );
 		}
 	
@@ -196,12 +197,14 @@ Author URI: http://sendpress.com/
 		}
 
 		function wp(){
+			
 			sendpress_register_template(
 				array('path'=> SENDPRESS_PATH.'templates/original.html', 'name'=> 'SendPress Original')
 				);
 			sendpress_register_template(
 				array('path'=> SENDPRESS_PATH.'templates/2columns-to-rows.html', 'name'=> '2 Column Top - Wide Bottom - Responsive')
 				);
+			
 		}
 	
 		function init() {
@@ -616,7 +619,7 @@ Author URI: http://sendpress.com/
 		//dadd_action('admin_notices', array($this,'sendpress_ignore_087'));
 
 		if( SendPress_Option::get('sendmethod') == false ){
-			SendPress_Option::set('sendmethod','website');
+			SendPress_Option::set('sendmethod','SendPress_Sender_Website');
 		}
 
 		if( SendPress_Option::get('send_optin_email') == false ){
@@ -643,7 +646,7 @@ Author URI: http://sendpress.com/
 		//Removed in 0.9.2
 		//$this->create_initial_list();
 		
-
+		/*
 		if( SendPress_Option::get('emails-today') == false ){
 			$emails_today = array( date("z") => '0' );
 			SendPress_Option::set('emails-today', $emails_today);
@@ -653,8 +656,8 @@ Author URI: http://sendpress.com/
 		$emails_today[date("z") + 1 ] = '0';
 
 		SendPress_Option::set('emails-today', $emails_today);
-
-
+		*/
+		SendPress_Option::set('emails-today', '');
 		//SendPress_Option::set('allow_tracking', '');
 		//wp_clear_scheduled_hook( 'sendpress_cron_action' );
 		// Schedule an action if it's not already scheduled

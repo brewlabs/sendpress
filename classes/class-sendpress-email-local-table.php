@@ -152,12 +152,7 @@ class SendPress_Email_Local_Table extends WP_List_Table {
 		);
 		
 		//Return the title contents
-
-		return sprintf('%1$s <span style="color:silver">(id:%2$s)</span>%3$s',
-			/*$1%s*/ $item->post_title,
-			/*$2%s*/ $item->ID,
-			/*$3%s*/ $this->row_actions($actions)
-		);
+		
 	}
 	
 	/** ************************************************************************
@@ -241,7 +236,7 @@ class SendPress_Email_Local_Table extends WP_List_Table {
 	 **************************************************************************/
 	function get_bulk_actions() {
 		
-		return '';
+		return array();
 	}
 	
 	

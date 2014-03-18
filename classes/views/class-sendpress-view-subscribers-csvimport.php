@@ -8,6 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Subscribers_Csvimport extends SendPress_View_Subscribers {
 	
+ 
 	function save(){
 		$uploadfiles = $_FILES['uploadfiles'];
 	if (is_array($uploadfiles)) {
@@ -43,20 +44,25 @@ class SendPress_View_Subscribers_Csvimport extends SendPress_View_Subscribers {
          * Check write permissions
          */
         if ( !is_writeable( $upload_dir['path'] ) ) {
-          $this->msg_e('Unable to write to directory %s. Is this directory writable by the server?');
-          return;
+          SendPress_Option::set('import_error', true);  
+          //$this->_error = true;
+          //$this->msg_e('Unable to write to directory %s. Is this directory writable by the server?');
+          //return;
         }
 
         /**
          * Save temporary file to uploads dir
          */
         if ( !@move_uploaded_file($filetmp, $filedest) ){
-          $this->msg_e("Error, the file $filetmp could not moved to : $filedest ");
-          continue;
+          SendPress_Option::set('import_error', true);
+          //$this->msg_e("Error, the file $filetmp could not moved to : $filedest ");
+          //continue;
         }
 
         update_post_meta($_POST['listID'],'csv_import',$filedest);
-		SendPress_Admin::redirect('Subscribers_Csvprep',array('listID'=> $_POST['listID']));
+        if(SendPress_Option::get('import_error', false) == false  ){
+		      SendPress_Admin::redirect('Subscribers_Csvprep',array('listID'=> $_POST['listID']));
+        }
         /*
         $attachment = array(
           'post_mime_type' => $filetype['type'],
@@ -76,7 +82,13 @@ class SendPress_View_Subscribers_Csvimport extends SendPress_View_Subscribers {
 	}
 
 	function html($sp) { ?>
-	<div id="taskbar" class="lists-dashboard rounded group"> 
+  <?php 
+  if( SendPress_Option::get('import_error', false) == true ) { ?>
+	<div class="alert alert-danger">
+  We had a problem saving your upload.
+  </div>
+  <?php } ?>
+  <div id="taskbar" class="lists-dashboard rounded group"> 
 	<h2><?php _e('Import CSV to ','sendpress'); ?><?php echo get_the_title($_GET['listID']); ?></h2>
 	</div>
 <div class="boxer">
@@ -98,7 +110,9 @@ class SendPress_View_Subscribers_Csvimport extends SendPress_View_Subscribers {
   </tr> 
  	</table>
    
-<?php SendPress_Data::nonce_field(); ?>
+<?php 
+SendPress_Option::set('import_error', false);
+SendPress_Data::nonce_field(); ?>
 	   </form>
 </div>
 </div>

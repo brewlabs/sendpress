@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 3.8.1
-Stable tag: 0.9.8.7
+Stable tag: 0.9.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,18 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 0.9.9 - 2014.3.16 =
+* Fix: Error sending when no social icons set
+* Fix: Error message on CSV Import
+* Fix: Template no saving correctly
+
+= 0.9.9 - 2014.3.14 =
+* Fix: Default Sender no longer set to old
+* Update: Settings tabs renamed
+* Update: Moved testing to sending account
+* Update: On state added to menu
+* New: Social Icon Setup
 
 = 0.9.8.7 - 2014.3.3 =
 * Fix: Hourly and Daily send count being off
@@ -423,6 +435,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.9.1 =
+Bug fix for sending and csv import
+
+= 0.9.9 =
+New Socail Icons and bug fixes
 
 = 0.9.8.7 =
 Queue Hourly and Daily send counts fix
