@@ -98,7 +98,7 @@ class SendPress_View {
 		
 		<?php
 
-		delete_transient( 'current_sp_pro_version' );
+		//delete_transient( 'current_sp_pro_version' );
 
 		//call api to get current version of pro if pro installed
 		if( defined('SENDPRESS_PRO_VERSION')){
@@ -116,9 +116,6 @@ class SendPress_View {
 					<?php
 				}
 			}
-			
-			
-			
 		}
 	}
 
