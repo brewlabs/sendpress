@@ -36,20 +36,25 @@ class SendPress_View {
 	}
 	static function footer(){
 
-		//call api to get current version of pro if pro installed
-		if( defined('SENDPRESS_PRO_VERSION') && SendPress_Pro_Manager::get_pro_state() !== 'valid'){
-			if ( false === ( $current_sp_pro_version = get_transient( 'current_sp_pro_version' ) ) ) {
-			    // It wasn't there, so regenerate the data and save the transient
-			    $remote = wp_remote_get( 'http://api.sendpress.com/pro/getversion' );
-			    $current_sp_pro_version = json_decode(wp_remote_retrieve_body( $remote ))[0]->version;
-			    set_transient( 'current_sp_pro_version', $current_sp_pro_version, 24 * HOUR_IN_SECONDS );
-			}
+		delete_transient( 'current_sp_pro_version' );
 
-			if( $current_sp_pro_version > SENDPRESS_PRO_VERSION ){
-				?>
-				<div class="alert alert-danger">SendPress Pro is out of date! Upgrade to get the latest updates, features, and bug fixes.  If your key has expired visit <a href="http://sendpress.com" target="_blank">SendPress.com</a> to renew. </div>
-				<?php
+		//call api to get current version of pro if pro installed
+		if( defined('SENDPRESS_PRO_VERSION')){
+			if(SendPress_Pro_Manager::get_pro_state() !== 'valid' && !empty(SendPress_Option::get('api_key'))){
+				if ( false === ( $current_sp_pro_version = get_transient( 'current_sp_pro_version' ) ) ) {
+				    // It wasn't there, so regenerate the data and save the transient
+				    $remote = wp_remote_get( 'http://api.sendpress.com/pro/getversion' );
+				    $current_sp_pro_version = json_decode(wp_remote_retrieve_body( $remote ))[0]->version;
+				    set_transient( 'current_sp_pro_version', $current_sp_pro_version, 24 * HOUR_IN_SECONDS );
+				}
+
+				if( $current_sp_pro_version > SENDPRESS_PRO_VERSION ){
+					?>
+					<div class="alert alert-danger">SendPress Pro is out of date! Upgrade to get the latest updates, features, and bug fixes.  If your key has expired visit <a href="http://sendpress.com" target="_blank">SendPress.com</a> to renew. </div>
+					<?php
+				}
 			}
+			
 		}
 
 		?>
