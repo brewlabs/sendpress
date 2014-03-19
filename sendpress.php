@@ -1200,21 +1200,21 @@ Author URI: http://sendpress.com/
 
 		}
 
-if(version_compare( $current_version, '0.9.9', '<' )){
-					$link = SendPress_Option::get('socialicons');
+		if(version_compare( $current_version, '0.9.9', '<' )){
+			$link = SendPress_Option::get('socialicons');
 
-							if($twit =  SendPress_Option::get('twitter') ){
-								$link['Twitter']	 = $twit;
-							}
+			if($twit =  SendPress_Option::get('twitter') ){
+				$link['Twitter']	 = $twit;
+			}
 
-							if($fb =  SendPress_Option::get('facebook') ){
-							$link['Facebook']	 = $fb;
-							}
-							if($ld =  SendPress_Option::get('linkedin') ){
-							$link['LinkedIn']	 = $ld;
-							}
-	SendPress_Option::set('socialicons',$link);
-}
+			if($fb =  SendPress_Option::get('facebook') ){
+				$link['Facebook']	 = $fb;
+			}
+			if($ld =  SendPress_Option::get('linkedin') ){
+				$link['LinkedIn']	 = $ld;
+			}
+			SendPress_Option::set('socialicons',$link);
+		}
 		SendPress_Option::set( 'version' , SENDPRESS_VERSION );
 	}	
 	

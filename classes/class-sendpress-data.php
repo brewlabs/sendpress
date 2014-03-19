@@ -328,6 +328,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$color = 'style="color: '.$color.';"';
 		} 
 		if( is_array( $link ) && !empty($link) ) {
+		ksort($link);
 		foreach($link as $key => $url ){
 				if($px !== 'text'){
 					$output .= '<a href="'. $url .'" ><img src="'.  SENDPRESS_URL .'img/'. $px .'/'. $key .'.png" alt="'. $key .'" /></a> ';
