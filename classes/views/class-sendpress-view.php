@@ -37,7 +37,7 @@ class SendPress_View {
 	static function footer(){
 
 		//call api to get current version of pro if pro installed
-		if( defined('SENDPRESS_PRO_VERSION') ){
+		if( defined('SENDPRESS_PRO_VERSION') && SendPress_Pro_Manager::get_pro_state() !== 'valid'){
 			if ( false === ( $current_sp_pro_version = get_transient( 'current_sp_pro_version' ) ) ) {
 			    // It wasn't there, so regenerate the data and save the transient
 			    $remote = wp_remote_get( 'http://api.sendpress.com/pro/getversion' );
