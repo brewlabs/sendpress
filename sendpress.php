@@ -24,7 +24,7 @@ Author URI: http://sendpress.com/
 	      
    	define('SENDPRESS_CRON',md5(__FILE__.$blog_id));
 	if(!defined('SENDPRESS_STORE_URL') ){
-		define( 'SENDPRESS_STORE_URL', 'http://sendpress.com' );
+		define( 'SENDPRESS_STORE_URL', 'https://sendpress.com' );
 	}
 	if(!defined('SENDPRESS_PRO_NAME') ){
 		define( 'SENDPRESS_PRO_NAME', 'SendPress Pro' );
