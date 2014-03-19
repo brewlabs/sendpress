@@ -348,6 +348,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return array(
     		'500px' => 'e.g. http://500px.com/username',
 			'AddThis' => 'e.g. http://www.addthis.com',
+			'App.Net' => 'e.g. http://app.net/username',
 			'Behance' => 'e.g. http://www.behance.net/username',
 			'Blogger' => 'e.g. http://username.blogspot.com',
 			'Mail' => 'e.g. mailto:user@name.com',
@@ -1379,6 +1380,58 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if ( $slug ) {
 			// Tell the static function what to look for in a post.
 			$_args = array('post_parent' => '0', 'post_type' => 'sptemplates', 'name' => 'sp-template-' . $slug, 'post_status' => 'draft', 'comment_status' => 'closed', 'ping_status' => 'closed' );
+
+
+
+			 $querystr = "
+			    SELECT $wpdb->posts.* 
+			    FROM $wpdb->posts 
+			    WHERE $wpdb->posts.post_name = 'sp-template-$slug'
+			    ORDER BY $wpdb->posts.post_date DESC
+			 ";
+
+ 			$_posts = $wpdb->get_results($querystr, OBJECT);
+ 			//print_r($_posts);
+			// look in the database for a "silent" post that meets our criteria.
+			//$_posts = get_posts( $_args );
+			// If we've got a post, loop through and get it's ID.
+			if ( count( $_posts ) ) {
+				$_id = $_posts[0]->ID;
+			} else {
+				// If no post is present, insert one.
+				// Prepare some additional data to go with the post insertion.
+				$_words = explode( '_', $slug );
+				$_title = join( ' ', $_words );
+				$_title = ucwords( $_title );
+				$_post_data = array( 'post_title' => $_title );
+				$_post_data = array( 'post_name' => $_args['name'] );
+				
+				//$_post_data = array( 'post_name' => );
+				$_post_data = array_merge( $_post_data, $_args );
+
+				$_id = wp_insert_post( $_post_data );
+			} // End IF Statement
+		}
+		return $_id;
+	} 
+
+	/**
+	* Takes a key and looks up or creates a template post for storing data.
+	* 
+	* 
+	* @param mixed $_token Description.
+	*
+	* @access public
+	*
+	* @return mixed Value.
+	*/
+	static function get_html_template_id_by_slug( $slug ) {
+		global $wpdb;
+		$_id = 0;
+		$slug = strtolower( str_replace( ' ', '_', $slug ) );
+		if ( $slug ) {
+			// Tell the static function what to look for in a post.
+			$_args = array('post_parent' => '0', 'post_type' => 'sptemplates', 'name' => 'sp-template-' . $slug, 'post_status' => 'pending', 'comment_status' => 'closed', 'ping_status' => 'closed' );
 
 
 

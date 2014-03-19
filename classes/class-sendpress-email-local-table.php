@@ -77,11 +77,11 @@ class SendPress_Email_Local_Table extends WP_List_Table {
 
 			 case 'name':
 				
-				return $item['name'];
+				return $item->post_title;
 				break;
 			case 'actions':
 				$a = '<div class="inline-buttons" style="text-align:right;">';
-				$a .= '<a class="btn btn-primary" href="'.SendPress_Admin::link('Emails_Tempstyle',array('templateID'=>$item['ID'])) .'"><span class="glyphicon glyphicon-tint"></span> Style</a> ';
+				$a .= '<a class="btn btn-primary" href="'.SendPress_Admin::link('Emails_Tempstyle',array('templateID'=>$item->ID)) .'"><span class="glyphicon glyphicon-tint"></span> Style</a> ';
 				$a .= '</div>';
 				return $a;
 			break;
@@ -275,20 +275,99 @@ class SendPress_Email_Local_Table extends WP_List_Table {
 	 * @uses $this->set_pagination_args()
 	 **************************************************************************/
 	function prepare_items() {
-			global $sendpress_html_templates;
-			$columns = $this->get_columns();
-             $hidden = array();
-             $sortable = $this->get_sortable_columns();
-             $this->_column_headers = array($columns, $hidden, $sortable);
-			//print_r($sendpress_html_templates);
-			/* -- Register the pagination -- */
-			$this->set_pagination_args( array(
-				"total_items" => count($sendpress_html_templates),
-				"total_pages" =>  count($sendpress_html_templates),
-				"per_page" =>  count($sendpress_html_templates),
-			) );
+		global $wpdb, $_wp_column_headers;
+		$screen = get_current_screen();
+		//$this->process_bulk_action();
+		  /*      
+		select t1.* from `sp_sendpress_list_subscribers` as t1 , `sp_sendpress_subscribers` as t2
+		where t1.subscriberID = t2.subscriberID and t1.listID = 2*/
+		 /* -- Pagination parameters -- */
+		//Number of elements in your table?
+	   // $totalitems = $wpdb->query($query); //return the total number of affected rows
+		//How many to display per page?
+		
+		/* -- Register the Columns -- */
+		   $columns = $this->get_columns();
+			 $hidden = array();
+			 $sortable = $this->get_sortable_columns();
+			 $this->_column_headers = array($columns, $hidden, $sortable);
+		/* -- Fetch the items -- */
+			$args = array(
+			'post_type' => 'sptemplates',
+			'post_status' => array('pending')
+			);
 
-			$this->items = $sendpress_html_templates;
+			$query = new WP_Query( $args );
+			
+			$totalitems = $query->found_posts;
+		   // get the current user ID
+			$user = get_current_user_id();
+			// get the current admin screen
+			$screen = get_current_screen();
+			
+			// retrieve the "per_page" option
+			$screen_option = $screen->get_option('per_page', 'option');
+			$per_page = 10;
+			if(!empty( $screen_option)) {
+				// retrieve the value of the option stored for the current user
+				$per_page = get_user_meta($user, $screen_option, true);
+				
+				if ( empty ( $per_page) || $per_page < 1 ) {
+					// get the default value if none is set
+					$per_page = $screen->get_option( 'per_page', 'default' );
+				}
+			}
+			//Which page is this?
+			$paged = !empty($_GET["paged"]) ? mysql_real_escape_string($_GET["paged"]) : '';
+			//Page Number
+			if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
+			//How many pages do we have in total?
+			$totalpages = ceil($totalitems/$per_page);
+			//adjust the query to take pagination into account
+			if(!empty($paged) && !empty($per_page)){
+				$offset=($paged-1)*$per_page;
+			   // $query.=' LIMIT '.(int)$offset.','.(int)$per_page;
+			}
+
+		/* -- Register the pagination -- */
+			$this->set_pagination_args( array(
+				"total_items" => $totalitems,
+				"total_pages" => $totalpages,
+				"per_page" => $per_page,
+			) );
+			
+
+			$args = array(
+			'post_type' => 'sptemplates' ,
+			'post_status' => array('pending'),
+			'posts_per_page' => $per_page,
+			'paged'=> $paged,
+			);
+			if ( !empty( $_GET['s'] ) )
+				$args['s'] = $_GET['s'];
+			if(isset($_GET['order'])){
+				$args['order'] = $_GET['order'];
+			}
+
+			if(isset($_GET['orderby'])){
+				$orderby = $_GET['orderby'];
+				$args['orderby']  = $orderby;
+				if($orderby == 'subject'){
+					$args['orderby']  = 'meta_value';
+					$args['meta_key']= '_sendpress_subject';
+				}
+				 if($orderby == 'lastsend'){
+					$args['orderby']  = 'meta_value';
+					$args['meta_key']= 'send_date';
+				}
+		   
+
+			}
+			
+
+			$query2 = new WP_Query( $args );
+
+			$this->items = $query2->posts;
 		}
 	
    
