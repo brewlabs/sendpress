@@ -87,6 +87,9 @@ class SendPress_Posts{
 	static function email_post_type($name){
 
 		$sp_debug_post_type = false;
+		if(defined('SP_DEBUG') && SP_DEBUG){
+			$sp_debug_post_type = true;
+		}
 
 		register_post_type( $name , array(	
 				'show_in_menu' => $sp_debug_post_type,
@@ -122,6 +125,9 @@ class SendPress_Posts{
 	// Added 'exclude_from_search'=>true
 	static function report_post_type($name){
 		$sp_debug_post_type = false;
+		if(defined('SP_DEBUG') && SP_DEBUG){
+			$sp_debug_post_type = true;
+		}
 
 		register_post_type( $name , array(	
 			'show_in_menu' => $sp_debug_post_type,

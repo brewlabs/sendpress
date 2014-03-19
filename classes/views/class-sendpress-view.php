@@ -34,8 +34,24 @@ class SendPress_View {
 		add_action('in_admin_footer',array('SendPress_View','footer'));
 
 	}
-	static function footer(){ 
-		
+	static function footer(){
+
+		//call api to get current version of pro if pro installed
+		if( defined('SENDPRESS_PRO_VERSION') ){
+			if ( false === ( $current_sp_pro_version = get_transient( 'current_sp_pro_version' ) ) ) {
+			    // It wasn't there, so regenerate the data and save the transient
+			    $remote = wp_remote_get( 'http://api.sendpress.com/pro/getversion' );
+			    $current_sp_pro_version = json_decode(wp_remote_retrieve_body( $remote ))[0]->version;
+			    set_transient( 'current_sp_pro_version', $current_sp_pro_version, 24 * HOUR_IN_SECONDS );
+			}
+
+			if( $current_sp_pro_version > SENDPRESS_PRO_VERSION ){
+				?>
+				<div class="alert alert-danger">SendPress Pro is out of date! Upgrade to get the latest updates, features, and bug fixes.  If your key has expired visit <a href="http://sendpress.com" target="_blank">SendPress.com</a> to renew. </div>
+				<?php
+			}
+		}
+
 		?>
 		<div class="sp-footer">
 			<a href="<?php echo SendPress_Admin::link('Help_Whatsnew'); ?>">What's New</a> | <a href="http://sendpress.com/support/knowledgebase/" target="_blank">Knowledge Base</a> | <a href="http://sendpress.uservoice.com/" target="_blank">Feedback</a> | SendPress Version: <?php echo SENDPRESS_VERSION; ?> 
