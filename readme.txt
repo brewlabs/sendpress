@@ -108,7 +108,7 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * Fix: Converted all SendPress API calls to SSL
 * New: App.net Socail Icon
 * New: SendPress Pro update reminder
-
+* New: Set add Emails to Queue Ajax call count
 
 = 0.9.9.1 - 2014.3.16 =
 * Fix: Error sending when no social icons set
