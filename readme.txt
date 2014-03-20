@@ -102,11 +102,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
-= 0.9.9.2 - 2014.3.16 =
+= 0.9.9.2 - 2014.3.20 =
 * Fix: Saving Sending Account
 * Fix: Social Icon sorting 
-* Update: Added App.net Icon
-* Update: New SendPress Pro update reminder
+* Fix: Converted all SendPress API calls to SSL
+* New: App.net Socail Icon
+* New: SendPress Pro update reminder
 
 
 = 0.9.9.1 - 2014.3.16 =
@@ -442,6 +443,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.9.2 =
+Bug fix for activating sending account
 
 = 0.9.9.1 =
 Bug fix for sending and csv import
