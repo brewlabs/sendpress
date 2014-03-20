@@ -315,7 +315,7 @@ class SendPress_Ajax_Loader{
         }
 
 		//if()
-		if(count( $x ) == 1000){
+		if(count( $x ) == SendPress_Option::get('queue-per-call' , 1000 ) ){
 			
 			$w = end($x);
 			 update_post_meta($reportid,'_send_last',$w->subscriberID );

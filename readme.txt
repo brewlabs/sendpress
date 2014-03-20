@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 3.8.1
-Stable tag: 0.9.9.1
+Stable tag: 0.9.9.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -102,7 +102,14 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
-= 0.9.9 - 2014.3.16 =
+= 0.9.9.2 - 2014.3.16 =
+* Fix: Saving Sending Account
+* Fix: Social Icon sorting 
+* Update: Added App.net Icon
+* Update: New SendPress Pro update reminder
+
+
+= 0.9.9.1 - 2014.3.16 =
 * Fix: Error sending when no social icons set
 * Fix: Error message on CSV Import
 * Fix: Template no saving correctly

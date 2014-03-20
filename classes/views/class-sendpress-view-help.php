@@ -258,7 +258,7 @@ $screen = get_current_screen();
 	$class = 'columns-2';//. get_current_screen()->get_columns();
 
 ?>
-<div id="dashboard-widgets" class="metabox-holder <?php echo $class; ?>">
+<div id="dashboard-widgets" class="metabox-holder clearfix <?php echo $class; ?>">
 	<div id='postbox-container-1' class='postbox-container'>
 	<?php do_meta_boxes( $screen->id, 'normal', '' ); ?>
 	</div>

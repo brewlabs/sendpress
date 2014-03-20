@@ -349,7 +349,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return array(
     		'500px' => 'e.g. http://500px.com/username',
 			'AddThis' => 'e.g. http://www.addthis.com',
-			'App.Net' => 'e.g. http://app.net/username',
+			'AppNet' => 'e.g. http://app.net/username',
 			'Behance' => 'e.g. http://www.behance.net/username',
 			'Blogger' => 'e.g. http://username.blogspot.com',
 			'Mail' => 'e.g. mailto:user@name.com',
@@ -865,7 +865,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$lists = implode(',', $list_ids);
 		$query = "SELECT t1.subscriberID,t1.email, t3.status, t2.listid, count(*) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
 
-        $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.status = 2) AND (t2.listID in  ( ". $lists ."  )) AND t1.subscriberID > ".$id." GROUP BY t1.subscriberID LIMIT 1000";
+        $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.status = 2) AND (t2.listID in  ( ". $lists ."  )) AND t1.subscriberID > ".$id." GROUP BY t1.subscriberID LIMIT " . SendPress_Option::get('queue-per-call' , 1000 );
         
      
         return $wpdb->get_results( $query );
