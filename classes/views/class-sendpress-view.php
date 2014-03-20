@@ -106,8 +106,16 @@ class SendPress_View {
 				if ( false === ( $current_sp_pro_version = get_transient( 'current_sp_pro_version' ) ) ) {
 				    // It wasn't there, so regenerate the data and save the transient
 				    $remote = wp_remote_get( 'http://api.sendpress.com/pro/getversion' );
-				    $current_sp_pro_version = json_decode(wp_remote_retrieve_body( $remote ))[0]->version;
-				    set_transient( 'current_sp_pro_version', $current_sp_pro_version, 24 * HOUR_IN_SECONDS );
+				    $current_sp_pro_version = json_decode(wp_remote_retrieve_body( $remote ));
+				  	if( is_array( $current_sp_pro_version ) ){
+				  		$current_sp_pro_version = $current_sp_pro_version[0]->version;
+
+
+				  	} else {
+				  		$current_sp_pro_version = 100;
+				  	}
+				  	set_transient( 'current_sp_pro_version', $current_sp_pro_version, 24 * HOUR_IN_SECONDS );
+				 
 				}
 
 				if( $current_sp_pro_version > SENDPRESS_PRO_VERSION ){
