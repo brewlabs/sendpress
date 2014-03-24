@@ -114,7 +114,9 @@ Author URI: https://sendpress.com/
 			add_action( 'init', array( $this , 'init' ) );
 			add_action( 'widgets_init', array( $this , 'load_widgets' ) );
 			add_action( 'plugins_loaded', array( $this , 'load_plugin_language' ) );
-			
+
+			add_action( 'init', array( 'SendPress_Shortcode_Loader', 'init' ) );
+		
 			do_action( 'sendpress_loaded' );
 		}
 	
@@ -122,8 +124,8 @@ Author URI: https://sendpress.com/
 		  	if( strpos($className, 'SendPress') !== 0 ){
 		  		return;
 		  	}
-		  
-		    $cls = str_replace('_', '-',	strtolower($className) );
+		 	// Convert Classname to filename 
+		    $cls = str_replace('_', '-', strtolower($className) );
 		    if( substr($cls, -1) == '-'){
 		    	//AutoLoad seems to get odd clasname sometimes that ends with _
 	  			return;
@@ -131,8 +133,20 @@ Author URI: https://sendpress.com/
 		    if(class_exists($className)){
 		    	return;
 		    }
-	
-		    if( strpos($className, 'Public_View') != false ){
+			
+		    if( strpos($className, '_SC_') != false ){
+		    	if( defined('SENDPRESS_PRO_PATH') ) {
+		    		$pro_file = SENDPRESS_PRO_PATH."classes/sc/class-".$cls.".php";
+		    		if( file_exists( $pro_file ) ){
+		    			include SENDPRESS_PRO_PATH."classes/sc/class-".$cls.".php";
+		    			return;
+		    		}
+		    	}
+		    	include SENDPRESS_PATH."classes/sc/class-".$cls.".php";
+		  		return;
+		  	}
+
+		  	  if( strpos($className, 'Public_View') != false ){
 		    	if( defined('SENDPRESS_PRO_PATH') ) {
 		    		$pro_file = SENDPRESS_PRO_PATH."classes/public-views/class-".$cls.".php";
 		    		if( file_exists( $pro_file ) ){
@@ -145,8 +159,8 @@ Author URI: https://sendpress.com/
 				}
 		  		return;
 		  	} 
-	
-		    if( strpos($className, 'View') != false ){
+
+			if( strpos($className, 'View') != false ){
 		    	if( defined('SENDPRESS_PRO_PATH') ) {
 		    		$pro_file = SENDPRESS_PRO_PATH."classes/views/class-".$cls.".php";
 		    		if( file_exists( $pro_file ) ){
@@ -157,6 +171,10 @@ Author URI: https://sendpress.com/
 		    	include SENDPRESS_PATH."classes/views/class-".$cls.".php";
 		  		return;
 		  	}
+
+		  
+	
+		    
 	
 		  	if( strpos($className, 'Module') != false ){
 		  		if( defined('SENDPRESS_PRO_PATH') ) {

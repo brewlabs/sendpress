@@ -13,6 +13,16 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 	function page_end(){}
 
 	function html() {
+
+		if(isset($_POST['sp-shortcode']) && (strpos($_POST['sp-shortcode'], 'SC-') !== false )){
+			$cls = str_replace('-', '_',	trim($_POST['sp-shortcode']) );
+	error_log($cls);
+			call_user_func(array('SendPress_'. $cls, "form_post"), '');
+			error_log("asdf");
+
+		} else {
+
+
 		$post_options = array('list','email','firstname','lastname','return','status');
 		$user_info = array();
 		foreach ($post_options as $opt) {
@@ -170,7 +180,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 
 
 		}
-
+		}
 
 		//print_r($email);
 
