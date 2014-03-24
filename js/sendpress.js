@@ -756,13 +756,13 @@ jQuery(document).ready(function($) {
             });
         });
 
-        $("#cancel-edit-list").live('click',function(e){
+        $("#cancel-edit-list").on('click',function(e){
             e.preventDefault();
 
             $(this).closest("tr").remove();
         });
 
-        $('.edit-list-checkbox').live('click',function(){
+        $('.edit-list-checkbox').on('click',function(){
             if( $(this).is(':checked') ){
                 $(this).val(1);
             }else{
@@ -770,7 +770,7 @@ jQuery(document).ready(function($) {
             }
         });
 
-        $("#save-edit-list").live('click',function(e){
+        $("#save-edit-list").on('click',function(e){
             e.preventDefault();
 
             var list = {},
@@ -842,7 +842,7 @@ jQuery(document).ready(function($) {
     });
 
 
-    $('.sendpress_checkbox').live('click',function(){
+    $('.sendpress_checkbox').on('click',function(){
         if( $(this).is(':checked') ){
             $(this).val(1);
         }else{

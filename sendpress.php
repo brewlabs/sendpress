@@ -45,7 +45,6 @@ Author URI: https://sendpress.com/
 	// AutoLoad Classes
 	spl_autoload_register(array('SendPress', 'autoload'));
 	
-	
 	require_once( SENDPRESS_PATH . 'inc/functions.php' );
 	/*
 	require_once( SENDPRESS_PATH . 'classes/class-file-loader.php' );
@@ -197,19 +196,18 @@ Author URI: https://sendpress.com/
 		}
 
 		function wp(){
-			
+			/*
 			sendpress_register_template(
 				array('path'=> SENDPRESS_PATH.'templates/original.html', 'name'=> 'SendPress Original')
 				);
 			sendpress_register_template(
 				array('path'=> SENDPRESS_PATH.'templates/2columns-to-rows.html', 'name'=> '2 Column Top - Wide Bottom - Responsive')
 				);
-			
+			*/
 		}
 	
 		function init() {
 			$this->maybe_upgrade();
-
 			//add_action('register_form',array( $this , 'add_registration_fields'));
 			
 			SendPress_Ajax_Loader::init();
@@ -223,6 +221,7 @@ Author URI: https://sendpress.com/
 			SendPress_Notifications_Manager::init();
 			SendPress_Tracking::init();
 			SendPress_Videos::init();
+
 			sendpress_register_sender('SendPress_Sender_Website');
 			sendpress_register_sender('SendPress_Sender_Gmail');
 
@@ -598,7 +597,6 @@ Author URI: https://sendpress.com/
 
 
 	function admin_init(){
-		
 		$this->add_caps();
 		if ( !empty($_GET['_wp_http_referer']) && (isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)) ) {
 			wp_redirect( remove_query_arg( array('_wp_http_referer', '_wpnonce'), stripslashes($_SERVER['REQUEST_URI']) ) );
@@ -699,7 +697,8 @@ Author URI: https://sendpress.com/
 				remove_filter("mce_plugins", "cforms_plugin");
 				remove_filter('mce_buttons', 'cforms_button');
 				remove_filter('tinymce_before_init','cforms_button_script');
-
+				
+			
 			if(SendPress_Option::get('whatsnew','show') == 'show'){
 				SendPress_Option::set('whatsnew','hide');
 				SendPress_Admin::redirect('Help_Whatsnew');
@@ -708,7 +707,11 @@ Author URI: https://sendpress.com/
 			wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' ,'', SENDPRESS_VERSION);
 			wp_enqueue_script('sendpress_js_styler');
 		}
-		
+			if(defined('WPE_PLUGIN_BASE') ){
+				add_action('admin_print_styles', array( $this ,'remove_wpengine_style'));
+			}
+
+
 			$this->_page = $_GET['page'];
 			add_filter('tiny_mce_before_init',  array($this,'myformatTinyMCE') );
 			
@@ -812,6 +815,11 @@ Author URI: https://sendpress.com/
 		}
    	}
 
+	static function remove_wpengine_style() {
+		error_log('test');
+		wp_dequeue_style('wpe-common');
+		wp_deregister_style('wpe-common');
+	}
    	
 
    	function add_front_end_scripts(){

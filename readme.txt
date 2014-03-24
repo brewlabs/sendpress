@@ -447,6 +447,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Upgrade Notice ==
 
+= 0.9.9.3 =
+Fix for possible view error causing white screen on SendPress Tab
+
 = 0.9.9.2 =
 Bug fix for activating sending account
 

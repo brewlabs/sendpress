@@ -117,42 +117,94 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
 
         $postdata = get_post( $_GET['templateID'] );
 
+      
         //print_r( $postdata );
         ?>
         <h2><?php echo $postdata->post_title; ?></h2>
         <br><br>
-        <div class="alert alert-danger visible-xs">Sorry the Styler does not support screens smaller then 768px.</div>
+<div class="alert alert-danger visible-xs">Sorry the Styler does not support screens smaller then 768px.</div>
 <div class="sp-row">
-    
-    <div class="sp-75 sp-first">
-          
-        <iframe id="iframe1" class="hidden-xs" width="100%" style="border: solid 1px #e7e7e7; border-radius: 5px;" src="<?php echo home_url(); ?>?sendpress=render&spemail=<?php echo $_GET['templateID']; ?>" ></iframe>
-    </div>
-    <div class="sp-25">
-    <?php $this->panel_start( '<span class=" glyphicon glyphicon-tint"></span> '. __('Body Styles','sendpress') ); ?>
-        
-        Background<br>
-        <input type="text" value="#bada55" class="my-color-field" data-default-color="#effeff" />
-        <br><br>
 
-        
-        <?php $sp->create_color_picker( array('id'=>'body_bg','value'=>$body_bg['value'],'std'=>$body_bg['std'], 'link'=>'#html-view' ,'css'=>'background-color' ) ); ?>
-        <br><br>
-        Body Text Color<br>
-        <?php $sp->create_color_picker( array('id'=>'body_text','value'=>$body_text['value'],'std'=>$body_text['std'], 'link'=>'.html-view-outer-text' ,'css'=>'color' ) ); ?>
-        <br><br>
-        Body Link Color<br>
-        <?php $sp->create_color_picker( array('id'=>'body_link','value'=>$body_link['value'],'std'=>$body_link['std'], 'link'=>'.html-view-outer-text a' ,'css'=>'color' ) ); ?>
-        <?php $this->panel_end(); ?>
-        
-    </div>
+<div class="sp-75 sp-first">
+
+<iframe id="iframe1" class="hidden-xs" width="100%" style="border: solid 1px #e7e7e7; border-radius: 5px;" src="<?php echo home_url(); ?>?sendpress=render&spemail=<?php echo $_GET['templateID']; ?>" ></iframe>
+</div>
+<div class="sp-25">
+<?php $this->panel_start( '<span class=" glyphicon glyphicon-tint"></span> '. __('Body Styles','sendpress') ); ?>
+
+Background<br>
+<input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+<br>
+Background<br>
+<input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+
+
+<br><br><br><br><br><br><br><br><br>
+
+<?php $sp->create_color_picker( array('id'=>'body_bg','value'=>$body_bg['value'],'std'=>$body_bg['std'], 'link'=>'#html-view' ,'css'=>'background-color' ) ); ?>
+<br><br>
+Body Text Color<br>
+<?php $sp->create_color_picker( array('id'=>'body_text','value'=>$body_text['value'],'std'=>$body_text['std'], 'link'=>'.html-view-outer-text' ,'css'=>'color' ) ); ?>
+<br><br>
+Body Link Color<br>
+<?php $sp->create_color_picker( array('id'=>'body_link','value'=>$body_link['value'],'std'=>$body_link['std'], 'link'=>'.html-view-outer-text a' ,'css'=>'color' ) ); ?>
+<?php $this->panel_end(); ?>
+
+</div>
 </div>
 <script>
 
         
 
     jQuery(document).ready(function($){
-        $('.my-color-field').wpColorPicker();
+        var myOptions = {
+    // you can declare a default color here,
+    // or in the data-default-color attribute on the input
+    defaultColor: false,
+    // a callback to fire whenever the color changes to a valid color
+    change: function(event, ui){
+       // console.log( event );
+
+
+    //console.log(  ui.color.toString()  );
+
+     var iframe = $('#iframe1'),
+            content = iframe.contents(),
+            body = content.find('body');
+           // styletag = content.find('head').append('<style>body{ background-color: #000; }</style>');
+            //.children('style');
+
+            body.css( 'background-color' , ui.color.toString()  );
+
+          //  console.log(styletag);
+
+
+    },
+    // a callback to fire when the input is emptied or an invalid color
+    clear: function() {},
+    // hide the color picker controls on load
+    hide: true,
+    // show a group of common colors beneath the square
+    // or, supply an array of colors to customize further
+    palettes:  true
+};
+
+        $('.my-color-field').wpColorPicker(myOptions);
+
+        $('#bg-color-select').on('change',function(e){
+          
+/*
+var iframe = $('iframe1'),
+content = iframe.contents(),
+body = content.find('body'),
+styletag = content.find('head').append('<style></style>').children('style');
+
+styletag.text( 'background-color:' + $(this).val() +';' );
+
+*/
+        });
+        
+
         /*
         var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("template-content"), {
             lineNumbers: true,

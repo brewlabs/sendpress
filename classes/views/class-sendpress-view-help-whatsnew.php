@@ -41,7 +41,7 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 	<p><strong>Version <?php echo SENDPRESS_VERSION; ?></strong> addressed several bugs. For more information, see <a href="http://wordpress.org/plugins/sendpress/changelog/">the changelog</a>.</p>
 </div>
 <div class="changelog">
-	<h2 class="about-headline-callout">Introducing New Socail Settings</h2>
+	<h2 class="about-headline-callout">Introducing New Social Settings</h2>
 	<img class="about-overview-img" src="<?php echo SENDPRESS_URL;?>/img/icons.png">
 	<div class="feature-section col three-col about-updates">
 		<div class="col-1">

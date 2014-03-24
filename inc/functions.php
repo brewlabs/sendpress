@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 	Function used by or with SendPress
  */
@@ -22,6 +23,7 @@ function sendpress_unregister_sender( $classname ){
 }
 
 
+
 /**
  * 
  * 
@@ -35,10 +37,10 @@ function sendpress_register_template($html_template = array()){
 
 	$content = file_get_contents($html_template['path']);
 	$my_post = array(
-	'ID'           => $id,
-	'post_content' => $content,
-	'post_title' => $html_template['name'],
-	'post_status' => 'pending'
+		'ID'           	=> $id,
+		'post_content' 	=> $content,
+		'post_title' 	=> $html_template['name'],
+		'post_status' 	=> 'pending'
 	);
 
 	// Update the post into the database

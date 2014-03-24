@@ -192,12 +192,17 @@ wp_enqueue_style( 'sendpress_codemirror_css' );
 		<?php $this->panel_end(); ?>
 
 		<?php $this->panel_start('<span class="glyphicon glyphicon-tags"></span> '. __('Template Tags','sendpress')); ?>
-			<p><code>{browser-link}</code> Link to browser version</p>
-			<p><code>{header-content}</code> Content from editor</p>
-			<p><code>{main-content}</code> Content from editor</p>
-			<p><code>{canspam}</code> CANSPAM from settings</p>
-			<p><code>{unsubscribe-link}</code> Link to Unsubscribe</p>
-			<p><code>{manage-link}</code> Link to Manage Subscription</p>
+<p><code>[sp-broswer]</code> <small>Link to browser version</small></p>
+<p><code>[sp-header]</code> <small>Content from editor</small></p>
+<p><code>[sp-content-1]</code> <small>Content from editor</small></p>
+<p><code>[sp-content-2]</code> <small>Content from editor</small></p>
+<p><code>[sp-content-3]</code> <small>Content from editor</small></p>
+<p><code>[sp-content-4]</code> <small>Content from editor</small></p>
+<p><code>[sp-content-5]</code> <small>Content from editor</small></p>
+<p><code>[sp-content-6]</code> <small>Content from editor</small></p>
+<p><code>[sp-canspam]</code> <small>CANSPAM from settings</small></p>
+<p><code>[sp-unsubscribe]</code> <small>Link to Unsubscribe</small></p>
+<p><code>[sp-manage]</code> <small>Link to Manage Subscription</small></p>
 
 
 		<?php $this->panel_end(); ?>
