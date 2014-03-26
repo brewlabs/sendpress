@@ -13,6 +13,7 @@ class SendPress_Shortcode_Loader {
 	public static function shortcodes(){
 		return array(
 			'unsubscribe-form' => __CLASS__ . '::unsubscribe_form',
+			'recent-posts' => __CLASS__ . '::recent_posts',
 		);
 	}
 
@@ -31,7 +32,9 @@ class SendPress_Shortcode_Loader {
 
 
 	public static function docs(){
+		?><div class="panel-group" id="accordion"><?php
 		$shortcodes = self::shortcodes();
+		ksort($shortcodes);
 		foreach ( $shortcodes as $shortcode => $function ) {
 			$classname = ucwords(str_replace('-', ' ', strtolower($shortcode) ));
 			$classname = str_replace(' ', '_', $classname );
@@ -40,7 +43,7 @@ class SendPress_Shortcode_Loader {
 			<div class="panel panel-default">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
-			        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#<? echo $classname ?>">
 			        	<?php
 			        		$title = $classname::title() !==false ? $classname::title() : "[sp-". $shortcode ."]";
 			         	 echo $title;
@@ -48,7 +51,7 @@ class SendPress_Shortcode_Loader {
 			        </a>
 			      </h4>
 			    </div>
-				<div id="collapseOne" class="panel-collapse collapse ">
+				<div id="<? echo $classname ?>" class="panel-collapse collapse ">
 					<div class="panel-body">
 					<?php
 						if($classname::docs() !== false){
@@ -81,6 +84,7 @@ class SendPress_Shortcode_Loader {
 			</div>
 			<?php
 		}
+		?></div><?php
 	}
 
 	/**
@@ -120,6 +124,16 @@ class SendPress_Shortcode_Loader {
 	 */
 	public static function unsubscribe_form( $atts ) {
 		return self::shortcode_wrapper( array( 'SendPress_SC_Unsubscribe_Form', 'output' ), $atts );
+	}
+	/**
+	 * Cart page shortcode.
+	 *
+	 * @access public
+	 * @param mixed $atts
+	 * @return string
+	 */
+	public static function recent_posts( $atts ) {
+		return self::shortcode_wrapper( array( 'SendPress_SC_Recent_Posts', 'output' ), $atts );
 	}
 
 
