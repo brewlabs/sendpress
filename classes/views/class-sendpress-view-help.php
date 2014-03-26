@@ -31,19 +31,10 @@ class SendPress_View_Help extends SendPress_View{
 <?php
 	}
 
-	function help_shortcodes(){
-
+	function help_shortcodes(){ ?>
+	<p class="lead">Click a title to view info about a shortcode.</p>
+	<?php
 		SendPress_Shortcode_Loader::docs();
-
-		?>
-		<hr>
-		<b>Signup Shortcode</b>
-		<p>If you would rather add the SendPress signup form to a page, you can use the following short code.  If you want more detailed information on how to use the short code check out our <a href="http://sendpress.com/support/knowledgebase/how-to-use-the-sign-up-shortcode/" target="_blank">knowledge base</a>.</p>
-		<pre>[sendpress-signup listids='1']</pre>
-		
-
-<?php
-
 	}
 
 	function help_support(){

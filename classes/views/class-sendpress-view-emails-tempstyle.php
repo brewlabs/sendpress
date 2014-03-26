@@ -136,18 +136,16 @@ Background<br>
 <input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
 <br>
 Background<br>
-<input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
-
-
-<br><br><br><br><br><br><br><br><br>
-
-<?php $sp->create_color_picker( array('id'=>'body_bg','value'=>$body_bg['value'],'std'=>$body_bg['std'], 'link'=>'#html-view' ,'css'=>'background-color' ) ); ?>
+<input type="text" value="#bada55" id="bg-color-select" class="my-color-field2" data-default-color="#effeff" />
+<!--
+<?php // $sp->create_color_picker( array('id'=>'body_bg','value'=>$body_bg['value'],'std'=>$body_bg['std'], 'link'=>'#html-view' ,'css'=>'background-color' ) ); ?>
 <br><br>
 Body Text Color<br>
-<?php $sp->create_color_picker( array('id'=>'body_text','value'=>$body_text['value'],'std'=>$body_text['std'], 'link'=>'.html-view-outer-text' ,'css'=>'color' ) ); ?>
+<?php // $sp->create_color_picker( array('id'=>'body_text','value'=>$body_text['value'],'std'=>$body_text['std'], 'link'=>'.html-view-outer-text' ,'css'=>'color' ) ); ?>
 <br><br>
 Body Link Color<br>
-<?php $sp->create_color_picker( array('id'=>'body_link','value'=>$body_link['value'],'std'=>$body_link['std'], 'link'=>'.html-view-outer-text a' ,'css'=>'color' ) ); ?>
+<?php // $sp->create_color_picker( array('id'=>'body_link','value'=>$body_link['value'],'std'=>$body_link['std'], 'link'=>'.html-view-outer-text a' ,'css'=>'color' ) ); ?>
+-->
 <?php $this->panel_end(); ?>
 
 </div>
@@ -157,7 +155,40 @@ Body Link Color<br>
         
 
     jQuery(document).ready(function($){
-        var myOptions = {
+        var myOptions2 = {
+    // you can declare a default color here,
+    // or in the data-default-color attribute on the input
+    defaultColor: false,
+    // a callback to fire whenever the color changes to a valid color
+    change: function(event, ui){
+       // console.log( event );
+
+
+    //console.log(  ui.color.toString()  );
+
+     var iframe = $('#iframe1'),
+            content = iframe.contents(),
+            body = content.find('.bodyContent');
+           // styletag = content.find('head').append('<style>body{ background-color: #000; }</style>');
+            //.children('style');
+
+            body.css( 'background-color' , ui.color.toString()  );
+
+          //  console.log(styletag);
+
+
+    },
+    // a callback to fire when the input is emptied or an invalid color
+    clear: function() {},
+    // hide the color picker controls on load
+    hide: true,
+    // show a group of common colors beneath the square
+    // or, supply an array of colors to customize further
+    palettes:  true
+};
+
+        
+            var myOptions = {
     // you can declare a default color here,
     // or in the data-default-color attribute on the input
     defaultColor: false,
@@ -189,8 +220,8 @@ Body Link Color<br>
     palettes:  true
 };
 
+        $('.my-color-field2').wpColorPicker(myOptions2);
         $('.my-color-field').wpColorPicker(myOptions);
-
         $('#bg-color-select').on('change',function(e){
           
 /*
