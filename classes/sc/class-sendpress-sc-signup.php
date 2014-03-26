@@ -150,7 +150,7 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 	}
 
 	public static function docs(){
-		return __('This shortcode creates a sign up form for users on your site.', 'sendpress');
+		return __('This shortcode creates a sign up form for users on your site.  This shortcode is not required for users to signup, you can also use our signup widget.', 'sendpress');
 	}
 
 }
