@@ -82,7 +82,9 @@ class SendPress_Shortcode_Loader {
 							echo "<pre>[sp-". $shortcode ."]". $message ."[/sp-". $shortcode ."]</pre>";
 						}
 
+						do_action('sendpress_shortcode_examples_'.$shortcode);
 					?>
+
 					</div>
 				</div>
 			</div>
