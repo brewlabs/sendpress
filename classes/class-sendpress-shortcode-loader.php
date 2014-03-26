@@ -57,7 +57,7 @@ class SendPress_Shortcode_Loader {
 						if($classname::docs() !== false){
 							echo "<p>" . $classname::docs() . "</p>";
 						}
-						echo "<strong class='text-muted'>Basic:</strong><br>";
+						echo "<strong class='text-muted'>".__('Basic','sendpress').":</strong><br>";
 						echo "<pre>[sp-". $shortcode ."]</pre>";
 						$options = $classname::options();
 
@@ -66,7 +66,7 @@ class SendPress_Shortcode_Loader {
 						foreach ($options as $key => $value) {
 							$txt .= $key . "='".$value."' ";
 						}
-						echo "<strong class='text-muted'>All Options with Defaults:</strong><br>";
+						echo "<strong class='text-muted'>".__('All Options with Defaults','sendpress').":</strong><br>";
 						echo "<pre>[sp-". $shortcode ." ". $txt ."]</pre>";
 						}
 						if( $classname::html() !== false ){
@@ -74,7 +74,7 @@ class SendPress_Shortcode_Loader {
 							if(is_string( $classname::html() ) ){	
 								$message = $classname::html();
 							}
-							echo "<strong class='text-muted'>Wrapping Content:</strong><br>";
+							echo "<strong class='text-muted'>".__('Wrapping Content','sendpress').":</strong><br>";
 							echo "<pre>[sp-". $shortcode ."]". $message ."[/sp-". $shortcode ."]</pre>";
 						}
 
@@ -116,7 +116,7 @@ class SendPress_Shortcode_Loader {
 	}
 
 	/**
-	 * Cart page shortcode.
+	 * Unsubscribe shortcode.
 	 *
 	 * @access public
 	 * @param mixed $atts
@@ -126,7 +126,7 @@ class SendPress_Shortcode_Loader {
 		return self::shortcode_wrapper( array( 'SendPress_SC_Unsubscribe_Form', 'output' ), $atts );
 	}
 	/**
-	 * Cart page shortcode.
+	 * Recent Posts shortcode.
 	 *
 	 * @access public
 	 * @param mixed $atts

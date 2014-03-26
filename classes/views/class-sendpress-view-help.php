@@ -11,7 +11,7 @@ class SendPress_View_Help extends SendPress_View{
 		
 		wp_enqueue_script( 'dashboard' );
 		sp_add_help_widget( 'help_support', 'Contact Us', array(&$this,'help_support'));
-		sp_add_help_widget( 'help_knowledge', 'Recent Knowledge Base Articles', array(&$this,'help_knowledge'),'side' );
+		//sp_add_help_widget( 'help_knowledge', 'Recent Knowledge Base Articles', array(&$this,'help_knowledge'),'side' );
 		sp_add_help_widget( 'help_debug', 'Debug Information', array(&$this,'help_debug'), 'side');
 		
 		//sp_add_help_widget( 'help_blog', 'Recent Blog Posts', array(&$this,'help_blog'),'normal',  array(&$this,'help_blog_control') );
@@ -112,7 +112,7 @@ class SendPress_View_Help extends SendPress_View{
 	  	_e('open','sendpress');
 	  } ?><br><br>
 	  	<b>Support Info:</b>
-	  	<textarea readonly="readonly" class="sendpress-sysinfo" id="system-info-textarea" name="sendpress-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'sendpress' ); ?>">
+	  	<textarea readonly="readonly" class="sendpress-sysinfo"  name="sendpress-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'sendpress' ); ?>">
 ### Begin System Info ###
 
 ## Please include this information when posting support requests ##

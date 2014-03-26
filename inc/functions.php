@@ -33,7 +33,7 @@ global $sendpress_html_templates;
 $sendpress_html_templates = array();
 function sendpress_register_template($html_template = array()){
 	global $sendpress_html_templates;
-	$id = SendPress_Data::get_html_template_id_by_slug( sanitize_title( $html_template['name'] ) );
+	$id = SendPress_Data::get_html_template_id_by_slug( sanitize_title_for_query( $html_template['name'] ) );
 
 	$content = file_get_contents($html_template['path']);
 	$my_post = array(

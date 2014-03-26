@@ -214,14 +214,13 @@ Author URI: https://sendpress.com/
 		}
 
 		function wp(){
-			/*
 			sendpress_register_template(
 				array('path'=> SENDPRESS_PATH.'templates/original.html', 'name'=> 'SendPress Original')
 				);
 			sendpress_register_template(
 				array('path'=> SENDPRESS_PATH.'templates/2columns-to-rows.html', 'name'=> '2 Column Top - Wide Bottom - Responsive')
 				);
-			*/
+			
 		}
 	
 		function init() {
