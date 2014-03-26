@@ -1,5 +1,4 @@
 <?php
-// SendPress Required Class: SendPress_Signup_Shortcode
 
 // Prevent loading this file directly
 if ( !defined('SENDPRESS_VERSION') ) {

@@ -228,7 +228,7 @@ Author URI: https://sendpress.com/
 			//add_action('register_form',array( $this , 'add_registration_fields'));
 			
 			SendPress_Ajax_Loader::init();
-			SendPress_Signup_Shortcode::init();
+			//SendPress_Signup_Shortcode::init();
 			SendPress_Shortcode_Manage::init();
 			SendPress_Sender::init();
 			SendPress_Shortcodes::init();

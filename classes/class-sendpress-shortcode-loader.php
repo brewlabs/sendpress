@@ -14,6 +14,7 @@ class SendPress_Shortcode_Loader {
 		return array(
 			'unsubscribe-form' => __CLASS__ . '::unsubscribe_form',
 			'recent-posts' => __CLASS__ . '::recent_posts',
+			'signup' => __CLASS__ . '::signup',
 		);
 	}
 
@@ -27,6 +28,9 @@ class SendPress_Shortcode_Loader {
 		foreach ( $shortcodes as $shortcode => $function ) {
 			add_shortcode( apply_filters( "sp_{$shortcode}_shortcode_tag", 'sp-'. $shortcode ), $function );
 		}
+
+		//backwards compatibility
+		add_shortcode('sendpress-signup', __CLASS__ . '::signup');
 
 	}
 
@@ -134,6 +138,16 @@ class SendPress_Shortcode_Loader {
 	 */
 	public static function recent_posts( $atts ) {
 		return self::shortcode_wrapper( array( 'SendPress_SC_Recent_Posts', 'output' ), $atts );
+	}
+	/**
+	 * Signup shortcode.
+	 *
+	 * @access public
+	 * @param mixed $atts
+	 * @return string
+	 */
+	public static function signup( $atts ) {
+		return self::shortcode_wrapper( array( 'SendPress_SC_Signup', 'output' ), $atts );
 	}
 
 
