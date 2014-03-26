@@ -659,6 +659,13 @@ Author URI: https://sendpress.com/
 			SendPress_Option::set('emails-per-hour','100');
 		}
 
+		if( SendPress_Option::get('queue-per-call') == false ){
+			SendPress_Option::set('queue-per-call' , 1000 );
+	
+		}
+		
+		 
+
 		//Removed in 0.9.2
 		//$this->create_initial_list();
 		

@@ -14,7 +14,7 @@ class SendPress_View_Help extends SendPress_View{
 		sp_add_help_widget( 'help_knowledge', 'Recent Knowledge Base Articles', array(&$this,'help_knowledge'),'side' );
 		sp_add_help_widget( 'help_debug', 'Debug Information', array(&$this,'help_debug'), 'side');
 		
-		sp_add_help_widget( 'help_blog', 'Recent Blog Posts', array(&$this,'help_blog'),'normal',  array(&$this,'help_blog_control') );
+		//sp_add_help_widget( 'help_blog', 'Recent Blog Posts', array(&$this,'help_blog'),'normal',  array(&$this,'help_blog_control') );
 		sp_add_help_widget( 'help_shortcodes', 'Shortcode Cheat Sheet', array(&$this,'help_shortcodes') ,'normal');
 		sp_add_help_widget( 'help_editemail', 'Customizing Emails', array(&$this,'help_editemail') ,'normal');
 
@@ -32,13 +32,18 @@ class SendPress_View_Help extends SendPress_View{
 	}
 
 	function help_shortcodes(){
-?>
+
+		SendPress_Shortcode_Loader::docs();
+
+		?>
+		<hr>
 		<b>Signup Shortcode</b>
 		<p>If you would rather add the SendPress signup form to a page, you can use the following short code.  If you want more detailed information on how to use the short code check out our <a href="http://sendpress.com/support/knowledgebase/how-to-use-the-sign-up-shortcode/" target="_blank">knowledge base</a>.</p>
 		<pre>[sendpress-signup listids='1']</pre>
 		
 
 <?php
+
 	}
 
 	function help_support(){
@@ -59,6 +64,9 @@ class SendPress_View_Help extends SendPress_View{
 		$browser = NEW SendPress_Browser();
 		echo "<b>WordPress Version</b>: ". $wp_version."<br>";
 		echo "<b>SendPress Version</b>: ".SENDPRESS_VERSION ."<br>";
+		if(defined('SENDPRESS_PRO_VERSION')){
+			echo "<b>SendPress Pro Version</b>: ".SENDPRESS_VERSION ."<br>";
+		}
 		echo '<b>PHP Version</b>: ' . phpversion(). '<br>';
 		
 		$mem = (int) ini_get('memory_limit') ;	
@@ -111,17 +119,13 @@ class SendPress_View_Help extends SendPress_View{
 
 Multi-site:               <?php echo is_multisite() ? 'Yes' . "\n" : 'No' . "\n" ?>
 
-SITE_URL:                 <?php echo site_url() . "\n"; ?>
 HOME_URL:                 <?php echo home_url() . "\n"; ?>
 
-SP Version:              <?php echo SENDPRESS_VERSION . "\n"; ?>
+SP Version:               <?php echo SENDPRESS_VERSION . "\n"; ?>
+<?php if(defined('SENDPRESS_PRO_VERSION')){ ?>SP Pro Version: 	  <?php echo SENDPRESS_PRO_VERSION . "\n"; ?><?php	} ?>
 WordPress Version:        <?php echo get_bloginfo( 'version' ) . "\n"; ?>
-
-<?php echo $browser ; ?>
-
-<?php echo SendPress_DB_Tables::check_setup_support(); ?>
-
 Sending Method: 		  <?php echo SendPress_Option::get( 'sendmethod' ). "\n"; ?>
+SendPress Tables:		   <?php echo SendPress_DB_Tables::check_setup_support(); ?>
 
 PHP Version:              <?php echo PHP_VERSION . "\n"; ?>
 MySQL Version:            <?php echo mysql_get_server_info() . "\n"; ?>
@@ -129,28 +133,17 @@ Web Server Info:          <?php echo $_SERVER['SERVER_SOFTWARE'] . "\n"; ?>
 
 PHP Memory Limit:         <?php echo ini_get( 'memory_limit' ) . "\n"; ?>
 PHP Post Max Size:        <?php echo ini_get( 'post_max_size' ) . "\n"; ?>
+PHP Memory Used:		  <?php echo  $used . __(' MByte') . "\n"; ?>
 
+WP Memory Limit:          <?php echo ( SendPress_Data::let_to_num( WP_MEMORY_LIMIT )/( 1024*1024 ) )."MB"; ?><?php echo "\n"; ?>
 WP_DEBUG:                 <?php echo defined( 'WP_DEBUG' ) ? WP_DEBUG ? 'Enabled' . "\n" : 'Disabled' . "\n" : 'Not set' . "\n" ?>
-
-WP Table Prefix:          <?php echo "Length: ". strlen( $wpdb->prefix ); echo " Status:"; if ( strlen( $wpdb->prefix )>16 ) {echo " ERROR: Too Long";} else {echo " Acceptable";} echo "\n"; ?>
-
-Show On Front:            <?php echo get_option( 'show_on_front' ) . "\n" ?>
-Page On Front:            <?php $id = get_option( 'page_on_front' ); echo get_the_title( $id ) . ' #' . $id . "\n" ?>
-Page For Posts:           <?php $id = get_option( 'page_on_front' ); echo get_the_title( $id ) . ' #' . $id . "\n" ?>
-
-Session:                  <?php echo isset( $_SESSION ) ? 'Enabled' : 'Disabled'; ?><?php echo "\n"; ?>
-Session Name:             <?php echo esc_html( ini_get( 'session.name' ) ); ?><?php echo "\n"; ?>
-Cookie Path:              <?php echo esc_html( ini_get( 'session.cookie_path' ) ); ?><?php echo "\n"; ?>
-Save Path:                <?php echo esc_html( ini_get( 'session.save_path' ) ); ?><?php echo "\n"; ?>
-Use Cookies:              <?php echo ini_get( 'session.use_cookies' ) ? 'On' : 'Off'; ?><?php echo "\n"; ?>
-Use Only Cookies:         <?php echo ini_get( 'session.use_only_cookies' ) ? 'On' : 'Off'; ?><?php echo "\n"; ?>
 
 UPLOAD_MAX_FILESIZE:      <?php if ( function_exists( 'phpversion' ) ) echo ( SendPress_Data::let_to_num( ini_get( 'upload_max_filesize' ) )/( 1024*1024 ) )."MB"; ?><?php echo "\n"; ?>
 POST_MAX_SIZE:            <?php if ( function_exists( 'phpversion' ) ) echo ( SendPress_Data::let_to_num( ini_get( 'post_max_size' ) )/( 1024*1024 ) )."MB"; ?><?php echo "\n"; ?>
-WordPress Memory Limit:   <?php echo ( SendPress_Data::let_to_num( WP_MEMORY_LIMIT )/( 1024*1024 ) )."MB"; ?><?php echo "\n"; ?>
-WP_DEBUG:                 <?php echo ( WP_DEBUG ) ? __( 'On', 'sendpress' ) : __( 'Off', 'sendpress' ); ?><?php echo "\n"; ?>
 DISPLAY ERRORS:           <?php echo ( ini_get( 'display_errors' ) ) ? 'On (' . ini_get( 'display_errors' ) . ')' : 'N/A'; ?><?php echo "\n"; ?>
 FSOCKOPEN:                <?php echo ( function_exists( 'fsockopen' ) ) ? __( 'Your server supports fsockopen.', 'sendpress' ) : __( 'Your server does not support fsockopen.', 'sendpress' ); ?><?php echo "\n"; ?>
+
+<?php echo $browser ; ?>
 
 ACTIVE PLUGINS:
 

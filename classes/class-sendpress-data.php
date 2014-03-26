@@ -863,9 +863,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function get_active_subscribers_lists_with_id($list_ids = array() , $id = 0 ){
 		global $wpdb;
 		$lists = implode(',', $list_ids);
+		$get = intval( SendPress_Option::get('queue-per-call' , 1000 ) );
 		$query = "SELECT t1.subscriberID,t1.email, t3.status, t2.listid, count(*) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
 
-        $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.status = 2) AND (t2.listID in  ( ". $lists ."  )) AND t1.subscriberID > ".$id." GROUP BY t1.subscriberID LIMIT " . SendPress_Option::get('queue-per-call' , 1000 );
+        $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.status = 2) AND (t2.listID in  ( ". $lists ."  )) AND t1.subscriberID > ".$id." GROUP BY t1.subscriberID LIMIT " . $get;
         
      
         return $wpdb->get_results( $query );
@@ -1028,6 +1029,12 @@ class SendPress_Data extends SendPress_DB_Tables {
 		update_post_meta($rid, '_unsubscribe_count', $stat );
 		$wpdb->update( SendPress_Data::list_subcribers_table() , array('status'=> 3) , array('listID'=> $lid,'subscriberID'=>$sid ));
 	}
+
+	static function unsubscribe_from_all_lists( $sid ) {
+		global $wpdb;
+		$wpdb->update( SendPress_Data::list_subcribers_table() , array('status'=> 3) , array('subscriberID'=>$sid ));
+	}
+
 
 	static function get_subscriber_by_email( $email ){
 		global $wpdb;

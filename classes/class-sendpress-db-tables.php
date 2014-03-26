@@ -195,48 +195,39 @@ class SendPress_DB_Tables {
 
     static function check_setup_support(){
         global $wpdb;
-
-        echo "Database Tables: \n";
+        $tables  =  true;
         $subscriber_events_table =  SendPress_DB_Tables::subscriber_event_table();
         if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
-            echo $subscriber_events_table . " Not Installed\n";
-        } else {
-             echo $subscriber_events_table . " OK\n";
-        }
+           $tables =false;
+        } 
 
         $report_url_table =  SendPress_DB_Tables::report_url_table();
         if($wpdb->get_var("show tables like '$report_url_table'") != $report_url_table) {
-            echo $report_url_table . " Not Installed\n";
-        } else {
-             echo $report_url_table . " OK\n";
-        }
+            $tables =false;
+        } 
 
         $subscriber_status_table =  SendPress_DB_Tables::subscriber_status_table();
         if($wpdb->get_var("show tables like '$subscriber_status_table'") != $subscriber_status_table) {
-            echo $subscriber_status_table . " Not Installed\n";
-        } else {
-             echo $subscriber_status_table . " OK\n";
-        }
-
+            $tables =false;
+        } 
         $subscriber_table = SendPress_DB_Tables::subscriber_table();
         if($wpdb->get_var("show tables like '$subscriber_table'") != $subscriber_table) {
-            echo $subscriber_table . " Not Installed\n";
-        } else {
-             echo $subscriber_table . " OK\n";
-        }
+           $tables =false;
+        } 
 
         $subscriber_list_subscribers = SendPress_DB_Tables::list_subcribers_table();
         if($wpdb->get_var("show tables like '$subscriber_list_subscribers'") != $subscriber_list_subscribers) {
-            echo $subscriber_list_subscribers . " Not Installed\n";
-        } else {
-             echo $subscriber_list_subscribers . " OK\n";
-        }
+            $tables =false;
+        } 
 
         $subscriber_queue = SendPress_DB_Tables::queue_table();
         if($wpdb->get_var("show tables like '$subscriber_queue'") != $subscriber_queue) {
-            echo $subscriber_queue . " Not Installed\n";
+            $tables =false;
+        } 
+        if($tables !== false){
+            echo "Tables Installed";
         } else {
-             echo $subscriber_queue . " OK\n";
+            echo "Tables Missing";
         }
         echo "\n";
     }
