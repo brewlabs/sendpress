@@ -100,6 +100,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
+= 0.9.9.5 - 2014.3.27 =
+* Fix: Code fix for PHP 5.2 - T_PAAMAYIM_NEKUDOTAYIM Error
+
 = 0.9.9.4 - 2014.3.26 =
 * Fix: CSS conflicts on WPEngine
 * New: Unsubscribe Shortcode
@@ -451,6 +454,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.9.5 =
+Fix for systems running php 5.2
 
 = 0.9.9.4 =
 Bug Fixes and Shortcodes added

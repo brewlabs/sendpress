@@ -47,10 +47,14 @@ class SendPress_Shortcode_Loader {
 			<div class="panel panel-default">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
-			        <a data-toggle="collapse" data-parent="#accordion" href="#<? echo $classname ?>">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#<? echo $classname; ?>">
 			        	<?php
-			        		$title = $classname::title() !==false ? $classname::title() : "[sp-". $shortcode ."]";
-			         	 echo $title;
+			        		$sc_title = "[sp-". $shortcode ."]";
+			        		$title = call_user_func(array($classname, 'title'));
+			        		if( $title != false ){
+			        			$sc_title = $title;
+			        		}
+			         	 	echo $sc_title;
 			         	  ?>
 			        </a>
 			      </h4>
@@ -58,12 +62,13 @@ class SendPress_Shortcode_Loader {
 				<div id="<? echo $classname ?>" class="panel-collapse collapse ">
 					<div class="panel-body">
 					<?php
-						if($classname::docs() !== false){
-							echo "<p>" . $classname::docs() . "</p>";
+						$docs = call_user_func(array($classname, 'docs'));
+						if($docs !== false){
+							echo "<p>" . $docs . "</p>";
 						}
 						echo "<strong class='text-muted'>".__('Basic','sendpress').":</strong><br>";
 						echo "<pre>[sp-". $shortcode ."]</pre>";
-						$options = $classname::options();
+						$options =  call_user_func(array($classname, 'options'));
 
 						if(!empty($options)){
 						$txt = '';
@@ -73,10 +78,11 @@ class SendPress_Shortcode_Loader {
 						echo "<strong class='text-muted'>".__('All Options with Defaults','sendpress').":</strong><br>";
 						echo "<pre>[sp-". $shortcode ." ". $txt ."]</pre>";
 						}
-						if( $classname::html() !== false ){
+						$html = call_user_func(array($classname, 'html'));
+						if( $html !== false ){
 							$message = __('Your Content Here.','sendpress');
-							if(is_string( $classname::html() ) ){	
-								$message = $classname::html();
+							if(is_string( $html ) ){	
+								$message = $html;
 							}
 							echo "<strong class='text-muted'>".__('Wrapping Content','sendpress').":</strong><br>";
 							echo "<pre>[sp-". $shortcode ."]". $message ."[/sp-". $shortcode ."]</pre>";
