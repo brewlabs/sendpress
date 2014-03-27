@@ -2,6 +2,7 @@ script: phpunit
 after_script: 
 - php vendor/bin/coveralls -v
 php: 
+- "5.2.4"
 - "5.3"
 - "5.4"
 language: php
