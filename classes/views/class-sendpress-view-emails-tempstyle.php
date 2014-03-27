@@ -130,13 +130,18 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
 <iframe id="iframe1" class="hidden-xs" width="100%" style="border: solid 1px #e7e7e7; border-radius: 5px;" src="<?php echo home_url(); ?>?sendpress=render&spemail=<?php echo $_GET['templateID']; ?>" ></iframe>
 </div>
 <div class="sp-25">
-<?php $this->panel_start( '<span class=" glyphicon glyphicon-tint"></span> '. __('Body Styles','sendpress') ); ?>
+<?php $this->panel_start( '<span class=" glyphicon glyphicon-tint"></span> '. __('Background Styles','sendpress') ); ?>
 
-Background<br>
+Body<br>
 <input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+
 <br>
-Background<br>
+Content<br>
 <input type="text" value="#bada55" id="bg-color-select" class="my-color-field2" data-default-color="#effeff" />
+
+<br>
+Footer<br>
+<input type="text" value="#bada55" id="bg-color-select" class="my-color-field3" data-default-color="#effeff" />
 <!--
 <?php // $sp->create_color_picker( array('id'=>'body_bg','value'=>$body_bg['value'],'std'=>$body_bg['std'], 'link'=>'#html-view' ,'css'=>'background-color' ) ); ?>
 <br><br>
@@ -220,6 +225,38 @@ Body Link Color<br>
     palettes:  true
 };
 
+           var myOptions3 = {
+    // you can declare a default color here,
+    // or in the data-default-color attribute on the input
+    defaultColor: false,
+    // a callback to fire whenever the color changes to a valid color
+    change: function(event, ui){
+       // console.log( event );
+
+
+    //console.log(  ui.color.toString()  );
+
+     var iframe = $('#iframe1'),
+            content = iframe.contents(),
+            body = content.find('.footerContent');
+           // styletag = content.find('head').append('<style>body{ background-color: #000; }</style>');
+            //.children('style');
+
+            body.css( 'background-color' , ui.color.toString()  );
+
+          //  console.log(styletag);
+
+
+    },
+    // a callback to fire when the input is emptied or an invalid color
+    clear: function() {},
+    // hide the color picker controls on load
+    hide: true,
+    // show a group of common colors beneath the square
+    // or, supply an array of colors to customize further
+    palettes:  true
+};
+        $('.my-color-field3').wpColorPicker(myOptions3);
         $('.my-color-field2').wpColorPicker(myOptions2);
         $('.my-color-field').wpColorPicker(myOptions);
         $('#bg-color-select').on('change',function(e){
