@@ -1,10 +1,10 @@
 === SendPress Newsletters ===
-Plugin URI: http://sendpress.com
+Plugin URI: https://sendpress.com
 Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 3.8.1
-Stable tag: 0.9.9.3
+Stable tag: 0.9.9.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,8 +80,6 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 
 
-
-
 == Screenshots ==
 
 1. Email Lists.
@@ -101,6 +99,13 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 0.9.9.4 - 2014.3.26 =
+* Fix: CSS conflicts on WPEngine
+* New: Unsubscribe Shortcode
+* New: Recent Posts Shortcode
+* New: Signup Shortcode
+* New: Shortcode Docs on Help Page
 
 = 0.9.9.3 - 2014.3.20 =
 * Fix: Bug in SendPress_View that may cause white screen in SendPress
@@ -446,6 +451,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.9.4 =
+Bug Fixes and Shortcodes added
 
 = 0.9.9.3 =
 Fix for possible view error causing white screen on SendPress Tab
