@@ -24,6 +24,7 @@ class WP_Test_SendPress_Data extends WP_UnitTestCase {
     }
     
     function test_tables_installed(){
+        SendPress_Data::install();
         $this->assertContains('Installed', SendPress_DB_Tables::check_setup_support() );
     }
 
