@@ -23,6 +23,11 @@ class WP_Test_SendPress_Data extends WP_UnitTestCase {
                     SendPress_Data::email_post_type() );
     }
     
+    function test_tables_installed(){
+        $this->assertContains('Installed', SendPress_DB_Tables::check_setup_support() );
+    }
+
+
     function test_report_post_type(){
         
       $this->assertEquals( 'sp_report',

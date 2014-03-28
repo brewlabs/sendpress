@@ -722,6 +722,22 @@ class SendPress_Data extends SendPress_DB_Tables {
 		//$result = $wpdb->update($table, $values, array('email'=> $email) );
 	}
 
+	static function update_subscriber_by_wp_user($wp_user_id, $values){
+		$table = SendPress_Data::subscriber_table();
+		global $wpdb;
+		$key = SendPress_Data::random_code();
+		
+		$current = $wpdb->get_var( $wpdb->prepare("SELECT subscriberID FROM $table WHERE wp_user_id = %d", $wp_user_id) );
+		if( $current !== null ){
+			$wpdb->update($table , $values, array( 'subscriberID' => $current ) );
+		} else {	
+			$q = "INSERT INTO $table (email,wp_user_id,identity_key,join_date,firstname,lastname) VALUES (%s,%d,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE wp_user_id=%d,firstname=%s,lastname=%s";
+			$q = $wpdb->prepare($q,$values['email'],$wp_user_id,$key,date('Y-m-d H:i:s'),$values['firstname'],$values['lastname'],$wp_user_id,$values['firstname'],$values['lastname']);
+			$result = $wpdb->query($q);
+		}
+		//$result = $wpdb->update($table, $values, array('email'=> $email) );
+	}
+
 
 	static function get_subcribers_by_meta($meta_key = false, $meta_value = false, $list_id= false){
 
