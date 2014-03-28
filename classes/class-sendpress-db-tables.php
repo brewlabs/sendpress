@@ -225,11 +225,11 @@ class SendPress_DB_Tables {
             $tables =false;
         } 
         if($tables !== false){
-            echo "Tables Installed";
+            return "Tables Installed";
         } else {
-            echo "Tables Missing";
+            return "Tables Missing";
         }
-        echo "\n";
+       
     }
   
 

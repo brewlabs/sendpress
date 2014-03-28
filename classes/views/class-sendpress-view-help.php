@@ -116,7 +116,7 @@ SP Version:               <?php echo SENDPRESS_VERSION . "\n"; ?>
 <?php if(defined('SENDPRESS_PRO_VERSION')){ ?>SP Pro Version: 	  <?php echo SENDPRESS_PRO_VERSION . "\n"; ?><?php	} ?>
 WordPress Version:        <?php echo get_bloginfo( 'version' ) . "\n"; ?>
 Sending Method: 		  <?php echo SendPress_Option::get( 'sendmethod' ). "\n"; ?>
-SendPress Tables:		   <?php echo SendPress_DB_Tables::check_setup_support(); ?>
+SendPress Tables:		   <?php echo SendPress_DB_Tables::check_setup_support() . "\n"; ?>
 
 PHP Version:              <?php echo PHP_VERSION . "\n"; ?>
 MySQL Version:            <?php echo mysql_get_server_info() . "\n"; ?>
