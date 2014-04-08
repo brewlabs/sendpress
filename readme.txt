@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
-Tested up to: 3.8.1
-Stable tag: 0.9.9.5
+Tested up to: 3.8.2
+Stable tag: 0.9.9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,6 +99,14 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 0.9.9.6 - 2014.4.8 =
+* Fix: List Sync not updating all users
+* Fix: multiple sptemplates being created on some hosts
+* New: Duplicate tempalte check added to Advanced Settings
+* Update: Trvix CLI tests updated
+* Update: Pro installer should always use SSL
+ 
 
 = 0.9.9.5 - 2014.3.27 =
 * Fix: Code fix for PHP 5.2 - T_PAAMAYIM_NEKUDOTAYIM Error

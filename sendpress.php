@@ -1,7 +1,7 @@
 <?php 
 /*
 Plugin Name: SendPress Newsletters
-Version: 0.9.9.5
+Version: 0.9.9.6
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress. 
 Author: SendPress
