@@ -125,7 +125,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 		<pre><?php echo SendPress_DB_Tables::check_setup_support(); ?></pre>
 		<a class="btn btn-danger" href="<? echo SendPress_Admin::link('Settings_Install'); ?>">Install Missing Tables</a>
 		<a class="btn btn-warning" href="<? echo SendPress_Admin::link('Settings_Install',array('action'=>'events-repair')); ?>">Repair Events Tables</a>
-
+		<a class="btn btn-primary" href="<? echo SendPress_Admin::link('Settings_Fixposts'); ?>">Templates Check</a>
 	</div>	
 	<div class="sp-50">
 		<div class="panel panel-default">

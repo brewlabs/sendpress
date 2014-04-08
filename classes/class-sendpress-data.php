@@ -1004,6 +1004,21 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $event_data);
 	}
 
+
+	static  function get_bad_post_count(){
+		global $wpdb;
+		$result = $wpdb->get_var("select count(*) from ". $wpdb->posts ." where post_type='sptemplates' and post_name not in('sp-template-user-style','sp-template-default-style','sp-template-double-optin')");
+		return $result;
+	}
+
+
+	static function delete_extra_posts(){
+		global $wpdb;
+		$wpdb->query("delete from ". $wpdb->posts ." where post_type='sptemplates' and post_name not in('sp-template-user-style','sp-template-default-style','sp-template-double-optin')");
+
+
+	}
+
 	static function add_subscribe_event( $sid, $lid, $type ){
 		global $wpdb;
 
