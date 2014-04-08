@@ -114,7 +114,7 @@ Author URI: https://sendpress.com/
 			add_action( 'init', array( $this , 'init' ) );
 			add_action( 'widgets_init', array( $this , 'load_widgets' ) );
 			add_action( 'plugins_loaded', array( $this , 'load_plugin_language' ) );
-
+			add_action( 'admin_enqueue_scripts', array( $this , 'wp_enqueue_script' ) );
 			add_action( 'init', array( 'SendPress_Shortcode_Loader', 'init' ) );
 		
 			do_action( 'sendpress_loaded' );
@@ -223,18 +223,17 @@ Author URI: https://sendpress.com/
 			
 		}
 	
+		
+
 		function init() {
 			$this->maybe_upgrade();
 			//add_action('register_form',array( $this , 'add_registration_fields'));
 			
 			SendPress_Ajax_Loader::init();
 			//SendPress_Signup_Shortcode::init();
-			SendPress_Shortcode_Manage::init();
 			SendPress_Sender::init();
-			SendPress_Shortcodes::init();
 			SendPress_Pro_Manager::init();
 			SendPress_Cron::get_instance();
-			SendPress_Cron::auto();
 			SendPress_Notifications_Manager::init();
 			SendPress_Tracking::init();
 			SendPress_Videos::init();
@@ -696,28 +695,23 @@ Author URI: https://sendpress.com/
 			
 		*/
 		
+		wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' ,'', SENDPRESS_VERSION);
 
-
-		if( ( isset($_GET['page']) && $_GET['page'] == 'sp-templates' ) || (isset( $_GET['view'] ) && $_GET['view'] == 'style-email' )) {
-			wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' ,'', SENDPRESS_VERSION);
-			wp_enqueue_script('sendpress_js_styler');
-		}
+		
 		wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', false, SENDPRESS_VERSION );
     	wp_enqueue_style( 'sendpress_css_admin' );
+    	wp_register_script('sendpress-widget-js', SENDPRESS_URL .'js/sendpress.widget.js','', SENDPRESS_VERSION );
+			
+    	
 
-    	global $pagenow;
-
-    	if( $pagenow === 'widgets.php' ){
-    		wp_register_script('sendpress-widget-js', SENDPRESS_URL .'js/sendpress.widget.js','', SENDPRESS_VERSION );
-			wp_enqueue_script('sendpress-widget-js');
-    	}
+    	
 
 		//MAKE SURE WE ARE ON AN ADMIN PAGE
 		if(isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)){
 
 				remove_action('admin_init', 'Zotpress_add_meta_box', 1);
-				remove_filter( 'mce_external_plugins', 'cforms_plugin');
-				remove_filter( 'mce_buttons', 'cforms_button');
+				remove_filter('mce_external_plugins', 'cforms_plugin');
+				remove_filter('mce_buttons', 'cforms_button');
 				remove_filter("mce_plugins", "cforms_plugin");
 				remove_filter('mce_buttons', 'cforms_button');
 				remove_filter('tinymce_before_init','cforms_button_script');
@@ -727,12 +721,11 @@ Author URI: https://sendpress.com/
 				SendPress_Option::set('whatsnew','hide');
 				SendPress_Admin::redirect('Help_Whatsnew');
 			}
-				if( ( isset($_GET['page']) && $_GET['page'] == 'sp-templates' ) || (isset( $_GET['view'] ) && $_GET['view'] == 'style-email' )) {
-			wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' ,'', SENDPRESS_VERSION);
-			wp_enqueue_script('sendpress_js_styler');
-		}
+			if( ( isset($_GET['page']) && $_GET['page'] == 'sp-templates' ) || (isset( $_GET['view'] ) && $_GET['view'] == 'style-email' )) {
+				wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' ,'', SENDPRESS_VERSION);
+			}
 			if(defined('WPE_PLUGIN_BASE') ){
-				add_action('admin_print_styles', array( $this ,'remove_wpengine_style'));
+				add_action('admin_print_styles', array( $this ,'remove_wpengine_style'), 100);
 			}
 
 
@@ -749,48 +742,13 @@ Author URI: https://sendpress.com/
 			//Stop Facebook Plugin from posting emails to Facebook.
 			remove_action( 'transition_post_status', 'fb_publish_later', 10, 3);
 
-			wp_enqueue_style( 'farbtastic' );
 			$tiny = new SendPress_TinyMCE();
 	   		$this->_current_view = isset( $_GET['view'] ) ? $_GET['view'] : '' ;
 
-			wp_enqueue_script(array('jquery', 'editor', 'thickbox', 'media-upload'));
-			if($this->_page == 'help'){
-				wp_enqueue_script( 'dashboard' );
-			}
-			wp_enqueue_style('thickbox');
-			wp_register_script('spfarb', SENDPRESS_URL .'js/farbtastic.js' ,'', SENDPRESS_VERSION );
-			wp_enqueue_script( 'spfarb' );
-	
-			wp_register_script('sendpress-flot', SENDPRESS_URL .'js/flot/jquery.flot.js' ,'', SENDPRESS_VERSION );
-			wp_register_script('sendpress-flot-selection', SENDPRESS_URL .'js/flot/jquery.flot.selection.js' ,'', SENDPRESS_VERSION );
-			wp_register_script('sendpress-flot-resize', SENDPRESS_URL .'js/flot/jquery.flot.resize.js' ,'', SENDPRESS_VERSION );
-		
-
-			wp_register_script('sendpress-admin-js', SENDPRESS_URL .'js/sendpress.js','', SENDPRESS_VERSION );
-			wp_enqueue_script('sendpress-admin-js');
-			wp_register_script('sendpress_bootstrap', SENDPRESS_URL .'bootstrap/js/bootstrap.min.js' ,'',SENDPRESS_VERSION);
-			wp_enqueue_script('sendpress_bootstrap');
-			wp_register_style( 'sendpress_bootstrap_css', SENDPRESS_URL . 'bootstrap/css/bootstrap.css', '', SENDPRESS_VERSION );
-    		wp_enqueue_style( 'sendpress_bootstrap_css' );
-
-    		wp_register_script('sendpress_ls', SENDPRESS_URL .'js/jquery.autocomplete.js' ,'', SENDPRESS_VERSION );
-			wp_enqueue_script('sendpress_ls');
-
-
-			//wp_localize_script( 'sendpress_js', 'sendpress', array( 'ajaxurl' => admin_url( 'admin-ajax.php', 'http' ) ) );
-
-			/*
-			wp_register_style( 'sendpress_jquery_ibutton_css', SENDPRESS_URL . 'css/jquery.ibutton.css', false, SENDPRESS_VERSION );
-    		wp_enqueue_style( 'sendpress_jquery_ibutton_css' );
-    		wp_register_script('sendpress_jquery_ibutton_js', SENDPRESS_URL .'js/jquery.ibutton.min.js' ,'',SENDPRESS_VERSION);
-			wp_enqueue_script('sendpress_jquery_ibutton_js');
-			*/
-
-			wp_register_style( 'sendpress_css_base', SENDPRESS_URL . 'css/style.css', array('sendpress_bootstrap_css'), SENDPRESS_VERSION );
-    		wp_enqueue_style( 'sendpress_css_base' );
-			wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array('sendpress_bootstrap_css'), SENDPRESS_VERSION );
-    		wp_enqueue_style( 'sendpress_css_admin' );
-	    	do_action('sendpress_admin_scripts');
+			
+			
+			
+	    	
 	    	$view_class = $this->get_view_class($this->_page, $this->_current_view);
 			$view_class = NEW $view_class;
 			$view_class->admin_init();	
@@ -839,8 +797,69 @@ Author URI: https://sendpress.com/
 		}
    	}
 
+   	function wp_enqueue_script(){
+
+
+			global $pagenow;
+			
+    		//MAKE SURE WE ARE ON AN ADMIN PAGE
+			if(is_admin() && isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)){
+
+				wp_enqueue_style('thickbox');
+				wp_register_script('spfarb', SENDPRESS_URL .'js/farbtastic.js' ,'', SENDPRESS_VERSION );
+
+				wp_register_script('sendpress-flot', SENDPRESS_URL .'js/flot/jquery.flot.js' ,'', SENDPRESS_VERSION );
+				wp_register_script('sendpress-flot-selection', SENDPRESS_URL .'js/flot/jquery.flot.selection.js' ,'', SENDPRESS_VERSION );
+				wp_register_script('sendpress-flot-resize', SENDPRESS_URL .'js/flot/jquery.flot.resize.js' ,'', SENDPRESS_VERSION );
+				wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array('sendpress_bootstrap_css'), SENDPRESS_VERSION );
+				wp_register_style( 'sendpress_css_base', SENDPRESS_URL . 'css/style.css', array('sendpress_bootstrap_css'), SENDPRESS_VERSION );
+
+
+				wp_register_script('sendpress-admin-js', SENDPRESS_URL .'js/sendpress.js','', SENDPRESS_VERSION );
+				wp_register_script('sendpress_bootstrap', SENDPRESS_URL .'bootstrap/js/bootstrap.min.js' ,'',SENDPRESS_VERSION);
+
+				wp_register_style( 'sendpress_bootstrap_css', SENDPRESS_URL . 'bootstrap/css/bootstrap.css', '', SENDPRESS_VERSION );
+
+
+				wp_register_script('sendpress_ls', SENDPRESS_URL .'js/jquery.autocomplete.js' ,'', SENDPRESS_VERSION );
+
+
+
+			wp_enqueue_script('sendpress_bootstrap');
+			wp_enqueue_style( 'sendpress_bootstrap_css' );
+			wp_enqueue_style( 'sendpress_css_base' );
+			wp_enqueue_style( 'sendpress_css_admin' );	
+    		if( ( isset($_GET['page']) && $_GET['page'] == 'sp-templates' ) || (isset( $_GET['view'] ) && $_GET['view'] == 'style-email' )) {
+				wp_enqueue_script('sendpress_js_styler');
+			}
+			if( $pagenow === 'widgets.php' ){
+    			wp_enqueue_script('sendpress-widget-js');
+    		}
+
+				if($this->_page == 'help'){
+					wp_enqueue_script( 'dashboard' );
+				}
+				wp_enqueue_style( 'farbtastic' );
+			
+    			wp_enqueue_script(array('jquery', 'editor', 'thickbox', 'media-upload'));
+    			wp_enqueue_script('sendpress-admin-js');
+				wp_enqueue_script( 'spfarb' );
+				wp_enqueue_script('sendpress_ls');
+	
+    		}
+    			wp_localize_script( 'sendpress-admin-js', 'spvars', array(
+	    // URL to wp-admin/admin-ajax.php to process the request
+	    'ajaxurl'          => admin_url( 'admin-ajax.php' ),
+	 
+	    // generate a nonce with a unique ID "myajax-post-comment-nonce"
+	    // so that you can check it later when an AJAX request is sent
+	    'sendpressnonce' => wp_create_nonce( SendPress_Ajax_Loader::$ajax_nonce ),
+	    )
+		);
+    		do_action('sendpress_admin_scripts');
+		}
+
 	static function remove_wpengine_style() {
-		error_log('test');
 		wp_dequeue_style('wpe-common');
 		wp_deregister_style('wpe-common');
 	}

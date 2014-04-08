@@ -30,7 +30,7 @@ class SendPress_Shortcode_Loader {
 		}
 
 		//backwards compatibility
-		add_shortcode('sendpress-signup', __CLASS__ . '::signup');
+		add_shortcode('sendpress-signup', __CLASS__ . '::signup_nowrap');
 
 	}
 
@@ -157,6 +157,18 @@ class SendPress_Shortcode_Loader {
 	public static function signup( $atts ) {
 		return self::shortcode_wrapper( array( 'SendPress_SC_Signup', 'output' ), $atts );
 	}
+	/**
+	 * Signup shortcode old with no wrapper code.
+	 *
+	 * @access public
+	 * @param mixed $atts
+	 * @return string
+	 */
+	public static function signup_nowarp( $atts ) {
+		return call_user_func( array( 'SendPress_SC_Signup', 'output' ), $atts );
+	}
+
+
 
 
 

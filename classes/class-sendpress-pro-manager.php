@@ -30,9 +30,11 @@ class SendPress_Pro_Manager {
 	}
 
 	function _init(){
-		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'pre_set_site_transient_update_plugins_filter' ) );
-		add_filter('plugins_api', array( $this, 'get_pro_details' ),10,3);
+		//add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'pre_set_site_transient_update_plugins_filter' ) );
+		add_filter('plugins_api', array( $this, 'plugins_api_filter' ),10,3);
 		add_filter( 'http_request_args', array( $this, 'http_request_args' ), 10, 2 );
+			
+		
 		//add_filter('plugins_api_result', array( $this, 'get_pro_details' ),10,3);
 		if( defined('SENDPRESS_PRO_VERSION') ){	
 			add_action( 'admin_head', array( $this, 'check_api_key' ) );
@@ -51,7 +53,7 @@ class SendPress_Pro_Manager {
 
 			if( false !== $api_response && is_object( $api_response ) && isset( $api_response->new_version ) ) {
 				if( version_compare( SENDPRESS_PRO_VERSION, $api_response->new_version, '<' ) )
-					$_transient_data->response[$this->name] = $api_response;
+					$_transient_data->response['sendpress-pro/sendpress-pro.php'] = $api_response;
 			}
 		}
 		return $_transient_data;
@@ -71,6 +73,19 @@ class SendPress_Pro_Manager {
 		}
 		return $args;
 	}
+
+
+	function plugins_api_filter( $_data, $_action = '', $_args = null ) {
+		if ( ( $_action != 'plugin_information' ) || !isset( $_args->slug ) || ( $_args->slug != 'sendpress-pro' ) ) return $_data;
+
+		$to_send = array( 'slug' => 'sendpress-pro' );
+
+		$api_response = $this->api_request( 'plugin_information', $to_send );
+		if ( false !== $api_response ) $_data = $api_response;
+
+		return $_data;
+	}
+
 
 	/**
      * get_pro_state
@@ -290,7 +305,6 @@ class SendPress_Pro_Manager {
 			'author'		=> 'SendPress'
 		);
 		$request = wp_remote_post( SENDPRESS_STORE_URL , array( 'timeout' => 15, 'ssverify' => false, 'body' => $api_params ) );
-		
 		if ( !is_wp_error( $request ) ):
 			$request = json_decode( wp_remote_retrieve_body( $request ) );
 			if( $request )

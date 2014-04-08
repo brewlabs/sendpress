@@ -47,15 +47,7 @@ class SendPress_Ajax_Loader{
 	}
 
 	function admin_scripts(){
-		wp_localize_script( 'sendpress-admin-js', 'spvars', array(
-	    // URL to wp-admin/admin-ajax.php to process the request
-	    'ajaxurl'          => admin_url( 'admin-ajax.php' ),
-	 
-	    // generate a nonce with a unique ID "myajax-post-comment-nonce"
-	    // so that you can check it later when an AJAX request is sent
-	    'sendpressnonce' => wp_create_nonce( SendPress_Ajax_Loader::$ajax_nonce ),
-	    )
-		);
+		
 	}
 
 	function verify_ajax_call(){
