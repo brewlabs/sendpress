@@ -726,7 +726,7 @@ Author URI: https://sendpress.com/
 				wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' ,'', SENDPRESS_VERSION);
 			}
 			if(defined('WPE_PLUGIN_BASE') ){
-				add_action('admin_print_styles', array( $this ,'remove_wpengine_style'), 100);
+				add_action('admin_print_styles', array( $this ,'remove_wpengine_style'));
 			}
 
 
