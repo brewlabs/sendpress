@@ -44,8 +44,7 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 		global $load_signup_js, $sendpress_show_thanks, $sendpress_signup_error;
 		$load_signup_js = true;
 
-		ob_start();
-
+		
 	   	$lists = SendPress_Data::get_lists(
 			array('meta_query' => array(
 				array(
@@ -142,10 +141,7 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 		</div> 
 	
 	    <?php
-
-	    $output = ob_get_contents();
-	    //ob_end_clean();
-	    return $output;
+	    
 
 	}
 
