@@ -1202,6 +1202,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function read_file_to_str($file){
 		return file_get_contents($file);
 	}
+	
 	static function import_csv_array($data, $map, $list){
 
 		global $wpdb;
@@ -1252,15 +1253,31 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$query_get = "SELECT subscriberID FROM ". SendPress_Data::subscriber_table(). " WHERE email in ('".implode("','", $emails_added)."')";
 		
 		$data = $wpdb->get_results($query_get);
+
+		$txt = '';
+		foreach ($data as $value) {
+			$txt .= $value->subscriberID . ',';
+		}
+		$txt .= '0';
+
+		$current_status = "SELECT * FROM ". SendPress_Data::list_subcribers_table(). " WHERE subscriberID in (". $txt .") AND listID = " . $list ;
+		
+		
+		$my_data_x = $wpdb->get_results($current_status, OBJECT_K);
+
 	
 		$query_update_status ="INSERT IGNORE INTO ". SendPress_Data::list_subcribers_table(). "(subscriberID,listID,status,updated ) VALUES ";
+		
 		$total = count($data);
 		$x = 0;
 		if($total > 0){
 		foreach ($data as $value) {
 			$x++;
-			$query_update_status .= "( ".$value->subscriberID . "," . $list . ",2,'" .date('Y-m-d H:i:s') . "') ";
-			if($total > $x ){ $query_update_status .=",";}
+			if( !isset( $my_data_x[ $value->subscriberID ]) ){
+				$query_update_status .= "( ".$value->subscriberID . "," . $list . ",2,'" .date('Y-m-d H:i:s') . "') ";
+			
+				if($total > $x ){ $query_update_status .=",";}
+			}
 		}
 		$query_update_status .=";";
 		$wpdb->query($query_update_status);

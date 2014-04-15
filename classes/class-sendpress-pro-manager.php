@@ -196,19 +196,16 @@ class SendPress_Pro_Manager {
 
 	static function try_deactivate_key(){
 		$key = SendPress_Option::get('api_key');
-		global $pro_names;
-		foreach($pro_names as $name){
-			SendPress_Pro_Manager::deactivate_key($key,$name);
-		}
+		SendPress_Pro_Manager::deactivate_key($key,$name);
 	}
 
 	static function check_key($key,$name){
 
 		if(empty($key)){
-			return array('state'=>SENDPRESS_PRO_DEACTIVATED, 'transient_time'=>YEAR_IN_SECONDS,'sp_state'=>'passed');
+			return false;
 		}
 
-		$failed = array('state'=>'valid', 'transient_time'=>DAY_IN_SECONDS, 'sp_state'=>'failed');
+		$failed = false; //array('state'=>'valid', 'transient_time'=>DAY_IN_SECONDS, 'sp_state'=>'failed');
         
         // data to send in our API request
         $api_params = array( 
@@ -228,7 +225,7 @@ class SendPress_Pro_Manager {
         // decode the license data
         $license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
-        if($license_data){
+        if($license_data->license === 'valid'){
      	   // $license_data->license will be either "deactivated" or "failed"
      	   return array('state'=>$license_data->license, 'transient_time'=>SENDPRESS_TRANSIENT_LENGTH,  'sp_state'=>'passed');
     	}
