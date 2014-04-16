@@ -28,6 +28,9 @@ class SendPress_View_Subscribers_Csvimport extends SendPress_View_Subscribers {
         $filetitle = preg_replace('/\.[^.]+$/', '', basename( $filename ) );
         $filename = $filetitle . '.' . $filetype['ext'];
         $upload_dir = wp_upload_dir();
+        if( $filetype['ext'] != 'csv' ){
+          SendPress_Admin::redirect('Subscribers_Csvimport',array('listID'=> $_POST['listID']));
+        }
 
         /**
          * Check if the filename already exist in the directory and rename the

@@ -267,7 +267,7 @@ class SendPress_Email {
 
 	function subject(){
 			// Get any existing copy of our transient data
-			if ( false === ( $email_subject = get_transient( 'sendpress_report_subject_'. $this->id() ) ) || ($this->purge() == true) ) {
+			//if ( false === ( $email_subject = get_transient( 'sendpress_report_subject_'. $this->id() ) ) || ($this->purge() == true) ) {
 			    // It wasn't there, so regenerate the data and save the transient
 			    if(!$this->post_info){
 			    	$this->post_info = get_post( $this->id() );
@@ -280,9 +280,9 @@ class SendPress_Email {
 				}
 				
 			    $email_subject = SendPress_Template::tag_replace($email_subject);
-				set_transient( 'sendpress_report_subject_'. $this->id(), $email_subject , 60*60*2);
+			//	set_transient( 'sendpress_report_subject_'. $this->id(), $email_subject , 60*60*2);
 			    // Get any existing copy of our transient data
-			}
+			//}
 			$subscriber = SendPress_Data::get_subscriber($this->subscriber_id());
 			if (!is_null($subscriber)) {
 				$email_subject = str_replace("*|FNAME|*", $subscriber->firstname , $email_subject );
