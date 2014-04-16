@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 3.8.2
-Stable tag: 0.9.9.7
+Stable tag: 0.9.9.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,6 +99,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 0.9.9.8 - 2014.4.15 =
+* Fix: Import changing status of users
+* Fix: Import not check for valid csv
+* Fix: ob_start in shortcode (fixes broken front-ends)
+* Fix: Pro key management
 
 = 0.9.9.7 - 2014.4.10 =
 * Fix: styling on wpengine.com
@@ -465,6 +471,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.9.8 =
+Bug fixes for shortcods and imports
 
 = 0.9.9.7 =
 Styling fix for WPEngine Customers
