@@ -88,6 +88,8 @@ Author URI: https://sendpress.com/
 		var $_debugAddress = 'josh@sendpress.com';
 	
 		var $_debugMode = false;
+
+		public $email_tags;
 	
 		private static $instance;
 
@@ -110,7 +112,7 @@ Author URI: https://sendpress.com/
 		
 		
 		function __construct() {
-			add_action( 'admin_init' , array( $this , 'wp' ) );
+			//add_action( 'admin_init' , array( 'SendPress' , 'wp' ) );
 			add_action( 'init', array( $this , 'init' ) );
 			add_action( 'widgets_init', array( $this , 'load_widgets' ) );
 			add_action( 'plugins_loaded', array( $this , 'load_plugin_language' ) );
@@ -204,23 +206,24 @@ Author URI: https://sendpress.com/
 	    
 	  }
 	
-		static function get_instance() {
-			if ( ! isset( self::$instance ) ) {
-				$class_name = __CLASS__;
-				self::$instance = new $class_name;
+		
+
+		public static function get_instance() {
+			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof SendPress ) ) {
+				self::$instance = new SendPress;
+				self::$instance->email_tags = new SendPress_Email_Tags();
 			}
 			return self::$instance;
 		}
 
-		function wp(){
-			/*
+		static function update_templates(){
 			sendpress_register_template(
-				array('path'=> SENDPRESS_PATH.'templates/original.html', 'name'=> 'SendPress Original')
+				array('slug'=>'original','path'=> SENDPRESS_PATH.'templates/original.html', 'name'=> 'SendPress Original')
 				);
 			sendpress_register_template(
-				array('path'=> SENDPRESS_PATH.'templates/2columns-to-rows.html', 'name'=> '2 Column Top - Wide Bottom - Responsive')
+				array('slug'=>'2columns-to-rows','path'=> SENDPRESS_PATH.'templates/2columns-to-rows.html', 'name'=> '2 Column Top - Wide Bottom - Responsive')
 				);
-			*/
+			
 		}
 	
 		
@@ -267,6 +270,8 @@ Author URI: https://sendpress.com/
 			}
 		
 			$this->add_custom_post();
+
+			
 			//add_filter( 'cron_schedules', array($this,'cron_schedule' ));
 			//add_action( 'wp_loaded', array( $this, 'add_cron' ) );
 				
@@ -1157,6 +1162,7 @@ Author URI: https://sendpress.com/
 		//On version change update default template
 		$this->set_template_default();	
 
+		SendPress::update_templates();
 
 		if(version_compare( $current_version, '0.8.6', '<' )){
 			$widget_options =  array();
@@ -2061,4 +2067,11 @@ register_activation_hook( __FILE__, array( 'SendPress', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'SendPress', 'plugin_deactivation' ) );
 
 // Initialize!
-SendPress::get_instance();
+
+function SPNL(){
+	return SendPress::get_instance();
+}
+SPNL();
+
+
+

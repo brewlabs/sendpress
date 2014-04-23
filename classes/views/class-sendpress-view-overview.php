@@ -39,6 +39,10 @@ $sp->send_optin(1,array('1','2','3'),$lists);
 */
 list( $display_version ) = explode( '-', $wp_version );
 
+SendPress_Template_Manager::update_template_content();
+
+echo spnl_do_email_tags( 'here is some {subscriber_list} content that should run tags' , 0 , 0 );
+
 
 ?>
 <br>

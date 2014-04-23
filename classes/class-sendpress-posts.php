@@ -164,6 +164,26 @@ class SendPress_Posts{
 	
 	// Added 'exclude_from_search'=>true
 	static function template_post_type(){
+		// Template Post Statuses
+		register_post_status( 'sp-standard', array(
+			'label'                     => _x( 'Standard', 'Standard Template', 'sendpress' ),
+			'public'                    => true,
+			'exclude_from_search'       => false,
+			'show_in_admin_all_list'    => true,
+			'show_in_admin_status_list' => true,
+			'label_count'               => _n_noop( 'Standard <span class="count">(%s)</span>', 'Standard <span class="count">(%s)</span>', 'sendpress' )
+		)  );
+
+		register_post_status( 'sp-custom', array(
+			'label'                     => _x( 'Custom', 'Custom Template', 'sendpress' ),
+			'public'                    => true,
+			'exclude_from_search'       => false,
+			'show_in_admin_all_list'    => true,
+			'show_in_admin_status_list' => true,
+			'label_count'               => _n_noop( 'Custom <span class="count">(%s)</span>', 'Custom <span class="count">(%s)</span>', 'sendpress' )
+		)  );
+
+
 		register_post_type( 'sptemplates', array(
 			'labels' => array(
 				'name' => __( 'SendPress Internal Container', 'sendpress' ),
@@ -178,6 +198,21 @@ class SendPress_Posts{
 			'query_var' => false,
 			'can_export' => true,
 			'show_in_nav_menus' => false,
+			'exclude_from_search'=>'true',
+		) );
+
+		register_post_type( 'sp_template', array(
+			'labels' => array(
+				'name' => __( 'SendPress Templates', 'sendpress' ),
+			),
+			'public' 			=> false,
+			'query_var' 		=> false,
+			'rewrite' 			=> false,
+			'show_ui'           => false,
+			'capability_type' 	=> 'post',
+			'map_meta_cap'      => true,
+			'supports' 			=> array( 'title' ),
+			'can_export'		=> true,
 			'exclude_from_search'=>'true',
 		) );
 

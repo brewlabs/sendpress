@@ -303,8 +303,8 @@ class SendPress_Email_Templates_Table extends WP_List_Table {
 			 $this->_column_headers = array($columns, $hidden, $sortable);
 		/* -- Fetch the items -- */
 			$args = array(
-			'post_type' => 'sptemplates',
-			'post_status' => array('publish')
+			'post_type' => 'sp_template',
+			'post_status' => array('enabled')
 			);
 
 			$query = new WP_Query( $args );
@@ -348,8 +348,8 @@ class SendPress_Email_Templates_Table extends WP_List_Table {
 			
 
 			$args = array(
-			'post_type' => 'sptemplates' ,
-			'post_status' => array('publish'),
+			'post_type' => 'sp_template' ,
+			'post_status' => array('enabled'),
 			'posts_per_page' => $per_page,
 			'paged'=> $paged,
 			);

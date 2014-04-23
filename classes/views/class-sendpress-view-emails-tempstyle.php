@@ -152,7 +152,9 @@ Body Link Color<br>
 <?php // $sp->create_color_picker( array('id'=>'body_link','value'=>$body_link['value'],'std'=>$body_link['std'], 'link'=>'.html-view-outer-text a' ,'css'=>'color' ) ); ?>
 -->
 <?php $this->panel_end(); ?>
-
+<?php
+ echo spnl_get_emails_tags_list();
+?>
 </div>
 </div>
 <script>
