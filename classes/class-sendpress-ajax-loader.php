@@ -201,7 +201,7 @@ class SendPress_Ajax_Loader{
 
 			$url = "http://api.sendpress.com/senddiscountcode/".md5($_SERVER['SERVER_NAME']."|".$email)."/".$email;
 
-			wp_remote_post( $url );
+			wp_remote_get( $url );
 
 		} else {
 			SendPress_Option::set('autocron', 'no');
