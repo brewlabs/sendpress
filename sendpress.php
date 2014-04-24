@@ -90,7 +90,8 @@ Author URI: https://sendpress.com/
 		var $_debugMode = false;
 
 		public $email_tags;
-	
+		public $log;
+		
 		private static $instance;
 
 		/**
@@ -212,6 +213,7 @@ Author URI: https://sendpress.com/
 			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof SendPress ) ) {
 				self::$instance = new SendPress;
 				self::$instance->email_tags = new SendPress_Email_Tags();
+				self::$instance->log = new SendPress_Logging();
 			}
 			return self::$instance;
 		}
