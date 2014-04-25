@@ -94,18 +94,6 @@ Author URI: https://sendpress.com/
 		
 		private static $instance;
 
-		/**
-		 * [log description]
-		 * @param  [type] $args [description]
-		 * @return [type]       [description]
-		 */
-		function log($args) {
-			return SendPress_Helper::log($args);
-		}
-	
-		function append_log($msg, $queueid = -1) {
-			return SendPress_Helper::append_log($msg, $queueid);
-		}
 		
 		function nonce_value(){
 			return 'sendpress-is-awesome';
@@ -2075,5 +2063,7 @@ function SPNL(){
 }
 SPNL();
 
-
-
+if( defined('SENDPRESS_PRO_PATH') && !defined('SENDPRESS_PRO_LOADED') && function_exists('SPPRO') ){
+	define( 'SENDPRESS_PRO_LOADED' , true );
+	SPPRO();
+}
