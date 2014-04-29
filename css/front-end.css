@@ -18,6 +18,7 @@
 	/* submit button */
 	.sendpress-submit{
 		margin-top: 20px;
+		display: inline-block !important;
 	}
 	/* element where error messages are displayed */
 	.sendpress-signup-form #error{
