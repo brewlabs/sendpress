@@ -9,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
 	
 	function save(){
-		  $saveid = $_POST['post_ID'];
+		$saveid = $_POST['post_ID'];
         $bodybg = $_POST['body_bg'];
         $bodytext = $_POST['body_text'];
         $bodylink = $_POST['body_link'];
@@ -130,10 +130,17 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
 <iframe id="iframe1" class="hidden-xs" width="100%" style="border: solid 1px #e7e7e7; border-radius: 5px;" src="<?php echo home_url(); ?>?sendpress=render&spemail=<?php echo $_GET['templateID']; ?>" ></iframe>
 </div>
 <div class="sp-25">
+<ul class="list-group">
+  <li class="list-group-item">Body<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+</li>
+  <li class="list-group-item">Dapibus ac facilisis in</li>
+  <li class="list-group-item">Morbi leo risus</li>
+  <li class="list-group-item">Porta ac consectetur ac</li>
+  <li class="list-group-item">Vestibulum at eros</li>
+</ul>
 <?php $this->panel_start( '<span class=" glyphicon glyphicon-tint"></span> '. __('Background Styles','sendpress') ); ?>
 
 Body<br>
-<input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
 
 <br>
 Content<br>

@@ -2056,8 +2056,9 @@ add_action('wp', array( 'SendPress', 'add_cron' ) );
 register_activation_hook( __FILE__, array( 'SendPress', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'SendPress', 'plugin_deactivation' ) );
 
-// Initialize!
 
+
+// Initialize!
 function SPNL(){
 	return SendPress::get_instance();
 }
