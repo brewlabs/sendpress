@@ -152,6 +152,18 @@ class SendPress_Sender_Website extends SendPress_Sender {
 			//$this->last_send_smtp_debug = $smtp_debug;
 		
 		}
+		if (  $result != true ){
+
+			$log_message = $phpmailer->ErrorInfo;
+			if( $istest == true  ){
+				$log_message .= "<br><br>";
+				$log_message .= $smtp_debug;
+			}
+			//$phpmailer->ErrorInfo
+			SPNL()->log->add( $to , $log_message  );
+
+		}	
+
 
 		if (  $result != true && $istest == true  ) {
 			$hostmsg = 'host: '.($phpmailer->Host).'  port: '.($phpmailer->Port).'  secure: '.($phpmailer->SMTPSecure) .'  auth: '.($phpmailer->SMTPAuth).'  user: '.($phpmailer->Username)."  pass: *******\n";

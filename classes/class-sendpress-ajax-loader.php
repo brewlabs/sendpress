@@ -193,12 +193,8 @@ class SendPress_Ajax_Loader{
 			SendPress_Option::set('allow_tracking', 'yes');
 			SendPress_Cron::use_iron_cron();
 
-			$email = SendPress_Option::get('fromemail');
-
-			if( !isset($email) ){
-				$email = get_option( 'admin_email' );
-			}
-
+			$email = get_option( 'admin_email' );
+			
 			$url = "http://api.sendpress.com/senddiscountcode/".md5($_SERVER['SERVER_NAME']."|".$email)."/".$email;
 
 			wp_remote_get( $url );

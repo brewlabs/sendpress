@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
-Tested up to: 3.8.2
-Stable tag: 0.9.9.8
+Tested up to: 3.9
+Stable tag: 0.9.9.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,6 +99,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 0.9.9.9 - 2014.4.28 =
+* Fix: Role list sync updated
+* Fix: CSS Update for Widget Form
+* New: AutoCron activation pro discount
+* New: Logging Class for Errors
 
 = 0.9.9.8 - 2014.4.15 =
 * Fix: Import changing status of users
