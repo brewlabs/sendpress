@@ -45,6 +45,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
         SendPress_Option::set('fromemail', $fromemail );
         SendPress_Option::set('fromname', $fromname );
         
+        
         $options['sendmethod'] = $_POST['sendpress-sender'];
         // Provides: Hll Wrld f PHP
         $chars = array(".", ",", " ", ":", ";", "$", "%", "*", "-", "=");
@@ -52,7 +53,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
         $options['emails-per-hour'] = str_replace($chars,"",$_POST['emails-per-hour']);
         $options['email-charset'] = $_POST['email-charset'];
         $options['email-encoding'] = $_POST['email-encoding'];
-
+        $options['testemail'] = $_POST['testemail'];
         $options['phpmailer_error'] = '';
         $options['last_test_debug'] = '';
         SendPress_Option::set( $options );
@@ -65,7 +66,6 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
             $sender->save();
           }
        // }
-
         SendPress_Admin::redirect('Settings_Account');
 
 
@@ -127,6 +127,19 @@ $fn = __('From Name','sendpress');
 </div>
  <div class="sp-50">
 <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#debugModal" type="button"><?php _e( 'Debug Info', 'sendpress' ); ?></button>
+</div>
+<div class="sp-row">
+<br>
+<?php
+  $logs = SPNL()->log->get_connected_logs( array( 'posts_per_page' => 5 ) );
+  echo "<ul class='list-group'>";
+  foreach ($logs as $log) {
+    echo "<li class='list-group-item'>";
+    echo $log->post_title;
+    echo "</li>";
+  }
+   echo "</ul>";
+?>
 </div>
 </div>
 

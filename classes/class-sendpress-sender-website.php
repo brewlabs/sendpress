@@ -154,13 +154,13 @@ class SendPress_Sender_Website extends SendPress_Sender {
 		}
 		if (  $result != true ){
 
-			$log_message = $phpmailer->ErrorInfo;
+			$log_message = $to;
 			if( $istest == true  ){
 				$log_message .= "<br><br>";
 				$log_message .= $smtp_debug;
 			}
 			//$phpmailer->ErrorInfo
-			SPNL()->log->add( $to , $log_message  );
+			SPNL()->log->add(  $phpmailer->ErrorInfo , $log_message  );
 
 		}	
 
