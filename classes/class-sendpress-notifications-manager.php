@@ -184,11 +184,14 @@ class SendPress_Notifications_Manager {
 			}
 		}
 
-		if(is_array($senders) && !empty($senders)) {
-			foreach($senders as $to){
-				SendPress_Manager::send($to, 'SendPress Notification', $body, $text);
+		if( $options['notifications-enable'] ){
+			if(is_array($senders) && !empty($senders)) {
+				foreach($senders as $to){
+					SendPress_Manager::send($to, 'SendPress Notification', $body, $text);
+				}
 			}
 		}
+		
 		//hipchat
 		if( $options['enable-hipchat'] && strlen($options['hipchat-api']) > 0 ){
 			global $hc;
