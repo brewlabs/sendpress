@@ -77,7 +77,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
         
         SendPress_Option::set($options);
         SendPress_Manager::send_test();
-         SendPress_Admin::redirect('Settings_Account');
+        // SendPress_Admin::redirect('Settings_Account');
        // $this->send_test();
        // $this->redirect();
   }
@@ -135,7 +135,7 @@ $fn = __('From Name','sendpress');
   echo "<ul class='list-group'>";
   foreach ($logs as $log) {
     echo "<li class='list-group-item'>";
-    echo $log->post_title;
+     echo $log->post_date ."  ". $log->post_title;
     echo "</li>";
   }
    echo "</ul>";
