@@ -193,7 +193,7 @@ Author URI: https://sendpress.com/
 		  	return;
 		    
 	    
-	  }
+	  	}
 	
 		
 
@@ -296,6 +296,9 @@ Author URI: https://sendpress.com/
 				add_action( 'sendpress_notices', array( $this,'sendpress_notices') );
 				add_filter('user_has_cap',array( $this,'user_has_cap') , 10 , 3);
 			} else{
+				if( SendPress_Option::get('sp_widget_shortdoces') ){
+					add_filter('widget_text', 'do_shortcode');
+				}
 				
 			}
 			add_image_size( 'sendpress-max', 600, 600 );
