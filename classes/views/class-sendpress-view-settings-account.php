@@ -135,7 +135,7 @@ $fn = __('From Name','sendpress');
   echo "<ul class='list-group'>";
   foreach ($logs as $log) {
     echo "<li class='list-group-item'>";
-     echo $log->post_date ."  ". $log->post_title;
+    echo "<strong>". $log->post_date ."</strong>  ". $log->post_title;
     echo "</li>";
   }
    echo "</ul>";

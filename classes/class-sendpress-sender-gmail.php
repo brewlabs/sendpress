@@ -160,7 +160,7 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 				$log_message .= $smtp_debug;
 			}
 			//$phpmailer->ErrorInfo
-			SPNL()->log->add(  $phpmailer->ErrorInfo , $log_message  );
+			SPNL()->log->add(  $phpmailer->ErrorInfo , $log_message , 0 , 'sending' );
 
 		}	
 

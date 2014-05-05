@@ -128,7 +128,7 @@ class SendPress_Logging {
 
 	private function log_types() {
 		$terms = array(
-			'error', 'event'
+			'sending','error', 'event'
 		);
 
 		return apply_filters( $this->log_type , $terms );
