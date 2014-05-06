@@ -131,7 +131,7 @@ $fn = __('From Name','sendpress');
 <div class="sp-row">
 <br>
 <?php
-  $logs = SPNL()->log->get_connected_logs( array( 'posts_per_page' => 5 ) );
+  $logs = SPNL()->log->get_connected_logs( array( 'posts_per_page' => 5, 'log_type'=>'sending' ) );
   echo "<ul class='list-group'>";
   foreach ($logs as $log) {
     echo "<li class='list-group-item'>";

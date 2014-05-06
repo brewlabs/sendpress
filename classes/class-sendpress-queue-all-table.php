@@ -408,9 +408,13 @@ class SendPress_Queue_All_Table extends WP_List_Table {
         }
          /* -- Ordering parameters -- */
         //Parameters that are going to be used to order the result
-        $orderby = !empty($_GET["orderby"]) ? mysql_real_escape_string($_GET["orderby"]) : 'ASC';
-        $order = !empty($_GET["order"]) ? mysql_real_escape_string($_GET["order"]) : '';
+        $orderby = !empty($_GET["orderby"]) ? mysql_real_escape_string($_GET["orderby"]) : '';
+        $order = !empty($_GET["order"]) ? mysql_real_escape_string($_GET["order"]) : 'ASC';
         if(!empty($orderby) & !empty($order)){ $query.=' ORDER BY '.$orderby.' '.$order; }
+
+        if( empty( $orderby ) ){
+          $query .=  ' ORDER BY id DESC ';
+        }
 
         //adjust the query to take pagination into account
         if(!empty($paged) && !empty($per_page)){

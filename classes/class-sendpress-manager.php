@@ -12,6 +12,12 @@ class SendPress_Manager {
 		global $wpdb;
 		$emails_per_hour = SendPress_Option::get('emails-per-hour');
 		$emails_per_day = SendPress_Option::get('emails-per-day');
+		$pause_sending = SendPress_Option::get('pause-sending','no');
+
+		//Stop Sending for now
+		if($pause_sending == 'yes'){
+			return true;
+		}
 
 		$email_count_day = SendPress_Data::emails_sent_in_queue("day");
 		// Check our daily send limit

@@ -24,7 +24,7 @@ static function send_mail(){
 		$day_count = SendPress_Option::get('autocron-per-call',25);
 
 		if( !SendPress_Manager::limit_reached()  ){
-		$count= SendPress_Data::emails_in_queue();
+		$count = SendPress_Data::emails_in_queue();
 		$email_count = 0;
 		$attempts = 0;
 		if($count > 0 ){
@@ -62,10 +62,6 @@ static function send_mail(){
 
 		
 		}
-
-
-		
-		
 
 		
 	}

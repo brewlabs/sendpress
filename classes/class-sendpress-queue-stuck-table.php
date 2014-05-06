@@ -17,7 +17,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
  * 
  * Our theme for this list table is going to be movies.
  */
-class SendPress_Queue_Table extends WP_List_Table {
+class SendPress_Queue_Stuck_Table extends WP_List_Table {
     
     /** ************************************************************************
      * Normally we would be querying data from a database and manipulating that
@@ -360,7 +360,7 @@ class SendPress_Queue_Table extends WP_List_Table {
        
         /* -- Pagination parameters -- */
         //Number of elements in your table?
-        $totalitems = SendPress_Data::emails_in_queue();//$wpdb->query($query); //return the total number of affected rows
+        $totalitems = SendPress_Data::emails_maxed_in_queue();//$wpdb->query($query); //return the total number of affected rows
         //How many to display per page?
         // get the current user ID
             $user = get_current_user_id();
@@ -386,7 +386,7 @@ class SendPress_Queue_Table extends WP_List_Table {
         if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
         //How many pages do we have in total?
         $totalpages = ceil($totalitems/$per_page);
-        $query.=' WHERE success = 0 AND max_attempts > attempts ';
+        $query.=' WHERE success = 0 AND max_attempts <= attempts ';
         $query.="AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s')."') ";
         if(isset($_GET["listid"]) &&  $_GET["listid"]> 0 ){
             $query .= ' AND listID = '. $_GET["listid"];

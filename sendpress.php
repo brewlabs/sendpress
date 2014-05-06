@@ -379,20 +379,33 @@ Author URI: https://sendpress.com/
 			}
 	
 	
-		function admin_notice(){
+		function admin_notice(){ 
 			//This is the WordPress one shows above menu area.
 			//echo 'wtf';
 	
 		}
 		function sendpress_notices(){
 			if( in_array('settings', $this->_messages) ){
-			echo '<div class="alert alert-error">';
-				echo "<b>";
-				_e('Warning','sendpress');
-				echo "</b>&nbsp;";
-				printf(__('Before sending any emails please setup your <a href="%1s">information</a>.','sendpress'), SendPress_Admin::link('Settings') );
+			echo '<div class="alert alert-danger">';
+				echo "<strong>";
+				_e('Warning!','sendpress');
+				echo "</strong>&nbsp;";
+				printf(__('  Before sending any emails please setup your <a href="%1s">information</a>.','sendpress'), SendPress_Admin::link('Settings') );
 		    echo '</div>';
 			}
+
+			$pause_sending = SendPress_Option::get('pause-sending','no');
+				//Stop Sending for now
+				if($pause_sending == 'yes'){
+					echo '<div class="alert alert-danger">';
+				echo "<strong>";
+				_e('Warning!','sendpress');
+				echo "</strong>&nbsp;";
+				printf(__('  Sending has been paused. You can restart it on the <a href="%1s">Queue</a> page.','sendpress'), SendPress_Admin::link('Queue') );
+		    echo '</div>';
+				}
+
+
 		}
 	
 	    /**
@@ -1807,12 +1820,15 @@ Author URI: https://sendpress.com/
 
 
 	function add_email_to_queue($values){
+		/*
 		global $wpdb;
 		$table = SendPress_Data::queue_table();
 		$messageid = $this->unique_message_id();
 		$values["messageID"] = $messageid;
 		$values["date_published"] = date('Y-m-d H:i:s');
 		$wpdb->insert( $table, $values);
+		*/
+		SendPress_Data::add_email_to_queue($values);
 	}
 
 	

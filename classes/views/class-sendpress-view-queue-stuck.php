@@ -12,7 +12,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 * @uses     SendPress_View
 *
 */
-class SendPress_View_Queue extends SendPress_View {
+class SendPress_View_Queue_Stuck extends SendPress_View_Queue {
 
 
 	function admin_init(){
@@ -25,41 +25,6 @@ class SendPress_View_Queue extends SendPress_View {
 	}
 
 
-	function sub_menu($sp = false){
-
-
-		?>
-		<div class="navbar navbar-default" >
-			<div class="navbar-header">
-			  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-
-    </button>
-    <a class="navbar-brand" href="#">Queues</a>
-</div>
-		 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		<ul class="nav navbar-nav">
-					<li <?php if(!isset($_GET['view']) ){ ?>class="active"<?php } ?> >
-				    	<a href="<?php echo SendPress_Admin::link('Queue'); ?>"><span class="glyphicon glyphicon-transfer"></span>  <?php _e('Active','sendpress'); ?></a>
-				  	</li>
-				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'stuck'){ ?>class="active"<?php } ?> >
-				    	<a href="<?php echo SendPress_Admin::link('Queue_Stuck'); ?>"><span class="glyphicon glyphicon-exclamation-sign"></span>  <?php _e('Stuck','sendpress'); ?></a>
-				  	</li>
-				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'all'){ ?>class="active"<?php } ?> >
-				    	<a href="<?php echo SendPress_Admin::link('Queue_All'); ?>"><span class="glyphicon glyphicon-time"></span>  <?php _e('Send History','sendpress'); ?></a>
-				  	</li>
-
-				</ul>
-			</div>
-		</div>
-		
-		<?php
-
-		do_action('sendpress-queue-sub-menu');
-	}
 
 	function screen_options(){
 
@@ -75,8 +40,8 @@ class SendPress_View_Queue extends SendPress_View {
 	}
 	
 	function empty_queue( $get, $sp ){
-		SendPress_Data::delete_queue_emails();
-		SendPress_Admin::redirect('Queue');
+		SendPress_Data::delete_stuck_queue_emails();
+		SendPress_Admin::redirect('Queue_Stuck');
 	}
 
 	function reset_queue(){
@@ -108,7 +73,7 @@ class SendPress_View_Queue extends SendPress_View {
 	}	
 
 		//Create an instance of our package class...
-	$testListTable = new SendPress_Queue_Table();
+	$testListTable = new SendPress_Queue_Stuck_Table();
 	//Fetch, prepare, sort, and filter our data...
 	$testListTable->prepare_items();
 	SendPress_Option::set('no_cron_send', 'false');
@@ -207,14 +172,12 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
 	    <?php wp_nonce_field($sp->_nonce_value); ?>
 	</form>
 	<br>
-	<!--
 		<a class="btn btn-large btn-success " href="<?php echo SendPress_Admin::link('Queue'); ?>&action=reset-queue" ><i class="icon-repeat icon-white "></i> <?php _e('Re-queue All Emails','sendpress'); ?></a><br><br>
-	-->
 	<form  method='get'>
 		<input type='hidden' value="<?php echo $_GET['page']; ?>" name="page" />
 		
 		<input type='hidden' value="empty-queue" name="action" />
-		<a class="btn btn-large  btn-danger" data-toggle="modal" href="#sendpress-empty-queue" ><i class="icon-warning-sign "></i> <?php _e('Delete All Emails in the Queue','sendpress'); ?></a>
+		<a class="btn btn-large  btn-danger" data-toggle="modal" href="#sendpress-empty-queue" ><i class="icon-warning-sign "></i> <?php _e('Delete All Stuck Emails','sendpress'); ?></a>
 		<?php wp_nonce_field($sp->_nonce_value); ?>
 	</form>
 <div class="modal fade" id="sendpress-empty-queue" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -222,13 +185,13 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
   	<div class="modal-content">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">×</button>
-		<h3><?php _e('Really? Delete All Emails in the Queue.','sendpress');?></h3>
+		<h3><?php _e('Really? Delete All Emails stuck in the Queue.','sendpress');?></h3>
 	</div>
 	<div class="modal-body">
-		<p><?php _e('This will remove all emails from the queue without attempting to send them','sendpress');?>.</p>
+		<p><?php _e('This will remove all stuck emails from the queue without attempting to send them','sendpress');?>.</p>
 	</div>
 	<div class="modal-footer">
-	<a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('No! I was Joking','sendpress');?></a><a href="<?php echo SendPress_Admin::link('Queue'); ?>&action=empty-queue" id="confirm-delete" class="btn btn-danger" ><?php _e('Yes! Delete All Emails','sendpress');?></a>
+	<a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('No! I was Joking','sendpress');?></a><a href="<?php echo SendPress_Admin::link('Queue_Stuck'); ?>&action=empty-queue" id="confirm-delete" class="btn btn-danger" ><?php _e('Yes! Delete All Emails','sendpress');?></a>
 	</div>
 </div></div>
 </div>

@@ -92,6 +92,11 @@ class SendPress_Data extends SendPress_DB_Tables {
 		self::wpdbQuery("DELETE FROM $table WHERE success = 0", 'query');
 	}
 
+	static function delete_stuck_queue_emails(){
+		$table = self::queue_table();
+		self::wpdbQuery("DELETE FROM $table WHERE success = 0 AND max_attempts = attempts ", 'query');
+	}
+
 	static function queue_email_process($id){
 		$table = self::queue_table();
 		global $wpdb;
@@ -127,6 +132,31 @@ class SendPress_Data extends SendPress_DB_Tables {
 		}	
 		return $wpdb->get_var( $query );
 	}
+
+	static function emails_maxed_in_queue($id = false){
+		global $wpdb;
+		$table = self::queue_table();
+		if($id == false){
+			$query = "SELECT COUNT(*) FROM $table where success = 0";
+			 $query.=" AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s')."') ";
+       
+	        if(isset($_GET["listid"]) &&  $_GET["listid"]> 0 ){
+	            $query .= ' AND listID = '. $_GET["listid"];
+	        }
+
+	        if(isset($_GET["qs"] )){
+	            $query .= ' AND to_email LIKE "%'. $_GET["qs"] .'%"';
+
+	        }
+
+	        $query .= " AND max_attempts = attempts ";
+
+		} else {
+			$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where emailID = %d and success = 0", $id );
+		}	
+		return $wpdb->get_var( $query );
+	}
+
 
 	static function emails_stuck_in_queue($id = false){
 		global $wpdb;
@@ -268,6 +298,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$table = SendPress_Data::queue_table();
 		$messageid = SendPress_Data::unique_message_id();
 		$values["messageID"] = $messageid;
+		$values["max_attempts"] = 1;
 		$values["date_published"] = date('Y-m-d H:i:s');
 		$wpdb->insert( $table, $values);
 	}
