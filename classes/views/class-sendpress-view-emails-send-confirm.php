@@ -120,7 +120,7 @@ $subject = SendPress_Option::get('current_send_subject_'.$post->ID ,true);
 <a class="btn btn-default" href="<?php echo '?page='.$_GET['page']. '&view=send&emailID='. $_GET['emailID']; ?>"><?php _e('Cancel Send','sendpress'); ?></a>&nbsp;
 </div>
 <h2><?php _e('Confirm Send','sendpress'); ?></h2>
-
+<br>
 
 <input type="hidden" id="user-id" name="user_ID" value="<?php //echo $current_user->ID; ?>" />
 <input type="hidden" id="post_ID" name="post_ID" value="<?php echo $post->ID; ?>" />

@@ -166,7 +166,7 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
  		<br><br>
 		</div>
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
-	<form id="email-filter" action="<?php echo SendPress_Admin::link('Queue'); ?>" method="get">
+	<form id="email-filter" action="<?php echo SendPress_Admin::link('Queue_Stuck'); ?>" method="get">
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	     <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" /> 
 	    <!-- Now we can render the completed list table -->

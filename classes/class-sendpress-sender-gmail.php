@@ -153,15 +153,15 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 		}
 
 		if (  $result != true ){
-
-			$log_message = $to;
+			$log_message = 'Gmail <br>';
+			$log_message .= $to . "<br>";
+			
 			if( $istest == true  ){
 				$log_message .= "<br><br>";
 				$log_message .= $smtp_debug;
 			}
 			//$phpmailer->ErrorInfo
 			SPNL()->log->add(  $phpmailer->ErrorInfo , $log_message , 0 , 'sending' );
-
 		}	
 
 		if (  $result != true && $istest == true  ) {

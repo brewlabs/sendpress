@@ -152,9 +152,11 @@ class SendPress_Sender_Website extends SendPress_Sender {
 			//$this->last_send_smtp_debug = $smtp_debug;
 		
 		}
+		
 		if (  $result != true ){
-
-			$log_message = $to;
+			$log_message = 'Website <br>';
+			$log_message .= $to . "<br>";
+			
 			if( $istest == true  ){
 				$log_message .= "<br><br>";
 				$log_message .= $smtp_debug;

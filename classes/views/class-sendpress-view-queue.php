@@ -46,12 +46,14 @@ class SendPress_View_Queue extends SendPress_View {
 				    	<a href="<?php echo SendPress_Admin::link('Queue'); ?>"><span class="glyphicon glyphicon-open"></span>  <?php _e('Active','sendpress'); ?></a>
 				  	</li>
 				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'stuck'){ ?>class="active"<?php } ?> >
-				    	<a href="<?php echo SendPress_Admin::link('Queue_Stuck'); ?>"><span class="glyphicon glyphicon-exclamation-sign"></span>  <?php _e('Stuck','sendpress'); ?></a>
+				    	<a href="<?php echo SendPress_Admin::link('Queue_Stuck'); ?>"><span class="glyphicon glyphicon-exclamation-sign"></span>  <?php _e('Stuck','sendpress'); ?> (<?php echo  SendPress_Data::emails_maxed_in_queue(); ?>)</a>
 				  	</li>
 				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'all'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Queue_All'); ?>"><span class="glyphicon glyphicon-time"></span>  <?php _e('Send History','sendpress'); ?></a>
 				  	</li>
-
+				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'errors'){ ?>class="active"<?php } ?> >
+				    	<a href="<?php echo SendPress_Admin::link('Queue_Errors'); ?>"><span class="glyphicon glyphicon-warning-sign"></span>  <?php _e('Send Errors','sendpress'); ?></a>
+				  	</li>
 				</ul>
 			</div>
 		</div>

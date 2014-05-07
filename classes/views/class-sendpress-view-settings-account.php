@@ -130,16 +130,35 @@ $fn = __('From Name','sendpress');
 </div>
 <div class="sp-row">
 <br>
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+          Click to View Last Error
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse">
+      <div class="panel-body">
+     
 <?php
-  $logs = SPNL()->log->get_connected_logs( array( 'posts_per_page' => 5, 'log_type'=>'sending' ) );
+
+  $logs = SPNL()->log->get_connected_logs( array( 'posts_per_page' => 1, 'log_type'=>'sending' ) );
   echo "<ul class='list-group'>";
   foreach ($logs as $log) {
     echo "<li class='list-group-item'>";
     echo "<strong>". $log->post_date ."</strong>  ". $log->post_title;
+    echo "<br>". $log->post_content;
     echo "</li>";
   }
    echo "</ul>";
+   
 ?>
+ </div>
+    </div>
+  </div>
+  </div>
 </div>
 </div>
 
