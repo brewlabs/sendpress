@@ -89,7 +89,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	static function delete_queue_emails(){
 		$table = self::queue_table();
-		self::wpdbQuery("DELETE FROM $table WHERE success = 0", 'query');
+		self::wpdbQuery("DELETE FROM $table WHERE success = 0 AND max_attempts > attempts", 'query');
 	}
 
 	static function delete_stuck_queue_emails(){
@@ -1225,15 +1225,16 @@ class SendPress_Data extends SendPress_DB_Tables {
 				if( empty($current_status) || ( isset($current_status->status) && $current_status->status < 2 ) ){
 					$success = SendPress_Data::update_subscriber_status($list->ID, $subscriberID, $status);
 				} else {
-
 					$success = true;
 				}
+				foreach ($custom as $key => $value) {
+					SendPress_Data::update_subscriber_meta( $subscriberID, $key, $value, $list->ID );
+				}
+
 			}
 		}
 
-		foreach ($custom as $key => $value) {
-			SendPress_Data::update_subscriber_meta($subscriberID,$key,$value,$listid);
-		}
+		
 
 		return $success;
 	}

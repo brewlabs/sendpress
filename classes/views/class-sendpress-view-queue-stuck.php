@@ -127,13 +127,15 @@ echo $time;//11:09
 	$txt = __('Pause Sending','sendpress');
 		//Stop Sending for now
 		if($pause_sending == 'yes'){
-			$txt = __('Restart Sending','sendpress');
+			$txt = __('Resume Sending','sendpress');
 		}
 	?>
 	<div class="btn-group">
+		<!--
 	<a class="btn btn-large btn-default " href="<?php echo SendPress_Admin::link('Queue'); ?>&action=pause-queue" ><i class="icon-repeat icon-white "></i> <?php echo $txt; ?></a>
 
 	<a id="send-now" class="btn btn-primary btn-large " data-toggle="modal" href="#sendpress-sending"   ><i class="icon-white icon-refresh"></i> <?php _e('Send Emails Now','sendpress');?></a>
+	-->
 	</div>
 	</div>
 	<?php

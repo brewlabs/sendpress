@@ -386,23 +386,23 @@ Author URI: https://sendpress.com/
 		}
 		function sendpress_notices(){
 			if( in_array('settings', $this->_messages) ){
-			echo '<div class="alert alert-danger">';
+			echo '<div class="error"><p>';
 				echo "<strong>";
 				_e('Warning!','sendpress');
 				echo "</strong>&nbsp;";
-				printf(__('  Before sending any emails please setup your <a href="%1s">information</a>.','sendpress'), SendPress_Admin::link('Settings') );
-		    echo '</div>';
+				printf(__('  Before sending any emails please setup your <a href="%1s">information</a>.','sendpress'), SendPress_Admin::link('Settings_Account') );
+		    echo '</p></div>';
 			}
 
 			$pause_sending = SendPress_Option::get('pause-sending','no');
 				//Stop Sending for now
 				if($pause_sending == 'yes'){
-					echo '<div class="alert alert-danger">';
+					echo '<div class="error"><p>';
 				echo "<strong>";
 				_e('Warning!','sendpress');
 				echo "</strong>&nbsp;";
-				printf(__('  Sending has been paused. You can restart it on the <a href="%1s">Queue</a> page.','sendpress'), SendPress_Admin::link('Queue') );
-		    echo '</div>';
+				printf(__('  Sending has been paused. You can resume sending on the <a href="%1s">Queue</a> page.','sendpress'), SendPress_Admin::link('Queue') );
+		    echo '</p></div>';
 				}
 
 
@@ -414,7 +414,7 @@ Author URI: https://sendpress.com/
 	 * @access public
 	 *
 	 * @return mixed Value.
-	 */
+	 */	
 		function ready_for_sending(){
 			
 			$ready = true;
@@ -727,6 +727,10 @@ Author URI: https://sendpress.com/
 				remove_filter('mce_buttons', 'cforms_button');
 				remove_filter('tinymce_before_init','cforms_button_script');
 				
+
+				global $wp_filter;
+
+				$wp_filter['admin_notices'] = array();
 			
 			if(SendPress_Option::get('whatsnew','show') == 'show'){
 				SendPress_Option::set('whatsnew','hide');
@@ -1020,6 +1024,7 @@ Author URI: https://sendpress.com/
 
 	function admin_menu() {
 		
+
 		if( current_user_can('sendpress_view') ){
 			$role = "sendpress_view";
 		} else {
