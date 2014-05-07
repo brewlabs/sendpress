@@ -120,13 +120,13 @@ class SendPress_View {
 				 
 				}
 
-				//if( $current_sp_pro_version > SENDPRESS_PRO_VERSION ){
+				if( $current_sp_pro_version > SENDPRESS_PRO_VERSION ){
 					?><br>
 					<div style="padding: 0 15px 0 0">
 					<div class="sp-error sp-clear-top"><p><strong>SendPress Pro is out of date!</strong>&nbsp;&nbsp;Upgrade to get the latest updates, features, and bug fixes.  If your key has expired visit <a href="https://sendpress.com" target="_blank">SendPress.com</a> to renew.</p></div>
 					</div>
 					<?php
-				//}
+				}
 			}
 		}
 	}
