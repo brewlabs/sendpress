@@ -100,9 +100,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
-= 0.9.9.9 - 2014.4.28 =
+= 0.9.9.9 - 2014.5.8 =
 * Fix: Role list sync updated
 * Fix: CSS Update for Widget Form
+* Fix: Widget post data
+* New: Views for Queue health
 * New: AutoCron activation pro discount
 * New: Logging Class for Errors
 
@@ -477,6 +479,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.9.9 =
+Queue update and bug fixes
 
 = 0.9.9.8 =
 Bug fixes for shortcods and imports
