@@ -145,14 +145,10 @@ $fn = __('From Name','sendpress');
 <?php
 
   $logs = SPNL()->log->get_connected_logs( array( 'posts_per_page' => 1, 'log_type'=>'sending' ) );
-  echo "<ul class='list-group'>";
   foreach ($logs as $log) {
-    echo "<li class='list-group-item'>";
     echo "<strong>". $log->post_date ."</strong>  ". $log->post_title;
     echo "<br>". $log->post_content;
-    echo "</li>";
   }
-   echo "</ul>";
    
 ?>
  </div>
@@ -161,8 +157,6 @@ $fn = __('From Name','sendpress');
   </div>
 </div>
 </div>
-
-
 <?php $this->panel_end(); ?>
    </div>
 </div>
