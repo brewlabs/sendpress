@@ -296,13 +296,15 @@ Older versions of SendPress used "quoted-printable"
 
     <button id="sp-enable-cron" <?php if($tl == 'yes'){ echo "style='display:none;'";} ?> class="btn  btn-success">Enable Pro Auto Cron</button><button id="sp-disable-cron" <?php if($tl == 'no'){ echo "style='display:none;'";} ?> class="btn  btn-danger">Disable Pro Auto Cron</button>
     <br><br>
+<strong>Enable AutoCron and receive a 20% discount code for SendPress Pro. Your discount code will be emailed to you.</strong>
+    <br><br>
     <p class="well">
       <strong>Without SendPress Pro</strong><br>
       Auto Cron is limited to a max of <strong>3,000*</strong> emails per day at a max rate of <strong>125*</strong> emails per hour.
       <br><br>
       <strong>With SendPress Pro</strong><br>
       Auto Cron starts at a max of <strong>12,000*</strong> emails per day at a max rate of <strong>500*</strong> emails per hour. Sending of up to <strong>36,000*</strong> emails a day available provided your server can handle it. <br><br><br>
-      <strong>*</strong>Auto Cron will not send faster then your <strong>Email Sending Limits</strong> to the right.<br>Please make sure you follow the rules of your hosting provider or upgrade to <strong><a href="http://sendpress.com">SendPress Pro</a></strong> to use a third-party service.
+      <strong>*</strong>Auto Cron will not send faster then your <strong>Email Sending Limits</strong> to the right.<br><br>Please make sure you follow the rules of your hosting provider or upgrade to <strong><a href="http://sendpress.com">SendPress Pro</a></strong> to use a third-party service.
     </p>
     <small>Pro Auto Cron does collect some data about your website and usage of SendPress. It will not track any user details, so your security and privacy are safe with us.</small>
 
