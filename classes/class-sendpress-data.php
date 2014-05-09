@@ -157,6 +157,31 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $wpdb->get_var( $query );
 	}
 
+	static function emails_active_in_queue($id = false){
+		global $wpdb;
+		$table = self::queue_table();
+		if($id == false){
+			$query = "SELECT COUNT(*) FROM $table where success = 0";
+			 $query.=" AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s')."') ";
+       
+	        if(isset($_GET["listid"]) &&  $_GET["listid"]> 0 ){
+	            $query .= ' AND listID = '. $_GET["listid"];
+	        }
+
+	        if(isset($_GET["qs"] )){
+	            $query .= ' AND to_email LIKE "%'. $_GET["qs"] .'%"';
+
+	        }
+
+	        $query .= " AND max_attempts > attempts ";
+
+		} else {
+			$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where emailID = %d and success = 0", $id );
+		}	
+		return $wpdb->get_var( $query );
+	}
+
+
 
 	static function emails_stuck_in_queue($id = false){
 		global $wpdb;

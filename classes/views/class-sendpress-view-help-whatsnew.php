@@ -41,13 +41,13 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 	<p><strong>Version <?php echo SENDPRESS_VERSION; ?></strong> addressed several bugs. For more information, see <a href="http://wordpress.org/plugins/sendpress/changelog/">the changelog</a>.</p>
 </div>
 <div class="changelog">
-	<h2 class="about-headline-callout">Introducing New Social Settings</h2>
+	<h2 class="about-headline-callout">Introducing New Queue Management</h2>
 	<img class="about-overview-img" src="<?php echo SENDPRESS_URL;?>/img/icons.png">
 	<div class="feature-section col three-col about-updates">
 		<div class="col-1">
-			<img src="<?php echo SENDPRESS_URL;?>/img/newlook.png?1">
-			<h3>Modern aesthetic</h3>
-			<p>The new SendPress UI has a fresh, uncluttered design that embraces the new WordPress design.</p>
+			<img src="<?php echo SENDPRESS_URL;?>/img/sending-errors.png?1">
+			<h3>Detailed Errors</h3>
+			<p>SendPress now displays detail connection errors for sending in the Queue section.</p>
 		</div>
 		<div class="col-2">
 			<img src="<?php echo SENDPRESS_URL;?>/img/sendhistory.png?1">
@@ -55,9 +55,9 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 			<p>Keep an eye on the email messages being sent and look up your recent send history.</p>
 		</div>
 		<div class="col-3 last-feature">
-			<img src="<?php echo SENDPRESS_URL;?>/img/ipadready.png?1">
-			<h3>Mobile Menus</h3>
-			<p>We think beautiful design should never sacrifice legibility and usability. The new design is easy to read and a pleasure to navigate.</p>
+			<img src="<?php echo SENDPRESS_URL;?>/img/autocron.png?1">
+			<h3>Pro Discount</h3>
+			<p>Enable AutoCron and recieve a discount from pro. Discounts are emails to the admin email of the site.</p>
 		</div>
 	</div>
 </div>
@@ -86,9 +86,9 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 
 
 <div class="changelog">
-	<h3>Whats Ahead</h3>
 
 	<div class="feature-section col three-col">
+	<h3>Whats Ahead</h3>
 		<div>
 			<h4>Post Notifications</h4>
 			<p>Subscribers will be able to get your new post's via email. Post Notifications will only be available with SendPress Pro.</p>

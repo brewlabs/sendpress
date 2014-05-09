@@ -12,13 +12,13 @@ Easy to use Email Newsletter Plugin for WordPress to create, send, manage and tr
 
 == Description ==
 
-Sending great emails and newsletters is something that should be easy and not require a third party system. This plugin aims to fix that and allow you to manage newsletters and emails with ease within WordPress. Instead of focusing on providing every single feature under the sun, SendPress tries to provide only the ones that you really need. It aims to make email marketing through WordPress easy, complete and extensible.
+SendPress is a plugin for WordPress that allows to write and send newsletters, and to gather and manage the subscribers. Built on the WordPress UI you already know. It's just as easy as creating a new Post.
+
+Sending great emails and newsletters is something that should be easy and not require a third party system forget MailChimp, Aweber, etc.
 
 = Check out our 2 minute run through video =
 
 http://vimeo.com/56978344
-
-**Follow this plugin on [Git Hub](https://github.com/brewlabs/sendpress)**
 
 Features of the plugin include:
 
@@ -27,17 +27,16 @@ Features of the plugin include:
 * Stat tracking for each email: clicks, opens and unsubscribes. Bounce handling and report details with [SendPress Pro](http://sendpress.com/).
 * Add a subscription form as a sidebar widget or in your pages
 * Send with your web host or Gmail for free (Mandrill, Sendgrid, Amazon SES and more with PRO).
-* Developer friendly with dozens of actions and filters
 * Scheduled Sending of emails
 * Sync Lists to WordPress Roles
 
 More information at [SendPress.com](http://sendpress.com/).
 
-
 = Support =
 
-Please check out our support site [http://sendpress.com/support/knowledgebase/](http://sendpress.com/support/) if you need help with anything.
+Please check out our support site [http://sendpress.com/support/knowledgebase/](http://sendpress.com/support/) if you need help with anything. Also feel free to post to the WordPress support forum.
 
+**Follow this plugin on [Git Hub](https://github.com/brewlabs/sendpress)**
 
 == Installation ==
 
