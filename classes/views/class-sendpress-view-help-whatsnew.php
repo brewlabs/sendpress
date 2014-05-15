@@ -35,9 +35,9 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 
 <h1>Welcome to SendPress <?php echo SENDPRESS_VERSION; ?></h1>
 
-<div class="about-text">Thank you for updating to SendPress <?php echo SENDPRESS_VERSION; ?>, the best SendPress yet.</div>
+<div class="about-text">Thank you for helping us reach 100K+ downloads and using SendPress.</div>
 <div class="changelog point-releases">
-	<h3>Maintenance Release</h3>
+	<h3>Maintenance & Bug Fix Release</h3>
 	<p><strong>Version <?php echo SENDPRESS_VERSION; ?></strong> addressed several bugs. For more information, see <a href="http://wordpress.org/plugins/sendpress/changelog/">the changelog</a>.</p>
 </div>
 <div class="changelog">

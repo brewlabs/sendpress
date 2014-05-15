@@ -99,6 +99,14 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
+= 0.9.9.9.1 - 2014.5.14 =
+* Fix: Javascript error on some pages
+* Fix: CSS fixes for views
+* Fix: TinyMCE error fix
+* New: DB Support for PRO
+* New: Stats caching to reduce db load
+* Update: Passed 100K Downloads - Thanks for using SendPress
+
 = 0.9.9.9 - 2014.5.8 =
 * Fix: Role list sync updated
 * Fix: CSS Update for Widget Form
@@ -478,6 +486,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.9.9.1 =
+Bug fixes
 
 = 0.9.9.9 =
 Queue update and bug fixes

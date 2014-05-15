@@ -54,138 +54,46 @@ echo "</pre>";
 <br>
 
 
-<div class="sp-row">
-<div class="w-25 sp-first">
-<div class="panel panel-success">
-              <div class="panel-heading">
-                	<div class="w-50 pull-left">
-                   <span class="glyphicon glyphicon-user fa-5x"></span>
-                  </div>
-                  <div class="w-50 pull-left text-right">
-                    <p class="announcement-heading"><?php echo SendPress_Data::bd_nice_number(SendPress_Data::get_count_subscribers()); ?></p>
-                    <p class="announcement-text">Subscribers</p>
-                  </div>
-                  	<br class="clear">
-              </div>
-              <!--
-              <a href="#">
-                <div class="panel-footer announcement-bottom">
-                  <div class="w-50 pull-left">
-                      View Lists
-                    </div>
-                  <div class="w-50 pull-left text-right">
-                      <span class="glyphicon glyphicon-circle-arrow-right"></span>
-                    </div>
-                  <br class="clear">
-                </div>
-              </a>
-          -->
-            </div>
-  </div>
 
-<div class="w-25 ">
-<div class="panel panel-info">
-              <div class="panel-heading">
-                	<div class="w-50 pull-left">
-                   <span class="glyphicon glyphicon-envelope fa-5x"></span>
-                  </div>
-                  <div class="w-50 pull-left text-right">
-                    <p class="announcement-heading"><?php $report = SendPress_Data::get_last_report(); 
+<div class="sp-row ">
+
+  <div class="sp-block sp-25 sp-first"> 
+    <h2 class="nomargin nopadding"><?php echo SendPress_Data::bd_nice_number(SendPress_Data::get_count_subscribers()); ?></h2> <p class="fwb">Subscribers</p>  
+  </div>
+  <div class="sp-block sp-25">
+    <h2 class="nomargin nopadding"><?php $report = SendPress_Data::get_last_report(); 
                     if($report){
                     $x= SendPress_Data::get_opens_count($report->ID);
                     if(empty( $x )){
-                    	echo "0";
+                      echo "0";
                     } else {
-                    	echo $x[0]->count;
+                      echo $x[0]->count;
                     }
                     } else {
                       echo "0";
                     }
-                    ?></p>
-                    <p class="announcement-text">Opens in last send</p>
-                  </div>
-                  	<br class="clear">
-              </div>
-              <!--
-              <a href="#">
-                <div class="panel-footer announcement-bottom">
-                  <div class="w-50 pull-left">
-                      View Report
-                    </div>
-                  <div class="w-50 pull-left text-right">
-                      <span class="glyphicon glyphicon-circle-arrow-right"></span>
-                    </div>
-                  <br class="clear">
-                </div>
-              </a>
-          -->
-            </div>
+                    ?></h2> <p class="fwb">Opens in last Send</small></p>
   </div>
-  <div class="w-25 ">
-<div class="panel panel-warning">
-              <div class="panel-heading">
-                	<div class="w-50 pull-left">
-                   <span class="glyphicon glyphicon-link fa-5x"></span>
-                  </div>
-                  <div class="w-50 pull-left text-right">
-                    <p class="announcement-heading"><?php $c = SendPress_Data::get_clicks_count($report->ID);
+  <div class="sp-block sp-25">
+    <h2 class="nomargin nopadding"><?php $c = SendPress_Data::get_clicks_count($report->ID);
                     if($report){
                     if(empty( $c )){
-                    	echo "0";
+                      echo "0";
                     } else {
-                    	echo $c[0]->count;
+                      echo $c[0]->count;
                     } 
                     } else {
                       echo "0";
-                    }?></p>
-                    <p class="announcement-text">Clicks in last send</p>
-                  </div>
-                  	<br class="clear">
-              </div>
-             <!--
-              <a href="#">
-                <div class="panel-footer announcement-bottom">
-                  <div class="w-50 pull-left">
-                      View Mentions
-                    </div>
-                  <div class="w-50 pull-left text-right">
-                      <span class="glyphicon glyphicon-circle-arrow-right"></span>
-                    </div>
-                  <br class="clear">
-                </div>
-              </a>
-          -->
-            </div>
+                    }?></h2> <p class="fwb">Clicks in last Send</p>
   </div>
-  <div class="w-25 ">
-<div class="panel panel-danger">
-              <div class="panel-heading">
-                	<div class="w-50 pull-left">
-                   <span class="glyphicon glyphicon-envelope fa-5x"></span>
-                  </div>
-                  <div class="w-50 pull-left text-right">
-                    <p class="announcement-heading"><?php echo SendPress_Data::emails_in_queue(); ?></p>
-                    <p class="announcement-text">Emails in Queue</p>
-                  </div>
-                  	<br class="clear">
-              </div>
-              <!--
-              <a href="#">
-                <div class="panel-footer announcement-bottom">
-                  <div class="w-50 pull-left">
-                      View Queue
-                    </div>
-                  <div class="w-50 pull-left text-right">
-                      <span class="glyphicon glyphicon-circle-arrow-right"></span>
-                    </div>
-                  <br class="clear">
-                </div>
-              </a>
-          -->
-            </div>
+  <div class="sp-block sp-25">
+    <h2 class="nomargin nopadding"><?php echo SendPress_Data::emails_in_queue(); ?></h2> <p class="fwb">Emails in Queue</p>
   </div>
 
-  </div>
+</div>
+
+
+
 
 <div class="sp-row">
 <div class="sp-33 sp-first">
