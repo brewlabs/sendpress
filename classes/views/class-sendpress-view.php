@@ -49,21 +49,28 @@ class SendPress_View {
 	}
 
 
-	function panel_start($title = false){ ?>
+	function panel_start($title = false, $body=true){ ?>
 		<div class="panel panel-default">
 			<?php if($title !== false ){ ?>
 		  <div class="panel-heading">
 				<h3 class="panel-title"><?php echo $title; ?></h3>
 		  </div>
-		  <?php } ?>
+		  <?php } 
+		  	if($body == true){
+		  ?>
+
 		<div class="panel-body">
-		<?php
+		<?php }
 	}
 
 	
-	function panel_end($footer = false){ ?>
+	function panel_end($footer = false , $body = true){ 
+		if($body == true){
+			?>
 		</div>
-		<?php if($footer !== false) { ?>
+		<?php 
+		}
+		if($footer !== false) { ?>
 		<div class="panel-footer"><?php echo $footer; ?></div>
 		<?php } ?>
 		</div>
@@ -160,6 +167,8 @@ class SendPress_View {
 	}
 
 	function sub_menu($sp = false){}
+
+	function admin_scripts_load(){}
 
 	function tabs(){
 		?>

@@ -65,14 +65,28 @@ table {
   border-spacing: 0;
 }
 
+.bg-f8f8f8 {
+background-color: #f8f8f8;
+}
+
+.font-15{
+  font-size: 14px;
+}
+
+.bb-ddd{
+  border-bottom: 1px solid #ddd;
+}
 
 .announcement-heading {
 font-size: 50px;
 margin: 0;
 }
 
-.sp-row{
+.sp-row, .sp-row-text{
     margin-bottom: 1.5em;
+}
+.sp-row-text{
+  padding: 0 15px;
 }
 
 .sp-row:before,
@@ -119,6 +133,22 @@ width: 25%;
 }
 */
 
+.sp-border{
+  border: 1px solid #d9d9d9;
+  border-radius: 6px 0 0 6px;
+}
+
+
+
+
+.sp-100 {
+    width: 100%;
+    position: relative;
+    min-height: 1px;
+   
+    float:left;
+}
+
 /* grid2 col */
 .sp-50 {
     width: 48.4%;
@@ -162,6 +192,33 @@ width: 25%;
     margin-left: 3.2%;
     float:left;
 }
+
+.sp-block{
+  padding-top: 1.8125em;
+  padding-bottom: 1.8125em;
+  border: 1px solid #d9d9d9;
+  border-left: 0 none;
+  -moz-background-clip: padding-box !important;
+  -webkit-background-clip: padding-box !important;
+  background-clip: padding-box !important;
+  -moz-box-sizing: border-box;
+ -webkit-box-sizing: border-box; 
+ box-sizing: border-box;
+ background-color: #f8f8f8;
+ text-align: center; 
+}
+.sp-block.sp-25{
+   width: 25%;
+   margin-left: 0;
+}
+.sp-block:last-child {
+border-radius: 0 6px 6px 0;
+}
+
+.sp-block.sp-first{
+  border-left: 1px solid #d9d9d9;
+  border-radius:  6px 0 0 6px ;
+}
 .sp-first{
     margin-left: 0;
 }
@@ -172,6 +229,11 @@ width: 25%;
 .qemails .column-actions{
   width: auto;
 }
+
+.nopadding{
+  padding: 0px !important;
+}
+
 
 .CodeMirror{
   height: 800px;
@@ -244,6 +306,20 @@ h2 .nav-tab{
    font-weight: normal !important;
    font-family: "Open Sans", sans-serif;
    }
+
+
+.sp-header{
+margin-top: 1.875em;
+margin-bottom: 2.5625em;
+}
+.sub-nav a{
+  margin-right: 2em;
+}
+.sub-nav{
+  border-top: solid 1px #e7e7e7;
+  border-bottom: solid 1px #e7e7e7;
+  padding: 15px 0;
+}
 /*
 .admin-color-coffee .nav-tab-active{
   background-color: #c7a589;

@@ -766,8 +766,9 @@ Author URI: https://sendpress.com/
 	    	
 	    	$view_class = $this->get_view_class($this->_page, $this->_current_view);
 			$view_class = NEW $view_class;
-			$view_class->admin_init();	
-	    	$view_class = $this->get_view_class($this->_page, $this->_current_view);
+			$view_class->admin_init();
+			add_action('sendpress_admin_scripts',array($view_class, 'admin_scripts_load'));
+			$view_class = $this->get_view_class($this->_page, $this->_current_view);
 	    		
 	    	$this->_current_action = isset( $_GET['action'] ) ? $_GET['action'] : '' ;
 		    $this->_current_action = isset( $_GET['action2'] ) ? $_GET['action2'] : $this->_current_action ;
@@ -1079,7 +1080,6 @@ Author URI: https://sendpress.com/
 		$view_class->add_tab( __('Help','sendpress'), 'sp-help', ($this->_page === 'sp-help') );
 		$view_class->add_tab( __('Pro','sendpress'), 'sp-pro', ($this->_page === 'sp-pro') );
 		
-
 		$view_class->prerender( $this );
 		$view_class->render( $this );
 	}

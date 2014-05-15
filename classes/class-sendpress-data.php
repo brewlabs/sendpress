@@ -538,10 +538,21 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $result;
 	}
 
+	static function get_open_total($rid){
+		global $wpdb;
+		$table = self::subscriber_event_table();
+		$result = $wpdb->get_var("SELECT COUNT(*) FROM $table WHERE reportID = '$rid' AND type = 'open' GROUP BY subscriberID ;");
+		if(empty($result)){
+			return 0;
+		}
+		return $result;
+	}
+
 	static function get_opens_unique_count($rid){
 		global $wpdb;
 		$table = self::subscriber_event_table();
 		$result = $wpdb->get_results("SELECT COUNT(t.eventID) as count,date(t.eventdate) as day FROM  (Select eventdate,eventID FROM $table  WHERE  reportID = '$rid' AND type = 'open' GROUP BY subscriberID) as t GROUP BY date(eventdate) ORDER BY eventID DESC ");
+
 		return $result;
 	}
 
@@ -549,6 +560,37 @@ class SendPress_Data extends SendPress_DB_Tables {
 		global $wpdb;
 		$table = self::subscriber_event_table();
 		$result = $wpdb->get_results("SELECT COUNT(t.eventID) as count,date(t.eventdate) as day FROM  (Select eventdate,eventID FROM $table  WHERE  reportID = '$rid' AND type = 'click' GROUP BY subscriberID) as t GROUP BY date(eventdate) ORDER BY eventID DESC ");
+		return $result;
+	}
+
+	static function get_click_total($rid){
+		global $wpdb;
+		$table = self::subscriber_event_table();
+		$result = $wpdb->get_var("SELECT COUNT(*) FROM $table WHERE reportID = '$rid' AND type = 'click' GROUP BY subscriberID ;");
+		if(empty($result)){
+			return 0;
+		}
+		return $result;
+	}
+
+	static function get_bounce_total($rid){
+		global $wpdb;
+		$table = self::subscriber_event_table();
+		$result = $wpdb->get_var("SELECT COUNT(*) FROM $table WHERE reportID = '$rid' AND type = 'bounce' GROUP BY subscriberID ;");
+		if(empty($result)){
+			return 0;
+		}
+		return $result;
+	}
+
+
+	static function get_unsubscribed_total($rid){
+		global $wpdb;
+		$table = self::subscriber_event_table();
+		$result = $wpdb->get_var("SELECT COUNT(*) FROM $table WHERE reportID = '$rid' AND type = 'unsubscribed' GROUP BY subscriberID ;");
+		if(empty($result)){
+			return 0;
+		}
 		return $result;
 	}
 
