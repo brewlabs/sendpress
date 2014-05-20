@@ -1,9 +1,9 @@
-<?php 
+<?php
 /*
 Plugin Name: SendPress Newsletters
 Version: 0.9.9.9.1
 Plugin URI: https://sendpress.com
-Description: Easy to manage Newsletters for WordPress. 
+Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
 Author URI: https://sendpress.com/
 */
@@ -21,7 +21,7 @@ Author URI: https://sendpress.com/
 	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
 	define( 'SENDPRESS_IRON','http://sendpress.com/iron');
-	      
+
    	define('SENDPRESS_CRON',md5(__FILE__.$blog_id));
 	if(!defined('SENDPRESS_STORE_URL') ){
 		define( 'SENDPRESS_STORE_URL', 'https://sendpress.com' );
@@ -32,7 +32,7 @@ Author URI: https://sendpress.com/
 
 	global $pro_names;
 	$pro_names = array('Pro1','Pro3','Pro20');
-	
+
 	/*
 	*
 	*	Supporting Classes they build out the WordPress table views.
@@ -41,10 +41,10 @@ Author URI: https://sendpress.com/
 	if(!class_exists('WP_List_Table')){
 	    require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 	}
-	
+
 	// AutoLoad Classes
 	spl_autoload_register(array('SendPress', 'autoload'));
-	
+
 	require_once( SENDPRESS_PATH . 'inc/functions.php' );
 	/*
 	require_once( SENDPRESS_PATH . 'classes/class-file-loader.php' );
@@ -55,51 +55,51 @@ Author URI: https://sendpress.com/
 		define( 'SENDPRESS_TRANSIENT_LENGTH', WEEK_IN_SECONDS );
 	}
 	/**
-	 * The Main Brain. 
+	 * The Main Brain.
 	 *
 	 * @package SendPress
-	 * @subpackage 
+	 * @subpackage
 	 * @since thedawnoftime
 	 */
 	class SendPress {
-	
+
 		var $prefix = 'sendpress_';
 		var $ready = false;
 		var $_nonce_value = 'sendpress-is-awesome';
-	
+
 		var $_current_action = '';
 		var $_current_view = '';
-	
+
 		var $_email_post_type = 'sp_newsletters';
-	
+
 		var $_report_post_type = 'sp_report';
-	
+
 		var $adminpages = array('sp','sp-overview','sp-reports','sp-emails','sp-templates','sp-subscribers','sp-settings','sp-queue','sp-pro','sp-help');
-	
+
 		var $_templates = array();
 		var $_messages = array();
-	
+
 		var $_page = '';
-	
+
 		var $testmode = false;
-	
+
 		var $_posthelper = '';
-	
+
 		var $_debugAddress = 'josh@sendpress.com';
-	
+
 		var $_debugMode = false;
 
 		public $email_tags;
 		public $log;
-		
+
 		private static $instance;
 
-		
+
 		function nonce_value(){
 			return 'sendpress-is-awesome';
 		}
-		
-		
+
+
 		function __construct() {
 			//add_action( 'admin_init' , array( 'SendPress' , 'wp' ) );
 			add_action( 'init', array( $this , 'init' ) );
@@ -109,12 +109,12 @@ Author URI: https://sendpress.com/
 			add_action( 'init', array( 'SendPress_Shortcode_Loader', 'init' ) );
 			do_action( 'sendpress_loaded' );
 		}
-	
+
 		public static function autoload($className) {
 		  	if( strpos($className, 'SendPress') !== 0 ){
 		  		return;
 		  	}
-		 	// Convert Classname to filename 
+		 	// Convert Classname to filename
 		    $cls = str_replace('_', '-', strtolower($className) );
 		    if( substr($cls, -1) == '-'){
 		    	//AutoLoad seems to get odd clasname sometimes that ends with _
@@ -123,7 +123,7 @@ Author URI: https://sendpress.com/
 		    if(class_exists($className)){
 		    	return;
 		    }
-			
+
 		    if( strpos($className, '_SC_') != false ){
 		    	if( defined('SENDPRESS_PRO_PATH') ) {
 		    		$pro_file = SENDPRESS_PRO_PATH."classes/sc/class-".$cls.".php";
@@ -148,7 +148,7 @@ Author URI: https://sendpress.com/
 		    		include SENDPRESS_PATH."classes/public-views/class-".$cls.".php";
 				}
 		  		return;
-		  	} 
+		  	}
 
 			if( strpos($className, 'View') != false ){
 		    	if( defined('SENDPRESS_PRO_PATH') ) {
@@ -162,10 +162,10 @@ Author URI: https://sendpress.com/
 		  		return;
 		  	}
 
-		  
-	
-		    
-	
+
+
+
+
 		  	if( strpos($className, 'Module') != false ){
 		  		if( defined('SENDPRESS_PRO_PATH') ) {
 		    		$pro_file = SENDPRESS_PRO_PATH."classes/modules/class-".$cls.".php";
@@ -174,11 +174,11 @@ Author URI: https://sendpress.com/
 		    			return;
 		    		}
 		    	}
-	
+
 		    	include SENDPRESS_PATH."classes/modules/class-".$cls.".php";
 		  		return;
-		  	} 
-	
+		  	}
+
 		    if( defined('SENDPRESS_PRO_PATH') ) {
 	    		$pro_file = SENDPRESS_PRO_PATH."classes/class-".$cls.".php";
 	    		if( file_exists( $pro_file ) ){
@@ -191,11 +191,11 @@ Author URI: https://sendpress.com/
 		    		include SENDPRESS_PATH."classes/class-".$cls.".php";
 			}
 		  	return;
-		    
-	    
+
+
 	  	}
-	
-		
+
+
 
 		public static function get_instance() {
 			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof SendPress ) ) {
@@ -213,15 +213,15 @@ Author URI: https://sendpress.com/
 			sendpress_register_template(
 				array('slug'=>'2columns-to-rows','path'=> SENDPRESS_PATH.'templates/2columns-to-rows.html', 'name'=> '2 Column Top - Wide Bottom - Responsive')
 				);
-			
+
 		}
-	
-		
+
+
 
 		function init() {
 			$this->maybe_upgrade();
 			//add_action('register_form',array( $this , 'add_registration_fields'));
-			
+
 			SendPress_Ajax_Loader::init();
 			//SendPress_Signup_Shortcode::init();
 			SendPress_Sender::init();
@@ -237,11 +237,11 @@ Author URI: https://sendpress.com/
 			add_action( 'sendpress_event', array('SendPress_Tracking','event'), 1, 1 );
 
 			do_action('sendpress_init');
-	
+
 			SendPress_Admin::add_cap('Emails_Send','sendpress_email_send');
 			$indexer ="";
 			$permalinks = get_option('permalink_structure');
-			
+
 			if($permalinks){
 				$pos = strpos($permalinks, "index.php");
 
@@ -250,21 +250,21 @@ Author URI: https://sendpress.com/
 				}
 			}
 
-			 add_rewrite_rule(  
-        "^{$indexer}sendpress/([^/]+)/?",  
-        'index.php?sendpress=$matches[1]',  
-        "top"); 
-			
+			 add_rewrite_rule(
+        "^{$indexer}sendpress/([^/]+)/?",
+        'index.php?sendpress=$matches[1]',
+        "top");
+
 			if(defined('WP_ADMIN') && WP_ADMIN == true){
 				$sendpress_screen_options = new SendPress_Screen_Options();
 			}
-		
+
 			$this->add_custom_post();
 
-			
+
 			//add_filter( 'cron_schedules', array($this,'cron_schedule' ));
 			//add_action( 'wp_loaded', array( $this, 'add_cron' ) );
-				
+
 			if( is_admin() ){
 				if( isset($_GET['spv'])){
 					SendPress_Option::set( 'version' , $_GET['spv'] );
@@ -286,7 +286,7 @@ Author URI: https://sendpress.com/
 
 
 				}
-				
+
 				$this->ready_for_sending();
 				add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 				add_action( 'admin_init', array( $this, 'admin_init' ) );
@@ -299,22 +299,22 @@ Author URI: https://sendpress.com/
 				if( SendPress_Option::get('sp_widget_shortdoces') ){
 					add_filter('widget_text', 'do_shortcode');
 				}
-				
+
 			}
 			add_image_size( 'sendpress-max', 600, 600 );
 			add_filter( 'template_include', array( $this, 'template_include' ) );
 			add_action( 'sendpress_cron_action', array( $this,'sendpress_cron_action_run') );
-			
-			
+
+
 			//using this for now, might find a different way to include things later
 			// global $load_signup_js;
 			// $load_signup_js = false;
-			
+
 			add_action( 'wp_enqueue_scripts', array( $this, 'add_front_end_scripts' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'add_front_end_styles' ) );
-	
+
 			add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
-			
+
 		}
 
 		function add_registration_fields() {
@@ -332,18 +332,18 @@ Author URI: https://sendpress.com/
 		}
 
 		static function add_cron(){
-			
+
 			if( SendPress_Option::get('autocron','no') == 'yes' && wp_next_scheduled( 'sendpress_cron_action' ) ) {
 				wp_clear_scheduled_hook('sendpress_cron_action');
 			} else {
 				if ( ! wp_next_scheduled( 'sendpress_cron_action' )   ){
-					wp_schedule_event( time() , 'hourly', 'sendpress_cron_action' );  
-				} 
+					wp_schedule_event( time() , 'hourly', 'sendpress_cron_action' );
+				}
 			}
 		}
-	
+
 		function user_has_cap($all, $caps, $args){
-	
+
 			if(isset($args[2])){
 				$post = get_post( $args[2] );
 				if($post !== null && $post->post_type == 'sp_newsletters'){
@@ -351,23 +351,23 @@ Author URI: https://sendpress.com/
 						foreach($caps as $cap){
 							$all[$cap] = 1;
 						}
-						
-	
+
+
 					}
-	
-	
+
+
 				}
-	
+
 			}
 			return $all;
-	
+
 		}
-	
-	
+
+
 		function load_plugin_language(){
 			load_plugin_textdomain( 'sendpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 		}
-	
+
 			/**
 	 * Register our widget.
 	 * 'SendPress_Signup_Widget' is the widget class used below.
@@ -377,12 +377,12 @@ Author URI: https://sendpress.com/
 			function load_widgets() {
 				register_widget( 'SendPress_Widget_Signup' );
 			}
-	
-	
-		function admin_notice(){ 
+
+
+		function admin_notice(){
 			//This is the WordPress one shows above menu area.
 			//echo 'wtf';
-	
+
 		}
 		function sendpress_notices(){
 			if( in_array('settings', $this->_messages) ){
@@ -407,48 +407,48 @@ Author URI: https://sendpress.com/
 
 
 		}
-	
+
 	    /**
 	 * ready_for_sending
-	 * 
+	 *
 	 * @access public
 	 *
 	 * @return mixed Value.
-	 */	
+	 */
 		function ready_for_sending(){
-			
+
 			$ready = true;
 			$message = '';
-	
+
 			$from = SendPress_Option::get('fromname');
 			if($from == false || $from == ''){
-				$ready = false;	
+				$ready = false;
 				$this->show_message('settings');
 			}
-	
+
 			$fromemail = SendPress_Option::get('fromemail');
 			if( ( $from == false || $from == '' ) && !is_email( $fromemail ) ){
-				$ready = false;	
+				$ready = false;
 				$this->show_message('settings');
 			}
-	
+
 			/*
 			$canspam = SendPress_Option::get('canspam');
 			if($canspam == false || $canspam == ''){
-				$ready = false;	
+				$ready = false;
 				$this->show_message('settings');
 			}
 	 */
-	
+
 			$this->ready = $ready;
 		}
-	
+
 		function show_message($item){
 			if(!in_array($item,$this->_messages) ){
 				array_push($this->_messages, $item);
-			}	
+			}
 		}
-	 
+
 		// Hook into that action that'll fire weekly
 		function sendpress_cron_action_run() {
 			if( SendPress_Option::get('autocron','no') == 'yes'){
@@ -458,26 +458,26 @@ Author URI: https://sendpress.com/
 				SendPress_Queue::send_mail_cron();
 			}
 		}
-	 
+
 		function cron_schedule( $schedules ) {
 		    $schedules['tenminutes'] = array(
 		        'interval' => 300, // 1 week in seconds
 		        'display'  => __( 'Once Every Minute' ),
 		    );
-		 
+
 		    return $schedules;
 		}
-	
+
 		// Start of Presstrends Magic
 		function presstrends_plugin() {
 			SendPress_Tracking::data();
 		}
-	
-		function template_include( $template ) { 
-		  	global $post; 
-	
+
+		function template_include( $template ) {
+		  	global $post;
+
 		  	if( (get_query_var( 'sendpress' )) || isset($_POST['sendpress']) ){
-			  	
+
 			  	$action = isset($_POST['sendpress']) ? $_POST['sendpress'] : get_query_var( 'sendpress' );
 				//Look for encrypted data
 		  		$data = SendPress_Data::decrypt( urldecode($action) );
@@ -487,39 +487,39 @@ Author URI: https://sendpress.com/
 			 	} else {
 			 		$view= $action;
 			 	}
-	
+
 			 	$view_class = SendPress_Data::get_public_view_class($view);
 			 	if(class_exists($view_class)){
 			 		$view_class = NEW $view_class;
 			 		$view_class->data($data);
 					if( isset( $_POST['sp'] ) && wp_verify_nonce( $_POST['sp'],'sendpress-form-post') && method_exists($view_class, 'save') ){
 						$view_class->save();
-					} 
+					}
 					$view_class->prerender();
 					$view_class->render();
 				}
 			  	//$this->load_default_screen($action);
 				die();
 			}
-	
+
 		  	if(isset($post)){
 	 			if($post->post_type == $this->_email_post_type || $post->post_type == $this->_report_post_type  ) {
-	  				
+
 	  				$inline = false;
 					if(isset($_GET['inline']) ){
 						$inline = true;
 					}
 					return SendPress_Template::get_instance()->render(false, true, $inline );
 	  				//return SENDPRESS_PATH. '/template-loader.php';
-	    		//return dirname(__FILE__) . '/my_special_template.php'; 
+	    		//return dirname(__FILE__) . '/my_special_template.php';
 				}
 			}
-	  		return $template; 
-		} 
-		
+	  		return $template;
+		}
+
 	    /**
 	 * has_identity_key
-	 * 
+	 *
 	 * @access public
 	 *
 	 * @return mixed Value.
@@ -534,7 +534,7 @@ Author URI: https://sendpress.com/
 			}
 			return false;
 		}
-	
+
 		static function add_vars($public_query_vars) {
 			$public_query_vars[] = 'fxti';
 			$public_query_vars[] = 'sendpress';
@@ -545,7 +545,7 @@ Author URI: https://sendpress.com/
 			$public_query_vars[] = 'spemail';
 			return $public_query_vars;
 		}
-	
+
 		function add_custom_post(){
 			SendPress_Posts::email_post_type( $this->_email_post_type );
 			SendPress_Posts::report_post_type( $this->_report_post_type );
@@ -554,14 +554,14 @@ Author URI: https://sendpress.com/
 
 			do_action('sendpress_custom_post_types_created',$this);
 		}
-	
-		
-	
+
+
+
 		function SendPress(){
 			//$this->_templates = $this->get_templates();
 		}
-		
-		function create_color_picker( $value ) { ?>	
+
+		function create_color_picker( $value ) { ?>
 		<input class="cpcontroller " data-id="<?php echo $value['id']; ?>" css-id="<?php echo $value['css']; ?>" link-id="<?php echo $value['link']; ?>" name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>" type="text" value="<?php  echo isset($value['value']) ? $value['value'] : $value['std'] ; ?>" />
 		<input type='hidden' value='<?php echo $value['std'];?>' id='default_<?php echo $value['id']; ?>'/>
 		<a href="#" class="btn btn-default btn-xs reset-line" data-type="cp" data-id="<?php echo $value['id']; ?>" >Reset</a>
@@ -573,7 +573,7 @@ Author URI: https://sendpress.com/
 	}
 
 
-	function create_color_picker_iframe( $value ) { ?>	
+	function create_color_picker_iframe( $value ) { ?>
 		<input class="cpcontroller" iframe="true" data-id="<?php echo $value['id']; ?>" css-id="<?php echo $value['css']; ?>" target="<?php echo $value['iframe']; ?>" link-id="<?php echo $value['link']; ?>" name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>" type="text" value="<?php  echo isset($value['value']) ? $value['value'] : $value['std'] ; ?>" />
 		<input type='hidden' value='<?php echo $value['std'];?>' id='default_<?php echo $value['id']; ?>'/>
 		<a href="#" class="btn btn-default btn-xs reset-line" data-type="cp" data-id="<?php echo $value['id']; ?>" >Reset</a>
@@ -605,7 +605,7 @@ Author URI: https://sendpress.com/
 	}
 
 	/* Display a notice that can be dismissed */
-		
+
 	function sendpress_ignore_087() {
 	        /* Check that the user hasn't already clicked to ignore the message */
 	    if ( ! SendPress_Option::get('sendpress_ignore_087') ) {
@@ -614,7 +614,7 @@ Author URI: https://sendpress.com/
 	        echo "</p></div>";
 	    }
 	}
-		
+
 
 	function myformatTinyMCE($in){
 		$in['plugins']= str_replace('wpeditimage,', '', $in['plugins']);
@@ -670,14 +670,14 @@ Author URI: https://sendpress.com/
 
 		if( SendPress_Option::get('queue-per-call') == false ){
 			SendPress_Option::set('queue-per-call' , 1000 );
-	
+
 		}
-		
-		 
+
+
 
 		//Removed in 0.9.2
 		//$this->create_initial_list();
-		
+
 		/*
 		if( SendPress_Option::get('emails-today') == false ){
 			$emails_today = array( date("z") => '0' );
@@ -698,24 +698,24 @@ Author URI: https://sendpress.com/
 		    wp_schedule_event( time(), 'tenminutes',  'sendpress_cron_action' );
 		}
 		*/
-		
+
 		//wp_clear_scheduled_hook( 'sendpress_cron_action' );
-		
+
 		/*
 		add_meta_box( 'email-status', __( 'Email Status', 'sendpress' ), array( $this, 'email_meta_box' ), $this->_email_post_type, 'side', 'low' );
-			
+
 		*/
-		
+
 		wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' ,'', SENDPRESS_VERSION);
 
-		
+
 		wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', false, SENDPRESS_VERSION );
     	wp_enqueue_style( 'sendpress_css_admin' );
     	wp_register_script('sendpress-widget-js', SENDPRESS_URL .'js/sendpress.widget.js','', SENDPRESS_VERSION );
-			
-    	
 
-    	
+
+
+
 
 		//MAKE SURE WE ARE ON AN ADMIN PAGE
 		if(isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)){
@@ -726,12 +726,12 @@ Author URI: https://sendpress.com/
 				remove_filter("mce_plugins", "cforms_plugin");
 				remove_filter('mce_buttons', 'cforms_button');
 				remove_filter('tinymce_before_init','cforms_button_script');
-				
+
 
 				global $wp_filter;
 
 				$wp_filter['admin_notices'] = array();
-			
+
 			if(SendPress_Option::get('whatsnew','show') == 'show'){
 				SendPress_Option::set('whatsnew','hide');
 				SendPress_Admin::redirect('Help_Whatsnew');
@@ -746,7 +746,7 @@ Author URI: https://sendpress.com/
 
 			$this->_page = $_GET['page'];
 			add_filter('tiny_mce_before_init',  array($this,'myformatTinyMCE') );
-			
+
 
 			if( isset($_GET['beta'])){
 				SendPress_Option::set( 'beta' , absint( $_GET['beta'] ) );
@@ -760,23 +760,23 @@ Author URI: https://sendpress.com/
 			$tiny = new SendPress_TinyMCE();
 	   		$this->_current_view = isset( $_GET['view'] ) ? $_GET['view'] : '' ;
 
-			
-			
-			
-	    	
+
+
+
+
 	    	$view_class = $this->get_view_class($this->_page, $this->_current_view);
 			$view_class = NEW $view_class;
 			$view_class->admin_init();
 			add_action('sendpress_admin_scripts',array($view_class, 'admin_scripts_load'));
 			$view_class = $this->get_view_class($this->_page, $this->_current_view);
-	    		
+
 	    	$this->_current_action = isset( $_GET['action'] ) ? $_GET['action'] : '' ;
 		    $this->_current_action = isset( $_GET['action2'] ) ? $_GET['action2'] : $this->_current_action ;
 		    $this->_current_action = isset( $_POST['action2'] ) ? $_POST['action2'] : $this->_current_action ;
 		    $this->_current_action = isset( $_POST['action'] ) && $_POST['action'] !== '-1' ? $_POST['action'] : $this->_current_action ;
 		    $method = str_replace("-","_", $this->_current_action);
 	    	$method = str_replace(" ","_",$method);
-	    		
+
 
 	    	if ( !empty($_POST) &&  (isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'],$this->_nonce_value) )   ){
 
@@ -789,11 +789,11 @@ Author URI: https://sendpress.com/
 	    			$save_class->save( $_POST, $this );
 	    		} else {
 
-		    	
+
 		    	require_once( SENDPRESS_PATH . 'inc/helpers/sendpress-post-actions.php' );
-		    	
+
 		    	}
-	    	
+
 	    	} else if ( isset( $_GET['action']) || isset( $_GET['action2'] )  ){
 
 		    	$this->_current_action = $_GET['action'];
@@ -806,7 +806,7 @@ Author URI: https://sendpress.com/
 	    			call_user_func(array($view_class, $method ),$_GET,$this);
 	    		}
 
-	    		
+
 
 		    	require_once( SENDPRESS_PATH . 'inc/helpers/sendpress-get-actions.php' );
 	    	}
@@ -817,7 +817,7 @@ Author URI: https://sendpress.com/
 
 
 			global $pagenow;
-			
+
     		//MAKE SURE WE ARE ON AN ADMIN PAGE
 			if(is_admin() && isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)){
 
@@ -844,7 +844,7 @@ Author URI: https://sendpress.com/
 			wp_enqueue_script('sendpress_bootstrap');
 			wp_enqueue_style( 'sendpress_bootstrap_css' );
 			wp_enqueue_style( 'sendpress_css_base' );
-			wp_enqueue_style( 'sendpress_css_admin' );	
+			wp_enqueue_style( 'sendpress_css_admin' );
     		if( ( isset($_GET['page']) && $_GET['page'] == 'sp-templates' ) || (isset( $_GET['view'] ) && $_GET['view'] == 'style-email' )) {
 				wp_enqueue_script('sendpress_js_styler');
 			}
@@ -856,17 +856,17 @@ Author URI: https://sendpress.com/
 					wp_enqueue_script( 'dashboard' );
 				}
 				wp_enqueue_style( 'farbtastic' );
-			
+
     			wp_enqueue_script(array('jquery', 'editor', 'thickbox', 'media-upload'));
     			wp_enqueue_script('sendpress-admin-js');
 				wp_enqueue_script( 'spfarb' );
 				wp_enqueue_script('sendpress_ls');
-	
+
     		}
     			wp_localize_script( 'sendpress-admin-js', 'spvars', array(
 	    // URL to wp-admin/admin-ajax.php to process the request
 	    'ajaxurl'          => admin_url( 'admin-ajax.php' ),
-	 
+
 	    // generate a nonce with a unique ID "myajax-post-comment-nonce"
 	    // so that you can check it later when an AJAX request is sent
 	    'sendpressnonce' => wp_create_nonce( SendPress_Ajax_Loader::$ajax_nonce ),
@@ -879,7 +879,7 @@ Author URI: https://sendpress.com/
 		wp_dequeue_style('wpe-common');
 		wp_deregister_style('wpe-common');
 	}
-   	
+
 
    	function add_front_end_scripts(){
 		$widget_options = SendPress_Option::get('widget_options');
@@ -907,14 +907,14 @@ Author URI: https://sendpress.com/
    	function change_button_text( $translation, $original ) {
 		 // We don't pass "type" in our custom upload fields, yet WordPress does, so ignore our function when WordPress has triggered the upload popup.
 	    if ( isset( $_REQUEST['type'] ) ) { return $translation; }
-	    
+
 	    if( $original == 'Insert into Post' ) {
 	    	$translation = __( 'Use this Image', 'sendpress' );
 			if ( isset( $_REQUEST['title'] ) && $_REQUEST['title'] != '' ) { $translation = sprintf( __( 'Use as %s', 'sendpress' ), esc_attr( $_REQUEST['title'] ) ); }
 	    }
-	
+
 	    return $translation;
-	} 
+	}
 
 	function save_redirect(){
 	    // echo $_POST['save-type'];
@@ -923,16 +923,16 @@ Author URI: https://sendpress.com/
 		    switch ( $_POST['save-action'] ) {
 		    	case 'save-confirm-send':
 					 wp_redirect( '?page='.$_GET['page']. '&view=send-confirm&emailID='. $_POST['post_ID'] );
-				break; 
+				break;
 				case 'save-style':
 					 wp_redirect( '?page='.$_GET['page']. '&view=style&emailID='. $_POST['post_ID'] );
-				break; 
+				break;
 				case 'save-create':
 					 wp_redirect( '?page='.$_GET['page']. '&view=style&emailID='. $_POST['post_ID'] );
 				break;
 				case 'save-send':
 					 wp_redirect( '?page='.$_GET['page']. '&view=send&emailID='. $_POST['post_ID'] );
-				break;         
+				break;
 				default:
 					wp_redirect( $_POST['_wp_http_referer'] );
 				break;
@@ -952,13 +952,13 @@ Author URI: https://sendpress.com/
 				<a href="#" id="save-update" class="btn btn-primary btn-large "><i class="icon-white icon-ok"></i> <?php echo __('Update','sendpress'); ?></a>
 				<?php if( SendPress_Admin::access('Emails_Send') ) { ?>
 				<a href="#" id="save-send-email" class="btn btn-primary btn-large "><i class="icon-envelope icon-white"></i> <?php echo __('Send','sendpress'); ?></a>
-				<?php } ?>	
+				<?php } ?>
 				<?php } ?>
 				<?php if($this->_current_view == 'styles'){ ?>
 				<a href="#" id="save-update" class="btn btn-primary btn-large "><i class="icon-white icon-ok"></i> <?php echo __('Update','sendpress'); ?></a><a href="#" id="save-send-email" class="btn btn-primary btn-large "><i class="icon-envelope icon-white"></i> <?php echo __('Send','sendpress'); ?></a>
 				<?php } ?>
 				<?php if($this->_current_view == 'send'){ ?>
-				<a href="?page=<?php echo $_GET['page']; ?>&view=style&emailID=<?php echo $_GET['emailID']; ?>" class="btn btn-primary btn-large "><i class="icon-white icon-pencil"></i> <?php echo __('Edit','sendpress'); ?></a><a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-envelope"></i> <?php echo __('Send','sendpress'); ?></a>	
+				<a href="?page=<?php echo $_GET['page']; ?>&view=style&emailID=<?php echo $_GET['emailID']; ?>" class="btn btn-primary btn-large "><i class="icon-white icon-pencil"></i> <?php echo __('Edit','sendpress'); ?></a><a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-envelope"></i> <?php echo __('Send','sendpress'); ?></a>
 				<?php } ?>
 				<?php if($this->_current_view == 'create'){ ?>
 				<a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-ok icon-white"></i> <?php echo __('Save & Next','sendpress'); ?></a>
@@ -1024,7 +1024,7 @@ Author URI: https://sendpress.com/
 	}
 
 	function admin_menu() {
-		
+
 
 		if( current_user_can('sendpress_view') ){
 			$role = "sendpress_view";
@@ -1043,18 +1043,18 @@ Author URI: https://sendpress.com/
 		add_menu_page($plugin_name, $plugin_name, $role,'sp-overview',  array(&$this,'render_view') , SENDPRESS_URL.'img/sendpress-bg-16.png');
 	    add_submenu_page('sp-overview', __('Overview','sendpress'), __('Overview','sendpress'), $role, 'sp-overview', array(&$this,'render_view'));
 	    $main = add_submenu_page('sp-overview', __('Emails','sendpress'), __('Emails','sendpress'), $role, 'sp-emails', array(&$this,'render_view'));
-	    
+
 	    add_submenu_page('sp-overview', __('Reports','sendpress'), __('Reports','sendpress'), $role, 'sp-reports', array(&$this,'render_view'));
 	   	add_submenu_page('sp-overview', __('Subscribers','sendpress'), __('Subscribers','sendpress'), $role, 'sp-subscribers', array(&$this,'render_view'));
 	    add_submenu_page('sp-overview', __('Queue','sendpress') ." ". $queue, __('Queue','sendpress')." ". $queue, $role, 'sp-queue', array(&$this,'render_view'));
 	   	add_submenu_page('sp-overview', __('Settings','sendpress'), __('Settings','sendpress'), $role, 'sp-settings', array(&$this,'render_view'));
-	  
-	   	
+
+
 
 	   	add_submenu_page('sp-overview', __('Help','sendpress'), __('Help','sendpress'), $role, 'sp-help', array(&$this,'render_view'));
-	   
+
 	   add_submenu_page('sp-overview', __('Pro','sendpress'), __('Pro','sendpress'), $role, 'sp-pro', array(&$this,'render_view'));
-	   
+
 
 	   	if(SendPress_Option::get('feedback') == 'yes' || SendPress_Option::get('allow_tracking') == 'yes'){
 			SendPress_Tracking::data();
@@ -1062,7 +1062,7 @@ Author URI: https://sendpress.com/
 	}
 
 	function render_view(){
-		
+
 		$view_class = $this->get_view_class($this->_page, $this->_current_view);
 		//echo "About to render: $view_class, $this->_page";
 		$view_class = NEW $view_class;
@@ -1076,10 +1076,10 @@ Author URI: https://sendpress.com/
 		$view_class->add_tab( __('Subscribers','sendpress'), 'sp-subscribers', ($this->_page === 'sp-subscribers') );
 		$view_class->add_tab( __('Queue','sendpress') . ' <small>('. $queue .')</small>', 'sp-queue', ($this->_page === 'sp-queue') );
 		$view_class->add_tab( __('Settings','sendpress'), 'sp-settings', ($this->_page === 'sp-settings') );
-		
+
 		$view_class->add_tab( __('Help','sendpress'), 'sp-help', ($this->_page === 'sp-help') );
 		$view_class->add_tab( __('Pro','sendpress'), 'sp-pro', ($this->_page === 'sp-pro') );
-		
+
 		$view_class->prerender( $this );
 		$view_class->render( $this );
 	}
@@ -1100,7 +1100,7 @@ Author URI: https://sendpress.com/
 					$classname = '_';
 				}
 				$classname .= ucwords( $p );
-				
+
 			}
 		}
 
@@ -1115,15 +1115,15 @@ Author URI: https://sendpress.com/
 		}
 
 		$class = "SendPress_View_{$classname}";
-		
+
 		if ( class_exists( $class ) )
 			return $class;
-		
+
 		return "SendPress_View";
 	}
 
-	
-	
+
+
 	function upgrade_lists_to_custom_postype(){
 		$table = $this->lists_table();
 
@@ -1159,19 +1159,19 @@ Author URI: https://sendpress.com/
 		$result = $wpdb->update($table,$values, array('listID'=> $old) );
 		//return $result;
 	}
-	
+
 
 	function maybe_upgrade() {
 
 		$current_version = SendPress_Option::get('version', '0' );
 		//SendPress_Error::log($current_version);
-		
+
 		if ( version_compare( $current_version, SENDPRESS_VERSION, '==' ) )
 			return;
 
 		SendPress_Option::set('whatsnew','show');
 		//On version change update default template
-		$this->set_template_default();	
+		$this->set_template_default();
 
 		//SendPress::update_templates();
 
@@ -1182,11 +1182,11 @@ Author URI: https://sendpress.com/
         	$widget_options['widget_options']['load_ajax'] = 0;
         	$widget_options['widget_options']['load_scripts_in_footer'] = 0;
 
-        	SendPress_Option::set($widget_options);   
+        	SendPress_Option::set($widget_options);
 		}
-	
-		
-		
+
+
+
 		if(version_compare( $current_version, '0.8.7.5', '<' )){
 			SendPress_Data::set_double_optin_content();
 		}
@@ -1198,10 +1198,10 @@ Author URI: https://sendpress.com/
 			SendPress_Option::set($pro_plugins);
 		}
 
-			
+
 
 		if(version_compare( $current_version, '0.9.3', '<' )){
-	
+
 			$options = SendPress_Option::get('notification_options');
 
 			$new_options = array(
@@ -1219,13 +1219,13 @@ Author URI: https://sendpress.com/
 		        );
 
 			if($options === false || $options === ''){
-				
+
 		        SendPress_Option::set('notification_options', $new_options );
 			} else if( is_array($options) ){
 				$result = array_merge( $new_options , $options);
 				SendPress_Option::set('notification_options', $result );
 			}
-			
+
 		}
 		/*
 
@@ -1241,7 +1241,7 @@ Author URI: https://sendpress.com/
 		}
 		*/
 
-	
+
 		if(version_compare( $current_version, '0.9.6', '<' )){
 
 			$options = SendPress_Option::get('notification_options');
@@ -1290,10 +1290,10 @@ Author URI: https://sendpress.com/
 			wp_remote_get( $url );
 		}
 		*/
-		
+
 		SendPress_Option::set( 'version' , SENDPRESS_VERSION );
-	}	
-	
+	}
+
 	function set_template_default(){
 		$default_style_post = SendPress_Data::get_template_id_by_slug('default-style');
 		update_post_meta($default_style_post ,'body_bg', '#E8E8E8' );
@@ -1348,23 +1348,23 @@ Author URI: https://sendpress.com/
 	// GET DATA
 	function getData($table) {
 		$result = $this->wpdbQuery("SELECT * FROM $table", 'get_results');
-		return $result;		
+		return $result;
 	}
 
 	// GET DETAIL (RETURN X WHERE Y = Z)
 	function getDetail($table, $entry, $value) {
 		$result = $this->wpdbQuery("SELECT * FROM $table WHERE $entry = '$value'", 'get_results');
-		return $result;	
+		return $result;
 	}
 
 	function getUrl($report, $url) {
 		$table = SendPress_Data::report_url_table();
 		$result = $this->wpdbQuery("SELECT * FROM $table WHERE reportID = '$report' AND url = '$url'", 'get_results');
-		return $result;	
+		return $result;
 	}
 
 
-	
+
 	function get_opens_unique_count($rid){
 		$table = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery("SELECT COUNT( DISTINCT subscriberID ) FROM $table WHERE reportID = '$rid' AND type = 'open';", 'get_var');
@@ -1419,7 +1419,7 @@ Author URI: https://sendpress.com/
 		$table = SendPress_Data::list_subcribers_table();
 		$result = $this->wpdbQuery("DELETE FROM $table WHERE listID = '$listID'", 'query');
 
-		return $result;	
+		return $result;
 	}
 
 	// GET DETAIL (RETURN X WHERE Y = Z)
@@ -1427,7 +1427,7 @@ Author URI: https://sendpress.com/
 		$table = SendPress_Data::queue_table();
 		$result = $this->wpdbQuery("DELETE FROM $table WHERE id = '$emailID'", 'query');
 
-		return $result;	
+		return $result;
 	}
 
 	// GET DETAIL (RETURN X WHERE Y = Z)
@@ -1445,17 +1445,17 @@ Author URI: https://sendpress.com/
 		$table = SendPress_Data::queue_table();
 
 		$result = $wpdb->update($table,array('attempts'=>0 ,'inprocess'=>0), array('id'=> $emailid) );
-	
+
 	}
 
 	// GET DETAIL (RETURN X WHERE Y = Z)
 	function unlink_list_subscriber($listID, $subscriberID) {
 		$table = SendPress_Data::list_subcribers_table();
 		$result = $this->wpdbQuery("DELETE FROM $table WHERE listID = '$listID' AND subscriberID = '$subscriberID' ", 'query');
-		return $result;	
+		return $result;
 	}
 
-	
+
 	// COUNT DATA
 	function countData($table) {
 		$count = $this->wpdbQuery("SELECT COUNT(*) FROM $table", 'get_var');
@@ -1469,7 +1469,7 @@ Author URI: https://sendpress.com/
 
 		$query = "SELECT COUNT(*) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3";
 
-        
+
             $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND(t2.status = %d) AND (t2.listID =  %d)";
           //  "SELECT COUNT(*) FROM $table WHERE listID = $listID AND status = $status"
 		$count = $this->wpdbQuery( $wpdb->prepare( $query, $status, $listID) , 'get_var');
@@ -1508,14 +1508,14 @@ Author URI: https://sendpress.com/
 		return $wpdb->insert_id;
 	}
 
-	
+
 
 	function updateSubscriber($subscriberID, $values){
 		$table = SendPress_Data::subscriber_table();
 		$email = $values['email'];
 		global $wpdb;
 		$result = $this->wpdbQuery("SELECT subscriberID FROM $table WHERE email = '$email' ", 'get_var');
-		if($result == false || $result == $subscriberID){ 
+		if($result == false || $result == $subscriberID){
 
 		$result = $wpdb->update($table,$values, array('subscriberID'=> $subscriberID) );
 		//$result = $this->wpdbQuery("SELECT @lastid2 := LAST_INSERT_ID()",'query');
@@ -1523,12 +1523,12 @@ Author URI: https://sendpress.com/
 		//return $wpdb->insert_id;
 	}
 
-	
+
 
 	function getSubscriberLists( $value ) {
 		$table = SendPress_Data::list_subcribers_table();
 		$result = $this->wpdbQueryArray("SELECT listID FROM $table WHERE subscriberID = '$value'", 'get_results');
-		return $result;	
+		return $result;
 	}
 
 	function getSubscriberListsStatus( $listID,$subscriberID ) {
@@ -1540,14 +1540,14 @@ Author URI: https://sendpress.com/
 		$query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
 
         $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.listID =  ". $listID .")";
-        
+
         return $this->wpdbQuery($query, 'get_results');
 	}
 	function get_active_subscribers($listID = false){
 		$query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
 
         $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.listID =  ". $listID .") AND (t2.status = 2)";
-        
+
         return $this->wpdbQuery($query, 'get_results');
 	}
 
@@ -1567,7 +1567,7 @@ Author URI: https://sendpress.com/
 		if($listID){
         $query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
 
-        
+
             $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.listID =  ". $listID .")";
         } else {
             $query = "SELECT * FROM " .  SendPress_Data::subscriber_table();
@@ -1576,38 +1576,38 @@ Author URI: https://sendpress.com/
         return $this->wpdbQuery($query, 'get_results');
 	}
 
-	
+
 
 
 	function the_content( $content ) {
-		
+
 		global $post;
-		$optin = SendPress_Data::get_template_id_by_slug('double-optin');	
+		$optin = SendPress_Data::get_template_id_by_slug('double-optin');
 		if ( $post->post_type == 'sptemplates' && $post->ID == $optin ) {
 			$content .= "";
 		}
-		
+
 		return $content;
-		
+
 	}
 
 	function create_initial_list(){
 
 		//check if you have lists
-		$lists = wp_count_posts('sendpress_list');		
+		$lists = wp_count_posts('sendpress_list');
 
 		if( intval($lists->publish) === 0 ){
 			//add in a fresh list
 			$id = $this->createList( array('name'=> 'My First SendPress Newsletter', 'public'=>1 ) );
 		}
-		
+
 	}
-	
+
 
 
     /**
      * plugin_activation
-     * 
+     *
      * @access public
      *
      * @return mixed Value.
@@ -1621,12 +1621,12 @@ Author URI: https://sendpress.com/
 		}
 
 
-		
-				
+
+
 		//Make sure we stop the old action from running
 		wp_clear_scheduled_hook('sendpress_cron_action_run');
 		flush_rewrite_rules();
-				 
+
 		SendPress_Option::set( 'install_date' , time() );
 
 	}
@@ -1640,41 +1640,41 @@ Author URI: https://sendpress.com/
 		flush_rewrite_rules( );
 		wp_clear_scheduled_hook( 'sendpress_cron_action' );
 		wp_clear_scheduled_hook( 'sendpress_notification_daily' );
-	} 
+	}
 
-	
 
-	
 
-	function csv2array($input,$delimiter=',',$enclosure='"',$escape='\\'){ 
-    	$fields=explode($enclosure.$delimiter.$enclosure,substr($input,1,-1)); 
-    	foreach ($fields as $key=>$value) 
-        	$fields[$key]=str_replace($escape.$enclosure,$enclosure,$value); 
-    	return($fields); 
-	} 
 
-	function array2csv($input,$delimiter=',',$enclosure='"',$escape='\\'){ 
-	    foreach ($input as $key=>$value) 
-	        $input[$key]=str_replace($enclosure,$escape.$enclosure,$value); 
-	    return $enclosure.implode($enclosure.$delimiter.$enclosure,$input).$enclosure; 
-	} 
 
-	
+	function csv2array($input,$delimiter=',',$enclosure='"',$escape='\\'){
+    	$fields=explode($enclosure.$delimiter.$enclosure,substr($input,1,-1));
+    	foreach ($fields as $key=>$value)
+        	$fields[$key]=str_replace($escape.$enclosure,$enclosure,$value);
+    	return($fields);
+	}
+
+	function array2csv($input,$delimiter=',',$enclosure='"',$escape='\\'){
+	    foreach ($input as $key=>$value)
+	        $input[$key]=str_replace($enclosure,$escape.$enclosure,$value);
+	    return $enclosure.implode($enclosure.$delimiter.$enclosure,$input).$enclosure;
+	}
+
+
 
 	/*
 	*
 	*	Creates an array from a posted textarea
-	*	
+	*
 	*	expects 3 fields or less: @sendpress.me, fname, lname
 	*
 	*/
-	function subscriber_csv_post_to_array($csv, $delimiter = ',', $enclosure = '"', $escape = '\\', $terminator = "\n") { 
+	function subscriber_csv_post_to_array($csv, $delimiter = ',', $enclosure = '"', $escape = '\\', $terminator = "\n") {
 	   return SendPress_Data::subscriber_csv_post_to_array($csv, $delimiter, $enclosure, $escape , $terminator);
-	} 
+	}
 
-	
 
-	
+
+
 
 	/**
 	 * Returns an array of all PHP files in the specified absolute path.
@@ -1690,7 +1690,7 @@ Author URI: https://sendpress.com/
 		if (!$dir = @opendir( $absolute_path ) ) {
 			return $files;
 		}
-		
+
 		while ( false !== $file = readdir( $dir ) ) {
 			if ( '.' == substr( $file, 0, 1 ) || '.php' != substr( $file, -4 ) ) {
 				continue;
@@ -1711,7 +1711,7 @@ Author URI: https://sendpress.com/
 		return $files;
 	}
 
-	
+
 
 	function get_lists(){
 		return	$this->getData( $this->lists_table() );
@@ -1730,18 +1730,18 @@ Author URI: https://sendpress.com/
 				$selected = " selected='selected'";
 			else
 				$selected = '';
-				
+
 		echo "\n\t<option value='".$key."' $selected>".$template['name'] ."</option>";
 		endforeach;
 	}
 
 	/*
-		Funtion to be removed.	
+		Funtion to be removed.
 	*/
-   
 
 
-	
+
+
 
 	function unique_message_id() {
 		if ( isset($_SERVER['SERVER_NAME'] ) ) {
@@ -1754,7 +1754,7 @@ Author URI: https://sendpress.com/
 	    return $result;
 	}
 
-	
+
 
 	function cron_stop(){
 		$upload_dir = wp_upload_dir();
@@ -1770,7 +1770,7 @@ Author URI: https://sendpress.com/
 		$filename = $upload_dir['basedir'].'/sendpress.pause';
 		if (file_exists($filename)) {
 			unlink($filename);
-		} 
+		}
 	}
 
 	static function fetch_mail_from_queue(){
@@ -1778,13 +1778,13 @@ Author URI: https://sendpress.com/
 		global $wpdb;
 		$count = SendPress_Option::get('emails-per-hour');
 		$emails_per_hour = SendPress_Option::get('emails-per-hour');
-		
+
 		if( SendPress_Manager::limit_reached()  ){
 			return;
 		}
 
 
-		for ($i=0; $i < $count ; $i++) { 
+		for ($i=0; $i < $count ; $i++) {
 				$email = $this->wpdbQuery("SELECT * FROM ". SendPress_Data::queue_table() ." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 ORDER BY id LIMIT 1","get_row");
 				if($email != null){
 
@@ -1817,12 +1817,12 @@ Author URI: https://sendpress.com/
 
 
 		return;
-		
 
-		
+
+
 	}
 
-	
+
 
 
 	function add_email_to_queue($values){
@@ -1837,9 +1837,9 @@ Author URI: https://sendpress.com/
 		SendPress_Data::add_email_to_queue($values);
 	}
 
-	
+
 	function set_default_email_style( $id ){
-		SendPress_Email::set_default_style( $id ); 
+		SendPress_Email::set_default_style( $id );
 	}
 
 	function register_open( $subscriberKey, $report ){
@@ -1873,10 +1873,10 @@ Author URI: https://sendpress.com/
 		$wpdb->update( $this->list_subcribers_table() , array('status'=> 3) , array('listID'=> $lid,'subscriberID'=>$sid ));
 	}
 
-	
-	
-	
-	
+
+
+
+
 
 	function get_ip_info($ip){
 		if($ip != false && false == get_transient('sp-'.$ip) ){
@@ -1925,10 +1925,10 @@ Author URI: https://sendpress.com/
 	/*
 	*
 	*	FUNCTIONS TO BE REMOVED PLEASE DO NOT USE
-	* 
+	*
 	*/
 
-	
+
 	function send_single_from_queue(){
 		_deprecated_function( __FUNCTION__, '0.9.4.8', 'SendPress_Manager::send_single_from_queue()' );
 		return SendPress_Manager::send_single_from_queue();
@@ -1947,7 +1947,7 @@ Author URI: https://sendpress.com/
 
 	function encrypt_data( $message ) {
 		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::encrypt()' );
-		return SendPress_Data::encrypt($message);		
+		return SendPress_Data::encrypt($message);
 	}
 
 	function decrypt_data($message) {
@@ -1999,12 +1999,12 @@ Author URI: https://sendpress.com/
 		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::subscriber_open_table()' );
 		return SendPress_Data::subscriber_open_table();
 	}
-	
+
 	function report_url_table(){
 		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::report_url_table()' );
 		return SendPress_Data::report_url_table();
 	}
-	
+
 	function queue_table(){
 		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::queue_table()' );
 		return SendPress_Data::queue_table();
@@ -2017,7 +2017,7 @@ Author URI: https://sendpress.com/
 
 	function send_optin($subscriberID, $listids, $lists){
 		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Manager::send_optin()' );
-		SendPress_Manager::send_optin($subscriberID, $listids, $lists);	
+		SendPress_Manager::send_optin($subscriberID, $listids, $lists);
 	}
 
 	function subscribe_user($listid, $email, $first, $last){
@@ -2028,13 +2028,13 @@ Author URI: https://sendpress.com/
 	function get_option( $name, $default = false ) {
 		_deprecated_function( __FUNCTION__, '0.8.7', 'SendPress_Option::get()' );
 		return SendPress_Option::get( $name, $default);
-	}	
-	
+	}
+
 	function update_option( $name, $value ) {
 		_deprecated_function( __FUNCTION__, '0.8.7', 'SendPress_Option::set()' );
 		return SendPress_Option::set( $name, $value  );
 	}
-	
+
 	function update_options( $array ) {
 		_deprecated_function( __FUNCTION__, '0.8.7', 'SendPress_Option::set()' );
 		return  SendPress_Option::set( $array );
@@ -2067,18 +2067,18 @@ Author URI: https://sendpress.com/
 
 	function linkListSubscriber($listID, $subscriberID, $status = 0) {
 		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::update_subscriber_status()' );
-		return SendPress_Data::update_subscriber_status($listID, $subscriberID, $status );	
+		return SendPress_Data::update_subscriber_status($listID, $subscriberID, $status );
 	}
 
 	function send_test(){
 		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Manager::send_test()' );
 		SendPress_Manager::send_test();
 	}
-	
+
 	/*
 	*
 	*	END FUNCTIONS TO BE REMOVED PLEASE DO NOT USE
-	* 
+	*
 	*/
 
 }// End SP CLASS
