@@ -58,7 +58,7 @@ echo "</pre>";
 <div class="sp-row ">
 
   <div class="sp-block sp-25 sp-first"> 
-    <h2 class="nomargin nopadding"><?php echo SendPress_Data::bd_nice_number(SendPress_Data::get_count_subscribers()); ?></h2> <p class="fwb">Subscribers</p>  
+    <h2 class="nomargin nopadding"><?php echo SendPress_Data::bd_nice_number(SendPress_Data::get_total_subscribers()); ?></h2> <p class="fwb">Subscribers</p>  
   </div>
   <div class="sp-block sp-25">
     <h2 class="nomargin nopadding"><?php $report = SendPress_Data::get_last_report(); 

@@ -107,7 +107,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function requeue_emails(){
 		$table = self::queue_table();
 		global $wpdb;
-		$result = $wpdb->update( $table ,array('attempts'=>'0'), array('attempts'=> '3' ,'success'=>'0') );
+		$result = $wpdb->update( $table ,array('attempts'=>'0'), array('attempts'=> '1' ,'success'=>'0') );
 
 	}
 
@@ -1490,16 +1490,23 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$query = "SELECT COUNT(t1.subscriberID) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3";
 
         
-            $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND(t2.status = %d) ";
+            $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND (t2.status = %d) ";
             if($listID  !== false){
             	$query .= "AND (t2.listID =  %d)";
             } else {
-            	 $query .= "";
+            	 $query .= " ";
             }
-
           //  "SELECT COUNT(*) FROM $table WHERE listID = $listID AND status = $status"
 		$count = $wpdb->get_var( $wpdb->prepare( $query, $status, $listID));
 		return $count;
+	}
+
+	static function get_total_subscribers(){
+		global $wpdb;
+		$table = SendPress_Data::list_subcribers_table();
+		$query = "SELECT DISTINCT subscriberID FROM " . $table . " WHERE status = 2";
+		$count = $wpdb->get_results( $query );
+		return count($count);
 	}
 
 
