@@ -166,7 +166,7 @@ class SendPress_Posts{
 	static function template_post_type(){
 		// Template Post Statuses
 		register_post_status( 'sp-standard', array(
-			'label'                     => _x( 'Standard', 'Standard Template', 'sendpress' ),
+			'label'                     => _x( 'Standard',  'sendpress' ),
 			'public'                    => true,
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
@@ -175,12 +175,21 @@ class SendPress_Posts{
 		)  );
 
 		register_post_status( 'sp-custom', array(
-			'label'                     => _x( 'Custom', 'Custom Template', 'sendpress' ),
+			'label'                     => _x(  'Custom Template', 'sendpress' ),
 			'public'                    => true,
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,
 			'label_count'               => _n_noop( 'Custom <span class="count">(%s)</span>', 'Custom <span class="count">(%s)</span>', 'sendpress' )
+		)  );
+
+		register_post_status( 'sp-form', array(
+			'label'                     => _x( 'Form', 'sendpress' ),
+			'public'                    => true,
+			'exclude_from_search'       => false,
+			'show_in_admin_all_list'    => true,
+			'show_in_admin_status_list' => true,
+			'label_count'               => _n_noop( 'Form Setting <span class="count">(%s)</span>', 'Forms Settings <span class="count">(%s)</span>', 'sendpress' )
 		)  );
 
 
@@ -204,6 +213,21 @@ class SendPress_Posts{
 		register_post_type( 'sp_template', array(
 			'labels' => array(
 				'name' => __( 'SendPress Templates', 'sendpress' ),
+			),
+			'public' 			=> false,
+			'query_var' 		=> false,
+			'rewrite' 			=> false,
+			'show_ui'           => false,
+			'capability_type' 	=> 'post',
+			'map_meta_cap'      => true,
+			'supports' 			=> array( 'title' ),
+			'can_export'		=> true,
+			'exclude_from_search'=>'true',
+		) );
+
+		register_post_type( 'sp_settings', array(
+			'labels' => array(
+				'name' => __( 'SendPress Settings', 'sendpress' ),
 			),
 			'public' 			=> false,
 			'query_var' 		=> false,

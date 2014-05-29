@@ -294,7 +294,7 @@ class SendPress_Email_Local_Table extends WP_List_Table {
 		/* -- Fetch the items -- */
 			$args = array(
 			'post_type' => 'sp_template',
-			'post_status' => array('enabled')
+			'post_status' => array('sp-standard')
 			);
 
 			$query = new WP_Query( $args );
@@ -339,7 +339,7 @@ class SendPress_Email_Local_Table extends WP_List_Table {
 
 			$args = array(
 			'post_type' => 'sp_template' ,
-			'post_status' => array('enabled'),
+			'post_status' => array('sp-standard'),
 			'posts_per_page' => $per_page,
 			'paged'=> $paged,
 			);
