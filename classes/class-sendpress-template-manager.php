@@ -11,6 +11,7 @@ class SendPress_Template_Manager {
     
         return  array(
             'original' => array('path'=> SENDPRESS_PATH.'templates/original.html', 'name'=> 'SendPress Original' ,'status' => 'sp-standard'),
+            '1column' => array('path'=> SENDPRESS_PATH.'templates/1column.html', 'name'=> 'Responsive 1 Column' ,'status' => 'sp-standard'),
             '2columns-to-rows' => array('path'=> SENDPRESS_PATH.'templates/2columns-to-rows.html', 'name'=> '2 Column Top - Wide Bottom - Responsive','status' => 'sp-standard')
         );
     

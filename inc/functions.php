@@ -33,8 +33,9 @@ global $sendpress_html_templates;
 $sendpress_html_templates = array();
 function sendpress_register_template($html_template = array()){
 	global $sendpress_html_templates;
-	//$id = SendPress_Data::get_html_template_id_by_slug( sanitize_title_for_query( $html_template['name'] ) );
-	$id = 0;
+	$id = SendPress_Data::get_html_template_id_by_slug( sanitize_title_for_query( $html_template['name'] ) );
+	//$id = 0;
+	echo $id;
 	$content = file_get_contents($html_template['path']);
 	$my_post = array(
 		'ID'           	=> $id,
@@ -45,7 +46,7 @@ function sendpress_register_template($html_template = array()){
 
 	//print_r( $my_post );
 	// Update the post into the database
-	//wp_update_post( $my_post );
+	wp_update_post( $my_post );
 
 	//$html_template['ID'] = $id;
 	//$sendpress_html_templates[$id] = $html_template;

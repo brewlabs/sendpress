@@ -38,6 +38,10 @@ class SendPress_View_Subscribers extends SendPress_View {
 					<li <?php if(isset($_GET['view']) && $_GET['view'] === 'all'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Subscribers_All'); ?>"><i class="icon-user "></i> <?php _e('All Subscribers','sendpress'); ?></a>
 				  	</li>
+				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'custom'){ ?>class="active"<?php } ?> >
+				    	<a href="<?php echo SendPress_Admin::link('Subscribers_Custom'); ?>"><i class="icon-list "></i> <?php _e('Custom Fields','sendpress'); ?></a>
+				  	</li>
+
 				</ul>
 			</div>
 		</div>

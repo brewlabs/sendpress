@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: SendPress Newsletters
-Version: 0.9.9.9.2
+Version: 0.9.9.9.4
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -16,7 +16,7 @@ Author URI: https://sendpress.com/
 	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 	define( 'SENDPRESS_API_VERSION', 1 );
 	define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-	define( 'SENDPRESS_VERSION', '0.9.9.9.2' );
+	define( 'SENDPRESS_VERSION', '0.9.9.9.4' );
 	define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -136,6 +136,12 @@ Author URI: https://sendpress.com/
 		  		return;
 		  	}
 
+		  	 if( strpos($className, '_Tag_') != false ){
+		    	
+		    	include SENDPRESS_PATH."classes/tag/class-".$cls.".php";
+		  		return;
+		  	}
+
 		  	  if( strpos($className, 'Public_View') != false ){
 		    	if( defined('SENDPRESS_PRO_PATH') ) {
 		    		$pro_file = SENDPRESS_PRO_PATH."classes/public-views/class-".$cls.".php";
@@ -200,7 +206,7 @@ Author URI: https://sendpress.com/
 		public static function get_instance() {
 			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof SendPress ) ) {
 				self::$instance = new SendPress;
-				self::$instance->email_tags = new SendPress_Email_Tags();
+				self::$instance->template_tags = new SendPress_Template_Tags();
 				self::$instance->log = new SendPress_Logging();
 			}
 			return self::$instance;
@@ -209,6 +215,9 @@ Author URI: https://sendpress.com/
 		static function update_templates(){
 			sendpress_register_template(
 				array('slug'=>'original','path'=> SENDPRESS_PATH.'templates/original.html', 'name'=> 'SendPress Original')
+				);
+			sendpress_register_template(
+				array('slug'=>'1column','path'=> SENDPRESS_PATH.'templates/1column.html', 'name'=> 'Responsive 1 Column')
 				);
 			sendpress_register_template(
 				array('slug'=>'2columns-to-rows','path'=> SENDPRESS_PATH.'templates/2columns-to-rows.html', 'name'=> '2 Column Top - Wide Bottom - Responsive')
@@ -481,6 +490,8 @@ Author URI: https://sendpress.com/
 			  	$action = isset($_POST['sendpress']) ? $_POST['sendpress'] : get_query_var( 'sendpress' );
 				//Look for encrypted data
 		  		$data = SendPress_Data::decrypt( urldecode($action) );
+		  		print_r($data);
+
 				$view = false;
 			 	if(is_object($data)){
 			 		$view = isset($data->view) ? $data->view : false;
@@ -512,6 +523,10 @@ Author URI: https://sendpress.com/
 					return SendPress_Template::get_instance()->render(false, true, $inline );
 	  				//return SENDPRESS_PATH. '/template-loader.php';
 	    		//return dirname(__FILE__) . '/my_special_template.php';
+				}
+
+				if($post->post_type == 'sp-standard' ){
+					return 'You Bet';
 				}
 			}
 	  		return $template;
@@ -1162,7 +1177,8 @@ Author URI: https://sendpress.com/
 
 
 	function maybe_upgrade() {
-
+		
+		//SendPress::update_templates();
 		$current_version = SendPress_Option::get('version', '0' );
 		//SendPress_Error::log($current_version);
 
@@ -1173,7 +1189,7 @@ Author URI: https://sendpress.com/
 		//On version change update default template
 		$this->set_template_default();
 
-		//SendPress::update_templates();
+		
 
 		if(version_compare( $current_version, '0.8.6', '<' )){
 			$widget_options =  array();

@@ -125,19 +125,89 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
 <div class="alert alert-danger visible-xs">Sorry the Styler does not support screens smaller then 768px.</div>
 <div class="sp-row">
 
-<div class="sp-75 sp-first">
 
-<iframe id="iframe1" class="hidden-xs" width="100%" style="border: solid 1px #e7e7e7; border-radius: 5px;" src="<?php echo home_url(); ?>?sendpress=render&spemail=<?php echo $_GET['templateID']; ?>" ></iframe>
+<div class="sp-toolbar">
+<div class="panel-group" id="accordion">
+  <div class="panel panel-color">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+         Page
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in">
+      <div class="panel-body">
+        Background<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+        <hr>
+        Preheader<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-color">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+          Header
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse">
+      <div class="panel-body">
+        Background<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+        <hr>
+        Title<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+        <hr>
+        Subtitle<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+       </div>
+    </div>
+  </div>
+  <div class="panel panel-color">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+            Body
+        </a>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse">
+      <div class="panel-body">
+        Background<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+        <hr>
+        Border<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+        <hr>
+        Title<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+        <hr>
+        Text<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+        <hr>
+        Link<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+       </div>
+    </div>
+  </div>
+  <div class="panel panel-color">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+            Footer
+        </a>
+      </h4>
+    </div>
+    <div id="collapseFour" class="panel-collapse collapse">
+      <div class="panel-body">
+        Background<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+        <hr>
+        Text<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+        <hr>
+        Link<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+      </div>
+    </div>
+  </div>
 </div>
-<div class="sp-25">
-<ul class="list-group">
-  <li class="list-group-item">Body<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
-</li>
-  <li class="list-group-item">Dapibus ac facilisis in</li>
-  <li class="list-group-item">Morbi leo risus</li>
-  <li class="list-group-item">Porta ac consectetur ac</li>
-  <li class="list-group-item">Vestibulum at eros</li>
-</ul>
+<br><BR><BR>
+
+<!--
+
+
 <?php $this->panel_start( '<span class=" glyphicon glyphicon-tint"></span> '. __('Background Styles','sendpress') ); ?>
 
 Body<br>
@@ -149,7 +219,7 @@ Content<br>
 <br>
 Footer<br>
 <input type="text" value="#bada55" id="bg-color-select" class="my-color-field3" data-default-color="#effeff" />
-<!--
+
 <?php // $sp->create_color_picker( array('id'=>'body_bg','value'=>$body_bg['value'],'std'=>$body_bg['std'], 'link'=>'#html-view' ,'css'=>'background-color' ) ); ?>
 <br><br>
 Body Text Color<br>
@@ -157,11 +227,18 @@ Body Text Color<br>
 <br><br>
 Body Link Color<br>
 <?php // $sp->create_color_picker( array('id'=>'body_link','value'=>$body_link['value'],'std'=>$body_link['std'], 'link'=>'.html-view-outer-text a' ,'css'=>'color' ) ); ?>
--->
+
 <?php $this->panel_end(); ?>
+-->
 <?php
  echo spnl_get_emails_tags_list();
 ?>
+
+</div>
+<div class="sp-screen">
+    <div class="sp-screen-holder">
+    <iframe id="iframe1" class="hidden-xs" width="100%" style="border: solid 1px #999; border-radius: 5px;" src="<?php echo home_url(); ?>?sendpress=render&spemail=<?php echo $_GET['templateID']; ?>" ></iframe>
+    </div>
 </div>
 </div>
 <script>

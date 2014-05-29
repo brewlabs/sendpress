@@ -19,10 +19,15 @@ class SendPress_Public_View_Render extends SendPress_Public_View{
 		
 		$post = get_post($email_id);
 		$inline = false;
-		if(isset($_GET['inline']) ){
-			$inline = true;
+		if(isset($post) &&  $post->post_type == 'sp_template' ){
+			//Render New Template Preview
+			echo SendPress_Email_Render_Engine::render_template_example( $post );		
+		} else {
+			if(isset($_GET['inline']) ){
+				$inline = true;
+			}
+			echo $post->post_content;
 		}
-		echo $post->post_content;
 	}
 
 	function page_start(){

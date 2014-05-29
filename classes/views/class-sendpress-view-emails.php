@@ -18,7 +18,7 @@ class SendPress_View_Emails extends SendPress_View{
 	function screen_options(){
 
 		$screen = get_current_screen();
-	 	
+
 		$args = array(
 			'label' => __('Emails per page', 'sendpress'),
 			'default' => 10,
@@ -28,7 +28,7 @@ class SendPress_View_Emails extends SendPress_View{
 	}
 
  	function sub_menu($sp = false){
- 		
+
 		?>
 		<div class="navbar navbar-default" >
 			<div class="navbar-header">
@@ -51,10 +51,11 @@ class SendPress_View_Emails extends SendPress_View{
 				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'all'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails_Auto'); ?>"><?php _e('Autoresponders','sendpress'); ?></a>
 				  	</li>
+				  	 	-->
 				  	<li <?php if(isset($_GET['view']) && ( $_GET['view'] === 'templates' || $_GET['view'] === 'tempedit' )){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails_Templates'); ?>"><?php _e('Templates','sendpress'); ?></a>
 				  	</li>
-				  	-->
+
 				  	<li <?php if(isset($_GET['view']) && ( $_GET['view'] === 'temp' || $_GET['view'] === 'tempstyle' )){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails_Temp'); ?>"><span class="sp-label">SP</span>   <?php _e('Templates','sendpress'); ?></a>
 				  	</li>
@@ -65,20 +66,20 @@ class SendPress_View_Emails extends SendPress_View{
 				</ul>
 			</div>
 		</div>
-		
+
 		<?php
 
-		
-		
-	}	
+
+
+	}
 
 
 	function prerender($sp= false){
-	
-	
+
+
 
 	}
-	
+
 	function html($sp){
 		 SendPress_Tracking::event('Emails Tab');
 	//Create an instance of our package class...
@@ -87,15 +88,15 @@ class SendPress_View_Emails extends SendPress_View{
 	$testListTable->prepare_items();
 
 	?>
-	
+
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="email-filter" method="get">
-		<div id="taskbar" class="lists-dashboard rounded group"> 
+		<div id="taskbar" class="lists-dashboard rounded group">
 
-		<div id="button-area">  
+		<div id="button-area">
 			<a class="btn btn-primary btn-large" href="?page=<?php echo $_REQUEST['page']; ?>&view=create"><?php _e('Create Email','sendpress'); ?></a>
 		</div>
-		
+
 	</div>
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	    <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />

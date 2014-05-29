@@ -171,7 +171,27 @@ width: 25%;
 }
 
 .sp-75{
-   width: 74.2%;
+    width: 100%;
+    position: relative;
+    min-height: 1px;
+    margin-left: 3.2%;
+    float:left;
+}
+.sp-screen{
+    margin-right: 300px;
+}
+.sp-toolbar{
+  float:right;
+  width: 285px;
+}
+
+.panel-body hr{
+margin-top: 5px;
+margin-bottom: 5px;
+}
+.sp-style{
+    width: 100%;
+    margin-right: 275px;
     position: relative;
     min-height: 1px;
     margin-left: 3.2%;
@@ -191,6 +211,9 @@ width: 25%;
     min-height: 1px;
     margin-left: 3.2%;
     float:left;
+}
+.sp-min{
+  min-width: 265px;
 }
 
 .sp-block{
@@ -298,6 +321,87 @@ padding: 2px;
   background-color: #04a4cc;
   color: #fff;
 }
+
+.panel-color{
+  border-color: #ddd;
+}
+
+.admin-color-midnight .panel-color{
+  border-color: #e14d43;
+}
+.admin-color-midnight .panel-color .panel-heading{
+  background-color: #e14d43;
+  color: #fff;
+}
+
+.admin-color-fresh .panel-color{
+  border-color: #0074a2;
+}
+.admin-color-fresh .panel-color .panel-heading{
+  background-color: #0074a2;
+  color: #fff;
+}
+
+.admin-color-blue .panel-color{
+  border-color: #096484;
+}
+.admin-color-blue .panel-color .panel-heading{
+  background-color: #096484;
+  color: #fff;
+}
+
+
+.admin-color-coffee .panel-color{
+  border-color: #c7a589;
+}
+.admin-color-coffee .panel-color .panel-heading{
+  background-color: #c7a589;
+  color: #fff;
+}
+
+
+.admin-color-ectoplasm .panel-color{
+  border-color: #a3b745;
+}
+.admin-color-ectoplasm .panel-color .panel-heading{
+  background-color: #a3b745;
+  color: #fff;
+}
+
+
+.admin-color-ocean .panel-color{
+  border-color: #9ebaa0;
+}
+.admin-color-ocean .panel-color .panel-heading{
+  background-color: #9ebaa0;
+  color: #fff;
+}
+
+
+.admin-color-sunrise .panel-color{
+  border-color: #dd823b;
+}
+.admin-color-sunrise .panel-color .panel-heading{
+  background-color: #dd823b;
+  color: #fff;
+}
+
+.admin-color-light .panel-color {
+  border-color: #888;
+}
+.admin-color-light .panel-color .panel-heading{
+  background-color: #888;
+   border-color: #888;
+  color: #fff;
+}
+
+
+
+
+
+
+
+
 h1, h2, h3, h4, h5, h6 {
    font-family: "Open Sans", sans-serif !important;
 } 
