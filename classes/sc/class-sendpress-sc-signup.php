@@ -7,7 +7,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 /**
  * Subscribe Form Shortcode
  *
- * 
+ *
  * @author 		SendPress
  * @category 	Shortcodes
  * @version     0.9.9.4
@@ -35,11 +35,11 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 			'thank_you'=>'Thank you for subscribing!',
 			'button_text' => 'Submit',
 			'no_list_error' => '-- NO LIST HAS BEEN SET! --',
-			'postnotification' => '', 
+			'postnotification' => '',
 			'pnlistid' => 0
 			);
 	}
-	
+
 	/**
 	 * Output the form
 	 *
@@ -49,7 +49,7 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 		global $load_signup_js, $sendpress_show_thanks, $sendpress_signup_error;
 		$load_signup_js = true;
 
-		
+
 	   	$lists = SendPress_Data::get_lists(
 			array('meta_query' => array(
 				array(
@@ -65,50 +65,50 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 		$label = filter_var($label_display, FILTER_VALIDATE_BOOLEAN);
 		$widget_options = SendPress_Option::get('widget_options');
 		$list_ids = (strlen($listids) > 0) ? explode(",",$listids) : array();
-		
+
 		$post_notifications_code = apply_filters( 'sendpress-post-notifications-submit-code', "", $list_ids, $postnotification, $pnlistid );
 	    ?>
-	    
+
 	    <div class="sendpress-signup-form">
 			<form id="sendpress_signup" method="POST" <?php if( !$widget_options['load_ajax'] ){ ?>class="sendpress-signup"<?php } else { ?>action="?sendpress=post"<?php } ?> >
-				<?php 
+				<?php
 					if( $widget_options['load_ajax'] ){
 						echo '<input type="hidden" name="action" value="signup-user" />';
 					}
 					if(empty($listids) && strlen($post_notifications_code) == 0){
-						echo 'dur'.$no_list_error;
+						echo $no_list_error;
 					}
 					if($redirect_page != false && $redirect_page > 0){
 						echo '<input type="hidden" name="redirect" value="'.$redirect_page.'" />';
 					}
 
 				?>
-					
+
 				<div id="error"><?php echo $sendpress_signup_error; ?></div>
 				<div id="thanks" <?php if( $sendpress_show_thanks ){ echo 'style="display:block;"'; }else{ echo 'style="display:none;"'; } ?>><?php echo $thank_you; ?></div>
 				<div id="form-wrap" <?php if( $sendpress_show_thanks ){ echo 'style="display:none;"'; } ?>>
 					<p><?php echo $desc; ?></p>
 					<?php
-					
+
 					if(count($list_ids) > 0){
-						if( count($list_ids) > 1 || strlen($post_notifications_code) > 0) { 
+						if( count($list_ids) > 1 || strlen($post_notifications_code) > 0) {
 							?>
 							<p>
 								<label for="list"><?php echo $list_label; ?>:</label>
 								<?php
-									foreach ($list_ids as $id) { 
+									foreach ($list_ids as $id) {
 										?>
 										<input type="checkbox" name="sp_list[]" class="sp_list" id="list<?php echo $id; ?>" value="<?php echo $id; ?>" <?php if($lists_checked){ echo 'checked'; }?> /> <?php echo get_the_title($id); ?><br>
 										<?php
-									} 
-								?>	
+									}
+								?>
 							</p>
 							<?php
-						} else { 
+						} else {
 							?>
 							<input type="hidden" name="sp_list" id="list" class="sp_list" value="<?php echo $listids; ?>" />
-							<?php 
-						} 
+							<?php
+						}
 					}
 
 					echo $post_notifications_code;
@@ -117,7 +117,7 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 					if( strlen($postnotification) > 0 ){
 						do_action('sendpress_add_post_notification_list', $postnotification, $pnlistid);
 					}
-					
+
 					?>
 
 					<?php if( filter_var($display_firstname, FILTER_VALIDATE_BOOLEAN)  ): ?>
@@ -153,10 +153,10 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 					</p>
 				</div>
 			</form>
-		</div> 
-	
+		</div>
+
 	    <?php
-	    
+
 
 	}
 

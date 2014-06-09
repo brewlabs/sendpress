@@ -6,7 +6,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 	die;
 }
 
-if(!class_exists('SendPress_Admin')){  
+if(!class_exists('SendPress_Admin')){
 
 
 class SendPress_Admin {
@@ -39,25 +39,25 @@ class SendPress_Admin {
 		} else {
 			$params = '';
 		}
-		
+
 		return  admin_url( 'admin.php'. $l . $params );
 	}
 
 
 	static function redirect( $classname =false , $params = array() ){
-		
+
 		$url = self::link(  $classname , $params );
 		if ( headers_sent() ) {
-			echo "<script>document.location.href='".$url."';</script>"; 
+			echo "<script>document.location.href='".$url."';</script>";
 		}
 		else {
-			wp_redirect(  $url ); 
+			wp_redirect(  $url );
 		}
 		exit;
 	}
 
 
-	
+
 	static public function access($class = null){
 		if(is_object($class) ){
 			$class = get_class($class);
@@ -74,12 +74,12 @@ class SendPress_Admin {
 		if( current_user_can(self::$_admin_cap) || is_super_admin() || current_user_can('delete_users') ){
 			return true;
 		}
-		
+
 		//View Specific
 		if( current_user_can( self::view_cap($class) ) ){
-			return true;	
+			return true;
 		}
-		
+
 		//You can't see me
 		return false;
 	}
@@ -98,7 +98,7 @@ class SendPress_Admin {
 		//Check for set permissions
 		if(isset(self::$_primary[$current_class]))
 			return self::$_primary[$current_class];
-		
+
 		$p = self::getParents( $current_class );
 		//Check Parent class for limit
 

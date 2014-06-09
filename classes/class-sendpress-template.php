@@ -138,8 +138,10 @@ class SendPress_Template {
 	function render($post_id = false, $render = true, $inline = false, $no_links = false){
 		global $post;
 
+		$saved = false;
 		if($post_id !== false){
 			$post = get_post( $post_id );
+			$saved = $post;
 		}
 		if(!isset($post)){
 			echo __('Sorry we could not find your email.','sendpress');
@@ -152,6 +154,8 @@ class SendPress_Template {
 			ob_start();
 			require_once( $template_list[$selected_template]['file'] );
 			$HtmlCode= ob_get_clean(); 
+			
+			$post = $saved;
 			
 			$HtmlCode =str_replace("*|SP:SUBJECT|*",$post->post_title ,$HtmlCode);
 

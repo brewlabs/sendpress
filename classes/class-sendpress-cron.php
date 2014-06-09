@@ -6,15 +6,16 @@ if ( !defined('SENDPRESS_VERSION') ) {
 	die;
 }
 
+
 /**
 * SendPress_Cron
 *
-* @uses     
+* @uses
 *
 * @package  SendPress
 * @author   Josh Lyford
 * @license  See SENPRESS
-* @since 	0.8.8.5     
+* @since 	0.8.8.5
 */
 class SendPress_Cron {
 	private static $instance;
@@ -24,11 +25,11 @@ class SendPress_Cron {
      * Alternative function to the current wp_cron function that would usually executed on sanitize_comment_cookies
      */
     static public function auto() {
-      
 
-      
+
+
     }
-	
+
 	static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
 			$class_name = __CLASS__;
@@ -42,19 +43,19 @@ class SendPress_Cron {
 		  /* some processing for cron management */
         add_action( 'wp_loaded', array( $this , 'auto_cron' ) );
         add_filter( 'cron_schedules', array( $this , 'cron_schedules' ) );
- 
+
 	}
-	
+
     function auto_cron(){
           // make sure we're in wp-cron.php
         if ( false !== strpos( $_SERVER['REQUEST_URI'], '/wp-cron.php' ) ) {
             // make sure a secret string is provided in the ur
             if ( isset( $_GET['action'] ) && $_GET['action'] == 'sendpress' ) {
-                
+
                 SendPress_Queue::send_mail();
                 $count= SendPress_Data::emails_in_queue();
                 $pro = 0;
-                
+
                 if(defined('SENDPRESS_PRO_VERSION')){
                     $pro = SENDPRESS_PRO_VERSION;
                 }
@@ -69,7 +70,7 @@ class SendPress_Cron {
                 echo json_encode(array( "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits  ));
                 die();
             }
-            
+
         }
     }
 
@@ -133,17 +134,17 @@ class SendPress_Cron {
         $filename = $upload_dir['basedir'].'/sendpress.pause';
         if (file_exists($filename)) {
             unlink($filename);
-        } 
+        }
     }
 
     static function iron_url($url){
         return  parse_url($url);
-        
+
     }
 
 
     static function use_iron_cron(){
-        
+
         $url = SendPress_Cron::remove_http( site_url() );
         $domain = base64_encode( $url );
         //SendPress_Error::log( 'http://api.sendpress.com/set/'. $domain .'/'. SENDPRESS_CRON);
@@ -165,10 +166,3 @@ class SendPress_Cron {
 
     }
 }
-
-
-
-
-
-
-
