@@ -143,6 +143,7 @@ class SendPress_Template {
 			$post = get_post( $post_id );
 			$saved = $post;
 		}
+		$saved = $post;
 		if(!isset($post)){
 			echo __('Sorry we could not find your email.','sendpress');
 			return;

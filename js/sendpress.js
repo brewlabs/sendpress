@@ -609,8 +609,6 @@
 
 
 
-
-
 jQuery(document).ready(function($) {
 
     /*
