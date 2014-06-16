@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 3.9.1
-Stable tag: 0.9.9.9.2
+Stable tag: 0.9.9.9.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 0.9.9.9.3 - 2014.6.16 =
+* Fix: Shortcode conflict (WooCommerce)
+* Fix: Speed of email rendering
+* New: Settings post type (Moving settings to custom post)
+* New: Overview has preview of Pro Charts 2.0
 
 = 0.9.9.9.2 - 2014.5.21 =
 * Fix: requeue all emails fixed
@@ -491,6 +497,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.9.9.3 =
+Shortcode issue fix when in email
 
 = 0.9.9.9.2 =
 Minor bug fixes
