@@ -203,18 +203,19 @@
                 //super lame but works for now.
                 html = "<div>"+ html +"</div>";
                 imgurl = jQuery('img',html).attr('src');
+                imgTitle = jQuery('img',html).attr('alt');
                 //cl =jQuery('img',html).parent().attr('class');
                 find = html.search('alignleft');
                 if(find > 0 ){
-                    html = "<img style='margin-right: 10px;' src='"+imgurl+"' align='left'/>";
+                    html = "<img style='margin-right: 10px;' src='"+imgurl+"' alt='"+imgTitle+"' align='left'/>";
                 }
                 find = html.search('alignright');
                 if(find > 0 ){
-                    html = "<img style='margin-left: 10px;' src='"+imgurl+"' align='right'/>";
+                    html = "<img style='margin-left: 10px;' src='"+imgurl+"' alt='"+imgTitle+"' align='right'/>";
                 }
                 find = html.search('aligncenter');
                 if(find > 0 ){
-                    html = '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><img style="margin-left: 10px; margin-right: 10px;" src="'+imgurl+'" align="center"/></td></tr></table>';
+                    html = '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><img style="margin-left: 10px; margin-right: 10px;" src="'+imgurl+'" alt="'+imgTitle+'" align="center"/></td></tr></table>';
                 }
 
 
