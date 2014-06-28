@@ -58,29 +58,29 @@ echo "</pre>";
 <div class="sp-row ">
 
   <div class="sp-block sp-25 sp-first"> 
-    <h2 class="nomargin nopadding"><?php echo SendPress_Data::bd_nice_number(SendPress_Data::get_total_subscribers()); ?></h2> <p class="fwb">Subscribers</p>  
+    <h2 class="nomargin nopadding"><?php echo SendPress_Data::bd_nice_number(SendPress_Data::get_total_subscribers()); ?></h2> <p class="fwb"><?php _e('Subscribers', 'sendpress');?></p>  
   </div>
   <div class="sp-block sp-25">
-    <h2 class="nomargin nopadding"><?php $report = SendPress_Data::get_last_report(); ?><?php echo SendPress_Data::emails_active_in_queue(); ?></h2> <p class="fwb">Emails Actively Sending</small></p>
+    <h2 class="nomargin nopadding"><?php $report = SendPress_Data::get_last_report(); ?><?php echo SendPress_Data::emails_active_in_queue(); ?></h2> <p class="fwb"><?php _e('Emails Actively Sending', 'sendpress');?></small></p>
   </div>
   <div class="sp-block sp-25">
-    <h2 class="nomargin nopadding"><?php echo  SendPress_Data::emails_maxed_in_queue(); ?></h2> <p class="fwb">Emails Stuck in Queue</p>
+    <h2 class="nomargin nopadding"><?php echo  SendPress_Data::emails_maxed_in_queue(); ?></h2> <p class="fwb"><?php _e('Emails Stuck in Queue', 'sendpress');?></p>
   </div>
   <div class="sp-block sp-25">
-    <h2 class="nomargin nopadding"><?php echo SENDPRESS_VERSION ?></h2> <p class="fwb">SendPress Version</p>
+    <h2 class="nomargin nopadding"><?php echo SENDPRESS_VERSION ?></h2> <p class="fwb"><?php _e('SendPress Version', 'sendpress');?></p>
   </div>
 
 </div>
 <?php 
 if($report){ 
 $rec = get_post_meta($report->ID, '_send_last_count', true);
-$this->panel_start($report->post_title ." <small style='color:#333;'>This email had " . $rec ." Recipients</small>");
+$this->panel_start($report->post_title ." <small style='color:#333;'>".__('This email had', 'sendpress')." ". $rec ." ".__('Recipients', 'sendpress')."</small>");
 
 ?>
 
 <div class="sp-row">
   <div class="sp-50 sp-first">
-    <h4 style="text-align:center;">Opens</h4>
+    <h4 style="text-align:center;"><?php _e('Opens', 'sendpress');?></h4>
       <?php 
         $this->panel_start();
         $open = 0;
@@ -128,7 +128,7 @@ $this->panel_start($report->post_title ." <small style='color:#333;'>This email 
       ?>
   </div>
   <div class="sp-50">
-  <h4 style="text-align:center;">Clicks</h4>
+  <h4 style="text-align:center;"><?php _e('Clicks', 'sendpress');?></h4>
     <?php 
         $this->panel_start();
          $open = 0;
@@ -147,7 +147,7 @@ $this->panel_start($report->post_title ." <small style='color:#333;'>This email 
           <div id="myStat" class="chartid" data-dimension="150" data-text="<?php echo floor($p); ?>%" data-info="Total Opens" data-width="15" data-fontsize="30" data-percent="<?php echo floor($p); ?>" data-fgcolor="#61a9dc" data-bgcolor="#eee" data-fill="#ddd" data-total="<?php echo  $rec; ?>" data-part="<?php echo  $open; ?>" data-icon="long-arrow-up" data-icon-size="28" data-icon-color="#fff"></div>
          </div>
          <div style="text-align:center;">
-         <h5>Total</h5>
+         <h5><?php _e('Total', 'sendpress');?></h5>
          <?php echo $open; ?>
          </div>
         </div>
@@ -166,7 +166,7 @@ $this->panel_start($report->post_title ." <small style='color:#333;'>This email 
           <div id="myStat" class="chartid" data-dimension="150" data-text="<?php echo floor($px); ?>%" data-info="Unique Opens" data-width="15" data-fontsize="30" data-percent="35" data-fgcolor="#85d002" data-bgcolor="#eee" data-fill="#ddd" data-total="<?php echo  $rec; ?>" data-part="<?php echo  $ou; ?>" data-icon="long-arrow-up" data-icon-size="28" data-icon-color="#fff"></div>
         </div>
         <div style="text-align:center;">
-          <h5>Unique</h5>
+          <h5><?php _e('Unique', 'sendpress');?></h5>
           <?php echo $ou; ?>
          </div>
        </div>
@@ -190,7 +190,7 @@ $this->panel_start($report->post_title ." <small style='color:#333;'>This email 
 <div class="sp-33 sp-first">
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">Recent Subscribers</h3>
+    <h3 class="panel-title"><?php _e('Recent Subscribers', 'sendpress');?></h3>
   </div>
   <div class="panel-body">
   	<ul>
@@ -221,7 +221,7 @@ $this->panel_start($report->post_title ." <small style='color:#333;'>This email 
 <div class="sp-33">
 	<div class="panel panel-default">
 	  <div class="panel-heading">
-	    <h3 class="panel-title">Most Active Subscribers</h3>
+	    <h3 class="panel-title"><?php _e('Most Active Subscribers', 'sendpress');?></h3>
 	  </div>
 	  <div class="panel-body">
 	  	<ul>
@@ -245,13 +245,13 @@ $this->panel_start($report->post_title ." <small style='color:#333;'>This email 
 <div class="sp-33">
 	<div class="panel panel-default">
 	  <div class="panel-heading">
-	    <h3 class="panel-title">Go Pro!</h3>
+	    <h3 class="panel-title"><?php _e('Go Pro!', 'sendpress');?></h3>
 	  </div>
 	  <div class="panel-body">
 	  	<ul>
-	  		<li><a href="http://sendpress.com/purchase-pricing/">Advanced Reports</a></li>
-	  		<li><a href="http://sendpress.com/purchase-pricing/">Check Spam Scores</a></li>
-	  		<li><a href="http://sendpress.com/purchase-pricing/">Post Notifications</a></li>
+	  		<li><a href="http://sendpress.com/purchase-pricing/"><?php _e('Advanced Reports', 'sendpress');?></a></li>
+	  		<li><a href="http://sendpress.com/purchase-pricing/"><?php _e('Check Spam Scores', 'sendpress');?></a></li>
+	  		<li><a href="http://sendpress.com/purchase-pricing/"><?php _e('Post Notifications', 'sendpress');?></a></li>
 	  	</ul>
    
 	  </div>
