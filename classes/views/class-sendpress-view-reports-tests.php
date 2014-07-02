@@ -43,9 +43,9 @@ class SendPress_View_Reports_Tests extends SendPress_View_Reports{
 		</form>
 		<h3>Information</h3>
 		<div class='well'>
-		<span class="label label-success">Unique</span> The total number of different recipients that have clicked on a link or opened an email.<br><br>
+		<span class="label label-success"><?php _e('Unique','sendpress');?></span> <?php _e('The total number of different recipients that have clicked on a link or opened an email.','sendpress');?><br><br>
 
-		<span class="label label-info">Total</span> The total number of clicks or opens that have happened. Regardless of who clicked or opened the email.
+		<span class="label label-info"><?php _e('Total','sendpress');?></span> <?php _e('The total number of clicks or opens that have happened. Regardless of who clicked or opened the email.','sendpress');?>
 		</div>
 		<?php
 	
