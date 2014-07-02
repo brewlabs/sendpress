@@ -1060,7 +1060,7 @@ Author URI: https://sendpress.com/
 
 	    add_submenu_page('sp-overview', __('Reports','sendpress'), __('Reports','sendpress'), $role, 'sp-reports', array(&$this,'render_view'));
 	   	add_submenu_page('sp-overview', __('Subscribers','sendpress'), __('Subscribers','sendpress'), $role, 'sp-subscribers', array(&$this,'render_view'));
-	    add_submenu_page('sp-overview', __('Queue','sendpress') ." ". $queue, __('Queue','sendpress')." ". $queue, $role, 'sp-queue', array(&$this,'render_view'));
+	    add_submenu_page('sp-overview', __('Queue','sendpress') , __('Queue','sendpress')." ". $queue, $role, 'sp-queue', array(&$this,'render_view'));
 	   	add_submenu_page('sp-overview', __('Settings','sendpress'), __('Settings','sendpress'), $role, 'sp-settings', array(&$this,'render_view'));
 
 

@@ -1729,23 +1729,23 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function optin_content(){
 		return "Howdy.
 
-We're ready to send you emails from *|SITE:TITLE|*, but first we need you to confirm that this is what you really want.
+		We're ready to send you emails from *|SITE:TITLE|*, but first we need you to confirm that this is what you really want.
 
-If you want *|SITE:TITLE|* content delivered by email, all you have to do is click the link below. Thanks!
+		If you want *|SITE:TITLE|* content delivered by email, all you have to do is click the link below. Thanks!
 
------------------------------------------------------------
-CONFIRM BY VISITING THE LINK BELOW:
+		-----------------------------------------------------------
+		CONFIRM BY VISITING THE LINK BELOW:
 
-*|SP:CONFIRMLINK|*
+		*|SP:CONFIRMLINK|*
 
-Click the link above to give us permission to send you
-information.  It's fast and easy!  If you cannot click the
-full URL above, please copy and paste it into your web
-browser.
+		Click the link above to give us permission to send you
+		information.  It's fast and easy!  If you cannot click the
+		full URL above, please copy and paste it into your web
+		browser.
 
------------------------------------------------------------
-If you do not want to confirm, simply ignore this message.
-";
+		-----------------------------------------------------------
+		If you do not want to confirm, simply ignore this message.
+		";
 	}
 
 
@@ -1813,6 +1813,82 @@ If you do not want to confirm, simply ignore this message.
 			return json_decode($decstring);
 		}
 	}
+
+
+
+
+	/********************* Widget Settings functionS **************************/
+
+	static function create_widget_settings(){
+		//SendPress_Option::set('default-signup-widget-settings',null);
+
+		$postid = SendPress_Option::get('default-signup-widget-settings');
+
+		if ( empty($postid) ) {
+			// Create post object
+			$my_post = array(
+				'post_title'    => 'default signup settings',
+				'post_status'   => 'draft',
+				'post_type' 	=> 'sp_settings'
+			);
+
+			// Insert the post into the database
+			$postid = wp_insert_post( $my_post );
+
+			//insert post meta info
+			//add_post_meta($post_id, $meta_key, $meta_value, $unique);
+			add_post_meta($postid, "_setting_type", 'signup_widget', true);
+
+			add_post_meta($postid, "_form_description", '', true);
+			add_post_meta($postid, "_collect_firstname", false, true);
+			add_post_meta($postid, "_collect_lastname", false, true);
+			add_post_meta($postid, "_display_labels_inside_fields", 0, true);
+			add_post_meta($postid, "_firstname_label", 'First Name', true);
+			add_post_meta($postid, "_lastname_label", 'Last Name', true);
+			add_post_meta($postid, "_email_label", 'E-Mail', true);
+			add_post_meta($postid, "_button_label", 'Submit', true);
+			add_post_meta($postid, "_list_label", 'List Selection', true);
+			add_post_meta($postid, "_thankyou_message", 'Check your inbox now to confirm your subscription.', true);
+			add_post_meta($postid, "_thankyou_page", '', true);
+
+
+			SendPress_Option::set('default-signup-widget-settings',$postid);
+		}
+
+		
+	}
+
+	static function get_sp_settings_object($postid){
+
+		$post_meta_keys = get_post_custom_keys($postid);
+		if (empty($post_meta_keys)) return;
+
+		$obj = array();
+		
+		
+		foreach ($post_meta_keys as $meta_key) {
+			$meta_values = get_post_custom_values($meta_key, $postid);
+			foreach ($meta_values as $meta_value) {
+				$meta_value = maybe_unserialize($meta_value);
+				$obj[$meta_key] = $meta_value;
+			}
+		}
+
+		return $obj;
+	}
+
+	static function update_sp_settings_object($postid, $data){
+
+		//update_post_meta($post_id, $meta_key, $meta_value, $prev_value);
+		//$post_meta_keys = get_post_custom_keys($postid);
+		foreach ($data as $key => $value) {
+			update_post_meta($postid, $key, $value);
+		}
+
+
+	}
+
+	/********************* END Widget Settings functionS **************************/
 
 
 }

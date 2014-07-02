@@ -232,13 +232,15 @@ class SendPress_Posts{
 			'public' 			=> false,
 			'query_var' 		=> false,
 			'rewrite' 			=> false,
-			'show_ui'           => false,
+			'show_ui'           => true,
 			'capability_type' 	=> 'post',
 			'map_meta_cap'      => true,
 			'supports' 			=> array( 'title' ),
 			'can_export'		=> true,
-			'exclude_from_search'=>'true',
+			'exclude_from_search'=>'true'
 		) );
+
+		
 
 	}
 
