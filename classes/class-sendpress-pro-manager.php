@@ -122,7 +122,7 @@ class SendPress_Pro_Manager {
 			$state = SendPress_Pro_Manager::get_pro_state();
 			
 			if( $state !== 'valid' && !empty($key) ){
-				add_action('sendpress_notices', array('SendPress_Pro_Manager', 'key_notice'));
+				//add_action('sendpress_notices', array('SendPress_Pro_Manager', 'key_notice'));
 				//SendPress_Option::set('api_key','');
 			}
 		}
@@ -141,7 +141,7 @@ class SendPress_Pro_Manager {
 
         // make sure the response came back okay
         if ( is_wp_error( $response ) )
-            return false;
+            return true; //return true, site might be down
 
         // decode the license data
         $license_data = json_decode( wp_remote_retrieve_body( $response ) );
@@ -163,9 +163,15 @@ class SendPress_Pro_Manager {
 
 		//$key = SendPress_Option::get('api_key');
 		global $pro_names;
+		$valid = false;
 		foreach($pro_names as $name){
-			SendPress_Pro_Manager::activate_key($key,$name);
+			if(SendPress_Pro_Manager::activate_key($key,$name)){
+				$valid = true;
+				break;
+			}
 		}
+
+		return $valid;
 
 	}
 
@@ -187,7 +193,7 @@ class SendPress_Pro_Manager {
         $license_data = json_decode( wp_remote_retrieve_body( $response ) );
         // $license_data->license will be either "deactivated" or "failed"
         if( $license_data->license === SENDPRESS_PRO_DEACTIVATED || $license_data->license === SENDPRESS_PRO_FAILED ){
-            SendPress_Option::set('api_key','');
+            //SendPress_Option::set('api_key','');
             SendPress_Pro_Manager::set_pro_state(false); //this will delete the transient
             return true;
         }
@@ -220,7 +226,7 @@ class SendPress_Pro_Manager {
         // make sure the response came back okay
         // if response didn't come back, lets set the transient and try again in a day.
         if ( is_wp_error( $response ) )
-            return $failed;
+            return true;
 
         // decode the license data
         $license_data = json_decode( wp_remote_retrieve_body( $response ) );

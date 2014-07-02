@@ -37,7 +37,7 @@ class SendPress_Module_Pro extends SendPress_Module{
 			<?php if( !$key_active ): ?>
 				<a href="#" class="save-api-key btn-success  btn"><?php _e('Register Key','sendpress');?></a>
 			<?php else: ?>
-				<a href="#" class="save-api-key btn-danger btn"><?php _e('Remove Key','sendpress');?></a>
+				<a href="#" class="save-api-key btn-danger btn"><?php _e('Deactivate Key','sendpress');?></a>
 			<?php endif; ?>
 			<div class="description">
 				<?php echo sprintf(	__( 'Enter your API key to enable premium support and automatic updates. Get your API key by logging into <a href="%s">SendPress.com</a>.','sendpress' ), 'http://sendpress.com' ); ?>
