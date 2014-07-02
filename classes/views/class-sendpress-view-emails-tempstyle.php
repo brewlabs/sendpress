@@ -102,106 +102,108 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
         }
 
 
-       
-	}
-	function admin_init(){
-		 wp_enqueue_style( 'wp-color-picker' );
-         wp_enqueue_script( 'wp-color-picker' );
-	}
 
-	function html($sp) { 
+    }
+    function admin_init(){
+       wp_enqueue_style( 'wp-color-picker' );
+       wp_enqueue_script( 'wp-color-picker' );
+   }
 
-        global $sendpress_html_templates;
+   function html($sp) { 
+    SendPress_Template_Manager::update_template_content();
+    global $sendpress_html_templates;
 
         //print_r($sendpress_html_templates[$_GET['templateID']]);
 
-        $postdata = get_post( $_GET['templateID'] );
+    $postdata = get_post( $_GET['templateID'] );
 
-      
+
         //print_r( $postdata );
-        ?>
-        <h2><?php echo $postdata->post_title; ?></h2>
-        <br><br>
-<div class="alert alert-danger visible-xs">Sorry the Styler does not support screens smaller then 768px.</div>
-<div class="sp-row">
+    ?>
+    <h2><?php echo $postdata->post_title; ?></h2>
+    <br><br>
+    <div class="alert alert-danger visible-xs">Sorry the Styler does not support screens smaller then 768px.</div>
+    <div class="sp-row">
 
 
-<div class="sp-toolbar">
-<div class="panel-group" id="accordion">
-  <div class="panel panel-color">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-         Page
-        </a>
-      </h4>
+        <div class="sp-toolbar">
+            <div class="panel-group" id="accordion">
+              <div class="panel panel-color">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                     Page
+                 </a>
+             </h4>
+         </div>
+         <div id="collapseOne" class="panel-collapse collapse in">
+          <div class="panel-body">
+            Background<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="background-color" data-template-target=".sp-body-bg" />
+            <hr>
+            Preheader<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+        </div>
     </div>
-    <div id="collapseOne" class="panel-collapse collapse in">
-      <div class="panel-body">
-        Background<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
-        <hr>
-        Preheader<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
-      </div>
-    </div>
-  </div>
-  <div class="panel panel-color">
+</div>
+<div class="panel panel-color">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
           Header
-        </a>
-      </h4>
-    </div>
-    <div id="collapseTwo" class="panel-collapse collapse">
-      <div class="panel-body">
-        Background<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
-        <hr>
-        Title<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
-        <hr>
-        Subtitle<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
-       </div>
-    </div>
-  </div>
-  <div class="panel panel-color">
+      </a>
+  </h4>
+</div>
+<div id="collapseTwo" class="panel-collapse collapse">
+  <div class="panel-body">
+    Background<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="background-color" data-template-target=".sp-style-h-bg" />
+    <hr>
+    Title<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="color" data-template-target=".sp-style-header" />
+    <hr>
+    Subtitle<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+</div>
+</div>
+</div>
+<div class="panel panel-color">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
             Body
         </a>
-      </h4>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div class="panel-body">
-        Background<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
-        <hr>
-        Border<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
-        <hr>
-        Title<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
-        <hr>
-        Text<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
-        <hr>
-        Link<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
-       </div>
-    </div>
-  </div>
-  <div class="panel panel-color">
+    </h4>
+</div>
+<div id="collapseThree" class="panel-collapse collapse">
+  <div class="panel-body">
+    Background<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="background-color" data-template-target=".sp-style-c-bg" />
+    <hr>
+    <!--
+    Border<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="border-color" data-template-target="td.sp-style-c-bg"/>
+    <hr>
+    -->
+    Titles<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="color" data-template-target=".sp-style-c-bg .sp-header"/>
+    <hr>
+    Text<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="color" data-template-target=".sp-style-c-bg p" />
+    <hr>
+    Link<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="color" data-template-target=".sp-style-c-bg a" />
+</div>
+</div>
+</div>
+<div class="panel panel-color">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
             Footer
         </a>
-      </h4>
-    </div>
-    <div id="collapseFour" class="panel-collapse collapse">
-      <div class="panel-body">
-        Background<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
-        <hr>
-        Text<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
-        <hr>
-        Link<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
-      </div>
-    </div>
-  </div>
+    </h4>
+</div>
+<div id="collapseFour" class="panel-collapse collapse">
+  <div class="panel-body">
+    Background<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="background-color" data-template-target=".sp-style-f-bg" />
+    <hr>
+    Text<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="color" data-template-target=".sp-style-f-bg" />
+    <hr>
+    Link<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="color" data-template-target=".sp-style-f-bg a" />
+</div>
+</div>
+</div>
 </div>
 <br><BR><BR>
 
@@ -231,132 +233,60 @@ Body Link Color<br>
 <?php $this->panel_end(); ?>
 -->
 <?php
- echo spnl_get_emails_tags_list();
+echo spnl_get_emails_tags_list();
 ?>
 
 </div>
 <div class="sp-screen">
     <div class="sp-screen-holder">
-    <iframe id="iframe1" class="hidden-xs" width="100%" style="border: solid 1px #999; border-radius: 5px;" src="<?php echo home_url(); ?>?sendpress=render&spemail=<?php echo $_GET['templateID']; ?>" ></iframe>
+        <iframe id="iframe1" class="hidden-xs" width="100%" style="border: solid 1px #999; border-radius: 5px;" src="<?php echo home_url(); ?>?sendpress=render&spemail=<?php echo $_GET['templateID']; ?>" ></iframe>
     </div>
 </div>
 </div>
 <script>
 
-        
+
 
     jQuery(document).ready(function($){
-        var myOptions2 = {
-    // you can declare a default color here,
-    // or in the data-default-color attribute on the input
-    defaultColor: false,
-    // a callback to fire whenever the color changes to a valid color
-    change: function(event, ui){
-       // console.log( event );
 
 
-    //console.log(  ui.color.toString()  );
+        var styler_options = {
+            // you can declare a default color here,
+            // or in the data-default-color attribute on the input
+            defaultColor: false,
+            // a callback to fire whenever the color changes to a valid color
+            change: function(event, ui){
+               // console.log( event );
+               var $target =  $(event.target);
+               var target_class = $target.data('template-target');
+               var target_style = $target.data('template-style');
+                //console.log($(event.target).data('template-target'));
+            //console.log(  ui.color.toString()  );
 
-     var iframe = $('#iframe1'),
+            var iframe = $('#iframe1'),
             content = iframe.contents(),
-            body = content.find('.bodyContent');
-           // styletag = content.find('head').append('<style>body{ background-color: #000; }</style>');
-            //.children('style');
-
-            body.css( 'background-color' , ui.color.toString()  );
-
-          //  console.log(styletag);
-
-
-    },
-    // a callback to fire when the input is emptied or an invalid color
-    clear: function() {},
-    // hide the color picker controls on load
-    hide: true,
-    // show a group of common colors beneath the square
-    // or, supply an array of colors to customize further
-    palettes:  true
-};
-
-        
-            var myOptions = {
-    // you can declare a default color here,
-    // or in the data-default-color attribute on the input
-    defaultColor: false,
-    // a callback to fire whenever the color changes to a valid color
-    change: function(event, ui){
-       // console.log( event );
+            body = content.find(  target_class );
+                   // styletag = content.find('head').append('<style>body{ background-color: #000; }</style>');
+                    //.children('style');
+                        body.css( target_style , ui.color.toString() );
+                   
+                  //  console.log(styletag);
 
 
-    //console.log(  ui.color.toString()  );
-
-     var iframe = $('#iframe1'),
-            content = iframe.contents(),
-            body = content.find('body');
-           // styletag = content.find('head').append('<style>body{ background-color: #000; }</style>');
-            //.children('style');
-
-            body.css( 'background-color' , ui.color.toString()  );
-
-          //  console.log(styletag);
+              },
+            // a callback to fire when the input is emptied or an invalid color
+            clear: function() {},
+            // hide the color picker controls on load
+            hide: true,
+            // show a group of common colors beneath the square
+            // or, supply an array of colors to customize further
+            palettes:  true
+        };
 
 
-    },
-    // a callback to fire when the input is emptied or an invalid color
-    clear: function() {},
-    // hide the color picker controls on load
-    hide: true,
-    // show a group of common colors beneath the square
-    // or, supply an array of colors to customize further
-    palettes:  true
-};
 
-           var myOptions3 = {
-    // you can declare a default color here,
-    // or in the data-default-color attribute on the input
-    defaultColor: false,
-    // a callback to fire whenever the color changes to a valid color
-    change: function(event, ui){
-       // console.log( event );
+        $('.my-color-field').wpColorPicker( styler_options );
 
-
-    //console.log(  ui.color.toString()  );
-
-     var iframe = $('#iframe1'),
-            content = iframe.contents(),
-            body = content.find('.footerContent');
-           // styletag = content.find('head').append('<style>body{ background-color: #000; }</style>');
-            //.children('style');
-
-            body.css( 'background-color' , ui.color.toString()  );
-
-          //  console.log(styletag);
-
-
-    },
-    // a callback to fire when the input is emptied or an invalid color
-    clear: function() {},
-    // hide the color picker controls on load
-    hide: true,
-    // show a group of common colors beneath the square
-    // or, supply an array of colors to customize further
-    palettes:  true
-};
-        $('.my-color-field3').wpColorPicker(myOptions3);
-        $('.my-color-field2').wpColorPicker(myOptions2);
-        $('.my-color-field').wpColorPicker(myOptions);
-        $('#bg-color-select').on('change',function(e){
-          
-/*
-var iframe = $('iframe1'),
-content = iframe.contents(),
-body = content.find('body'),
-styletag = content.find('head').append('<style></style>').children('style');
-
-styletag.text( 'background-color:' + $(this).val() +';' );
-
-*/
-        });
         
 
         /*
@@ -415,21 +345,29 @@ styletag.text( 'background-color:' + $(this).val() +';' );
         
         $(window).resize(function(){
              var x = $( window ).height(); //jQuery('#wpbody').height();
-        
-       // $('.btn-group .btn').tooltip({container: 'body'});
-        $('#iframe1').height((x - 350));
-        });
+
+        if(x - 350 < 700){
+            $('#iframe1').height(700);
+       } else {
+            $('#iframe1').height(x - 350);
+       }
+   });
 
         var x = $( window ).height(); //jQuery('#wpbody').height();
         
        // $('.btn-group .btn').tooltip({container: 'body'});
-        $('#iframe1').height((x - 350));
+        if(x - 350 < 700){
+            $('#iframe1').height(700);
+       } else {
+            $('#iframe1').height(x - 350);
+       }
+       
         ///myCodeMirror.setSize('100%',(x - 350));
     });
-    </script>
-    <?php
+</script>
+<?php
 
-	}
+}
 
 }
 

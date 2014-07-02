@@ -187,7 +187,7 @@ class SendPress_Pro_Manager {
         $license_data = json_decode( wp_remote_retrieve_body( $response ) );
         // $license_data->license will be either "deactivated" or "failed"
         if( $license_data->license === SENDPRESS_PRO_DEACTIVATED || $license_data->license === SENDPRESS_PRO_FAILED ){
-            SendPress_Option::set('api_key','');
+           // SendPress_Option::set('api_key','');
             SendPress_Pro_Manager::set_pro_state(false); //this will delete the transient
             return true;
         }

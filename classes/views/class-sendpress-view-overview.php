@@ -37,7 +37,7 @@ $args = array( 'post_type' => 'sendpress_list','numberposts'     => -1,
 $sp->send_optin(1,array('1','2','3'),$lists);
 */
 list( $display_version ) = explode( '-', $wp_version );
-SendPress_Template_Manager::update_template_content();
+//SendPress_Template_Manager::update_template_content();
 /*
 
 
