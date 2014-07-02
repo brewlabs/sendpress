@@ -232,7 +232,7 @@ class SendPress_Posts{
 			'public' 			=> false,
 			'query_var' 		=> false,
 			'rewrite' 			=> false,
-			'show_ui'           => true,
+			'show_ui'           => false,
 			'capability_type' 	=> 'post',
 			'map_meta_cap'      => true,
 			'supports' 			=> array( 'title' ),
