@@ -83,7 +83,24 @@ class SendPress_View {
 	}
 
 
-	
+	static function let_to_num( $v ) {
+		$l   = substr( $v, -1 );
+		$ret = substr( $v, 0, -1 );
+
+		switch ( strtoupper( $l ) ) {
+			case 'P': // fall-through
+			case 'T': // fall-through
+			case 'G': // fall-through
+			case 'M': // fall-through
+			case 'K': // fall-through
+				$ret *= 1024;
+				break;
+			default:
+				break;
+		}
+
+		return $ret;
+	}
 
 	/**
 	 * Initializes the view.

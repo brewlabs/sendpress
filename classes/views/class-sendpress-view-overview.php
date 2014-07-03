@@ -86,11 +86,8 @@ $this->panel_start($report->post_title ." <small style='color:#333;'>".__('This 
         $open = 0;
         $rec = get_post_meta($report->ID, '_send_last_count', true);
           if($report){
-              $x= SendPress_Data::get_opens_count($report->ID);
-              if(!empty( $x )){
-                $open = $x[0]->count;
-              }
-              $p = $open/$rec * 100;
+            $open= SendPress_Data::get_opens($report->ID);
+            $p = $open/$rec * 100;
           }
         ?>
         <div class="sp-row">
@@ -106,10 +103,7 @@ $this->panel_start($report->post_title ." <small style='color:#333;'>".__('This 
         <div class="sp-50">
         <?php 
           $ou = 0;
-          $unk = SendPress_Data::get_opens_unique_count($report->ID);
-          if( !empty($unk) ){
-            $ou = $unk[0]->count;
-          }
+          $ou =  SendPress_Data::get_opens_unique_total($report->ID);
           $px = $ou/$rec * 100;
 
         ?>
@@ -131,34 +125,30 @@ $this->panel_start($report->post_title ." <small style='color:#333;'>".__('This 
   <h4 style="text-align:center;"><?php _e('Clicks', 'sendpress');?></h4>
     <?php 
         $this->panel_start();
-         $open = 0;
+         $click = 0;
         $rec = get_post_meta($report->ID, '_send_last_count', true);
           if($report){
-              $x= SendPress_Data::get_clicks_count($report->ID);
-              if(!empty( $x )){
-                $open = $x[0]->count;
-              }
-              $p = $open/$rec * 100;
+              $click= SendPress_Data::get_clicks($report->ID);
+             
+              $p = $click/$rec * 100;
           }
      ?>
      <div class="sp-row">
         <div class="sp-50 sp-first">
           <div style="float:left;">
-          <div id="myStat" class="chartid" data-dimension="150" data-text="<?php echo floor($p); ?>%" data-info="Total Opens" data-width="15" data-fontsize="30" data-percent="<?php echo floor($p); ?>" data-fgcolor="#61a9dc" data-bgcolor="#eee" data-fill="#ddd" data-total="<?php echo  $rec; ?>" data-part="<?php echo  $open; ?>" data-icon="long-arrow-up" data-icon-size="28" data-icon-color="#fff"></div>
+          <div id="myStat" class="chartid" data-dimension="150" data-text="<?php echo floor($p); ?>%" data-info="Total Opens" data-width="15" data-fontsize="30" data-percent="<?php echo floor($p); ?>" data-fgcolor="#61a9dc" data-bgcolor="#eee" data-fill="#ddd" data-total="<?php echo  $rec; ?>" data-part="<?php echo  $click; ?>" data-icon="long-arrow-up" data-icon-size="28" data-icon-color="#fff"></div>
          </div>
          <div style="text-align:center;">
          <h5><?php _e('Total', 'sendpress');?></h5>
-         <?php echo $open; ?>
+         <?php echo $click; ?>
          </div>
         </div>
         <div class="sp-50">
         <?php 
           $ou = 0;
 
-          $unk = SendPress_Data::get_clicks_unique_count($report->ID);
-          if( !empty($unk) ){
-            $ou = $unk[0]->count;
-          }
+          $ou = SendPress_Data::get_clicks_unique_total($report->ID);
+          
           $px = $ou/$rec * 100;
 
         ?>
@@ -193,28 +183,44 @@ $this->panel_start($report->post_title ." <small style='color:#333;'>".__('This 
     <h3 class="panel-title"><?php _e('Recent Subscribers', 'sendpress');?></h3>
   </div>
   <div class="panel-body">
-  	<ul>
+  	<table class="table table-striped table-condensed">
+    <tr>
+    <th>Date</th>
+    <th>List</th>
+    <th><div style="text-align:right;">Email</div></th>
+    </tr>
   	<?php 
-  		$recent = SendPress_Data::get_optin_events();
+  		$recent = SendPress_Data::get_subscribed_events();
   		foreach($recent as $item){
+        echo "<tr>";
+         echo "<td>";
   			if(property_exists($item,'subscriberID')){
-        echo "<li>";
-
+       
   			$d = 	SendPress_Data::get_subscriber($item->subscriberID);
+        
         if(property_exists($item,'eventdate')){
-  			   echo date_i18n("m.d.Y" ,strtotime($item->eventdate) );
+  			   echo date_i18n("m.d.y" ,strtotime($item->eventdate) );
         }
+          echo "</td>";
+echo "<td >";
+           if(property_exists($item,'listID')){
+           echo get_the_title($item->listID);
+        }
+         echo "</td>";
+           echo "<td align='right'>";
         if(is_object($d)){
-  			echo "<span class='sp-email'>" . $d->email . "</span>";
+  			echo  $d->email ."<br>";
         }
-  			echo "</li>";
+        
+       echo "</td>";
+  			echo "</tr>";
   		  }
       }
 
   		
 
   	?>
-  </ul>
+  </table>
   </div>
 </div>
 </div>

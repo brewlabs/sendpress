@@ -537,6 +537,14 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$result = $wpdb->get_results("SELECT COUNT(eventID) as count,date(eventdate) as day FROM $table WHERE reportID = '$rid' AND type = 'open' GROUP BY date(eventdate) ORDER BY eventID DESC ;");
 		return $result;
 	}
+	
+	static function get_opens($rid){
+		global $wpdb;
+		$table = SendPress_Data::subscriber_event_table();
+		$result =  $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $table WHERE reportID = '%d' AND type = 'open'  ORDER BY eventID DESC", $rid));
+		return $result;
+	}
+
 
 	static function get_open_total($rid){
 		global $wpdb;
@@ -556,6 +564,20 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $result;
 	}
 
+	static function get_opens_unique_total($rid){
+		global $wpdb;
+		$table = SendPress_Data::subscriber_event_table();
+		$result = $wpdb->get_var( $wpdb->prepare("SELECT COUNT( DISTINCT subscriberID ) FROM $table WHERE reportID = '%d' AND type = 'open'", $rid ) );
+		return $result;
+	}
+
+	static function get_clicks_unique_total($rid){
+		global $wpdb;
+		$table = SendPress_Data::subscriber_event_table();
+		$result = $wpdb->get_var( $wpdb->prepare("SELECT COUNT( DISTINCT subscriberID ) FROM $table WHERE reportID = '%d' AND type = 'click'", $rid ) );
+		return $result;
+	}
+
 	static function get_clicks_unique_count($rid){
 		global $wpdb;
 		$table = self::subscriber_event_table();
@@ -570,6 +592,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if(empty($result)){
 			return 0;
 		}
+		return $result;
+	}
+
+	static function get_clicks($rid){
+		global $wpdb;
+		$table = SendPress_Data::subscriber_event_table();
+		$result =  $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $table WHERE reportID = '%d' AND type = 'click'  ORDER BY eventID DESC", $rid));
 		return $result;
 	}
 
@@ -1075,6 +1104,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 		global $wpdb;
 		$table  = SendPress_Data::subscriber_event_table();
 		return $wpdb->get_results( $wpdb->prepare("SELECT * FROM $table WHERE type = 'optin' order by eventID DESC LIMIT %d", $limit) );
+
+	}
+
+	static function get_subscribed_events($limit = 10){
+		global $wpdb;
+		$table  = SendPress_Data::subscriber_event_table();
+		return $wpdb->get_results( $wpdb->prepare("SELECT * FROM $table WHERE type = 'subscribed' order by eventID DESC LIMIT %d", $limit) );
 
 	}
 

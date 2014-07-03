@@ -49,6 +49,49 @@ class SendPress_View_Help extends SendPress_View{
 	
 <?php
 	}
+	 function display() {
+		$browser = NEW SendPress_Browser();
+		if ( get_bloginfo( 'version' ) < '3.4' ) {
+			$theme_data = get_theme_data( get_stylesheet_directory() . '/style.css' );
+			$theme      = $theme_data['Name'] . ' ' . $theme_data['Version'];
+		} else {
+			$theme_data = wp_get_theme();
+			$theme      = $theme_data->Name . ' ' . $theme_data->Version;
+		}
+
+		// Try to identify the hosting provider
+		$host = false;
+		if ( defined( 'WPE_APIKEY' ) ) {
+			$host = 'WP Engine';
+		} elseif ( defined( 'PAGELYBIN' ) ) {
+			$host = 'Pagely';
+		}
+
+		$request['cmd'] = '_notify-validate';
+
+		$params = array(
+			'sslverify' => false,
+			'timeout'   => 60,
+			'body'      => $request,
+		);
+
+		$response = wp_remote_post( 'https://www.paypal.com/cgi-bin/webscr', $params );
+
+		if ( ! is_wp_error( $response ) && $response['response']['code'] >= 200 && $response['response']['code'] < 300 ) {
+			$WP_REMOTE_POST = 'wp_remote_post() works' . "\n";
+		} else {
+			$WP_REMOTE_POST = 'wp_remote_post() does not work' . "\n";
+		}
+
+		return $this->display_output( $browser, $theme, $host, $WP_REMOTE_POST );
+	}
+	//Render Info Display
+	 function display_output( $browser, $theme, $host, $WP_REMOTE_POST ) {
+		global $wpdb;
+		ob_start();
+		require_once( SENDPRESS_PATH . 'inc/output.php' );
+		return ob_get_clean();
+	}
 
 	function help_debug(){
 		global $wp_version,$wpdb;
@@ -103,69 +146,7 @@ class SendPress_View_Help extends SendPress_View{
 	  	_e('open','sendpress');
 	  } ?><br><br>
 	  	<b>Support Info:</b>
-	  	<textarea readonly="readonly" class="sendpress-sysinfo"  name="sendpress-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'sendpress' ); ?>">
-### Begin System Info ###
-
-## Please include this information when posting support requests ##
-
-Multi-site:               <?php echo is_multisite() ? 'Yes' . "\n" : 'No' . "\n" ?>
-
-HOME_URL:                 <?php echo home_url() . "\n"; ?>
-
-SP Version:               <?php echo SENDPRESS_VERSION . "\n"; ?>
-<?php if(defined('SENDPRESS_PRO_VERSION')){ ?>SP Pro Version: 	  <?php echo SENDPRESS_PRO_VERSION . "\n"; ?><?php	} ?>
-WordPress Version:        <?php echo get_bloginfo( 'version' ) . "\n"; ?>
-Sending Method: 		  <?php echo SendPress_Option::get( 'sendmethod' ). "\n"; ?>
-SendPress Tables:		   <?php echo SendPress_DB_Tables::check_setup_support() . "\n"; ?>
-
-PHP Version:              <?php echo PHP_VERSION . "\n"; ?>
-MySQL Version:            <?php echo mysql_get_server_info() . "\n"; ?>
-Web Server Info:          <?php echo $_SERVER['SERVER_SOFTWARE'] . "\n"; ?>
-
-PHP Memory Limit:         <?php echo ini_get( 'memory_limit' ) . "\n"; ?>
-PHP Post Max Size:        <?php echo ini_get( 'post_max_size' ) . "\n"; ?>
-PHP Memory Used:		  <?php echo  $used . __(' MByte') . "\n"; ?>
-
-WP Memory Limit:          <?php echo ( SendPress_Data::let_to_num( WP_MEMORY_LIMIT )/( 1024*1024 ) )."MB"; ?><?php echo "\n"; ?>
-WP_DEBUG:                 <?php echo defined( 'WP_DEBUG' ) ? WP_DEBUG ? 'Enabled' . "\n" : 'Disabled' . "\n" : 'Not set' . "\n" ?>
-
-UPLOAD_MAX_FILESIZE:      <?php if ( function_exists( 'phpversion' ) ) echo ( SendPress_Data::let_to_num( ini_get( 'upload_max_filesize' ) )/( 1024*1024 ) )."MB"; ?><?php echo "\n"; ?>
-POST_MAX_SIZE:            <?php if ( function_exists( 'phpversion' ) ) echo ( SendPress_Data::let_to_num( ini_get( 'post_max_size' ) )/( 1024*1024 ) )."MB"; ?><?php echo "\n"; ?>
-DISPLAY ERRORS:           <?php echo ( ini_get( 'display_errors' ) ) ? 'On (' . ini_get( 'display_errors' ) . ')' : 'N/A'; ?><?php echo "\n"; ?>
-FSOCKOPEN:                <?php echo ( function_exists( 'fsockopen' ) ) ? __( 'Your server supports fsockopen.', 'sendpress' ) : __( 'Your server does not support fsockopen.', 'sendpress' ); ?><?php echo "\n"; ?>
-
-<?php echo $browser ; ?>
-
-ACTIVE PLUGINS:
-
-<?php
-$plugins = get_plugins();
-$active_plugins = get_option( 'active_plugins', array() );
-
-foreach ( $plugins as $plugin_path => $plugin ):
-	// If the plugin isn't active, don't show it.
-	if ( ! in_array( $plugin_path, $active_plugins ) )
-		continue;
-
-echo $plugin['Name']; ?>: <?php echo $plugin['Version'] ."\n";
-
-endforeach; ?>
-
-CURRENT THEME:
-
-<?php
-if ( get_bloginfo( 'version' ) < '3.4' ) {
-	$theme_data = get_theme_data( get_stylesheet_directory() . '/style.css' );
-	echo $theme_data['Name'] . ': ' . $theme_data['Version'];
-} else {
-	$theme_data = wp_get_theme();
-	echo $theme_data->Name . ': ' . $theme_data->Version;
-}
-?>
-
-
-### End System Info ###
-			</textarea>
+	  	<textarea readonly="readonly" class="sendpress-sysinfo"  name="sendpress-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'sendpress' ); ?>"><?php echo esc_html( $this->display() ); ?></textarea>
 
 
 

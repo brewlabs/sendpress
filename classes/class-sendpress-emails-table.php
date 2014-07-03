@@ -325,7 +325,7 @@ class SendPress_Emails_Table extends WP_List_Table {
 				}
 			}
 			//Which page is this?
-			$paged = !empty($_GET["paged"]) ? mysql_real_escape_string($_GET["paged"]) : '';
+			$paged = !empty($_GET["paged"]) ? $_GET["paged"] : '';
 			//Page Number
 			if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
 			//How many pages do we have in total?
