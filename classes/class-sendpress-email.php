@@ -111,16 +111,16 @@ class SendPress_Email {
 			global $wpdb;
 			//$email =  $this->email();
 			// Get any existing copy of our transient data
-			if ( false === ( $body_html = get_transient( 'sendpress_report_body_html_'. $this->id() )  ) || ($this->purge() == true) ) {
+			//if ( false === ( $body_html = get_transient( 'sendpress_report_body_html_'. $this->id() )  ) || ($this->purge() == true) ) {
 
 			    // It wasn't there, so regenerate the data and save the transient
 			    if(!$this->post_info){
 			    	$this->post_info = get_post( $this->id() );
 				}
 			    $body_html = SendPress_Template::get_instance()->render( $this->post_info->ID, false, false , $this->remove_links() );
-			    set_transient( 'sendpress_report_body_html_'. $this->id(), $body_html , 60*60*2 );
+			    //set_transient( 'sendpress_report_body_html_'. $this->id(), $body_html , 60*60*2 );
 
-			}
+			//}
 			$subscriber = SendPress_Data::get_subscriber($this->subscriber_id());
 			if (!is_null($subscriber)) {
 				$body_html = str_replace("*|FNAME|*", $subscriber->firstname , $body_html );
@@ -136,7 +136,7 @@ class SendPress_Email {
 			);
 			$code = SendPress_Data::encrypt( $open_info );
 
-			$link = SendPress_Manager::public_url($code);
+			$link = SendPress_Manager::public_url( $code );
 
 
 			$tracker = "<img src='". $link ."' width='1' height='1'/></body>";
@@ -169,30 +169,36 @@ class SendPress_Email {
 				//ADD TO DB?
 				
 				if(strrpos( $href, "*|" ) === false ) {
+						
+						if( SendPress_Option::get('skip_mailto', false ) == true && strrpos( $href, "mailto" ) !== false  ) {
+							continue;
+						}
 
-					$urlinDB = SendPress_Data::get_url_by_report_url( $this->id(), $href );
-					if(!isset($urlinDB[0])){
-					
-						$urlData = array(
-							'url' => trim($href),
-							'reportID' => $this->id(),
+						$urlinDB = SendPress_Data::get_url_by_report_url( $this->id(), $href );
+						if(!isset($urlinDB[0])){
+						
+							$urlData = array(
+								'url' => trim($href),
+								'reportID' => $this->id(),
+							);
+							$urlID = SendPress_Data::insert_report_url( $urlData );
+						
+						} else {
+							$urlID  = $urlinDB[0]->urlID;
+						}
+						$link = array(
+							"id"=>$this->subscriber_id(),
+							"report"=> $this->id(),
+							"urlID"=> $urlID,
+							"view"=>"link"
 						);
-						$urlID = SendPress_Data::insert_report_url( $urlData );
-					
-					} else {
-						$urlID  = $urlinDB[0]->urlID;
-					}
-					$link = array(
-						"id"=>$this->subscriber_id(),
-						"report"=> $this->id(),
-						"urlID"=> $urlID,
-						"view"=>"link"
-					);
-					$code = SendPress_Data::encrypt( $link );
-					$link = SendPress_Manager::public_url($code);
+						$code = SendPress_Data::encrypt( $link );
+						$link = SendPress_Manager::public_url($code);
 
-					$href = $link;
-					$aElement->setAttribute('href', $href);
+						$href = $link;
+						$aElement->setAttribute('href', $href);
+
+					
 				}
 			}
 			$body_html = $dom->saveHtml();

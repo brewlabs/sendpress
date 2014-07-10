@@ -23,6 +23,14 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 			SendPress_Option::set('old_permalink', false );
 		}
 
+		if(isset( $post['skip_mailto'] )){
+			SendPress_Option::set('skip_mailto', true );
+		} else {
+			SendPress_Option::set('skip_mailto', false );
+		}
+
+
+
 
 		if(isset( $post['prerelease_templates'] )){
 			SendPress_Option::set('prerelease_templates', 'yes' );
@@ -123,11 +131,14 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-					<h3 class="panel-title">Permalink Settings</h3>
+					<h3 class="panel-title">Optional Settings</h3>
 			  </div>
 				<div class="panel-body">
 				<?php $ctype = SendPress_Option::get('old_permalink'); ?>
 				<input type="checkbox" name="old_permalink" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> Use old permalink with ?sendpress=.
+				<br><br>
+				<?php $ctype = SendPress_Option::get('skip_mailto'); ?>
+				<input type="checkbox" name="skip_mailto" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> Do not track mailto links in email.
 				
 				
 
