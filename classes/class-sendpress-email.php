@@ -33,7 +33,7 @@ class SendPress_Email {
 	private $_list_id = false;
 	private $_list_ids = array();
 	private $_purge = false;
-
+	private $_html = false;
 
 	
 	function SendPress_Email(){
@@ -64,6 +64,12 @@ class SendPress_Email {
 		$this->_purge = $purge;
 	}
 
+	function cache($cache = NULL){
+		if ( ! isset( $cache ) )
+			return $this->_html;
+		$this->_html = $cache;
+	}
+
 
 	function list_id($list_id = NULL){
 		if ( ! isset( $list_id ) )
@@ -78,7 +84,6 @@ class SendPress_Email {
 	}
 
 	function text_convert($html,$fullConvert = true){
-
 		if($fullConvert){
 			$html = preg_replace('# +#',' ',$html);
 			$html = str_replace(array("\n","\r","\t"),'',$html);
@@ -94,7 +99,7 @@ class SendPress_Email {
 		$replaceLinks = '/< *a[^>]*href *= *"([^#][^"]*)"[^>]*>(.*)< *\/ *a *>/Uis';
 		$text = preg_replace(array($removepictureslinks,$removeScript,$removeStyle,$removeStrikeTags,$replaceByTwoReturnChar,$replaceByStars,$replaceByReturnChar1,$replaceByReturnChar,$replaceLinks),array('','','','',"\n\n","\n* ","\n","\n",'${2} ( ${1} )'),$html);
 		$text = str_replace(array(" ","&nbsp;"),' ',strip_tags($text));
-		$text = trim(@html_entity_decode($text,ENT_QUOTES,'UTF-8'));
+		$text = trim(html_entity_decode($text,ENT_QUOTES,'UTF-8'));
 		if($fullConvert){
 			$text = preg_replace('# +#',' ',$text);
 			$text = preg_replace('#\n *\n\s+#',"\n\n",$text);
@@ -103,24 +108,29 @@ class SendPress_Email {
 	}
 
 	function text(){
-		return $this->text_convert( $this->html() , true);
+		return $this->text_convert( $this->html(), true);
 	}
 
 
 	function html(){
+			
 			global $wpdb;
 			//$email =  $this->email();
 			// Get any existing copy of our transient data
-			//if ( false === ( $body_html = get_transient( 'sendpress_report_body_html_'. $this->id() )  ) || ($this->purge() == true) ) {
+			if ( false === ( $body_html = get_transient( 'sendpress_report_body_html_'. $this->id() )  ) || ($this->purge() == true) ) {
 
 			    // It wasn't there, so regenerate the data and save the transient
 			    if(!$this->post_info){
 			    	$this->post_info = get_post( $this->id() );
 				}
-			    $body_html = SendPress_Template::get_instance()->render( $this->post_info->ID, false, false , $this->remove_links() );
-			    //set_transient( 'sendpress_report_body_html_'. $this->id(), $body_html , 60*60*2 );
-
-			//}
+				if($this->cache() !== false ){
+					$body_html = $this->cache();
+				} else {
+			    	$body_html = SendPress_Template::get_instance()->render( $this->id(), false, false , $this->remove_links() );
+			    	$this->cache($body_html);
+			    }
+			    set_transient( 'sendpress_report_body_html_'. $this->id(), $body_html , 60*60*2 );
+			}
 			$subscriber = SendPress_Data::get_subscriber($this->subscriber_id());
 			if (!is_null($subscriber)) {
 				$body_html = str_replace("*|FNAME|*", $subscriber->firstname , $body_html );
@@ -264,11 +274,12 @@ class SendPress_Email {
 			}
 			
 			
-            $body_html = apply_filters('sendpress_post_render_email', $body_html);
+            //$body_html = apply_filters('sendpress_post_render_email', $body_html);
 			//echo  $body_html;
-
 			//print_r($email);
+			
 			return $body_html;
+
 	}
 
 	function subject(){
