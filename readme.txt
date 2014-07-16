@@ -99,6 +99,13 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
+= 0.9.9.9.4 - 2014.7.16 =
+* Fix: Overview stat fix
+* Fix: Duplicate email sending to subscribers
+* Fix: Translation code added
+* Fix: Support to turn off mailto tracking
+* Update: Added some more unit tests
+
 = 0.9.9.9.3 - 2014.6.16 =
 * Fix: Shortcode conflict (WooCommerce)
 * Fix: Speed of email rendering
@@ -497,6 +504,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.9.9.4 =
+Sending and stats update
 
 = 0.9.9.9.3 =
 Shortcode issue fix when in email
