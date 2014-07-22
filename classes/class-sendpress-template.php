@@ -336,12 +336,12 @@ class SendPress_Template {
 			$HtmlCode= ob_get_clean(); 
 			*/
 			$HtmlCode = file_get_contents(SENDPRESS_PATH .'/templates/simple.html' );
-			add_filter('the_content', 'do_shortcode', 11);
-			//$content = apply_filters('the_content', $post->post_content);
+			add_filter('the_content', 'do_shortcode' , 11);
+			$content = apply_filters( 'the_content' , $post->post_content );
 			//print_r($post->post_content);
-			$content = str_replace(']]>', ']]&gt;', $post->post_content);
-			$content = do_shortcode( $content );
-			$HtmlCode =str_replace("*|SP:CONTENT|*", $content ,$HtmlCode);
+			$content = str_replace( ']]>' , ']]&gt;' , $content );
+			//$content = do_shortcode( $content );
+			$HtmlCode = str_replace( "*|SP:CONTENT|*" , $content , $HtmlCode );
 
 			$post = $saved;
 			
