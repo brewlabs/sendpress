@@ -38,7 +38,7 @@ class SendPress_Notifications_Manager {
 			return;
 		}
 
-		$body = $subscribed . $unsubscribed;
+		$body = $subscribed . '<br><br>' . $unsubscribed;
 		$text = $subscribed . $unsubscribed;
 		SendPress_Notifications_Manager::send_notification($body, $text);
 	}
@@ -160,7 +160,7 @@ class SendPress_Notifications_Manager {
 			if( strlen($subscribed) === 0 && strlen($unsubscribed) === 0 ){
 				return;
 			}
-			$body = $subscribed.$unsubscribed;
+			$body = $subscribed . "<br><br>" .$unsubscribed;
 			$text = $subscribed.$unsubscribed;
 		
 			SendPress_Notifications_Manager::send_notification($body,$text);
@@ -170,9 +170,9 @@ class SendPress_Notifications_Manager {
 
 	static function send_notification($body = "Possible Error With Notifications",$text= "Possible Error With Notifications"){
 		$options = SendPress_Option::get('notification_options');
-
+		$senders = array();
 		if( strlen($options['email']) > 0 ){
-			$senders[] = $options['email'];
+			$senders = explode("," , $options['email'] );
 		}
 
 		if( $options['send-to-admins'] ){
@@ -187,7 +187,7 @@ class SendPress_Notifications_Manager {
 		if( $options['notifications-enable'] ){
 			if(is_array($senders) && !empty($senders)) {
 				foreach($senders as $to){
-					SendPress_Manager::send($to, 'SendPress Notification', $body, $text);
+					SendPress_Manager::send( trim( $to ), 'SendPress Notification', $body, $text);
 				}
 			}
 		}
