@@ -18,11 +18,16 @@ if ( !defined('SENDPRESS_VERSION') ) {
 */
 class SendPress_Queue extends SendPress_Base {
 
+function convert($size)
+{
+    $unit=array('b','kb','mb','gb','tb','pb');
+    return @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
+}
 
 static function send_mail(){
 		global $wpdb;
 		$day_count = SendPress_Option::get('autocron-per-call',25);
-
+		
 		if( !SendPress_Manager::limit_reached()  ){
 		$count = SendPress_Data::emails_in_queue();
 		$email_count = 0;
@@ -30,6 +35,7 @@ static function send_mail(){
 		
 		SendPress_Email_Cache::build_cache();
 
+		
 		if($count > 0 ){
 		for ($i=0; $i < $day_count; $i++) { 
 				$email = SendPress_Data::get_single_email_from_queue();
@@ -58,12 +64,9 @@ static function send_mail(){
 					}
 				} 
 				
-				
 		}
 		}
 
-
-		
 		}
 
 		

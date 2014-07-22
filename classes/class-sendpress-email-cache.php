@@ -36,7 +36,6 @@ class SendPress_Email_Cache {
       $html =  SendPress_Template::get_instance()->render_html( $email->emailID, false, false , false );
       self::set( $email->emailID , $html );
     }
-    error_log('build cache');
 
   }
 }

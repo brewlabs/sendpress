@@ -307,7 +307,8 @@ class SendPress_Manager {
 	   		SPNL()->log->add(  'Email Skiped' , 'Email to '.$to.' did not have any Text.', 0 , 'sending' );
 	   		return false;
 	   	}
-
+	   	
+	   	unset($message);
 	   	return SendPress_Manager::send($to , $subject, $body, $text, false, $email->subscriberID ,$email->listID, $email->emailID );
 	   
 	}
@@ -340,15 +341,15 @@ class SendPress_Manager {
 	static function send($to , $subject, $body, $text, $test = false, $sid=0 ,$list_id = 0, $report_id = 0 ){
 
 		global $sendpress_sender_factory;
-	   	$senders = $sendpress_sender_factory->get_all_senders();
+	   //	$senders = $sendpress_sender_factory->get_all_senders();
    		$method = SendPress_Option::get( 'sendmethod' );
-
-   		if( array_key_exists( $method , $senders) && is_a( $senders[$method] , 'SendPress_Sender') ){
+   		$sender = $sendpress_sender_factory->get_sender($method);
+   		if( $sender != false ){
    			if( empty($text) || $text == '' || empty($body) || $body== '' || $body == " "){
    				SPNL()->log->add(  'Email Skiped' , 'Email to '.$to.' did not have any Text.', 0 , 'sending' );
    				return false;
 	   		}
-	   		return $senders[$method]->send_email( $to, $subject, $body, $text, $test, $sid , $list_id, $report_id );
+	   		return $sender->send_email( $to, $subject, $body, $text, $test, $sid , $list_id, $report_id );
    		}
    		$website = new SendPress_Sender_Website();
    		return  $website->send_email( $to, $subject, $body, $text, $test, $sid , $list_id, $report_id );
