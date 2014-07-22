@@ -127,6 +127,29 @@ class SendPress_Shortcode_Loader {
 		return ob_get_clean();
 	}
 
+
+	public static function shortcode_wrapper_nobuffer(
+		$function,
+		$atts    = array(),
+		$wrapper = array(
+			'class'  => 'sendpress',
+			'before' => null,
+			'after'  => null
+		)
+	) {
+		
+
+		$before 	= empty( $wrapper['before'] ) ? '<div class="' . esc_attr( $wrapper['class'] ) . '">' : $wrapper['before'];
+		$after 		= empty( $wrapper['after'] ) ? '</div>' : $wrapper['after'];
+
+		$x = $before;
+		$x .= call_user_func( $function, $atts );
+		$x .= $after;
+
+		return $x;
+	}
+
+
 	/**
 	 * Unsubscribe shortcode.
 	 *
@@ -145,7 +168,7 @@ class SendPress_Shortcode_Loader {
 	 * @return string
 	 */
 	public static function recent_posts( $atts ) {
-		return self::shortcode_wrapper( array( 'SendPress_SC_Recent_Posts', 'output' ), $atts );
+		return self::shortcode_wrapper_nobuffer( array( 'SendPress_SC_Recent_Posts', 'output' ), $atts );
 	}
 	/**
 	 * Signup shortcode.

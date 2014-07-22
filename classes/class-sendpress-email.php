@@ -117,19 +117,23 @@ class SendPress_Email {
 			global $wpdb;
 			//$email =  $this->email();
 			// Get any existing copy of our transient data
-			if ( false === ( $body_html = get_transient( 'sendpress_report_body_html_'. $this->id() )  ) || ($this->purge() == true) ) {
+			if( SendPress_Email_Cache::get( $this->id() ) != null ){
+				$body_html = SendPress_Email_Cache::get( $this->id() );
+			} else {
+				if ( false === ( $body_html = get_transient( 'sendpress_report_body_html_'. $this->id() )  ) || ($this->purge() == true) ) {
 
-			    // It wasn't there, so regenerate the data and save the transient
-			    if(!$this->post_info){
-			    	$this->post_info = get_post( $this->id() );
+				    // It wasn't there, so regenerate the data and save the transient
+				    if(!$this->post_info){
+				    	$this->post_info = get_post( $this->id() );
+					}
+					if($this->cache() !== false ){
+						$body_html = $this->cache();
+					} else {
+				    	$body_html = SendPress_Template::get_instance()->render( $this->id(), false, false , $this->remove_links() );
+				    	$this->cache($body_html);
+				    }
+				    set_transient( 'sendpress_report_body_html_'. $this->id(), $body_html , 60*60*2 );
 				}
-				if($this->cache() !== false ){
-					$body_html = $this->cache();
-				} else {
-			    	$body_html = SendPress_Template::get_instance()->render( $this->id(), false, false , $this->remove_links() );
-			    	$this->cache($body_html);
-			    }
-			    set_transient( 'sendpress_report_body_html_'. $this->id(), $body_html , 60*60*2 );
 			}
 			$subscriber = SendPress_Data::get_subscriber($this->subscriber_id());
 			if (!is_null($subscriber)) {

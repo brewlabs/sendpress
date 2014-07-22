@@ -61,7 +61,7 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
         }
             */
 
-        if(isset($info['testemails'])){
+        if(isset($info['testemails']) && $info['testemails'] != false ){
             foreach($info['testemails'] as $email){
                    
                      $go = array(

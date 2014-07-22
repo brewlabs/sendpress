@@ -72,17 +72,24 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	/********************* QUEUE static functionS **************************/
 
+	static function get_email_id_from_queue(){
+		global $wpdb;
+		$date = date_i18n('Y-m-d H:i:s');
+		return $wpdb->get_results($wpdb->prepare("SELECT DISTINCT emailID FROM ". SendPress_Data::queue_table() ." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 and ( date_sent = '0000-00-00 00:00:00' or date_sent < %s ) ", $date));
+
+	}
+
 	static function get_single_email_from_queue(){
 		global $wpdb;
 		$date = date_i18n('Y-m-d H:i:s');
 
 		$spdb_count = SendPress_Data::emails_in_queue();
-		$spdb_offest = '';
+		$spdb_offset = '';
 		if($spdb_count > 1 ){
 			if( $spdb_count > 25){
 				$spdb_count = 25;
 			}
-			$spdb_offset = ' OFFSET '. rand(0,25);
+			$spdb_offset = ' OFFSET '. rand(0, $spdb_count);
 		} 
 		$info =  $wpdb->get_row($wpdb->prepare("SELECT * FROM ". SendPress_Data::queue_table() ." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 and ( date_sent = '0000-00-00 00:00:00' or date_sent < %s ) ORDER BY id LIMIT 1 " . $spdb_offset, $date));
 

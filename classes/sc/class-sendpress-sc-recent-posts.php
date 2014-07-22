@@ -36,22 +36,23 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 		global $post , $wp;
 		$old_post = $post;
 		extract( shortcode_atts( self::options() , $atts ) );
-		
+		$return_string = '';
 	   	if($content){
 	      	$return_string = $content;
 	  	}
-	  	
-		$return_string .= '<div>';
+	  	$return_string .= '<div>';
 	   	query_posts(array('orderby' => 'date', 'order' => 'DESC' , 'showposts' => $posts));
+
+
 	   	if (have_posts()) :
 	    	while (have_posts()) : the_post();
-	        	$return_string .= '<div><a href="'.get_permalink().'">'.get_the_title().'</a></div>';
+	    		$return_string .= '<div><a href="'.get_permalink().'">'.get_the_title().'</a></div>';
 	          	$return_string .= '<div>'.get_the_excerpt().'</div>';
 	          	$return_string .= '<br>';
+
 	      	endwhile;
 	   	endif;
 	   	$return_string .= '</div>';
-
 	   	wp_reset_query();
 	   	$post = $old_post;
 	   	return $return_string;

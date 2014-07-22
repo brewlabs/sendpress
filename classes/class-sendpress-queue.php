@@ -27,6 +27,9 @@ static function send_mail(){
 		$count = SendPress_Data::emails_in_queue();
 		$email_count = 0;
 		$attempts = 0;
+		
+		SendPress_Email_Cache::build_cache();
+
 		if($count > 0 ){
 		for ($i=0; $i < $day_count; $i++) { 
 				$email = SendPress_Data::get_single_email_from_queue();
@@ -78,6 +81,7 @@ static function send_mail(){
 		if( SendPress_Manager::limit_reached()  ){
 			return;
 		}
+		SendPress_Email_Cache::build_cache();
 
 
 		for ($i=0; $i < $count ; $i++) { 

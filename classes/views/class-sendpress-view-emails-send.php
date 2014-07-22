@@ -13,10 +13,14 @@ class SendPress_View_Emails_Send extends SendPress_View_Emails {
             $send_at = $_POST['date-pickit'] . " " . $_POST['send-later-time'];
         } else {
             $send_at = '0000-00-00 00:00:00';
-        }
-
+        }   
+        if(isset($_POST['test-add'])){
 		$csvadd ="email,firstname,lastname\n" . trim($_POST['test-add']);
+
     	$data=  SendPress_Data::subscriber_csv_post_to_array($csvadd);
+    } else {
+        $data = false;
+    }
         $listids = isset($_POST['listIDS']) ? $_POST['listIDS'] : array();
         SendPress_Option::set('current_send_'. $_POST['post_ID'], array(
             'listIDS' =>  $listids,
