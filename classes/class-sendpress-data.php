@@ -1884,6 +1884,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 			add_post_meta($postid, "_email_label", 'E-Mail', true);
 			add_post_meta($postid, "_button_label", 'Submit', true);
 			add_post_meta($postid, "_list_label", 'List Selection', true);
+			add_post_meta($postid, "_lists_checked", 'Select Lists by default', true);
 			add_post_meta($postid, "_thankyou_message", 'Check your inbox now to confirm your subscription.', true);
 			add_post_meta($postid, "_thankyou_page", '', true);
 
@@ -1915,12 +1916,15 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	static function update_sp_settings_object($postid, $data){
 
-		//update_post_meta($post_id, $meta_key, $meta_value, $prev_value);
-		//$post_meta_keys = get_post_custom_keys($postid);
-		foreach ($data as $key => $value) {
-			update_post_meta($postid, $key, $value);
-		}
+		$options = SendPress_Data::get_sp_settings_object($postid);
 
+		foreach($options as $key => $value){
+			if(array_key_exists($key, $data)){
+				update_post_meta($postid, $key, $value);
+			}else{
+				update_post_meta($postid, $key, false);
+			}
+		}
 
 	}
 

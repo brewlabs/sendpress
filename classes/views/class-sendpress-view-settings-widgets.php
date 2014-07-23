@@ -10,6 +10,24 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 	function save($post, $sp){
 		$data = array_slice($post, 0, -2);
+
+		//fix list ids for signup
+		$listids = array();
+		foreach($data as $key => $item){
+			if (strpos($key, "_list_") === 0){
+				if( $item === "on" ){
+					$id = intval(substr($key, 6));
+					if($id > 0){
+						$listids[] = $id;
+					}
+					
+				}
+				
+			}
+		}
+
+		$data['_listids'] = implode(',', $listids);
+
 		SendPress_Data::update_sp_settings_object($data['_sp_settings_id'],$data);
 	}
 
@@ -85,6 +103,11 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 			<label for="_list_label"><?php _e('Lists Label: multiple lists only', 'sendpress'); ?></label>
 			<input type="text" class="widefat" id="_list_label" name="_list_label" value="<?php echo $settings['_list_label']; ?>" style="width:100%;" />
 		</p>
+
+		<p>
+			<input class="checkbox" type="checkbox" <?php checked( $settings['_lists_checked'], 'on' ); ?> id="_lists_checked" name="_lists_checked" /> 
+			<label for="_lists_checked"><?php _e('Select Lists by Default', 'sendpress'); ?></label>
+		</p> 
 		
 		
 		<p><b>Check off the lists you would like<br>users to subscribe to.</b></p>
