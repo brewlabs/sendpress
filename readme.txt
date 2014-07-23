@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 3.9.1
-Stable tag: 0.9.9.9.5
+Stable tag: 0.9.9.9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,10 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 0.9.9.9.6 - 2014.7.22 =
+* Fix: sending stoping at random points
+* Fix: Linebreaks not formated correctly
 
 = 0.9.9.9.5 - 2014.7.21 =
 * Fix: Blank email sending
