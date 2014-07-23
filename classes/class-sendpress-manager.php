@@ -201,7 +201,7 @@ class SendPress_Manager {
 			return array('attempted'=> $attempts,'sent'=>$count);
 		}
 		SendPress_Email_Cache::build_cache();
-		$email = SendPress_Data::get_single_email_from_queue();
+		$email = SendPress_Data::get_single_email_from_queue( true );
 		if( is_object($email) ){
 			//$email = $email[0];
 			
