@@ -15,6 +15,7 @@ class SendPress_Shortcode_Loader {
 			'unsubscribe-form' => __CLASS__ . '::unsubscribe_form',
 			'recent-posts' => __CLASS__ . '::recent_posts',
 			'signup' => __CLASS__ . '::signup',
+			'form' => __CLASS__ . '::forms',
 		);
 	}
 
@@ -179,6 +180,16 @@ class SendPress_Shortcode_Loader {
 	 */
 	public static function signup( $atts ) {
 		return self::shortcode_wrapper( array( 'SendPress_SC_Signup', 'output' ), $atts );
+	}
+	/**
+	 * Forms shortcode.
+	 *
+	 * @access public
+	 * @param mixed $atts
+	 * @return string
+	 */
+	public static function forms( $atts ) {
+		return self::shortcode_wrapper( array( 'SendPress_SC_Forms', 'output' ), $atts );
 	}
 	/**
 	 * Signup shortcode old with no wrapper code.
