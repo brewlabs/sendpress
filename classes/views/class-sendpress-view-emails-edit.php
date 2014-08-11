@@ -31,7 +31,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
         if($post->post_type !== 'sp_newsletters'){
             SendPress_Admin::redirect('Emails');
         }
-        $template_id = get_post_meta( $post->ID ,'_sendpress_template', true);
+        $template_id = get_post_meta( $post->ID , '_sendpress_template' , true);
 
 		?>
         <form method="POST" name="post" id="post">

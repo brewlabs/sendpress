@@ -159,6 +159,8 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
     Title<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="color" data-template-target=".sp-style-header" />
     <hr>
     Subtitle<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
+    <hr>
+    Edit Content<br><a href="#edit" class="btn">Edit</a>
 </div>
 </div>
 </div>

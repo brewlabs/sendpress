@@ -88,6 +88,16 @@ class SendPress_Option extends SendPress_Base {
 
 
 
+	static function check_for_keys(){
+		$options = get_option( self::$key );
+		foreach ($options as $key => $value) {
+			$pos = strrpos( $key , "current_send_" );
+			if ($pos !== false) { 
+				unset( $options[ $key ] );
+			}
+		}
+		update_option( self::$key , $options );
+	}
 
 
 	 /**
