@@ -31,9 +31,21 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		SendPress_Data::update_sp_settings_object($data['_sp_settings_id'],$data);
 	}
 
+	function view_buttons(){
+		?>
+		<!--<button class="btn btn-default" id="save-menu-cancel">Cancel</button>-->
+		<button class="btn btn-primary" id="save-menu-post">Save</button>
+		<?php
+	}
+
 	function html($sp) {
 
-		$postid = SendPress_Option::get('default-signup-widget-settings');
+		$postid = $_GET['id'];
+		if( !$postid ){
+			echo 'No form to save setting to.';
+			return;
+		}
+
 		$settings = SendPress_Data::get_sp_settings_object($postid);
 
 		$lists = SendPress_Data::get_lists(
@@ -74,8 +86,8 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 		<p>
 			<label for="_display_labels_inside_fields">Display labels inside?:</label>
-			<input type="radio" name="_display_labels_inside_fields" value="1"<?php echo $instance['_display_labels_inside_fields'] == 1 ? ' checked' : ''; ?> /> Yes
-			<input type="radio" name="_display_labels_inside_fields" value="0"<?php echo $instance['_display_labels_inside_fields'] == 0 ? ' checked' : ''; ?> /> No
+			<input type="radio" name="_display_labels_inside_fields" value="1"<?php echo $settings['_display_labels_inside_fields'] == 1 ? ' checked' : ''; ?> /> Yes
+			<input type="radio" name="_display_labels_inside_fields" value="0"<?php echo $settings['_display_labels_inside_fields'] == 0 ? ' checked' : ''; ?> /> No
 		</p>
 		
 
@@ -125,12 +137,12 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 			}
 		}
 
-		do_action('sendpress_post_notification_widget_form',$lists, $settings, $this);
+		do_action('sendpress_post_notification_widget_form',$lists, $settings, $this, "_");
 		?>
 
 		<p>
-			<label for="_thank_you"><?php _e('Thank you message:', 'sendpress'); ?></label>
-			<textarea rows="5" type="text" class="widefat" id="_thank_you" name="_thank_you"><?php echo $settings['_thankyou_message']; ?></textarea>
+			<label for="_thankyou_message"><?php _e('Thank you message:', 'sendpress'); ?></label>
+			<textarea rows="5" type="text" class="widefat" id="_thankyou_message" name="_thankyou_message"><?php echo $settings['_thankyou_message']; ?></textarea>
 		</p>
 
 		<p>

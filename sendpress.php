@@ -385,6 +385,7 @@ Author URI: https://sendpress.com/
 	 */
 			function load_widgets() {
 				register_widget( 'SendPress_Widget_Signup' );
+				register_widget( 'SendPress_Widget_Forms' );
 			}
 
 

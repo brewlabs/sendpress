@@ -1946,6 +1946,15 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 
+	static function get_forms_for_widget(){
+		$query = get_posts(array(
+				'post_type'=>'sp_settings',
+				'post_status'=>'any'
+			));
+
+		return $query;
+	}
+
 	/********************* END Widget Settings functionS **************************/
 
 
