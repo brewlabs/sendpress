@@ -652,42 +652,59 @@ Author URI: https://sendpress.com/
    				add_filter('disable_captions', create_function('$a','return true;'));
    			}
    		}
+
+   		$update_options_sp = array();
+
 		if ( isset($_GET['sendpress_ignore_087']) && '0' == $_GET['sendpress_ignore_087'] ) {
-		    SendPress_Option::set('sendpress_ignore_087', 'true');
+		    $update_options_sp['sendpress_ignore_087'] = 'true';
+		    //SendPress_Option::set('sendpress_ignore_087', 'true');
 		}
 		//dadd_action('admin_notices', array($this,'sendpress_ignore_087'));
 
 		if( SendPress_Option::get('sendmethod') == false ){
-			SendPress_Option::set('sendmethod','SendPress_Sender_Website');
+			$update_options_sp['sendmethod'] = 'SendPress_Sender_Website';
+			//SendPress_Option::set('sendmethod','SendPress_Sender_Website');
 		}
 
 		if( SendPress_Option::get('send_optin_email') == false ){
-			SendPress_Option::set('send_optin_email','yes');
+			$update_options_sp['send_optin_email'] = 'yes';
+			//SendPress_Option::set('send_optin_email','yes');
 		}
 
 		if( SendPress_Option::get('try-theme') == false ){
-			SendPress_Option::set('try-theme','yes');
+			$update_options_sp['try-theme'] = 'yes';
+			//SendPress_Option::set('try-theme','yes');
 		}
 
 		if( SendPress_Option::get('confirm-page') == false ){
-			SendPress_Option::set('confirm-page','default');
+			$update_options_sp['confirm-page'] = 'default';
+			//SendPress_Option::set('confirm-page','default');
 		}
 
 		if( SendPress_Option::get('cron_send_count') == false ){
-			SendPress_Option::set('cron_send_count','100');
+			$update_options_sp['cron_send_count'] = '100';
+			//SendPress_Option::set('cron_send_count','100');
 		}
 
 		if( SendPress_Option::get('emails-per-day') == false ){
-			SendPress_Option::set('emails-per-day','1000');
-			SendPress_Option::set('emails-per-hour','100');
+			$update_options_sp['emails-per-day'] = '1000';
+			
+			//SendPress_Option::set('emails-per-day','1000');
+			//SendPress_Option::set('emails-per-hour','100');
 		}
-
+		if( SendPress_Option::get('emails-per-hour') == false ){
+			$update_options_sp['emails-per-hour'] = '100';
+		}
 		if( SendPress_Option::get('queue-per-call') == false ){
-			SendPress_Option::set('queue-per-call' , 1000 );
+			$update_options_sp['queue-per-call'] = '1000';
+			//SendPress_Option::set('queue-per-call' , 1000 );
 
 		}
 
-
+		if(!empty($update_options_sp)){
+			SendPress_Option::set($update_options_sp);
+			unset($update_options_sp);
+		}
 
 		//Removed in 0.9.2
 		//$this->create_initial_list();
@@ -703,7 +720,7 @@ Author URI: https://sendpress.com/
 
 		SendPress_Option::set('emails-today', $emails_today);
 		*/
-		SendPress_Option::set('emails-today', '');
+		//SendPress_Option::set('emails-today', '');
 		//SendPress_Option::set('allow_tracking', '');
 		//wp_clear_scheduled_hook( 'sendpress_cron_action' );
 		// Schedule an action if it's not already scheduled
@@ -1188,7 +1205,7 @@ Author URI: https://sendpress.com/
 		//On version change update default template
 		$this->set_template_default();
 
-		
+		SendPress_Option::check_for_keys();
 
 		if(version_compare( $current_version, '0.8.6', '<' )){
 			$widget_options =  array();

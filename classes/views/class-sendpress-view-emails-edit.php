@@ -9,7 +9,8 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 	
 	function save(){
-	   
+	   print_r($_POST['content-1']);
+
 	}
 
 	function admin_init(){
@@ -30,11 +31,12 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
         if($post->post_type !== 'sp_newsletters'){
             SendPress_Admin::redirect('Emails');
         }
-
+        $template_id = get_post_meta( $post->ID , '_sendpress_template' , true);
 
 		?>
         <form method="POST" name="post" id="post">
         <input type="hidden" name="post_ID" id="post_ID" value="<?php echo $post->ID; ?>" />
+        <input type="submit" value="save" />
         <h2>Edit Email Content</h2>
         <br>
         <?php $this->panel_start('<span class="glyphicon glyphicon-envelope"></span> '.  __('Subject','sendpress') ); ?>
@@ -58,8 +60,34 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 </div>
 
 </div>
- <div class="sp-25">
-sidebar
+<div class="sp-25">
+<br><br>
+	<?php $this->panel_start( __('Template','sendpress') ); ?>
+	<select>
+	<?php
+			$args = array(
+			'post_type' => 'sp_template' ,
+			'post_status' => array('sp-standard'),
+			);
+
+			$the_query = new WP_Query( $args );
+
+			if ( $the_query->have_posts() ) {
+			while ( $the_query->have_posts() ) {
+				$the_query->the_post();
+				$temp_id = $the_query->post->ID;
+				$s = '';
+				if($temp_id == $template_id){
+					$s = 'selected';
+				}
+				echo '<option '.$s.'>' . get_the_title() . '</option>';
+			}
+			
+		}
+	?>
+	
+	</select>
+	<?php $this->panel_end(  ); ?>
 </div>
 </div>
 
