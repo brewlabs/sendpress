@@ -127,6 +127,16 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
 
 
         <div class="sp-toolbar">
+        <div  class="btn-toolbar">
+
+            <div class="btn-group btn-group-justified" id="code-edit-buttons" >
+             
+            <a href="<?php echo SendPress_Admin::link('Emails_Temp'); ?>" id="cancel-update" class="btn btn-lg btn-default" data-toggle="tooltip" data-placement="top" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a>
+            <div class="btn-group">
+                <button class="btn btn-default btn-lg " type="submit" value="save" name="submit"  data-toggle="tooltip" data-placement="top" title="Save"><span class="glyphicon glyphicon-floppy-disk"></span></button></div>
+            </div>
+               
+        </div><br>
             <div class="panel-group" id="accordion">
               <div class="panel panel-color">
                 <div class="panel-heading">
@@ -154,13 +164,15 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
 </div>
 <div id="collapseTwo" class="panel-collapse collapse">
   <div class="panel-body">
+    <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Header', array('templateID' => $_GET['templateID'] )); ?>" class="btn">Edit Header Content</a>
+    <br>
     Background<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="background-color" data-template-target=".sp-style-h-bg" />
     <hr>
     Title<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="color" data-template-target=".sp-style-header" />
     <hr>
     Subtitle<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" />
     <hr>
-    Edit Content<br><a href="#edit" class="btn">Edit</a>
+    
 </div>
 </div>
 </div>
@@ -198,6 +210,9 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
 </div>
 <div id="collapseFour" class="panel-collapse collapse">
   <div class="panel-body">
+    <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Footer', array('templateID' => $_GET['templateID'] )); ?>" class="btn">Edit Footer Content</a>
+    <br>
+  
     Background<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="background-color" data-template-target=".sp-style-f-bg" />
     <hr>
     Text<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="color" data-template-target=".sp-style-f-bg" />

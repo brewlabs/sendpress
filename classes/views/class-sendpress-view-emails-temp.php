@@ -15,6 +15,16 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 		add_action('load-sendpress_page_sp-emails',array($this,'screen_options'));
 	}
 
+	function delete(){
+
+		$p = $_GET['templateID'];
+		$type = get_post_meta( $p , "_template_type", true);
+		if($type == 'clone'){
+			wp_delete_post($p, true);
+		}
+		SendPress_Admin::redirect('Emails_Temp');
+	}
+
 	function screen_options(){
 
 		$screen = get_current_screen();

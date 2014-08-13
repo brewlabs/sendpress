@@ -16,7 +16,7 @@ class SendPress_Tag_Canspam extends SendPress_Tag_Base{
         return '';
 	}
 	
-	static function external(  $email_id , $subscriber_id  ){
+	static function external(  $email_id , $subscriber_id , $e ){
 		$canspam = SendPress_Option::get('canspam');
 		if( $canspam != '' && $canspam  != false ){
 			return wpautop( $canspam );

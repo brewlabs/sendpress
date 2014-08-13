@@ -431,6 +431,20 @@ function spnl_setup_template_tags() {
 			'function'    => array('SendPress_Tag_Content_Area_One','external'),
 			'internal'    => array('SendPress_Tag_Content_Area_One','internal'),
 			'copy'    => array('SendPress_Tag_Content_Area_One','copy'),
+		),
+		array(
+			'tag'         => 'header-content',
+			'description' => __( 'Header Content', 'sendpress' ),
+			'function'    => array('SendPress_Tag_Header_Content','external'),
+			//'internal'    => array('SendPress_Tag_Header_Content','internal'),
+			'copy'    => array('SendPress_Tag_Header_Content','copy'),
+		),
+		array(
+			'tag'         => 'footer-content',
+			'description' => __( 'Footer Content', 'sendpress' ),
+			'function'    => array('SendPress_Tag_Footer_Content','external'),
+			//'internal'    => array('SendPress_Tag_Footer_Content','internal'),
+			'copy'    => array('SendPress_Tag_Footer_Content','copy'),
 		)
 	);
 
