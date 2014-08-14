@@ -165,58 +165,58 @@ class SendPress_Email {
 
 			//$pattern ="/(?<=href=(\"|'))[^\"']+(?=(\"|'))/";
 			//$body_html = preg_replace( $pattern , site_url() ."?sendpress=link&fxti=".$subscriber_key."&spreport=". $this->id ."&spurl=$0", $body_html );
-			
-			$dom = new DomDocument();
-			$dom->strictErrorChecking = false;
-			@$dom->loadHtml($body_html);
-			$aTags = $dom->getElementsByTagName('a');
-			foreach ($aTags as $aElement) {
-				$href = $aElement->getAttribute('href');
-				/*
-				$style = $aElement->getAttribute('style');
+			if(class_exists("DomDocument")){
+				$dom = new DomDocument();
+				$dom->strictErrorChecking = false;
+				@$dom->loadHtml($body_html);
+				$aTags = $dom->getElementsByTagName('a');
+				foreach ($aTags as $aElement) {
+					$href = $aElement->getAttribute('href');
+					/*
+					$style = $aElement->getAttribute('style');
 
-				if($style == ""){
-					$aElement->setAttribute('style');
-				}
-				*/
+					if($style == ""){
+						$aElement->setAttribute('style');
+					}
+					*/
 
-				//ADD TO DB?
-				
-				if(strrpos( $href, "*|" ) === false ) {
-						
-						if( SendPress_Option::get('skip_mailto', false ) == true && strrpos( $href, "mailto" ) !== false  ) {
-							continue;
-						}
-
-						$urlinDB = SendPress_Data::get_url_by_report_url( $this->id(), $href );
-						if(!isset($urlinDB[0])){
-						
-							$urlData = array(
-								'url' => trim($href),
-								'reportID' => $this->id(),
-							);
-							$urlID = SendPress_Data::insert_report_url( $urlData );
-						
-						} else {
-							$urlID  = $urlinDB[0]->urlID;
-						}
-						$link = array(
-							"id"=>$this->subscriber_id(),
-							"report"=> $this->id(),
-							"urlID"=> $urlID,
-							"view"=>"link"
-						);
-						$code = SendPress_Data::encrypt( $link );
-						$link = SendPress_Manager::public_url($code);
-
-						$href = $link;
-						$aElement->setAttribute('href', $href);
-
+					//ADD TO DB?
 					
-				}
-			}
-			$body_html = $dom->saveHtml();
+					if(strrpos( $href, "*|" ) === false ) {
+							
+							if( SendPress_Option::get('skip_mailto', false ) == true && strrpos( $href, "mailto" ) !== false  ) {
+								continue;
+							}
 
+							$urlinDB = SendPress_Data::get_url_by_report_url( $this->id(), $href );
+							if(!isset($urlinDB[0])){
+							
+								$urlData = array(
+									'url' => trim($href),
+									'reportID' => $this->id(),
+								);
+								$urlID = SendPress_Data::insert_report_url( $urlData );
+							
+							} else {
+								$urlID  = $urlinDB[0]->urlID;
+							}
+							$link = array(
+								"id"=>$this->subscriber_id(),
+								"report"=> $this->id(),
+								"urlID"=> $urlID,
+								"view"=>"link"
+							);
+							$code = SendPress_Data::encrypt( $link );
+							$link = SendPress_Manager::public_url($code);
+
+							$href = $link;
+							$aElement->setAttribute('href', $href);
+
+						
+					}
+				}
+				$body_html = $dom->saveHtml();
+			}
 			$link_data = array(
 				"id"=>$this->subscriber_id(),
 				"report"=> $this->id(),

@@ -1379,16 +1379,16 @@ class SendPress_Data extends SendPress_DB_Tables {
 				
 				if(is_email($email)){
 
-					$values.="'".mysql_real_escape_string($email,$wpdb->dbh)."',";
+					$values.="'".esc_sql($email,$wpdb->dbh)."',";
 					$emails_added[] = $email;
 					if(array_key_exists('firstname',$map)){
-						$values.="'".mysql_real_escape_string(trim($line[$map['firstname']]),$wpdb->dbh)."',";
+						$values.="'".esc_sql(trim($line[$map['firstname']]),$wpdb->dbh)."',";
 					} else {
 						$values .= "'',";
 					}
 					
 					if(array_key_exists('lastname',$map)){
-						$values.="'".mysql_real_escape_string(trim($line[$map['lastname']]),$wpdb->dbh)."',";
+						$values.="'".esc_sql(trim($line[$map['lastname']]),$wpdb->dbh)."',";
 					} else {
 						$values .= "'',";
 					}
