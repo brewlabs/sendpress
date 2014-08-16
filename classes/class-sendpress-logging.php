@@ -415,7 +415,7 @@ class SendPress_Logging {
 		$query_args = array(
 			'post_parent'    => $object_id,
 			'post_type'      => $this->log_post_type,
-			'posts_per_page' => -1,
+			'posts_per_page' => 5,
 			'post_status'    => 'publish'
 		);
 
@@ -437,7 +437,7 @@ class SendPress_Logging {
 
 		$logs = new WP_Query( $query_args );
 
-		return (int) $logs->post_count;
+		return (int) $logs->found_posts;
 
 	}
 
