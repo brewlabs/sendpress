@@ -99,7 +99,7 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
-= 0.9.9.9.8 - 2014.8.18 =
+= 0.9.9.9.9 - 2014.8.18 =
 * Fix: Array index issue for new template system
 
 = 0.9.9.9.8 - 2014.8.15 =
