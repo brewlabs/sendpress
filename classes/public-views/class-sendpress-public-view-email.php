@@ -16,6 +16,7 @@ class SendPress_Public_View_Email extends SendPress_Public_View{
 	function html(){
 		$email_id = get_query_var( 'spemail' );
 		global $post;
+
 		if($this->data()->id){
 			$email_id = $this->data()->id;
 		} 
@@ -24,7 +25,7 @@ class SendPress_Public_View_Email extends SendPress_Public_View{
 		if(isset($_GET['inline']) ){
 			$inline = true;
 		}
-		echo SendPress_Template::get_instance()->render(false, true, $inline );
+		echo SendPress_Template::get_instance()->render_html(false, true, $inline );
 	}
 
 	function page_start(){

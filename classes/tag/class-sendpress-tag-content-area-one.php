@@ -8,15 +8,15 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Tag_Content_Area_One extends SendPress_Tag_Base  {
 
-	static function internal( $email_id, $subscriber_id , $example ) {
-		$return = self::external( $email_id, $subscriber_id , $example );
+	static function internal( $template_id , $email_id, $subscriber_id , $example ) {
+		$return = self::external( $template_id ,$email_id, $subscriber_id , $example );
 		if( $return != '' ){
 			return self::table_start() . $return . self::table_end();
 		}
         return '';
 	}
 	
-	static function external(  $email_id , $subscriber_id, $example ){
+	static function external( $template_id ,  $email_id , $subscriber_id, $example ){
 		if( $example == false ){
 			$content_post = get_post($email_id);
 			$content = $content_post->post_content;

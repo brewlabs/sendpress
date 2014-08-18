@@ -327,15 +327,25 @@ class SendPress_Template {
 			echo __('Sorry we could not find your email.','sendpress');
 			return;
 		}
-		$selected_template = $this->get_template( $post_id );
-		$template_list = $this->info();
-		if( isset($template_list[$selected_template]) ){
+		//$selected_template = $this->get_template( $post_id );
+		//$template_list = $this->info();
+		$post_template  = get_post_meta( $post->ID , '_sendpress_template', true );
+		if( $post_template != '' && is_numeric($post_template) ){
+			$HtmlCode  = SendPress_Email_Render_Engine::render_template( $post_template , $post->ID); 
+
+		} else {
+
+			$HtmlCode = file_get_contents(SENDPRESS_PATH .'/templates/simple.html' );
+		}
+
+
+		if( $HtmlCode != false ){
 			/*
 			ob_start();
 			require_once( $template_list[$selected_template]['file'] );
 			$HtmlCode= ob_get_clean(); 
 			*/
-			$HtmlCode = file_get_contents(SENDPRESS_PATH .'/templates/simple.html' );
+			
 			add_filter('the_content', 'do_shortcode' , 11);
 			$content = apply_filters( 'the_content' , $post->post_content );
 			//print_r($post->post_content);
@@ -423,7 +433,7 @@ class SendPress_Template {
 			}
 			$social = SendPress_Data::build_social( $body_link );
 			$HtmlCode = str_replace("*|SP:SOCIAL|*",$social ,$HtmlCode);
-
+			/*
 			$dom = new DomDocument();
 				$dom->strictErrorChecking = false;
 				@$dom->loadHtml($HtmlCode);
@@ -432,7 +442,7 @@ class SendPress_Template {
 					$class = $iElement->getAttribute('class');
 				}
 				$body_html = $dom->saveHtml();
-
+			*/
 			/*
 			$simplecss = file_get_contents(SENDPRESS_PATH.'/templates/simple.css');
 				

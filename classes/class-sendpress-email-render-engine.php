@@ -25,7 +25,12 @@ class SendPress_Email_Render_Engine {
 	}
 
 	function render_template_example( $post ){
-		return spnl_do_template_tags( $post->post_content, $post->ID, 0, true );
+		return spnl_do_template_tags( $post->post_content, $post->ID, $post->ID, 0, true );
+	}
+
+	function render_template( $template_id, $email_id ){
+			$temp = get_post( $template_id );
+			return spnl_do_template_tags(  $temp->post_content, $template_id, $email_id, 0, false );
 	}
 
 	function render_old_template( $post_id ){

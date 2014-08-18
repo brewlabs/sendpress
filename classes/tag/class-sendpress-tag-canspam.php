@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Tag_Canspam extends SendPress_Tag_Base{
 
-	static function internal( $email_id, $subscriber_id ) {
+	static function internal($template_id ,  $email_id, $subscriber_id ) {
 		$return = self::external( $email_id , $subscriber_id );
 		if( $return != '' ){
 			return self::table_start() . $return . self::table_end();
@@ -16,7 +16,7 @@ class SendPress_Tag_Canspam extends SendPress_Tag_Base{
         return '';
 	}
 	
-	static function external(  $email_id , $subscriber_id , $e ){
+	static function external( $template_id ,  $email_id , $subscriber_id , $e ){
 		$canspam = SendPress_Option::get('canspam');
 		if( $canspam != '' && $canspam  != false ){
 			return wpautop( $canspam );

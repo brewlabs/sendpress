@@ -12,7 +12,7 @@ class SendPress_Template_Tags {
 	private $subscriber_id;
 	private $example;
 	private $email_id;
-
+private $template_id;
 	private $email_type;
 
 	/**
@@ -113,7 +113,7 @@ class SendPress_Template_Tags {
 	 *
 	 * @return string Content with email tags filtered out.
 	 */
-	public function do_email_tags( $content, $email_id , $subscriber_id , $example ) {
+	public function do_email_tags( $content, $t_id, $email_id , $subscriber_id , $example ) {
 
 		// Check if there is atleast one tag added
 		if ( empty( $this->email_tags ) || ! is_array( $this->email_tags ) ) {
@@ -122,7 +122,8 @@ class SendPress_Template_Tags {
 		$this->example = $example;
 		$this->subscriber_id = $subscriber_id;
 		$this->email_id = $email_id;
-		$email = get_post( $email_id );
+		$this->template_id = $t_id;
+		$email = get_post( $t_id );
 		if($email){
 			if($email->post_type == 'sp_template'){
 				if($email->post_status == 'sp-standard'){
@@ -162,10 +163,10 @@ class SendPress_Template_Tags {
 		}
 
 		if( $this->email_type == 'internal' && isset( $this->email_tags[$tag]['internal'] ) ) {
-			return call_user_func( $this->email_tags[$tag]['internal'], $this->email_id, $this->subscriber_id, $tag );
+			return call_user_func( $this->email_tags[$tag]['internal'],$this->template_id, $this->email_id, $this->subscriber_id, $tag );
 		}
 
-		return call_user_func( $this->email_tags[$tag]['func'], $this->email_id, $this->subscriber_id, $tag );
+		return call_user_func( $this->email_tags[$tag]['func'], $this->template_id,$this->email_id, $this->subscriber_id, $tag );
 	}
 
 
@@ -214,7 +215,7 @@ class SendPress_Template_Tags {
 	 *
 	 * @return string Content with email tags filtered out.
 	 */
-	public function do_content_tags( $content, $email_id , $subscriber_id , $example ) {
+	public function do_content_tags( $content, $t_id, $email_id , $subscriber_id , $example ) {
 
 		// Check if there is atleast one tag added
 		if ( empty( $this->content_tags ) || ! is_array( $this->content_tags ) ) {
@@ -223,7 +224,8 @@ class SendPress_Template_Tags {
 		$this->example = $example;
 		$this->subscriber_id = $subscriber_id;
 		$this->email_id = $email_id;
-		$email = get_post( $email_id );
+		$this->template_id = $t_id;
+		$email = get_post( $t_id );
 		if($email){
 			if($email->post_type == 'sp_template'){
 				if($email->post_status == 'sp-standard'){
@@ -263,10 +265,10 @@ class SendPress_Template_Tags {
 		}
 
 		if( $this->email_type == 'internal' && isset( $this->content_tags[$tag]['internal'] ) ) {
-			return call_user_func( $this->content_tags[$tag]['internal'], $this->email_id, $this->subscriber_id, $this->example, $tag );
+			return call_user_func( $this->content_tags[$tag]['internal'], $this->template_id,$this->email_id, $this->subscriber_id, $this->example, $tag );
 		}
 
-		return call_user_func( $this->content_tags[$tag]['func'], $this->email_id, $this->subscriber_id,  $this->example, $tag );
+		return call_user_func( $this->content_tags[$tag]['func'], $this->template_id,$this->email_id, $this->subscriber_id,  $this->example, $tag );
 	}
 
 }
@@ -374,12 +376,12 @@ function spnl_get_emails_tags_list() {
  *
  * @return string Content with email tags filtered out.
  */
-function spnl_do_template_tags( $content, $email_id, $subscriber_id = 0 , $example = false ) {
+function spnl_do_template_tags( $content, $t_id , $email_id, $subscriber_id = 0 , $example = false ) {
 	// Replace Content Tags
-	$content = SPNL()->template_tags->do_content_tags( $content, $email_id, $subscriber_id , $example );
+	$content = SPNL()->template_tags->do_content_tags( $content,$t_id ,  $email_id, $subscriber_id , $example );
 
 	// Replace Email tags
-	$content = SPNL()->template_tags->do_email_tags( $content, $email_id, $subscriber_id , $example );
+	$content = SPNL()->template_tags->do_email_tags( $content, $t_id , $email_id, $subscriber_id , $example );
 	
 	// Return content
 	return $content;
@@ -407,6 +409,7 @@ function spnl_setup_template_tags() {
 
 	// Setup default tags array
 	$email_tags = array(
+		/*
 		array(
 			'tag'         => 'subscriber_list',
 			'description' => __( 'A list of download links for each download purchased', 'sendpress' ),
@@ -414,6 +417,7 @@ function spnl_setup_template_tags() {
 			'internal'    => false,
 			'copy'    => false,
 		),
+		*/
 		array(
 			'tag'         => 'canspam',
 			'description' => __( 'Inserts the CANSPAM text.', 'sendpress' ),

@@ -9,8 +9,22 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 	
 	function save(){
-	   print_r($_POST['content-1']);
+	   //print_r($_POST['content-1']);
+//content-area-one-edit
+	//$template = get_post();
+	//$_POST['post_type'] = 'sp_newsletters';
+ 	$my_post = _wp_translate_postdata(true);
+ 	//print_r($my_post);
+ 	//$template['post_content'] = $my_post->content_area_one_edit;
+ 	$post_update = array(
+ 		'ID'           => $my_post['post_ID'],
+      	'post_content' => $my_post['content_area_one_edit']
+      );
+update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
 
+ 	//	print_r($template);
+	wp_update_post( $post_update );
+	SendPress_Admin::redirect('Emails_Edit', array('emailID'=>$_GET['emailID'] ));
 	}
 
 	function admin_init(){
@@ -36,7 +50,12 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 		?>
         <form method="POST" name="post" id="post">
         <input type="hidden" name="post_ID" id="post_ID" value="<?php echo $post->ID; ?>" />
-        <input type="submit" value="save" />
+       <div  >
+	<div id="button-area">  
+		<input type="submit" value="<?php _e('Save','sendpress'); ?>" class="btn btn-large btn-primary"/>
+	</div>
+
+</div>
         <h2>Edit Email Content</h2>
         <br>
         <?php $this->panel_start('<span class="glyphicon glyphicon-envelope"></span> '.  __('Subject','sendpress') ); ?>
@@ -46,24 +65,29 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 <div class="sp-75 sp-first">
 <!-- Nav tabs -->
 <ul class="nav nav-tabs">
-  <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+  <li class="active"><a href="#content-area-one-tab" data-toggle="tab">Main Content</a></li>
+  <!--
   <li><a href="#profile" data-toggle="tab">Profile</a></li>
   <li><a href="#messages" data-toggle="tab">Messages</a></li>
   <li><a href="#settings" data-toggle="tab">Settings</a></li>
+  -->
 </ul>
 
 <div class="tab-content">
-  <div class="tab-pane fade in active" id="home"><?php the_editor($post->post_content,'content-1'); ?></div>
+  <div class="tab-pane fade in active" id="content-area-one-tab"><?php the_editor($post->post_content,'content_area_one_edit'); ?></div>
+  <!--
   <div class="tab-pane fade" id="profile"><?php the_editor($post->post_content,'content-2'); ?></div>
   <div class="tab-pane fade" id="messages"><?php the_editor($post->post_content,'content-3'); ?></div>
   <div class="tab-pane fade" id="settings"><?php the_editor($post->post_content,'content-4'); ?></div>
+  -->
 </div>
 
 </div>
 <div class="sp-25">
 <br><br>
+
 	<?php $this->panel_start( __('Template','sendpress') ); ?>
-	<select>
+	<select name="template" class="form-control">
 	<?php
 			$args = array(
 			'post_type' => 'sp_template' ,
@@ -80,7 +104,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 				if($temp_id == $template_id){
 					$s = 'selected';
 				}
-				echo '<option '.$s.'>' . get_the_title() . '</option>';
+				echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
 			}
 			
 		}
@@ -92,7 +116,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 </div>
 
 
-
+	<?php SendPress_Data::nonce_field(); ?>
         </form>
 	<?php
 	}
