@@ -99,6 +99,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
+= 0.9.9.9.8 - 2014.8.18 =
+* Fix: Array index issue for new template system
+
 = 0.9.9.9.8 - 2014.8.15 =
 * Fix: Template showing php code in some clients
 * Fix: SendPress options full of extra data
@@ -522,6 +525,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 0.9.9.9.9 =
+Small bug fixes for 1.0 prep release
+
+= 0.9.9.9.4 =
+Sending and stats update
 
 = 0.9.9.9.4 =
 Sending and stats update
