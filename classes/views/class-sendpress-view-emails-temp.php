@@ -48,7 +48,7 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 	function html($sp){
 		 SendPress_Tracking::event('Emails Tab');
 
-		
+		 SendPress_Template_Manager::update_template_content();
 	//Create an instance of our package class...
 	$testListTable = new SendPress_Email_Local_Table();
 	//Fetch, prepare, sort, and filter our data...

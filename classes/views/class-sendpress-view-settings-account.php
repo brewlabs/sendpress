@@ -172,7 +172,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 		<div class="panel-body">
 
 			<input type="hidden" name="action" value="account-setup" />
-
+			
 			<?php if( count($senders) < 3 ){
 				$c= 0;
 				foreach ( $senders as $key => $sender ) {

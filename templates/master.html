@@ -11,8 +11,8 @@
   <style type="text/css">
 
     /* Resets: see reset.css for details */
-    .ReadMsgBody { width: 100%; background-color: #ebebeb;}
-    .ExternalClass {width: 100%; background-color: #ebebeb;}
+    .ReadMsgBody { width: 100%; background-color: {sp-body-color};}
+    .ExternalClass {width: 100%; background-color: {sp-body-color};}
     .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height:100%;}
     body {-webkit-text-size-adjust:none; -ms-text-size-adjust:none;}
     body {margin:0; padding:0;}
@@ -34,6 +34,13 @@
         padding-left: 12px !important;
         padding-right: 12px !important;
       }
+
+        img[class="sp-img"] {
+            height:auto !important;
+            max-width:600px !important;
+            width: 100% !important;
+        }
+    
     }
 
 
@@ -74,49 +81,39 @@
   </style>
 
 </head>
-<body style="margin:0; padding:10px 0;"  class="sp-body-bg"  leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<body style="margin:0; padding:10px 0;"  class="sp-body-bg"  leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" bgcolor="{sp-body-color}">
 
-  <br>
 
   <!-- 100% wrapper (grey background) -->
-  <table border="0" width="100%" height="100%" class="sp-body-bg" cellpadding="0" cellspacing="0" >
+  <table border="0" width="100%" height="100%" class="sp-body-bg" cellpadding="0" cellspacing="0" bgcolor="{sp-body-color}">
     <tr>
-      <td align="center" valign="top" class="sp-body-bg"  >
-
-       <!-- 600px container Header -->
-       <table border="0" width="600" cellpadding="0" cellspacing="0" class="container sp-style-h-bg" bgcolor="#ffffff">
-         <tr>
-          <td class="container-padding sp-style-h-bg" bgcolor="#ffffff" style="background-color: #ffffff; font-size: 13px; line-height: 20px; font-family: Helvetica, sans-serif; color: #333;" align="left">
-            {header-content}
-        </td>
-      </tr>
-    </table>
+      <td align="center" valign="top" class="sp-body-bg" bgcolor="{sp-body-color}" style="background-color: {sp-body-color};">
+          <br>
+          {sp-header-page}
+          <br>
+          {sp-header-content}
+       
     <!--/600px container -->
     <!-- 600px container Body -->
-    <table border="0" width="600" cellpadding="0" cellspacing="0" class="container sp-style-c-bg" bgcolor="#ffffff">
+    <table border="0" width="600" cellpadding="0" cellspacing="0" class="container sp-style-c-bg" bgcolor="{sp-content-bg-color}">
      <tr>
-      <td class="container-padding sp-style-c-bg" bgcolor="#ffffff" style="background-color: #ffffff; padding-left: 30px; padding-right: 30px; font-size: 13px; line-height: 20px; font-family: Helvetica, sans-serif; color: #333;" align="left">
-        {content-area-one}
+      <td class="container-padding sp-style-c-bg" bgcolor="{sp-content-bg-color}" style="background-color: {sp-content-bg-color}; padding-left: 30px; padding-right: 30px; font-size: 13px; line-height: 20px; font-family: Helvetica, sans-serif; color: {sp-content-text-color};" align="left">
+        {sp-content-area-one}
       </td>
     </tr>
   </table>
   <!--/600px container -->
   <!-- 600px container Footer -->
-  <table border="0" width="600" cellpadding="0" cellspacing="0" class="container sp-style-f-bg" bgcolor="#ffffff">
-   <tr>
-    <td class="container-padding sp-style-f-bg" bgcolor="#ffffff" style="background-color: #ffffff; padding-left: 30px; padding-right: 30px; font-size: 13px; line-height: 20px; font-family: Helvetica, sans-serif; color: #333;" align="left">
-     <!-- 600px container Footer -->
-      {footer-content}
-   </td>
- </tr>
-</table>
+    {sp-footer-content}   
 <!--/600px container -->
+<br>
+{sp-footer-page}
+<br>
 </td>
 </tr>
 </table>
 <!--/100% wrapper-->
-<br>
-<br>
+
 </body>
 </html>
 

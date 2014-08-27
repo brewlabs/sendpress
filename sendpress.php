@@ -511,15 +511,27 @@ Author URI: https://sendpress.com/
 			  	//$this->load_default_screen($action);
 				die();
 			}
-
-		  	if(isset($post)){
+		
+			if(isset($post)){
 	 			if($post->post_type == $this->_email_post_type || $post->post_type == $this->_report_post_type  ) {
 
 	  				$inline = false;
 					if(isset($_GET['inline']) ){
 						$inline = true;
 					}
-					return SendPress_Template::get_instance()->render_html(false, true, $inline );
+					SendPress_Email_Cache::build_cache_for_email( $post->ID );
+					
+					$message = new SendPress_Email();
+				   	$message->id( $post->ID );
+				   	$message->subscriber_id( 0 );
+				   	$message->list_id( 0 );
+				   	$body = $message->html();
+				   	//print_r( $body );
+				   	unset($message);
+
+					echo $body; 
+					die();
+					//SendPress_Template::get_instance()->render_html(false, true, $inline );
 	  				//return SENDPRESS_PATH. '/template-loader.php';
 	    		//return dirname(__FILE__) . '/my_special_template.php';
 				}

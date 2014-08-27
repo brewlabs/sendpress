@@ -20,6 +20,8 @@ class SendPress_Tag_Header_Content extends SendPress_Tag_Base  {
 		//if( $example == false ){
 			$content = get_post_meta( $template_id , '_header_content' , true); // get_post_meta($email_id);
 			//$content = $content_post->post_content;
+			
+			
 			remove_filter('the_content','wpautop');
 			$content = apply_filters('the_content', $content);
 			add_filter('the_content','wpautop');
@@ -29,7 +31,11 @@ class SendPress_Tag_Header_Content extends SendPress_Tag_Base  {
 			$content = self::lipsum_format();
 		}
 		*/
-		return $content;
+		 if($content != ''){
+		 	return self::table_start( $template_id ) . $content . self::table_end();
+		 }
+		 return '';
+		
 	}
 
 	static function copy(){
@@ -39,4 +45,39 @@ class SendPress_Tag_Header_Content extends SendPress_Tag_Base  {
         return $return;
 	}
 
+	static function content(){
+		return "<br><div style='text-align:center;'><h1 style='text-align:center;'>{sp-site-name}</h1></div><br>";	
+	}
+
+	static function table_start( $template_id ){
+		$htext = get_post_meta( $template_id ,'_header_text_color',true );
+		if($htext == false ){
+			$htext = '#333';
+		}
+		$bgtext = get_post_meta( $template_id ,'_header_bg_color',true );
+        if($bgtext == false ){
+            $bgtext = '#d1d1d1';
+        }
+
+        $padding = get_post_meta( $template_id ,'_header_padding',true );
+        $pd = '';
+        $cl = '';
+        if( $padding == 'pad-header'  ){
+        	 $pd = ' padding-left: 30px; padding-right: 30px; ';
+        	 $cl = ' container-padding ';
+    	}
+    	$return ='';
+		$return .='<!-- 600px container Header - SendPress_Tag_Header_Content-->';
+	    $return .='<table border="0" width="600" cellpadding="0" cellspacing="0" class="container sp-style-h-bg" bgcolor="'.$bgtext.'">';
+	    $return .='<tr>';
+	    $return .='<td class="' . $cl . ' sp-style-h-bg" bgcolor="'.$bgtext.'" style="background-color: '.$bgtext.'; '.$pd.' font-size: 13px; line-height: 20px; font-family: Helvetica, sans-serif; color: '.$htext.';" align="left">';
+	    return $return;
+	}
+	static function table_end(){
+		$return ='';
+		$return .='</td>';
+	    $return .='</tr>';
+	    $return .='</table>';
+	    return $return;
+	}
 }

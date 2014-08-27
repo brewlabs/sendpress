@@ -96,7 +96,12 @@ class SendPress_Emails_Table extends WP_List_Table {
 			case 'actions':
 				$a = '<div class="inline-buttons">';
 				$a .= '<a class="btn btn-default view-btn" title="'.  get_post_meta($item->ID, "_sendpress_subject", true) . '" href="'. get_permalink( $item->ID  ). '"><span class="glyphicon  glyphicon-eye-open"></span> View</a> ';
-				$a .= '<a class="btn btn-primary" href="?page='.$_REQUEST['page'].'&view=style&emailID='. $item->ID .'"><span class="glyphicon glyphicon-edit"></span> Edit</a> ';
+				
+				$editwindow = 'style';
+				if(get_post_meta($item->ID  , '_sendpress_system', true) == 'new'){
+					$editwindow = 'edit';
+				}
+				$a .= '<a class="btn btn-primary" href="?page='.$_REQUEST['page'].'&view='.$editwindow.'&emailID='. $item->ID .'"><span class="glyphicon glyphicon-edit"></span> Edit</a> ';
 				$a = apply_filters('sendpress_email_table', $a, $item);
 				if( SendPress_Admin::access('Emails_Send') ) { 
 				$a .= '<a class="btn  btn-success " href="'. SendPress_Admin::link('Emails_Send').'&emailID='. $item->ID .'"><span class="glyphicon glyphicon-send"></span> Send</a>';

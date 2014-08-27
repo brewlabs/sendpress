@@ -8,6 +8,8 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 	
+	
+
 	function save(){
 	   //print_r($_POST['content-1']);
 //content-area-one-edit
@@ -28,12 +30,25 @@ update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
 	}
 
 	function admin_init(){
+		global $is_IE;
 		remove_filter('the_editor',					'qtrans_modifyRichEditor');
+		if (  ! wp_is_mobile() &&
+			 ! ( $is_IE && preg_match( '/MSIE [5678]/', $_SERVER['HTTP_USER_AGENT'] ) ) ) {
+
+			wp_enqueue_script('editor-expand');
+			$_wp_autoresize_on = true;
+		}
 	}
 
 	function html($sp) {
+		global $is_IE;
 		global $post_ID, $post;
+		if (  wp_is_mobile() &&
+			 ! ( $is_IE && preg_match( '/MSIE [5678]/', $_SERVER['HTTP_USER_AGENT'] ) ) ) {
 
+			wp_enqueue_script('editor-expand');
+			$_wp_autoresize_on = true;
+		}
 		$view = isset($_GET['view']) ? $_GET['view'] : '' ;
 
 		if(isset($_GET['emailID'])){
@@ -74,7 +89,18 @@ update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
 </ul>
 
 <div class="tab-content">
-  <div class="tab-pane fade in active" id="content-area-one-tab"><?php the_editor($post->post_content,'content_area_one_edit'); ?></div>
+  <div class="tab-pane fade in active" id="content-area-one-tab">
+  <?php wp_editor( $post->post_content, 'content_area_one_edit', array(
+	'dfw' => true,
+	'drag_drop_upload' => true,
+	'tabfocus_elements' => 'insert-media-button-1,save-post',
+	'editor_height' => 360,
+	'tinymce' => array(
+		'resize' => false,
+		'wp_autoresize_on' => ( ! empty( $_wp_autoresize_on ) && get_user_setting( 'editor_expand', 'on' ) === 'on' ),
+		'add_unload_trigger' => false,
+	),
+) ); ?><?php //the_editor($post->post_content,'content_area_one_edit'); ?></div>
   <!--
   <div class="tab-pane fade" id="profile"><?php the_editor($post->post_content,'content-2'); ?></div>
   <div class="tab-pane fade" id="messages"><?php the_editor($post->post_content,'content-3'); ?></div>
@@ -97,6 +123,7 @@ update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
 			$the_query = new WP_Query( $args );
 
 			if ( $the_query->have_posts() ) {
+			echo  '<optgroup label="SendPress Templates">';
 			while ( $the_query->have_posts() ) {
 				$the_query->the_post();
 				$temp_id = $the_query->post->ID;
@@ -106,6 +133,29 @@ update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
 				}
 				echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
 			}
+			echo  '</optgroup>';
+			
+		}
+
+		$args = array(
+			'post_type' => 'sp_template' ,
+			'post_status' => array('sp-custom'),
+			);
+
+			$the_query = new WP_Query( $args );
+
+			if ( $the_query->have_posts() ) {
+				echo  '<optgroup label="Custom Templates">';
+			while ( $the_query->have_posts() ) {
+				$the_query->the_post();
+				$temp_id = $the_query->post->ID;
+				$s = '';
+				if($temp_id == $template_id){
+					$s = 'selected';
+				}
+				echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
+			}
+			echo  '</optgroup>';
 			
 		}
 	?>

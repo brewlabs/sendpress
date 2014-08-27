@@ -52,12 +52,13 @@ class SendPress_View_Emails extends SendPress_View{
 				    	<a href="<?php echo SendPress_Admin::link('Emails_Auto'); ?>"><?php _e('Autoresponders','sendpress'); ?></a>
 				  	</li>
 				  	 	-->
-				  	<li <?php if(isset($_GET['view']) && ( $_GET['view'] === 'templates' || $_GET['view'] === 'tempedit' )){ ?>class="active"<?php } ?> >
-				    	<a href="<?php echo SendPress_Admin::link('Emails_Templates'); ?>"><?php _e('Templates','sendpress'); ?></a>
-				  	</li>
+				  	
 
 				  	<li <?php if(isset($_GET['view']) && ( $_GET['view'] === 'temp' || $_GET['view'] === 'tempstyle' )){ ?>class="active"<?php } ?> >
-				    	<a href="<?php echo SendPress_Admin::link('Emails_Temp'); ?>"><span class="sp-label">SP</span>   <?php _e('Templates','sendpress'); ?></a>
+				    	<a href="<?php echo SendPress_Admin::link('Emails_Temp'); ?>"><?php _e('Templates','sendpress'); ?></a>
+				  	</li>
+				  	<li <?php if(isset($_GET['view']) && ( $_GET['view'] === 'templates' || $_GET['view'] === 'tempedit' )){ ?>class="active"<?php } ?> >
+				    	<a href="<?php echo SendPress_Admin::link('Emails_Templates'); ?>"><?php _e('Custom Templates','sendpress'); ?></a>
 				  	</li>
 				  	<?php } ?>
 				  	<li <?php if(isset($_GET['view']) &&  $_GET['view'] === 'social'){ ?>class="active"<?php } ?> >

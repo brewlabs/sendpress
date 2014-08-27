@@ -19,7 +19,7 @@ class SendPress_View_Emails_Tempcreate extends SendPress_View_Emails {
 
 	function save(){
 
-		$post = get_default_post_to_edit( SendPress_Data::template_post_type() , true );
+		$post = get_default_post_to_edit( 'sp_template' , true );
 		$post_ID = $post->ID;
 	
 		global $current_user;
@@ -42,7 +42,7 @@ class SendPress_View_Emails_Tempcreate extends SendPress_View_Emails {
         $my_post['post_title'] = $_POST['post_title'];
         */
       	$post->post_title = $_POST['post_title'];
-        $post->post_status = 'publish';
+        $post->post_status = 'sp-custom';
         $post->post_content = $content;
         // Update the post into the database
         wp_update_post( $post );
