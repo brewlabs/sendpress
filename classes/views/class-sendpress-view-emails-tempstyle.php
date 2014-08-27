@@ -178,7 +178,7 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
          </div>
          <div id="collapseOne" class="panel-collapse collapse">
           <div class="panel-body">
-            <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Headerpage', array('templateID' => $_GET['templateID'] )); ?>" class="btn">Edit Page Header Content</a>
+            <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Headerpage', array('templateID' => $_GET['templateID'] )); ?>" class="btn">Edit Page Header HTML</a>
             <br>
            
             <?php
@@ -196,7 +196,7 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
            
             Text<br><input type="text" value="<?php echo $htext; ?>" id="pagetxt-color-select" name="pagetxt-color-select" class="my-color-field" data-default-color="#333" data-template-style="color" data-template-target=".page-text-color" />
             <br><br>
-            <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Footerpage', array('templateID' => $_GET['templateID'] )); ?>" class="btn">Edit Page Footer Content</a>
+            <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Footerpage', array('templateID' => $_GET['templateID'] )); ?>" class="btn">Edit Page Footer HTML</a>
             
          </div>
     </div>

@@ -60,7 +60,7 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 	<form id="email-filter" method="get">
 		<div id="taskbar" class="lists-dashboard rounded group"> 
 
-		<h2><?php _e('SP Templates','sendpress'); ?></h2>
+		<h2><?php _e('Templates','sendpress'); ?></h2>
 	</div>
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	    <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
