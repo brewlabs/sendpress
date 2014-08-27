@@ -10,45 +10,71 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 	
 	
 
-	function save(){
+	function save_email(){
+		
 	   //print_r($_POST['content-1']);
 //content-area-one-edit
 	//$template = get_post();
 	//$_POST['post_type'] = 'sp_newsletters';
- 	$my_post = _wp_translate_postdata(true);
+ 	//$my_post = _wp_translate_postdata(true);
  	//print_r($my_post);
  	//$template['post_content'] = $my_post->content_area_one_edit;
  	$post_update = array(
- 		'ID'           => $my_post['post_ID'],
-      	'post_content' => $my_post['content_area_one_edit']
+ 		'ID'           => $_POST['post_ID'],
+      	'post_content' => $_POST['content_area_one_edit']
+      	
       );
-update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
+ 	
+	update_post_meta( $_POST['post_ID'], '_sendpress_template', $_POST['template'] );
+	update_post_meta( $_POST['post_ID'], '_sendpress_subject', $_POST['post_subject'] );
+
+	
 
  	//	print_r($template);
 	wp_update_post( $post_update );
-	SendPress_Admin::redirect('Emails_Edit', array('emailID'=>$_GET['emailID'] ));
+	
+
+        if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
+            SendPress_Admin::redirect('Emails_Send', array('emailID'=>$_GET['emailID'] ));
+        } else if (isset($_POST['submit']) && $_POST['submit'] == 'send-test'){
+            $email = new stdClass;
+            $email->emailID  = $_POST['post_ID'];
+            $email->subscriberID = 0;
+            $email->listID = 0;
+            $email->to_email = $_POST['test-email'];
+            $d =SendPress_Manager::send_test_email( $email );
+            //print_r($d);
+           SendPress_Admin::redirect('Emails_Edit', array('emailID'=>$_GET['emailID'] ));
+        } else {
+            SendPress_Admin::redirect('Emails_Edit', array('emailID'=>$_GET['emailID'] ));
+        }
+
 	}
 
 	function admin_init(){
 		global $is_IE;
 		remove_filter('the_editor',					'qtrans_modifyRichEditor');
+		/*
 		if (  ! wp_is_mobile() &&
 			 ! ( $is_IE && preg_match( '/MSIE [5678]/', $_SERVER['HTTP_USER_AGENT'] ) ) ) {
 
 			wp_enqueue_script('editor-expand');
 			$_wp_autoresize_on = true;
 		}
+		*/
 	}
 
 	function html($sp) {
 		global $is_IE;
 		global $post_ID, $post;
+		/*
 		if (  wp_is_mobile() &&
 			 ! ( $is_IE && preg_match( '/MSIE [5678]/', $_SERVER['HTTP_USER_AGENT'] ) ) ) {
 
 			wp_enqueue_script('editor-expand');
 			$_wp_autoresize_on = true;
 		}
+		*/
 		$view = isset($_GET['view']) ? $_GET['view'] : '' ;
 
 		if(isset($_GET['emailID'])){
@@ -63,12 +89,23 @@ update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
         $template_id = get_post_meta( $post->ID , '_sendpress_template' , true);
 
 		?>
-        <form method="POST" name="post" id="post">
+     <form method="post" id="post" role="form">
         <input type="hidden" name="post_ID" id="post_ID" value="<?php echo $post->ID; ?>" />
+        <input type="hidden" name="post_type" id="post_type" value="sp_newsletters" />
+        <input type="hidden" name="action" id="action" value="save-email" />
        <div  >
-	<div id="button-area">  
-		<input type="submit" value="<?php _e('Save','sendpress'); ?>" class="btn btn-large btn-primary"/>
-	</div>
+       <div style="float:right;" class="btn-toolbar">
+            <div id="sp-cancel-btn" class="btn-group">
+                <a href="?page=<?php echo $_GET['page']; ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+            </div>
+            <div class="btn-group">
+            <button class="btn btn-default " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Update','sendpress'); ?></button>
+            <?php if( SendPress_Admin::access('Emails_Send') ) { ?>
+            <button class="btn btn-primary " type="submit" value="save-next" name="submit"><i class="icon-envelope icon-white"></i> <?php echo __('Send','sendpress'); ?></button>
+            <?php } ?>
+            </div>
+        </div>
+	
 
 </div>
         <h2>Edit Email Content</h2>
@@ -164,7 +201,11 @@ update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
 	<?php $this->panel_end(  ); ?>
 </div>
 </div>
-
+<div class="well clear">
+            <h2>Test This Email</h2>
+            <p><input type="text" name="test-email" value="" class="sp-text" placeholder="Email to send test to." /></p>
+            <button class="btn btn-success" name="submit" type="submit" value="send-test"><i class=" icon-white icon-inbox"></i> Send Test</button>
+        </div>
 
 	<?php SendPress_Data::nonce_field(); ?>
         </form>

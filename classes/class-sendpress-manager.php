@@ -319,7 +319,7 @@ class SendPress_Manager {
 	* @return boolean true if mail sent successfully, false if an error
 	*/
     static function send_test_email( $email ) {
-
+    	SendPress_Email_Cache::build_cache_for_email($email->emailID);
 	   	$message = new SendPress_Email();
 	   	$message->id( $email->emailID );
 	   	$message->purge( true );

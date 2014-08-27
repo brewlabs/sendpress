@@ -79,7 +79,7 @@ $post_type_object = get_post_type_object($sp->_email_post_type);
 <div class="btn-group">
     
 
-    <button class="btn btn-default " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Edit','sendpress'); ?></button>
+    <!--<button class="btn btn-default " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Edit','sendpress'); ?></button>-->
     <button class="btn btn-primary " type="submit" value="save-next" id="sp-send-next" name="submit"><i class="icon-envelope icon-white"></i> <?php echo __('Send','sendpress'); ?></button>
 </div>
 </div>

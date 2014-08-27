@@ -643,7 +643,9 @@ Author URI: https://sendpress.com/
 
 
 	function myformatTinyMCE($in){
-		$in['plugins']= str_replace('wpeditimage,', '', $in['plugins']);
+		if(isset($in['plugins'])){
+			$in['plugins']= str_replace('wpeditimage,', '', $in['plugins']);
+		}
 		return $in;
 	}
 
@@ -821,11 +823,16 @@ Author URI: https://sendpress.com/
 	    	$method = str_replace(" ","_",$method);
 
 
+
 	    	if ( !empty($_POST) &&  (isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'],$this->_nonce_value) )   ){
 
 	    		if( method_exists( $view_class , $method )  ){
+
+
 	    			$save_class = new $view_class;
+
 	    			$save_class->$method();
+	    			print_r($save_class);
 	    		} elseif( method_exists( $view_class , 'save' )  ) {
 	    			//$view_class::save($this);
 	    			$save_class = new $view_class;
@@ -853,6 +860,7 @@ Author URI: https://sendpress.com/
 
 		    	require_once( SENDPRESS_PATH . 'inc/helpers/sendpress-get-actions.php' );
 	    	}
+
 		}
    	}
 
