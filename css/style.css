@@ -14,6 +14,12 @@ h2 small{
     background-color: #0088cc;
 }
 
+input[type="radio"], input[type="checkbox"] {
+margin: 0;
+margin-top: 1px \9;
+line-height: normal;
+}
+
 
 
 .table .thead{
@@ -40,6 +46,20 @@ p{
 	background:url('../img/sendpress-32.png') no-repeat;
 }
 
+
+.sendpress-layout-selector label.box {
+border: 3px solid transparent;
+display: block;
+float: left;
+margin: 10px 10px 10px 0;
+text-align: center;
+max-width: 85px;
+max-height: 76px;
+}
+.sendpress-layout-selector label.box img {
+max-width: 85px;
+pointer-events: none;
+}
 
 
 .badge-default {

@@ -72,7 +72,9 @@ class SendPress_View_Pro extends SendPress_View{
             <input class="action" type="hidden" name="action" value="module-activate-sendpress-pro" />
             <?php wp_nonce_field($sp->_nonce_value); ?>
         </form>
-    <h1 style="font-size:35px;">SendPress Pro</h1>
+    <h1 style="font-size:35px;">SendPress Pro
+    <?php if(defined('SENDPRESS_PRO_VERSION')){ echo "<small>v" . SENDPRESS_PRO_VERSION."</small>"; } ?>
+    </h1>
     <?php if( is_plugin_active('sendpress-pro/sendpress-pro.php') ){ ?>
         <p class="lead">Thanks for using <b>SendPress Pro</b>.</p>
     <?php } else { ?> 
@@ -82,9 +84,14 @@ class SendPress_View_Pro extends SendPress_View{
                 <?php
 
 
-		$modules = apply_filters('sendpress_pro_modules', array('pro','reports', 'spam_test', 'sendgrid', 'mailjet','customsmtp','amazonses','bounce','autoresponders','mandrill') );
+		$modules = apply_filters('sendpress_pro_modules', array('sendgrid', 'mailjet','customsmtp','amazonses','mandrill','empty') );
 		echo '<div class="sendpress-addons">';
-        $i = 0;
+        $p = NEW SendPress_Module_Pro();
+        $p->index(0);
+        $p->render( $this );
+        $i = 1;
+       
+        echo "<h2 class='clear' style='padding-left: 18px; padding-top: 30px; padding-bottom: 10px;'>Sending Options</h2>";
 		foreach ($modules as $mod) {
 			$mod_class = $this->get_module_class($mod);
 			if($mod_class){

@@ -21,6 +21,7 @@ class SendPress_Public_View_Render extends SendPress_Public_View{
 		$inline = false;
 		if(isset($post) &&  $post->post_type == 'sp_template' ){
 			//Render New Template Preview
+			
 			echo SendPress_Email_Render_Engine::render_template_example( $post );		
 		} else {
 			if(isset($_GET['inline']) ){

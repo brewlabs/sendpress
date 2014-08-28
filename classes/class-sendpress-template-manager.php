@@ -10,9 +10,9 @@ class SendPress_Template_Manager {
    static function templates(){
     
         return  array(
-            'original' => array('path'=> SENDPRESS_PATH.'templates/master.html', 'name'=> 'Base' ,'status' => 'sp-standard'),
+            'original' => array('path'=> SENDPRESS_PATH.'templates/master.html', 'name'=> 'Responsive Starter' ,'status' => 'sp-standard'),
             '1column' => array('path'=> SENDPRESS_PATH.'templates/1column.html', 'name'=> 'Responsive 1 Column' ,'status' => 'draft'),
-           '2columns-to-rows' => array('path'=> SENDPRESS_PATH.'templates/2columns-to-rows.html', 'name'=> '2 Column Top - Wide Bottom - Responsive','status' => 'draft')
+            '2columns-to-rows' => array('path'=> SENDPRESS_PATH.'templates/2columns-to-rows.html', 'name'=> '2 Column Top - Wide Bottom - Responsive','status' => 'draft')
         );
     
     }
@@ -49,7 +49,10 @@ class SendPress_Template_Manager {
                 'post_type' => 'sp_template'
             );
             // Insert the post into the database
-            wp_insert_post( $my_post );
+            $post_id_added = wp_insert_post( $my_post );
+
+            update_post_meta( $post_id_added, '_footer_page', SendPress_Tag_Footer_Page::content() );
+             update_post_meta( $post_id_added, '_header_content', SendPress_Tag_Header_Content::content() );
 
         }
     }

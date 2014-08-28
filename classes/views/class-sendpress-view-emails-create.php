@@ -34,12 +34,16 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
         update_post_meta( $my_post['ID'], '_sendpress_subject', $_POST['post_subject'] );
         update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
         update_post_meta( $my_post['ID'], '_sendpress_status', 'private');
+ 		
+       	update_post_meta( $my_post['ID'], '_sendpress_system',  $_POST['template_system'] );
 
         SendPress_Email::set_default_style( $my_post['ID'] );
         //clear the cached file.
         delete_transient( 'sendpress_email_html_'. $my_post['ID'] );
 
-        
+        if($_POST['template_system']  == 'new') {
+        	SendPress_Admin::redirect( 'Emails_Edit' , array('emailID' =>  $my_post['ID']  )   );
+    	}
         SendPress_Admin::redirect( 'Emails_Style' , array('emailID' =>  $my_post['ID']  )   );
         //$this->save_redirect( $_POST  );
 
@@ -69,7 +73,7 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 		</div>
 		
 		<h2>Create Email</h2>
-		<div id="poststuff" class="metabox-holder"> 
+		<br>
 		<!--
 		has-right-sidebar">
 		<div id="side-info-column" class="inner-sidebar">
@@ -80,34 +84,78 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 			</div>
 		</div>
 		-->
-		<div id="post-body">
-		<div id="post-body-content">
+		
 		<input type="hidden" value="save-create" name="save-action" id="save-action" />
 		<input type="hidden" value="save-email" name="action" />
 		<input type="hidden" id="user-id" name="user_ID" value="<?php echo $current_user->ID; ?>" />
 		<input type="hidden" value="default" name="target-location" id="target-location" />
 		<input type="hidden" id="post_ID" name="post_ID" value="<?php echo $post->ID; ?>" />
-		<div class="boxer">
-		<div class="boxer-inner">
+		
 			<!--
 			<h2>Email Template Name</h2>
 			-->
 			<input type="hidden" name="post_title" size="30" tabindex="1" value="<?php  echo SendPress_Data::random_code();  //echo esc_attr( htmlspecialchars( $post->post_title ) ); ?>" id="title" autocomplete="off" />
 		<!--<br><br>-->
-			<h2><?php _e('Subject','sendpress'); ?></h2>
-			<input type="text" name="post_subject" size="30" tabindex="1" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
+			<!--<h2><?php _e('Subject','sendpress'); ?></h2>
+			<input type="text" name="post_subject" size="30" tabindex="1" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />-->
+		<?php $this->panel_start('<span class="glyphicon glyphicon-envelope"></span> '.  __('Subject','sendpress') ); ?>
+        <input type="text" name="post_subject" size="30" tabindex="1" class="form-control" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
+        <?php $this->panel_end(  ); ?>
+		
 
-		</div>
-		</div>
-		</div>
-		<input value="simple.php" name="template" type="hidden" />
+        
+        	<div class="sp-row">
+        		<div class="sp-50 sp-first">
+			<?php $this->panel_start( __('1.0 Template','sendpress') ); ?>
+			<label>
+			<input type="radio"  name="template_system" checked value="new" /> Use New System
+			</label>
+			<br>
+			
+			<h5>Select your template:</h5>
+			<select class="form-control" name="template">
+			<?php
+					$args = array(
+					'post_type' => 'sp_template' ,
+					'post_status' => array('sp-standard'),
+					);
+
+					$the_query = new WP_Query( $args );
+
+					if ( $the_query->have_posts() ) {
+					while ( $the_query->have_posts() ) {
+						$the_query->the_post();
+						$temp_id = $the_query->post->ID;
+						$s = '';
+						if($temp_id == $template_id){
+							$s = 'selected';
+						}
+						echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
+					}
+					
+				}
+			?>
+			
+			</select>
+			<?php $this->panel_end(  ); ?>
+			</div>
+			<div class="sp-50">
+			<?php $this->panel_start( __('Original Template','sendpress') ); ?>
+			<label>
+			<input type="radio"  name="template_system"  value="old" /> Use Old Email System
+			</label><br>Currently emails cannot be upgraded directly to the new Template system.
+
+			<?php $this->panel_end(  ); ?>
+			</div>
+			</div>
+
+			
 		<br><br>
 		<?php //wp_editor($post->post_content,'textversion'); ?>
 
 		 <?php wp_nonce_field($sp->_nonce_value); ?><br><br>
 		 </form>
-		 </div>
-		</div>
+		 
 		<?php
 	}
 

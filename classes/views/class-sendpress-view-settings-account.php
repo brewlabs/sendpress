@@ -119,6 +119,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 			<?php $this->panel_start( '<span class="glyphicon glyphicon-inbox"></span> '. __('Test Email','sendpress') ); ?>
 
 			<div class="form-group">
+				<label for="testemail"><?php _e('Where to send Test Email','sendpress'); ?></label>
 				<input name="testemail" type="text" id="test-email-main" value="<?php echo SendPress_Option::get( 'testemail' ); ?>" class="form-control"/>
 			</div>
 			<div class="sp-row">
@@ -172,7 +173,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 		<div class="panel-body">
 
 			<input type="hidden" name="action" value="account-setup" />
-
+			
 			<?php if( count($senders) < 3 ){
 				$c= 0;
 				foreach ( $senders as $key => $sender ) {

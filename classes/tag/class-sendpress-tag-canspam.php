@@ -8,26 +8,28 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Tag_Canspam extends SendPress_Tag_Base{
 
-	static function internal( $email_id, $subscriber_id ) {
-		$return = self::external( $email_id , $subscriber_id );
+	static function internal( $template_id , $email_id, $subscriber_id , $example ) {
+		$return = self::external( $template_id , $email_id, $subscriber_id , $example );
 		if( $return != '' ){
-			return self::table_start() . $return . self::table_end();
+			return $return;
 		}
         return '';
 	}
 	
-	static function external(  $email_id , $subscriber_id , $e ){
+	
+
+	static function external( $template_id , $email_id, $subscriber_id , $example ) {
 		$canspam = SendPress_Option::get('canspam');
 		if( $canspam != '' && $canspam  != false ){
-			return wpautop( $canspam );
+			return  nl2br($canspam);
 		}
 		return '';
 	}
 
 	static function copy(){
-		$return =  '<table border="0" width="100%" cellpadding="0" cellspacing="0"><tr><td align="left">';
-        $return .= '{canspam}';
-        $return .='</td></tr></table>';
+		//$return =  '<table border="0" width="100%" cellpadding="0" cellspacing="0"><tr><td align="left">';
+        $return = '{canspam}';
+       
         return $return;
 	}
 

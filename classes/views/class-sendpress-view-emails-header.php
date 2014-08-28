@@ -34,7 +34,7 @@ class SendPress_View_Emails_Header extends SendPress_View_Emails {
    	</div>
    <h2><?php echo $postdata->post_title; ?> Template Header</h2><br>
      <div class="tab-pane fade in active" id="home"><?php the_editor( get_post_meta( $postdata->ID , '_header_content' , true) , 'header-content'); ?></div>
-
+     <div></div>
 		<?php SendPress_Data::nonce_field(); ?>
      </form>
 

@@ -18,7 +18,7 @@ class SendPress_Module_Empty extends SendPress_Module{
 			<?php 
 
 			$btn = $this->build_button(
-				array(	'class' => 'btn module-empty', 
+				array(	'class' => 'btn btn-primary module-empty', 
 						'href' => 'http://sendpress.uservoice.com', 
 						'target' => '_blank', 
 						'text' => __('Request a Feature','sendpress')

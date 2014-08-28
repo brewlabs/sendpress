@@ -381,7 +381,7 @@ class SendPress_Queue_Table extends WP_List_Table {
             }
             
         //Which page is this?
-        $paged = !empty($_GET["paged"]) ? mysql_real_escape_string($_GET["paged"]) : '';
+        $paged = !empty($_GET["paged"]) ? esc_sql($_GET["paged"]) : '';
         //Page Number
         if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
         //How many pages do we have in total?
@@ -398,8 +398,8 @@ class SendPress_Queue_Table extends WP_List_Table {
         }
          /* -- Ordering parameters -- */
         //Parameters that are going to be used to order the result
-        $orderby = !empty($_GET["orderby"]) ? mysql_real_escape_string($_GET["orderby"]) : '';
-        $order = !empty($_GET["order"]) ? mysql_real_escape_string($_GET["order"]) : 'ASC';
+        $orderby = !empty($_GET["orderby"]) ? esc_sql($_GET["orderby"]) : '';
+        $order = !empty($_GET["order"]) ? esc_sql($_GET["order"]) : 'ASC';
         if(!empty($orderby) & !empty($order)){ $query.=' ORDER BY '.$orderby.' '.$order; }
 
         if( empty( $orderby ) ){
