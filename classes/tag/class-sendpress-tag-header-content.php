@@ -22,10 +22,10 @@ class SendPress_Tag_Header_Content extends SendPress_Tag_Base  {
 			//$content = $content_post->post_content;
 			
 			
-			remove_filter('the_content','wpautop');
+			//remove_filter('the_content','wpautop');
 			$content = apply_filters('the_content', $content);
 			add_filter('the_content','wpautop');
-			$content = nl2br(str_replace(']]>', ']]&gt;', $content));
+			$content = str_replace(']]>', ']]&gt;', $content);
 		/*
 		} else {
 			$content = self::lipsum_format();

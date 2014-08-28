@@ -207,17 +207,16 @@
                 //cl =jQuery('img',html).parent().attr('class');
                 find = html.search('alignleft');
                 if(find > 0 ){
-                    html = "<img style='margin-right: 10px;' src='"+imgurl+"' alt='"+imgTitle+"' align='left'/>";
+                    html = "<img style='margin-right: 10px;' src='"+imgurl+"' alt='"+imgTitle+"' border='0' style='vertical-align:top;'  hspace='0' vspace='0' class='sp-img' align='left'/>";
                 }
                 find = html.search('alignright');
                 if(find > 0 ){
-                    html = "<img style='margin-left: 10px;' src='"+imgurl+"' alt='"+imgTitle+"' align='right'/>";
+                    html = "<img style='margin-left: 10px;' src='"+imgurl+"' alt='"+imgTitle+"' border='0' style='vertical-align:top;'  hspace='0' vspace='0'  class='sp-img' align='right'/>";
                 }
                 find = html.search('aligncenter');
                 if(find > 0 ){
-                    html = '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><img style="margin-left: 10px; margin-right: 10px;" src="'+imgurl+'" alt="'+imgTitle+'" align="center"/></td></tr></table>';
+                    html = '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><img src="'+imgurl+'" alt="'+imgTitle+'" border="0" style="vertical-align:top;"  hspace="0" vspace="0" class="sp-img" align="center"/></td></tr></table>';
                 }
-
 
                 spadmin.send_to_editor(html);
             }

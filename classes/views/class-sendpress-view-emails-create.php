@@ -103,7 +103,7 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
         <?php $this->panel_end(  ); ?>
 		
 
-        <?php if(SendPress_Option::get('prerelease_templates') == 'yes') { ?>
+        
         	<div class="sp-row">
         		<div class="sp-50 sp-first">
 			<?php $this->panel_start( __('1.0 Template','sendpress') ); ?>
@@ -142,18 +142,14 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 			<div class="sp-50">
 			<?php $this->panel_start( __('Original Template','sendpress') ); ?>
 			<label>
-			<input type="radio"  name="template_system"  value="old" /> Use New System
+			<input type="radio"  name="template_system"  value="old" /> Use Old Email System
 			</label><br>Currently emails cannot be upgraded directly to the new Template system.
 
 			<?php $this->panel_end(  ); ?>
 			</div>
 			</div>
 
-			<?php } else { ?> 
-
-
-		<input value="simple.php" name="template" type="hidden" />
-		<?php } ?>
+			
 		<br><br>
 		<?php //wp_editor($post->post_content,'textversion'); ?>
 

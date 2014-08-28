@@ -292,7 +292,7 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
 </div>
 <div id="collapseFour" class="panel-collapse collapse">
   <div class="panel-body">
-    <a class="btn btn-primary btn-block" href="<?php echo SendPress_Admin::link('Emails_Footer', array('templateID' => $_GET['templateID'] )); ?>" class="btn">Edit Footer HTML</a>
+    <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Footer', array('templateID' => $_GET['templateID'] )); ?>" class="btn">Edit Footer HTML</a>
     <br>
      <?php 
     $bgtext = get_post_meta( $postdata->ID ,'_footer_bg_color',true );

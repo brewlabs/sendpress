@@ -609,7 +609,7 @@ function spnl_setup_template_tags() {
 		*/
 		array(
 			'tag'         => 'sp-social-links',
-			'description' => __( 'Inserts the CANSPAM text.', 'sendpress' ),
+			'description' => __( 'Inserts Social Links.', 'sendpress' ),
 			'function'    => array('SendPress_Tag_Social_Links','external'),
 			'internal'    => array('SendPress_Tag_Social_Links','internal'),
 			'copy'    => array('SendPress_Tag_Social_Links','copy'),
@@ -623,7 +623,7 @@ function spnl_setup_template_tags() {
 		),
 		array(
 			'tag'         => 'sp-site-name',
-			'description' => __( 'Inserts view in browser url.', 'sendpress' ),
+			'description' => __( 'Inserts Site Name.', 'sendpress' ),
 			'function'    => array('SendPress_Tag_Site_Name','external'),
 			'internal'    => array('SendPress_Tag_Site_Name','internal'),
 			'copy'    => array('SendPress_Tag_Site_Name','copy'),
