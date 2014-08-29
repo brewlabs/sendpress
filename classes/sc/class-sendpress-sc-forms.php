@@ -107,9 +107,11 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 								<label for="list"><?php echo $_list_label; ?>:</label>
 								<?php
 									foreach ($list_ids as $id) {
-										?>
-										<input type="checkbox" name="sp_list[]" class="sp_list" id="list<?php echo $id; ?>" value="<?php echo $id; ?>" <?php if($_lists_checked){ echo 'checked'; }?> /> <?php echo get_the_title($id); ?><br>
-										<?php
+										if($id !== $pnlistid){
+											?>
+											<input type="checkbox" name="sp_list[]" class="sp_list" id="list<?php echo $id; ?>" value="<?php echo $id; ?>" <?php if($_lists_checked){ echo 'checked'; }?> /> <?php echo get_the_title($id); ?><br>
+											<?php
+										}
 									}
 								?>
 							</p>
