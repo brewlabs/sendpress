@@ -835,7 +835,7 @@ Author URI: https://sendpress.com/
 	    			$save_class = new $view_class;
 
 	    			$save_class->$method();
-	    			print_r($save_class);
+	    			//print_r($save_class);
 	    		} elseif( method_exists( $view_class , 'save' )  ) {
 	    			//$view_class::save($this);
 	    			$save_class = new $view_class;
