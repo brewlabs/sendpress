@@ -634,6 +634,13 @@ function spnl_setup_template_tags() {
 			'function'    => array('SendPress_Tag_Canspam','external'),
 			'internal'    => array('SendPress_Tag_Canspam','internal'),
 			'copy'    => array('SendPress_Tag_Canspam','copy'),
+		),
+		array(
+			'tag'         => 'sp-unsubscribe-url',
+			'description' => __( 'Inserts the unsubscribe url.', 'sendpress' ),
+			'function'    => array('SendPress_Tag_Unsubscribe','external'),
+			'internal'    => array('SendPress_Tag_Unsubscribe','internal'),
+			'copy'    => array('SendPress_Tag_Unsubscribe','copy'),
 		)
 
 	);

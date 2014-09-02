@@ -68,6 +68,7 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
         //clear the cached file.
         //delete_transient( 'sendpress_email_html_'. $my_post['ID'] );
          update_post_meta($saveid ,'_header_page_text_color', $_POST['pagetxt-color-select'] );
+          update_post_meta($saveid ,'_header_page_link_color', $_POST['pagelink-color-select'] );
         
         update_post_meta($saveid ,'_header_text_color', $_POST['htxt-color-select'] );
         update_post_meta($saveid ,'_header_bg_color', $_POST['bg-color-select'] );
@@ -81,6 +82,8 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
           update_post_meta($saveid ,'_content_color', $_POST['content-color-select'] );
 
         update_post_meta($saveid ,'_content_text_color', $_POST['content-text-color-select'] );
+         update_post_meta($saveid ,'_content_link_color', $_POST['content-link-color-select'] );
+          update_post_meta($saveid ,'_footer_link_color', $_POST['footer-link-color-select'] );
 
         update_post_meta($saveid ,'_footer_text_color', $_POST['footer-txt-color-select'] );
         update_post_meta($saveid ,'_footer_bg_color', $_POST['footer-bg-color-select'] );
@@ -195,6 +198,15 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
                 }?>
            
             Text<br><input type="text" value="<?php echo $htext; ?>" id="pagetxt-color-select" name="pagetxt-color-select" class="my-color-field" data-default-color="#333" data-template-style="color" data-template-target=".page-text-color" />
+                 <hr> <?php 
+            $linktextpage = get_post_meta( $postdata->ID ,'_header_page_link_color',true );
+                if($linktextpage == false ){
+                    $linktextpage = '#2469a0';
+                }?>
+           
+            Link<br><input type="text" value="<?php echo $linktextpage; ?>" id="pagelink-color-select" name="pagelink-color-select" class="my-color-field" data-default-color="#2469a0" data-template-style="color" data-template-target=".page-text-color a" />
+          
+
             <br><br>
             <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Footerpage', array('templateID' => $_GET['templateID'] )); ?>" class="btn">Edit Page Footer HTML</a>
             
@@ -216,7 +228,7 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
     <?php 
     $bgtext = get_post_meta( $postdata->ID ,'_header_bg_color',true );
         if($bgtext == false ){
-            $bgtext = '#ffffff';
+            $bgtext = '#d1d1d1';
         }?>
     Background<br><input type="text" value="<?php echo $bgtext; ?>" id="bg-color-select" name="bg-color-select" class="my-color-field" data-default-color="#d1d1d1" data-template-style="background-color" data-template-target=".sp-style-h-bg" />
     <?php 
@@ -275,6 +287,14 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
         }?>
     
     Text<br><input type="text" value="<?php echo $contenttext; ?>" id="content-text-color-select" name="content-text-color-select" class="my-color-field" data-default-color="#333333" data-template-style="color" data-template-target=".sp-style-c-bg" />
+      <?php
+  $contentlink = get_post_meta( $postdata->ID ,'_content_link_color',true );
+        if($contentlink == false ){
+            $contentlink = '#2469a0';
+        }?>
+    <hr>
+    Link<br><input type="text" value="<?php echo $contentlink; ?>" id="content-link-color-select" name="content-link-color-select" class="my-color-field" data-default-color="#2469a0" data-template-style="color" data-template-target=".sp-style-c-bg a" />
+  
     <!--
     <hr>
     Link<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="color" data-template-target=".sp-style-c-bg a" />
@@ -307,6 +327,14 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
         }?>
     <hr>
     Text<br><input type="text" value="<?php echo $htext; ?>" id="footer-txt-color-select" name="footer-txt-color-select" class="my-color-field" data-default-color="#333" data-template-style="color" data-template-target=".sp-style-f-bg" />
+      <?php
+  $footerlink = get_post_meta( $postdata->ID ,'_footer_link_color',true );
+        if($footerlink == false ){
+            $footerlink = '#2469a0';
+        }?>
+    <hr>
+    Link<br><input type="text" value="<?php echo $footerlink; ?>" id="footer-link-color-select" name="footer-link-color-select" class="my-color-field" data-default-color="#2469a0" data-template-style="color" data-template-target=".sp-style-f-bg a" />
+  
     <hr>
      <?php 
         $padfooter = get_post_meta( $postdata->ID ,'_footer_padding',true );
@@ -330,7 +358,7 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
 Body<br>
 
 <br>
-Content<br>
+footer<br>
 <input type="text" value="#bada55" id="bg-color-select" class="my-color-field2" data-default-color="#effeff" />
 
 <br>

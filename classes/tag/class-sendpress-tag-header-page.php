@@ -20,12 +20,20 @@ class SendPress_Tag_Header_Page extends SendPress_Tag_Base  {
 		//if( $example == false ){
 			$content = get_post_meta( $template_id , '_header_page' , true); // get_post_meta($email_id);
 			//$content = $content_post->post_content;
+			$link = get_post_meta( $template_id ,'_header_page_link_color',true );
+			if($link == false ){
+				$link = '#2469a0';
+			}
+
 			
 			
-			remove_filter('the_content','wpautop');
+			//remove_filter('the_content','wpautop');
 			$content = apply_filters('the_content', $content);
-			add_filter('the_content','wpautop');
-			$content = nl2br(str_replace(']]>', ']]&gt;', $content));
+			//add_filter('the_content','wpautop');
+			$content = str_replace(']]>', ']]&gt;', $content);
+			$content = spnl_do_email_tags($content ,$template_id , $email_id , $subscriber_id, $example  );
+			$content = SendPress_Template::link_style($link, $content);
+
 		/*
 		} else {
 			$content = self::lipsum_format();

@@ -29,6 +29,19 @@ class SendPress_Email_Render_Engine {
 		$return = spnl_do_email_tags( $return, $post->ID, $post->ID, 0, true );
 		$return = spnl_do_subscriber_tags( $return, $post->ID, $post->ID, 0, true );
 		
+		//$body_html = preg_replace( $pattern , site_url() ."?sendpress=link&fxti=".$subscriber_key."&spreport=". $this->id ."&spurl=$0", $body_html );
+			if(class_exists("DomDocument")){
+				$dom = new DomDocument();
+				$dom->strictErrorChecking = false;
+				@$dom->loadHtml($return);
+				
+				$pTags = $dom->getElementsByTagName('p');
+				foreach ($pTags as $pElement) {
+					$pElement->setAttribute('style','margin-top:0;margin-bottom:10px;');
+				}
+				$return =  $dom->saveHtml();
+			}
+
 		return $return;
 	}
 

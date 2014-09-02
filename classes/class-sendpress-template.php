@@ -512,6 +512,34 @@ class SendPress_Template {
 	}
 
 
+	static function link_style($color, $content){
+		if(class_exists("DomDocument")){
+				$dom = new DomDocument('1.0', 'UTF-8');
+				//$content = str_replace ('&nbsp;', '@nbsp;', $content);
+				if(function_exists('mb_convert_encoding')){
+					$content =  mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');// htmlspecialchars($content);
+				}
+				$dom->strictErrorChecking = false;
+				@$dom->loadHtml($content);
+				$aTags = $dom->getElementsByTagName('a');
+				foreach ($aTags as $aElement) {
+					$style = $aElement->getAttribute('style');
+					$style .= ' color: '. $color .'; ';
+					$aElement->setAttribute('style', $style);
+				}
+				//$content = $dom->saveHTML();
+				$content = preg_replace(array("/^\<\!DOCTYPE.*?<html><body>/si",
+                                  "!</body></html>$!si"),
+                            "",
+                            $dom->saveHTML());
+				return $content;
+
+		}
+		return $content;
+	}
+
+
+
 	static function tag_replace($HtmlCode){
 			$HtmlCode = str_replace('*|SITE:URL|*', get_option('home'), $HtmlCode);
 	        $HtmlCode = str_replace('*|SITE:TITLE|*', get_option('blogname'), $HtmlCode);

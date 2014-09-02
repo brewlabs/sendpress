@@ -20,12 +20,21 @@ class SendPress_Tag_Footer_Page extends SendPress_Tag_Base  {
 		//if( $example == false ){
 			$content = get_post_meta( $template_id , '_footer_page' , true); // get_post_meta($email_id);
 			//$content = $content_post->post_content;
-			
-			
+			$link = get_post_meta( $template_id ,'_header_page_link_color',true );
+			if($link == false ){
+				$link = '#2469a0';
+			}
+
+			//$content = SendPress_Template::link_style($link, $content);
+
 			remove_filter('the_content','wpautop');
 			$content = apply_filters('the_content', $content);
 			add_filter('the_content','wpautop');
 			$content = nl2br(str_replace(']]>', ']]&gt;', $content));
+
+			$content = spnl_do_email_tags($content ,$template_id , $email_id , $subscriber_id, $example  );
+			$content = SendPress_Template::link_style($link, $content);
+
 		/*
 		} else {
 			$content = self::lipsum_format();
@@ -41,7 +50,7 @@ class SendPress_Tag_Footer_Page extends SendPress_Tag_Base  {
 	static function content(){
 		$display_correct = __("Is this email not displaying correctly?","sendpress");
 		$view = __("View it in your browser","sendpress");
-		return $display_correct . ' <a href="{sp-browser-link}">'.$view.'</a>';
+		return '<br>' . $display_correct . ' <a href="{sp-browser-link}">'.$view.'</a>';
 	}
 	
 
@@ -57,6 +66,8 @@ class SendPress_Tag_Footer_Page extends SendPress_Tag_Base  {
 		if($htext == false ){
 			$htext = '#333';
 		}
+
+		
 		
 		$return ='';
         $padding = get_post_meta( $template_id ,'_header_padding',true );

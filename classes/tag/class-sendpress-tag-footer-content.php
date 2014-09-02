@@ -18,13 +18,19 @@ class SendPress_Tag_Footer_Content extends SendPress_Tag_Base  {
 	
 	static function external(  $template_id , $email_id , $subscriber_id, $example ){
 		//if( $example == false ){
-		
+		$link = get_post_meta( $template_id ,'_footer_link_color',true );
+			if($link == false ){
+				$link = '#2469a0';
+			}
 			$content = get_post_meta( $template_id , '_footer_content' , true); // get_post_meta($email_id);
 			//$content = $content_post->post_content;
-			remove_filter('the_content','wpautop');
+			//remove_filter('the_content','wpautop');
 			$content = apply_filters('the_content', $content);
-			add_filter('the_content','wpautop');
+			//add_filter('the_content','wpautop');
 			$content = str_replace(']]>', ']]&gt;', $content);
+			$content = spnl_do_email_tags($content ,$template_id , $email_id , $subscriber_id, $example  );
+			$content = SendPress_Template::link_style($link, $content);
+
 		/*
 		} else {
 			$content = self::lipsum_format();
@@ -59,7 +65,7 @@ class SendPress_Tag_Footer_Content extends SendPress_Tag_Base  {
         $padding = get_post_meta( $template_id ,'_footer_padding',true );
         $pd = '';
         if( $padding == 'pad-footer'  ){
-        	 $pd = ' padding-left: 30px; padding-right: 30px; ';
+        	 $pd = ' padding-left: 30px; padding-right: 30px; padding-top: 15px;';
         	 $cl = ' container-padding ';
     	}
     	$return ='';

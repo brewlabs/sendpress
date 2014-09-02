@@ -26,6 +26,9 @@ class SendPress_Tag_Header_Content extends SendPress_Tag_Base  {
 			$content = apply_filters('the_content', $content);
 			add_filter('the_content','wpautop');
 			$content = str_replace(']]>', ']]&gt;', $content);
+			$content = spnl_do_email_tags($content ,$template_id , $email_id , $subscriber_id, $example  );
+			
+
 		/*
 		} else {
 			$content = self::lipsum_format();
@@ -46,7 +49,7 @@ class SendPress_Tag_Header_Content extends SendPress_Tag_Base  {
 	}
 
 	static function content(){
-		return "<br><div style='text-align:center;'><h1 style='text-align:center;'>{sp-site-name}</h1></div><br>";	
+		return "<table cellpadding='0' cellspacing='0' width='100%'><tr><td><h1 style='text-align:center;'>{sp-site-name}</h1></td></tr></table>";	
 	}
 
 	static function table_start( $template_id ){
@@ -63,7 +66,7 @@ class SendPress_Tag_Header_Content extends SendPress_Tag_Base  {
         $pd = '';
         $cl = '';
         if( $padding == 'pad-header'  ){
-        	 $pd = ' padding-left: 30px; padding-right: 30px; ';
+        	 $pd = ' padding-left: 30px; padding-right: 30px; padding-top: 15px; padding-bottom:15px;';
         	 $cl = ' container-padding ';
     	}
     	$return ='';

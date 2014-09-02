@@ -175,6 +175,11 @@ class SendPress_Email {
 				$dom = new DomDocument();
 				$dom->strictErrorChecking = false;
 				@$dom->loadHtml($body_html);
+				
+				$pTags = $dom->getElementsByTagName('p');
+				foreach ($pTags as $pElement) {
+					$pElement->setAttribute('style','margin-top:0;margin-bottom:10px;');
+				}
 				$aTags = $dom->getElementsByTagName('a');
 				foreach ($aTags as $aElement) {
 					$href = $aElement->getAttribute('href');
