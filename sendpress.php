@@ -324,6 +324,8 @@ Author URI: https://sendpress.com/
 
 			add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
 
+			SendPress_Data::create_default_widget_settings();
+
 		}
 
 		function add_registration_fields() {
@@ -385,6 +387,7 @@ Author URI: https://sendpress.com/
 	 */
 			function load_widgets() {
 				register_widget( 'SendPress_Widget_Signup' );
+				register_widget( 'SendPress_Widget_Forms' );
 			}
 
 
@@ -832,7 +835,7 @@ Author URI: https://sendpress.com/
 	    			$save_class = new $view_class;
 
 	    			$save_class->$method();
-	    			print_r($save_class);
+	    			//print_r($save_class);
 	    		} elseif( method_exists( $view_class , 'save' )  ) {
 	    			//$view_class::save($this);
 	    			$save_class = new $view_class;

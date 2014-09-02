@@ -107,9 +107,11 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 								<label for="list"><?php echo $_list_label; ?>:</label>
 								<?php
 									foreach ($list_ids as $id) {
-										?>
-										<input type="checkbox" name="sp_list[]" class="sp_list" id="list<?php echo $id; ?>" value="<?php echo $id; ?>" <?php if($lists_checked){ echo 'checked'; }?> /> <?php echo get_the_title($id); ?><br>
-										<?php
+										if($id !== $pnlistid){
+											?>
+											<input type="checkbox" name="sp_list[]" class="sp_list" id="list<?php echo $id; ?>" value="<?php echo $id; ?>" <?php if($_lists_checked){ echo 'checked'; }?> /> <?php echo get_the_title($id); ?><br>
+											<?php
+										}
 									}
 								?>
 							</p>
@@ -123,43 +125,38 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
 					echo $post_notifications_code;
 
-
-					if( strlen($postnotification) > 0 ){
-						do_action('sendpress_add_post_notification_list', $postnotification, $pnlistid);
-					}
-
 					?>
 
-					<?php if( filter_var($display_firstname, FILTER_VALIDATE_BOOLEAN)  ): ?>
-						<p name="firstname">
-							<?php if( !$label ): ?>
-								<label for="firstname"><?php echo $firstname_label; ?>:</label>
+					<?php if( filter_var($_collect_firstname, FILTER_VALIDATE_BOOLEAN)  ): ?>
+						<p name="sp_firstname">
+							<?php if( !$_display_labels_inside_fields ): ?>
+								<label for="sp_firstname"><?php echo $_firstname_label; ?>:</label>
 							<?php endif; ?>
-							<input type="text" class="sp_firstname" orig="<?php echo $firstname_label; ?>" value="<?php if($label){ echo $firstname_label; } ?>"  name="sp_firstname" />
+							<input type="text" class="sp_firstname" orig="<?php echo $_firstname_label; ?>" value="<?php if($_display_labels_inside_fields){ echo $_firstname_label; } ?>"  name="sp_firstname" />
 						</p>
 					<?php endif; ?>
 
-					<?php if( filter_var($display_lastname, FILTER_VALIDATE_BOOLEAN) ): ?>
-						<p name="lastname">
-							<?php if( !$label ): ?>
-								<label for="lastname"><?php echo $lastname_label; ?>:</label>
+					<?php if( filter_var($_collect_lastname, FILTER_VALIDATE_BOOLEAN) ): ?>
+						<p name="sp_lastname">
+							<?php if( !$_display_labels_inside_fields ): ?>
+								<label for="sp_lastname"><?php echo $_lastname_label; ?>:</label>
 							<?php endif; ?>
-							<input type="text" class="sp_lastname" orig="<?php echo $lastname_label; ?>" value="<?php if($label){ echo $lastname_label; } ?>" name="sp_lastname" />
+							<input type="text" class="sp_lastname" orig="<?php echo $_lastname_label; ?>" value="<?php if($_display_labels_inside_fields){ echo $_lastname_label; } ?>" name="sp_lastname" />
 						</p>
 					<?php endif; ?>
 
-					<p name="email">
-						<?php if( !$label ): ?>
-							<label for="email"><?php echo $email_label; ?>:</label>
+					<p name="sp_email">
+						<?php if( !$_display_labels_inside_fields ): ?>
+							<label for="sp_email"><?php echo $_email_label; ?>:</label>
 						<?php endif; ?>
-						<input type="text" class="sp_email" orig="<?php echo $email_label; ?>" value="<?php if($label){ echo $email_label; } ?>" name="sp_email" />
+						<input type="text" class="sp_email" orig="<?php echo $_email_label; ?>" value="<?php if($label){ echo $_email_label; } ?>" name="sp_email" />
 					</p>
 					<p name="extra_fields" class="signup-fields-bottom">
 						<?php do_action('sendpress_signup_form_bottom'); ?>
 					</p>
 
 					<p class="submit">
-						<input value="<?php echo $button_text; ?>" class="sendpress-submit" type="submit"  id="submit" name="submit"><img class="ajaxloader" src="<?php echo SENDPRESS_URL; ?>/img/ajax-loader.gif" />
+						<input value="<?php echo $_button_label; ?>" class="sendpress-submit" type="submit"  id="submit" name="submit"><img class="ajaxloader" src="<?php echo SENDPRESS_URL; ?>/img/ajax-loader.gif" />
 					</p>
 				</div>
 			</form>

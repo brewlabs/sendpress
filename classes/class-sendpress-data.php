@@ -1873,7 +1873,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	/********************* Widget Settings functionS **************************/
 
-	static function create_widget_settings(){
+	static function create_default_widget_settings(){
 		//SendPress_Option::set('default-signup-widget-settings',null);
 
 		$postid = SendPress_Option::get('default-signup-widget-settings');
@@ -1938,12 +1938,21 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		foreach($options as $key => $value){
 			if(array_key_exists($key, $data)){
-				update_post_meta($postid, $key, $value);
+				update_post_meta($postid, $key, $data[$key]);
 			}else{
 				update_post_meta($postid, $key, false);
 			}
 		}
 
+	}
+
+	static function get_forms_for_widget(){
+		$query = get_posts(array(
+				'post_type'=>'sp_settings',
+				'post_status'=>'any'
+			));
+
+		return $query;
 	}
 
 	/********************* END Widget Settings functionS **************************/
