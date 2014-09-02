@@ -48,7 +48,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		}
 
 		$settings = SendPress_Data::get_sp_settings_object($postid);
-
+		$settings['_sp_settings_id'] = $postid;
 		?>
 		<form method="post" id="post">
 
