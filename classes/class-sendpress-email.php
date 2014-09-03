@@ -167,7 +167,8 @@ class SendPress_Email {
 
 			
 				
-
+			$body_html = spnl_do_subscriber_tags( $body_html, $post_template, $this->id(), $this->subscriber_id(), true );
+			
 
 			//$pattern ="/(?<=href=(\"|'))[^\"']+(?=(\"|'))/";
 			//$body_html = preg_replace( $pattern , site_url() ."?sendpress=link&fxti=".$subscriber_key."&spreport=". $this->id ."&spurl=$0", $body_html );
@@ -288,7 +289,6 @@ class SendPress_Email {
 				$body_html = str_replace("*|EMAIL|*", $subscriber->email , $body_html );
 				$body_html = str_replace("*|ID|*", $subscriber->subscriberID , $body_html );
 			}
-			$body_html = spnl_do_subscriber_tags( $body_html, $post_template, $this->id(), $this->subscriber_id(), true );
 			
             //$body_html = apply_filters('sendpress_post_render_email', $body_html);
 			//echo  $body_html;

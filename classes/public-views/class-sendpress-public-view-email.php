@@ -20,9 +20,10 @@ class SendPress_Public_View_Email extends SendPress_Public_View{
 		if($this->data()->id){
 			$email_id = $this->data()->id;
 		} 
-		if(isset($_GET['eid']){
-			$email_id = $_GET['eid'];
+		if(isset($_GET['eid'])){
+			$email_id = base64_decode( $_GET['eid'] );
 		}
+		
 		//$post = get_post($email_id);
 		$inline = false;
 		if(isset($_GET['inline']) ){
