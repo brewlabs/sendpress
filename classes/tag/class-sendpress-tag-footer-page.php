@@ -31,10 +31,11 @@ class SendPress_Tag_Footer_Page extends SendPress_Tag_Base  {
 			$content = apply_filters('the_content', $content);
 			add_filter('the_content','wpautop');
 			$content = nl2br(str_replace(']]>', ']]&gt;', $content));
-
+			
 			$content = spnl_do_email_tags($content ,$template_id , $email_id , $subscriber_id, $example  );
+			
 			$content = SendPress_Template::link_style($link, $content);
-
+			
 		/*
 		} else {
 			$content = self::lipsum_format();

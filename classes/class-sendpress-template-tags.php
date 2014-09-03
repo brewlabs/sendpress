@@ -164,9 +164,7 @@ class SendPress_Template_Tags {
 
 		$new_content = preg_replace_callback( "/{([A-z0-9\-\_]+)}/s", array( $this, 'do_email_tag' ), $content );
 
-		$this->subscriber_id = null;
-		$this->email_id = null;
-
+		
 		return $new_content;
 	}
 
@@ -263,11 +261,11 @@ class SendPress_Template_Tags {
 				}
 			}
 		}
-
+		
 		$new_content = preg_replace_callback( "/{([A-z0-9\-\_]+)}/s", array( $this, 'do_content_tag' ), $content );
 
-		$this->subscriber_id = null;
-		$this->email_id = null;
+		//$this->subscriber_id = null;
+		//$this->email_id = null;
 
 		return $new_content;
 	}
@@ -290,6 +288,7 @@ class SendPress_Template_Tags {
 		if ( ! $this->content_tag_exists( $tag ) ) {
 			return $m[0];
 		}
+		
 
 		if( $this->email_type == 'internal' && isset( $this->content_tags[$tag]['internal'] ) ) {
 			return call_user_func( $this->content_tags[$tag]['internal'], $this->template_id,$this->email_id, $this->subscriber_id, $this->example, $tag );
@@ -370,9 +369,7 @@ class SendPress_Template_Tags {
 
 		$new_content = preg_replace_callback( "/{([A-z0-9\-\_]+)}/s", array( $this, 'do_subscriber_tag' ), $content );
 
-		$this->subscriber_id = null;
-		$this->email_id = null;
-
+		
 		return $new_content;
 	}
 
@@ -521,6 +518,7 @@ function spnl_get_emails_tags_list() {
  */
 function spnl_do_content_tags( $content, $t_id , $email_id, $subscriber_id = 0 , $example = false ) {
 	// Replace Content Tags
+	
 	$content = SPNL()->template_tags->do_content_tags( $content,$t_id ,  $email_id, $subscriber_id , $example );
 
 	// Replace Email tags

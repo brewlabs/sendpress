@@ -42,8 +42,9 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 		SendPress_Option::set('autocron-per-call', $post['autocron-per-call'] );
 		SendPress_Option::set('wpcron-per-call', $post['wpcron-per-call'] );
 		SendPress_Option::set('queue-history', $post['queue-history'] );
-
-		SendPress_Option::set('sp_widget_shortdoces', $post['sp_widget_shortdoces'] );
+		if(isset( $post['sp_widget_shortdoces'])){
+			SendPress_Option::set('sp_widget_shortdoces', $post['sp_widget_shortdoces'] );
+		}
 		
 		$widget_options =  array();
 

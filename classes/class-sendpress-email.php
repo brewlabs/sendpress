@@ -171,14 +171,15 @@ class SendPress_Email {
 
 			//$pattern ="/(?<=href=(\"|'))[^\"']+(?=(\"|'))/";
 			//$body_html = preg_replace( $pattern , site_url() ."?sendpress=link&fxti=".$subscriber_key."&spreport=". $this->id ."&spurl=$0", $body_html );
-			if(class_exists("DomDocument")){
+			if(class_exists("DomDocument") ){
 				$dom = new DomDocument();
 				$dom->strictErrorChecking = false;
 				@$dom->loadHtml($body_html);
 				
 				$pTags = $dom->getElementsByTagName('p');
 				foreach ($pTags as $pElement) {
-					$pElement->setAttribute('style','margin-top:0;margin-bottom:10px;');
+					$px = $pElement->getAttribute('style');
+					$pElement->setAttribute('style', $px .' margin-top:0;margin-bottom:10px;');
 				}
 				$aTags = $dom->getElementsByTagName('a');
 				foreach ($aTags as $aElement) {
