@@ -37,7 +37,8 @@ class SendPress_Email_Render_Engine {
 				
 				$pTags = $dom->getElementsByTagName('p');
 				foreach ($pTags as $pElement) {
-					$pElement->setAttribute('style','margin-top:0;margin-bottom:10px;');
+					$px = $pElement->getAttribute('style');
+					$pElement->setAttribute('style', $px .' margin-top:0;margin-bottom:10px;');
 				}
 				$return =  $dom->saveHtml();
 			}
