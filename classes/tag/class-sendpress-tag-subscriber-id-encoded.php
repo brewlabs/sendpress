@@ -6,19 +6,18 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 
-class SendPress_Tag_Unsubscribe extends SendPress_Tag_Base{
+class SendPress_Tag_Subscriber_Id_Encoded extends SendPress_Tag_Base{
 
 	static function internal( $template_id , $email_id, $subscriber_id , $example ) {
 		return self::external( $template_id , $email_id , $subscriber_id , $example);
 	}
 	
 	static function external( $template_id ,  $email_id , $subscriber_id , $e ){
-		$link = SendPress_Manager::public_url('unsubscribe');
-		return add_query_arg('sid', '{sp-subscriber-id-encoded}', $link );
+		return str_replace( '=', '', base64_encode( $subscriber_id ) );
 	}
 
 	static function copy(){
-		$return = '{sp-unsubscribe}';
+		$return = '{sp-subscriber-id-encoded}';
         return $return;
 	}
 

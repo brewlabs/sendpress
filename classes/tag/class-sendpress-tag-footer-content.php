@@ -16,6 +16,10 @@ class SendPress_Tag_Footer_Content extends SendPress_Tag_Base  {
         return '';
 	}
 	
+	static function content(){
+		return '{sp-social-links}';
+	}
+
 	static function external(  $template_id , $email_id , $subscriber_id, $example ){
 		//if( $example == false ){
 		$link = get_post_meta( $template_id ,'_footer_link_color',true );

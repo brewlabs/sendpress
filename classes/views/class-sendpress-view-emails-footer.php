@@ -36,9 +36,11 @@ class SendPress_View_Emails_Footer extends SendPress_View_Emails {
      <div class="tab-pane fade in active" id="home"><?php the_editor( get_post_meta( $postdata->ID , '_footer_content' , true) , 'footer-content'); ?></div>
 
 		<?php SendPress_Data::nonce_field(); ?>
-     </form>
-
-<br><br>
+     </form><br><br>Default Content
+<textarea class="form-control" rows="3">
+<?php echo SendPress_Tag_Footer_Content::content(); ?>
+</textarea>
+<br>
 <?php
 echo spnl_get_emails_tags_list();
 ?>

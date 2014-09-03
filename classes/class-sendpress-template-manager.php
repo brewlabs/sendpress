@@ -53,6 +53,7 @@ class SendPress_Template_Manager {
 
             update_post_meta( $post_id_added, '_footer_page', SendPress_Tag_Footer_Page::content() );
             update_post_meta( $post_id_added, '_header_content', SendPress_Tag_Header_Content::content() );
+            update_post_meta( $post_id_added, '_header_padding', 'pad-header' );
 
         }
     }

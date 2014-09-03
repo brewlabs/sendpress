@@ -652,6 +652,12 @@ function spnl_setup_template_tags() {
 			'function'    => array('SendPress_Tag_Subscriber_Id','external'),
 			'internal'    => array('SendPress_Tag_Subscriber_Id','internal'),
 			'copy'    => array('SendPress_Tag_Subscriber_Id','copy'),
+		),array(
+			'tag'         => 'sp-subscriber-id-encoded',
+			'description' => __( 'Inserts the subscriber id.', 'sendpress' ),
+			'function'    => array('SendPress_Tag_Subscriber_Id_Encoded','external'),
+			'internal'    => array('SendPress_Tag_Subscriber_Id_Encoded','internal'),
+			'copy'    => array('SendPress_Tag_Subscriber_Id_Encoded','copy'),
 		)
 		);
 
