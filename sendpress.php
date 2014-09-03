@@ -304,6 +304,9 @@ Author URI: https://sendpress.com/
 				add_filter( 'gettext', array($this, 'change_button_text'), null, 2 );
 				add_action( 'sendpress_notices', array( $this,'sendpress_notices') );
 				add_filter('user_has_cap',array( $this,'user_has_cap') , 10 , 3);
+
+				//SendPress_Option::set('default-signup-widget-settings',false);
+				SendPress_Data::create_default_form();
 			} else{
 				if( SendPress_Option::get('sp_widget_shortdoces') ){
 					add_filter('widget_text', 'do_shortcode');
@@ -323,9 +326,6 @@ Author URI: https://sendpress.com/
 			add_action( 'wp_enqueue_scripts', array( $this, 'add_front_end_styles' ) );
 
 			add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
-
-			//SendPress_Option::set('default-signup-widget-settings',false);
-			SendPress_Data::create_default_form();
 
 		}
 
