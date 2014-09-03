@@ -14,7 +14,9 @@ class SendPress_Tag_Unsubscribe extends SendPress_Tag_Base{
 	
 	static function external( $template_id ,  $email_id , $subscriber_id , $e ){
 		$link = SendPress_Manager::public_url('unsubscribe');
-		return add_query_arg('sid', '{sp-subscriber-id-encoded}', $link );
+		
+		$email_key = str_replace( '=', '', base64_encode( $email_id ) );
+		return add_query_arg(array('sid'=> '{sp-subscriber-id-encoded}', 'rid'=> $email_key), $link );
 	}
 
 	static function copy(){

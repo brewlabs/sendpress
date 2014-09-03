@@ -171,7 +171,7 @@ class SendPress_Email {
 
 			//$pattern ="/(?<=href=(\"|'))[^\"']+(?=(\"|'))/";
 			//$body_html = preg_replace( $pattern , site_url() ."?sendpress=link&fxti=".$subscriber_key."&spreport=". $this->id ."&spurl=$0", $body_html );
-			if(class_exists("DomDocument")){
+			if(class_exists("DomDocument") && 1==0){
 				$dom = new DomDocument();
 				$dom->strictErrorChecking = false;
 				@$dom->loadHtml($body_html);

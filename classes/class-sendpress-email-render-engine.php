@@ -47,6 +47,7 @@ class SendPress_Email_Render_Engine {
 
 	function render_template( $template_id, $email_id ){
 			$temp = get_post( $template_id );
+			
 			return spnl_do_content_tags(  $temp->post_content, $template_id, $email_id, 0, false );
 	}
 

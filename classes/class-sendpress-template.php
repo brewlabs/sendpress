@@ -331,7 +331,7 @@ class SendPress_Template {
 		//$template_list = $this->info();
 		$post_template  = get_post_meta( $post->ID , '_sendpress_template', true );
 		if( $post_template != '' && is_numeric($post_template) ){
-			$HtmlCode  = SendPress_Email_Render_Engine::render_template( $post_template , $post->ID); 
+			$HtmlCode  = SendPress_Email_Render_Engine::render_template( $post_template , $post_id ); 
 
 		} else {
 
@@ -532,6 +532,9 @@ class SendPress_Template {
                                   "!</body></html>$!si"),
                             "",
                             $dom->saveHTML());
+
+				$content =str_replace("%7B","{",$content);
+				$content =str_replace("%7D","}",$content);
 				return $content;
 
 		}
