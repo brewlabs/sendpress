@@ -324,7 +324,8 @@ Author URI: https://sendpress.com/
 
 			add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
 
-			SendPress_Data::create_default_widget_settings();
+			//SendPress_Option::set('default-signup-widget-settings',false);
+			SendPress_Data::create_default_form();
 
 		}
 

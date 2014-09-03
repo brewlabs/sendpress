@@ -1872,16 +1872,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 	/********************* Widget Settings functionS **************************/
-
-	static function create_default_widget_settings(){
-		//SendPress_Option::set('default-signup-widget-settings',null);
-
-		$postid = SendPress_Option::get('default-signup-widget-settings');
-
-		if ( empty($postid) ) {
-			// Create post object
+	static function create_settings_post_signup_form(){
+		// Create post object
 			$my_post = array(
-				'post_title'    => 'default signup settings',
+				'post_title'    => 'Default Signup Settings',
 				'post_status'   => 'draft',
 				'post_type' 	=> 'sp_settings'
 			);
@@ -1908,11 +1902,35 @@ class SendPress_Data extends SendPress_DB_Tables {
 			add_post_meta($postid, "_thankyou_message", 'Check your inbox now to confirm your subscription.', true);
 			add_post_meta($postid, "_thankyou_page", '', true);
 
+			return $postid;
+	}
 
-			SendPress_Option::set('default-signup-widget-settings',$postid);
+	static function create_default_form($type = 'signup'){
+		//SendPress_Option::set('default-signup-widget-settings',null);
+
+		$postid = SendPress_Option::get('default-signup-widget-settings');
+
+		if ( !empty($postid) ) {
+			
+			$query = get_posts(array(
+				'post_type'=>'sp_settings',
+				'post_status'=>'any',
+				'p'=>$postid
+			));
+
+			if( !empty($query) ){
+				return;
+			}
+
 		}
 
-		
+		switch($type){
+			case 'signup':
+				$postid = SendPress_Data::create_settings_post_signup_form();
+				SendPress_Option::set('default-signup-widget-settings',$postid);
+				break;
+		}
+
 	}
 
 	static function get_sp_settings_object($postid){
