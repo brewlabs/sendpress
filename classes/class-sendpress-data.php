@@ -1891,7 +1891,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 			//insert post meta info
 			//add_post_meta($post_id, $meta_key, $meta_value, $unique);
-			add_post_meta($postid, "_setting_type", 'signup_widget', true);
+			add_post_meta($postid, "_setting_type", 'form', true);
+			add_post_meta($postid, "_form_type", 'signup_widget', true);
+			add_post_meta($postid, "_sp_settings_id", $postid, true);
 
 			add_post_meta($postid, "_form_description", '', true);
 			add_post_meta($postid, "_collect_firstname", false, true);
@@ -1944,12 +1946,23 @@ class SendPress_Data extends SendPress_DB_Tables {
 			}
 		}
 
+		foreach($data as $key => $value){
+			if(!array_key_exists($key, $options)){
+				update_post_meta($postid, $key, $data[$key]);
+			}
+		}
+
 	}
 
 	static function get_forms_for_widget(){
 		$query = get_posts(array(
 				'post_type'=>'sp_settings',
-				'post_status'=>'any'
+				'post_status'=>'any',
+				'meta_query'=>array(
+					'key'     => '_setting_type',
+					'value'   => 'blue',
+					'compare' => '='
+				)
 			));
 
 		return $query;

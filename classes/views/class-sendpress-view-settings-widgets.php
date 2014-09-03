@@ -43,7 +43,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 		$postid = $_GET['id'];
 		if( !$postid ){
-			echo 'No form to save setting to.';
+			self::display_forms();
 			return;
 		}
 
@@ -54,7 +54,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		<form method="post" id="post">
 
 		<?php 
-			switch($settings['_setting_type']){
+			switch($settings['_form_type']){
 
 				case 'signup_widget':
 					self::signup($settings);
@@ -66,6 +66,10 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		</form>
 		<?php
 
+	}
+
+	function display_forms(){
+		echo 'suprise mothafucker!';
 	}
 
 	function signup($settings){
@@ -207,8 +211,8 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 			
 		
 		</div>
-
-		<input type="hidden" name="_setting_type" id="setting_type" value="signup_widget" />
+		<input type="hidden" name="_setting_type" id="setting_type" value="form" />
+		<input type="hidden" name="_form_type" id="form_type" value="signup_widget" />
 		<input type="hidden" name="_sp_settings_id" id="sp_settings_id" value="<?php echo $settings['_sp_settings_id']; ?>" />
 		<?php
 	}
