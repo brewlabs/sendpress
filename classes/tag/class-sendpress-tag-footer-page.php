@@ -52,7 +52,7 @@ class SendPress_Tag_Footer_Page extends SendPress_Tag_Base  {
 		$display_correct = __("Is this email not displaying correctly?","sendpress");
 		$view = __("View it in your browser","sendpress");
 		$unsubscribe =  __("unsubscribe from this list","sendpress");
-		return '<br>' . $display_correct . ' <a href="{sp-browser-link}">'.$view.'</a><br><br><a href="{sp-unsubscribe-url}">'. $unsubscribe . '</a><br>';
+		return '<br>' . $display_correct . ' <a href="{sp-browser-url}">'.$view.'</a><br><br><a href="{sp-unsubscribe-url}">'. $unsubscribe . '</a><br>';
 	}
 	
 

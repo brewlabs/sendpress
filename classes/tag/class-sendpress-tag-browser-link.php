@@ -13,12 +13,18 @@ class SendPress_Tag_Browser_Link extends SendPress_Tag_Base{
 	}
 	
 	static function external( $template_id ,  $email_id , $subscriber_id , $e ){
+		/*
 		$open_info = array(
 			"id"=>$email_id,
 			"view"=>"email"
 		);
 		$code = SendPress_Data::encrypt( $open_info );
 		$xlink = SendPress_Manager::public_url($code);
+		*/
+		$link = SendPress_Manager::public_url('email');
+		
+		$email_key = str_replace( '=', '', base64_encode( $email_id ) );
+		return add_query_arg(array('sid'=> '{sp-subscriber-id-encoded}', 'eid'=> $email_key), $link );
 
 		return $xlink;
 	}
