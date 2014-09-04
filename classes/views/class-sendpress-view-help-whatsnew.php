@@ -35,14 +35,31 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 
 <h1>Welcome to SendPress <?php echo SENDPRESS_VERSION; ?></h1>
 
-<div class="about-text">Thank you for helping us reach 100K+ downloads and using SendPress.</div>
-<div class="changelog point-releases">
+<div class="about-text">Thank you for updating! SendPress <?php echo SENDPRESS_VERSION; ?> brings you one of our biggest releases yet.</div>
+
+<!--<div class="changelog point-releases">
 	<h3>Maintenance & Bug Fix Release</h3>
 	<p><strong>Version <?php echo SENDPRESS_VERSION; ?></strong> addressed several bugs. For more information, see <a href="http://wordpress.org/plugins/sendpress/changelog/">the changelog</a>.</p>
-</div>
+</div>-->
+<hr>
 <div class="changelog">
-	<h2 class="about-headline-callout">Introducing New Queue Management</h2>
-	<img class="about-overview-img" src="<?php echo SENDPRESS_URL;?>/img/icons.png">
+<div class="about-overview">
+	<h2 class="about-headline-callout">Introducing New Responsive Templates</h2>
+	<img class="about-overview-img" src="<?php echo SENDPRESS_URL;?>/img/v1update.png">
+	<p>Create as many responsive templates as you like with ease. Want to send 100% custom HTML emails upgrade to Pro.</p>
+	</div>
+	<hr>
+	<div class="feature-section col two-col">
+		<div class="col-1">
+		<!-- focus.png -->
+			<img src="<?php echo SENDPRESS_URL;?>/img/simpleeditor.png">
+			</div>
+		<div class="col-2 last-feature">
+			<h3>Focus on your content</h3>
+			<p>Writing and editing is smoother and simpler with a new editor layout and email creation screen. Designed to support our upcoming multicolumn email templates.</p>
+		</div>
+	</div>
+
 	<div class="feature-section col three-col about-updates">
 		<div class="col-1">
 			<img src="<?php echo SENDPRESS_URL;?>/img/sending-errors.png?1">
