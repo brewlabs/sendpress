@@ -59,7 +59,19 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 			<p>Writing and editing is smoother and simpler with a new editor layout and email creation screen. Designed to support our upcoming multicolumn email templates.</p>
 		</div>
 	</div>
-
+	<hr>
+	<div class="feature-section col two-col">
+		<div class="col-1">
+		<!-- focus.png -->
+				<h3>All new Forms &amp; Widget</h3>
+			<p>Creating that perfect signup form is now much simpler. Edit settings in one place to manage both widgets and forms shortcodes.</p>
+		
+			</div>
+		<div class="col-2 last-feature">
+		<img src="<?php echo SENDPRESS_URL;?>/img/forms.png">
+		</div>
+	</div>
+<hr>
 	<div class="feature-section col three-col about-updates">
 		<div class="col-1">
 			<img src="<?php echo SENDPRESS_URL;?>/img/sending-errors.png?1">
