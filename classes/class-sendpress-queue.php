@@ -79,7 +79,8 @@ static function send_mail(){
 		$count = SendPress_Option::get('emails-per-hour');
 		$count = SendPress_Option::get('wpcron-per-call',25);
 
-
+		$email_count = 0;
+		$attempts = 0;
 
 		if( SendPress_Manager::limit_reached()  ){
 			return;
