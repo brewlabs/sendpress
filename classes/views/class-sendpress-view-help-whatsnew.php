@@ -74,9 +74,9 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 <hr>
 	<div class="feature-section col three-col about-updates">
 		<div class="col-1">
-			<img src="<?php echo SENDPRESS_URL;?>/img/sending-errors.png?1">
-			<h3>Detailed Errors</h3>
-			<p>SendPress now displays detail connection errors for sending in the Queue section.</p>
+			<img src="<?php echo SENDPRESS_URL;?>/img/prot.png?1">
+			<h3>Custom HTML</h3>
+			<p>SendPress PRO adds the ability to send any HTML template you want.</p>
 		</div>
 		<div class="col-2">
 			<img src="<?php echo SENDPRESS_URL;?>/img/sendhistory.png?1">
@@ -119,8 +119,8 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 	<div class="feature-section col three-col">
 	<h3>Whats Ahead</h3>
 		<div>
-			<h4>Post Notifications</h4>
-			<p>Subscribers will be able to get your new post's via email. Post Notifications will only be available with SendPress Pro.</p>
+			<h4>Ninja Forms</h4>
+			<p>We are working on an exentsion so you can collect all your subscriber data with the <a href="http://ninjaforms.com/">Ninja Forms Plugin</a>.</p>
 		</div>
 		<div>
 			<h4>Autoresponders</h4>
