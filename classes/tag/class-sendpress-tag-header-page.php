@@ -11,7 +11,7 @@ class SendPress_Tag_Header_Page extends SendPress_Tag_Base  {
 	static function internal( $template_id , $email_id, $subscriber_id , $example ) {
 		$return = self::external( $template_id ,$email_id, $subscriber_id , $example );
 		if( $return != '' ){
-			return self::table_start() . $return . self::table_end();
+			return  $return;
 		}
         return '';
 	}
@@ -67,9 +67,9 @@ class SendPress_Tag_Header_Page extends SendPress_Tag_Base  {
         if( $padding == 'pad-page'  ){
         	 $pd = ' padding-left: 30px; padding-right: 30px; ';
     	}
-    	$return .='<table border="0" width="100%" height="100%" class="sp-body-bg" cellpadding="0" cellspacing="0">';
-    	$return .='<tr>';
-      	$return .='<td align="center" valign="top">';
+    	//$return .='<table border="0" width="100%" height="100%" class="sp-body-bg" cellpadding="0" cellspacing="0">';
+    	//$return .='<tr>';
+      	//$return .='<td align="center" valign="top">';
 		$return .='<!-- 600px container Header - SendPress_Tag_Header_Page-->';
 	    $return .='<table border="0" width="600" cellpadding="0" cellspacing="0" class="container " >';
 	    $return .='<tr>';
@@ -82,9 +82,9 @@ class SendPress_Tag_Header_Page extends SendPress_Tag_Base  {
 		$return .='</td>';
 	    $return .='</tr>';
 	    $return .='</table>';
-		$return .='</td>';
-	    $return .='</tr>';
-	    $return .='</table>';
+		//$return .='</td>';
+	    //$return .='</tr>';
+	    //$return .='</table>';
 	    return $return;
 	}
 }

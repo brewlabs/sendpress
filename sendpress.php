@@ -1229,6 +1229,8 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 		//On version change update default template
 		$this->set_template_default();
 
+		SendPress_Template_Manager::update_template_content();
+		
 		SendPress_Option::check_for_keys();
 
 		if(version_compare( $current_version, '0.8.6', '<' )){
