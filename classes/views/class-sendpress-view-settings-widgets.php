@@ -203,7 +203,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 					}
 				}
 
-				do_action('sendpress_post_notification_widget_form',$lists, $settings, $this, "_");
+				do_action('sendpress_post_notification_widget_form_new',$lists, $settings, $this, "_");
 				?>
 
 				<?php $this->panel_end(); ?>
