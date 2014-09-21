@@ -66,13 +66,20 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 			$sender->save();
 		}
 	   // }
-		SendPress_Admin::redirect('Settings_Account');
+
+		if($_POST['test']){
+			
+			$this->send_test_email();
+		}
+
+		//SendPress_Admin::redirect('Settings_Account');
 
 
 	}
 
 	function send_test_email(){
 		$options = array();
+
 		$options['testemail'] = $_POST['testemail'];
 
 		SendPress_Option::set($options);
@@ -124,7 +131,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 			</div>
 			<div class="sp-row">
 				<div class="sp-50 sp-first">
-					<button class="btn btn-primary btn-block" id="send-test-email-btn" type="submit"><?php _e( 'Send Test!', 'sendpress' ); ?></button>
+					<button class="btn btn-primary btn-block" value="test" name="test" type="submit"><?php _e( 'Send Test!', 'sendpress' ); ?></button>
 				</div>
 				<div class="sp-50">
 					<button class="btn btn-danger btn-block" data-toggle="modal" data-target="#debugModal" type="button"><?php _e( 'Debug Info', 'sendpress' ); ?></button>
