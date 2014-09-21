@@ -1913,16 +1913,36 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		if ( !empty($postid) ) {
 			$hasPost = true;
-
-			$query = get_posts(array(
+			$query = array();
+			/*
+			$query =  get_posts(array(
 				'post_type'=>'sp_settings',
 				'post_status'=>'any',
 				'p'=>$postid
 			));
 
+			*/
+		
 			if( count($query) === 0 ){
 				$hasPost = false;
-			}
+				$xposts = get_posts(array(
+					'post_type'=>'sp_settings',
+					'post_status'=>'any',
+					'orderby' => 'ID',
+					'order' => 'ASC'
+				));
+				foreach ($xposts as $pchecks) {
+
+					if($pchecks->post_title == 'Default Signup Settings'){
+						$hasPost = true;
+						SendPress_Option::set('default-signup-widget-settings',$pchecks->ID);
+					}
+					
+					//Default Signup Settings
+				}
+				
+
+			} 
 
 		}
 

@@ -306,7 +306,7 @@ Author URI: https://sendpress.com/
 				add_filter('user_has_cap',array( $this,'user_has_cap') , 10 , 3);
 
 				//SendPress_Option::set('default-signup-widget-settings',false);
-				SendPress_Data::create_default_form();
+			
 			} else{
 				if( SendPress_Option::get('sp_widget_shortdoces') ){
 					add_filter('widget_text', 'do_shortcode');
@@ -1231,6 +1231,8 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 
 		SendPress_Template_Manager::update_template_content();
 		
+		SendPress_Data::create_default_form();
+
 		SendPress_Option::check_for_keys();
 
 		if(version_compare( $current_version, '0.8.6', '<' )){
