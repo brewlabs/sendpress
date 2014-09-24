@@ -11,8 +11,8 @@ class SendPress_Template_Manager {
     
         return  array(
             'antwort' => array('guid'=>'cd8ab466-e236-49d3-bd6c-e84db055ae9a', 'path'=> SENDPRESS_PATH.'templates/master.html', 'name'=> 'Responsive Starter' ,'status' => 'sp-standard'),
-            '1column' => array('guid'=>'a6789cdf-cb0d-4069-aba5-42fbded54519', 'path'=> SENDPRESS_PATH.'templates/1column.html', 'name'=> 'Responsive 1 Column' ,'status' => 'draft'),
-            '2columns-to-rows' => array('guid'=>'919af989-16b7-427f-bf2e-95adda844e1c', 'path'=> SENDPRESS_PATH.'templates/2columns-to-rows.html', 'name'=> '2 Column Top - Wide Bottom - Responsive','status' => 'draft')
+            //'1column' => array('guid'=>'a6789cdf-cb0d-4069-aba5-42fbded54519', 'path'=> SENDPRESS_PATH.'templates/1column.html', 'name'=> 'Responsive 1 Column' ,'status' => 'draft'),
+            //'2columns-to-rows' => array('guid'=>'919af989-16b7-427f-bf2e-95adda844e1c', 'path'=> SENDPRESS_PATH.'templates/2columns-to-rows.html', 'name'=> '2 Column Top - Wide Bottom - Responsive','status' => 'draft')
         );
     
     }

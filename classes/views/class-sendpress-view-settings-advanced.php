@@ -84,9 +84,10 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 				<br class="clear">
 		<div class="sp-row">
 			<div class="sp-50 sp-first">
-			
-		
-			
+			<?php $this->panel_start( __('Database Repair','sendpress') ); ?>
+				<p>Reset our new tempalte system back to default and fix some postmeta issues.</p>
+				<a class="btn btn-primary btn-block" href="<? echo SendPress_Admin::link('Settings_Dbfix'); ?>">Data Fix Options</a>
+			<?php $this->panel_end(); ?>
 			<div class="panel panel-default">
 			  <div class="panel-heading">
 			    <h3 class="panel-title">Javascript & CSS</h3>
@@ -141,6 +142,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 				<a class="btn btn-danger" href="<? echo SendPress_Admin::link('Settings_Install'); ?>">Install Missing Tables</a>
 				<a class="btn btn-warning" href="<? echo SendPress_Admin::link('Settings_Install',array('action'=>'events-repair')); ?>">Repair Events Tables</a>
 				<a class="btn btn-primary" href="<? echo SendPress_Admin::link('Settings_Fixposts'); ?>">Templates Check</a>
+
 			</div>	
 			<div class="sp-50">
 				<div class="panel panel-default">
