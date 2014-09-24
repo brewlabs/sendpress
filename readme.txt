@@ -4,7 +4,7 @@ Contributors: brewlabs
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 4.0
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,13 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 1.0.1 - 2014.9.23 =
+* Fix: Stop extra template creations
+* Fix: Remove extra settings from new settings posts
+* Fix: Template spacing and disable issues
+* New: Added link to template setup
+
 
 = 1.0 - 2014.9.5 =
 * Fix: Mising variables in cron
@@ -535,6 +542,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Templates and Settings fixes
 
 = 1.0 =
 New Templates and Bug Fixes
