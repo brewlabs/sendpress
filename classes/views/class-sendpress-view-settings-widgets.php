@@ -9,6 +9,26 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 	function save($post, $sp){
+
+		$action = (isset($post['form_action'])) ? $post['form_action'] : 'save';
+		
+		switch($action){
+			case 'copy':
+				$postid = SendPress_Data::create_settings_post($post['post_subject'], array(), $post['copy_from']);
+				wp_redirect( '?page=sp-settings&view=widgets&id='. $postid );
+				break;
+			case 'create':
+				$postid = SendPress_Data::create_settings_post($post['post_subject'], SendPress_Data::signup_defaults());
+				wp_redirect( '?page=sp-settings&view=widgets&id='. $postid );
+				break;
+			default:
+				self::save_form($post, $sp);
+				break;
+		}
+
+	}
+
+	function save_form($post, $sp){
 		//$data = array_slice($post, 0, -2);
 		$data = $post;
 
@@ -44,35 +64,39 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		$postid = $_GET['id'];
 		$showCreate = (isset($_GET['create']) && $_GET['create'] == 1) ? true : false;
 
-		error_log($showCreate);
+		$settings = SendPress_Data::get_post_meta_object($postid);
+		$settings['_settings_id'] = $postid;
 
 		if(!$postid && !$showCreate){
-			self::display_forms();
-			return;
+			//self::display_forms();
+			$settings['_form_type'] = '';
 		}
 
 		if( $showCreate ){
-			self::create_form();
-			return;
+			//self::create_form();
+			$settings['_form_type'] = 'create_form';
 		}
 
-		$settings = SendPress_Data::get_post_meta_object($postid);
-		$settings['_settings_id'] = $postid;
-		?>
-		<form method="post" id="post">
+		if(strlen($settings['_form_type']) > 0){
+			echo '<form method="post" id="post">';
+		}
 
-		<?php 
-			switch($settings['_form_type']){
-
-				case 'signup_widget':
-					self::signup($settings);
-					break;
-			}
-		?>
-
-		<?php wp_nonce_field($sp->_nonce_value); ?>
-		</form>
-		<?php
+		switch($settings['_form_type']){
+			case 'create_form':
+				self::create_form();
+				break;
+			case 'signup_widget':
+				self::signup($settings);
+				break;
+			default:
+				self::display_forms();
+				break;
+		}
+	
+		if(strlen($settings['_form_type']) > 0){
+			wp_nonce_field($sp->_nonce_value);
+			echo '</form>';
+		}
 
 	}
 
@@ -87,7 +111,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		?>
 		
 		<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
-		<form id="email-filter" method="get">
+		<form id="forms-filter" method="get">
 			<div id="taskbar" class="lists-dashboard rounded group"> 
 				<div id="button-area">  
 					<a class="btn btn-primary btn-large" href="?page=<?php echo $_REQUEST['page']; ?>&view=widgets&create=1"><?php _e('Create Form','sendpress'); ?></a>
@@ -104,24 +128,16 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 	}
 
 	function create_form(){
-		echo 'suprise muthafucker';
-		do_action('sendpress_event','Create Email');
-		$post = get_default_post_to_edit( $sp->_email_post_type, true );
-		$post_ID = $post->ID;
-	
-		global $current_user;
+		
+		$copy_from = (isset($_GET['id'])) ? $_GET['id'] : 0;
 
-		wp_enqueue_script('post');
-
-		$post_type = SendPress_Data::email_post_type();
-		$post_type_object = get_post_type_object( $post_type );
+		$save_type = ($copy_from > 0) ? "copy" : "create";
 
 		?>
-		<form method="POST" name="post" id="post">
 		
-		<h2>Create Form</h2>
+		<h2><?php ucfirst($save_type); ?> Form</h2>
 		<br>
-		<?php $this->panel_start('<span class="glyphicon glyphicon-envelope"></span> '.  __('Form Name','sendpress') ); ?>
+		<?php $this->panel_start( __('Form Name','sendpress') ); ?>
         
         <input type="text" name="post_subject" size="30" tabindex="1" class="form-control" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
         
@@ -169,10 +185,16 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		</div>
 		-->
 
-		 <?php wp_nonce_field($sp->_nonce_value); ?><br><br>
-		 </form>
+		<input type="hidden" name="_setting_type" id="setting_type" value="form" />
+		<input type="hidden" name="_form_type" id="form_type" value="signup_widget" />
+		<input type="hidden" name="form_action" id="form_action" value="<?php echo $save_type; ?>" />
 		 
 		<?php
+		if($copy_from > 0){
+			?>
+			<input type="hidden" name="copy_from" id="copy_from" value="<?php echo $copy_from; ?>" />
+			<?php
+		}
 	}
 
 	function signup($settings){
@@ -196,7 +218,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		}
 		?>
 		<div class="sp-row">
-			<h3>Signup Form</h3>
+			<h3><?php echo $settings['post_title'];?></h3>
 		</div>
 		<div class="sp-row">
 			<div class="sp-50 sp-first">

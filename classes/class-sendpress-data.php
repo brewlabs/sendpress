@@ -1179,6 +1179,11 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 
+	static function delete_extra_settings_post(){
+		
+	}
+
+
 	static function add_subscribe_event( $sid, $lid, $type ){
 		global $wpdb;
 
@@ -1803,8 +1808,21 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
+	static function remove_all_templates(){
+		global $wpdb;
+		$wpdb->query("DELETE a,b,c FROM wp_posts a LEFT JOIN wp_term_relationships b ON (a.ID = b.object_id) LEFT JOIN wp_postmeta c ON (a.ID = c.post_id) WHERE a.post_type = 'sp_template' AND a.post_title = 'Responsive Starter' " );
+		$wpdb->query("DELETE a,b,c FROM wp_posts a LEFT JOIN wp_term_relationships b ON (a.ID = b.object_id) LEFT JOIN wp_postmeta c ON (a.ID = c.post_id) WHERE a.post_type = 'sp_template' AND a.post_title = 'Responsive 1 Column' " );
+		$wpdb->query("DELETE a,b,c FROM wp_posts a LEFT JOIN wp_term_relationships b ON (a.ID = b.object_id) LEFT JOIN wp_postmeta c ON (a.ID = c.post_id) WHERE a.post_type = 'sp_template' AND a.post_title = '2 Column Top - Wide Bottom - Responsive' " );
 
 
+	}
+
+
+	static function remove_all_settings(){
+		global $wpdb;
+		$wpdb->query("DELETE a,b,c FROM wp_posts a LEFT JOIN wp_term_relationships b ON (a.ID = b.object_id) LEFT JOIN wp_postmeta c ON (a.ID = c.post_id) WHERE a.post_type = 'sp_settings'" );
+
+	}
 
 
 
@@ -1872,37 +1890,48 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 	/********************* Widget Settings functionS **************************/
-	static function create_settings_post_signup_form(){
+
+	static function signup_defaults(){
+		return array(
+			"_sp_setting_type" => "form",
+			"_sp_form_type" => "signup_widget",
+			"_sp_form_description" => "",
+			"_sp_collect_firstname" => false,
+			"_sp_collect_lastname" => false,
+			"_sp_display_labels_inside_fields" => 0,
+			"_sp_firstname_label" => "First Name",
+			"_sp_lastname_label" => "Last Name",
+			"_sp_email_label" => "E-Mail",
+			"_sp_button_label" => "Submit",
+			"_sp_list_label" => "List Selection",
+			"_sp_lists_checked" => "Select Lists by default",
+			"_sp_thankyou_message" => "Check your inbox now to confirm your subscription.",
+			"_sp_thankyou_page" => ""
+		);
+	}
+
+	static function create_settings_post($title = 'Settings', $defaults = array(), $copy_from = 0){
 		// Create post object
-			$my_post = array(
-				'post_title'    => 'Default Signup Settings',
-				'post_status'   => 'draft',
-				'post_type' 	=> 'sp_settings'
-			);
+		$my_post = array(
+			'post_title'    => $title,
+			'post_status'   => 'draft',
+			'post_type' 	=> 'sp_settings'
+		);
 
-			// Insert the post into the database
-			$postid = wp_insert_post( $my_post );
+		// Insert the post into the database
+		$postid = wp_insert_post( $my_post );
 
-			//insert post meta info
-			//add_post_meta($post_id, $meta_key, $meta_value, $unique);
-			add_post_meta($postid, "_sp_setting_type", 'form', true);
-			add_post_meta($postid, "_sp_form_type", 'signup_widget', true);
-			add_post_meta($postid, "_sp_settings_id", $postid, true);
+		add_post_meta($postid, "_sp_settings_id", $postid, true);
 
-			add_post_meta($postid, "_sp_form_description", '', true);
-			add_post_meta($postid, "_sp_collect_firstname", false, true);
-			add_post_meta($postid, "_sp_collect_lastname", false, true);
-			add_post_meta($postid, "_sp_display_labels_inside_fields", 0, true);
-			add_post_meta($postid, "_sp_firstname_label", 'First Name', true);
-			add_post_meta($postid, "_sp_lastname_label", 'Last Name', true);
-			add_post_meta($postid, "_sp_email_label", 'E-Mail', true);
-			add_post_meta($postid, "_sp_button_label", 'Submit', true);
-			add_post_meta($postid, "_sp_list_label", 'List Selection', true);
-			add_post_meta($postid, "_sp_lists_checked", 'Select Lists by default', true);
-			add_post_meta($postid, "_sp_thankyou_message", 'Check your inbox now to confirm your subscription.', true);
-			add_post_meta($postid, "_sp_thankyou_page", '', true);
+		if( $copy_from > 0 ){
+			$defaults = SendPress_Data::get_post_meta_object($copy_from, false);
+		}
 
-			return $postid;
+		foreach ($defaults as $key => $value) {
+			add_post_meta($postid, $key, $value, true);
+		}
+
+		return $postid;
 	}
 
 	static function create_default_form($type = 'signup'){
@@ -1949,30 +1978,30 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if(!$hasPost){
 			switch($type){
 				case 'signup':
-					$postid = SendPress_Data::create_settings_post_signup_form();
+					$postid = SendPress_Data::create_settings_post("Default Signup Settings", SendPress_Data::signup_defaults());
 					SendPress_Option::set('default-'.$type.'-widget-settings',$postid);
 					break;
 			}
 		}
-		
-
 	}
 
-	static function get_post_meta_object($postid){
+	static function get_post_meta_object($postid, $cleansp = true){
 
 		$post_meta_keys = get_post_custom_keys($postid);
 		if (empty($post_meta_keys)) return;
 
 		$obj = array();
 		
-		
 		foreach ($post_meta_keys as $meta_key) {
 			$meta_values = get_post_custom_values($meta_key, $postid);
 			foreach ($meta_values as $meta_value) {
 				$meta_value = maybe_unserialize($meta_value);
-				$obj[str_replace('_sp', '', $meta_key)] = $meta_value;
+				$obj[($cleansp) ? str_replace('_sp', '', $meta_key) : $meta_key] = $meta_value;
 			}
 		}
+
+		//add post title to the array
+		$obj['post_title'] = get_the_title($postid);
 
 		return $obj;
 	}
@@ -1994,7 +2023,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 				update_post_meta($postid, '_sp'.$key, $data[$key]);
 			}
 		}
-
 	}
 
 	static function get_forms_for_widget($type = 'signup_widget'){
@@ -2003,12 +2031,12 @@ class SendPress_Data extends SendPress_DB_Tables {
 				'post_status'=>'any',
 				'meta_query'=>array(
 					array(
-							'key'     => '_setting_type',
+							'key'     => '_sp_setting_type',
 							'value'   => 'form',
 							'compare' => '='
 						),
 						array(
-							'key'     => '_form_type',
+							'key'     => '_sp_form_type',
 							'value'   => $type,
 							'compare' => '='
 						),

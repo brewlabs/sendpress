@@ -30,6 +30,9 @@ class SendPress_Notifications_Manager {
 	}
 
 	static function maybe_send_notification($type = 'daily', $data = false){
+
+		do_action("spnl_logging_prune_routine");
+
 		$options = SendPress_Option::get('notification_options');
 		$subscribed = SendPress_Notifications_Manager::build_subscribed_notification($data);
 		$unsubscribed = SendPress_Notifications_Manager::build_unsibscribed_notification($data);

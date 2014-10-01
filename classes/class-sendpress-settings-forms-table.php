@@ -304,7 +304,7 @@ class SendPress_Settings_Forms_Table extends WP_List_Table {
 			'post_status' => array('any'),
 			'meta_query'=>array(
 					array(
-							'key'     => '_setting_type',
+							'key'     => '_sp_setting_type',
 							'value'   => 'form',
 							'compare' => '='
 						)
@@ -358,7 +358,7 @@ class SendPress_Settings_Forms_Table extends WP_List_Table {
 			'paged'=> $paged,
 			'meta_query'=>array(
 					array(
-							'key'     => '_setting_type',
+							'key'     => '_sp_setting_type',
 							'value'   => 'form',
 							'compare' => '='
 						)
