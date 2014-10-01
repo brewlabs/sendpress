@@ -35,7 +35,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
 		if($formid > 0){
 			//get options
-			$options = SendPress_Data::get_sp_settings_object($formid);
+			$options = SendPress_Data::get_post_meta_object($formid);
 
 			switch($options['_form_type']){
 				case 'signup_widget':

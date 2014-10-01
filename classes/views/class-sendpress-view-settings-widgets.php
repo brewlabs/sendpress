@@ -29,7 +29,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 		$data['_listids'] = implode(',', $listids);
 
-		SendPress_Data::update_sp_settings_object($data['_sp_settings_id'],$data);
+		SendPress_Data::update_post_meta_object($data['_settings_id'],$data);
 	}
 
 	function view_buttons(){
@@ -42,14 +42,22 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 	function html($sp) {
 
 		$postid = $_GET['id'];
-		if( !$postid ){
+		$showCreate = (isset($_GET['create']) && $_GET['create'] == 1) ? true : false;
+
+		error_log($showCreate);
+
+		if(!$postid && !$showCreate){
 			self::display_forms();
 			return;
 		}
 
+		if( $showCreate ){
+			self::create_form();
+			return;
+		}
 
-		$settings = SendPress_Data::get_sp_settings_object($postid);
-		$settings['_sp_settings_id'] = $postid;
+		$settings = SendPress_Data::get_post_meta_object($postid);
+		$settings['_settings_id'] = $postid;
 		?>
 		<form method="post" id="post">
 
@@ -69,7 +77,102 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 	}
 
 	function display_forms(){
-		echo 'suprise mothafucker!';
+		SendPress_Tracking::event('Emails Tab');
+
+		//Create an instance of our package class...
+		$testListTable = new SendPress_Settings_Forms_Table();
+		//Fetch, prepare, sort, and filter our data...
+		$testListTable->prepare_items();
+
+		?>
+		
+		<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
+		<form id="email-filter" method="get">
+			<div id="taskbar" class="lists-dashboard rounded group"> 
+				<div id="button-area">  
+					<a class="btn btn-primary btn-large" href="?page=<?php echo $_REQUEST['page']; ?>&view=widgets&create=1"><?php _e('Create Form','sendpress'); ?></a>
+				</div>
+				<h2><?php _e('Forms','sendpress'); ?></h2>
+			</div>
+			<!-- For plugins, we also need to ensure that the form posts back to our current page -->
+		    <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+		    <!-- Now we can render the completed list table -->
+		    <?php $testListTable->display(); ?>
+		    <?php wp_nonce_field($this->_nonce_value); ?>
+		</form>
+		<?php
+	}
+
+	function create_form(){
+		echo 'suprise muthafucker';
+		do_action('sendpress_event','Create Email');
+		$post = get_default_post_to_edit( $sp->_email_post_type, true );
+		$post_ID = $post->ID;
+	
+		global $current_user;
+
+		wp_enqueue_script('post');
+
+		$post_type = SendPress_Data::email_post_type();
+		$post_type_object = get_post_type_object( $post_type );
+
+		?>
+		<form method="POST" name="post" id="post">
+		
+		<h2>Create Form</h2>
+		<br>
+		<?php $this->panel_start('<span class="glyphicon glyphicon-envelope"></span> '.  __('Form Name','sendpress') ); ?>
+        
+        <input type="text" name="post_subject" size="30" tabindex="1" class="form-control" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
+        
+        <?php $this->panel_end(  ); ?>
+		
+		<!--
+    	<div class="sp-row">
+    		<div class="sp-50 sp-first">
+				<?php $this->panel_start( __('Form to Create','sendpress') ); ?>
+				<h5>Select your form:</h5>
+				<select class="form-control" name="template">
+				<?php
+						$args = array(
+							'post_type' => 'sp_template' ,
+							'post_status' => array('sp-standard'),
+						);
+
+						$the_query = new WP_Query( $args );
+
+						if ( $the_query->have_posts() ) {
+						while ( $the_query->have_posts() ) {
+							$the_query->the_post();
+							$temp_id = $the_query->post->ID;
+							$s = '';
+							if($temp_id == $template_id){
+								$s = 'selected';
+							}
+							echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
+						}
+						
+					}
+				?>
+				
+				</select>
+				<?php $this->panel_end(); ?>
+			</div>
+			<div class="sp-50">
+				<?php $this->panel_start( __('Original Template','sendpress') ); ?>
+				<label>
+					<input type="radio"  name="template_system"  value="old" /> Use Old Email System
+				</label><br>Currently emails cannot be upgraded directly to the new Template system.
+
+				<?php $this->panel_end(  ); ?>
+			</div>
+		</div>
+		-->
+
+		 <?php wp_nonce_field($sp->_nonce_value); ?><br><br>
+		 </form>
+		 
+		<?php
 	}
 
 	function signup($settings){
@@ -139,7 +242,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 			<div class="sp-50">
 				<?php $this->panel_start( __('Shortcode','sendpress') ); ?>
 					<p>Use the shortcode belot to insert this signup form into your posts and pages.</p>
-					<pre>[sp-form formid=<?php echo $settings['_sp_settings_id']; ?>]</pre>
+					<pre>[sp-form formid=<?php echo $settings['_settings_id']; ?>]</pre>
 				<?php $this->panel_end(); ?>
 
 				<?php $this->panel_start( __('Signup Settings','sendpress') ); ?>
@@ -213,7 +316,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		</div>
 		<input type="hidden" name="_setting_type" id="setting_type" value="form" />
 		<input type="hidden" name="_form_type" id="form_type" value="signup_widget" />
-		<input type="hidden" name="_sp_settings_id" id="sp_settings_id" value="<?php echo $settings['_sp_settings_id']; ?>" />
+		<input type="hidden" name="_settings_id" id="sp_settings_id" value="<?php echo $settings['_settings_id']; ?>" />
 		<?php
 	}
 

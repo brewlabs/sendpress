@@ -1885,22 +1885,22 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 			//insert post meta info
 			//add_post_meta($post_id, $meta_key, $meta_value, $unique);
-			add_post_meta($postid, "_setting_type", 'form', true);
-			add_post_meta($postid, "_form_type", 'signup_widget', true);
+			add_post_meta($postid, "_sp_setting_type", 'form', true);
+			add_post_meta($postid, "_sp_form_type", 'signup_widget', true);
 			add_post_meta($postid, "_sp_settings_id", $postid, true);
 
-			add_post_meta($postid, "_form_description", '', true);
-			add_post_meta($postid, "_collect_firstname", false, true);
-			add_post_meta($postid, "_collect_lastname", false, true);
-			add_post_meta($postid, "_display_labels_inside_fields", 0, true);
-			add_post_meta($postid, "_firstname_label", 'First Name', true);
-			add_post_meta($postid, "_lastname_label", 'Last Name', true);
-			add_post_meta($postid, "_email_label", 'E-Mail', true);
-			add_post_meta($postid, "_button_label", 'Submit', true);
-			add_post_meta($postid, "_list_label", 'List Selection', true);
-			add_post_meta($postid, "_lists_checked", 'Select Lists by default', true);
-			add_post_meta($postid, "_thankyou_message", 'Check your inbox now to confirm your subscription.', true);
-			add_post_meta($postid, "_thankyou_page", '', true);
+			add_post_meta($postid, "_sp_form_description", '', true);
+			add_post_meta($postid, "_sp_collect_firstname", false, true);
+			add_post_meta($postid, "_sp_collect_lastname", false, true);
+			add_post_meta($postid, "_sp_display_labels_inside_fields", 0, true);
+			add_post_meta($postid, "_sp_firstname_label", 'First Name', true);
+			add_post_meta($postid, "_sp_lastname_label", 'Last Name', true);
+			add_post_meta($postid, "_sp_email_label", 'E-Mail', true);
+			add_post_meta($postid, "_sp_button_label", 'Submit', true);
+			add_post_meta($postid, "_sp_list_label", 'List Selection', true);
+			add_post_meta($postid, "_sp_lists_checked", 'Select Lists by default', true);
+			add_post_meta($postid, "_sp_thankyou_message", 'Check your inbox now to confirm your subscription.', true);
+			add_post_meta($postid, "_sp_thankyou_page", '', true);
 
 			return $postid;
 	}
@@ -1958,7 +1958,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 
-	static function get_sp_settings_object($postid){
+	static function get_post_meta_object($postid){
 
 		$post_meta_keys = get_post_custom_keys($postid);
 		if (empty($post_meta_keys)) return;
@@ -1970,28 +1970,28 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$meta_values = get_post_custom_values($meta_key, $postid);
 			foreach ($meta_values as $meta_value) {
 				$meta_value = maybe_unserialize($meta_value);
-				$obj[$meta_key] = $meta_value;
+				$obj[str_replace('_sp', '', $meta_key)] = $meta_value;
 			}
 		}
 
 		return $obj;
 	}
 
-	static function update_sp_settings_object($postid, $data){
+	static function update_post_meta_object($postid, $data){
 
-		$options = SendPress_Data::get_sp_settings_object($postid);
+		$options = SendPress_Data::get_post_meta_object($postid);
 
 		foreach($options as $key => $value){
 			if(array_key_exists($key, $data)){
-				update_post_meta($postid, $key, $data[$key]);
+				update_post_meta($postid, '_sp'.$key, $data[$key]);
 			}else{
-				update_post_meta($postid, $key, false);
+				update_post_meta($postid, '_sp'.$key, false);
 			}
 		}
 
 		foreach($data as $key => $value){
 			if(!array_key_exists($key, $options)){
-				update_post_meta($postid, $key, $data[$key]);
+				update_post_meta($postid, '_sp'.$key, $data[$key]);
 			}
 		}
 
