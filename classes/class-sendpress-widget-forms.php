@@ -82,35 +82,34 @@ class SendPress_Widget_Forms extends WP_Widget {
 		
 		<?php 
 		$forms = SendPress_Data::get_forms_for_widget(); 
+		$id = $instance['form_to_display'];
 
-			if(count($forms) > 1){
+		if(count($forms) > 1){
+
+			?>
+			<p>
+				<label for="<?php echo $this->get_field_id( 'form_to_display' ); ?>"><?php _e('Form to Display:', 'sendpress'); ?></label>
+				<select name="<?php echo $this->get_field_name( 'form_to_display' ); ?>" id="<?php echo $this->get_field_id( 'form_to_display' ); ?>"> 
+
+				<?php 
+
+				  	foreach ( $forms as $form ) {
+					  	$s ='';
+					  	if($id == $form->ID){ $s =  "selected"; }
+					  	$option = '<option value="' . $form->ID .'" ' .$s. '>';
+						$option .= $form->post_title;
+						$option .= '</option>';
+						echo $option;
+					}
 				?>
-				<p>
-					<label for="<?php echo $this->get_field_id( 'form_to_display' ); ?>"><?php _e('Form to Display:', 'sendpress'); ?></label>
-					<select name="<?php echo $this->get_field_name( 'form_to_display' ); ?>" id="<?php echo $this->get_field_id( 'form_to_display' ); ?>"> 
-
-					<?php 
-
-					  	foreach ( $forms as $form ) {
-						  	$s ='';
-						  	if($id == $form->ID){ $s =  "selected"; }
-						  	$option = '<option value="' . $form->ID .'" ' .$s. '>';
-							$option .= $form->post_title;
-							$option .= '</option>';
-							echo $option;
-						}
-					?>
-					</select>
-				</p>
-				<?
-			}else{
-				?>
-				<input type="hidden" name="<?php echo $this->get_field_name( 'form_to_display' ); ?>" id="<?php echo $this->get_field_name( 'form_to_display' ); ?>" value="<?php echo $forms[0]->ID; ?>" />
-				<?php
-			}
-		?>
-		
-		<?php
+				</select>
+			</p>
+			<?
+		}else{
+			?>
+			<input type="hidden" name="<?php echo $this->get_field_name( 'form_to_display' ); ?>" id="<?php echo $this->get_field_name( 'form_to_display' ); ?>" value="<?php echo $forms[0]->ID; ?>" />
+			<?php
+		}
 		
 	}
 }
