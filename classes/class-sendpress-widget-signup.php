@@ -138,6 +138,7 @@ class SendPress_Widget_Signup extends WP_Widget {
 	    $listids = array();
 
 		foreach($lists as $list){
+			
 			if( get_post_meta($list->ID,'public',true) == 1 ){
 				( !array_key_exists('list_'.$list->ID,$new_instance) ) ? $instance['list_'.$list->ID] = false : $instance['list_'.$list->ID] = $new_instance['list_'.$list->ID];
 			}
@@ -186,7 +187,10 @@ class SendPress_Widget_Signup extends WP_Widget {
 			$defaults['list_'.$list->ID] = false;
 		}
 
-		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
+		$instance = wp_parse_args( (array) $instance, $defaults ); 
+
+		?>
+
 
 		<!-- Widget Title: Text Input -->
 		<p>
