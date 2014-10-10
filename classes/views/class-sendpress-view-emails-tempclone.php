@@ -22,6 +22,7 @@ class SendPress_View_Emails_Tempclone extends SendPress_View_Emails {
   		$new_post = SendPress_Posts::copy($postdata, $_POST['post_title'], '' , '');
   		SendPress_Posts::copy_meta_info($new_post, $_GET['templateID']  );
   		update_post_meta($new_post, '_template_type','clone');
+  		update_post_meta($new_post, '_guid','');
   		SendPress_Admin::redirect('Emails_Tempstyle', array('templateID' => $new_post ) );
 	}
 	
