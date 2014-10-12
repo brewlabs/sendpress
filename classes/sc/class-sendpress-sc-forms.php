@@ -51,7 +51,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		global $load_signup_js, $sendpress_show_thanks, $sendpress_signup_error;
 		$load_signup_js = true;
 		$no_list_error = '-- NO LIST HAS BEEN SET! --';
-
+		$_listids = '';
 		extract($options);
 
 	   	$lists = SendPress_Data::get_lists(
@@ -63,7 +63,8 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 			)),
 			false
 		);
-
+	   	$postnotification = '';
+	   	$pnlistid = array();
 	   	//find post notification list
 	   	foreach ($options as $key => $value) {
 		    if (strpos($key, '_meta_for_list_') === 0) {
@@ -118,7 +119,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 							<?php
 						} else {
 							?>
-							<input type="hidden" name="sp_list" id="list" class="sp_list" value="<?php echo $listids; ?>" />
+							<input type="hidden" name="sp_list" id="list" class="sp_list" value="<?php echo $list_ids[0]; ?>" />
 							<?php
 						}
 					}
