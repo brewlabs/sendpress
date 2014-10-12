@@ -164,7 +164,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 					<hr>
 					Users to Sync per ajax call: <?php $this->select('sync-per-call',SendPress_Option::get('sync-per-call',250) ); ?> Default: 250
 					<hr>
-					Emails sent per AutoCron execution: <?php $this->select('autocron-per-call',SendPress_Option::get('autocron-per-call',25), array(15,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100) ); ?> Default: 25<br>
+					Emails sent per AutoCron execution: <?php $this->select('autocron-per-call',SendPress_Option::get('autocron-per-call',25), array(5,10,15,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100) ); ?> Default: 25<br>
 					<small>If AutoCron errors it will shut itself off.</small>
 					<hr>
 					WordPress cron emails sent per execution: <?php $this->select('wpcron-per-call',SendPress_Option::get('wpcron-per-call',25), array(15,25,30,35,40,45,50,100,250,500,1000) ); ?> Default: 25<br>
