@@ -67,7 +67,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 		}
 	   // }
 
-		if($_POST['test']){
+		if( isset($_POST['test'])){
 			
 			$this->send_test_email();
 		}
