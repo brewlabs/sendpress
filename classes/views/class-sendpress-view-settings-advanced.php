@@ -86,7 +86,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 			<div class="sp-50 sp-first">
 			<?php $this->panel_start( __('Database Repair','sendpress') ); ?>
 				<p>Reset our new tempalte system back to default and fix some postmeta issues.</p>
-				<a class="btn btn-primary btn-block" href="<? echo SendPress_Admin::link('Settings_Dbfix'); ?>">Data Fix Options</a>
+				<a class="btn btn-primary btn-block" href="<?php echo SendPress_Admin::link('Settings_Dbfix'); ?>">Data Fix Options</a>
 			<?php $this->panel_end(); ?>
 			<div class="panel panel-default">
 			  <div class="panel-heading">
@@ -139,9 +139,9 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 
 			<h2>Table Info</h2>
 				<pre><?php echo SendPress_DB_Tables::check_setup_support(); ?></pre>
-				<a class="btn btn-danger" href="<? echo SendPress_Admin::link('Settings_Install'); ?>">Install Missing Tables</a>
-				<a class="btn btn-warning" href="<? echo SendPress_Admin::link('Settings_Install',array('action'=>'events-repair')); ?>">Repair Events Tables</a>
-				<a class="btn btn-primary" href="<? echo SendPress_Admin::link('Settings_Fixposts'); ?>">Templates Check</a>
+				<a class="btn btn-danger" href="<?php echo SendPress_Admin::link('Settings_Install'); ?>">Install Missing Tables</a>
+				<a class="btn btn-warning" href="<?php echo SendPress_Admin::link('Settings_Install',array('action'=>'events-repair')); ?>">Repair Events Tables</a>
+				<a class="btn btn-primary" href="<?php echo SendPress_Admin::link('Settings_Fixposts'); ?>">Templates Check</a>
 
 			</div>	
 			<div class="sp-50">
