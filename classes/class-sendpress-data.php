@@ -1810,17 +1810,15 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	static function remove_all_templates(){
 		global $wpdb;
-		$wpdb->query("DELETE a,b,c FROM wp_posts a LEFT JOIN wp_term_relationships b ON (a.ID = b.object_id) LEFT JOIN wp_postmeta c ON (a.ID = c.post_id) WHERE a.post_type = 'sp_template' AND a.post_title = 'Responsive Starter' " );
-		$wpdb->query("DELETE a,b,c FROM wp_posts a LEFT JOIN wp_term_relationships b ON (a.ID = b.object_id) LEFT JOIN wp_postmeta c ON (a.ID = c.post_id) WHERE a.post_type = 'sp_template' AND a.post_title = 'Responsive 1 Column' " );
-		$wpdb->query("DELETE a,b,c FROM wp_posts a LEFT JOIN wp_term_relationships b ON (a.ID = b.object_id) LEFT JOIN wp_postmeta c ON (a.ID = c.post_id) WHERE a.post_type = 'sp_template' AND a.post_title = '2 Column Top - Wide Bottom - Responsive' " );
-
-
+		$wpdb->query("DELETE a,b,c FROM {$wpdb->posts} a LEFT JOIN {$wpdb->term_relationships} b ON (a.ID = b.object_id) LEFT JOIN {$wpdb->postmeta} c ON (a.ID = c.post_id) WHERE a.post_type = 'sp_template' AND a.post_title = 'Responsive Starter' " );
+		$wpdb->query("DELETE a,b,c FROM {$wpdb->posts} a LEFT JOIN {$wpdb->term_relationships} b ON (a.ID = b.object_id) LEFT JOIN {$wpdb->postmeta} c ON (a.ID = c.post_id) WHERE a.post_type = 'sp_template' AND a.post_title = 'Responsive 1 Column' " );
+		$wpdb->query("DELETE a,b,c FROM {$wpdb->posts} a LEFT JOIN {$wpdb->term_relationships} b ON (a.ID = b.object_id) LEFT JOIN {$wpdb->postmeta} c ON (a.ID = c.post_id) WHERE a.post_type = 'sp_template' AND a.post_title = '2 Column Top - Wide Bottom - Responsive' " );
 	}
 
 
 	static function remove_all_settings(){
 		global $wpdb;
-		$wpdb->query("DELETE a,b,c FROM wp_posts a LEFT JOIN wp_term_relationships b ON (a.ID = b.object_id) LEFT JOIN wp_postmeta c ON (a.ID = c.post_id) WHERE a.post_type = 'sp_settings'" );
+		$wpdb->query("DELETE a,b,c FROM {$wpdb->posts} a LEFT JOIN {$wpdb->term_relationships} b ON (a.ID = b.object_id) LEFT JOIN {$wpdb->postmeta} c ON (a.ID = c.post_id) WHERE a.post_type = 'sp_settings'" );
 
 	}
 
