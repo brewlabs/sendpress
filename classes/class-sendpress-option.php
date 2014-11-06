@@ -77,6 +77,70 @@ class SendPress_Option extends SendPress_Base {
 
 
 
+
+	/**
+     * email_set
+     * 
+     * @param mixed $option String or Array of options to set.
+     * @param mixed $value  if String name is passed us this to pass value to save.
+     *
+     * @access public
+     *
+     * @return bool Value success or failure of option save.
+     */
+	static function email_set($option, $value= null){
+		$optkey = 'sendpress_email_settings';
+		$options = get_option( $optkey );
+		
+		//Set options with an array of values.
+		if(is_array($option)){
+			return update_option( $optkey , array_merge( $options, $option ) );
+		}
+
+		if ( !is_array( $options ) ) {
+			$options = array();
+		}
+		$options[$option] = $value;
+		return update_option( $optkey , $options );
+	}
+
+
+    /**
+     * eamil_get
+     * 
+     * @param mixed $name    Item to get out of SendPress option array.
+     * @param mixed $default return value if option is not set.
+     *
+     * @access public
+     *
+     * @return mixed Value default or option value.
+     */
+	static function email_get( $name, $default = false ) {
+		$optkey = 'sendpress_email_settings';
+		$options = get_option( $optkey );
+		if ( is_array( $options ) && isset( $options[$name] ) ) {
+			return is_array( $options[$name] )  ? $options[$name] : stripslashes( $options[$name] );
+		}
+		return $default;
+	}	
+
+	/**
+     * eamil_get
+     * 
+     * @param mixed $name    Item to get out of SendPress option array.
+     * @param mixed $default return value if option is not set.
+     *
+     * @access public
+     *
+     * @return mixed Value default or option value.
+     */
+	static function email_get_all( $name, $default = false ) {
+		$optkey = 'sendpress_email_settings';
+		return get_option( $optkey );
+	}
+
+
+
 	static function set_encrypted($option, $value = null){
 		$options = get_option( self::$key );
 

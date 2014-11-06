@@ -192,6 +192,15 @@ class SendPress_Posts{
 			'label_count'               => _n_noop( 'Form Setting <span class="count">(%s)</span>', 'Forms Settings <span class="count">(%s)</span>', 'sendpress' )
 		)  );
 
+		register_post_status( 'sp-autoresponder', array(
+			'label'                     => _x( 'Autoresponder', 'sendpress' ),
+			'public'                    => true,
+			'exclude_from_search'       => false,
+			'show_in_admin_all_list'    => true,
+			'show_in_admin_status_list' => true,
+			'label_count'               => _n_noop( 'Autoresponder Setting <span class="count">(%s)</span>', 'Autoresponder Settings <span class="count">(%s)</span>', 'sendpress' )
+		)  );
+
 
 		register_post_type( 'sptemplates', array(
 			'labels' => array(

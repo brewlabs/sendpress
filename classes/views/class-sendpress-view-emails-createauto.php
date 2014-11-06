@@ -15,7 +15,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 * @since 0.8.7
 *
 */
-class SendPress_View_Emails_Create extends SendPress_View_Emails {
+class SendPress_View_Emails_Createauto extends SendPress_View_Emails {
 
 	function save(){
 
@@ -28,23 +28,23 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
         $my_post['post_content'] = $_POST['content'];
         $my_post['post_title'] = $_POST['post_title'];
         */
-        $my_post['post_status'] = 'publish';
+        $my_post['post_status'] = 'sp-autoresponder';
         // Update the post into the database
         wp_update_post( $my_post );
         update_post_meta( $my_post['ID'], '_sendpress_subject', $_POST['post_subject'] );
         update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
         update_post_meta( $my_post['ID'], '_sendpress_status', 'private');
  		
-       	update_post_meta( $my_post['ID'], '_sendpress_system',  $_POST['template_system'] );
+       	update_post_meta( $my_post['ID'], '_sendpress_system',  'new');
 
         SendPress_Email::set_default_style( $my_post['ID'] );
         //clear the cached file.
         delete_transient( 'sendpress_email_html_'. $my_post['ID'] );
 
-        if($_POST['template_system']  == 'new') {
-        	SendPress_Admin::redirect( 'Emails_Edit' , array('emailID' =>  $my_post['ID']  )   );
-    	}
-        SendPress_Admin::redirect( 'Emails_Style' , array('emailID' =>  $my_post['ID']  )   );
+        
+        SendPress_Admin::redirect( 'Emails_Edit' , array('emailID' =>  $my_post['ID']  )   );
+    	
+        
         //$this->save_redirect( $_POST  );
 
 	}
@@ -68,11 +68,11 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 				<input type="submit" value="<?php _e('Save & Next','sendpress'); ?>" class="btn btn-primary" />
 			</div>
 			<div id="sp-cancel-btn" style="float:right; ">
-				<a href="<?php echo SendPress_Admin::link('Emails'); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+				<a href="<?php echo SendPress_Admin::link('Emails_Autoresponder'); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
 			</div>
 		</div>
 		
-		<h2>Create Email</h2>
+		<h2>Create Autoresponder</h2>
 		<br>
 		<!--
 		has-right-sidebar">
@@ -106,69 +106,36 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
         
         	<div class="sp-row">
         		<div class="sp-50 sp-first">
-			<?php $this->panel_start( __('1.0 Template','sendpress') ); ?>
-			<label>
-			<input type="radio"  name="template_system" checked value="new" /> Use New System
-			</label>
-			<br>
+			<?php $this->panel_start( __('Template','sendpress') ); ?>
 			
-			<h5>Select your template:</h5>
 			<select class="form-control" name="template">
 			<?php
-			$args = array(
-			'post_type' => 'sp_template' ,
-			'post_status' => array('sp-standard'),
-			);
+					$args = array(
+					'post_type' => 'sp_template' ,
+					'post_status' => array('sp-standard'),
+					);
 
-			$the_query = new WP_Query( $args );
+					$the_query = new WP_Query( $args );
 
-			if ( $the_query->have_posts() ) {
-			echo  '<optgroup label="SendPress Templates">';
-			while ( $the_query->have_posts() ) {
-				$the_query->the_post();
-				$temp_id = $the_query->post->ID;
-				$s = '';
-				if($temp_id == $template_id){
-					$s = 'selected';
+					if ( $the_query->have_posts() ) {
+					while ( $the_query->have_posts() ) {
+						$the_query->the_post();
+						$temp_id = $the_query->post->ID;
+						$s = '';
+						if($temp_id == $template_id){
+							$s = 'selected';
+						}
+						echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
+					}
+					
 				}
-				echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
-			}
-			echo  '</optgroup>';
-			
-		}
-		
-		$args = array(
-			'post_type' => 'sp_template' ,
-			'post_status' => array('sp-custom'),
-			);
-
-			$the_query = new WP_Query( $args );
-
-			if ( $the_query->have_posts() ) {
-				echo  '<optgroup label="Custom Templates">';
-			while ( $the_query->have_posts() ) {
-				$the_query->the_post();
-				$temp_id = $the_query->post->ID;
-				$s = '';
-				if($temp_id == $template_id){
-					$s = 'selected';
-				}
-				echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
-			}
-			echo  '</optgroup>';
-			
-		}
-	?>
+			?>
 			
 			</select>
 			<?php $this->panel_end(  ); ?>
 			</div>
 			<div class="sp-50">
 			<?php $this->panel_start( __('Original Template','sendpress') ); ?>
-			<label>
-			<input type="radio"  name="template_system"  value="old" /> Use Old Email System
-			</label><br>Currently emails cannot be upgraded directly to the new Template system.
-
 			<?php $this->panel_end(  ); ?>
 			</div>
 			</div>
