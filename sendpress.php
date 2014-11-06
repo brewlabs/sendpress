@@ -1,7 +1,7 @@
 <?php
 /**
 *Plugin Name: SendPress Newsletters
-*Version: 1.0.2
+*Version: 1.0.3
 *Plugin URI: https://sendpress.com
 *Description: Easy to manage Newsletters for WordPress.
 *Author: SendPress
@@ -16,13 +16,18 @@
 	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 	define( 'SENDPRESS_API_VERSION', 1 );
 	define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-	define( 'SENDPRESS_VERSION', '1.0.2' );
+	define( 'SENDPRESS_VERSION', '1.0.3' );
 	define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
 	define( 'SENDPRESS_IRON','http://sendpress.com/iron');
 
    	define('SENDPRESS_CRON',md5(__FILE__.$blog_id));
+
+	if ( ! defined( 'SENDPRESS_FILE' ) ) {
+		define( 'SENDPRESS_FILE', __FILE__ );
+	}
+
 	if(!defined('SENDPRESS_STORE_URL') ){
 		define( 'SENDPRESS_STORE_URL', 'https://sendpress.com' );
 	}
@@ -539,10 +544,12 @@
 	  				//return SENDPRESS_PATH. '/template-loader.php';
 	    		//return dirname(__FILE__) . '/my_special_template.php';
 				}
-
-				if($post->post_type == 'sp-standard' ){
-					return 'You Bet';
-				}
+				/**
+				*
+				* if($post->post_type == 'sp-standard' ){
+				*	return 'You Bet';
+				* }
+				**/
 			}
 	  		return $template;
 		}
@@ -1713,7 +1720,25 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 		}
 
 
+		/**
+		 * Run wpseo activation routine on creation / activation of a multisite blog if WPSEO is activated
+		 * network-wide.
+		 *
+		 * Will only be called by multisite actions.
+		 * @internal Unfortunately will fail if the plugin is in the must-use directory
+		 * @see https://core.trac.wordpress.org/ticket/24205
+		 */
+		static function on_activate_blog( $blog_id ) {
+			if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+				require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+			}
 
+			if ( is_plugin_active_for_network( plugin_basename( SENDPRESS_FILE ) ) ) {
+				switch_to_blog( $blog_id );
+				SendPress::plugin_install();
+				restore_current_blog();
+			}
+		}
 
 
 	static function plugin_install(){
@@ -2197,7 +2222,8 @@ add_filter( 'query_vars', array( 'SendPress', 'add_vars' ) );
 add_action('wp', array( 'SendPress', 'add_cron' ) );
 register_activation_hook( __FILE__, array( 'SendPress', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'SendPress', 'plugin_deactivation' ) );
-
+add_action( 'wpmu_new_blog', array('SendPress','on_activate_blog' ));
+add_action( 'activate_blog', array('SendPress','on_activate_blog' ));
 
 
 // Initialize!

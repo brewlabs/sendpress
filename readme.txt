@@ -99,6 +99,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
+= 1.0.3 - 2014.11.05 =
+* Fix: Multisite Setup
+* Fix: Custom tags showing in
+* Fix: 
+
 = 1.0.2 - 2014.10.14 =
 * Fix: form shortcode missing list id
 * Fix: Multisite install now creates all tables
