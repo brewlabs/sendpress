@@ -1721,7 +1721,7 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 
 
 		/**
-		 * Run wpseo activation routine on creation / activation of a multisite blog if WPSEO is activated
+		 * Run SendPress install if plugin is network activated
 		 * network-wide.
 		 *
 		 * Will only be called by multisite actions.
@@ -1729,6 +1729,7 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 		 * @see https://core.trac.wordpress.org/ticket/24205
 		 */
 		static function on_activate_blog( $blog_id ) {
+
 			if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 				require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 			}
