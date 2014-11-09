@@ -1,6 +1,6 @@
 === SendPress Newsletters ===
 Plugin URI: https://sendpress.com
-Contributors: brewlabs
+Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 4.0
