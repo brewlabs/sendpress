@@ -99,10 +99,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
-= 1.0.3 - 2014.11.05 =
+= 1.0.3 - 2014.11.08 =
 * Fix: Multisite Setup
-* Fix: Custom tags showing in
-* Fix: 
+* Fix: Custom tags showing in emails
+* Fix: Plugin install when site is created
+* Fix: Update sending to improve speed
 
 = 1.0.2 - 2014.10.14 =
 * Fix: form shortcode missing list id
