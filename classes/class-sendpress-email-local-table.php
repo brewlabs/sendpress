@@ -76,7 +76,6 @@ class SendPress_Email_Local_Table extends WP_List_Table {
 		switch($column_name){
 
 			 case 'name':
-				
 				return $item->post_title;
 				break;
 			case 'actions':

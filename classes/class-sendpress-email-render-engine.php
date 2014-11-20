@@ -20,12 +20,13 @@ if ( !defined('SENDPRESS_VERSION') ) {
 */
 class SendPress_Email_Render_Engine {
 
-	function render_example_by_id( $post_id ){
+	static function render_example_by_id( $post_id ){
 		return self::render_example( get_post( $post_id ) );
 	}
 
-	function render_template_example( $post ){
-		$return = spnl_do_content_tags( $post->post_content, $post->ID, $post->ID, 0, true );
+	static function render_template_example( $post ){
+		$html = self::render_html_base_by_post( $post );
+		$return = spnl_do_content_tags( $html, $post->ID, $post->ID, 0, true );
 		$return = spnl_do_email_tags( $return, $post->ID, $post->ID, 0, true );
 		$return = spnl_do_subscriber_tags( $return, $post->ID, $post->ID, 0, true );
 		
@@ -46,10 +47,35 @@ class SendPress_Email_Render_Engine {
 		return $return;
 	}
 
-	function render_template( $template_id, $email_id ){
-			$temp = get_post( $template_id );
+	static function render_template( $template_id, $email_id ){
+		
+			$html = self::render_html_base_by_id($template_id);
+
+			return spnl_do_content_tags(  $html , $template_id, $email_id, 0, false );
+	}
+
+	static function render_html_base_by_id( $id ){
+			$temp = get_post( $id );
+			$temp = json_decode( $temp->post_content );
+			if( $temp === false ){
+				$path = SENDPRESS_PATH.'templates/v1-0/master.html';
+			} else {
+				$path = $temp->path;
+			}
+			$html = file_get_contents($path);
+			return $html;
+	}
+
+	static function render_html_base_by_post( $post ){
 			
-			return spnl_do_content_tags(  $temp->post_content, $template_id, $email_id, 0, false );
+			$temp = json_decode( $post->post_content );
+			if( $temp === false ){
+				$path = SENDPRESS_PATH.'templates/v1-0/master.html';
+			} else {
+				$path = $temp->path;
+			}
+			$html = file_get_contents($path);
+			return $html;
 	}
 
 	function render_old_template( $post_id ){

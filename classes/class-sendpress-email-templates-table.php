@@ -83,6 +83,7 @@ class SendPress_Email_Templates_Table extends WP_List_Table {
 		   */
 			   case 'subject':
 				$sub = get_post_meta($item->ID, "_sendpress_subject", true);
+
 				return $sub;
 				case 'lastsend':
 				$date = get_post_meta($item->ID, "send_date", true);
@@ -106,6 +107,7 @@ class SendPress_Email_Templates_Table extends WP_List_Table {
 				}
 				*/
 				$a .= '</div>';
+			
 				return $a;
 			default:
 				return print_r($item,true); //Show the whole array for troubleshooting purposes
