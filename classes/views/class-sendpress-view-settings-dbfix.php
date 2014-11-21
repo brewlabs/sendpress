@@ -31,13 +31,13 @@ class SendPress_View_Settings_Dbfix extends SendPress_View_Settings {
 			<div class="sp-row">
 				<div class="sp-50 sp-first">
 				<?php $this->panel_start( __('1.0 Template Reset','sendpress') ); ?>
-					<p>This will remove all templates in the new template system.</p>
+					<p><?php _e('This will remove all templates in the new template system','sendpress'); ?>.</p>
 					<input type="submit" name="templates" class="btn btn-primary" value="Reset Templates" />
 				<?php $this->panel_end(); ?>
 				</div>
 				<div class="sp-50">
 				<?php $this->panel_start( __('Reset Settings','sendpress') ); ?>
-					<p>This will reset all form settings and remove extra metadata</p>
+					<p><?php _e('This will reset all form settings and remove extra metadata','sendpress'); ?></p>
 					<input type="submit" name="settings" class="btn btn-primary" value="Reset Settings" />
 					
 					<?php $this->panel_end(); ?>

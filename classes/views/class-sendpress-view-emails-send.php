@@ -98,8 +98,8 @@ $post_type_object = get_post_type_object($sp->_email_post_type);
 <?php $this->panel_end(); ?>
 <div class="leftcol">
 <?php $this->panel_start( '<span class="glyphicon glyphicon-calendar"></span> '. __('Date & Time','sendpress')); ?>
-<input type="radio" name="send-date" value="now" checked/> Start Sending Now<br>
-<input type="radio" name="send-date" value="later"/> Send Later<br>
+<input type="radio" name="send-date" value="now" checked/> <?php _e('Start Sending Now','sendpress'); ?><br>
+<input type="radio" name="send-date" value="later"/> <?php _e('Send Later','sendpress'); ?><br>
 <div class="date-holder" style="display:none">
 	<br>
 <input type="text" name="date-pickit" id="date-pickit" class=" fifty float-left" value="<?php echo date_i18n('Y/m/d'); ?>"/>&nbsp;at
@@ -173,8 +173,8 @@ $this->panel_end();
 
 $this->panel_start('<span class="glyphicon glyphicon-tag"></span> '. __('Mark as Test','sendpress'));
 
-    echo "<input name='test_report' type='checkbox' id='test_report' value='1'> Test<br>";
-    echo "<small class='text-muted'>This puts the report into the Test tab on the Reports screen.</small>";
+    echo "<input name='test_report' type='checkbox' id='test_report' value='1'> ". __('Test','sendpress') ."<br>";
+    echo "<small class='text-muted'> " . __('This puts the report into the Test tab on the Reports screen','sendpress') .".</small>";
 
 $this->panel_end();
 
@@ -210,7 +210,7 @@ $sep = strstr($url, '?') ? '&' : '?';
 $link = $url.$sep.'inline=true';
 ?>
 <iframe src="<?php echo $link; ?>" width="100%" height="600px"></iframe>
-<small>Displaying a 404? Please try saving your permalinks <a href="<?php echo admin_url('options-permalink.php'); ?>">here</a>.</small>
+<small><?php _e('Displaying a 404? Please try saving your permalinks','sendpress'); ?> <a href="<?php echo admin_url('options-permalink.php'); ?>"><?php _e('here','sendpress'); ?></a>.</small>
 
 </div>
 </div>

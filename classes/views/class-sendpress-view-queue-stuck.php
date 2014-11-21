@@ -153,13 +153,13 @@ echo $time;//11:09
 		
 		<h2><strong><?php echo $emails_so_far; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_day; ?></strong> <?php _e('emails sent in the last 24 hours','sendpress'); ?>.</h2>
 		<h2><strong><?php  echo $hourly_emails; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_hour; ?></strong> <?php _e('emails sent in the last hour','sendpress'); ?>.</h2>
-		<small>You can adjust these settings here: <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>">Settings > Sending Account</a>.</small>
+		<small><?php _e('You can adjust these settings here','sendpress'); ?>: <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>"><?php _e('Settings','sendpress'); ?> > <?php _e('Sending Account','sendpress'); ?></a>.</small>
  		<?php
  		if(  $autocron == 'no'){
 $offset = get_option( 'gmt_offset' ) * 60 * 60; // Time offset in seconds
 $local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
 
-?><br><small>The cron will run again around: <?php
+?><br><small><?php _e('The cron will run again around','sendpress'); ?>: <?php
 echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $local_timestamp);
 ?></small>
 <?php } ?>
@@ -211,8 +211,8 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
   <div id="sendbar-inner" class="progress-bar"
        style="width: 40%;"></div>
 </div>
-	Sent <span id="queue-sent">-</span> <?php _e('of','sendpress');?> <span id="queue-total">-</span> emails.<br>
-	You are currently sending 1 email approximately every <?php 
+	Sent <span id="queue-sent">-</span> <?php _e('of','sendpress');?> <span id="queue-total">-</span> <?php _e('emails','sendpress'); ?>.<br>
+	<?php _e('You are currently sending 1 email approximately every','sendpress'); ?> <?php 
 	$hour = SendPress_Option::get('emails-per-hour');
 	if($hour != 0){
 	$rate = 3600 / $hour; 
@@ -225,9 +225,9 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
 
 	echo $rate;
 
-	?> seconds.<br>
-	You are also limited to <?php echo $hour; ?> emails per hour.<br>
-	To change these settings go to <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>">Settings > Sending Account</a>.
+	?> <?php _e('seconds','sendpress'); ?>.<br>
+	<?php _e('You are also limited to','sendpress'); ?> <?php echo $hour; ?> <?php _e('emails per hour','sendpress'); ?>.<br>
+	<?php _e('To change these settings go to','sendpress'); ?> <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>"><?php _e('Settings','sendpress'); ?> > <?php _e('Sending Account','sendpress'); ?></a>.
   </div>
   <div class="modal-footer">
    <?php _e('If you close this window sending will stop. ','sendpress');?><a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('Close','sendpress');?></a>

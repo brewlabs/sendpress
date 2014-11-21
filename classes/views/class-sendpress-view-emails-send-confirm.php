@@ -165,7 +165,7 @@ $this->panel_start('<span class="glyphicon glyphicon-tag"></span> '. __('Mark as
         $sel = 'checked';
     }
     echo "<input $sel name='test_report' type='checkbox' id='test_report' value='1' disabled> Test<br>";
-    echo "<small class='text-muted'>This puts the report into the Test tab on the Reports screen.</small>";
+    echo "<small class='text-muted'>". __('This puts the report into the Test tab on the Reports screen','sendpress') .".</small>";
 
 $this->panel_end();
 ?>
@@ -192,7 +192,7 @@ $link = $url.$sep.'inline=true';
 ?>
 <iframe src="<?php echo $link; ?>" width="100%" height="600px"></iframe>
 
-<small>Displaying a 404? Please try saving your permalinks <a href="<?php echo admin_url('options-permalink.php'); ?>">here</a>.</small>
+<small><?php _e('Displaying a 404? Please try saving your permalinks','sendpress'); ?> <a href="<?php echo admin_url('options-permalink.php'); ?>"><?php _e('here','sendpress'); ?></a>.</small>
 </div>
 <?php wp_nonce_field($sp->_nonce_value); ?><br><br>
 </div>

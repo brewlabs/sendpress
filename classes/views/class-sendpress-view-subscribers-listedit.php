@@ -53,8 +53,8 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
 	    <p><input type="checkbox" class="edit-list-checkbox" name="public" value="<?php echo get_post_meta($listinfo->ID,'public',true); ?>" <?php if( get_post_meta($listinfo->ID,'public',true) == 1 ){ echo 'checked'; } ?> /><label for="public"><?php _e('Allow user to sign up to this list','sendpress'); ?></label></p>
 	     <p><input type="checkbox" class="edit-list-checkbox" name="test_list" value="<?php echo get_post_meta($listinfo->ID,'_test_list',true); ?>" <?php if( get_post_meta($listinfo->ID,'_test_list',true) == 1 ){ echo 'checked'; } ?> /><label for="public"><?php _e('Mark list as test. Adds <span class="label label-info">Test List</span> to list title every where.','sendpress'); ?></label></p>
 	    <!-- Now we can render the completed list table -->
-	   	  	<p><H4>Select List Type</h4>
-	   		Pick SendPress list if you want to use SendPress to manage your subscribers. Pick a WordPress Role if you want to send emails to your users. <br>Synced lists can only have users that have a login to your WordPress site.</p>
+	   	  	<p><H4><?php _e('Select List Type','sendpress'); ?></h4>
+	   		<?php _e('Pick SendPress list if you want to use SendPress to manage your subscribers. Pick a WordPress Role if you want to send emails to your users. <br>Synced lists can only have users that have a login to your WordPress site.','sendpress'); ?></p>
 	   	 <?php 
 
 	   	$roles = get_post_meta($listinfo->ID, 'sync_role', true);
@@ -66,7 +66,7 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
 	   	 		$d = 'checked';
 	   	 	}
 	   	?>
-	   	<input type="radio" name="sync_role" value="none" <?php echo $d; ?> /> SendPress List ( Use this to have subscribers sign up, import csv, etc.  )<br><br>
+	   	<input type="radio" name="sync_role" value="none" <?php echo $d; ?> /> <?php _e('SendPress List','sendpress'); ?> ( <?php _e('Use this to have subscribers sign up, import csv, etc.','sendpress'); ?> )<br><br>
 	   	<?php
 	   	 foreach (get_editable_roles() as $role_name => $role_info):
 	   	 	$d ='';

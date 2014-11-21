@@ -144,7 +144,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 						<div class="panel-heading">
 							<h4 class="panel-title">
 								<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-									Click to View Last Error
+									<?php _e('Click to View Last Error','sendpress'); ?>
 								</a>
 							</h4>
 						</div>
@@ -175,7 +175,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">Sending Account Setup</h3>
+			<h3 class="panel-title"><?php _e('Sending Account Setup','sendpress'); ?></h3>
 		</div>
 		<div class="panel-body">
 
@@ -188,7 +188,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 					if ( $c >= 1 ) { $class = "margin-left: 4%"; }
 					echo "<div style=' float:left; width: 48%; $class' id='$key'>";
 					?>
-					<p>&nbsp;<input name="sendpress-sender" type="radio"  <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> Send Emails via
+					<p>&nbsp;<input name="sendpress-sender" type="radio"  <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> <?php _e('Send Emails via','sendpress'); ?>
 						<?php
 						echo $sender->label();
 						echo "</p><div class='well'>";
@@ -220,7 +220,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 							if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { $class = "active"; }
 							echo "<div class='tab-pane $class' id='$key'>";
 							?>
-							<p>&nbsp;<input name="sendpress-sender" type="radio"  <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> Activate
+							<p>&nbsp;<input name="sendpress-sender" type="radio"  <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> <?php _e('Activate','sendpress'); ?>
 								<?php
 								echo $sender->label();
 								echo "</p><div class='well'>";
@@ -233,7 +233,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 					</div>
 
 
-					<p > <span class="glyphicon glyphicon-ok-sign"></span> = Currently Active</p>
+					<p > <span class="glyphicon glyphicon-ok-sign"></span> = <?php _e('Currently Active','sendpress'); ?></p>
 					<?php } ?>
 
 				</div>
@@ -241,12 +241,12 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 			<br class="clear">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Advanced Sending Options</h3>
+					<h3 class="panel-title"><?php _e('Advanced Sending Options','sendpress'); ?></h3>
 				</div>
 				<div class="panel-body">
 					<div class="boxer form-box">
 						<div style="float: right; width: 45%;">
-							<h2>Email Sending Limits</h2>
+							<h2><?php _e('Email Sending Limits','sendpress'); ?></h2>
 
 							<?php
 							$emails_per_day = SendPress_Option::get('emails-per-day');
@@ -259,11 +259,11 @@ $offset = get_option( 'gmt_offset' ) * 60 * 60; // Time offset in seconds
 $local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
 //print_r(wp_get_schedules());
 ?>
-You have sent <strong><?php echo $emails_so_far; ?></strong> emails so far today.<br><br>
-<input type="text" size="6" name="emails-per-day" value="<?php echo $emails_per_day; ?>" /> Emails Per Day<br><br>
-<input type="text" size="6" name="emails-per-hour" value="<?php echo $emails_per_hour; ?>" /> Emails Per Hour
+<?php _e('You have sent','sendpress'); ?> <strong><?php echo $emails_so_far; ?></strong> <?php _e('emails so far today','sendpress'); ?>.<br><br>
+<input type="text" size="6" name="emails-per-day" value="<?php echo $emails_per_day; ?>" /> <?php _e('Emails Per Day','sendpress'); ?><br><br>
+<input type="text" size="6" name="emails-per-hour" value="<?php echo $emails_per_hour; ?>" /> <?php _e('Emails Per Hour','sendpress'); ?>
 <br><br>
-<h2>Email Encoding</h2>
+<h2><?php _e('Email Encoding','sendpress'); ?></h2>
 <?php
 $charset = SendPress_Option::get('email-charset','UTF-8');
 ?>Charset:
@@ -281,9 +281,9 @@ $charset = SendPress_Option::get('email-charset','UTF-8');
 	}
 	?>
 </select><br>
-Squares or weird characters displaying in your emails select the charset for your language.
+<?php _e('Squares or weird characters displaying in your emails select the charset for your language','sendpress'); ?>.
 <br><br>
-Encoding: <select name="email-encoding" id="">
+<?php _e('Encoding','sendpress'); ?>: <select name="email-encoding" id="">
 <?php
 $charset = SendPress_Option::get('email-encoding','8bit');
 $charsete = SendPress_Data::get_encoding_types();
@@ -297,13 +297,13 @@ foreach ( $charsete as $type) {
 }
 ?>
 </select><br>
-Older versions of SendPress used "quoted-printable"
+<?php _e('Older versions of SendPress used','sendpress'); ?> "quoted-printable"
 
 <br class="clear">
 </div>
 <div style="width: 45%; margin-right: 10%">
 	<?php $tl =  SendPress_Option::get('autocron','no'); ?>
-	<h2>SendPress Pro Auto Cron</h2>
+	<h2><?php _e('SendPress Pro Auto Cron','sendpress'); ?></h2>
 	<p>At least once every hour we visit your site, just like a "cron" job.<br>There's no setup involved. Easy and hassle free.</p>
 
 	<button id="sp-enable-cron" <?php if($tl == 'yes'){ echo "style='display:none;'";} ?> class="btn  btn-success">Enable Pro Auto Cron</button><button id="sp-disable-cron" <?php if($tl == 'no'){ echo "style='display:none;'";} ?> class="btn  btn-danger">Disable Pro Auto Cron</button>
@@ -339,7 +339,7 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
 //wp_nonce_field(  basename(__FILE__) ,'_spnonce' );
 wp_nonce_field( $sp->_nonce_value );
 ?>
-<input type="submit" class="btn btn-primary" value="Save"/> <a href="" class="btn btn-default"><i class="icon-remove"></i> Cancel</a>
+<input type="submit" class="btn btn-primary" value="Save"/> <a href="" class="btn btn-default"><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a>
 </form>
 <form method="post" id="post-test" class="form-inline">
 	<input type="hidden" name="action" value="send-test-email" />

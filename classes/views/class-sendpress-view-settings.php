@@ -28,7 +28,7 @@ class SendPress_View_Settings extends SendPress_View {
 		<span class="icon-bar"></span>
 
 		</button>
-		<a class="navbar-brand" href="#">Settings</a>
+		<a class="navbar-brand" href="#"><?php _e('Settings','sendpress'); ?></a>
 		</div>
 		 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav">

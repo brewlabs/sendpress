@@ -17,9 +17,9 @@ class SendPress_View_Settings_Fixposts extends SendPress_View_Settings {
 
 	function html($sp) {
 		$count =  SendPress_Data::get_bad_post_count();
-		echo "We see ". $count . " bad posts.";
+		echo __("We see","sendpress")." ". $count." ". __("bad posts.","sendpress");
 		$link = SendPress_Admin::link('Settings_Fixposts',array('action'=>'posts-repair'));
-		echo "<br><br><a href='$link' class='btn btn-primary' >Attempt to Delete These</a>";
+		echo "<br><br><a href='$link' class='btn btn-primary' >".__('Attempt to Delete These','sendpress')."</a>";
 
 
 		/*

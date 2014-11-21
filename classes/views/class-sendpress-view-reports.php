@@ -76,7 +76,7 @@ class SendPress_View_Reports extends SendPress_View{
 		    <?php $sp_reports_table->display(); ?>
 		    <?php wp_nonce_field( $this->_nonce_value ); ?>
 		</form>
-		<h3>Information</h3>
+		<h3><?php _e('Information','sendpress'); ?></h3>
 		<div class='well'>
 		<span class="label label-success"><?php _e('Unique','sendpress');?></span> <?php _e('The total number of different recipients that have clicked on a link or opened an email.','sendpress');?><br><br>
 

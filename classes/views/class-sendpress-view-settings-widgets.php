@@ -55,7 +55,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 	function view_buttons(){
 		?>
 		<!--<button class="btn btn-default" id="save-menu-cancel">Cancel</button>-->
-		<button class="btn btn-primary" id="save-menu-post">Save</button>
+		<button class="btn btn-primary" id="save-menu-post"><?php _e('Save','sendpress'); ?></button>
 		<?php
 	}
 
@@ -135,7 +135,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 		?>
 		
-		<h2><?php ucfirst($save_type); ?> Form</h2>
+		<h2><?php ucfirst($save_type); ?> <?php _e('Form','sendpress'); ?></h2>
 		<br>
 		<?php $this->panel_start( __('Form Name','sendpress') ); ?>
         
@@ -263,7 +263,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 			</div>
 			<div class="sp-50">
 				<?php $this->panel_start( __('Shortcode','sendpress') ); ?>
-					<p>Use the shortcode belot to insert this signup form into your posts and pages.</p>
+					<p><?php _e('Use the shortcode belot to insert this signup form into your posts and pages','sendpress'); ?>.</p>
 					<pre>[sp-form formid=<?php echo $settings['_settings_id']; ?>]</pre>
 				<?php $this->panel_end(); ?>
 
@@ -280,9 +280,9 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 				</p> 
 
 				<p>
-					<label for="_display_labels_inside_fields">Display labels inside?:</label>
-					<input type="radio" name="_display_labels_inside_fields" value="1"<?php echo $settings['_display_labels_inside_fields'] == 1 ? ' checked' : ''; ?> /> Yes
-					<input type="radio" name="_display_labels_inside_fields" value="0"<?php echo $settings['_display_labels_inside_fields'] == 0 ? ' checked' : ''; ?> /> No
+					<label for="_display_labels_inside_fields"><?php _e('Display labels inside','sendpress'); ?>?:</label>
+					<input type="radio" name="_display_labels_inside_fields" value="1"<?php echo $settings['_display_labels_inside_fields'] == 1 ? ' checked' : ''; ?> /> <?php _e('Yes','sendpress'); ?>
+					<input type="radio" name="_display_labels_inside_fields" value="0"<?php echo $settings['_display_labels_inside_fields'] == 0 ? ' checked' : ''; ?> /> <?php _e('No','sendpress'); ?>
 				</p>
 
 				<p>
@@ -313,7 +313,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 				</p> 
 				
 				
-				<p><b>Check off the lists you would like<br>users to subscribe to.</b></p>
+				<p><b><?php _e('Check off the lists you would like','sendpress'); ?><br><?php _e('users to subscribe to','sendpress'); ?>.</b></p>
 				<?php 
 				if( count($lists) === 0 ){
 					echo '<p>No public lists available</p>';

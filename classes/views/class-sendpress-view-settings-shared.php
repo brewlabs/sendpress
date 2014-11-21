@@ -40,20 +40,20 @@ class SendPress_View_Settings_Shared extends SendPress_View_Settings {
 
 <div class="sp-row">
 <div class="sp-50 sp-first">
-<p class="lead">Social Icons appear in emails in Alphabetical order. If you enter a url in the box below then that icon will show in your emails.</p>
+<p class="lead"><?php _e('Social Icons appear in emails in Alphabetical order. If you enter a url in the box below then that icon will show in your emails.','sendpress'); ?></p>
 </div>
 <div class="sp-50">
 <p>
 <label >
-<input type="radio" name="icon-view" value="large" <?php checked( $socialsize, 'large' ); ?> /> Large ( 32px x 32px )
+<input type="radio" name="icon-view" value="large" <?php checked( $socialsize, 'large' ); ?> /> <?php _e('Large','sendpress'); ?> ( 32px x 32px )
 </label>
 <br>
 <label >
-<input type="radio" name="icon-view" value="small" <?php checked( $socialsize, 'small' ); ?> /> Small ( 16px x 16px )
+<input type="radio" name="icon-view" value="small" <?php checked( $socialsize, 'small' ); ?> /> <?php _e('Small','sendpress'); ?> ( 16px x 16px )
 </label>
 <br>
 <label >
-<input type="radio" name="icon-view" value="text" <?php checked( $socialsize, 'text' ); ?> /> Text
+<input type="radio" name="icon-view" value="text" <?php checked( $socialsize, 'text' ); ?> /> <?php _e('Text','sendpress'); ?>
 </label>
 </p>
 </div>

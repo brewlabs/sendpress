@@ -59,7 +59,7 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 		<div id="taskbar" class="lists-dashboard rounded group"> 
 
 		<h2><?php _e('Templates','sendpress'); ?></h2>
-		<small>Help: <a target="_blank" href="https://sendpress.com/support/knowledgebase/getting-started-sendpress-templates/">Getting Started with Templates</a></small>
+		<small><?php _e('Help','sendpress'); ?>: <a target="_blank" href="https://sendpress.com/support/knowledgebase/getting-started-sendpress-templates/"><?php _e('Getting Started with Templates','sendpress'); ?></a></small>
 	</div>
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	    <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />

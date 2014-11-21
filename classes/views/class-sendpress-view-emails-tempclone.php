@@ -43,7 +43,7 @@ class SendPress_View_Emails_Tempclone extends SendPress_View_Emails {
 			</div>
 		</div>
 		
-		<h2>Clone Template - <?php echo $postdata->post_title; ?></h2>
+		<h2><?php _e('Clone Template','sendpress'); ?> - <?php echo $postdata->post_title; ?></h2>
 		<br>
 		<!--
 		has-right-sidebar">

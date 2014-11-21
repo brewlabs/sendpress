@@ -88,7 +88,7 @@ class SendPress_View_Subscribers_Csvimport extends SendPress_View_Subscribers {
   <?php 
   if( SendPress_Option::get('import_error', false) == true ) { ?>
 	<div class="alert alert-danger">
-  We had a problem saving your upload.
+  <?php _e('We had a problem saving your upload','sendpress'); ?>.
   </div>
   <?php } ?>
   <div id="taskbar" class="lists-dashboard rounded group"> 

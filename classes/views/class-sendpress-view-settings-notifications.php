@@ -75,26 +75,26 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 							<input type="checkbox" class="form-control" value="<?php echo $options['send-to-admins']; ?>" name="send-to-admins" id="send-to-admins" <?php checked( $options['send-to-admins'], true ); ?>/>
 							<?php _e('Send Notifications to all WordPress Administrators','sendpress'); ?>
 							</p>
-							<p>Select the notifications you'd like to receive and how often you'd like to receive them.</p>
-							<h5>User Subscribed:</h5>
+							<p><?php _e('Select the notifications you\'d like to receive and how often you\'d like to receive them','sendpress'); ?>.</p>
+							<h5><?php _e('User Subscribed','sendpress'); ?>:</h5>
 							<input class="notifications-radio" type="radio" value="0" <?php if(intval($options['subscribed']) === 0){echo 'checked="checked"';} ?> name="subscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
-							Instant&nbsp;&nbsp;&nbsp;
+							<?php _e('Instant','sendpress'); ?>&nbsp;&nbsp;&nbsp;
 							<input class="notifications-radio" type="radio" value="1" <?php if(intval($options['subscribed']) === 1){echo 'checked="checked"';} ?> name="subscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
-							Daily&nbsp;&nbsp;&nbsp;
+							<?php _e('Daily','sendpress'); ?>&nbsp;&nbsp;&nbsp;
 							<input class="notifications-radio" type="radio" value="2" <?php if(intval($options['subscribed']) === 2){echo 'checked="checked"';} ?> name="subscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
-							Weekly&nbsp;&nbsp;&nbsp;
+							<?php _e('Weekly','sendpress'); ?>&nbsp;&nbsp;&nbsp;
 							<input class="notifications-radio" type="radio" value="3" <?php if(intval($options['subscribed']) === 3){echo 'checked="checked"';} ?> name="subscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
-							Monthly&nbsp;&nbsp;&nbsp;
+							<?php _e('Monthly','sendpress'); ?>&nbsp;&nbsp;&nbsp;
 
-							<h5>User Unsbscribed:</h5>
+							<h5><?php _e('User Unsbscribed','sendpress'); ?>:</h5>
 							<input class="notifications-radio" type="radio" value="0" <?php if(intval($options['unsubscribed']) === 0){echo 'checked="checked"';} ?> name="unsubscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
-							Instant&nbsp;&nbsp;&nbsp;
+							<?php _e('Instant','sendpress'); ?>&nbsp;&nbsp;&nbsp;
 							<input class="notifications-radio" type="radio" value="1" <?php if(intval($options['unsubscribed']) === 1){echo 'checked="checked"';} ?> name="unsubscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
-							Daily&nbsp;&nbsp;&nbsp;
+							<?php _e('Daily','sendpress'); ?>&nbsp;&nbsp;&nbsp;
 							<input class="notifications-radio" type="radio" value="2" <?php if(intval($options['unsubscribed']) === 2){echo 'checked="checked"';} ?> name="unsubscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
-							Weekly&nbsp;&nbsp;&nbsp;
+							<?php _e('Weekly','sendpress'); ?>&nbsp;&nbsp;&nbsp;
 							<input class="notifications-radio" type="radio" value="3" <?php if(intval($options['unsubscribed']) === 3){echo 'checked="checked"';} ?> name="unsubscribed" <?php if(!$options['notifications-enable']){echo 'disabled';} ?>>
-							Monthly&nbsp;&nbsp;&nbsp;
+							<?php _e('Monthly','sendpress'); ?>&nbsp;&nbsp;&nbsp;
 
 						<?php $this->panel_end(); ?>
 
@@ -106,7 +106,7 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 							<input class="form-control" type="checkbox" value="<?php echo $options['enable-hipchat']; ?>" name="enable-hipchat" id="enable-hipchat" <?php checked( $options['enable-hipchat'], true ); ?>/>
 							<?php _e('Enable HipChat Notification','sendpress'); ?><br>
 							</p>
-							API Key: <input class="form-control" style="width:80%; display:inline;" name="hipchat-api" tabindex=2 type="text" id="hipchat-api" value="<?php echo $options['hipchat-api']; ?>"><br><a style="display:inline-block; margin-left:50px;" href="https://sendpress.hipchat.com/admin/api" target="_blank">Where is my API key?</a><br>
+							<?php _e('API Key','sendpress'); ?>: <input class="form-control" style="width:80%; display:inline;" name="hipchat-api" tabindex=2 type="text" id="hipchat-api" value="<?php echo $options['hipchat-api']; ?>"><br><a style="display:inline-block; margin-left:50px;" href="https://sendpress.hipchat.com/admin/api" target="_blank"><?php _e('Where is my API key','sendpress'); ?>?</a><br>
 
 							<?php
 								if( strlen($options['hipchat-api']) > 0 ){
@@ -132,7 +132,7 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 									}
 									catch (Exception $e){
 										?>
-										Room Name: <input class="form-control" name="hipchat-room" tabindex=2 type="text" id="hipchat-room" value="<?php echo $options['hipchat-room']; ?>">
+										<?php _e('Room Name','sendpress'); ?>: <input class="form-control" name="hipchat-room" tabindex=2 type="text" id="hipchat-room" value="<?php echo $options['hipchat-room']; ?>">
 										<?php
 									}
 

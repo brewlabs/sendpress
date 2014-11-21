@@ -85,12 +85,12 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 		<div class="sp-row">
 			<div class="sp-50 sp-first">
 			<?php $this->panel_start( __('Database Repair','sendpress') ); ?>
-				<p>Reset our new tempalte system back to default and fix some postmeta issues.</p>
-				<a class="btn btn-primary btn-block" href="<?php echo SendPress_Admin::link('Settings_Dbfix'); ?>">Data Fix Options</a>
+				<p><?php _e('Reset our new tempalte system back to default and fix some postmeta issues','sendpress'); ?>.</p>
+				<a class="btn btn-primary btn-block" href="<?php echo SendPress_Admin::link('Settings_Dbfix'); ?>"><?php _e('Data Fix Options','sendpress'); ?></a>
 			<?php $this->panel_end(); ?>
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			    <h3 class="panel-title">Javascript & CSS</h3>
+			    <h3 class="panel-title"><?php _e('Javascript','sendpress'); ?> & <?php _e('CSS','sendpress'); ?></h3>
 			  </div>
 			  <div class="panel-body">
 
@@ -110,10 +110,10 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-					<h3 class="panel-title">Use Shortcodes in Widgets</h3>
+					<h3 class="panel-title"><?php _e('Use Shortcodes in Widgets','sendpress'); ?></h3>
 			  </div>
 				<div class="panel-body">
-					<p>Want to use Shortcodes in your Widgets, but all you get is [shortcode]?  Turn on this option and we'll make sure your shortcodes work in widgets.</p>
+					<p><?php _e('Want to use Shortcodes in your Widgets, but all you get is','sendpress'); ?> [shortcode]?  <?php _e('Turn on this option and we\'ll make sure your shortcodes work in widgets','sendpress'); ?>.</p>
 					
 					<?php $ctype = SendPress_Option::get('sp_widget_shortdoces'); ?>
 					<input type="checkbox" name="sp_widget_shortdoces" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> Turn on Widget Shortcodes
@@ -122,14 +122,14 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-					<h3 class="panel-title">Optional Settings</h3>
+					<h3 class="panel-title"><?php _e('Optional Settings','sendpress'); ?></h3>
 			  </div>
 				<div class="panel-body">
 				<?php $ctype = SendPress_Option::get('old_permalink'); ?>
-				<input type="checkbox" name="old_permalink" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> Use old permalink with ?sendpress=.
+				<input type="checkbox" name="old_permalink" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> <?php _e('Use old permalink with','sendpress'); ?> ?sendpress=.
 				<br><br>
 				<?php $ctype = SendPress_Option::get('skip_mailto'); ?>
-				<input type="checkbox" name="skip_mailto" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> Do not track mailto links in email.
+				<input type="checkbox" name="skip_mailto" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> <?php _e('Do not track mailto links in email','sendpress'); ?>.
 				
 				
 
@@ -137,41 +137,41 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 			</div>
 
 
-			<h2>Table Info</h2>
+			<h2><?php _e('Table Info','sendpress'); ?></h2>
 				<pre><?php echo SendPress_DB_Tables::check_setup_support(); ?></pre>
-				<a class="btn btn-danger" href="<?php echo SendPress_Admin::link('Settings_Install'); ?>">Install Missing Tables</a>
-				<a class="btn btn-warning" href="<?php echo SendPress_Admin::link('Settings_Install',array('action'=>'events-repair')); ?>">Repair Events Tables</a>
-				<a class="btn btn-primary" href="<?php echo SendPress_Admin::link('Settings_Fixposts'); ?>">Templates Check</a>
+				<a class="btn btn-danger" href="<?php echo SendPress_Admin::link('Settings_Install'); ?>"><?php _e('Install Missing Tables','sendpress'); ?></a>
+				<a class="btn btn-warning" href="<?php echo SendPress_Admin::link('Settings_Install',array('action'=>'events-repair')); ?>"><?php _e('Repair Events Tables','sendpress'); ?></a>
+				<a class="btn btn-primary" href="<?php echo SendPress_Admin::link('Settings_Fixposts'); ?>"><?php _e('Templates Check','sendpress'); ?></a>
 
 			</div>	
 			<div class="sp-50">
 				<div class="panel panel-default">
 			  <div class="panel-heading">
-					<h3 class="panel-title">Tracking</h3>
+					<h3 class="panel-title"><?php _e('Tracking','sendpress'); ?></h3>
 			  </div>
 				<div class="panel-body">
 				<?php $ctype = SendPress_Option::get('allow_tracking'); ?>
-			<input type="checkbox" name="allow_tracking" value="yes" <?php if($ctype=='yes'){echo "checked='checked'"; } ?> /> Allow tracking of this WordPress installs anonymous data.
+			<input type="checkbox" name="allow_tracking" value="yes" <?php if($ctype=='yes'){echo "checked='checked'"; } ?> /> <?php _e('Allow tracking of this WordPress installs anonymous data','sendpress'); ?>.
 				<p>	
-			To maintain a plugin as big as SendPress, we need to know what we're dealing: what kinds of other plugins our users are using, what themes, etc. Please allow us to track that data from your install. It will not track any user details, so your security and privacy are safe with us.</p>
+			<?php _e('To maintain a plugin as big as SendPress, we need to know what we\'re dealing: what kinds of other plugins our users are using, what themes, etc. Please allow us to track that data from your install. It will not track any user details, so your security and privacy are safe with us','sendpress'); ?>.</p>
 		</div></div>
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-					<h3 class="panel-title">System Limits</h3>
+					<h3 class="panel-title"><?php _e('System Limits','sendpress'); ?></h3>
 			  </div>
 				<div class="panel-body">
-					<p>Please take care when changing these settings. We have attempted to set these to work on almost all servers. If you have a faster server you may be able to increase the limits below or if you are having troubles you may need to decrease the settings.</p>
+					<p><?php _e('Please take care when changing these settings. We have attempted to set these to work on almost all servers. If you have a faster server you may be able to increase the limits below or if you are having troubles you may need to decrease the settings','sendpress'); ?>.</p>
 					<hr>
-					Users to Sync per ajax call: <?php $this->select('sync-per-call',SendPress_Option::get('sync-per-call',250) ); ?> Default: 250
+					<?php _e('Users to Sync per ajax call','sendpress'); ?>: <?php $this->select('sync-per-call',SendPress_Option::get('sync-per-call',250) ); ?> <?php _e('Default','sendpress'); ?>: 250
 					<hr>
-					Emails sent per AutoCron execution: <?php $this->select('autocron-per-call',SendPress_Option::get('autocron-per-call',25), array(5,10,15,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100) ); ?> Default: 25<br>
-					<small>If AutoCron errors it will shut itself off.</small>
+					<?php _e('Emails sent per AutoCron execution','sendpress'); ?>: <?php $this->select('autocron-per-call',SendPress_Option::get('autocron-per-call',25), array(5,10,15,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100) ); ?> <?php _e('Default','sendpress'); ?>: 25<br>
+					<small><?php _e('If AutoCron errors it will shut itself off','sendpress'); ?>.</small>
 					<hr>
-					WordPress cron emails sent per execution: <?php $this->select('wpcron-per-call',SendPress_Option::get('wpcron-per-call',25), array(15,25,30,35,40,45,50,100,250,500,1000) ); ?> Default: 25<br>
+					<?php _e('WordPress cron emails sent per execution','sendpress'); ?>: <?php $this->select('wpcron-per-call',SendPress_Option::get('wpcron-per-call',25), array(15,25,30,35,40,45,50,100,250,500,1000) ); ?> <?php _e('Default','sendpress'); ?>: 25<br>
 					<hr>
-					Queue History:  <?php $this->select('queue-history',SendPress_Option::get('queue-history',7), array(7,14,21,28,35,42,49) ); ?> Days <br><small>Default: 7 Days</small>
+					<?php _e('Queue History','sendpress'); ?>:  <?php $this->select('queue-history',SendPress_Option::get('queue-history',7), array(7,14,21,28,35,42,49) ); ?> <?php _e('Days','sendpress'); ?> <br><small><?php _e('Default','sendpress'); ?>: 7 Days</small>
 					<hr>
-					Add Emails to Queue:  <?php $this->select('queue-per-call',SendPress_Option::get('queue-per-call',1000), array( 50,100,200,300,400,500,600,700,800,900,1000 ) ); ?> Emails <br><small>Default: 1000 Emails</small>
+					<?php _e('Add Emails to Queue','sendpress'); ?>:  <?php $this->select('queue-per-call',SendPress_Option::get('queue-per-call',1000), array( 50,100,200,300,400,500,600,700,800,900,1000 ) ); ?> <?php _e('Emails','sendpress'); ?> <br><small><?php _e('Default','sendpress'); ?>: 1000 <?php _e('Emails','sendpress'); ?></small>
 				</div>
 			</div>
 			<?php do_action('sendpress_advanced_settings'); ?>

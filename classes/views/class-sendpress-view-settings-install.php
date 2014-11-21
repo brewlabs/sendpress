@@ -14,7 +14,7 @@ class SendPress_View_Settings_Install extends SendPress_View_Settings {
 	}	
 
 	function html($sp) {
-		echo "<h2>Attempting to install or repair missing data</h2><br>";
+		echo "<h2>". __('Attempting to install or repair missing data','sendpress') . "</h2><br>";
 
 		SendPress_Data::install();
 

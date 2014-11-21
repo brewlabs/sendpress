@@ -99,7 +99,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
     $subscribers = SendPress_Data::csv_to_array($file);
     $total = count($subscribers);
     ?>
-    We found <?php echo $total; ?> lines in your csv.
+    <?php _e('We found','sendpress'); ?> <?php echo $total; ?> <?php _e('lines in your csv','sendpress'); ?>.
     <table cellspacing="0" class="table  table-bordered table-striped table-condensed" >
                     <thead>
                         <tr class="thead">

@@ -148,8 +148,8 @@ $view = __("View it in your browser","sendpress");
 
 if( SendPress_Option::get('beta') ) {
 ?>
-<h4 class="nomargin">Link to browser version</h4>
-<p><input type=radio value="" name="browerslink" checked/> Use default&nbsp;&nbsp;&nbsp;<input type=radio value="" name="browerslink"/> Use custom&nbsp;&nbsp;&nbsp;<input type=radio value="" name="browerslink"/> None</p>
+<h4 class="nomargin"><?php _e('Link to browser version','sendpress'); ?></h4>
+<p><input type=radio value="" name="browerslink" checked/> <?php _e('Use default','sendpress'); ?>&nbsp;&nbsp;&nbsp;<input type=radio value="" name="browerslink"/> <?php _e('Use custom','sendpress'); ?>&nbsp;&nbsp;&nbsp;<input type=radio value="" name="browerslink"/> <?php _e('None','sendpress'); ?></p>
 <p><input name="inbrowser" type="text" id="inbrowser" value="<?php echo SendPress_Option::get('inbrowser'); ?>" class="regular-text sp-text"></p>
 <br>
 <?php } ?>
