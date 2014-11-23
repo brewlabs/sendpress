@@ -126,7 +126,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 <div class="sp-75 sp-first">
 <!-- Nav tabs -->
 <ul class="nav nav-tabs">
-  <li class="active"><a href="#content-area-one-tab" data-toggle="tab">Main Content</a></li>
+  <li class="active"><a href="#content-area-one-tab" data-toggle="tab"><?php _e('Main Content','sendpress'); ?></a></li>
   <!--
   <li><a href="#profile" data-toggle="tab">Profile</a></li>
   <li><a href="#messages" data-toggle="tab">Messages</a></li>
@@ -211,9 +211,9 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 </div>
 </div>
 <div class="well clear">
-            <h2>Test This Email</h2>
+            <h2><?php _e('Test This Email','sendpress'); ?></h2>
             <p><input type="text" name="test-email" value="" class="sp-text" placeholder="Email to send test to." /></p>
-            <button class="btn btn-success" name="submit" type="submit" value="send-test"><i class=" icon-white icon-inbox"></i> Send Test</button>
+            <button class="btn btn-success" name="submit" type="submit" value="send-test"><i class=" icon-white icon-inbox"></i> <?php _e('Send Test','sendpress'); ?></button>
         </div>
 
 
@@ -223,8 +223,8 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">×</button>
 		<ul class="nav nav-tabs" id="myTab">
-			<li class="active tabs-first"><a href="#posts">Single Post</a></li>
-		  	<li ><a href="#merge">Personalize</a></li>
+			<li class="active tabs-first"><a href="#posts"><?php _e('Single Post','sendpress'); ?></a></li>
+		  	<li ><a href="#merge"><?php _e('Personalize','sendpress'); ?></a></li>
 		 
 		  	<!--
 		  <li><a href="#messages">Messages</a></li>
@@ -238,12 +238,12 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 <div class="tab-content">
 	 <div class="tab-pane active" id="posts">
 
-  	<div id="search-header">Search Posts: <input type="text" name="q" id="sp-single-query"></div>
+  	<div id="search-header"><?php _e('Search Posts','sendpress'); ?>: <input type="text" name="q" id="sp-single-query"></div>
   	<div  id="sp-post-preview" class="well">
-  		No Post Selected
+  		<?php _e('No Post Selected','sendpress'); ?>
   	</div>
 
-  	<p>Header HTML:&nbsp;
+  	<p><?php _e('Header HTML','sendpress'); ?>:&nbsp;
 	  	<label class="radio">
 		  <input type="radio" name="headerOptions" id="optionsRadios1" value="h1" >
 		  H1
@@ -269,112 +269,112 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 		  H6
 		</label>
 	</p>
-	<p>Header Link:&nbsp;
+	<p><?php _e('Header Link','sendpress'); ?>:&nbsp;
 	  	<label class="radio">
 		  <input type="radio" name="headerlinkOptions" id="optionsRadios2" value="link" checked>
-		  Link Header to Post
+		  <?php _e('Link Header to Post','sendpress'); ?>
 		</label>
 		<label class="radio">
 		  <input type="radio" name="headerlinkOptions" id="optionsRadios2" value="nolink">
-		  Don't Link Header to Post
+		  <?php _e('Don\'t Link Header to Post','sendpress'); ?>
 		</label>
 	</p>
-  	<p>Post Content:&nbsp;
+  	<p><?php _e('Post Content','sendpress'); ?>:&nbsp;
 	  	<label class="radio">
 		  <input type="radio" name="optionsRadios" id="optionsRadios1" value="excerpt" checked>
-		  Excerpt
+		  <?php _e('Excerpt','sendpress'); ?>
 		</label>
 		<label class="radio">
 		  <input type="radio" name="optionsRadios" id="optionsRadios2" value="full">
-		  Full Post
+		  <?php _e('Full Post','sendpress'); ?>
 		</label>
 	</p>
-  	<button class="btn btn-mini btn-success sp-insert-code" id="sp-post-preview-insert" data-code="">Insert</button>
+  	<button class="btn btn-mini btn-success sp-insert-code" id="sp-post-preview-insert" data-code=""><?php _e('Insert','sendpress'); ?></button>
   </div>
  	<div class="tab-pane " id="merge">
- 		<h3>Subscriber specific content</h3>
+ 		<h3><?php _e('Subscriber specific content','sendpress'); ?></h3>
   		<table class="table table-condensed table-striped">
   			
   <thead>
     <tr>
-      <th>Description</th>
-      <th>Code</th>
+      <th><?php _e('Description','sendpress'); ?></th>
+      <th><?php _e('Code','sendpress'); ?></th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-    	<td>First Name</td>
+    	<td><?php _e('First Name','sendpress'); ?></td>
       	<td>*|FNAME|*</td>
-      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|FNAME|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|FNAME|*"><?php _e('Insert','sendpress'); ?></button></td>
     </tr>
     <tr>
-    	<td>Last Name</td>
+    	<td><?php _e('Last Name','sendpress'); ?></td>
       	<td>*|LNAME|*</td>
-      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|LNAME|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|LNAME|*"><?php _e('Insert','sendpress'); ?></button></td>
     </tr>
     <tr>
-    	<td>Email</td>
+    	<td><?php _e('Email','sendpress'); ?></td>
       	<td>*|EMAIL|*</td>
-      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code"  data-code="*|EMAIL|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code"  data-code="*|EMAIL|*"><?php _e('Insert','sendpress'); ?></button></td>
     </tr>
 
   </tbody>
 </table>
-	<h3>Site specific content</h3>
+	<h3><?php _e('Site specific content','sendpress'); ?></h3>
   		<table class="table table-condensed table-striped">
   			
   <thead>
     <tr>
-      <th>Description</th>
-      <th>Code</th>
+      <th><?php _e('Description','sendpress'); ?></th>
+      <th><?php _e('Code','sendpress'); ?></th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-    	<td>Website URL</td>
+    	<td><?php _e('Website URL','sendpress'); ?></td>
       	<td>*|SITE:URL|*</td>
-      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|SITE:URL|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|SITE:URL|*"><?php _e('Insert','sendpress'); ?></button></td>
     </tr>
     <tr>
-    	<td>Website Title</td>
+    	<td><?php _e('Website Title','sendpress'); ?></td>
       	<td>*|SITE:TITLE|*</td>
-      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|SITE:TITLE|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|SITE:TITLE|*"><?php _e('Insert','sendpress'); ?></button></td>
     </tr>
     <tr>
-    	<td>Website Description</td>
+    	<td><?php _e('Website Description','sendpress'); ?></td>
       	<td>*|SITE:DECRIPTION|*</td>
-      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code"  data-code="*|SITE:DESCRIPTION|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code"  data-code="*|SITE:DESCRIPTION|*"><?php _e('Insert','sendpress'); ?></button></td>
     </tr>
     
   </tbody>
 </table>
-<h3>Date and Time</h3>
+<h3><?php _e('Date and Time','sendpress'); ?></h3>
   		<table class="table table-condensed table-striped">
   			
   <thead>
     <tr>
-      <th>Description</th>
-      <th>Code</th>
+      <th><?php _e('Description','sendpress'); ?></th>
+      <th><?php _e('Code','sendpress'); ?></th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-    	<td>Current Date<br><small>Format based on WordPress settings.</small></td>
+    	<td><?php _e('Current Date','sendpress'); ?><br><small><?php _e('Format based on WordPress settings','sendpress'); ?>.</small></td>
       	<td>*|DATE|*</td>
-      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|DATE|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|DATE|*"><?php _e('Insert','sendpress'); ?></button></td>
     </tr>
      <tr>
-    	<td>Current Time<br><small>5:16 pm</small></td>
+    	<td><?php _e('Current Time','sendpress'); ?><br><small>5:16 pm</small></td>
       	<td>*|DATE:g:i a|*</td>
-      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|DATE:g:i a|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|DATE:g:i a|*"><?php _e('Insert','sendpress'); ?></button></td>
     </tr>
     <tr>
-    	<td>Custom Date<br><small>March 10, 2001, 5:16 pm</small></td>
+    	<td><?php _e('Custom Date','sendpress'); ?><br><small>March 10, 2001, 5:16 pm</small></td>
       	<td>*|DATE:F j, Y, g:i a|*</td>
-      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|DATE:F j, Y, g:i a|*">Insert</button></td>
+      	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|DATE:F j, Y, g:i a|*"><?php _e('Insert','sendpress'); ?></button></td>
     </tr>
   
     
@@ -389,7 +389,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 		
 	</div>
 	<div class="modal-footer">
-	 	<a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>
+	 	<a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('Close','sendpress'); ?></a>
 	</div>
 </div>
 </div>
