@@ -88,7 +88,7 @@ class SendPress_Settings_Forms_Table extends WP_List_Table {
 				}
 				*/
 
-				$a .= '<a class="btn btn-default" href="'.SendPress_Admin::link('Settings_Widgets',array('id'=>$item->ID, 'create'=>1)) .'">Clone</a> <a class="btn btn-primary" href="'.SendPress_Admin::link('Settings_Widgets',array('id'=>$item->ID)) .'">Edit</a>';
+				$a .= '<a class="btn btn-default" href="'.SendPress_Admin::link('Settings_Widgets',array('id'=>$item->ID, 'create'=>1)) .'">'.__('Clone','sendpress').'</a> <a class="btn btn-primary" href="'.SendPress_Admin::link('Settings_Widgets',array('id'=>$item->ID)) .'">'. __('Edit','sendpress') .'</a>';
 				$a .= '</div>';
 				return $a;
 			break;
@@ -196,7 +196,7 @@ class SendPress_Settings_Forms_Table extends WP_List_Table {
 	function get_columns(){
 	   
 		$columns = array(
-			'name' => 'Name', //Render a checkbox instead of text
+			'name' => __('Name','sendpress'), //Render a checkbox instead of text
 			
 			//'lastsend' => __('Last Send','sendpress'),
 			'actions' => ''

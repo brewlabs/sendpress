@@ -85,7 +85,7 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
                  return date_i18n(get_option('date_format') , strtotime( $item->join_date ) );
            case 'actions':
                 $a = '<div class="inline-buttons">';
-                $a .= '<a class="btn btn-primary" href="'. SendPress_Admin::link('Subscribers_Subscriber', array('subscriberID'=>$item->subscriberID )) .'"><span class="glyphicon glyphicon-pencil"></span>  Edit</a> ';
+                $a .= '<a class="btn btn-primary" href="'. SendPress_Admin::link('Subscribers_Subscriber', array('subscriberID'=>$item->subscriberID )) .'"><span class="glyphicon glyphicon-pencil"></span> '.__('Edit','sendpress').'</a> ';
 
                 $a .= '</div>';
                 return $a;
@@ -166,12 +166,12 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
         $columns = array(
             'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
             'gravatar' => '',
-            'title' => 'Email',
-            'firstname' => 'First Name',
-            'lastname' => 'Last Name',
+            'title' => __('Email','sendpress'),
+            'firstname' => __('First Name','sendpress'),
+            'lastname' => __('Last Name','sendpress'),
             //'status' => 'Status',
-            'joindate' => 'Date Joined',
-            'actions' => 'Actions'
+            'joindate' => __('Date Joined','sendpress'),
+            'actions' => __('Actions','sendpress')
             //'count_subscribers' => 'Subscribers'
 
             
@@ -225,7 +225,7 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
      **************************************************************************/
     function get_bulk_actions() {
         $actions = array(
-            'delete-subscribers-bulk-all'    => 'Delete'
+            'delete-subscribers-bulk-all'    => __('Delete','sendpress')
         );
         return $actions;
     }

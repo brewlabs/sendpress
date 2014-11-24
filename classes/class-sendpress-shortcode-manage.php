@@ -31,8 +31,8 @@ class SendPress_Shortcode_Manage{
 		<th  ><?php _e('Subscribed','sendpress'); ?></th>
 		<th  ><?php _e('Unsubscribed','sendpress'); ?></th>
 		<th  ><?php _e('List','sendpress'); ?></th>
-		<th class="hidden-phone">Updated</th>
-		<th class="hidden-phone">Other Info</th>
+		<th class="hidden-phone"><?php _e('Updated','sendpress'); ?></th>
+		<th class="hidden-phone"><?php _e('Other Info','sendpress'); ?></th>
 	</tr>
 <?php
 

@@ -65,7 +65,7 @@ class SendPress_Widget_Signup extends WP_Widget {
 		$args.= 'thank_you="'.$instance['thank_you'].'" ';
 		$args.= 'label_display="'.$instance['label_display'].'" ';
 		$args.= 'desc="'.$instance['desc'].'" ';
-		$args.= 'no_list_error="<div><b>-- NO LIST HAS BEEN SELECTED IN SENDPRESS WIDGET SETTINGS --</b></div>" ';
+		$args.= 'no_list_error="<div><b>-- '. __('NO LIST HAS BEEN SELECTED IN SENDPRESS WIDGET SETTINGS','sendpress'). ' --</b></div>" ';
 	
 		$lists = SendPress_Data::get_lists(
 			array('meta_query' => array(
@@ -215,9 +215,9 @@ class SendPress_Widget_Signup extends WP_Widget {
 		</p> 
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'label_display' ); ?>">Display labels inside?:</label>
-			<input type="radio" name="<?php echo $this->get_field_name( 'label_display' ); ?>" value="1"<?php echo $instance['label_display'] == 1 ? ' checked' : ''; ?> /> Yes
-			<input type="radio" name="<?php echo $this->get_field_name( 'label_display' ); ?>" value="0"<?php echo $instance['label_display'] == 0 ? ' checked' : ''; ?> /> No
+			<label for="<?php echo $this->get_field_id( 'label_display' ); ?>"><?php _e('Display labels inside','sendpress'); ?>?:</label>
+			<input type="radio" name="<?php echo $this->get_field_name( 'label_display' ); ?>" value="1"<?php echo $instance['label_display'] == 1 ? ' checked' : ''; ?> /> <?php __('Yes','sendpress') ?>
+			<input type="radio" name="<?php echo $this->get_field_name( 'label_display' ); ?>" value="0"<?php echo $instance['label_display'] == 0 ? ' checked' : ''; ?> /> <?php __('No','sendpress') ?>
 		</p>
 		<!--
 		<p>
@@ -249,10 +249,10 @@ class SendPress_Widget_Signup extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'list_label' ); ?>"><?php _e('Lists Label: multiple lists only', 'sendpress'); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'list_label' ); ?>" name="<?php echo $this->get_field_name( 'list_label' ); ?>" value="<?php echo $instance['list_label']; ?>" style="width:100%;" />
 		</p>
-		<p><b>Check off the lists you would like<br>users to subscribe to.</b></p>
+		<p><b><?php __('Check off the lists you would like<br>users to subscribe to','sendpress') ?>.</b></p>
 		<?php 
 		if( count($lists) === 0 ){
-			echo '<p>No public lists available</p>';
+			_e('<p>No public lists available</p>','sendpress');
 		}else{
 			foreach($lists as $list){
 				?>
