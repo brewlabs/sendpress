@@ -17,13 +17,37 @@ class SendPress_Template_Manager {
         
     }
 
-
-    static function update_template_content(){
+    static function install_template_content(){
         $templates = self::templates();
         $template_data = get_posts( array(
             'post_type' => 'sp_template',
             'post_status'=>array('sp-standard','draft')
              ));
+       
+            foreach ($templates as $key => $template) {
+                //print_r($template);
+                //$content = file_get_contents($template['path']);
+                // Create post object
+                $my_post = array(
+                    'post_title'    => $template['name'],
+                    'post_content'  => json_encode($template),
+                    'post_status'   => $template['status'],
+                    'post_name' => $key,
+                    'post_type' => 'sp_template'
+                );
+                // Insert the post into the database
+                $post_id_added = wp_insert_post( $my_post );
+                update_post_meta( $post_id_added, '_guid',  $template['guid'] );
+                update_post_meta( $post_id_added, '_footer_page', SendPress_Tag_Footer_Page::content() );
+                update_post_meta( $post_id_added, '_header_content', SendPress_Tag_Header_Content::content() );
+                update_post_meta( $post_id_added, '_header_padding', 'pad-header' );
+
+            }
+            
+        
+
+
+        /*
         $update_array= array();
         foreach ($template_data as $template) {
             $guid = get_post_meta($template->ID, '_guid', true);
@@ -60,6 +84,78 @@ class SendPress_Template_Manager {
             update_post_meta( $post_id_added, '_header_padding', 'pad-header' );
 
         }
+        */
+    }
+
+
+    static function update_template_content(){
+        $templates = self::templates();
+        $template_data = get_posts( array(
+            'post_type' => 'sp_template',
+            'post_status'=>array('sp-standard','draft')
+             ));
+        if(count($template_data) == 0 ){
+            foreach ($templates as $key => $template) {
+                //print_r($template);
+                //$content = file_get_contents($template['path']);
+                // Create post object
+                $my_post = array(
+                    'post_title'    => $template['name'],
+                    'post_content'  => json_encode($template),
+                    'post_status'   => $template['status'],
+                    'post_name' => $key,
+                    'post_type' => 'sp_template'
+                );
+                // Insert the post into the database
+                $post_id_added = wp_insert_post( $my_post );
+                update_post_meta( $post_id_added, '_guid',  $template['guid'] );
+                update_post_meta( $post_id_added, '_footer_page', SendPress_Tag_Footer_Page::content() );
+                update_post_meta( $post_id_added, '_header_content', SendPress_Tag_Header_Content::content() );
+                update_post_meta( $post_id_added, '_header_padding', 'pad-header' );
+
+            }
+
+        }
+
+
+        /*
+        $update_array= array();
+        foreach ($template_data as $template) {
+            $guid = get_post_meta($template->ID, '_guid', true);
+           
+            foreach ($templates as $key => $values) {
+                if( $guid == trim($values['guid']) && $values['name'] == $template->post_title ){
+                    // $content = file_get_contents( $update['path'] );
+                    $template->post_title = $values['name'];
+                    $template->post_content = json_encode($values);
+                    $template->post_status = $values['status'];
+                    wp_update_post( $template );
+                    unset($templates[$key]);
+                }    
+            }
+  
+        }
+
+        foreach ($templates as $key => $template) {
+            //print_r($template);
+            //$content = file_get_contents($template['path']);
+            // Create post object
+            $my_post = array(
+                'post_title'    => $template['name'],
+                'post_content'  => json_encode($template),
+                'post_status'   => $template['status'],
+                'post_name' => $key,
+                'post_type' => 'sp_template'
+            );
+            // Insert the post into the database
+            $post_id_added = wp_insert_post( $my_post );
+            update_post_meta( $post_id_added, '_guid',  $template['guid'] );
+            update_post_meta( $post_id_added, '_footer_page', SendPress_Tag_Footer_Page::content() );
+            update_post_meta( $post_id_added, '_header_content', SendPress_Tag_Header_Content::content() );
+            update_post_meta( $post_id_added, '_header_padding', 'pad-header' );
+
+        }
+        */
     }
 }
 

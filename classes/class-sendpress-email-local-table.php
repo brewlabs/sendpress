@@ -81,9 +81,9 @@ class SendPress_Email_Local_Table extends WP_List_Table {
 			case 'actions':
 				$type = get_post_meta($item->ID, "_template_type", true);
 				$a = '<div class="inline-buttons" style="text-align:right;">';
-				if($type == 'clone'){
+				//if($type == 'clone'){
 					$a .= '<a class="btn btn-danger" href="'.SendPress_Admin::link('Emails_Tempdelete',array('templateID'=>$item->ID , 'action'=>'delete' )) .'">&times;</a> ';
-				}
+				//}
 
 				$a .= '<a class="btn btn-default" href="'.SendPress_Admin::link('Emails_Tempclone',array('templateID'=>$item->ID)) .'">Clone</a> <a class="btn btn-primary" href="'.SendPress_Admin::link('Emails_Tempstyle',array('templateID'=>$item->ID)) .'">Edit</a>';
 				$a .= '</div>';

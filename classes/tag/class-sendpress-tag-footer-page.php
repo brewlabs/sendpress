@@ -11,14 +11,19 @@ class SendPress_Tag_Footer_Page extends SendPress_Tag_Base  {
 	static function internal( $template_id , $email_id, $subscriber_id , $example ) {
 		$return = self::external( $template_id ,$email_id, $subscriber_id , $example );
 		if( $return != '' ){
-			return self::table_start() . $return . self::table_end();
+			return self::table_start() . $return . self::table_end( $template_id );
 		}
         return '';
 	}
 	
 	static function external(  $template_id , $email_id , $subscriber_id, $example ){
 		//if( $example == false ){
-			$content = get_post_meta( $template_id , '_footer_page' , true); // get_post_meta($email_id);
+		
+			if( self::template_post_exists($template_id) ){
+				$content = get_post_meta( $template_id , '_footer_page' , true); 
+			} else {
+				$content = self::content();
+			}
 			//$content = $content_post->post_content;
 			$link = get_post_meta( $template_id ,'_header_page_link_color',true );
 			if($link == false ){
@@ -41,7 +46,7 @@ class SendPress_Tag_Footer_Page extends SendPress_Tag_Base  {
 		}
 		*/
 		 if($content != ''){
-		 	return self::table_start( $template_id ) . $content . self::table_end();
+		 	return self::table_start( $template_id ) . $content . self::table_end( $template_id );
 		 }
 		 return '';
 		
@@ -86,7 +91,7 @@ class SendPress_Tag_Footer_Page extends SendPress_Tag_Base  {
 	   
 	    return $return;
 	}
-	static function table_end(){
+	static function table_end( $template_id ){
 		$return ='';
 		$return .='</td>';
 	    $return .='</tr>';

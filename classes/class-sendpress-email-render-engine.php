@@ -56,8 +56,11 @@ class SendPress_Email_Render_Engine {
 
 	static function render_html_base_by_id( $id ){
 			$temp = get_post( $id );
-			$temp = json_decode( $temp->post_content );
-			if( $temp === false ){
+			if($temp !== null){
+				$temp = json_decode( $temp->post_content );
+			} 
+
+			if( $temp === false || $temp === null){
 				$path = SENDPRESS_PATH.'templates/v1-0/master.html';
 			} else {
 				$path = $temp->path;

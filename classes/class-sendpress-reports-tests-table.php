@@ -198,7 +198,7 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
                      }
                      return '<span class="label label-danger">0</span>';
              
- break;
+                    break;
                case 'subject':
                 $sub = get_post_meta($item->ID, "_sendpress_subject", true);
                 return $sub;

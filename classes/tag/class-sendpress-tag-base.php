@@ -8,11 +8,15 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Tag_Base {
 
-	static function table_start(  ) {
+	static function content(){
+		return '';
+	}
+
+	static function table_start( $temp_id ) {
 		return '<!-- sp-table-tag --><table border="0" width="100%" cellpadding="0" cellspacing="0"><tr><td align="left">';
 	}
 
-	static function table_end(){
+	static function table_end( $temp_id ){
 		return '</td></tr></table><!-- /sp-table-tag -->';
 	}
 
@@ -30,6 +34,11 @@ Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdie
 In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.<br><br>
 Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc.</p>";
 
+	}
+
+	static function template_post_exists( $id ) {
+		if($id == 0) { return false;}
+  		return is_string( get_post_status( $id ) );
 	}
 
 }

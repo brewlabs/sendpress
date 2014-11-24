@@ -181,7 +181,9 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 			}
 			echo  '</optgroup>';
 			
-		}
+			} else {
+				echo '<option value="0" ></option>';
+			}
 
 		$args = array(
 			'post_type' => 'sp_template' ,

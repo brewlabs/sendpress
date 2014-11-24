@@ -715,6 +715,13 @@ function spnl_setup_template_tags() {
 			'function'    => array('SendPress_Tag_Footer_Content','external'),
 			'internal'    => false,//array('SendPress_Tag_Footer_Content','internal'),
 			'copy'    => array('SendPress_Tag_Footer_Content','copy'),
+		),
+		array(
+			'tag'         => 'sp-email-title',
+			'description' => __( 'Email Title', 'sendpress' ),
+			'function'    => array('SendPress_Tag_Email_Title','external'),
+			'internal'    => false,//array('SendPress_Tag_Footer_Content','internal'),
+			'copy'    => array('SendPress_Tag_Email_Title','copy'),
 		)
 	);
 

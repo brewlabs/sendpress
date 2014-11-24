@@ -18,11 +18,17 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 	function delete(){
 
 		$p = $_GET['templateID'];
-		$type = get_post_meta( $p , "_template_type", true);
-		if($type == 'clone'){
+		//$type = get_post_meta( $p , "_template_type", true);
+		//if($type == 'clone'){
 			wp_delete_post($p, true);
-		}
+		//}
 		SendPress_Admin::redirect('Emails_Temp');
+	}
+
+	function install(){
+		
+		SendPress_Admin::redirect('Emails_Temp');
+
 	}
 
 	function screen_options(){
@@ -47,7 +53,7 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 	
 	function html($sp){
 		SendPress_Tracking::event('Emails Tab');
-		SendPress_Template_Manager::update_template_content();
+		//SendPress_Template_Manager::update_template_content();
 		//Create an instance of our package class...
 		$testListTable = new SendPress_Email_Local_Table();
 		//Fetch, prepare, sort, and filter our data...
@@ -66,7 +72,8 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display(); ?>
 	    <?php wp_nonce_field($this->_nonce_value); ?>
-	</form>
+	</form><br>
+	<a href="<?php echo SendPress_Admin::link('Emails_Temp',array('action'=>'install')); ?>" class="btn btn-primary">Install Responsive Starter</a>
 	<?php
 	}
 

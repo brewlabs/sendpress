@@ -18,25 +18,25 @@ class SendPress_Email_Cache {
      return self::$instance;
   }
 
-  public function get($key) {
+ static public function get($key) {
      self::getInstance();
 
      return isset(self::$data[$key]) ? self::$data[$key] : null;
   }
 
-  public function set($key, $value) {
+ static public function set($key, $value) {
      self::getInstance();
      self::$data[$key] = $value;
   }
 
-  public function build_cache_for_email( $id ){
+ static public function build_cache_for_email( $id ){
      if(!isset(  self::$data[$id] )){
         $html =  SendPress_Template::get_instance()->render_html( $id , false, false , false );
         self::set( $id , $html );
       }
   }
 
-  public function build_cache(){
+  static public function build_cache(){
     self::getInstance();
     $email_list = SendPress_Data::get_email_id_from_queue();
     foreach ($email_list as $email) {

@@ -11,7 +11,7 @@ class SendPress_Tag_Footer_Content extends SendPress_Tag_Base  {
 	static function internal( $template_id , $email_id, $subscriber_id , $example ) {
 		$return = self::external($template_id , $email_id, $subscriber_id , $example );
 		if( $return != '' ){
-			return self::table_start() . $return . self::table_end();
+			return self::table_start( $template_id  ) . $return . self::table_end( $template_id );
 		}
         return '';
 	}
@@ -26,7 +26,12 @@ class SendPress_Tag_Footer_Content extends SendPress_Tag_Base  {
 			if($link == false ){
 				$link = '#2469a0';
 			}
-			$content = get_post_meta( $template_id , '_footer_content' , true); // get_post_meta($email_id);
+			
+			if( self::template_post_exists($template_id) ){
+				$content = get_post_meta( $template_id , '_footer_content' , true); 
+			} else {
+				$content = self::content();
+			}
 			//$content = $content_post->post_content;
 			//remove_filter('the_content','wpautop');
 			$content = apply_filters('the_content', $content);
@@ -41,7 +46,7 @@ class SendPress_Tag_Footer_Content extends SendPress_Tag_Base  {
 		}
 		*/
 		 if($content != ''){
-		 	return self::table_start( $template_id ) . $content . self::table_end();
+		 	return self::table_start( $template_id ) . $content . self::table_end( $template_id );
 		 }
 		 return '';
 	}
@@ -57,6 +62,7 @@ class SendPress_Tag_Footer_Content extends SendPress_Tag_Base  {
 	
 	
 	static function table_start( $template_id ){
+		$cl  = '';
 		$htext = get_post_meta( $template_id ,'_footer_text_color',true );
 		if($htext == false ){
 			$htext = '#333';
@@ -79,7 +85,7 @@ class SendPress_Tag_Footer_Content extends SendPress_Tag_Base  {
 	    $return .='<td class="' . $cl . ' sp-style-f-bg" bgcolor="'.$bgtext.'" style="background-color: '.$bgtext.'; '.$pd.' font-size: 13px; line-height: 20px; font-family: Helvetica, sans-serif; color: '.$htext.';" align="left">';
 	    return $return;
 	}
-	static function table_end(){
+	static function table_end($template_id){
 		$return ='';
 		$return .='</td>';
 	    $return .='</tr>';

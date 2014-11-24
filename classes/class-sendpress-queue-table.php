@@ -204,14 +204,14 @@ class SendPress_Queue_Table extends WP_List_Table {
         $columns = array(
             'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
             'gravatar' => ' ',
-            'title' => 'Email',
-            'listid' => 'List',
+            'title' => __('Email','sendpress'),
+            'listid' => __('List','sendpress'),
             
             
-            'max_attempts' => 'Max&nbsp;Attempts',
-            'attempts' => 'Attempted',
-            'last_attemp' => 'Last&nbsp;Attempt',
-            'actions' => 'Actions'
+            'max_attempts' => __('Max&nbsp;Attempts','sendpress'),
+            'attempts' => __('Attempted','sendpress'),
+            'last_attemp' => __('Last&nbsp;Attempt','sendpress'),
+            'actions' => __('Actions','sendpress')
 
             
         );
@@ -277,7 +277,7 @@ class SendPress_Queue_Table extends WP_List_Table {
          if(!isset($_GET['listid']) ){
                 $cls = " selected='selected' ";
             }
-        echo "<option cls value='-1' >All Lists</option>";
+        echo "<option cls value='-1' >". __('All Lists','sendpress') ."</option>";
         foreach ($info as $list) {
             $cls = '';
             if(isset($_GET['listid']) && $_GET['listid'] == $list['id']){

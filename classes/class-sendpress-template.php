@@ -323,6 +323,8 @@ class SendPress_Template {
 			$saved = $post;
 		}
 		$saved = $post;
+
+
 		if(!isset($post)){
 			echo __('Sorry we could not find your email.','sendpress');
 			return;
@@ -332,12 +334,13 @@ class SendPress_Template {
 		$post_template  = get_post_meta( $post->ID , '_sendpress_template', true );
 		if( $post_template != '' && is_numeric($post_template) ){
 			$HtmlCode  = SendPress_Email_Render_Engine::render_template( $post_template , $post_id ); 
-
+			
 		} else {
 
 			$HtmlCode = file_get_contents(SENDPRESS_PATH .'/templates/simple.html' );
 		}
 
+		
 
 		if( $HtmlCode != false ){
 			/*

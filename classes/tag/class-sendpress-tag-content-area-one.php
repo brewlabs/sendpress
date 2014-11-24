@@ -11,7 +11,7 @@ class SendPress_Tag_Content_Area_One extends SendPress_Tag_Base  {
 	static function internal( $template_id , $email_id, $subscriber_id , $example ) {
 		$return = self::external( $template_id ,$email_id, $subscriber_id , $example );
 		if( $return != '' ){
-			return self::table_start() . $return . self::table_end();
+			return self::table_start() . $return . self::table_end( $template_id );
 		}
         return '';
 	}
