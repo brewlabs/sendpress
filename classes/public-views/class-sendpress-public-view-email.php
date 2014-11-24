@@ -17,7 +17,7 @@ class SendPress_Public_View_Email extends SendPress_Public_View{
 		$email_id = get_query_var( 'spemail' );
 		global $post;
 
-		if($this->data()->id){
+		if( is_object($this->data()) &&  $this->data()->id){
 			$email_id = $this->data()->id;
 		} 
 		if(isset($_GET['eid'])){
