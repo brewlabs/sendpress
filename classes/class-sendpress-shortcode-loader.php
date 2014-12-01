@@ -16,6 +16,7 @@ class SendPress_Shortcode_Loader {
 			'recent-posts' => __CLASS__ . '::recent_posts',
 			'signup' => __CLASS__ . '::signup',
 			'form' => __CLASS__ . '::forms',
+			'recent-posts-by-user' => __CLASS__ . '::recent_posts_by_user'
 		);
 	}
 
@@ -202,6 +203,9 @@ class SendPress_Shortcode_Loader {
 		return call_user_func( array( 'SendPress_SC_Signup', 'output' ), $atts );
 	}
 
+	public static function recent_posts_by_user($atts){
+		return call_user_func( array( 'SendPress_SC_Recent_Posts_By_User', 'output' ), $atts );
+	}
 
 
 
