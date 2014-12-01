@@ -99,6 +99,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
+= 1.0.4 - 2014.11.24 =
+* Fix: Template updates
+* Update: Translation Strings
+
+
 = 1.0.3 - 2014.11.08 =
 * Fix: Multisite Setup
 * Fix: Custom tags showing in emails
