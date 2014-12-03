@@ -620,6 +620,16 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $result;
 	}
 
+	static function get_report_export( $rid ){
+		global $wpdb;
+		$event_table = SendPress_Data::subscriber_event_table();
+		$sub_table = SendPress_Data::subscriber_table();
+		$url_table = SendPress_Data::report_url_table();
+		return $wpdb->get_results( $wpdb->prepare("SELECT sev.eventdate,sev.ip,sev.`devicetype`,sev.`device`, sev.type ,subs.email,rurl.url from ". $event_table ." AS sev INNER JOIN ". $sub_table ." AS subs on sev.subscriberID = subs.subscriberID LEFT JOIN ".$url_table." AS rurl on sev.urlID = rurl.urlID where sev.reportID = %d and sev.subscriberID > 0 and sev.type != 'send'", $rid));
+		
+	}
+
+
 	static function get_bounce_total($rid){
 		global $wpdb;
 		$table = self::subscriber_event_table();
