@@ -72,10 +72,11 @@ class SendPress_Email_Render_Engine {
 	static function render_html_base_by_post( $post ){
 			
 			$temp = json_decode( $post->post_content );
-			if( $temp === false ){
-				$path = SENDPRESS_PATH.'templates/v1-0/master.html';
-			} else {
+			if( is_object($temp) ){
 				$path = $temp->path;
+			} else {
+				$path = SENDPRESS_PATH.'templates/v1-0/master.html';
+				
 			}
 			$html = file_get_contents($path);
 			return $html;

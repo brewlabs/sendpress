@@ -33,7 +33,7 @@ class SendPress_View_Emails_Footer extends SendPress_View_Emails {
      <a href="<?php echo SendPress_Admin::link('Emails_Tempstyle', array('templateID' => $_GET['templateID']  ) ); ?>">Back to Template</a>&nbsp;&nbsp;&nbsp;<button class="btn btn-primary " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Save','sendpress'); ?></button>
    	</div>
    <h2><?php echo $postdata->post_title; ?> Template Footer</h2><br>
-     <div class="tab-pane fade in active" id="home"><?php the_editor( get_post_meta( $postdata->ID , '_footer_content' , true) , 'footer-content'); ?></div>
+     <div class="tab-pane fade in active" id="home"><?php wp_editor( get_post_meta( $postdata->ID , '_footer_content' , true) , 'footer-content'); ?></div>
 
 		<?php SendPress_Data::nonce_field(); ?>
      </form><br><br>Default Content

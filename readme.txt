@@ -102,6 +102,8 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 = 1.0.4 - 2014.11.24 =
 * Fix: Template updates
 * Update: Translation Strings
+* Update: Transifex files updated
+* New: Recent Post Shortcode
 
 
 = 1.0.3 - 2014.11.08 =

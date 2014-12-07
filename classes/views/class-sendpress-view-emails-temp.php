@@ -27,8 +27,8 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 
 	function install(){
 		
+		SendPress_Template_Manager::install_template_content();
 		SendPress_Admin::redirect('Emails_Temp');
-
 	}
 
 	function screen_options(){

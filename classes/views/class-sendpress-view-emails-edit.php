@@ -146,11 +146,11 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 		'wp_autoresize_on' => ( ! empty( $_wp_autoresize_on ) && get_user_setting( 'editor_expand', 'on' ) === 'on' ),
 		'add_unload_trigger' => false,
 	),
-) ); ?><?php //the_editor($post->post_content,'content_area_one_edit'); ?></div>
+) ); ?><?php //wp_editor($post->post_content,'content_area_one_edit'); ?></div>
   <!--
-  <div class="tab-pane fade" id="profile"><?php the_editor($post->post_content,'content-2'); ?></div>
-  <div class="tab-pane fade" id="messages"><?php the_editor($post->post_content,'content-3'); ?></div>
-  <div class="tab-pane fade" id="settings"><?php the_editor($post->post_content,'content-4'); ?></div>
+  <div class="tab-pane fade" id="profile"><?php wp_editor($post->post_content,'content-2'); ?></div>
+  <div class="tab-pane fade" id="messages"><?php wp_editor($post->post_content,'content-3'); ?></div>
+  <div class="tab-pane fade" id="settings"><?php wp_editor($post->post_content,'content-4'); ?></div>
   -->
 </div>
 
