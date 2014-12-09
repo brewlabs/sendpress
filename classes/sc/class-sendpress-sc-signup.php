@@ -111,8 +111,10 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 						}
 					}
 
-					echo $post_notifications_code;
-
+					if(is_string($post_notifications_code) && strlen($post_notifications_code) > 0){
+						echo $post_notifications_code;
+					}
+					
 
 					if( strlen($postnotification) > 0 ){
 						do_action('sendpress_add_post_notification_list', $postnotification, $pnlistid);
