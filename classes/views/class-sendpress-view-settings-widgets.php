@@ -10,15 +10,19 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 	function save($post, $sp){
 
+		// print_r($post);
+		// die();
+
 		$action = (isset($post['form_action'])) ? $post['form_action'] : 'save';
 		
 		switch($action){
 			case 'copy':
-				$postid = SendPress_Data::create_settings_post($post['post_subject'], array(), $post['copy_from']);
+				$postid = SendPress_Data::create_settings_post($post['post_subject'], "", $post['copy_from']);
 				wp_redirect( '?page=sp-settings&view=widgets&id='. $postid );
 				break;
 			case 'create':
-				$postid = SendPress_Data::create_settings_post($post['post_subject'], SendPress_Data::signup_defaults());
+
+				$postid = SendPress_Data::create_settings_post($post['post_subject'], $post['form_type']);
 				wp_redirect( '?page=sp-settings&view=widgets&id='. $postid );
 				break;
 			default:
@@ -88,6 +92,9 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 			case 'signup_widget':
 				self::signup($settings);
 				break;
+			case 'manage_subscriptions':
+				self::manage_subscriptions($settings);
+				break;
 			default:
 				self::display_forms();
 				break;
@@ -137,56 +144,36 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		
 		<h2><?php ucfirst($save_type); ?> <?php _e('Form','sendpress'); ?></h2>
 		<br>
-		<?php $this->panel_start( __('Form Name','sendpress') ); ?>
-        
-        <input type="text" name="post_subject" size="30" tabindex="1" class="form-control" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
-        
-        <?php $this->panel_end(  ); ?>
 		
-		<!--
     	<div class="sp-row">
     		<div class="sp-50 sp-first">
-				<?php $this->panel_start( __('Form to Create','sendpress') ); ?>
-				<h5>Select your form:</h5>
-				<select class="form-control" name="template">
+				<?php $this->panel_start( __('Form Name','sendpress') ); ?>
+        
+		        <input type="text" name="post_subject" size="30" tabindex="1" class="form-control" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
+		        
+		        <?php $this->panel_end(  ); ?>
+			</div>
+			<div class="sp-50">
 				<?php
-						$args = array(
-							'post_type' => 'sp_template' ,
-							'post_status' => array('sp-standard'),
-						);
-
-						$the_query = new WP_Query( $args );
-
-						if ( $the_query->have_posts() ) {
-						while ( $the_query->have_posts() ) {
-							$the_query->the_post();
-							$temp_id = $the_query->post->ID;
-							$s = '';
-							if($temp_id == $template_id){
-								$s = 'selected';
-							}
-							echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
-						}
-						
-					}
+				$form_types = SendPress_Data::get_widget_form_types();
 				?>
+				<?php $this->panel_start( __('Form Type','sendpress') ); ?>
+				<select class="form-control" name="form_type" id="form_type">
+					<option value="0"></option>
+					<?php
+						foreach ($form_types as $key => $value) {
+							echo '<option value="'.$key .'">' . $value . '</option>';
+						}
+					?>
 				
 				</select>
 				<?php $this->panel_end(); ?>
 			</div>
-			<div class="sp-50">
-				<?php $this->panel_start( __('Original Template','sendpress') ); ?>
-				<label>
-					<input type="radio"  name="template_system"  value="old" /> Use Old Email System
-				</label><br>Currently emails cannot be upgraded directly to the new Template system.
-
-				<?php $this->panel_end(  ); ?>
-			</div>
 		</div>
-		-->
+		
 
 		<input type="hidden" name="_setting_type" id="setting_type" value="form" />
-		<input type="hidden" name="_form_type" id="form_type" value="signup_widget" />
+		<!--<input type="hidden" name="_form_type" id="form_type" value="signup_widget" />-->
 		<input type="hidden" name="form_action" id="form_action" value="<?php echo $save_type; ?>" />
 		 
 		<?php
@@ -338,6 +325,27 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		</div>
 		<input type="hidden" name="_setting_type" id="setting_type" value="form" />
 		<input type="hidden" name="_form_type" id="form_type" value="signup_widget" />
+		<input type="hidden" name="_settings_id" id="sp_settings_id" value="<?php echo $settings['_settings_id']; ?>" />
+		<?php
+	}
+
+	function manage_subscriptions($settings){
+		?>
+		<div class="sp-row">
+			<h3><?php echo $settings['post_title'];?></h3>
+		</div>
+		<div class="sp-row">
+			<?php $this->panel_start( __('Manage Subscription Options','sendpress') ); ?>
+
+			<p>
+				<label for="_form_description"><?php _e('Description:', 'sendpress'); ?></label>
+				<textarea placeholder="This text will show above the manage subscription form." rows="5" type="text" class="widefat" id="_form_description" name="_form_description"><?php echo $settings['_form_description']; ?></textarea>
+			</p>
+
+			<?php $this->panel_end(); ?>
+		</div>
+		<input type="hidden" name="_setting_type" id="setting_type" value="form" />
+		<input type="hidden" name="_form_type" id="form_type" value="manage_subscriptions" />
 		<input type="hidden" name="_settings_id" id="sp_settings_id" value="<?php echo $settings['_settings_id']; ?>" />
 		<?php
 	}
