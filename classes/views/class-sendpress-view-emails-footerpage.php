@@ -16,7 +16,6 @@ class SendPress_View_Emails_Footerpage extends SendPress_View_Emails {
         }
    
    function html($sp) { 
-    SendPress_Template_Manager::update_template_content();
     global $sendpress_html_templates;
 
         //print_r($sendpress_html_templates[$_GET['templateID']]);
