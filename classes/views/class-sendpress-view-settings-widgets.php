@@ -65,7 +65,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 	function html($sp) {
 
-		$postid = $_GET['id'];
+		$postid = ISSET($_GET['id']) ? $_GET['id'] : 0;
 		$showCreate = (isset($_GET['create']) && $_GET['create'] == 1) ? true : false;
 
 		$settings = SendPress_Data::get_post_meta_object($postid);

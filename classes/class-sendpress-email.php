@@ -195,7 +195,7 @@ class SendPress_Email {
 
 					//ADD TO DB?
 					
-					if(strrpos( $href, "*|" ) === false ) {
+					if(strrpos( $href, "*|" ) === false  && strrpos($href, "#") !== 0 ) {
 							
 							if( SendPress_Option::get('skip_mailto', false ) == true && strrpos( $href, "mailto" ) !== false  ) {
 								continue;

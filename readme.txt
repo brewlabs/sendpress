@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 4.0
-Stable tag: 1.0.9
+Stable tag: 1.0.12.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,16 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 1.0.12.10 - 2014.12.10 =
+* Fix: dont track links starting with #
+* Fix: pro custom templates not loading 
+* Fix: SSL error on template style page
+* Fix: Multiple templates created in some cases
+* Fix: Moved update script to admin init and check user permissions first
+* Fix: Update dwidget code to prevent broken widgets page
+* Fix: Changed plugin widget loader
+
 
 = 1.0.9 - 2014.12.07 =
 * Fix: Template updates
@@ -562,6 +572,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.0.12.10 =
+Multiple bug fixes
 
 = 1.0.2 =
 Template fixes and shortcode updates

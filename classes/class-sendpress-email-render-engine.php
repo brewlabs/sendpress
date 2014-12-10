@@ -55,18 +55,28 @@ class SendPress_Email_Render_Engine {
 	}
 
 	static function render_html_base_by_id( $id ){
-			$temp = get_post( $id );
-			if($temp !== null){
-				$temp = json_decode( $temp->post_content );
-			} 
+			$temp_post = get_post( $id );
+			if($temp_post !== null){
+				if($temp_post->post_status == 'sp-custom'){
+					return $temp_post->post_content;
+				}
 
-			if( $temp === false || $temp === null){
-				$path = SENDPRESS_PATH.'templates/v1-0/master.html';
-			} else {
-				$path = $temp->path;
+
+				$temp = json_decode( $temp_post->post_content );
+			 
+
+				if( $temp === false || $temp === null){
+					$path = SENDPRESS_PATH.'templates/v1-0/master.html';
+				} else {
+					$path = $temp->path;
+				}
+				$html = file_get_contents($path);
+				return $html;
 			}
+			$path = SENDPRESS_PATH.'templates/v1-0/master.html';
 			$html = file_get_contents($path);
 			return $html;
+
 	}
 
 	static function render_html_base_by_post( $post ){

@@ -1,7 +1,7 @@
 <?php
 /**
 Plugin Name: SendPress Newsletters
-Version: 1.0.9
+Version: 1.0.12.10
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -16,7 +16,7 @@ Author URI: https://sendpress.com/
 	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 	define( 'SENDPRESS_API_VERSION', 1 );
 	define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-	define( 'SENDPRESS_VERSION', '1.0.9' );
+	define( 'SENDPRESS_VERSION', '1.0.12.10' );
 	define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -110,7 +110,14 @@ Author URI: https://sendpress.com/
 		function __construct() {
 			//add_action( 'admin_init' , array( 'SendPress' , 'wp' ) );
 			add_action( 'init', array( $this , 'init' ) );
-			add_action( 'widgets_init', array( $this , 'load_widgets' ) );
+			//add_action( 'widgets_init', array( $this , 'load_widgets' ) );
+			add_action('widgets_init',
+			     create_function('', 'return register_widget("SendPress_Widget_Forms");')
+			);
+			add_action('widgets_init',
+			     create_function('', 'return register_widget("SendPress_Widget_Signup");')
+			);
+
 			add_action( 'plugins_loaded', array( $this , 'load_plugin_language' ) );
 			add_action( 'admin_enqueue_scripts', array( $this , 'wp_enqueue_script' ) );
 			add_action( 'init', array( 'SendPress_Shortcode_Loader', 'init' ) );
@@ -235,7 +242,7 @@ Author URI: https://sendpress.com/
 
 
 		function init() {
-			$this->maybe_upgrade();
+			
 			//add_action('register_form',array( $this , 'add_registration_fields'));
 
 			SendPress_Ajax_Loader::init();
@@ -667,6 +674,7 @@ Author URI: https://sendpress.com/
 
 	function admin_init(){
 		$this->add_caps();
+		$this->maybe_upgrade();
 		if ( !empty($_GET['_wp_http_referer']) && (isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)) ) {
 			wp_redirect( remove_query_arg( array('_wp_http_referer', '_wpnonce'), stripslashes($_SERVER['REQUEST_URI']) ) );
 	 		exit;
@@ -681,58 +689,6 @@ Author URI: https://sendpress.com/
    			}
    		}
 
-   		$update_options_sp = array();
-
-		if ( isset($_GET['sendpress_ignore_087']) && '0' == $_GET['sendpress_ignore_087'] ) {
-		    $update_options_sp['sendpress_ignore_087'] = 'true';
-		    //SendPress_Option::set('sendpress_ignore_087', 'true');
-		}
-		//dadd_action('admin_notices', array($this,'sendpress_ignore_087'));
-
-		if( SendPress_Option::get('sendmethod') == false ){
-			$update_options_sp['sendmethod'] = 'SendPress_Sender_Website';
-			//SendPress_Option::set('sendmethod','SendPress_Sender_Website');
-		}
-
-		if( SendPress_Option::get('send_optin_email') == false ){
-			$update_options_sp['send_optin_email'] = 'yes';
-			//SendPress_Option::set('send_optin_email','yes');
-		}
-
-		if( SendPress_Option::get('try-theme') == false ){
-			$update_options_sp['try-theme'] = 'yes';
-			//SendPress_Option::set('try-theme','yes');
-		}
-
-		if( SendPress_Option::get('confirm-page') == false ){
-			$update_options_sp['confirm-page'] = 'default';
-			//SendPress_Option::set('confirm-page','default');
-		}
-
-		if( SendPress_Option::get('cron_send_count') == false ){
-			$update_options_sp['cron_send_count'] = '100';
-			//SendPress_Option::set('cron_send_count','100');
-		}
-
-		if( SendPress_Option::get('emails-per-day') == false ){
-			$update_options_sp['emails-per-day'] = '1000';
-			
-			//SendPress_Option::set('emails-per-day','1000');
-			//SendPress_Option::set('emails-per-hour','100');
-		}
-		if( SendPress_Option::get('emails-per-hour') == false ){
-			$update_options_sp['emails-per-hour'] = '100';
-		}
-		if( SendPress_Option::get('queue-per-call') == false ){
-			$update_options_sp['queue-per-call'] = '1000';
-			//SendPress_Option::set('queue-per-call' , 1000 );
-
-		}
-
-		if(!empty($update_options_sp)){
-			SendPress_Option::set($update_options_sp);
-			unset($update_options_sp);
-		}
 
 		//Removed in 0.9.2
 		//$this->create_initial_list();
@@ -1232,7 +1188,7 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 		$current_version = SendPress_Option::get('version', '0' );
 		//SendPress_Error::log($current_version);
 
-		if ( version_compare( $current_version, SENDPRESS_VERSION, '==' ) )
+		if ( version_compare( $current_version, SENDPRESS_VERSION, '==' ) && current_user_can('manage_options'))
 			return;
 
 		SendPress_Option::set('whatsnew','show');
@@ -1359,7 +1315,63 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 			$url = "http://api.sendpress.com/senddiscountcode/".md5($_SERVER['SERVER_NAME']."|".$email)."/".$email;
 			wp_remote_get( $url );
 		}
+
+
 		*/
+
+
+   		$update_options_sp = array();
+
+		if ( isset($_GET['sendpress_ignore_087']) && '0' == $_GET['sendpress_ignore_087'] ) {
+		    $update_options_sp['sendpress_ignore_087'] = 'true';
+		    //SendPress_Option::set('sendpress_ignore_087', 'true');
+		}
+		//dadd_action('admin_notices', array($this,'sendpress_ignore_087'));
+
+		if( SendPress_Option::get('sendmethod') == false ){
+			$update_options_sp['sendmethod'] = 'SendPress_Sender_Website';
+			//SendPress_Option::set('sendmethod','SendPress_Sender_Website');
+		}
+
+		if( SendPress_Option::get('send_optin_email') == false ){
+			$update_options_sp['send_optin_email'] = 'yes';
+			//SendPress_Option::set('send_optin_email','yes');
+		}
+
+		if( SendPress_Option::get('try-theme') == false ){
+			$update_options_sp['try-theme'] = 'yes';
+			//SendPress_Option::set('try-theme','yes');
+		}
+
+		if( SendPress_Option::get('confirm-page') == false ){
+			$update_options_sp['confirm-page'] = 'default';
+			//SendPress_Option::set('confirm-page','default');
+		}
+
+		if( SendPress_Option::get('cron_send_count') == false ){
+			$update_options_sp['cron_send_count'] = '100';
+			//SendPress_Option::set('cron_send_count','100');
+		}
+
+		if( SendPress_Option::get('emails-per-day') == false ){
+			$update_options_sp['emails-per-day'] = '1000';
+			
+			//SendPress_Option::set('emails-per-day','1000');
+			//SendPress_Option::set('emails-per-hour','100');
+		}
+		if( SendPress_Option::get('emails-per-hour') == false ){
+			$update_options_sp['emails-per-hour'] = '100';
+		}
+		if( SendPress_Option::get('queue-per-call') == false ){
+			$update_options_sp['queue-per-call'] = '1000';
+			//SendPress_Option::set('queue-per-call' , 1000 );
+
+		}
+
+		if(!empty($update_options_sp)){
+			SendPress_Option::set($update_options_sp);
+			unset($update_options_sp);
+		}
 
 		SendPress_Option::set( 'version' , SENDPRESS_VERSION );
 	}
