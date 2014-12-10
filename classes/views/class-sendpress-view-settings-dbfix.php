@@ -17,7 +17,7 @@ class SendPress_View_Settings_Dbfix extends SendPress_View_Settings {
 
 		if(isset($_POST['settings'])){
 			SendPress_Data::remove_all_settings();
-			SendPress_Data::create_settings_post_signup_form();
+			//SendPress_Data::create_settings_post_signup_form();
 		}
 		
         SendPress_Admin::redirect('Settings_Dbfix');

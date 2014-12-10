@@ -119,7 +119,7 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 			'post_type' => 'sp_template' ,
 			'post_status' => array('sp-standard'),
 			);
-
+			$template_id= 0;
 			$the_query = new WP_Query( $args );
 
 			if ( $the_query->have_posts() ) {

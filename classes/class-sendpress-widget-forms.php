@@ -74,16 +74,20 @@ class SendPress_Widget_Forms extends WP_Widget {
 	 * when creating your form elements. This handles the confusing stuff.
 	 */
 	function form( $instance ) {
+	$title = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
+	$id = isset( $instance['form_to_display'] ) ? esc_attr( $instance['form_to_display'] ) : 0;
+
+
 	?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'sendpress'); ?></label>
-			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $title; ?>" style="width:100%;" />
 		</p>
 		
 		<?php 
 		$forms = SendPress_Data::get_forms_for_widget(); 
-		$id = $instance['form_to_display'];
-
+		
+		if(count($forms)){
 		if(count($forms) > 1){
 
 			?>
@@ -110,6 +114,7 @@ class SendPress_Widget_Forms extends WP_Widget {
 			<input type="hidden" name="<?php echo $this->get_field_name( 'form_to_display' ); ?>" id="<?php echo $this->get_field_name( 'form_to_display' ); ?>" value="<?php echo $forms[0]->ID; ?>" />
 			<?php
 		}
+	}
 		
 	}
 }
