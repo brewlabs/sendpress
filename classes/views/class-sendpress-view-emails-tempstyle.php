@@ -379,10 +379,23 @@ Body Link Color<br>
 echo spnl_get_emails_tags_list();
 ?>
 
+<?php
+
+$home_url = ''; 
+ 
+if (force_ssl_admin()) { 
+         $home_url = get_home_url(NULL, '', 'https'); 
+} 
+else { 
+         $home_url = get_home_url(); 
+}
+
+?>
+
 </div>
 <div class="sp-screen">
     <div class="sp-screen-holder">
-        <iframe id="iframe1" class="hidden-xs" width="100%" style="border: solid 1px #999; border-radius: 5px;" src="<?php echo home_url(); ?>?sendpress=render&spemail=<?php echo $_GET['templateID']; ?>" ></iframe>
+        <iframe id="iframe1" class="hidden-xs" width="100%" style="border: solid 1px #999; border-radius: 5px;" src="<?= $home_url ?>?sendpress=render&spemail=<?php echo $_GET['templateID']; ?>" ></iframe>
     </div>
 </div>
 <!--
