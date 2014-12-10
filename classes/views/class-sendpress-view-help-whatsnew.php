@@ -29,6 +29,7 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 	}
 
 	function html($sp){
+		SendPress_Option::set('whatsnew','hide');
 			?>
 			
 		<div class="wrap about-wrap">

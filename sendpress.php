@@ -747,10 +747,7 @@ Author URI: https://sendpress.com/
 
 				$wp_filter['admin_notices'] = array();
 
-			if(SendPress_Option::get('whatsnew','show') == 'show'){
-				SendPress_Option::set('whatsnew','hide');
-				SendPress_Admin::redirect('Help_Whatsnew');
-			}
+			
 			if( ( isset($_GET['page']) && $_GET['page'] == 'sp-templates' ) || (isset( $_GET['view'] ) && $_GET['view'] == 'style-email' )) {
 				wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' ,'', SENDPRESS_VERSION);
 			}
@@ -830,7 +827,11 @@ Author URI: https://sendpress.com/
 
 		    	require_once( SENDPRESS_PATH . 'inc/helpers/sendpress-get-actions.php' );
 	    	}
-
+	    	
+	    	if(SendPress_Option::get('whatsnew','hide') == 'show'){
+				SendPress_Option::set('whatsnew','hide');
+				SendPress_Admin::redirect('Help_Whatsnew');
+			}
 		}
    	}
 
