@@ -134,8 +134,8 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
   -->
 </ul>
 
-<div class="tab-content">
-  <div class="tab-pane fade in active" id="content-area-one-tab">
+<div class="tab-content" style="display:block;">
+  <div class="tab-pane fade in active" id="content-area-one-tab" style="display:block;">
   <?php wp_editor( $post->post_content, 'content_area_one_edit', array(
 	'dfw' => true,
 	'drag_drop_upload' => true,
