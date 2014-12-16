@@ -1,7 +1,7 @@
 <?php
 /**
 Plugin Name: SendPress Newsletters
-Version: 1.0.12.10
+Version: 1.0.12.11
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -16,13 +16,13 @@ Author URI: https://sendpress.com/
 	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 	define( 'SENDPRESS_API_VERSION', 1 );
 	define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-	define( 'SENDPRESS_VERSION', '1.0.12.10' );
+	define( 'SENDPRESS_VERSION', '1.0.12.11' );
 	define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
 	define( 'SENDPRESS_IRON','http://sendpress.com/iron');
 
-   	define('SENDPRESS_CRON',md5(__FILE__.$blog_id));
+   	define('SENDPRESS_CRON', md5( __FILE__ . $blog_id ) );
 
 	if ( ! defined( 'SENDPRESS_FILE' ) ) {
 		define( 'SENDPRESS_FILE', __FILE__ );
@@ -30,7 +30,7 @@ Author URI: https://sendpress.com/
 
 
 
-	if(!defined('SENDPRESS_STORE_URL') ){
+	if(! defined('SENDPRESS_STORE_URL') ){
 		define( 'SENDPRESS_STORE_URL', 'https://sendpress.com' );
 	}
 	if(!defined('SENDPRESS_PRO_NAME') ){
@@ -747,10 +747,7 @@ Author URI: https://sendpress.com/
 
 				$wp_filter['admin_notices'] = array();
 
-			if(SendPress_Option::get('whatsnew','show') == 'show'){
-				SendPress_Option::set('whatsnew','hide');
-				SendPress_Admin::redirect('Help_Whatsnew');
-			}
+			
 			if( ( isset($_GET['page']) && $_GET['page'] == 'sp-templates' ) || (isset( $_GET['view'] ) && $_GET['view'] == 'style-email' )) {
 				wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' ,'', SENDPRESS_VERSION);
 			}
@@ -1188,10 +1185,17 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 		$current_version = SendPress_Option::get('version', '0' );
 		//SendPress_Error::log($current_version);
 
-		if ( version_compare( $current_version, SENDPRESS_VERSION, '==' ) && current_user_can('manage_options'))
+		if ( version_compare( $current_version, SENDPRESS_VERSION, '==' ) ){
 			return;
+		}
 
-		SendPress_Option::set('whatsnew','show');
+		$current_version_base = SendPress_Option::base_get('version', '0' );
+
+		if ( version_compare( $current_version_base, SENDPRESS_VERSION, '==' ) ){
+			return;
+		}
+
+		SendPress_Option::base_set('update-info','show');
 		//On version change update default template
 		$this->set_template_default();
 
@@ -1372,7 +1376,7 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 			SendPress_Option::set($update_options_sp);
 			unset($update_options_sp);
 		}
-
+		SendPress_Option::base_set( 'version' , SENDPRESS_VERSION );
 		SendPress_Option::set( 'version' , SENDPRESS_VERSION );
 	}
 

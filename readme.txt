@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 4.0
-Stable tag: 1.0.12.10
+Stable tag: 1.0.12.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 1.0.12.11 - 2014.12.11 =
+* Fix: Removed redirect to Whats New Page
+
+= 1.0.12.10.1 - 2014.12.10 =
+* Fix: Whats new page showing more then it should
 
 = 1.0.12.10 - 2014.12.10 =
 * Fix: dont track links starting with #
@@ -572,6 +578,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.0.12.10.1 =
+Stop Whats New page from showing multiple times
 
 = 1.0.12.10 =
 Multiple bug fixes
