@@ -8,6 +8,18 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_Data extends SendPress_DB_Tables {
 
 
+	static function devicetypes($value){
+		$v = array('computer'=>1,'phone'=>2,'tablet'=>3);
+		if(is_string($value)){
+			return $v[$value];
+		}
+		if(is_int($value)){
+			return array_search($value, $v);
+		}
+
+	}
+
+
 	static function nonce(){
 		return 'sendpress-is-awesome';
 	}
@@ -506,6 +518,32 @@ class SendPress_Data extends SendPress_DB_Tables {
      * @return mixed Value.
      */
     
+ 	static function get_url_by_hash( $hash ) {
+ 		global $wpdb;
+		$table = SendPress_Data::url_table();
+		$result = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table WHERE hash = %s" , $hash ) );
+		return $result;	
+	}
+
+	static function insert_url( $url , $hash ) {
+		global $wpdb;
+		$table = SendPress_Data::url_table();
+
+		$wpdb->insert( 
+			$table, 
+			array( 
+				'hash' => $hash, 
+				'url' => esc_url( $url )
+			), 
+			array( 
+				'%s', 
+				'%s' 
+			) 
+		);
+		return $wpdb->insert_id;	
+	}
+
+
 
  	static function get_url_by_id( $id ) {
  		global $wpdb;
