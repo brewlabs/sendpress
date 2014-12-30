@@ -501,8 +501,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
     static function get_last_report(){
     	$f = get_posts(array('post_type' => 'sp_report','posts_per_page'   => 1));
-    	return $f[0];
-
+    	return isset($f[0]) ? $f[0] : '';
     }
 
 
