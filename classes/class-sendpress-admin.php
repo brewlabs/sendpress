@@ -64,12 +64,7 @@ class SendPress_Admin {
 		} else {
 			$class = strtolower( 'sendpress_view_'.$class );
 		}
-		/*
-		$x = wp_get_current_user();
-		echo "<pre>";
-		print_r($x);
-		echo "</pre>";
-		*/
+		
 		//Admin
 		if( current_user_can(self::$_admin_cap) || is_super_admin() || current_user_can('delete_users') ){
 			return true;

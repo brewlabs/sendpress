@@ -127,9 +127,7 @@ class SendPress_Public_View_Form extends SendPress_Public_View{
 		$email = $_POST['sp'];	
 		//foreach()
 
-		print_r($email);
-
-		echo "Nice Post";
+		
 	
 		/*
 

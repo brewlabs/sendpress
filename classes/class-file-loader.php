@@ -64,8 +64,6 @@ class File_Loader{
 			'sort' => 'Sort Order'
 		);
 
-		//print_r($headers);
-
 		$file = $this->get_module_path( $this->get_module_slug( $module  ) , $dir);
 		$mod = get_file_data( $file, $headers );
 

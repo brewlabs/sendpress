@@ -707,8 +707,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 		);
 		
 		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $urlData);
-
-		//print_r($this->get_open_without_id($rid,$sid));
 	}
 
 	static function track_open( $sid, $rid, $ip = null , $device_type=null, $device=null ){

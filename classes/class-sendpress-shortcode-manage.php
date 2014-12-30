@@ -52,7 +52,7 @@ $lists = SendPress_Data::get_lists(
 
 foreach($lists as $list){
 	$subscriber = SendPress_Data::get_subscriber_list_status($list->ID, $info->id);
-	print_r($subscriber);
+
 	?>
   	<tr>
   	<?php
