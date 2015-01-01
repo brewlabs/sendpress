@@ -213,7 +213,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 						}
 						?>
 					</ul>
-					<div class="tab-content">
+					<div class="tab-content" style="display:block;">
 						<?php
 						foreach ( $senders as $key => $sender ) {
 							$class ='';

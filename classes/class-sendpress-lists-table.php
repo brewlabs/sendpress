@@ -342,11 +342,7 @@ class SendPress_Lists_Table extends WP_List_Table {
 
             $query = SendPress_Data::get_lists(array('post_status' => array('publish','draft')));
             //$query = new WP_Query( $args );
-            /*
-            echo '<pre>';
-            print_r($query);
-            echo '</pre>';
-            */
+           
             $totalitems = $query->found_posts;
             // get the current user ID
             $user = get_current_user_id();

@@ -200,7 +200,7 @@ class SendPress_Email {
 							if( SendPress_Option::get('skip_mailto', false ) == true && strrpos( $href, "mailto" ) !== false  ) {
 								continue;
 							}
-
+							/*
 							$urlinDB = SendPress_Data::get_url_by_report_url( $this->id(), $href );
 							if(!isset($urlinDB[0])){
 							
@@ -219,6 +219,16 @@ class SendPress_Email {
 								"urlID"=> $urlID,
 								"view"=>"link"
 							);
+							*/
+							$link = array(
+								"id"=>$this->subscriber_id(),
+								"report"=> $this->id(),
+								"view"=>"tracker",
+								"url" => $href
+							);
+
+
+
 							$code = SendPress_Data::encrypt( $link );
 							$link = SendPress_Manager::public_url($code);
 

@@ -96,6 +96,30 @@ class SendPress_DB_Tables {
 	}
 
     /**
+     * subscriber_click_table
+     * 
+     * @access public
+     *
+     * @return mixed Value.
+     */
+    function subscriber_tracker_table(){
+        global $wpdb;
+        return $wpdb->prefix . self::$prefix . "subscribers_tracker";
+    }
+
+     /**
+     * subscriber_click_table
+     * 
+     * @access public
+     *
+     * @return mixed Value.
+     */
+    function url_table(){
+        global $wpdb;
+        return $wpdb->prefix . self::$prefix . "url";
+    }
+
+    /**
      * subscriber_meta_table
      * 
      * @access public
@@ -105,6 +129,18 @@ class SendPress_DB_Tables {
     static function subscriber_meta_table(){
         global $wpdb;
         return $wpdb->prefix . self::$prefix . "subscribers_meta";
+    }
+
+    /**
+     * subscriber_meta_table
+     * 
+     * @access public
+     *
+     * @return mixed Value.
+     */
+    static function subscriber_url_table(){
+        global $wpdb;
+        return $wpdb->prefix . self::$prefix . "subscribers_url";
     }
 
     /**
@@ -500,7 +536,38 @@ status varchar(255) DEFAULT NULL,
 PRIMARY KEY  (statusid)
 ) $collate;\n"; 
 
-             dbDelta($command);   
+$subscriber_tracker_table =  SendPress_DB_Tables::subscriber_tracker_table();
+$command .= " CREATE TABLE $subscriber_tracker_table (
+  subscriberID int(11) unsigned NOT NULL,
+  emailID int(11) unsigned NOT NULL,
+  sent_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
+  opened_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  status tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY  (subscriberID,emailID)
+)  $collate;\n"; 
+
+$subscriber_url_table =  SendPress_DB_Tables::subscriber_url_table();
+$command .= " CREATE TABLE $subscriber_url_table (
+    subscriberID int(11) unsigned NOT NULL,
+    emailID int(11) unsigned NOT NULL,
+    urlID int(11) unsigned NOT NULL,
+    clicked_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
+    click_count int(11) unsigned NOT NULL,
+    PRIMARY KEY  ( subscriberID , emailID , urlID )
+)  $collate;\n"; 
+
+
+$url_table =  SendPress_DB_Tables::url_table();
+$command .= " CREATE TABLE $url_table (
+  urlID int(11) unsigned NOT NULL AUTO_INCREMENT,
+  url text,
+  hash varchar(255) DEFAULT NULL, 
+  PRIMARY KEY  (urlID),
+  KEY hash (hash)
+)  $collate;\n"; 
+
+
+dbDelta($command);   
 
             
            

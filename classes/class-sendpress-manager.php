@@ -123,10 +123,16 @@ class SendPress_Manager {
 		if ($pos > 0) { // note: three equal signs
 			    $indexer = "index.php";
 		}
+		if( is_ssl() ){
+			$h = 'https';
+		} else {
+			$h = 'http';
+		}
+
 		if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
-				$link = home_url("?sendpress=".$code);
+				$link = home_url("?sendpress=".$code , $h);
 			} else {
-				$link = home_url("{$indexer}/sendpress/".$code."/");
+				$link = home_url("{$indexer}/sendpress/".$code."/", $h);
 				
 			}
 		return $link;
