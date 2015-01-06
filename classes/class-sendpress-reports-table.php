@@ -192,13 +192,13 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
                     return '<span class="label label-success">'. $ou .'</span> <span class="label label-info">'. $ot .'</span>';
                     
                 case 'unsubscribe':
-                $clicks = get_post_meta($item->ID, '_unsubscribe_count', true);
+                    $clicks = get_post_meta($item->ID, '_unsubscribe_count', true);
                     if($clicks) { 
                         return '<span class="label label-danger">'. $clicks .'</span>';
                      }
                      return '<span class="label label-danger">0</span>';
              
-break;
+                break;
                case 'subject':
                 $sub = get_post_meta($item->ID, "_sendpress_subject", true);
                 return $sub;

@@ -36,13 +36,16 @@ static function send_mail(){
 		SendPress_Email_Cache::build_cache();
 
 		
+		if( SendPress_Manager::limit_reached( $count )  ){
+			return;
+		}
+
+
 		if($count > 0 ){
 		for ($i=0; $i < $day_count; $i++) { 
 				$email = SendPress_Data::get_single_email_from_queue();
 				if($email != null){
-					if( SendPress_Manager::limit_reached()  ){
-						break;
-					}
+					
 					$attempts++;
 					SendPress_Data::queue_email_process( $email->id );
 					$result = SendPress_Manager::send_email_from_queue( $email );
@@ -51,6 +54,9 @@ static function send_mail(){
 						if($result === true){
 							$wpdb->update( SendPress_Data::queue_table() , array('success'=>1,'inprocess'=>3 ) , array('id'=> $email->id ));
 							//( $sid, $rid, $lid=null, $uid=null, $ip=null, $device_type=null, $device=null, $type='confirm' )
+							//SendPress_Data::track_send($email->subscriberID, $email->emailID);
+							//$wpdb->insert(SendPress_Data::subscriber_tracker_table() , array('subscriberID'=>$email->subscriberID,'emailID'=>$email->emailID,'sent_at' => get_gmt_from_date( date('Y-m-d H:i:s') ) ) );
+							SPNL()->db->subscribers_tracker->add( array('subscriber_id' => intval( $email->subscriberID ), 'email_id' => intval( $email->emailID) ) );
 							SendPress_Data::add_subscriber_event($email->subscriberID, $email->emailID, $email->listID,null,null,null,null, 'send');
 						} else {
 							$wpdb->update( SendPress_Data::queue_table() , array('success'=>2,'inprocess'=>3 ) , array('id'=> $email->id ));
@@ -82,7 +88,7 @@ static function send_mail(){
 		$email_count = 0;
 		$attempts = 0;
 
-		if( SendPress_Manager::limit_reached()  ){
+		if( SendPress_Manager::limit_reached( $count )  ){
 			return;
 		}
 		SendPress_Email_Cache::build_cache();
@@ -92,9 +98,7 @@ static function send_mail(){
 				$email = SendPress_Data::get_single_email_from_queue();
 				if($email != null){
 
-					if( SendPress_Manager::limit_reached()  ){
-						break;
-					}
+					
 					$attempts++;
 				
 					SendPress_Data::queue_email_process( $email->id );
@@ -104,6 +108,9 @@ static function send_mail(){
 						if($result === true){
 							$wpdb->update( SendPress_Data::queue_table() , array('success'=>1,'inprocess'=>3 ) , array('id'=> $email->id ));
 							//( $sid, $rid, $lid=null, $uid=null, $ip=null, $device_type=null, $device=null, $type='confirm' )
+							//$wpdb->update( SendPress_Data::queue_table() , array('success'=>1,'inprocess'=>3 ) , array('id'=> $email->id ));
+							//$wpdb->insert(SendPress_Data::subscriber_tracker_table() , array('subscriberID'=>$email->subscriberID,'emailID'=>$email->emailID,'sent_at' => get_gmt_from_date( date('Y-m-d H:i:s') )) );
+							SPNL()->db->subscribers_tracker->add( array('subscriber_id' => intval( $email->subscriberID ), 'email_id' => intval( $email->emailID) ) );
 							SendPress_Data::add_subscriber_event($email->subscriberID, $email->emailID, $email->listID,null,null,null,null, 'send');
 						} else {
 							$wpdb->update( SendPress_Data::queue_table() , array('success'=>2,'inprocess'=>3 ) , array('id'=> $email->id ));

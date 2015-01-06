@@ -96,9 +96,11 @@ Author URI: https://sendpress.com/
 
 		var $_debugMode = false;
 
+		
+
 		public $email_tags;
 		public $log;
-
+		public $db;
 		private static $instance;
 
 
@@ -153,6 +155,12 @@ Author URI: https://sendpress.com/
 		  	 if( strpos($className, '_Tag_') != false ){
 		    	
 		    	include SENDPRESS_PATH."classes/tag/class-".$cls.".php";
+		  		return;
+		  	}
+
+		  	if( strpos($className, '_DB') != false ){
+		    	
+		    	include SENDPRESS_PATH."classes/db/class-".$cls.".php";
 		  		return;
 		  	}
 
@@ -222,6 +230,10 @@ Author URI: https://sendpress.com/
 				self::$instance = new SendPress;
 				self::$instance->template_tags = new SendPress_Template_Tags();
 				self::$instance->log = new SendPress_Logging();
+				self::$instance->db = new stdClass();
+				self::$instance->db->subscribers_tracker =  new SendPress_DB_Subscribers_Tracker();
+				self::$instance->db->url = new SendPress_DB_Url();
+				self::$instance->db->subscribers_url = new SendPress_DB_Subscribers_Url();
 			}
 			return self::$instance;
 		}
@@ -358,12 +370,13 @@ Author URI: https://sendpress.com/
 		}
 
 		static function add_cron(){
-
+				
 			if( SendPress_Option::get('autocron','no') == 'yes' && wp_next_scheduled( 'sendpress_cron_action' ) ) {
 				wp_clear_scheduled_hook('sendpress_cron_action');
 			} else {
 				if ( ! wp_next_scheduled( 'sendpress_cron_action' )   ){
-					wp_schedule_event( time() , 'hourly', 'sendpress_cron_action' );
+
+					wp_schedule_event( time() , 'one_min', 'sendpress_cron_action' );
 				}
 			}
 		}
@@ -875,7 +888,10 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 				}
 				wp_enqueue_style( 'farbtastic' );
 
-    			wp_enqueue_script(array('jquery', 'editor', 'thickbox', 'media-upload'));
+    			wp_enqueue_script('jquery'); 
+    				wp_enqueue_script('editor');
+    					wp_enqueue_script('thickbox');
+    						wp_enqueue_script('media-upload');
     			wp_enqueue_script('sendpress-admin-js');
 				wp_enqueue_script( 'spfarb' );
 				wp_enqueue_script('sendpress_ls');
@@ -1767,11 +1783,14 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 	    		wp_die( sprintf( __('SendPress requires WordPress version %s or later.', 'sendpress'), SENDPRESS_MINIMUM_WP_VERSION) );
 			} else {
 		    	SendPress_DB_Tables::install();
-			}
+		    	@SPNL()->db->subscribers_tracker->create_table();
+		    	@SPNL()->db->subscribers_url->create_table();
+		    	@SPNL()->db->url->create_table();
+		    }
 			//Make sure we stop the old action from running
 			wp_clear_scheduled_hook('sendpress_cron_action_run');
 			flush_rewrite_rules();
-
+			SendPress::add_cron();
 			SendPress_Option::set( 'install_date' , time() );
 	}
 
@@ -2239,7 +2258,7 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 }// End SP CLASS
 
 add_filter( 'query_vars', array( 'SendPress', 'add_vars' ) );
-add_action('wp', array( 'SendPress', 'add_cron' ) );
+add_action('admin_init', array( 'SendPress', 'add_cron' ) );
 register_activation_hook( __FILE__, array( 'SendPress', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'SendPress', 'plugin_deactivation' ) );
 add_action( 'wpmu_new_blog', array('SendPress','on_activate_blog' ));

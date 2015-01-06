@@ -17,8 +17,14 @@ class SendPress_View_Overview extends SendPress_View{
 	function html($sp){
 		SendPress_Tracking::event('Overview Tab');
 		//print_r( SendPress_Data::get_subcribers_by_meta('test','test') );
-    
+    //echo wp_next_scheduled('wysija_cron_queue') . 'asdf';
 
+  //SPNL()->db->subscribers_tracker->add( array('subscriber_id'=> 101, 'email_id'=> 20 ) );
+  //SPNL()->db->subscribers_url->add_update( array('subscriber_id'=> 101, 'email_id'=> 20 , 'url_id' => 123 ) );
+
+
+  
+//print_r(_get_cron_array());
 
 global $wp_version;
 
