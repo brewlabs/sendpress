@@ -2121,7 +2121,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 	static function get_widget_form_types(){
-		return array("signup_widget" => "Signup", "manage_subscriptions" => "Manage Subscriptions");
+		return array("signup_widget" => "Signup");
+		//"manage_subscriptions" => "Manage Subscriptions"
 	}
 
 	/********************* END Widget Settings functionS **************************/

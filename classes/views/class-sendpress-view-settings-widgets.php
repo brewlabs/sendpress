@@ -335,14 +335,23 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 			<h3><?php echo $settings['post_title'];?></h3>
 		</div>
 		<div class="sp-row">
-			<?php $this->panel_start( __('Manage Subscription Options','sendpress') ); ?>
+			<div class="sp-50 sp-first">
+				<?php $this->panel_start( __('Manage Subscription Options','sendpress') ); ?>
 
-			<p>
-				<label for="_form_description"><?php _e('Description:', 'sendpress'); ?></label>
-				<textarea placeholder="This text will show above the manage subscription form." rows="5" type="text" class="widefat" id="_form_description" name="_form_description"><?php echo $settings['_form_description']; ?></textarea>
-			</p>
+				<p>
+					<label for="_form_description"><?php _e('Description:', 'sendpress'); ?></label>
+					<textarea placeholder="This text will show above the manage subscription form." rows="5" type="text" class="widefat" id="_form_description" name="_form_description"><?php echo $settings['_form_description']; ?></textarea>
+				</p>
 
-			<?php $this->panel_end(); ?>
+				<?php $this->panel_end(); ?>
+			</div>
+			<div class="sp-50">
+				<?php $this->panel_start( __('Shortcode','sendpress') ); ?>
+					<p><?php _e('Use the shortcode belot to insert this signup form into your posts and pages','sendpress'); ?>.</p>
+					<pre>[sp-form formid=<?php echo $settings['_settings_id']; ?>]</pre>
+				<?php $this->panel_end(); ?>
+			</div>
+			
 		</div>
 		<input type="hidden" name="_setting_type" id="setting_type" value="form" />
 		<input type="hidden" name="_form_type" id="form_type" value="manage_subscriptions" />
