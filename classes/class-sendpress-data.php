@@ -528,21 +528,24 @@ class SendPress_Data extends SendPress_DB_Tables {
 		global $wpdb;
 		$table = SendPress_Data::url_table();
 
+		if( strpos( $url , '{sp-') != false && strpos( $url , '}' ) != false ) {
+			$url = esc_url( $url );
+		}
+
 		$wpdb->insert( 
 			$table, 
 			array( 
 				'hash' => $hash, 
-				'url' => esc_url( $url )
+				'url' => $url
 			), 
 			array( 
 				'%s', 
 				'%s' 
 			) 
 		);
+
 		return $wpdb->insert_id;	
 	}
-
-
 
  	static function get_url_by_id( $id ) {
  		global $wpdb;

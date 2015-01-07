@@ -202,6 +202,7 @@ class SendPress_Ajax_Loader{
 		} else {
 			SendPress_Option::set('autocron', 'no');
 		}
+		SendPress::add_cron();
 		exit();
 	}
 

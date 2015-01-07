@@ -121,7 +121,7 @@ static function be_password_pointer_enqueue( $hook_suffix ) {
 
 
 
-function be_password_pointer_print_admin_bar() {
+static function be_password_pointer_print_admin_bar() {
 
 	$pointer_content  = '<h3>' . 'SendPress Pro Free Feature' . '</h3>';
 	$pointer_content .= '<p>' . '<b>Auto Cron</b>: Every hour we visit your site, just like a "cron" job. No setup involved. Easy and hassle free.' . '</p><p>See the <a href="'.SendPress_Admin::link('Settings_Account').'">Sending Account</a> tab for more details.</p>';

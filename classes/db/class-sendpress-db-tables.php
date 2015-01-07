@@ -90,7 +90,7 @@ class SendPress_DB_Tables {
      *
      * @return mixed Value.
      */
-	function subscriber_click_table(){
+	static function subscriber_click_table(){
 		global $wpdb;
 		return $wpdb->prefix . self::$prefix . "subscribers_click";
 	}
@@ -102,7 +102,7 @@ class SendPress_DB_Tables {
      *
      * @return mixed Value.
      */
-    function subscriber_tracker_table(){
+    static function subscriber_tracker_table(){
         global $wpdb;
         return $wpdb->prefix . self::$prefix . "subscribers_tracker";
     }
@@ -114,7 +114,7 @@ class SendPress_DB_Tables {
      *
      * @return mixed Value.
      */
-    function url_table(){
+    static function url_table(){
         global $wpdb;
         return $wpdb->prefix . self::$prefix . "url";
     }
@@ -536,6 +536,7 @@ status varchar(255) DEFAULT NULL,
 PRIMARY KEY  (statusid)
 ) $collate;\n"; 
 
+/*
 $subscriber_tracker_table =  SendPress_DB_Tables::subscriber_tracker_table();
 $command .= " CREATE TABLE $subscriber_tracker_table (
   subscriberID int(11) unsigned NOT NULL,
@@ -545,7 +546,8 @@ $command .= " CREATE TABLE $subscriber_tracker_table (
   status tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY  (subscriberID,emailID)
 )  $collate;\n"; 
-
+*/
+/*
 $subscriber_url_table =  SendPress_DB_Tables::subscriber_url_table();
 $command .= " CREATE TABLE $subscriber_url_table (
     subscriberID int(11) unsigned NOT NULL,
@@ -555,8 +557,8 @@ $command .= " CREATE TABLE $subscriber_url_table (
     click_count int(11) unsigned NOT NULL,
     PRIMARY KEY  ( subscriberID , emailID , urlID )
 )  $collate;\n"; 
-
-
+*/
+/*
 $url_table =  SendPress_DB_Tables::url_table();
 $command .= " CREATE TABLE $url_table (
   urlID int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -565,7 +567,7 @@ $command .= " CREATE TABLE $url_table (
   PRIMARY KEY  (urlID),
   KEY hash (hash)
 )  $collate;\n"; 
-
+*/
 
 dbDelta($command);   
 
