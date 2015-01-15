@@ -21,6 +21,9 @@ class SendPress_SC_Recent_Posts_By_User extends SendPress_SC_Base {
 	public static function options(){
 		return 	array(
 			 'posts' => 1,
+			 'uid' => 0,
+			 'imgalign' => 'left',
+			 'alternate' => false
 			);
 	}
 
@@ -47,10 +50,17 @@ class SendPress_SC_Recent_Posts_By_User extends SendPress_SC_Base {
 			$readmoretext = 'Read More';
 		}
 
+		if(strlen($imgalign) === 0){
+			$imgalign = 'left';
+		}
+
 		$return_string = '';
 	   	if($content){
 	      	$return_string = $content;
 	  	}
+
+	  	$margin = ($alternate && strtolower($imgalign) === 'left') ? '0px 10px 10px 0px' : '0px 0px 10px 10px';
+
 	  	$return_string .= '<div>';
 	   	//query_posts($args);
 
@@ -60,7 +70,7 @@ class SendPress_SC_Recent_Posts_By_User extends SendPress_SC_Base {
 				$query->the_post();
 
 				if(has_post_thumbnail()){
-					$return_string .= '<div style="float:left; margin:0px 10px 10px 0px;">'.get_the_post_thumbnail(get_the_ID(), 'thumbnail').'</div>';
+					$return_string .= '<div style="float:'.strtolower($imgalign).'; margin:'.$margin.';">'.get_the_post_thumbnail(get_the_ID(), 'thumbnail').'</div>';
 				}
 				
 				$return_string .= '<div><a href="'.get_permalink().'">'.get_the_title().'</a></div>';
@@ -68,6 +78,8 @@ class SendPress_SC_Recent_Posts_By_User extends SendPress_SC_Base {
 	          	$return_string .= '<div><a href="'.get_permalink().'">'.$readmoretext.'</a></div>';
 	          	$return_string .= '<br>';
 
+	          	$imgalign = ($alternate && strtolower($imgalign) === 'left') ? 'right' : 'left';
+	          	$margin = ($alternate && strtolower($imgalign) === 'left') ? '0px 10px 10px 0px' : '0px 0px 10px 10px';
 			}
 		}
 		wp_reset_postdata();

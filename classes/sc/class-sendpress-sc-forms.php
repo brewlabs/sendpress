@@ -41,7 +41,39 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 				case 'signup_widget':
 					self::signup($options);
 					break;
+				case 'manage_subscriptions':
+					self::manage_subscription($options);
+					break;
 			}
+		}
+
+	}
+
+	private static function manage_subscription($options){
+		$s = $_GET['sid'];
+		$s = (int)base64_decode($s);
+		extract($options);
+
+		if(is_numeric($s)){
+			$sub = SendPress_Data::get_subscriber($s);
+
+			if($sub == false){
+				$sub = NEW stdClass();
+				$sub->email = 'example@sendpress.com';
+				$sub->join_date = date("F j, Y, g:i a");
+			}
+
+			print_r($sub);
+			?>
+			<link rel="stylesheet" type="text/css" href="http://dev.wp/sendpress/wp-content/plugins/sendpress/css/manage-front-end.css">
+			<h4>Subscriber Info</h4>
+			<div class="subscriber-info">
+				<b><?php _e('Email','sendpress');?></b>
+				<?php echo $sub->email;?><br>
+				<b><?php _e('Signup Date','sendpress');?></b>
+				<?php echo $sub->join_date;?>
+			</div>
+			<?php
 		}
 
 	}
@@ -177,6 +209,44 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
 	public static function example_shortcodes(){
 		//echo "<strong class='text-muted'>Post Notification Signup:</strong><pre>[sp-signup listids='1' postnotification='pn-weekly' pnlistid='123']</pre>";
+	}
+
+	private static function handle_unsubscribes(){
+
+		if ( !empty($_POST) && check_admin_referer($this->_nonce_value) ){
+			
+			$args = array(
+			  'meta_key'=>'public',
+			  'meta_value'=> 1,
+			  'post_type' => 'sendpress_list',
+			  'post_status' => 'publish',
+			  'posts_per_page' => -1,
+			  'ignore_sticky_posts'=> 1
+			);
+
+			$my_query = new WP_Query($args);
+			if( $my_query->have_posts() ) {
+
+			  	while ($my_query->have_posts()) : $my_query->the_post(); 	
+
+					$list_id = $my_query->post->ID;
+
+					if(isset($_POST['subscribe_'.$list_id ])){
+						$list_status = SendPress_Data::get_subscriber_list_status( $list_id , $info->id );
+						if(isset($list_status->status)){
+							SendPress_Data::update_subscriber_status( $list_id , $info->id , $_POST[ 'subscribe_'.$list_id ] );
+						} elseif( $_POST['subscribe_'. $list_id ] == '2' ){
+							SendPress_Data::update_subscriber_status( $list_id , $info->id, $_POST[ 'subscribe_'.$list_id ] );
+						}
+					} 
+					$c = '';
+					
+				endwhile;
+			}
+
+			do_action('sendpress_public_view_manage_save', $_POST);
+		}
+		wp_reset_query();
 	}
 
 }

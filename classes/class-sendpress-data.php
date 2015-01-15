@@ -1959,7 +1959,33 @@ class SendPress_Data extends SendPress_DB_Tables {
 		);
 	}
 
-	static function create_settings_post($title = 'Settings', $defaults = array(), $copy_from = 0){
+	static function manage_subscriptions_defaults(){
+		return array(
+			"_sp_setting_type" => "form",
+			"_sp_form_type" => "manage_subscriptions",
+			"_sp_form_description" => ""
+		);
+	}
+
+	static function get_default_settings_for_type($type = ""){
+		$defaults = array();
+		switch($type){
+			case "signup_widget":
+				$defaults = SendPress_Data::signup_defaults();
+				break;
+			case "manage_subscriptions":
+				$defaults = SendPress_Data::manage_subscriptions_defaults();
+				break;
+			default:
+				$defaults = SendPress_Data::signup_defaults();
+				break;
+		}
+		return $defaults;
+	}
+
+	static function create_settings_post($title = 'Settings', $type = "", $copy_from = 0){
+		$defaults = SendPress_data::get_default_settings_for_type($type);
+
 		// Create post object
 		$my_post = array(
 			'post_title'    => $title,
@@ -2095,6 +2121,11 @@ class SendPress_Data extends SendPress_DB_Tables {
 			));
 
 		return $query;
+	}
+
+	static function get_widget_form_types(){
+		return array("signup_widget" => "Signup");
+		//"manage_subscriptions" => "Manage Subscriptions"
 	}
 
 	/********************* END Widget Settings functionS **************************/
