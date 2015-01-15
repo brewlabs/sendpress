@@ -234,6 +234,10 @@ margin-bottom: 5px;
    width: 25%;
    margin-left: 0;
 }
+.sp-block.sp-33{
+   width: 33%;
+   margin-left: 0;
+}
 .sp-block:last-child {
 border-radius: 0 6px 6px 0;
 }

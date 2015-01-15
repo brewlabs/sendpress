@@ -13,7 +13,7 @@ class SendPress_DB_Url extends SendPress_DB {
 
 		$this->table_name  = $wpdb->prefix . $this->prefix . 'url';
 		$this->version     = '1.1';
-	
+		$this->primary_key = 'url_id';
 	}
 
 	/**

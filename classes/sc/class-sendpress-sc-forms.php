@@ -76,8 +76,10 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		$label = filter_var($_display_labels_inside_fields, FILTER_VALIDATE_BOOLEAN);
 		$widget_options = SendPress_Option::get('widget_options');
 		$list_ids = (strlen($_listids) > 0) ? explode(",",$_listids) : array();
-
-		$post_notifications_code = apply_filters( 'sendpress-post-notifications-submit-code', "", $list_ids, $postnotification, $pnlistid );
+		$post_notifications_code = '';
+		if( is_wp_error($list_ids) ||  is_wp_error($postnotification) || is_wp_error($pnlistid)   ){
+			$post_notifications_code = apply_filters( 'sendpress-post-notifications-submit-code', "", $list_ids, $postnotification, $pnlistid );
+		}
 	    ?>
 
 	    <div class="sendpress-signup-form">

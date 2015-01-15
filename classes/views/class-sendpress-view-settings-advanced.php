@@ -164,10 +164,10 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 					<hr>
 					<?php _e('Users to Sync per ajax call','sendpress'); ?>: <?php $this->select('sync-per-call',SendPress_Option::get('sync-per-call',250) ); ?> <?php _e('Default','sendpress'); ?>: 250
 					<hr>
-					<?php _e('Emails sent per AutoCron execution','sendpress'); ?>: <?php $this->select('autocron-per-call',SendPress_Option::get('autocron-per-call',25), array(5,10,15,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100) ); ?> <?php _e('Default','sendpress'); ?>: 25<br>
+					<?php _e('Emails sent per AutoCron execution','sendpress'); ?>: <?php $this->select('autocron-per-call',SendPress_Option::get('autocron-per-call',25), array(1,5,10,15,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100) ); ?> <?php _e('Default','sendpress'); ?>: 25<br>
 					<small><?php _e('If AutoCron errors it will shut itself off','sendpress'); ?>.</small>
 					<hr>
-					<?php _e('WordPress cron emails sent per execution','sendpress'); ?>: <?php $this->select('wpcron-per-call',SendPress_Option::get('wpcron-per-call',25), array(15,25,30,35,40,45,50,100,250,500,1000) ); ?> <?php _e('Default','sendpress'); ?>: 25<br>
+					<?php _e('WordPress cron emails sent per execution','sendpress'); ?>: <?php $this->select('wpcron-per-call',SendPress_Option::get('wpcron-per-call',25), array(1,5,10,15,25,30,35,40,45,50,100,250,500,1000) ); ?> <?php _e('Default','sendpress'); ?>: 25<br>
 					<hr>
 					<?php _e('Queue History','sendpress'); ?>:  <?php $this->select('queue-history',SendPress_Option::get('queue-history',7), array(7,14,21,28,35,42,49) ); ?> <?php _e('Days','sendpress'); ?> <br><small><?php _e('Default','sendpress'); ?>: 7 Days</small>
 					<hr>
