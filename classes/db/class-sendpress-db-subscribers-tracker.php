@@ -175,7 +175,7 @@ class SendPress_DB_Subscribers_Tracker extends SendPress_DB {
 		  	opened_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 		  	status tinyint(4) NOT NULL DEFAULT '0',
 		  	opened_count int(11) unsigned NOT NULL,
-		  	PRIMARY KEY  (subscriber_id, email_id),
+		  	PRIMARY KEY  (subscriber_id, email_id)
 		  	
 			) $collate;";
 

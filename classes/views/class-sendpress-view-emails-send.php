@@ -207,7 +207,7 @@ $url = SendPress_Manager::public_url($code);
 
 
 $sep = strstr($url, '?') ? '&' : '?';
-$link = $url.$sep.'inline=true';
+$link = $url . $sep . 'inline=true';
 ?>
 <iframe src="<?php echo $link; ?>" width="100%" height="600px"></iframe>
 <small><?php _e('Displaying a 404? Please try saving your permalinks','sendpress'); ?> <a href="<?php echo admin_url('options-permalink.php'); ?>"><?php _e('here','sendpress'); ?></a>.</small>
