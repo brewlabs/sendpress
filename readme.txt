@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
-Tested up to: 4.0
-Stable tag: 1.0.12.11
+Tested up to: 4.1
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,9 +12,9 @@ Easy to use Email Newsletter Plugin for WordPress to create, send, manage and tr
 
 == Description ==
 
-SendPress is a plugin for WordPress that allows to write and send newsletters, and to gather and manage the subscribers. Built on the WordPress UI you already know. It's just as easy as creating a new Post.
+SendPress is a plugin for WordPress that allows to create and send newsletters. You can easily grow your newlsetter subscription list with widgets to gather and manage your subscribers. Built on the WordPress UI you already know creating a newsleter is just as easy as creating a new Post.
 
-Sending great emails and newsletters is something that should be easy and not require a third party system forget MailChimp, Aweber, etc.
+Sending great emails and newsletters is something that should be easy and not require a third party system forget MailChimp, Aweber, etc. Start sending great newsletters and tracking what your subscribers are doing.
 
 = Check out our 2 minute run through video =
 
@@ -98,6 +98,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 1.1 - 2015.1.19 =
+* Fix: Link tracking updates
+* Fix: Sending speed improved
+* Fix: Update to overview page
+* Fix: Widget breaking on some admin screens
 
 = 1.0.12.11 - 2014.12.11 =
 * Fix: Removed redirect to Whats New Page
@@ -578,6 +584,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.1 =
+Multiple bug fixes
 
 = 1.0.12.10.1 =
 Stop Whats New page from showing multiple times
