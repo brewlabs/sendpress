@@ -1,7 +1,7 @@
 <?php
 /**
 Plugin Name: SendPress Newsletters
-Version: 1.1
+Version: 1.1.0.1
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -16,7 +16,7 @@ Author URI: https://sendpress.com/
 	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 	define( 'SENDPRESS_API_VERSION', 1 );
 	define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-	define( 'SENDPRESS_VERSION', '1.1' );
+	define( 'SENDPRESS_VERSION', '1.1.0.1' );
 	define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -1210,6 +1210,12 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 		if ( version_compare( $current_version_base, SENDPRESS_VERSION, '==' ) ){
 			return;
 		}
+
+		SendPress_DB_Tables::install();
+		@SPNL()->db->subscribers_tracker->create_table();
+		@SPNL()->db->subscribers_url->create_table();
+		@SPNL()->db->url->create_table();
+
 
 		SendPress_Option::base_set('update-info','show');
 		//On version change update default template
