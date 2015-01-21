@@ -14,6 +14,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
  */
 class SendPress_SC_Base {
 
+	var $_data = '';
 	/**
 	*
 	*	Overide to set the title

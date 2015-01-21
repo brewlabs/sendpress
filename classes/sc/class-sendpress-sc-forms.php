@@ -42,6 +42,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					self::signup($options);
 					break;
 				case 'manage_subscriptions':
+					self::manage_sub_prerender();
 					self::manage_subscription($options);
 					break;
 			}
@@ -50,8 +51,23 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 	}
 
 	private static function manage_subscription($options){
+		$info = self::data();
+
+		if(!isset($info->id)){
+			$info = NEW stdClass();
+			$info->id = 0;
+		}
+
+		if(isset($_GET['email'])){
+			$data = SendPress_Data::get_subscriber_by_email($_GET['email']);
+			if($data != false){
+				$info->id = $data;
+			}
+		}
+
 		$s = $_GET['sid'];
 		$s = (int)base64_decode($s);
+
 		extract($options);
 
 		if(is_numeric($s)){
@@ -73,6 +89,83 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 				<b><?php _e('Signup Date','sendpress');?></b>
 				<?php echo $sub->join_date;?>
 			</div>
+			<div class="alert alert-block alert-info <?php echo self::handle_unsubscribes(); ?> fade in">
+ 				<h4 class="alert-heading"><?php _e('Saved','sendpress'); ?>!</h4>
+ 				<?php _e('Your subscriptions have been updated. Thanks.','sendpress'); ?>
+			</div>
+			<p><?php _e('You are subscribed to the following lists:','sendpress'); ?></p>
+			<?php
+				$info->action = "update";
+				$key = SendPress_Data::encrypt( $info );
+			?>
+			<form action="?sendpress=<?php echo $key; ?>" method="post">
+			<?php wp_nonce_field( SendPress_Data::nonce() ); ?>
+			<input type="hidden" name="subscriberid" id="subscriberid" value="<?php echo $info->id; ?>" />
+
+			<table cellpadding="0" cellspacing="0" class="table table-condensed table-striped table-bordered">
+				<tr>
+					<th  ><?php _e('Subscribed','sendpress'); ?></th>
+					<th  ><?php _e('Unsubscribed','sendpress'); ?></th>
+					<th  ><?php _e('List','sendpress'); ?></th>
+					<th class="hidden-phone">Updated</th>
+					<th class="hidden-phone">Other Info</th>
+				</tr>
+			<?php
+
+			$lists = SendPress_Data::get_lists(
+				apply_filters( 'sendpress_modify_manage_lists', 
+					array('meta_query' => array(
+						array(
+							'key' => 'public',
+							'value' => true
+							)
+						)
+					) 
+				),
+				false
+			);
+
+			foreach($lists as $list){
+				$subscriber = SendPress_Data::get_subscriber_list_status($list->ID, $info->id);
+				?>
+			  	<tr>
+			  	<?php
+
+			  		$checked = (isset($subscriber->statusid) && $subscriber->statusid == 2) ? 'checked' : '';
+					echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="2"></td>';
+					$checked = (isset($subscriber->statusid) && $subscriber->statusid == 3) ? 'checked' : '';
+					echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="3"></td>';
+			  	?>
+			  	<td><?php echo $list->post_title; ?></td>
+			  	<td class="hidden-phone"><span id="list_<?php echo $list->ID;?>"><?php 
+			  	if(isset($subscriber->updated)) { echo $subscriber->updated; } else {
+					 	_e('Never Subscribed','sendpress');
+					 }
+					 ?></span>
+				</td>
+				<td class="hidden-phone">
+					<?php 
+						if( is_object($subscriber) ){
+							if($subscriber->statusid != 3 && $subscriber->statusid != 2){
+								echo $subscriber->status;
+							} 
+						}
+					?>
+				</td>
+			  	<tr>	
+			    <?php
+			}
+				?>
+
+			</table>
+			<br>
+			<?php do_action( 'sendpress_manage_notifications', $info );?>
+			<input type="submit" class="btn btn-primary" value="<?php _e('Save My Settings','sendpress'); ?>"/>
+			</form>
+
+
+				<br>
+				<a  href="<?php echo home_url(); ?>"><i class="icon-hand-left"></i> <?php _e('Return to','sendpress'); ?> <?php echo $name; ?></a>
 			<?php
 		}
 
@@ -211,6 +304,9 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
 	private static function handle_unsubscribes(){
 
+		$_nonce_value = 'sendpress-is-awesome';
+		$c = ' hide ';
+
 		if ( !empty($_POST) && check_admin_referer($this->_nonce_value) ){
 			
 			$args = array(
@@ -245,6 +341,42 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 			do_action('sendpress_public_view_manage_save', $_POST);
 		}
 		wp_reset_query();
+
+		return $c;
+	}
+
+	private static function manage_sub_prerender(){
+		$info = self::data();
+
+	 	if ( isset($info->action) && $info->action == 'unsubscribe' ) {
+			SendPress_Data::unsubscribe_from_list( $info->id , $info->report, $info->listID  );
+
+			$link_data = array(
+				"id"=>$info->id,
+				"report"=>$info->report,
+				"urlID"=> '0',
+				"view"=>"manage",
+				"listID"=>$info->listID,
+				"action"=>""
+			);
+			$code = SendPress_Data::encrypt( $link_data );
+			$link =  SendPress_Manager::public_url($code);
+			//$this->redirect(  $link ); 
+			//exit;
+		}
+		
+	}
+
+	private static function data(){
+		$data = '';
+
+		if( (get_query_var( 'sendpress' )) || isset($_POST['sendpress']) ){
+		  	$action = isset($_POST['sendpress']) ? $_POST['sendpress'] : get_query_var( 'sendpress' );
+			//Look for encrypted data
+	  		$data = SendPress_Data::decrypt( urldecode($action) );
+
+	  	}
+	  	return $data;
 	}
 
 }
