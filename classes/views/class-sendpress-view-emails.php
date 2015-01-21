@@ -46,13 +46,13 @@ class SendPress_View_Emails extends SendPress_View{
 					<li <?php if(!isset($_GET['view']) || isset($_GET['view']) && $_GET['view'] === 'style' || isset($_GET['view']) && $_GET['view'] === 'create' || isset($_GET['view']) && $_GET['view'] === 'send' || isset($_GET['view']) && $_GET['view'] === 'send-confirm'  || isset($_GET['view']) && $_GET['view'] === 'send-queue'  ){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails'); ?>"><?php _e('Newsletters','sendpress'); ?></a>
 				  	</li>
-				  	<?php //if(SendPress_Option::get('prerelease_templates') == 'yes') { ?>
-				 
+				  	<?php  if(  false == true) {  //if(SendPress_Option::get('prerelease_templates') == 'yes') { ?>
+				 	
 				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'all'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails_Auto'); ?>"><?php _e('Autoresponders','sendpress'); ?></a>
 				  	</li>
 				  	  	<!--	-->
-				  	
+				  	<?php } ?>
 
 				  	<li <?php if(isset($_GET['view']) && ( $_GET['view'] === 'temp' || $_GET['view'] === 'tempstyle' )){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails_Temp'); ?>"><?php _e('Templates','sendpress'); ?></a>

@@ -41,7 +41,7 @@ class SendPress_DB_Subscribers_Url extends SendPress_DB {
 	public function get_column_defaults() {
 		return array(
 			'clicked_at' => get_gmt_from_date( date('Y-m-d H:i:s') ),
-			'click_count' => 0
+			'click_count' => 1
 			);
 	}
 
@@ -88,6 +88,37 @@ class SendPress_DB_Subscribers_Url extends SendPress_DB {
 	}
 
 
+	public function clicks_total_email_id( $email_id ) {
+		global $wpdb;
+		$q = $wpdb->prepare(" SELECT SUM(click_count) FROM $this->table_name WHERE email_id = %d ", $email_id);
+		return $wpdb->get_var( $q );	
+	}
+
+	public function clicks_email_id( $email_id ) {
+		global $wpdb;
+		$q = $wpdb->prepare(" SELECT COUNT(*) FROM $this->table_name WHERE email_id = %d ", $email_id);
+		return $wpdb->get_var( $q );
+		
+	}
+
+	public function clicks_top_email_id_subscriber( $email_id , $count = 5){
+		global $wpdb;
+		$q = $wpdb->prepare(" SELECT SUM(click_count) as count,subscriber_id  FROM $this->table_name WHERE email_id = %d GROUP BY subscriber_id ORDER BY click_count  DESC LIMIT %d ", $email_id , $count );
+		return $wpdb->get_results( $q );
+	}
+
+	public function clicks_top_email_id_url( $email_id , $count = 5){
+		global $wpdb;
+		$q = $wpdb->prepare(" SELECT SUM(click_count) as count,url_id  FROM $this->table_name  WHERE email_id = %d GROUP BY url_id ORDER BY click_count  DESC LIMIT %d ", $email_id , $count );
+		return $wpdb->get_results( $q );
+	}
+
+	public function links_with_counts( $email_id ){
+		global $wpdb;
+		$url_table = SPNL()->db->url->table_name;
+		$q = $wpdb->prepare(" SELECT COUNT(subscriber_id) as clicks, SUM(click_count) as totalclicks , su.url_id , su.url FROM $this->table_name as ssu INNER JOIN $url_table as su on su.url_id = ssu.url_id WHERE ssu.email_id = %d GROUP BY su.url_id ORDER BY totalclicks  ", $email_id );
+		return $wpdb->get_results( $q );
+	}
 
 	/**
 	 * Create the table

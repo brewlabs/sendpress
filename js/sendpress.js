@@ -550,11 +550,8 @@
         },
         sendbatch: function(){
             $.post(
-                spvars.ajaxurl,
-                {
-                    action:'sendpress-sendbatch',
-                    spnonce: spvars.sendpressnonce
-                }, 
+                spvars.wpcronurl + '?action=sendpress',
+                {}, 
                 function(data){
                     spadmin.queue.batchsent(data);
                 }); 
@@ -562,8 +559,8 @@
         batchsent: function(response){
             response = $.parseJSON(response);
             spadmin.log(response);
-            if( response != undefined && parseInt(response.attempted) > 0){
-                spadmin.queue.count = spadmin.queue.count + parseInt(response.sent);
+            if( response != undefined && parseInt(response.queue) > 0 && response.limit === false ){
+                spadmin.queue.count = spadmin.queue.total - parseInt(response.queue);
                 var $qt =$("#queue-sent");
                 $qt.html(spadmin.queue.count);
                 $p = parseInt( spadmin.queue.count / spadmin.queue.total * 100 );

@@ -83,6 +83,11 @@ if($report){
 $rec = get_post_meta($report->ID, '_send_last_count', true);
 $this->panel_start($report->post_title ." <small style='color:#333;'>".__('This email had', 'sendpress')." ". $rec ." ".__('Recipients', 'sendpress')."</small>");
 
+
+$stat_type = get_post_meta($report->ID, '_stat_type', true);
+         
+          $clicks = SPNL()->db->subscribers_url->clicks_email_id( $report->ID  );
+          $clicks_total = SPNL()->db->subscribers_url->clicks_total_email_id( $report->ID  );
 ?>
 
 <div class="sp-row">
@@ -93,7 +98,12 @@ $this->panel_start($report->post_title ." <small style='color:#333;'>".__('This 
         $open = 0;
         $rec = get_post_meta($report->ID, '_send_last_count', true);
           if($report){
-            $open= SendPress_Data::get_opens($report->ID);
+            if($stat_type == 'new'){
+                $open = SPNL()->db->subscribers_tracker->get_opens_total( $report->ID  );
+            } else {
+                $open= SendPress_Data::get_opens($report->ID);
+            }
+           
             $p = $open/$rec * 100;
           }
         ?>
@@ -110,7 +120,15 @@ $this->panel_start($report->post_title ." <small style='color:#333;'>".__('This 
         <div class="sp-50">
         <?php 
           $ou = 0;
-          $ou =  SendPress_Data::get_opens_unique_total($report->ID);
+
+            if($stat_type == 'new'){
+               $ou = SPNL()->db->subscribers_tracker->get_opens( $report->ID  );
+            } else {
+               $ou =  SendPress_Data::get_opens_unique_total($report->ID);
+            }
+         
+            
+
           $px = $ou/$rec * 100;
 
         ?>
@@ -135,8 +153,13 @@ $this->panel_start($report->post_title ." <small style='color:#333;'>".__('This 
          $click = 0;
         $rec = get_post_meta($report->ID, '_send_last_count', true);
           if($report){
-              $click= SendPress_Data::get_clicks($report->ID);
-             
+              
+            if($stat_type == 'new'){
+                $click = SPNL()->db->subscribers_url->clicks_email_id( $report->ID  );
+            } else {
+                $click= SendPress_Data::get_clicks($report->ID);
+            }
+
               $p = $click/$rec * 100;
           }
      ?>
@@ -154,7 +177,11 @@ $this->panel_start($report->post_title ." <small style='color:#333;'>".__('This 
         <?php 
           $ou = 0;
 
-          $ou = SendPress_Data::get_clicks_unique_total($report->ID);
+          if($stat_type == 'new'){
+                $ou = SPNL()->db->subscribers_url->clicks_total_email_id( $report->ID  );
+            } else {
+                $ou = SendPress_Data::get_clicks_unique_total($report->ID);
+            }
           
           $px = $ou/$rec * 100;
 

@@ -25,6 +25,7 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
         $lists = implode(',', $info['listIDS']);
         update_post_meta($new_id,'_send_time',  $info['send_at'] );
         update_post_meta($new_id,'_send_lists', $lists );
+        update_post_meta($new_id,'_stat_type', 'new' );
         $count = 0;    
         if(get_post_meta($saveid ,'istest',true) == true ){
             update_post_meta($new_id,'_report_type', 'test' );

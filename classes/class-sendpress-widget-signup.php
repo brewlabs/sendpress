@@ -272,8 +272,9 @@ class SendPress_Widget_Signup extends WP_Widget {
 				<?php
 			}
 		}
-
-		do_action('sendpress_post_notification_widget_form',$lists, $instance, $this);
+		if( is_wp_error($lists) ||  is_wp_error($instance) || is_wp_error($this)   ){
+			do_action('sendpress_post_notification_widget_form',$lists, $instance, $this);
+		}
 		?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'thank_you' ); ?>"><?php _e('Thank you message:', 'sendpress'); ?></label>
