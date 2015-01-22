@@ -520,7 +520,10 @@ function spnl_do_content_tags( $content, $t_id , $email_id, $subscriber_id = 0 ,
 	// Replace Content Tags
 	remove_filter( 'the_content', 'pdfprnt_content' );
 	$content = SPNL()->template_tags->do_content_tags( $content,$t_id ,  $email_id, $subscriber_id , $example );
-	add_filter( 'the_content', 'pdfprnt_content' );
+	//RE ADD THE FILTER..
+	if( function_exists('pdfprnt_content') ){
+		add_filter( 'the_content', 'pdfprnt_content' );
+	}
 	// Replace Email tags
 	//$content = SPNL()->template_tags->do_email_tags( $content, $t_id , $email_id, $subscriber_id , $example );
 	
