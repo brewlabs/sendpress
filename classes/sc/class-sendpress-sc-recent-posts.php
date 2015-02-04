@@ -21,6 +21,9 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 	public static function options(){
 		return 	array(
 			 'posts' => 1,
+			 'uid' => 0,
+			 'imgalign' => 'left',
+			 'alternate' => false
 			);
 	}
 
@@ -36,22 +39,51 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 		global $post , $wp;
 		$old_post = $post;
 		extract( shortcode_atts( self::options() , $atts ) );
+
+		$args = array('orderby' => 'date', 'order' => 'DESC' , 'showposts' => $posts);
+
+		if($uid > 0){
+			$args['author'] = $uid;
+		}
+
+		if(strlen($readmoretext) === 0){
+			$readmoretext = 'Read More';
+		}
+
+		if(strlen($imgalign) === 0){
+			$imgalign = 'left';
+		}
+
 		$return_string = '';
 	   	if($content){
 	      	$return_string = $content;
 	  	}
+
+	  	$margin = ($alternate && strtolower($imgalign) === 'left') ? '0px 10px 10px 0px' : '0px 0px 10px 10px';
+
 	  	$return_string .= '<div>';
-	   	query_posts(array('orderby' => 'date', 'order' => 'DESC' , 'showposts' => $posts));
+	   	//query_posts($args);
 
+	   	$query = new WP_Query($args);
+		if($query->have_posts()){
+			while($query->have_posts()){
+				$query->the_post();
 
-	   	if (have_posts()) :
-	    	while (have_posts()) : the_post();
-	    		$return_string .= '<div><a href="'.get_permalink().'">'.get_the_title().'</a></div>';
+				if(has_post_thumbnail()){
+					$return_string .= '<div style="float:'.strtolower($imgalign).'; margin:'.$margin.';">'.get_the_post_thumbnail(get_the_ID(), 'thumbnail').'</div>';
+				}
+				
+				$return_string .= '<div><a href="'.get_permalink().'">'.get_the_title().'</a></div>';
 	          	$return_string .= '<div>'.get_the_excerpt().'</div>';
+	          	$return_string .= '<div><a href="'.get_permalink().'">'.$readmoretext.'</a></div>';
 	          	$return_string .= '<br>';
 
-	      	endwhile;
-	   	endif;
+	          	$imgalign = ($alternate && strtolower($imgalign) === 'left') ? 'right' : 'left';
+	          	$margin = ($alternate && strtolower($imgalign) === 'left') ? '0px 10px 10px 0px' : '0px 0px 10px 10px';
+			}
+		}
+		wp_reset_postdata();
+
 	   	$return_string .= '</div>';
 	   	wp_reset_query();
 	   	$post = $old_post;
@@ -60,7 +92,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 	}
 
 	public static function docs(){
-		return __('This shortcode creates a listing of Posts in emails or on pages.', 'sendpress');
+		return __('This shortcode creates a listing of Posts in emails or on pages.  Use the following options to customize the output: <br><br><b>posts</b> - number of poists to display. (defaults to 1)<br><b>uid</b> - the user id of the author you would like to see.<br><b>imgalign</b> - Align images left or right. (defaults to left)<br><b>alternate</b> - when writing posts, alternate the thumbnail images. (defaults to false)<br><b>readmoretext</b> - the text for the readmore link (defaults to Read More)', 'sendpress');
 	}
 
 

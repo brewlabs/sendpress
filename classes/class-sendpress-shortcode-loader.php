@@ -16,7 +16,7 @@ class SendPress_Shortcode_Loader {
 			'recent-posts' => __CLASS__ . '::recent_posts',
 			'signup' => __CLASS__ . '::signup',
 			'form' => __CLASS__ . '::forms',
-			'recent-posts-by-user' => __CLASS__ . '::recent_posts_by_user'
+			'recent-posts-by-user' => __CLASS__ . '::recent_posts'
 		);
 	}
 
@@ -45,58 +45,63 @@ class SendPress_Shortcode_Loader {
 			$classname = ucwords(str_replace('-', ' ', strtolower($shortcode) ));
 			$classname = str_replace(' ', '_', $classname );
 			$classname = "SendPress_SC_" . $classname;
-			?>
-			<div class="panel panel-default">
-			    <div class="panel-heading">
-			      <h4 class="panel-title">
-			        <!--<a data-toggle="collapse" data-parent="#accordion" href="#<? echo $classname; ?>">-->
-			        	<?php
-			        		$sc_title = "[sp-". $shortcode ."]";
-			        		$title = call_user_func(array($classname, 'title'));
-			        		if( $title != false ){
-			        			$sc_title = $title;
-			        		}
-			         	 	echo $sc_title;
-			         	  ?>
-			        <!--</a>-->
-			      </h4>
-			    </div>
-				<div id="<? echo $classname ?>">
-					<div class="panel-body">
-					<?php
-						$docs = call_user_func(array($classname, 'docs'));
-						if($docs !== false){
-							echo "<p>" . $docs . "</p>";
-						}
-						echo "<strong class='text-muted'>".__('Basic','sendpress').":</strong><br>";
-						echo "<pre>[sp-". $shortcode ."]</pre>";
-						$options =  call_user_func(array($classname, 'options'));
-
-						if(!empty($options)){
-						$txt = '';
-						foreach ($options as $key => $value) {
-							$txt .= $key . "='".$value."' ";
-						}
-						echo "<strong class='text-muted'>".__('All Options with Defaults','sendpress').":</strong><br>";
-						echo "<pre>[sp-". $shortcode ." ". $txt ."]</pre>";
-						}
-						$html = call_user_func(array($classname, 'html'));
-						if( $html !== false ){
-							$message = __('Your Content Here.','sendpress');
-							if(is_string( $html ) ){	
-								$message = $html;
+			if(call_user_func(array($classname, 'display_docs'))){
+				?>
+				<div class="panel panel-default">
+				    <div class="panel-heading">
+				      <h4 class="panel-title">
+				        <!--<a data-toggle="collapse" data-parent="#accordion" href="#<? echo $classname; ?>">-->
+				        	<?php
+				        		$sc_title = "[sp-". $shortcode ."]";
+				        		$title = call_user_func(array($classname, 'title'));
+				        		if( $title != false ){
+				        			$sc_title = $title;
+				        		}
+				         	 	echo $sc_title;
+				         	  ?>
+				        <!--</a>-->
+				      </h4>
+				    </div>
+					<div id="<? echo $classname ?>">
+						<div class="panel-body">
+						<?php
+							$docs = call_user_func(array($classname, 'docs'));
+							if($docs !== false){
+								echo "<p>" . $docs . "</p>";
 							}
-							echo "<strong class='text-muted'>".__('Wrapping Content','sendpress').":</strong><br>";
-							echo "<pre>[sp-". $shortcode ."]". $message ."[/sp-". $shortcode ."]</pre>";
-						}
+							echo "<strong class='text-muted'>".__('Basic','sendpress').":</strong><br>";
+							echo "<pre>[sp-". $shortcode ."]</pre>";
+							$options =  call_user_func(array($classname, 'options'));
 
-						do_action('sendpress_shortcode_examples_'.$shortcode);
-					?>
+							if(!empty($options)){
+							$txt = '';
+							foreach ($options as $key => $value) {
+								if($value === false){
+									$value = 'false';
+								}
+								$txt .= $key . "='".$value."' ";
+							}
+							echo "<strong class='text-muted'>".__('All Options with Defaults','sendpress').":</strong><br>";
+							echo "<pre>[sp-". $shortcode ." ". $txt ."]</pre>";
+							}
+							$html = call_user_func(array($classname, 'html'));
+							if( $html !== false ){
+								$message = __('Your Content Here.','sendpress');
+								if(is_string( $html ) ){	
+									$message = $html;
+								}
+								echo "<strong class='text-muted'>".__('Wrapping Content','sendpress').":</strong><br>";
+								echo "<pre>[sp-". $shortcode ."]". $message ."[/sp-". $shortcode ."]</pre>";
+							}
 
+							do_action('sendpress_shortcode_examples_'.$shortcode);
+						?>
+
+						</div>
 					</div>
 				</div>
-			</div>
-			<?php
+				<?php
+			}
 		}
 		?></div><?php
 	}

@@ -17,6 +17,15 @@ class SendPress_SC_Base {
 	var $_data = '';
 	/**
 	*
+	*	Overide to not display the docs on the help screen
+	*
+	*/
+	public static function display_docs(){
+		return true;
+	}
+
+	/**
+	*
 	*	Overide to set the title
 	*
 	*/
