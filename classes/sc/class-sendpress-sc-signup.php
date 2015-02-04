@@ -151,7 +151,7 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 					</p>
 
 					<p class="submit">
-						<input value="<?php echo $button_text; ?>" class="sendpress-submit" type="submit"  id="submit" name="submit"><img class="ajaxloader" src="<?php echo SENDPRESS_URL; ?>/img/ajax-loader.gif" />
+						<input value="<?php echo $button_text; ?>" class="sendpress-submit" type="submit"  id="submit" name="submit"><img class="ajaxloader" style="display:none;"  src="<?php echo SENDPRESS_URL; ?>/img/ajax-loader.gif" />
 					</p>
 				</div>
 			</form>

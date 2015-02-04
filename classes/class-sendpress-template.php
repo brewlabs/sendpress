@@ -509,7 +509,7 @@ class SendPress_Template {
 			}
 
 		} else {
-			echo __('Sorry we could not find your email template.','sendpress');
+			//echo __('Sorry we could not find your email template.','sendpress');
 			return;	
 		}
 	}
