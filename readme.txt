@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 4.1
-Stable tag: 1.1.0.1
+Stable tag: 1.1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 15. Pro Tab.
 
 == Changelog ==
+
+= 1.1.0.2 - 2015.1.22 =
+* Fix: Sending not working in some cases
+* Fix: pdfprnt_content conflict
+* Fix: mailto: missing @ symbol
+* Fix: Email Titles not always showing
 
 = 1.1.0.1 - 2015.1.19 =
 * Fix: tables not installing
@@ -587,6 +593,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.1.0.2 =
+Emails stuck sending fix
 
 = 1.1 =
 Multiple bug fixes

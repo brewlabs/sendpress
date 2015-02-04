@@ -26,7 +26,7 @@ function convert($size)
 
 static function send_mail(){
 		global $wpdb;
-		$day_count = SendPress_Option::get('autocron-per-call',25);
+		$attempted_count = SendPress_Option::get('autocron-per-call',25);
 		
 		if( !SendPress_Manager::limit_reached()  ){
 		$count = SendPress_Data::emails_in_queue();
@@ -36,13 +36,13 @@ static function send_mail(){
 		SendPress_Email_Cache::build_cache();
 
 		
-		if( SendPress_Manager::limit_reached( $count )  ){
+		if( SendPress_Manager::limit_reached( $attempted_count )  ){
 			return;
 		}
 
 
 		if($count > 0 ){
-		for ($i=0; $i < $day_count; $i++) { 
+		for ($i=0; $i < $attempted_count; $i++) { 
 				$email = SendPress_Data::get_single_email_from_queue();
 				if($email != null){
 					

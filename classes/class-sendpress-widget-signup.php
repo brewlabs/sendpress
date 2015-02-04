@@ -272,7 +272,9 @@ class SendPress_Widget_Signup extends WP_Widget {
 				<?php
 			}
 		}
-		if( is_wp_error($lists) ||  is_wp_error($instance) || is_wp_error($this)   ){
+		
+		if( !is_wp_error($lists) ||  !is_wp_error($instance) || !is_wp_error($this)   ){
+			
 			do_action('sendpress_post_notification_widget_form',$lists, $instance, $this);
 		}
 		?>

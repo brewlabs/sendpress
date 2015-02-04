@@ -53,7 +53,15 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 
 		SPNL()->db->subscribers_tracker->open( $info->report , $info->id , 2 );
 
-		wp_redirect( $url );
+		if(strrpos( $href, "mailto" ) === false){
+				header("Location: $url");
+		} else {
+			wp_redirect( $url );
+		}
+		exit;
+
+	
+		//
 		//$link = SendPress_Data::get_url_by_id( $info->urlID );
 		//SendPress_Data::track_click( $info->id , $info->report, $info->urlID , $ip , $this->_device_type, $this->_device );
 		//header("Location: " . $link->url);

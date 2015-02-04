@@ -13,7 +13,10 @@ class SendPress_Tag_Email_Title extends SendPress_Tag_Base{
 	}
 	
 	static function external( $template_id ,  $email_id , $subscriber_id , $e ){
-		
+		$email_subject =  get_post_meta($email_id, '_sendpress_subject' ,true );
+		if( $email_subject !== '' ){
+			return $email_subject;
+		}
 		return get_the_title($email_id);
 	}
 
