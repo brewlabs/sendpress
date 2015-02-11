@@ -19,16 +19,20 @@ class SendPress_Videos{
     }
 
     function add_hooks(){
+        SendPress_Error::log('add hooks for video');
         add_action('sendpress_template_loaded', array($this, 'add_video_filter') );
     }
 
     function add_video_filter(){
-        add_filter( 'oembed_dataparse', array($this, 'fix_video'), 10, 3 );
+        SendPress_Error::log('add oembed filter');
+        add_filter( 'oembed_dataparse', array($this, 'fix_video'), 1, 3 );
     }
 
     function fix_video( $return, $data, $url ){
 
         $output = '';
+
+        SendPress_Error::log($data);
 
         if ($data->provider_name == 'YouTube' || $data->provider_name == 'Vimeo') {
             return $this->get_video($url, $data->thumbnail_url);
@@ -57,4 +61,3 @@ class SendPress_Videos{
     }
 
 }
-

@@ -28,7 +28,7 @@ Author URI: https://sendpress.com/
 		define( 'SENDPRESS_FILE', __FILE__ );
 	}
 
-
+	define('SENDPRESS_LOG_ERROR',true);
 
 	if(! defined('SENDPRESS_STORE_URL') ){
 		define( 'SENDPRESS_STORE_URL', 'https://sendpress.com' );
@@ -250,8 +250,6 @@ Author URI: https://sendpress.com/
 				);
 
 		}
-
-
 
 		function init() {
 			

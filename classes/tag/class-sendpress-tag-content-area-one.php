@@ -24,7 +24,6 @@ class SendPress_Tag_Content_Area_One extends SendPress_Tag_Base  {
 			$content = apply_filters('the_content', $content);
 			$content = str_replace(']]>', ']]&gt;', $content);
 
-
 		} else {
 			$content = self::lipsum_format();
 		}
