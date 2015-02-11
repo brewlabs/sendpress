@@ -153,7 +153,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 				<?php $ctype = SendPress_Option::get('allow_tracking'); ?>
 			<input type="checkbox" name="allow_tracking" value="yes" <?php if($ctype=='yes'){echo "checked='checked'"; } ?> /> <?php _e('Allow tracking of this WordPress installs anonymous data','sendpress'); ?>.
 				<p>	
-			<?php _e('To maintain a plugin as big as SendPress, we need to know what we\'re dealing: what kinds of other plugins our users are using, what themes, etc. Please allow us to track that data from your install. It will not track any user details, so your security and privacy are safe with us','sendpress'); ?>.</p>
+			<?php _e('To maintain a plugin as big as SendPress, we need to know what we\'re dealing: what kinds of other plugins our users are using, what themes, etc. Please allow us to track that data from your install. It will add your email to our support system to assist in AutoCron problems.','sendpress'); ?>.</p>
 		</div></div>
 			<div class="panel panel-default">
 			  <div class="panel-heading">

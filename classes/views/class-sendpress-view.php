@@ -34,12 +34,16 @@ class SendPress_View {
 		add_action('in_admin_footer',array('SendPress_View','footer'));
 
 	}
+
 	static function footer(){
+		
 		?>
 		<div class="sp-footer">
 			<a href="<?php echo SendPress_Admin::link('Help_Whatsnew'); ?>">What's New</a> | <a href="http://sendpress.com/support/knowledgebase/" target="_blank">Knowledge Base</a> | <a href="http://sendpress.uservoice.com/" target="_blank">Feedback</a> | SendPress Version: <?php echo SENDPRESS_VERSION; ?> 
 		</div>
-		<?php
+			<?php
+
+
 	}
 
 	function view_buttons(){
@@ -115,6 +119,27 @@ class SendPress_View {
 		echo '<div class="wrap">';
 		$this->tabs();
 		echo '<div class="spwrap">';
+		$user = wp_get_current_user();
+		if(SendPress_Option::get('autocron', 'yes') == 'yes' ||  SendPress_Option::get('allow_tracking') == 'yes') {
+			?>
+			<script>
+			  window.intercomSettings = {
+			    // TODO: The current logged in user's full name
+			    name: "<?php echo $user->display_name; ?>",
+			    // TODO: The current logged in user's email address.
+			    email: "<?php echo $user->user_email; ?>",
+			    // TODO: The current logged in user's sign-up date as a Unix timestamp.
+
+			    created_at: <?php echo SendPress_Option::get('install_date'); ?>,
+			    app_id: "bntxdazy",
+			    "domain" : "<?php echo home_url(); ?>",
+			    "version" : "<?php echo SENDPRESS_VERSION; ?>",
+			    "pro" : "<?php if(defined('SENDPRESS_PRO_VERSION')){ echo SENDPRESS_PRO_VERSION; } else { echo '0'; } ?>"
+			  };
+			</script>
+			<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/t7bvmqde';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
+			<?php
+		}
 	}
 
 	function page_end(){ 
