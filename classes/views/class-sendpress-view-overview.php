@@ -15,6 +15,7 @@ class SendPress_View_Overview extends SendPress_View{
 
 	
 	function html($sp){
+
 		SendPress_Tracking::event('Overview Tab');
 		//print_r( SendPress_Data::get_subcribers_by_meta('test','test') );
     //echo wp_next_scheduled('wysija_cron_queue') . 'asdf';
@@ -74,7 +75,16 @@ echo "</pre>";
     <h2 class="nomargin nopadding"><?php echo  SendPress_Data::emails_maxed_in_queue(); ?></h2> <p class="fwb"><?php _e('Emails Stuck in Queue', 'sendpress');?></p>
   </div>
   <div class="sp-block sp-25">
-    <h2 class="nomargin nopadding"><?php echo SENDPRESS_VERSION ?></h2> <p class="fwb"><?php _e('SendPress Version', 'sendpress');?></p>
+    <h2 class="nomargin nopadding"><?php _e('Autocron last check', 'sendpress');?></h2> <p class="fwb">  <?php 
+    $autocron = SendPress_Option::get('autocron','no');
+    //print_r(SendPress_Data::emails_stuck_in_queue());
+$api_info = json_decode( SendPress_Cron::get_info() );
+    if($autocron == 'yes') {
+      echo $api_info->updated_at . " UTC";
+    } else {
+      echo "Not Enabled";
+    }
+    ?></p>
   </div>
 
 </div>
