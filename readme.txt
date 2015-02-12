@@ -602,6 +602,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Upgrade Notice ==
 
+= 1.1.2.11 =
+Bug fixes for sending and templates
+
 = 1.1.0.2 =
 Emails stuck sending fix
 
