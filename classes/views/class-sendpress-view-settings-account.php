@@ -298,6 +298,26 @@ foreach ( $charsete as $type) {
 ?>
 </select><br>
 <?php _e('Older versions of SendPress used','sendpress'); ?> "quoted-printable"
+<br><br><br>
+<h2><?php _e('AutoCron Information','sendpress'); ?></h2>
+<?php
+ $api_info = json_decode( SendPress_Cron::get_info() );
+$autocron = SendPress_Option::get('autocron','no');
+if($autocron == 'yes') {
+	
+
+
+ 	?>
+<ul>
+	<li>Last Check: <?php echo $api_info->lastcheck; ?> UTC</li>
+	<li>Errors: <?php echo $api_info->errors; ?> </li>
+	<li>Active: <?php  if($api_info->active == 0 ) { echo "false"; } else { echo "true"; } ?> </li>
+	
+</ul>
+
+<?php } else { ?>
+	<p>AutoCron is not enabled.</p>
+<?php } ?>
 
 <br class="clear">
 </div>

@@ -80,7 +80,7 @@ echo "</pre>";
     //print_r(SendPress_Data::emails_stuck_in_queue());
 $api_info = json_decode( SendPress_Cron::get_info() );
     if($autocron == 'yes') {
-      echo $api_info->updated_at . " UTC";
+      echo $api_info->lastcheck . " UTC";
     } else {
       echo "Not Enabled";
     }

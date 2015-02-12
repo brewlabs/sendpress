@@ -120,30 +120,7 @@ class SendPress_View {
 		$this->tabs();
 		echo '<div class="spwrap">';
 		$user = wp_get_current_user();
-		if( (SendPress_Option::get('autocron', 'yes') == 'yes' ||  SendPress_Option::get('allow_tracking') == 'yes' ) && function_exists('hash_hmac') ) {
-			?>
-			<script>
-			  window.intercomSettings = {
-			    // TODO: The current logged in user's full name
-			    name: "<?php echo $user->display_name; ?>",
-			    // TODO: The current logged in user's email address.
-			    email: "<?php echo $user->user_email; ?>",
-			    // TODO: The current logged in user's sign-up date as a Unix timestamp.
-
-				  "user_hash": "<?php echo
-				    hash_hmac('sha256', $user->user_email, 'aEoMfprNQmMGHm43SQhFMmmqITP5TorzM664ZLIZ');
-				  ?>",
-
-			    created_at: <?php echo SendPress_Option::get('install_date'); ?>,
-			    app_id: "bntxdazy",
-			    "domain" : "<?php echo home_url(); ?>",
-			    "version" : "<?php echo SENDPRESS_VERSION; ?>",
-			    "pro" : "<?php if(defined('SENDPRESS_PRO_VERSION')){ echo SENDPRESS_PRO_VERSION; } else { echo '0'; } ?>"
-			  };
-			</script>
-			<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/t7bvmqde';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
-			<?php
-		}
+		
 	}
 
 	function page_end(){ 

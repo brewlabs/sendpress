@@ -185,7 +185,7 @@ echo $time;//11:09
 		//print_r(SendPress_Data::emails_stuck_in_queue());
 
 	  	if($autocron == 'yes') {
-			echo "<b>Autocron last check:&nbsp;" . $api_info->updated_at ." UTC</b><br>";
+			echo "<b>Autocron last check:&nbsp;" . $api_info->lastcheck ." UTC</b><br>";
 		}
 		?>
 
