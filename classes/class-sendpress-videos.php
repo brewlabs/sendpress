@@ -19,20 +19,21 @@ class SendPress_Videos{
     }
 
     function add_hooks(){
-        SendPress_Error::log('add hooks for video');
         add_action('sendpress_template_loaded', array($this, 'add_video_filter') );
     }
 
     function add_video_filter(){
-        SendPress_Error::log('add oembed filter');
-        add_filter( 'oembed_dataparse', array($this, 'fix_video'), 1, 3 );
+        add_filter('embed_oembed_html', array($this,'avoid_cache'),10, 4);
+        add_filter( 'oembed_dataparse', array($this, 'fix_video'), 10, 3 );
+    }
+
+    function avoid_cache($cache, $url, $attr, $post_ID ){
+        return wp_oembed_get($url,$attr);
     }
 
     function fix_video( $return, $data, $url ){
 
         $output = '';
-
-        SendPress_Error::log($data);
 
         if ($data->provider_name == 'YouTube' || $data->provider_name == 'Vimeo') {
             return $this->get_video($url, $data->thumbnail_url);
