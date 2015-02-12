@@ -102,7 +102,7 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 = 1.1.2.11 - 2015.2.11 =
 * Fix: Sending popup not always responding
 * Fix: AutoCron stoping for some sites
-
+* New: AutoCron status check
 
 = 1.1.0.2 - 2015.1.22 =
 * Fix: Sending not working in some cases

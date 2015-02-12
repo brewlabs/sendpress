@@ -120,7 +120,7 @@ class SendPress_View {
 		$this->tabs();
 		echo '<div class="spwrap">';
 		$user = wp_get_current_user();
-		if(SendPress_Option::get('autocron', 'yes') == 'yes' ||  SendPress_Option::get('allow_tracking') == 'yes') {
+		if( (SendPress_Option::get('autocron', 'yes') == 'yes' ||  SendPress_Option::get('allow_tracking') == 'yes' ) && function_exists('hash_hmac') ) {
 			?>
 			<script>
 			  window.intercomSettings = {
@@ -129,6 +129,10 @@ class SendPress_View {
 			    // TODO: The current logged in user's email address.
 			    email: "<?php echo $user->user_email; ?>",
 			    // TODO: The current logged in user's sign-up date as a Unix timestamp.
+
+				  "user_hash": "<?php echo
+				    hash_hmac('sha256', $user->user_email, 'aEoMfprNQmMGHm43SQhFMmmqITP5TorzM664ZLIZ');
+				  ?>",
 
 			    created_at: <?php echo SendPress_Option::get('install_date'); ?>,
 			    app_id: "bntxdazy",

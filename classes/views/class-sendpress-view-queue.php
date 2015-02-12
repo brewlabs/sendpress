@@ -152,7 +152,7 @@ echo $time;//11:09
 
 echo $time;//11:09
 	*/
-
+     $api_info = json_decode( SendPress_Cron::get_info() );
 	?>
 
 <br>
@@ -183,6 +183,10 @@ echo $time;//11:09
 	  $emails_so_far = SendPress_Data::emails_sent_in_queue("day");
 	  $autocron = SendPress_Option::get('autocron','no');
 		//print_r(SendPress_Data::emails_stuck_in_queue());
+
+	  	if($autocron == 'yes') {
+			echo "<b>Autocron last check:&nbsp;" . $api_info->updated_at ." UTC</b><br>";
+		}
 		?>
 
 		
@@ -197,15 +201,15 @@ $local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
 ?><br><small><?php _e('The cron will run again around','sendpress'); ?>: <?php
 echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $local_timestamp);
 ?></small>
-<?php } ?>
+<?php }  ?>
  		<br><br>
 		</div>
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="email-filter" action="<?php echo SendPress_Admin::link('Queue'); ?>" method="get">
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	     <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" /> 
+	     <input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>" /> 
 	    <!-- Now we can render the completed list table -->
-	    <?php $testListTable->display() ?>
+	    <?php $testListTable->display(); ?>
 	    <?php wp_nonce_field($sp->_nonce_value); ?>
 	</form>
 	<br>

@@ -160,7 +160,7 @@ class SendPress_Cron {
         $domain = base64_encode( $url );
         //SendPress_Error::log( 'http://api.sendpress.com/set/'. $domain .'/'. SENDPRESS_CRON);
         $body = wp_remote_retrieve_body( wp_remote_get( 'http://api.sendpress.com/get/'. $domain  ) );
-      
+       return $body;
 
     }
 
