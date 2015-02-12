@@ -104,6 +104,7 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * Fix: AutoCron stoping for some sites
 * Fix: Loading icon when CSS is off
 * Fix: options sometimes returning wp_error
+* Fix: Video embeds in emails
 * New: AutoCron status check
 
 = 1.1.0.2 - 2015.1.22 =
