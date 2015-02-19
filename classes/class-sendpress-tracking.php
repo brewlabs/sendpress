@@ -17,56 +17,105 @@ if ( !class_exists( 'SendPress_Tracking' ) ) {
 		}
 
 		static function data() {
-			/*
-		    // PressTrends Account API Key
-		    $api_key = 'eu1x95k67zut64gsjb5qozo7whqemtqiltzu';
-		    $auth    = 'j0nc5cpqb2nlv8xgn0ouo7hxgac5evn0o';
-		    // Start of Metrics
-		    global $wpdb;
-		    $data = get_transient( 'presstrends_cache_data' );
-		    if ( !$data || $data == '' ) {
-		        $api_base = 'http://api.presstrends.io/index.php/api/pluginsites/update/auth/';
-		        $url      = $api_base . $auth . '/api/' . $api_key . '/';
-		        $count_posts    = wp_count_posts();
-		        $count_pages    = wp_count_posts( 'page' );
-		        $comments_count = wp_count_comments();
-		        if ( function_exists( 'wp_get_theme' ) ) {
-		            $theme_data = wp_get_theme();
-		            $theme_name = urlencode( $theme_data->Name );
-		        } else {
-		            $theme_data = get_theme_data( get_stylesheet_directory() . '/style.css' );
-		            $theme_name = $theme_data['Name'];
-		        }
-		        $plugin_name = '&';
-		        foreach ( get_plugins() as $plugin_info ) {
-		            $plugin_name .= $plugin_info['Name'] . '&';
-		        }
-		        // CHANGE __FILE__ PATH IF LOCATED OUTSIDE MAIN PLUGIN FILE
-		        $plugin_data         = get_plugin_data( __FILE__ );
-		        $posts_with_comments = $wpdb->get_var( "SELECT COUNT(*) FROM $wpdb->posts WHERE post_type='post' AND comment_count > 0" );
-		        $data                = array(
-		            'url'             => base64_encode(site_url()),
-		            'posts'           => $count_posts->publish,
-		            'pages'           => $count_pages->publish,
-		            'comments'        => $comments_count->total_comments,
-		            'approved'        => $comments_count->approved,
-		            'spam'            => $comments_count->spam,
-		            'pingbacks'       => $wpdb->get_var( "SELECT COUNT(comment_ID) FROM $wpdb->comments WHERE comment_type = 'pingback'" ),
-		            'post_conversion' => ( $count_posts->publish > 0 && $posts_with_comments > 0 ) ? number_format( ( $posts_with_comments / $count_posts->publish ) * 100, 0, '.', '' ) : 0,
-		            'theme_version'   => $plugin_data['Version'],
-		            'theme_name'      => $theme_name,
-		            'site_name'       => str_replace( ' ', '', get_bloginfo( 'name' ) ),
-		            'plugins'         => count( get_option( 'active_plugins' ) ),
-		            'plugin'          => urlencode( $plugin_name ),
-		            'wpversion'       => get_bloginfo( 'version' ),
-		        );
-		        foreach ( $data as $k => $v ) {
-		            $url .= $k . '/' . $v . '/';
-		        }
-		        wp_remote_get( $url );
-		        set_transient( 'presstrends_cache_data', $data, 60 * 60 * 24 );
-		    }
-		    */
+			$transient_key = 'sendpress_tracking_cache';
+			$data          = get_transient( $transient_key );
+
+			// bail if transient is set and valid
+			if ( $data !== false ) {
+				// return;
+			}
+
+			// Make sure to only send tracking data once a week
+			set_transient( $transient_key, 1, WEEK_IN_SECONDS );
+
+			// Start of Metrics
+			global $blog_id, $wpdb;
+
+			$hash = get_option( 'SendPress_Tracking_Hash', false );
+
+			if ( ! $hash || empty( $hash ) ) {
+				// create and store hash
+				$hash = md5( site_url() );
+				update_option( 'SendPress_Tracking_Hash', $hash );
+			}
+
+			$pts        = array();
+			$post_types = get_post_types( array( 'public' => true ) );
+			if ( is_array( $post_types ) && $post_types !== array() ) {
+				foreach ( $post_types as $post_type ) {
+					$count             = wp_count_posts( $post_type );
+					$pts[ $post_type ] = $count->publish;
+				}
+			}
+			unset( $post_types );
+
+			$comments_count = wp_count_comments();
+
+			$theme_data     = wp_get_theme();
+			$theme          = array(
+				'name'       => $theme_data->display( 'Name', false, false ),
+				'theme_uri'  => $theme_data->display( 'ThemeURI', false, false ),
+				'version'    => $theme_data->display( 'Version', false, false ),
+				'author'     => $theme_data->display( 'Author', false, false ),
+				'author_uri' => $theme_data->display( 'AuthorURI', false, false ),
+			);
+			$theme_template = $theme_data->get_template();
+			if ( $theme_template !== '' && $theme_data->parent() ) {
+				$theme['template'] = array(
+					'version'    => $theme_data->parent()->display( 'Version', false, false ),
+					'name'       => $theme_data->parent()->display( 'Name', false, false ),
+					'theme_uri'  => $theme_data->parent()->display( 'ThemeURI', false, false ),
+					'author'     => $theme_data->parent()->display( 'Author', false, false ),
+					'author_uri' => $theme_data->parent()->display( 'AuthorURI', false, false ),
+				);
+			} else {
+				$theme['template'] = '';
+			}
+			unset( $theme_template );
+
+
+			$plugins       = array();
+			$active_plugin = get_option( 'active_plugins' );
+			foreach ( $active_plugin as $plugin_path ) {
+				if ( ! function_exists( 'get_plugin_data' ) ) {
+					require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+				}
+
+				$plugin_info = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin_path );
+
+				$slug             = str_replace( '/' . basename( $plugin_path ), '', $plugin_path );
+				$plugins[ $slug ] = array(
+					'version'    => $plugin_info['Version'],
+					'name'       => $plugin_info['Name'],
+					'plugin_uri' => $plugin_info['PluginURI'],
+					'author'     => $plugin_info['AuthorName'],
+					'author_uri' => $plugin_info['AuthorURI'],
+				);
+			}
+			unset( $active_plugins, $plugin_path );
+
+
+			$data = array(
+				'site'      => array(
+					'hash'      => $hash,
+					'version'   => get_bloginfo( 'version' ),
+					'multisite' => is_multisite(),
+					'users'     => $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->users INNER JOIN $wpdb->usermeta ON ({$wpdb->users}.ID = {$wpdb->usermeta}.user_id) WHERE 1 = 1 AND ( {$wpdb->usermeta}.meta_key = %s )", 'wp_' . $blog_id . '_capabilities' ) ),
+					'lang'      => get_locale(),
+				),
+				'pts'       => $pts,
+				'options'   => apply_filters( 'sp_tracking_filters', array() ),
+				'theme'     => $theme,
+				'plugins'   => $plugins,
+			);
+
+			$args = array(
+				'body'      => $data,
+				'blocking'  => false,
+				'sslverify' => false,
+			);
+
+			wp_remote_post( 'http://skynet.dev/api/v1/tracker', $args );
 		}
 
 		// Setup Events
@@ -190,3 +239,78 @@ static function be_password_pointer_print_admin_bar() {
 
 
 }
+
+
+
+
+
+function spnl_tracking_additions( $options ) {
+	if ( function_exists( 'curl_version' ) ) {
+		$curl = curl_version();
+	} else {
+		$curl = null;
+	}
+
+
+	//$opt = WPSEO_Options::get_all();
+
+	$options['sp'] = array(
+		/*
+		'xml_sitemaps'                => ( $opt['enablexmlsitemap'] === true ) ? 1 : 0,
+		'force_rewrite'               => ( $opt['forcerewritetitle'] === true ) ? 1 : 0,
+		'opengraph'                   => ( $opt['opengraph'] === true ) ? 1 : 0,
+		'twitter'                     => ( $opt['twitter'] === true ) ? 1 : 0,
+		'strip_category_base'         => ( $opt['stripcategorybase'] === true ) ? 1 : 0,
+		'on_front'                    => get_option( 'show_on_front' ),
+		'wmt_alexa'                   => ( ! empty( $opt['alexaverify'] ) ) ? 1 : 0,
+		'wmt_bing'                    => ( ! empty( $opt['msverify'] ) ) ? 1 : 0,
+		'wmt_google'                  => ( ! empty( $opt['googleverify'] ) ) ? 1 : 0,
+		'wmt_pinterest'               => ( ! empty( $opt['pinterestverify'] ) ) ? 1 : 0,
+		'wmt_yandex'                  => ( ! empty( $opt['yandexverify'] ) ) ? 1 : 0,
+		'permalinks_clean'            => ( $opt['cleanpermalinks'] == 1 ) ? 1 : 0,
+		*/
+		'subscribers'				  => SendPress_Data::get_active_subscribers_count(),
+		'site_db_charset'             => DB_CHARSET,
+
+		'webserver_apache'            => spnl_is_apache() ? 1 : 0,
+		'webserver_apache_version'    => function_exists( 'apache_get_version' ) ? apache_get_version() : 0,
+		'webserver_nginx'             => spnl_is_nginx() ? 1 : 0,
+
+		'webserver_server_software'   => $_SERVER['SERVER_SOFTWARE'],
+		'webserver_gateway_interface' => $_SERVER['GATEWAY_INTERFACE'],
+		'webserver_server_protocol'   => $_SERVER['SERVER_PROTOCOL'],
+
+		'php_version'                 => phpversion(),
+
+		'php_max_execution_time'      => ini_get( 'max_execution_time' ),
+		'php_memory_limit'            => ini_get( 'memory_limit' ),
+		'php_open_basedir'            => ini_get( 'open_basedir' ),
+
+		'php_bcmath_enabled'          => extension_loaded( 'bcmath' ) ? 1 : 0,
+		'php_ctype_enabled'           => extension_loaded( 'ctype' ) ? 1 : 0,
+		'php_curl_enabled'            => extension_loaded( 'curl' ) ? 1 : 0,
+		'php_curl_version_a'          => phpversion( 'curl' ),
+		'php_curl'                    => ( ! is_null( $curl ) ) ? $curl['version'] : 0,
+		'php_dom_enabled'             => extension_loaded( 'dom' ) ? 1 : 0,
+		'php_dom_version'             => phpversion( 'dom' ),
+		'php_filter_enabled'          => extension_loaded( 'filter' ) ? 1 : 0,
+		'php_mbstring_enabled'        => extension_loaded( 'mbstring' ) ? 1 : 0,
+		'php_mbstring_version'        => phpversion( 'mbstring' ),
+		'php_pcre_enabled'            => extension_loaded( 'pcre' ) ? 1 : 0,
+		'php_pcre_version'            => phpversion( 'pcre' ),
+		'php_pcre_with_utf8_a'        => @preg_match( '/^.{1}$/u', 'ñ', $UTF8_ar ),
+		'php_pcre_with_utf8_b'        => defined( 'PREG_BAD_UTF8_ERROR' ),
+		'php_spl_enabled'             => extension_loaded( 'spl' ) ? 1 : 0,
+	);
+
+	return $options;
+}
+
+
+add_filter( 'sp_tracking_filters', 'spnl_tracking_additions' );
+
+
+
+
+
+

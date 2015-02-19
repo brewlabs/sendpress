@@ -64,7 +64,7 @@ switch ( $this->_current_action ) {
 
             case 'delete-report':
 
-                SendPress_Posts::delete($_GET['reportID']);
+                SendPress_Posts::report_delete($_GET['reportID']);
                 wp_redirect( '?page='.$_GET['page'] );
             break;
             case 'delete-reports-bulk':
@@ -72,7 +72,7 @@ switch ( $this->_current_action ) {
                 $email_delete = $_GET['report'];
 
                 foreach ($email_delete as $emailID) {
-                    SendPress_Posts::delete($emailID);
+                    SendPress_Posts::report_delete($emailID);
                 }
                 wp_redirect( '?page='.$_GET['page'] );
             break;

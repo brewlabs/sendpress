@@ -14,6 +14,11 @@ class SendPress_Posts{
 		wp_delete_post($post_id);
 	}
 
+
+	static function report_delete($post_id){
+		update_post_meta($post_id,'_report_type', 'deleted' );
+	}
+
 	/**
 	 * Create a Duplicate post
 	 */

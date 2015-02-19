@@ -109,6 +109,33 @@ function sp_glob($dir){
 
 
 
+/**
+ * Check if the web server is running on Apache
+ * @return bool
+ */
+function spnl_is_apache() {
+	if ( isset( $_SERVER['SERVER_SOFTWARE'] ) && stristr( $_SERVER['SERVER_SOFTWARE'], 'apache' ) !== false ) {
+		return true;
+	}
+	return false;
+}
+
+/**
+ * Check if the web service is running on Nginx
+ *
+ * @return bool
+ */
+function spnl_is_nginx() {
+	if ( isset( $_SERVER['SERVER_SOFTWARE'] ) && stristr( $_SERVER['SERVER_SOFTWARE'], 'nginx' ) !== false ) {
+		return true;
+	}
+	return false;
+}
+
+
+
+
+
 if( !defined('MINUTE_IN_SECONDS') ){
 	//we aren't in WordPress 3.5, so lets add the constants they added so we can be cool too
 	define( 'MINUTE_IN_SECONDS', 60 );

@@ -145,7 +145,7 @@ class SendPress_Template {
 		}
 		$saved = $post;
 		if(!isset($post)){
-			echo __('Sorry we could not find your email.','sendpress');
+			//echo __('Sorry we could not find your email.','sendpress');
 			return;
 		}
 		$selected_template = $this->get_template( $post_id );
@@ -309,7 +309,7 @@ class SendPress_Template {
 			}
 
 		} else {
-			echo __('Sorry we could not find your email template.','sendpress');
+			//echo __('Sorry we could not find your email template.','sendpress');
 			return;	
 		}
 	}
@@ -326,7 +326,7 @@ class SendPress_Template {
 
 
 		if(!isset($post)){
-			echo __('Sorry we could not find your email.','sendpress');
+			//echo __('Sorry we could not find your email.','sendpress');
 			return;
 		}
 		//$selected_template = $this->get_template( $post_id );

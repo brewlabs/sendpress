@@ -93,8 +93,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	static function get_single_email_from_queue( $override = false ){
 		global $wpdb;
-		$date = date_i18n('Y-m-d H:i:s');
-
+		$date = date_i18n('Y-m-d H:i:s', current_time( 'timestamp' ) );
 		$spdb_count = SendPress_Data::emails_in_queue();
 		$spdb_offset = '';
 		if( $override == false ){
@@ -146,7 +145,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$table = self::queue_table();
 		if($id == false){
 			$query = "SELECT COUNT(*) FROM $table where success = 0";
-			 $query.=" AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s')."') ";
+			 $query.=" AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s', current_time( 'timestamp' ) )."') ";
        
 	        if(isset($_GET["listid"]) &&  $_GET["listid"]> 0 ){
 	            $query .= ' AND listID = '. $_GET["listid"];

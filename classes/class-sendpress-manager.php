@@ -321,7 +321,7 @@ class SendPress_Manager {
 	   	$to = $email->to_email;
 	   	$text = $message->text();
 	   	if(empty($text) || $text == '' || empty($body) || $body== '' || $body == " "){
-	   		SPNL()->log->add(  'Email Skiped' , 'Email to '.$to.' did not have any Text.', 0 , 'sending' );
+	   		SPNL()->log->add(  'Email Skiped' , 'Email id #'.$email->emailID . ' to '.$to.' did not have any content. Was the email or template deleted?', 0 , 'sending' );
 	   		return false;
 	   	}
 	   	
@@ -347,7 +347,7 @@ class SendPress_Manager {
 	   	$to = $email->to_email;
 	   	$text = $message->text();
 	   	if(empty($text) || $text == '' || empty($body) || $body == '' || $body == " "){
-	   		SPNL()->log->add(  'Email Skiped' , 'Email to '.$to.' did not have any Text.', 0 , 'sending' );
+	   		SPNL()->log->add(  'Email Skiped' , 'Email id #'.$email->emailID . ' to '.$to.' did not have any content. Was the email or template deleted?', 0 , 'sending' );
 	   		return false;
 	   	}
 

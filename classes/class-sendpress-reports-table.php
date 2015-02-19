@@ -57,7 +57,7 @@ class SendPress_Reports_Table extends WP_List_Table {
      */
     function single_row( $item ) {
         static $row_class = '';
-$canceled = get_post_meta($item->ID, '_canceled', true);
+        $canceled = get_post_meta($item->ID, '_canceled', true);
                     
         $info = get_post_meta($item->ID, '_send_time', true);
         $cl ='';
