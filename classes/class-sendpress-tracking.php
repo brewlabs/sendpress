@@ -115,7 +115,7 @@ if ( !class_exists( 'SendPress_Tracking' ) ) {
 				'sslverify' => false,
 			);
 
-			wp_remote_post( 'http://skynet.dev/api/v1/tracker', $args );
+			wp_remote_post( 'http://skynet.dev/api/v1/track/add', $args );
 		}
 
 		// Setup Events
