@@ -94,13 +94,17 @@ if ( !class_exists( 'SendPress_Tracking' ) ) {
 			}
 			unset( $active_plugins, $plugin_path );
 
+			$lists = SendPress_Data::get_lists();
 
 			$data = array(
 				'site'      => array(
 					'hash'      => $hash,
-					'version'   => get_bloginfo( 'version' ),
+					'wp_version'   => get_bloginfo( 'version' ),
+					'sp'   => SENDPRESS_VERSION,
+					'pro'   => defined('SENDPRESS_PRO_VERSION') ? SENDPRESS_PRO_VERSION : 0 ,
+					'lists' 	=> count($lists->posts),
+					'subscribers' => SendPress_Data::get_total_subscribers(),
 					'multisite' => is_multisite(),
-					'users'     => $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->users INNER JOIN $wpdb->usermeta ON ({$wpdb->users}.ID = {$wpdb->usermeta}.user_id) WHERE 1 = 1 AND ( {$wpdb->usermeta}.meta_key = %s )", 'wp_' . $blog_id . '_capabilities' ) ),
 					'lang'      => get_locale(),
 				),
 				'pts'       => $pts,
@@ -115,7 +119,7 @@ if ( !class_exists( 'SendPress_Tracking' ) ) {
 				'sslverify' => false,
 			);
 
-			wp_remote_post( 'http://skynet.dev/api/v1/track/add', $args );
+			wp_remote_post( 'http://api.sendpress.com/api/v1/track/add', $args );
 		}
 
 		// Setup Events

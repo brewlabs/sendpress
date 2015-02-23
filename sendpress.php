@@ -506,10 +506,8 @@ Author URI: https://sendpress.com/
 		    return $schedules;
 		}
 
-		// Start of Presstrends Magic
-		function presstrends_plugin() {
-			SendPress_Tracking::data();
-		}
+			
+		
 
 		function template_include( $template ) {
 		  	global $post;
@@ -782,8 +780,6 @@ Author URI: https://sendpress.com/
 
 			$tiny = new SendPress_TinyMCE();
 	   		$this->_current_view = isset( $_GET['view'] ) ? $_GET['view'] : '' ;
-
-
 
 
 
