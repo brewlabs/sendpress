@@ -99,6 +99,13 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
+= 1.1.2.22 - 2015.2.22 =
+* Fix: Autocron running speed
+* Fix: Send now not updating
+* Update: Soft delete Reports
+* Update: added new stat tracker
+
+
 = 1.1.2.11 - 2015.2.11 =
 * Fix: Sending popup not always responding
 * Fix: AutoCron stoping for some sites
@@ -601,6 +608,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.1.2.22 =
+Autocron update and Report soft delete
 
 = 1.1.2.11 =
 Bug fixes for sending and templates
