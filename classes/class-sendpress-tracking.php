@@ -22,7 +22,7 @@ if ( !class_exists( 'SendPress_Tracking' ) ) {
 
 			// bail if transient is set and valid
 			if ( $data !== false ) {
-				// return;
+				return;
 			}
 
 			// Make sure to only send tracking data once a week

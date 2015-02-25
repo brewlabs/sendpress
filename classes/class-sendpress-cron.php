@@ -158,9 +158,20 @@ class SendPress_Cron {
 
         $url = SendPress_Cron::remove_http( site_url() );
         $domain = base64_encode( $url );
+        $transient_key = 'sendpress_autocron_cache';
+            $data          = get_transient( $transient_key );
+
+            // bail if transient is set and valid
+            if ( $data !== false ) {
+                return $data;
+            }
+
+
         //SendPress_Error::log( 'http://api.sendpress.com/set/'. $domain .'/'. SENDPRESS_CRON);
         $body = wp_remote_retrieve_body( wp_remote_get( 'http://api.sendpress.com/get/'. $domain  ) );
-       return $body;
+        // Make sure to only send tracking data once a week
+        set_transient( $transient_key, $body, 60 * 5 );
+        return $body;
 
     }
 

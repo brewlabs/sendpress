@@ -79,9 +79,14 @@ echo "</pre>";
     <h2 class="nomargin nopadding"><?php _e('Autocron last check', 'sendpress');?></h2> <p class="fwb">  <?php 
     $autocron = SendPress_Option::get('autocron','no');
     //print_r(SendPress_Data::emails_stuck_in_queue());
-$api_info = json_decode( SendPress_Cron::get_info() );
+
     if($autocron == 'yes') {
-      echo $api_info->lastcheck . " UTC";
+      $api_info = json_decode( SendPress_Cron::get_info() );
+      if(isset($api_info->lastcheck)){
+        echo $api_info->lastcheck . " UTC";
+      } else {
+        echo "No Data";
+      }
     } else {
       echo "Not Enabled";
     }

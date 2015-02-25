@@ -152,7 +152,7 @@ echo $time;//11:09
 
 echo $time;//11:09
 	*/
-     $api_info = json_decode( SendPress_Cron::get_info() );
+     
 	?>
 
 <br>
@@ -185,7 +185,10 @@ echo $time;//11:09
 		//print_r(SendPress_Data::emails_stuck_in_queue());
 
 	  	if($autocron == 'yes') {
-			echo "<b>Autocron last check:&nbsp;" . $api_info->lastcheck ." UTC</b><br>";
+	  		$api_info = json_decode( SendPress_Cron::get_info() );
+	  		if(isset( $api_info->lastcheck)){
+				echo "<b>Autocron last check:&nbsp;" . $api_info->lastcheck ." UTC</b><br>";
+			}
 		}
 		?>
 
