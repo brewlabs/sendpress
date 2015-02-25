@@ -273,7 +273,6 @@ function spnl_tracking_additions( $options ) {
 		'wmt_yandex'                  => ( ! empty( $opt['yandexverify'] ) ) ? 1 : 0,
 		'permalinks_clean'            => ( $opt['cleanpermalinks'] == 1 ) ? 1 : 0,
 		*/
-		'subscribers'				  => SendPress_Data::get_active_subscribers_count(),
 		'site_db_charset'             => DB_CHARSET,
 
 		'webserver_apache'            => spnl_is_apache() ? 1 : 0,
