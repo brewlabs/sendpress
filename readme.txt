@@ -99,9 +99,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 == Changelog ==
 
+Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
 = 1.1.2.25 - 2015.2.25 =
 * Fix: Autocron check reduce increase 5 minutes
 * Fix: Overview page not loading on some sites
+* WP.org SVN cleanup
 
 = 1.1.2.24 - 2015.2.24 =
 * Fix: SQL error on some installs
