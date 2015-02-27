@@ -351,6 +351,20 @@ Author URI: https://sendpress.com/
 
 			add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
 
+			//debug
+			$link_data = array(
+				"id"=>23,
+				"report"=>0,
+				"urlID"=> '0',
+				"view"=>"manage",
+				"listID"=>"0",
+				"action"=>""
+			);
+			$code = SendPress_Data::encrypt( $link_data );
+			$link =  SendPress_Manager::public_url($code);
+
+			print_r($link);
+
 		}
 
 		function add_registration_fields() {
@@ -599,6 +613,7 @@ Author URI: https://sendpress.com/
 			$public_query_vars[] = 'spreport';
 			$public_query_vars[] = 'spurl';
 			$public_query_vars[] = 'spemail';
+			$public_query_vars[] = 'spms';
 			return $public_query_vars;
 		}
 

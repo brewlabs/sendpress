@@ -42,7 +42,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					self::signup($options);
 					break;
 				case 'manage_subscriptions':
-					self::manage_sub_prerender();
+					//self::manage_sub_prerender();
 					self::manage_subscription($options);
 					break;
 			}
@@ -51,22 +51,17 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 	}
 
 	private static function manage_subscription($options){
+		$_nonce_value = 'sendpress-is-awesome';
 		$info = self::data();
+
+		// print_r($info);
 
 		if(!isset($info->id)){
 			$info = NEW stdClass();
-			$info->id = 0;
+			$info->id = '';
 		}
 
-		if(isset($_GET['email'])){
-			$data = SendPress_Data::get_subscriber_by_email($_GET['email']);
-			if($data != false){
-				$info->id = $data;
-			}
-		}
-
-		$s = $_GET['sid'];
-		$s = (int)base64_decode($s);
+		$s = $info->id;
 
 		extract($options);
 
@@ -79,7 +74,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 				$sub->join_date = date("F j, Y, g:i a");
 			}
 
-			print_r($sub);
+			// print_r($sub);
 			?>
 			<link rel="stylesheet" type="text/css" href="http://dev.wp/sendpress/wp-content/plugins/sendpress/css/manage-front-end.css">
 			<h4>Subscriber Info</h4>
@@ -98,7 +93,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 				$info->action = "update";
 				$key = SendPress_Data::encrypt( $info );
 			?>
-			<form action="?sendpress=<?php echo $key; ?>" method="post">
+			<form action="?spms=<?php echo $key; ?>" method="post">
 			<?php wp_nonce_field( SendPress_Data::nonce() ); ?>
 			<input type="hidden" name="subscriberid" id="subscriberid" value="<?php echo $info->id; ?>" />
 
@@ -160,7 +155,9 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 			</table>
 			<br>
 			<?php do_action( 'sendpress_manage_notifications', $info );?>
+
 			<input type="submit" class="btn btn-primary" value="<?php _e('Save My Settings','sendpress'); ?>"/>
+			<?php wp_nonce_field($_nonce_value); ?>
 			</form>
 
 
@@ -309,8 +306,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		$_nonce_value = 'sendpress-is-awesome';
 		$c = ' hide ';
 
-		if ( !empty($_POST) && check_admin_referer($this->_nonce_value) ){
-			
+		if ( !empty($_POST) && check_admin_referer($_nonce_value) ){
 			$args = array(
 			  'meta_key'=>'public',
 			  'meta_value'=> 1,
@@ -328,11 +324,11 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					$list_id = $my_query->post->ID;
 
 					if(isset($_POST['subscribe_'.$list_id ])){
-						$list_status = SendPress_Data::get_subscriber_list_status( $list_id , $info->id );
+						$list_status = SendPress_Data::get_subscriber_list_status( $list_id , $_POST['subscriberid'] );
 						if(isset($list_status->status)){
-							SendPress_Data::update_subscriber_status( $list_id , $info->id , $_POST[ 'subscribe_'.$list_id ] );
+							SendPress_Data::update_subscriber_status( $list_id , $_POST['subscriberid'] , $_POST[ 'subscribe_'.$list_id ] );
 						} elseif( $_POST['subscribe_'. $list_id ] == '2' ){
-							SendPress_Data::update_subscriber_status( $list_id , $info->id, $_POST[ 'subscribe_'.$list_id ] );
+							SendPress_Data::update_subscriber_status( $list_id , $_POST['subscriberid'], $_POST[ 'subscribe_'.$list_id ] );
 						}
 					} 
 					$c = '';
@@ -372,8 +368,8 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 	private static function data(){
 		$data = '';
 
-		if( (get_query_var( 'sendpress' )) || isset($_POST['sendpress']) ){
-		  	$action = isset($_POST['sendpress']) ? $_POST['sendpress'] : get_query_var( 'sendpress' );
+		if( (get_query_var( 'spms' )) ){
+		  	$action = get_query_var( 'spms' );
 			//Look for encrypted data
 	  		$data = SendPress_Data::decrypt( urldecode($action) );
 
