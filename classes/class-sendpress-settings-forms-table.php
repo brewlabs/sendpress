@@ -72,61 +72,27 @@ class SendPress_Settings_Forms_Table extends WP_List_Table {
 	 * @return string Text or HTML to be placed inside the column <td>
 	 **************************************************************************/
 	function column_default($item, $column_name){
+		$settings = SendPress_Data::get_post_meta_object($item->ID);
 		
 		switch($column_name){
 
-			 case 'name':
-				
+			case 'name':
 				return $item->post_title;
+				break;
+			case 'type':
+				return ucwords(str_replace('_',' ',$settings['_form_type']));
+				break;
+			case 'shortcode':
+				return '[sp-form formid='.$item->ID.']';
 				break;
 			case 'actions':
 				//$type = get_post_meta($item->ID, "_template_type", true);
 				$a = '<div class="inline-buttons" style="text-align:right;">';
-				/*
-				if($type == 'clone'){
-					$a .= '<a class="btn btn-danger" href="'.SendPress_Admin::link('Emails_Tempdelete',array('templateID'=>$item->ID , 'action'=>'delete' )) .'">&times;</a> ';
-				}
-				*/
 
-				$a .= '<a class="btn btn-default" href="'.SendPress_Admin::link('Settings_Widgets',array('id'=>$item->ID, 'create'=>1)) .'">'.__('Clone','sendpress').'</a> <a class="btn btn-primary" href="'.SendPress_Admin::link('Settings_Widgets',array('id'=>$item->ID)) .'">'. __('Edit','sendpress') .'</a>';
+				$a .= '<a class="btn btn-default" href="'.SendPress_Admin::link('Settings_Widgets',array('id'=>$item->ID, 'create'=>1)) .'">'.__('Clone','sendpress').'</a> <a class="btn btn-primary" href="'.SendPress_Admin::link('Settings_Widgets',array('id'=>$item->ID)) .'">'. __('Edit','sendpress') .'</a>'.'</a> <a class="btn btn-danger" href="'.SendPress_Admin::link('Settings_Widgets',array('id'=>$item->ID, 'delete'=>1)) .'">'. __('Delete','sendpress') .'</a>';
 				$a .= '</div>';
 				return $a;
-			break;
-		   /* case 'firstname':
-			case 'lastname':
-				return $item->$column_name;
-			case 'status':
-			   return $item->$column_name;
-		   
-		   */
-		  /*
-			   case 'name':
-				
-				return $item->name;
-				case 'lastsend':
-				$date = get_post_meta($item->ID, "send_date", true);
-				if(!empty( $date ) ){
-					return date_i18n(get_option('date_format') ,strtotime($date) );
-				}
-				return '';
-			case 'created':
-				 return date_i18n(get_option('date_format') , strtotime( $item->post_date ) );
-			
-			
-				$a = '<div class="inline-buttons" style="text-align:right;">';
-				/*
-				$a .= '<a class="btn btn-default view-btn" title="'.  get_post_meta($item->ID, "_sendpress_subject", true) . '" href="'. get_permalink( $item->ID  ). '"><span class="glyphicon  glyphicon-eye-open"></span> View</a> ';
-				
-				$a .= '<a class="btn btn-primary" href="?page='.$_REQUEST['page'].'&view=tempedit&templateID='. $item->ID .'"><span class="glyphicon glyphicon-edit"></span> Edit</a> ';
-				/*
-				$a = apply_filters('sendpress_email_table', $a, $item);
-				if( SendPress_Admin::access('Emails_Send') ) { 
-				$a .= '<a class="btn  btn-success " href="'. SendPress_Admin::link('Emails_Send').'&emailID='. $item->ID .'"><span class="glyphicon glyphicon-send"></span> Send</a>';
-				}
-				
-				$a .= '</div>';
-				return $a;
-				*/
+				break;
 			default:
 				return print_r($item,true); //Show the whole array for troubleshooting purposes
 		}
@@ -197,7 +163,8 @@ class SendPress_Settings_Forms_Table extends WP_List_Table {
 	   
 		$columns = array(
 			'name' => __('Name','sendpress'), //Render a checkbox instead of text
-			
+			'type'=>__('Type','sendpress'),
+			'shortcode'=>__('Shortcode','sendpress'),
 			//'lastsend' => __('Last Send','sendpress'),
 			'actions' => ''
 			//'count_subscribers' => 'Subscribers'

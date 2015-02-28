@@ -13,6 +13,7 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 	}
 
 	function prerender(){
+		/*
 		$info = $this->data();
 		if ( isset($info->action) && $info->action == 'unsubscribe' ) {
 		//$sid, $rid, $lid
@@ -34,6 +35,7 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 
 		}	
 		add_action('sendpress_public_view_scripts', array(&$this,'scripts'));		
+		*/
 	}
 
 	function scripts(){
@@ -69,6 +71,10 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 		
 
 	function html() {
+
+		echo do_shortcode('[sp-form formid=manage]');
+
+		/*
 		$info = $this->data();
 
 
@@ -84,16 +90,16 @@ class SendPress_Public_View_Manage extends SendPress_Public_View {
 		}
 
 
-		/*
-		$link = array(
-				"id"=>$email->subscriberID,
-				"report"=> $email->emailID,
-				"urlID"=> $urlID,
-				"view"=>"manage",
-				"listID"=>$email->listID,
-				"action"=>"unsubscribe"
-			);
-		*/
+		
+		// $link = array(
+		// 		"id"=>$email->subscriberID,
+		// 		"report"=> $email->emailID,
+		// 		"urlID"=> $urlID,
+		// 		"view"=>"manage",
+		// 		"listID"=>$email->listID,
+		// 		"action"=>"unsubscribe"
+		// 	);
+		
 		?>
 		<?php
 
@@ -171,7 +177,7 @@ if ( !empty($_POST) && check_admin_referer($this->_nonce_value) ){
 			}
 			
 		}
-		*/
+		
 		
 	  endwhile;
 	}
@@ -270,7 +276,7 @@ foreach($lists as $list){
 
 	<?php
 
-
+	*/
 		
 	}
 

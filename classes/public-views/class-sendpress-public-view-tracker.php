@@ -34,14 +34,17 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 		}
 
 		$dk = SendPress_Data::devicetypes( $this->_device_type );
-		
+
 		$url = $info->url;
 		switch($info->url){
 			case '{sp-browser-url}':
-				$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Browser_Link::external( $info->url, $info->report, $info->report , $info->id, false ), $info->report, $info->report, $info->id, false );
+				$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Browser_Link::external( $info->url, $info->report , $info->id, false ), $info->report, $info->report, $info->id, false );
 			break;
 			case '{sp-unsubscribe-url}':
-				$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Unsubscribe::external( $info->url, $info->report, $info->report , $info->id, false ), $info->report, $info->report, $info->id, false );
+				$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Unsubscribe::external( $info->url, $info->report, $info->id, false ), $info->report, $info->report, $info->id, false );
+			break;
+			case '{sp-manage-subscription-url}':
+				$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Manage_Subscriptions::external( $info->url, $info->report , $info->id, false ), $info->report, $info->report, $info->id, false );
 			break;
 
 		}

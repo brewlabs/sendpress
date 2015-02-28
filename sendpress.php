@@ -190,10 +190,6 @@ Author URI: https://sendpress.com/
 		  		return;
 		  	}
 
-
-
-
-
 		  	if( strpos($className, 'Module') != false ){
 		  		if( defined('SENDPRESS_PRO_PATH') ) {
 		    		$pro_file = SENDPRESS_PRO_PATH."classes/modules/class-".$cls.".php";
@@ -220,10 +216,7 @@ Author URI: https://sendpress.com/
 			}
 		  	return;
 
-
 	  	}
-
-
 
 		public static function get_instance() {
 			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof SendPress ) ) {
@@ -351,20 +344,6 @@ Author URI: https://sendpress.com/
 
 			add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
 
-			//debug
-			$link_data = array(
-				"id"=>23,
-				"report"=>0,
-				"urlID"=> '0',
-				"view"=>"manage",
-				"listID"=>"0",
-				"action"=>""
-			);
-			$code = SendPress_Data::encrypt( $link_data );
-			$link =  SendPress_Manager::public_url($code);
-
-			print_r($link);
-
 		}
 
 		function add_registration_fields() {
@@ -419,22 +398,21 @@ Author URI: https://sendpress.com/
 			load_plugin_textdomain( 'sendpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 		}
 
-			/**
-	 * Register our widget.
-	 * 'SendPress_Signup_Widget' is the widget class used below.
-	 *
-	 * @since 1.0
-	 */
-			function load_widgets() {
-				register_widget( 'SendPress_Widget_Signup' );
-				register_widget( 'SendPress_Widget_Forms' );
-			}
+		/**
+		 * Register our widget.
+		 * 'SendPress_Signup_Widget' is the widget class used below.
+		 *
+		 * @since 1.0
+		 */
+		function load_widgets() {
+			register_widget( 'SendPress_Widget_Signup' );
+			register_widget( 'SendPress_Widget_Forms' );
+		}
 
 
 		function admin_notice(){
 			//This is the WordPress one shows above menu area.
 			//echo 'wtf';
-
 		}
 		function sendpress_notices(){
 			if( in_array('settings', $this->_messages) ){
@@ -519,9 +497,6 @@ Author URI: https://sendpress.com/
 
 		    return $schedules;
 		}
-
-			
-		
 
 		function template_include( $template ) {
 		  	global $post;
@@ -1203,7 +1178,6 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 		//return $result;
 	}
 
-
 	function maybe_upgrade() {
 		
 		//SendPress::update_templates();
@@ -1232,7 +1206,7 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 
 		SendPress_Template_Manager::update_template_content();
 		
-		SendPress_Data::create_default_form();
+		//SendPress_Data::create_default_form();
 
 		SendPress_Option::check_for_keys();
 
@@ -1381,6 +1355,11 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 		if( SendPress_Option::get('confirm-page') == false ){
 			$update_options_sp['confirm-page'] = 'default';
 			//SendPress_Option::set('confirm-page','default');
+		}
+
+		if( SendPress_Option::get('manage-page') == false ){
+			$update_options_sp['manage-page'] = 'default';
+			//SendPress_Option::set('manage-page','default');
 		}
 
 		if( SendPress_Option::get('cron_send_count') == false ){

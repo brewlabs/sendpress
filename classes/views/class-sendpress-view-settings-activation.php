@@ -17,6 +17,8 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		SendPress_Option::set('optin_subject', $_POST['subject']);
 		SendPress_Option::set('confirm-page', $_POST['confirm-page']);
 		SendPress_Option::set('confirm-page-id',$_POST['confirm-page-id']);
+		SendPress_Option::set('manage-page', $_POST['manage-page']);
+		SendPress_Option::set('manage-page-id',$_POST['manage-page-id']);
 		SendPress_Option::set('try-theme', $_POST['try-theme']);
 
 
@@ -67,6 +69,27 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 			<div class="sp-33 sp-first"><b><?php _e('Manage Page','sendpress'); ?></b><br>
 				<div class='well'>
 					<?php _e('This is the page subscribers are directed to to manage their subscriptions to your lists','sendpress'); ?>.
+					<br><br>
+					<?php $ctype = SendPress_Option::get('manage-page'); ?>
+					<input type="radio" name="manage-page" value="default" <?php if($ctype=='default'){echo "checked='checked'"; } ?> /> <?php _e('Use Default SendPress Page','sendpress'); ?><br><br>
+					<input type="radio" name="manage-page" value="custom"  <?php if($ctype=='custom'){echo "checked='checked'";} ?>/> <?php _e('Redirect to','sendpress'); ?> 
+					<select name="manage-page-id"> 
+					 	<option value="">
+					 	<?php $cpageid = SendPress_Option::get('manage-page-id');?>
+						<?php echo esc_attr( __( 'Select page' ) ); ?></option> 
+						 <?php 
+						  $pages = get_pages(); 
+						  foreach ( $pages as $page ) {
+						  	$s ='';
+						  	if($cpageid == $page->ID){ $s =  "selected"; }
+						  	$option = '<option value="' . $page->ID .'" ' .$s. '>';
+							$option .= $page->post_title;
+							$option .= '</option>';
+							echo $option;
+						  }
+						 ?>
+						</select>
+
 					<br><br>
 					<a class="btn btn-default" href="<?php echo site_url(); ?>?sendpress=manage"><?php _e('View Page','sendpress'); ?></a>
 				</div>

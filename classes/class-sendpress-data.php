@@ -1939,44 +1939,52 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	/********************* Widget Settings functionS **************************/
 
-	static function signup_defaults(){
+	static function signup_defaults($cleansp){
+		$prefix = '_sp';
+		if($cleansp){
+			$prefix = '';
+		}
 		return array(
-			"_sp_setting_type" => "form",
-			"_sp_form_type" => "signup_widget",
-			"_sp_form_description" => "",
-			"_sp_collect_firstname" => false,
-			"_sp_collect_lastname" => false,
-			"_sp_display_labels_inside_fields" => 0,
-			"_sp_firstname_label" => "First Name",
-			"_sp_lastname_label" => "Last Name",
-			"_sp_email_label" => "E-Mail",
-			"_sp_button_label" => "Submit",
-			"_sp_list_label" => "List Selection",
-			"_sp_lists_checked" => "Select Lists by default",
-			"_sp_thankyou_message" => "Check your inbox now to confirm your subscription.",
-			"_sp_thankyou_page" => ""
+			$prefix."_setting_type" => "form",
+			$prefix."_form_type" => "signup_widget",
+			$prefix."_form_description" => "",
+			$prefix."_collect_firstname" => false,
+			$prefix."_collect_lastname" => false,
+			$prefix."_display_labels_inside_fields" => 0,
+			$prefix."_firstname_label" => "First Name",
+			$prefix."_lastname_label" => "Last Name",
+			$prefix."_email_label" => "E-Mail",
+			$prefix."_button_label" => "Submit",
+			$prefix."_list_label" => "List Selection",
+			$prefix."_lists_checked" => "Select Lists by default",
+			$prefix."_thankyou_message" => "Check your inbox now to confirm your subscription.",
+			$prefix."_thankyou_page" => ""
 		);
 	}
 
-	static function manage_subscriptions_defaults(){
+	static function manage_subscriptions_defaults($cleansp){
+		$prefix = '_sp';
+		if($cleansp){
+			$prefix = '';
+		}
 		return array(
-			"_sp_setting_type" => "form",
-			"_sp_form_type" => "manage_subscriptions",
-			"_sp_form_description" => ""
+			$prefix."_setting_type" => "form",
+			$prefix."_form_type" => "manage_subscriptions",
+			$prefix."_form_description" => ""
 		);
 	}
 
-	static function get_default_settings_for_type($type = ""){
+	static function get_default_settings_for_type($type = "", $cleansp = false){
 		$defaults = array();
 		switch($type){
 			case "signup_widget":
-				$defaults = SendPress_Data::signup_defaults();
+				$defaults = SendPress_Data::signup_defaults($cleansp);
 				break;
 			case "manage_subscriptions":
-				$defaults = SendPress_Data::manage_subscriptions_defaults();
+				$defaults = SendPress_Data::manage_subscriptions_defaults($cleansp);
 				break;
 			default:
-				$defaults = SendPress_Data::signup_defaults();
+				$defaults = SendPress_Data::signup_defaults($cleansp);
 				break;
 		}
 		return $defaults;
@@ -2040,13 +2048,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 						$hasPost = true;
 						SendPress_Option::set('default-signup-widget-settings',$pchecks->ID);
 					}
-					
 					//Default Signup Settings
 				}
-				
-
 			} 
-
 		}
 
 		if(!$hasPost){
@@ -2099,6 +2103,18 @@ class SendPress_Data extends SendPress_DB_Tables {
 		}
 	}
 
+	static function delete_post_meta_object($postid, $data){
+
+		$post_meta_keys = get_post_custom_keys($postid);
+		
+		foreach($post_meta_keys as $key => $value){
+			delete_post_meta($postid, $value);
+		}
+
+		wp_delete_post( $postid, true ); 
+
+	}
+
 	static function get_forms_for_widget($type = 'signup_widget'){
 		$query = get_posts(array(
 				'post_type'=>'sp_settings',
@@ -2109,22 +2125,31 @@ class SendPress_Data extends SendPress_DB_Tables {
 							'value'   => 'form',
 							'compare' => '='
 						),
-						array(
-							'key'     => '_sp_form_type',
-							'value'   => $type,
-							'compare' => '='
-						),
+						// array(
+						// 	'key'     => '_sp_form_type',
+						// 	'value'   => $type,
+						// 	'compare' => '='
+						// ),
 
 					
 				)
 			));
 
+		$default_signup = (object)array('ID'=>'signup', 'post_title'=>'Default Signup','post_type'=>'sp_settings');
+		$default_manage = (object)array('ID'=>'manage', 'post_title'=>'Default Manage Subscriptions','post_type'=>'sp_settings');
+
+		array_unshift(
+			$query,
+			$default_signup,
+			$default_manage
+		);
+
 		return $query;
 	}
 
 	static function get_widget_form_types(){
-		return array("signup_widget" => "Signup");
-		//"manage_subscriptions" => "Manage Subscriptions"
+		return array("signup_widget" => "Signup","manage_subscriptions" => "Manage Subscriptions");
+		
 	}
 
 	/********************* END Widget Settings functionS **************************/

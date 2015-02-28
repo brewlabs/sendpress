@@ -33,10 +33,23 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		
 		extract( shortcode_atts( self::options() , $atts ) );
 
-		if($formid > 0){
-			//get options
+		if(is_numeric($formid)){
 			$options = SendPress_Data::get_post_meta_object($formid);
+		}
 
+		if( !$options ){
+			switch($formid){
+				case 'manage':
+					$options = SendPress_Data::get_default_settings_for_type('manage_subscriptions',true);
+					break;
+				case 'signup':
+					$options = SendPress_Data::get_default_settings_for_type('signup_widget',true);
+					break;
+			}
+			
+		}
+
+		if($options){
 			switch($options['_form_type']){
 				case 'signup_widget':
 					self::signup($options);
@@ -51,10 +64,25 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 	}
 
 	private static function manage_subscription($options){
+		//debug
+		
+		// $link_data = array(
+		// 	"id"=>23,
+		// 	"report"=>0,
+		// 	"urlID"=> '0',
+		// 	"view"=>"manage",
+		// 	"listID"=>"0",
+		// 	"action"=>""
+		// );
+		// $code = SendPress_Data::encrypt( $link_data );
+		// $link =  SendPress_Manager::public_url($code);
+
+		// print_r($link);
+
 		$_nonce_value = 'sendpress-is-awesome';
 		$info = self::data();
 
-		// print_r($info);
+		//print_r($info);
 
 		if(!isset($info->id)){
 			$info = NEW stdClass();
@@ -77,98 +105,102 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 			// print_r($sub);
 			?>
 			<link rel="stylesheet" type="text/css" href="http://dev.wp/sendpress/wp-content/plugins/sendpress/css/manage-front-end.css">
-			<h4>Subscriber Info</h4>
-			<div class="subscriber-info">
-				<b><?php _e('Email','sendpress');?></b>
-				<?php echo $sub->email;?><br>
-				<b><?php _e('Signup Date','sendpress');?></b>
-				<?php echo $sub->join_date;?>
-			</div>
-			<div class="alert alert-block alert-info <?php echo self::handle_unsubscribes(); ?> fade in">
- 				<h4 class="alert-heading"><?php _e('Saved','sendpress'); ?>!</h4>
- 				<?php _e('Your subscriptions have been updated. Thanks.','sendpress'); ?>
-			</div>
-			<p><?php _e('You are subscribed to the following lists:','sendpress'); ?></p>
-			<?php
-				$info->action = "update";
-				$key = SendPress_Data::encrypt( $info );
-			?>
-			<form action="?spms=<?php echo $key; ?>" method="post">
-			<?php wp_nonce_field( SendPress_Data::nonce() ); ?>
-			<input type="hidden" name="subscriberid" id="subscriberid" value="<?php echo $info->id; ?>" />
-
-			<table cellpadding="0" cellspacing="0" class="table table-condensed table-striped table-bordered">
-				<tr>
-					<th  ><?php _e('Subscribed','sendpress'); ?></th>
-					<th  ><?php _e('Unsubscribed','sendpress'); ?></th>
-					<th  ><?php _e('List','sendpress'); ?></th>
-					<th class="hidden-phone">Updated</th>
-					<th class="hidden-phone">Other Info</th>
-				</tr>
-			<?php
-
-			$lists = SendPress_Data::get_lists(
-				apply_filters( 'sendpress_modify_manage_lists', 
-					array('meta_query' => array(
-						array(
-							'key' => 'public',
-							'value' => true
-							)
-						)
-					) 
-				),
-				false
-			);
-
-			foreach($lists as $list){
-				$subscriber = SendPress_Data::get_subscriber_list_status($list->ID, $info->id);
-				?>
-			  	<tr>
-			  	<?php
-
-			  		$checked = (isset($subscriber->statusid) && $subscriber->statusid == 2) ? 'checked' : '';
-					echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="2"></td>';
-					$checked = (isset($subscriber->statusid) && $subscriber->statusid == 3) ? 'checked' : '';
-					echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="3"></td>';
-			  	?>
-			  	<td><?php echo $list->post_title; ?></td>
-			  	<td class="hidden-phone"><span id="list_<?php echo $list->ID;?>"><?php 
-			  	if(isset($subscriber->updated)) { echo $subscriber->updated; } else {
-					 	_e('Never Subscribed','sendpress');
-					 }
-					 ?></span>
-				</td>
-				<td class="hidden-phone">
-					<?php 
-						if( is_object($subscriber) ){
-							if($subscriber->statusid != 3 && $subscriber->statusid != 2){
-								echo $subscriber->status;
-							} 
-						}
+			<div class="sendpress-content">
+				<h4>Manage Subscriptions</h4>
+				<div class="subscriber-info">
+					<b><?php _e('Email','sendpress');?></b>
+					<?php echo $sub->email;?><br>
+					<b><?php _e('Signup Date','sendpress');?></b>
+					<?php echo $sub->join_date;?>
+				</div>
+				<?php if(self::handle_unsubscribes()){
 					?>
-				</td>
-			  	<tr>	
-			    <?php
-			}
+					<div class="alert alert-block alert-info">
+		 				<h4 class="alert-heading"><?php _e('Saved','sendpress'); ?>!</h4>
+		 				<?php _e('Your subscriptions have been updated. Thanks.','sendpress'); ?>
+					</div>
+					<?php
+				} ?>
+				
+				<p><?php _e('You are subscribed to the following lists:','sendpress'); ?></p>
+				<?php
+					$info->action = "update";
+					$key = SendPress_Data::encrypt( $info );
 				?>
+				<form action="?spms=<?php echo $key; ?>" method="post">
+				<?php wp_nonce_field( SendPress_Data::nonce() ); ?>
+				<input type="hidden" name="subscriberid" id="subscriberid" value="<?php echo $info->id; ?>" />
 
-			</table>
-			<br>
-			<?php do_action( 'sendpress_manage_notifications', $info );?>
+				<table cellpadding="0" cellspacing="0" class="table table-condensed table-striped table-bordered">
+					<tr>
+						<th  ><?php _e('Subscribed','sendpress'); ?></th>
+						<th  ><?php _e('Unsubscribed','sendpress'); ?></th>
+						<th  ><?php _e('List','sendpress'); ?></th>
+						<th class="hidden-phone">Updated</th>
+						<th class="hidden-phone">Other Info</th>
+					</tr>
+				<?php
 
-			<input type="submit" class="btn btn-primary" value="<?php _e('Save My Settings','sendpress'); ?>"/>
-			<?php wp_nonce_field($_nonce_value); ?>
-			</form>
+				$lists = SendPress_Data::get_lists(
+					apply_filters( 'sendpress_modify_manage_lists', 
+						array('meta_query' => array(
+							array(
+								'key' => 'public',
+								'value' => true
+								)
+							)
+						) 
+					),
+					false
+				);
 
+				foreach($lists as $list){
+					$subscriber = SendPress_Data::get_subscriber_list_status($list->ID, $info->id);
+					?>
+				  	<tr>
+				  	<?php
 
+				  		$checked = (isset($subscriber->statusid) && $subscriber->statusid == 2) ? 'checked' : '';
+						echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="2"></td>';
+						$checked = (isset($subscriber->statusid) && $subscriber->statusid == 3) ? 'checked' : '';
+						echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="3"></td>';
+				  	?>
+				  	<td><?php echo $list->post_title; ?></td>
+				  	<td class="hidden-phone"><span id="list_<?php echo $list->ID;?>"><?php 
+				  	if(isset($subscriber->updated)) { echo $subscriber->updated; } else {
+						 	_e('Never Subscribed','sendpress');
+						 }
+						 ?></span>
+					</td>
+					<td class="hidden-phone">
+						<?php 
+							if( is_object($subscriber) ){
+								if($subscriber->statusid != 3 && $subscriber->statusid != 2){
+									echo $subscriber->status;
+								} 
+							}
+						?>
+					</td>
+				  	<tr>	
+				    <?php
+				}
+					?>
+
+				</table>
 				<br>
-				<a  href="<?php echo home_url(); ?>"><i class="icon-hand-left"></i> <?php _e('Return to','sendpress'); ?> <?php echo $name; ?></a>
+				<?php do_action( 'sendpress_manage_notifications', $info );?>
+
+				<input type="submit" class="btn btn-primary" value="<?php _e('Save My Settings','sendpress'); ?>"/>
+				</form>
+			</div>
 			<?php
 		}
 
 	}
 
 	private static function signup($options){
+
+		//print_r($options);
 
 		global $load_signup_js, $sendpress_show_thanks, $sendpress_signup_error;
 		$load_signup_js = true;
@@ -185,6 +217,12 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 			)),
 			false
 		);
+
+	   	$default_list_ids = array();
+		foreach($lists as $list){
+			$default_list_ids[] = $list->ID;
+		}
+
 	   	$postnotification = '';
 	   	$pnlistid = array();
 	   	//find post notification list
@@ -198,6 +236,9 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		$label = filter_var($_display_labels_inside_fields, FILTER_VALIDATE_BOOLEAN);
 		$widget_options = SendPress_Option::get('widget_options');
 		$list_ids = (strlen($_listids) > 0) ? explode(",",$_listids) : array();
+		if(!$_settings_id && empty($list_ids)){
+			$list_ids = $default_list_ids;
+		}
 		$post_notifications_code = '';
 		if( is_wp_error($list_ids) ||  is_wp_error($postnotification) || is_wp_error($pnlistid)   ){
 			$post_notifications_code = apply_filters( 'sendpress-post-notifications-submit-code', "", $list_ids, $postnotification, $pnlistid );
@@ -210,7 +251,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					if( $widget_options['load_ajax'] ){
 						echo '<input type="hidden" name="action" value="signup-user" />';
 					}
-					if(empty($_listids) && strlen($post_notifications_code) == 0){
+					if(empty($_listids) && strlen($post_notifications_code) == 0 && $_settings_id){
 						echo $no_list_error;
 					}
 					if($_thankyou_page != false && $_thankyou_page > 0){
@@ -304,7 +345,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 	private static function handle_unsubscribes(){
 
 		$_nonce_value = 'sendpress-is-awesome';
-		$c = ' hide ';
+		$c = false;
 
 		if ( !empty($_POST) && check_admin_referer($_nonce_value) ){
 			$args = array(
@@ -331,12 +372,12 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 							SendPress_Data::update_subscriber_status( $list_id , $_POST['subscriberid'], $_POST[ 'subscribe_'.$list_id ] );
 						}
 					} 
-					$c = '';
+					$c = true;
 					
 				endwhile;
 			}
 
-			do_action('sendpress_public_view_manage_save', $_POST);
+			//do_action('sendpress_public_view_manage_save', $_POST);
 		}
 		wp_reset_query();
 
@@ -367,14 +408,14 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
 	private static function data(){
 		$data = '';
-
-		if( (get_query_var( 'spms' )) ){
-		  	$action = get_query_var( 'spms' );
-			//Look for encrypted data
-	  		$data = SendPress_Data::decrypt( urldecode($action) );
-
+		if( (get_query_var( 'spms' ) || get_query_var( 'sendpress' )) ){
+		  	$action = (get_query_var( 'spms' )) ? get_query_var( 'spms' ) : get_query_var( 'sendpress' );
+	  	}else{
+	  		$parsed = explode('/',$_SERVER['REQUEST_URI']);
+	  		$action = $parsed[count($parsed)-2];
 	  	}
-	  	return $data;
+
+	  	return SendPress_Data::decrypt( urldecode($action) );
 	}
 
 }

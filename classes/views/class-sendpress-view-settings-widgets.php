@@ -25,6 +25,10 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 				$postid = SendPress_Data::create_settings_post($post['post_subject'], $post['form_type']);
 				wp_redirect( '?page=sp-settings&view=widgets&id='. $postid );
 				break;
+			case 'delete':
+				self::delete_form_save($post, $sp);
+				wp_redirect( '?page=sp-settings&view=widgets' );
+				break;
 			default:
 				self::save_form($post, $sp);
 				break;
@@ -56,17 +60,31 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		SendPress_Data::update_post_meta_object($data['_settings_id'],$data);
 	}
 
+	function delete_form_save($post, $sp){
+		SendPress_Data::delete_post_meta_object($post['deleteid'],$data);
+	}
+
 	function view_buttons(){
-		?>
-		<!--<button class="btn btn-default" id="save-menu-cancel">Cancel</button>-->
-		<button class="btn btn-primary" id="save-menu-post"><?php _e('Save','sendpress'); ?></button>
-		<?php
+		$postid = ISSET($_GET['id']) ? $_GET['id'] : 0;
+		$showCreate = (isset($_GET['create']) && $_GET['create'] == 1) ? true : false;
+		$showDelete = (isset($_GET['delete']) && $_GET['delete'] == 1) ? true : false;
+		
+		if($showDelete || $showCreate|| $postid > 0){
+			$btnText = $showDelete ? "Confirm" : "Save";
+			$btnClass = $showDelete ? "danger" : "primary";
+			?>
+			<button class="btn btn-default" id="save-menu-cancel">Cancel</button>
+			<button class="btn btn-<?php echo $btnClass; ?>" id="save-menu-post"><?php _e($btnText,'sendpress'); ?></button>
+			<?php
+		}
+		
 	}
 
 	function html($sp) {
 
 		$postid = ISSET($_GET['id']) ? $_GET['id'] : 0;
 		$showCreate = (isset($_GET['create']) && $_GET['create'] == 1) ? true : false;
+		$showDelete = (isset($_GET['delete']) && $_GET['delete'] == 1) ? true : false;
 
 		$settings = SendPress_Data::get_post_meta_object($postid);
 		$settings['_settings_id'] = $postid;
@@ -81,6 +99,11 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 			$settings['_form_type'] = 'create_form';
 		}
 
+		if( $showDelete ){
+			//self::create_form();
+			$settings['_form_type'] = 'delete_form';
+		}
+
 		if(strlen($settings['_form_type']) > 0){
 			echo '<form method="post" id="post">';
 		}
@@ -88,6 +111,9 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		switch($settings['_form_type']){
 			case 'create_form':
 				self::create_form();
+				break;
+			case 'delete_form':
+				self::delete_form();
 				break;
 			case 'signup_widget':
 				self::signup($settings);
@@ -134,6 +160,15 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		<?php
 	}
 
+	function delete_form(){
+		?>
+		<h2><?php _e('Confirm Delete','sendpress'); ?></h2>
+		<div>Click confirm to delete the form. THIS CANNOT BE UNDONE!</div>
+		<input type="hidden" name="form_action" id="form_action" value="delete" />
+		<input type="hidden" name="deleteid" id="deleteid" value="<?php echo $_GET['id']; ?>" />
+		<?php
+	}
+
 	function create_form(){
 		
 		$copy_from = (isset($_GET['id'])) ? $_GET['id'] : 0;
@@ -153,22 +188,27 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		        
 		        <?php $this->panel_end(  ); ?>
 			</div>
-			<div class="sp-50">
-				<?php
-				$form_types = SendPress_Data::get_widget_form_types();
+			<?php if($save_type === 'create'){
 				?>
-				<?php $this->panel_start( __('Form Type','sendpress') ); ?>
-				<select class="form-control" name="form_type" id="form_type">
-					<option value="0"></option>
+				<div class="sp-50">
 					<?php
-						foreach ($form_types as $key => $value) {
-							echo '<option value="'.$key .'">' . $value . '</option>';
-						}
+					$form_types = SendPress_Data::get_widget_form_types();
 					?>
-				
-				</select>
-				<?php $this->panel_end(); ?>
-			</div>
+					<?php $this->panel_start( __('Form Type','sendpress') ); ?>
+					<select class="form-control" name="form_type" id="form_type">
+						<option value="0"></option>
+						<?php
+							foreach ($form_types as $key => $value) {
+								echo '<option value="'.$key .'">' . $value . '</option>';
+							}
+						?>
+					
+					</select>
+					<?php $this->panel_end(); ?>
+				</div>
+				<?php
+			} ?>
+			
 		</div>
 		
 
