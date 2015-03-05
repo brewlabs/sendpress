@@ -490,7 +490,9 @@ KEY inprocess (inprocess),
 KEY success (success), 
 KEY max_attempts (max_attempts), 
 KEY attempts (attempts), 
-KEY last_attempt (last_attempt)
+KEY last_attempt (last_attempt),
+KEY date_sent (date_sent),
+KEY success_date (success,last_attempt,max_attempts,attempts,inprocess,date_sent)
 ) $collate;\n";
 // dbDelta($command); 
             

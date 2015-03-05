@@ -23,6 +23,7 @@ class SendPress_View_Settings_Install extends SendPress_View_Settings {
 		echo "<pre>";
 		echo SendPress_DB_Tables::check_setup_support();
 		echo "</pre>";
-	}
+
+		}
 
 }

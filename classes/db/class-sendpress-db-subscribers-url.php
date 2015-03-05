@@ -148,7 +148,7 @@ class SendPress_DB_Subscribers_Url extends SendPress_DB {
 		    url_id int(11) unsigned NOT NULL,
 		    clicked_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
 		    click_count int(11) unsigned NOT NULL,
-		    PRIMARY KEY  ( subscriber_id , email_id , url_id )
+		    PRIMARY KEY  (subscriber_id,email_id,url_id)
 		) $collate;";
 
 

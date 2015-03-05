@@ -134,6 +134,41 @@ abstract class SendPress_DB {
 		return implode( ' AND ', $wheres );
 	}
 
+	/**
+	 * Insert a new row
+	 *
+	 * @access  public
+	 * @since   1.0.12.11
+	 * @return  int
+	 */
+	public function replace( $data, $type = '' ) {
+		global $wpdb;
+
+		// Set default values
+		$data = wp_parse_args( $data, $this->get_column_defaults() );
+
+		do_action( 'spnl_pre_replace_' . $type , $data );
+
+		// Initialise column format array
+		$column_formats = $this->get_columns();
+
+		// Force fields to lower case
+		$data = array_change_key_case( $data );
+		
+		// White list columns
+		$data = array_intersect_key( $data, $column_formats );
+
+		// Reorder $column_formats to match the order of columns given in $data
+		$data_keys = array_keys( $data );
+		$column_formats = array_merge( array_flip( $data_keys ), $column_formats );
+
+		$wpdb->replace( $this->table_name, $data, $column_formats );
+
+		do_action( 'spnl_post_replace_' . $type, $wpdb->insert_id, $data );
+
+		return $wpdb->insert_id;
+	}
+
 
 	/**
 	 * Insert a new row

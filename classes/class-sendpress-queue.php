@@ -28,18 +28,15 @@ static function send_mail(){
 		global $wpdb;
 		$attempted_count = SendPress_Option::get('autocron-per-call',25);
 		
-		if( !SendPress_Manager::limit_reached()  ){
+		if( SendPress_Manager::limit_reached( $attempted_count )  ){
+			return;
+		}
+
 		$count = SendPress_Data::emails_in_queue();
 		$email_count = 0;
 		$attempts = 0;
 		
 		SendPress_Email_Cache::build_cache();
-
-		
-		if( SendPress_Manager::limit_reached( $attempted_count )  ){
-			return;
-		}
-
 
 		if($count > 0 ){
 		for ($i=0; $i < $attempted_count; $i++) { 
@@ -71,7 +68,7 @@ static function send_mail(){
 				} 
 				
 		}
-		}
+		
 
 		}
 

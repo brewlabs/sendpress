@@ -94,19 +94,23 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function get_single_email_from_queue( $override = false ){
 		global $wpdb;
 		$date = date_i18n('Y-m-d H:i:s', current_time( 'timestamp' ) );
-		$spdb_count = SendPress_Data::emails_in_queue();
-		$spdb_offset = '';
-		if( $override == false ){
-			if($spdb_count > 1 ){
-				if( $spdb_count > 25){
-					$spdb_count = 25;
-				}
-				$spdb_offset = ' OFFSET '. rand(0, $spdb_count);
-			} 
-		}
-		$info = $wpdb->get_row($wpdb->prepare("SELECT * FROM ". SendPress_Data::queue_table() ." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 and ( date_sent = '0000-00-00 00:00:00' or date_sent < %s ) ORDER BY id LIMIT 1 " . $spdb_offset, $date));
+	
+		//SELECT id FROM wp_sendpress_queue WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 and ( date_sent = '0000-00-00 00:00:00' or date_sent < '2015-03-04 20:24:04' ) 
+		$list = $wpdb->get_results($wpdb->prepare("SELECT id FROM ". SendPress_Data::queue_table() ." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 and ( date_sent = '0000-00-00 00:00:00' or date_sent < %s ) ", $date));
+		if(!empty($list)){
 
-		return $info;
+			$ele = array_rand($list);
+		
+
+			$info = $wpdb->get_row( $wpdb->prepare("SELECT * FROM ". SendPress_Data::queue_table() ." WHERE id = %d ", $list[$ele]->id ) );
+			
+			if( $info->success > 0 || $info->inprocess > 0 || $info->max_attempts <= $info->attempts ){
+				return null;
+			}
+
+			return $info;
+		}
+		return null;
 
 	}
 

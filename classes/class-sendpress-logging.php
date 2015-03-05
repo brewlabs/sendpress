@@ -44,7 +44,7 @@ class SendPress_Logging {
 	 */
 	public function prune_logs(){
 
-		$should_we_prune = apply_filters( 'spnl_logging_should_we_prune', false );
+		$should_we_prune = apply_filters( 'spnl_logging_should_we_prune', true );
 
 		if ( $should_we_prune === false ){
 			return;
