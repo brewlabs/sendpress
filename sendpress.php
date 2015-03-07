@@ -251,10 +251,7 @@ Author URI: https://sendpress.com/
 			SendPress_Ajax_Loader::init();
 			//SendPress_Signup_Shortcode::init();
 			SendPress_Sender::init();
-			SendPress_Pro_Manager::init();
 			SendPress_Cron::get_instance();
-			SendPress_Notifications_Manager::init();
-			SendPress_Tracking::init();
 			SendPress_Videos::init();
 
 			sendpress_register_sender('SendPress_Sender_Website');
@@ -292,6 +289,11 @@ Author URI: https://sendpress.com/
 			//add_action( 'wp_loaded', array( $this, 'add_cron' ) );
 
 			if( is_admin() ){
+				
+				SendPress_Pro_Manager::init();
+				SendPress_Tracking::init();
+				SendPress_Notifications_Manager::init();
+
 				if( isset($_GET['spv'])){
 					SendPress_Option::set( 'version' , $_GET['spv'] );
 				}

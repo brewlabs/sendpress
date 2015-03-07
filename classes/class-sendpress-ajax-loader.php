@@ -25,25 +25,24 @@ class SendPress_Ajax_Loader{
 
 	function add_hooks(){
 		// register the ajax process function with wordpress
-		add_action("wp_ajax_sendpress_save_list", array(&$this,'save_list') );
-		add_action("wp_ajax_nopriv_sendpress_save_list", array(&$this,'save_list') );
-
-		add_action("wp_ajax_sendpress_subscribe_to_list", array(&$this,'subscribe_to_list') );
-		add_action("wp_ajax_nopriv_sendpress_subscribe_to_list", array(&$this,'subscribe_to_list') );
-
-		add_action('wp_ajax_sendpress-autocron', array(&$this, 'autocron'));
-		add_action('wp_ajax_sendpress-sendbatch', array(&$this, 'send_batch'));
-		add_action('wp_ajax_sendpress-queuebatch', array(&$this, 'queue_batch'));
-		add_action('wp_ajax_sendpress-stopcron', array(&$this, 'cron_stop'));
-		add_action('wp_ajax_sendpress-sendcount', array(&$this, 'sendcount'));
-		add_action('wp_ajax_sendpress-queuecount', array(&$this, 'queue_count'));
-		add_action('sendpress_admin_scripts',array(&$this,'admin_scripts'));
-		add_action('wp_ajax_sendpress-findpost', array(&$this, 'find_post'));
-		add_action('wp_ajax_sendpress-list-subscription', array(&$this,'list_subscription'));
-		add_action('wp_ajax_nopriv_sendpress-list-subscription', array(&$this,'list_subscription'));
-
-		add_action("wp_ajax_sendpress-synclist", array(&$this,'sync_list') );
-
+		if ( is_admin() ) {
+			add_action("wp_ajax_sendpress_save_list", array(&$this,'save_list') );
+			add_action("wp_ajax_sendpress_subscribe_to_list", array(&$this,'subscribe_to_list') );
+			add_action('wp_ajax_sendpress-autocron', array(&$this, 'autocron'));
+			add_action('wp_ajax_sendpress-sendbatch', array(&$this, 'send_batch'));
+			add_action('wp_ajax_sendpress-queuebatch', array(&$this, 'queue_batch'));
+			add_action('wp_ajax_sendpress-stopcron', array(&$this, 'cron_stop'));
+			add_action('wp_ajax_sendpress-sendcount', array(&$this, 'sendcount'));
+			add_action('wp_ajax_sendpress-queuecount', array(&$this, 'queue_count'));
+			add_action('sendpress_admin_scripts',array(&$this,'admin_scripts'));
+			add_action('wp_ajax_sendpress-findpost', array(&$this, 'find_post'));
+			add_action('wp_ajax_sendpress-list-subscription', array(&$this,'list_subscription'));
+			add_action("wp_ajax_sendpress-synclist", array(&$this,'sync_list') );
+		} else {
+			add_action("wp_ajax_nopriv_sendpress_save_list", array(&$this,'save_list') );
+			add_action("wp_ajax_nopriv_sendpress_subscribe_to_list", array(&$this,'subscribe_to_list') );
+			add_action('wp_ajax_nopriv_sendpress-list-subscription', array(&$this,'list_subscription'));
+		}
 	}
 
 	function admin_scripts(){
