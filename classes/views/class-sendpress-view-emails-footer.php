@@ -40,9 +40,16 @@ class SendPress_View_Emails_Footer extends SendPress_View_Emails {
 <?php echo SendPress_Tag_Footer_Content::content(); ?>
 </textarea>
 <br>
+
+
+
 <?php
 echo spnl_get_emails_tags_list();
+
+$this->popup();
 ?>
+
+
 <?php
 
 }

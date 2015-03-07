@@ -1373,6 +1373,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $result;	
 	}
 
+	static function get_active_list_ids_for_subscriber( $value ) {
+		global $wpdb;
+		$table = SendPress_Data::list_subcribers_table();
+		$result = $wpdb->get_results("SELECT listID FROM $table WHERE subscriberID = '$value' AND status = 2 ");
+		return $result;	
+	}
+
 
 	static function subscribe_user($listid, $email, $first, $last, $status = 2, $custom = array()){
 		
@@ -1382,10 +1389,15 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if( false === $subscriberID ){
 			return false;
 		}
-		$args = array( 'post_type' => 'sendpress_list','numberposts'  => -1,
-	    'offset'          => 0,
-	    'orderby'         => 'post_title',
-	    'order'           => 'DESC', );
+
+		$args = array( 
+			'post_type' => 'sendpress_list',
+			'numberposts'  => -1,
+	    	'offset'          => 0,
+	    	'orderby'         => 'post_title',
+	    	'order'           => 'DESC'
+	    	);
+
 		$lists = get_posts( $args );
 
 		$listids = explode(',', $listid);
@@ -1393,10 +1405,15 @@ class SendPress_Data extends SendPress_DB_Tables {
 	    //$lists = $s->getData($s->lists_table());
 	    //$listids = array();
 
-		
-		if( $status == 2 && SendPress_Option::is_double_optin() ){
-			$status = 1;
-			SendPress_Manager::send_optin( $subscriberID, $listids, $lists);
+		$already_subscribed = false;
+		if( $status == 2 && SendPress_Option::is_double_optin() ) {
+			$inlists = SendPress_Data::get_active_list_ids_for_subscriber( $subscriberID );
+			if( $inlists ){
+				$already_subscribed = true;
+			} else { 
+				$status = 1;
+				SendPress_Manager::send_optin( $subscriberID, $listids, $lists);
+			}
 		}
 		
 		foreach($lists as $list){
@@ -1414,10 +1431,14 @@ class SendPress_Data extends SendPress_DB_Tables {
 			}
 		}
 
-		
+		if($success == false){
+			return false;
+		}
 
-		return $success;
+		return array('success'=> $success,'already'=> $already_subscribed);
 	}
+
+
 
 	static function read_file_to_str($file){
 		return file_get_contents($file);

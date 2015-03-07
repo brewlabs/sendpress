@@ -39,6 +39,7 @@ class SendPress_View_Emails_Headerpage extends SendPress_View_Emails {
 
 <?php
 
+$this->popup();
 }
 
 }

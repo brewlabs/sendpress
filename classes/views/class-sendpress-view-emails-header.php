@@ -42,6 +42,7 @@ class SendPress_View_Emails_Header extends SendPress_View_Emails {
 
 <?php
 
+$this->popup();
 }
 
 }

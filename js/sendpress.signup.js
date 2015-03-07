@@ -68,7 +68,7 @@
                         // Invalid JSON.
                         $submit.removeAttr("disabled");
                         if(!jQuery.trim(response).length) {
-                            response = { error: 'Server returned empty response during charge attempt'};
+                            response = { error: 'Server returned empty response during add attempt'};
                         } else {
                             response = {error: 'Server returned invalid response:<br /><br />' + response};
                         }

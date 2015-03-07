@@ -169,6 +169,7 @@ class SendPress_Ajax_Loader{
 
 			if( false !== $success ){
 				$response['success'] = true;
+				$response['exists'] = $success['already'];
 			}else{
 				$response['error'] = __('User was not subscribed to the list.','sendpress');
 			}

@@ -33,8 +33,7 @@
 					$rcontainer = $list.closest('.meta-radio-buttons'),
 					$buttons = $rcontainer.find('.meta_radio_button');
 
-				console.debug($rcontainer);
-
+				
 				if( $list.is(':checked') ){
 					$buttons.removeAttr('disabled');
 				}else{
@@ -46,7 +45,6 @@
             	var $radio = $(this),
             		$wbuttons = $radio.closest('.meta-radio-buttons').find('.meta_radio_button');
             	
-            	console.debug('testing');
             	$wbuttons.removeAttr('checked');
             	$radio.attr('checked', 'checked');
 

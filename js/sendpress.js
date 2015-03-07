@@ -30,7 +30,6 @@
     //Stuff used by the SendPress Editor
     this.edit = {
         init: function($){
-            spadmin.log('SendPress Editor');
             //Make sure header editors are hidden to start
             this.imagebox = $('#imageaddbox');
             this.textbox = $('#textaddbox');
@@ -199,7 +198,6 @@
                 jQuery('#upload_image').val(imgurl);
                 tb_remove();
             } else {
-                spadmin.log(html);
                 //super lame but works for now.
                 html = "<div>"+ html +"</div>";
                 imgurl = jQuery('img',html).attr('src');
@@ -448,7 +446,6 @@
                 }); 
         }, batchit: function(response){
             response = $.parseJSON(response);
-            spadmin.log(response);
             if( response != undefined && parseInt(response.lastid) > 0){
                 spadmin.confirmsend.count = spadmin.confirmsend.count + parseInt(response.count);
                 var $qt =$("#queue-total");
@@ -457,12 +454,10 @@
                 $('.sp-queueit').css('width', $p+'%');
 
                  spadmin.confirmsend.queuebatch( $('#post_ID').val() );
-                spadmin.log('We should check for more emails');
             } else {
                  $('.sp-queueit').css('width', '100%');
                 window.location.href= window.location.href+"&finished=true";
                // spadmin.confirmsend.closesend();
-                spadmin.log('Should die');
             }
             
         },
@@ -496,7 +491,6 @@
                 }); 
         }, batchit: function(response){
             response = $.parseJSON(response);
-            spadmin.log(response);
             if( response != undefined && parseInt(response.count) > 0){
                 spadmin.syncroles.count = spadmin.syncroles.count + parseInt(response.count);
                 var $qt =$("#queue-total");
@@ -504,12 +498,10 @@
                 $p = parseInt( spadmin.syncroles.count / spadmin.syncroles.total * 100 );
                 $('.sp-queueit').css('width', $p+'%');
                 spadmin.syncroles.queuebatch( $('#post_ID').val() );
-                spadmin.log('We should check for more emails');
             } else {
                 $('.sp-queueit').css('width', '100%');
                 window.location.href= window.location.href+"&finished=true";
                 // spadmin.syncroles.closesend();
-                spadmin.log('Should die');
             }
             
         },
@@ -558,7 +550,6 @@
         },
         batchsent: function(response){
             response = $.parseJSON(response);
-            spadmin.log(response);
             if( response != undefined && parseInt(response.queue) > 0 && response.limit === false ){
                 spadmin.queue.count = spadmin.queue.total - parseInt(response.queue);
                 var $qt =$("#queue-sent");
@@ -567,10 +558,8 @@
                 $('#sendbar-inner').css('width', $p+'%');
 
                 spadmin.queue.sendbatch();
-                spadmin.log('We should check for more emails');
             } else {
                 spadmin.queue.closesend();
-                spadmin.log('Should die');
             }
         },
         closesend:function(){

@@ -44,6 +44,7 @@ class SendPress_View_Emails_Footerpage extends SendPress_View_Emails {
 
 <?php
 
+$this->popup();
 }
 
 }
