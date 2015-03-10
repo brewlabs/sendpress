@@ -101,6 +101,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.1.3.10.1 - 2015.3.10 =
+Fix: Some Ajax calls not working on Front End
+
 = 1.1.3.10 - 2015.3.10 =
 * New: Manage Page Shortcode with redirect option
 * Fix: Query Optimization for Queue
@@ -627,6 +630,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.1.3.10.1 = 
+Fix some broken ajax calls
 
 = 1.1.3.10 =
 Manage shortcode and bug fixes
