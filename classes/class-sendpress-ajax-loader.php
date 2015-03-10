@@ -25,7 +25,7 @@ class SendPress_Ajax_Loader{
 
 	function add_hooks(){
 		// register the ajax process function with wordpress
-		if ( is_admin() ) {
+		
 			add_action("wp_ajax_sendpress_save_list", array(&$this,'save_list') );
 			add_action("wp_ajax_sendpress_subscribe_to_list", array(&$this,'subscribe_to_list') );
 			add_action('wp_ajax_sendpress-autocron', array(&$this, 'autocron'));
@@ -38,11 +38,11 @@ class SendPress_Ajax_Loader{
 			add_action('wp_ajax_sendpress-findpost', array(&$this, 'find_post'));
 			add_action('wp_ajax_sendpress-list-subscription', array(&$this,'list_subscription'));
 			add_action("wp_ajax_sendpress-synclist", array(&$this,'sync_list') );
-		} else {
+		
 			add_action("wp_ajax_nopriv_sendpress_save_list", array(&$this,'save_list') );
 			add_action("wp_ajax_nopriv_sendpress_subscribe_to_list", array(&$this,'subscribe_to_list') );
 			add_action('wp_ajax_nopriv_sendpress-list-subscription', array(&$this,'list_subscription'));
-		}
+		
 	}
 
 	function admin_scripts(){
