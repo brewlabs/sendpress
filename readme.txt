@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 4.1.1
-Stable tag: 1.1.2.25
+Stable tag: 1.1.3.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,8 +101,17 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.1.3.10 - 2015.3.10 =
+* New: Manage Page Shortcode with redirect option
+* Fix: Query Optimization for Queue
+* Fix: Optimized subscriber tables
+* Fix: SP edit button on visual editor
+* Update: Better Stat Notification Query
+* Update: Ajax subscribe call return status for existing subscibers
+
+
 = 1.1.2.25 - 2015.2.25 =
-* Fix: Autocron check reduce increase 5 minutes
+* Fix: Autocron check increased to 5 minutes
 * Fix: Overview page not loading on some sites
 * WP.org SVN cleanup
 
@@ -618,6 +627,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.1.3.10 =
+Manage shortcode and bug fixes
 
 = 1.1.2.24 =
 Fix SQL error

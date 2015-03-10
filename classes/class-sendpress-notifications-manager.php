@@ -61,7 +61,10 @@ class SendPress_Notifications_Manager {
 				
 				break;
 			case 1:
-				$count = SendPress_Data::get_subscriber_event_count_day(date('Y-m-d'),'subscribed');
+				//$count = SendPress_Data::get_subscriber_event_count_day(date('Y-m-d'),'subscribed');
+				$count = SendPress_Data::get_subscriber_count( date('Y-m-d H:i:s' , strtotime('-1 day') ) , date('Y-m-d H:i:s') );
+				
+
 				$subscribe_body = 'You had '.$count.' new subscribers today.';
 
 				break;
@@ -69,8 +72,8 @@ class SendPress_Notifications_Manager {
 				if ( false === ( $sendpress_weekly_check = get_transient( 'sendpress_weekly_subscribed_check' ) ) ) {
 					// It wasn't there, so regenerate the data and save the transient
 					if( date('w') === get_option('start_of_week', 0) ){
-						
-						$count = SendPress_Data::get_subscriber_event_count_week(date('Y-m-d', strtotime(date('Y-m-d')." -1 week -1 day")),date('Y-m-d', strtotime(date('Y-m-d')." +1 day")),'subscribed');
+						$count = SendPress_Data::get_subscriber_count( date('Y-m-d H:i:s' , strtotime('-1 week') ) , date('Y-m-d H:i:s') );
+						//$count = SendPress_Data::get_subscriber_event_count_week(date('Y-m-d', strtotime(date('Y-m-d')." -1 week -1 day")),date('Y-m-d', strtotime(date('Y-m-d')." +1 day")),'subscribed');
 						$subscribe_body = 'You had '.$count.' new subscribers last week.';
 					
 						set_transient( 'sendpress_weekly_subscribed_check', true, WEEK_IN_SECONDS );
@@ -83,7 +86,8 @@ class SendPress_Notifications_Manager {
 					if( intval(date('j')) === 1 ){
 						
 						//get subscribers for for the last month
-						$count = SendPress_Data::get_subscriber_event_count_month(date('j', strtotime(date('j')." -1 month")),'subscribed');
+						$count = SendPress_Data::get_subscriber_count( date('Y-m-d H:i:s' , strtotime('-1 month') ) , date('Y-m-d H:i:s') );
+						//$count = SendPress_Data::get_subscriber_event_count_month(date('j', strtotime(date('j')." -1 month")),'subscribed');
 						$subscribe_body = 'You had '.$count.' new subscribers last month.<br><br>';
 					
 						set_transient( 'sendpress_monthly_subscribed_check', true, MONTH_IN_SECONDS );
@@ -111,15 +115,16 @@ class SendPress_Notifications_Manager {
 				}
 				break;
 			case 1:
-				$count = SendPress_Data::get_subscriber_event_count_day(date('Y-m-d'),'unsubscribed');
+				//$count = SendPress_Data::get_subscriber_event_count_day(date('Y-m-d'),'unsubscribed');
+				$count = SendPress_Data::get_subscriber_count( date('Y-m-d H:i:s' , strtotime('-1 day') ) , date('Y-m-d H:i:s') , 3);
 				$unsubscribe_body = 'You had '.$count.' users unsubscribe today.';
 				break;
 			case 2:
 				if ( false === ( $sendpress_weekly_check = get_transient( 'sendpress_weekly_unsubscribed_check' ) ) ) {
 					// It wasn't there, so regenerate the data and save the transient
 					if( date('w') === get_option('start_of_week', 0) ){
-					
-						$count = SendPress_Data::get_subscriber_event_count_week(date('Y-m-d', strtotime(date('Y-m-d')." -1 week")),date('Y-m-d'),'unsubscribed');
+						$count = SendPress_Data::get_subscriber_count( date('Y-m-d H:i:s' , strtotime('-1 week') ) , date('Y-m-d H:i:s') , 3);
+						//$count = SendPress_Data::get_subscriber_event_count_week(date('Y-m-d', strtotime(date('Y-m-d')." -1 week")),date('Y-m-d'),'unsubscribed');
 						$unsubscribe_body = 'You had '.$count.' people unsubscribe last week.';
 					
 						set_transient( 'sendpress_weekly_unsubscribed_check', true, WEEK_IN_SECONDS );
@@ -130,7 +135,8 @@ class SendPress_Notifications_Manager {
 				if ( false === ( $sendpress_monthly_check = get_transient( 'sendpress_monthly_unsubscribed_check' ) ) ) {
 					if( intval(date('j')) === 1 ){
 						//get subscribers for for the last month
-						$count = SendPress_Data::get_subscriber_event_count_month(date('j', strtotime(date('j')." -1 month")),'unsubscribed');
+						$count = SendPress_Data::get_subscriber_count( date('Y-m-d H:i:s' , strtotime('-1 month') ) , date('Y-m-d H:i:s') , 3);
+						//$count = SendPress_Data::get_subscriber_event_count_month(date('j', strtotime(date('j')." -1 month")),'unsubscribed');
 						$unsubscribe_body = 'You had '.$count.' people unsubscribe last month.<br><br>';
 					
 						set_transient( 'sendpress_monthly_unsubscribed_check', true, MONTH_IN_SECONDS );

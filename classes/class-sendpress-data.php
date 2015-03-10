@@ -741,6 +741,15 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $result;
 	}
 
+
+	static function get_subscriber_count($startdate, $enddate, $status = 2){
+		global $wpdb;
+		$table = SendPress_Data::list_subcribers_table();//SELECT * FROM table_name WHERE MONTH(date_column) = 4;
+		$result = $wpdb->get_var($wpdb->prepare("select count(subscriberID) from $table where status = %d and updated >= %s and updated <= %s ",$status,$startdate,$enddate));
+		return $result == null ? 0 : $result;
+	}
+
+
 	/********************* END REPORTS static functionS **************************/
 
 	/************************* LIST static functionS ****************************/
