@@ -126,8 +126,14 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 				<?php
 					$info->action = "update";
 					$key = SendPress_Data::encrypt( $info );
+					$query_var = '';
+					if(get_query_var( 'spms' )){
+						$query_var = "?spms=".$key;
+					}elseif(get_query_var( 'sendpress' )){
+						$query_var = "?sendpress=".$key;
+					}
 				?>
-				<form action="?spms=<?php echo $key; ?>" method="post">
+				<form action="<?php echo $query_var; ?>" method="post">
 				<?php wp_nonce_field( SendPress_Data::nonce() ); ?>
 				<input type="hidden" name="subscriberid" id="subscriberid" value="<?php echo $info->id; ?>" />
 
