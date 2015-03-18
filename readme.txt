@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 4.1.1
-Stable tag: 1.1.3.10.1
+Stable tag: 1.1.3.17
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.1.3.17 - 2015.3.17 =
+Fix: Manange Page and Shortcode
 
 = 1.1.3.10.1 - 2015.3.10 =
 Fix: Some Ajax calls not working on Front End
@@ -630,6 +633,9 @@ Fix: Some Ajax calls not working on Front End
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.1.3.17 =
+Manage Page Fix
 
 = 1.1.3.10.1 = 
 Fix some broken ajax calls
