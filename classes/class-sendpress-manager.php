@@ -304,6 +304,55 @@ class SendPress_Manager {
 			SendPress_Manager::send( $subscriber->email, $sub , $html, $text, false );
 	}
 
+	static function send_manage_subscription($subscriberID, $listids, $lists){
+			$subscriber = SendPress_Data::get_subscriber( $subscriberID );
+			$l = '';
+			foreach($lists as $list){
+				if( in_array($list->ID, $listids) ){
+					$l .= $list->post_title ." <br>";
+				}
+			}
+			//	add_filter( 'the_content', array( $this, 'the_content') );	
+			$optin = SendPress_Data::get_template_id_by_slug('double-optin');
+			$user = SendPress_Data::get_template_id_by_slug('user-style');
+			SendPress_Posts::copy_meta_info($optin,$user);
+
+		
+			$message = new SendPress_Email();
+			$message->id($optin);
+			$message->subscriber_id($subscriberID);
+			$message->remove_links(true);
+			$message->purge(true);
+			$html = $message->html();
+			$message->purge(false);
+			$text = $message->text();
+			
+			
+			$code = array(
+					"id"=>$subscriberID,
+					"listids"=> implode(',',$listids),
+					"view"=>"confirm"
+				);
+			$code = SendPress_Data::encrypt( $code );
+
+			if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
+				$link = home_url() ."?sendpress=".$code;
+			} else {
+				$link = home_url() ."/sendpress/".$code;
+			}
+			
+			$href = $link;
+			$html_href = "<a href='". $link  ."'>". $link  ."</a>";
+			
+			
+			$html = str_replace("*|SP:CONFIRMLINK|*", $html_href , $html );
+			$text = str_replace("*|SP:CONFIRMLINK|*", $href , $text );
+			$text = nl2br($text);
+			$sub =  $message->subject();
+			SendPress_Data::register_event( 'confirm_sent', $subscriberID );			
+			SendPress_Manager::send( $subscriber->email, $sub , $html, $text, false );
+	}
+
 
 	/**
 	* Used to add Overwrite send info for testing. 

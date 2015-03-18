@@ -7,10 +7,11 @@
         $signups.each(function(){
             $form = $(this),
             $error = $form.find('#error'),
-            $thanks = $form.find('#thanks');
+            $thanks = $form.find('#thanks'),
+            $exists = $form.find('#exists');
 
-            $error.hide();
-            $thanks.hide();
+            //$error.hide();
+            //$thanks.hide();
         });
 
     	$signups.submit(function(e){
@@ -74,12 +75,20 @@
                         }
                     }
 
-                    if(response['success']){
+                    console.debug(response);
+
+                    if(response.success){
                         $error.hide();
                         $formwrap.hide();
-                        $thanks.show();
+                        if(response.exists){
+                            $exists.show();
+                        }else{
+                            $thanks.show();
+                        }
+                        
                     }else{
                         //possibly display an error here
+                        
                     }
                 });
 
