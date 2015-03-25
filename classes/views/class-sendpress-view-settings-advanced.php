@@ -29,6 +29,12 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 			SendPress_Option::set('skip_mailto', false );
 		}
 
+		if(isset( $post['enable_email_template_edit'] )){
+			SendPress_Option::set('enable_email_template_edit', true );
+		} else {
+			SendPress_Option::set('enable_email_template_edit', false );
+		}
+
 
 
 
@@ -130,7 +136,9 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 				<br><br>
 				<?php $ctype = SendPress_Option::get('skip_mailto'); ?>
 				<input type="checkbox" name="skip_mailto" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> <?php _e('Do not track mailto links in email','sendpress'); ?>.
-				
+				<br><br>
+				<?php $ctype = SendPress_Option::get('enable_email_template_edit'); ?>
+				<input type="checkbox" name="enable_email_template_edit" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> <?php _e('Override email template settings','sendpress'); ?>.
 				
 
 				</div>
