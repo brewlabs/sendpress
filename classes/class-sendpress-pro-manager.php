@@ -261,19 +261,19 @@ class SendPress_Pro_Manager {
 			echo "<b>";
 			_e('Alert','sendpress');
 			echo "</b>&nbsp;-&nbsp;";
-			printf(__('Your API key is either invalid or in use on another site. Need help? Visit <a href="http://sendpress.com/support/">SendPress Support</a>','sendpress'), get_transient( 'sendpress_key_state' ) );
+			printf(__('Your API key is either invalid or in use on another site. Need help? Visit login to <a href="http://sendpress.com/your-account/">SendPress Support</a>','sendpress'), get_transient( 'sendpress_key_state' ) );
 	    echo '</div>';
 	}
 
 	function deactivate_key_notice(){
 		echo '<div class="alert alert-danger">';
-			printf(__('There was a problem deactivating your API key.  Try again in a few minutes or visit <a href="http://sendpress.com/support/">SendPress Support</a>','sendpress') );
+			printf(__('There was a problem deactivating your API key.  Try again in a few minutes or visit <a href="http://sendpress.com/your-account/">SendPress Support</a>','sendpress') );
 	    echo '</div>';
 	}
 
 	function activate_key_notice(){
 		echo '<div class="alert alert-danger">';
-			printf(__('There was a problem activating your API key.  Try again in a few minutes or visit <a href="http://sendpress.com/support/">SendPress Support</a>','sendpress') );
+			printf(__('There was a problem activating your API key.  Try again in a few minutes or visit <a href="http://sendpress.com/your-account/">SendPress Support</a>','sendpress') );
 	    echo '</div>';
 	}
 	

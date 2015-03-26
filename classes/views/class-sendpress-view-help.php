@@ -42,10 +42,10 @@ class SendPress_View_Help extends SendPress_View{
 		
 ?>
 	<b>Basic Support</b>
-	<p>You can get support for the FREE version of SendPress on the <a href="http://wordpress.org/support/plugin/sendpress" target="_blank">WordPress.org forums</a>.<br>Also check our <a href="http://sendpress.com/support" target="_blank">Knowledge Base</a> for help at <a href="http://sendpress.com/support" target="_blank">http://sendpress.com/support</a></p>
+	<p>You can get support for the FREE version of SendPress on the <a href="http://wordpress.org/support/plugin/sendpress" target="_blank">WordPress.org forums</a>.<br>Also check our <a href="http://sendpress.com/support" target="_blank">Knowledge Base</a> for help at <a href="http://docs.sendpress.com/" target="_blank">http://docs.sendpress.com/</a></p>
 	<br>
 	<b>Premium Support</b>
-	<p>Premium support is available if you have purchased SendPress Pro from SendPress.com. Premium support can be accessed via our support site: <a href="http://sendpress.com/support" target="_blank">http://sendpress.com/support</a> and requires a SendPress.com account.</p>
+	<p>Premium support is available if you have purchased SendPress Pro from SendPress.com. Premium support can be accessed via our support site: <a href="http://sendpress.com/your-account" target="_blank">http://sendpress.com/your-account</a> and requires a SendPress.com account.</p>
 	
 <?php
 	}
