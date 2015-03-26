@@ -22,13 +22,12 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
  	$post_update = array(
  		'ID'           => $_POST['post_ID'],
       	'post_content' => $_POST['content_area_one_edit']
-      	
-      );
+    );
  	
 	update_post_meta( $_POST['post_ID'], '_sendpress_template', $_POST['template'] );
 	update_post_meta( $_POST['post_ID'], '_sendpress_subject', $_POST['post_subject'] );
-
-	
+	update_post_meta( $_POST['post_ID'], '_header_content', $_POST['header_content_edit'] );
+	update_post_meta( $_POST['post_ID'], '_footer_content', $_POST['footer_content_edit'] );
 
  	//	print_r($template);
 	wp_update_post( $post_update );
@@ -125,17 +124,26 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
         <div class="sp-row">
 <div class="sp-75 sp-first">
 <!-- Nav tabs -->
+<?php $enable_edits = SendPress_Option::get('enable_email_template_edit');?>
 <ul class="nav nav-tabs">
   <li class="active"><a href="#content-area-one-tab" data-toggle="tab"><?php _e('Main Content','sendpress'); ?></a></li>
+  <?php if($enable_edits){
+  	?>
+  	<li><a href="#header-content" data-toggle="tab"><?php _e('Header','sendpress'); ?></a></li>
+  	<li><a href="#footer-content" data-toggle="tab"><?php _e('Footer','sendpress'); ?></a></li>
+  	<?php
+  }
+
+  ?>
+ 
   <!--
-  <li><a href="#profile" data-toggle="tab">Profile</a></li>
   <li><a href="#messages" data-toggle="tab">Messages</a></li>
   <li><a href="#settings" data-toggle="tab">Settings</a></li>
   -->
 </ul>
 
 <div class="tab-content" style="display:block;">
-  <div class="tab-pane fade in active" id="content-area-one-tab" style="display:block;">
+  <div class="tab-pane in active" id="content-area-one-tab">
   <?php wp_editor( $post->post_content, 'content_area_one_edit', array(
 	'dfw' => true,
 	'drag_drop_upload' => true,
@@ -147,8 +155,42 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 		'add_unload_trigger' => false,
 	),
 ) ); ?><?php //wp_editor($post->post_content,'content_area_one_edit'); ?></div>
-  <!--
-  <div class="tab-pane fade" id="profile"><?php wp_editor($post->post_content,'content-2'); ?></div>
+
+	<?php 
+	if($enable_edits){
+		?>
+		<div class="tab-pane" id="header-content">
+			<?php wp_editor(  get_post_meta( $post->ID , '_header_content' , true), 'header_content_edit', array(
+		'dfw' => true,
+		'drag_drop_upload' => true,
+		'tabfocus_elements' => 'insert-media-button-1,save-post',
+		'editor_height' => 360,
+		'tinymce' => array(
+			'resize' => false,
+			'wp_autoresize_on' => ( ! empty( $_wp_autoresize_on ) && get_user_setting( 'editor_expand', 'on' ) === 'on' ),
+			'add_unload_trigger' => false,
+		),
+		) ); ?>
+
+		</div>
+		<div class="tab-pane" id="footer-content">
+			<?php wp_editor(  get_post_meta( $post->ID , '_footer_content' , true), 'footer_content_edit', array(
+		'dfw' => true,
+		'drag_drop_upload' => true,
+		'tabfocus_elements' => 'insert-media-button-1,save-post',
+		'editor_height' => 360,
+		'tinymce' => array(
+			'resize' => false,
+			'wp_autoresize_on' => ( ! empty( $_wp_autoresize_on ) && get_user_setting( 'editor_expand', 'on' ) === 'on' ),
+			'add_unload_trigger' => false,
+		),
+		) ); ?>
+
+		</div>
+		<?php
+	}
+	?>
+   <!--
   <div class="tab-pane fade" id="messages"><?php wp_editor($post->post_content,'content-3'); ?></div>
   <div class="tab-pane fade" id="settings"><?php wp_editor($post->post_content,'content-4'); ?></div>
   -->

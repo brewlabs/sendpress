@@ -27,10 +27,14 @@ class SendPress_Tag_Footer_Content extends SendPress_Tag_Base  {
 				$link = '#2469a0';
 			}
 			
-			if( self::template_post_exists($template_id) ){
-				$content = get_post_meta( $template_id , '_footer_content' , true); 
-			} else {
-				$content = self::content();
+			$content = get_post_meta( $email_id , '_footer_content' , true); 
+			if(!$content){
+
+				if( self::template_post_exists($template_id) ){
+					$content = get_post_meta( $template_id , '_footer_content' , true); 
+				} else {
+					$content = self::content();
+				}
 			}
 			//$content = $content_post->post_content;
 			//remove_filter('the_content','wpautop');
