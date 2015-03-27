@@ -34,7 +34,7 @@ More information at [SendPress.com](http://sendpress.com/).
 
 = Support =
 
-Please check out our support site [http://sendpress.com/support/knowledgebase/](http://sendpress.com/support/) if you need help with anything. Also feel free to post to the WordPress support forum.
+Please check out our Docs site [http://docs.sendpress.com/](http://docs.sendpress.com/) if you need help with anything. Also feel free to post to the WordPress support forum.
 
 **Follow this plugin on [Git Hub](https://github.com/brewlabs/sendpress)**
 

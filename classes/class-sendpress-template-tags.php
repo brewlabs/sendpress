@@ -615,15 +615,15 @@ function spnl_setup_template_tags() {
 			'internal'    => array('SendPress_Tag_Social_Links','internal'),
 			'copy'    => array('SendPress_Tag_Social_Links','copy'),
 		),
-		/*
+		
 		array(
-			'tag'         => 'sp-browser-url',
-			'description' => __( 'Inserts view in browser url.', 'sendpress' ),
-			'function'    => array('SendPress_Tag_Browser_Link','external'),
-			'internal'    => array('SendPress_Tag_Browser_Link','internal'),
-			'copy'    => array('SendPress_Tag_Browser_Link','copy'),
+			'tag'         => 'sp-browser-link-html',
+			'description' => __( 'Inserts view in browser html link.', 'sendpress' ),
+			'function'    => array('SendPress_Tag_Browser_Link_Html','external'),
+			'internal'    => array('SendPress_Tag_Browser_Link_Html','internal'),
+			'copy'    => array('SendPress_Tag_Browser_Link_Html','copy'),
 		),
-		*/
+		
 		array(
 			'tag'         => 'sp-site-name',
 			'description' => __( 'Inserts Site Name.', 'sendpress' ),
@@ -638,15 +638,15 @@ function spnl_setup_template_tags() {
 			'internal'    => array('SendPress_Tag_Canspam','internal'),
 			'copy'    => array('SendPress_Tag_Canspam','copy'),
 		),
-		/*
+		
 		array(
-			'tag'         => 'sp-unsubscribe-url',
-			'description' => __( 'Inserts the unsubscribe url.', 'sendpress' ),
-			'function'    => array('SendPress_Tag_Unsubscribe','external'),
-			'internal'    => array('SendPress_Tag_Unsubscribe','internal'),
-			'copy'    => array('SendPress_Tag_Unsubscribe','copy'),
+			'tag'         => 'sp-unsubscribe-link-html',
+			'description' => __( 'Inserts an unsubscribe html link.', 'sendpress' ),
+			'function'    => array('SendPress_Tag_Unsubscribe_Link_Html','external'),
+			'internal'    => array('SendPress_Tag_Unsubscribe_Link_Html','internal'),
+			'copy'    => array('SendPress_Tag_Unsubscribe_Link_Html','copy'),
 		)
-		*/
+		
 
 	);
 

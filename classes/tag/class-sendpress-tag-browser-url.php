@@ -6,7 +6,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 
-class SendPress_Tag_Browser_Link extends SendPress_Tag_Base{
+class SendPress_Tag_Browser_Url extends SendPress_Tag_Base{
 
 	static function internal( $template_id , $email_id, $subscriber_id , $example ) {
 		return self::external( $template_id , $email_id , $subscriber_id , $example);
