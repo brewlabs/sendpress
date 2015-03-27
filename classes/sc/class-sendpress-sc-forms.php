@@ -209,7 +209,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		//print_r($options);
 
 		global $load_signup_js, $sendpress_show_thanks, $sendpress_signup_error;
-		$sendpress_signup_exists = "It looks like you're already signed up on this site.  If you'd like to manage your subscriptions click the link below to recieve an e-mail about managing your subscriptions.";
+		$sendpress_signup_exists = "You've already signed up, Thanks!";
 		$load_signup_js = true;
 		$no_list_error = '-- NO LIST HAS BEEN SET! --';
 		$_listids = '';
