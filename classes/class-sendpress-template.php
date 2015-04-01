@@ -348,7 +348,8 @@ class SendPress_Template {
 			require_once( $template_list[$selected_template]['file'] );
 			$HtmlCode= ob_get_clean(); 
 			*/
-			
+			$HtmlCode = do_shortcode($HtmlCode);
+
 			add_filter('the_content', 'do_shortcode' , 11);
 			$content = apply_filters( 'the_content' , $post->post_content );
 			//print_r($post->post_content);
