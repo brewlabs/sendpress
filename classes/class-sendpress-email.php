@@ -138,7 +138,7 @@ class SendPress_Email {
 				    set_transient( 'sendpress_report_body_html_'. $this->id(), $body_html , 60*60*2 );
 				}
 			}
-			error_log($body_html);
+			
 			$subscriber = SendPress_Data::get_subscriber($this->subscriber_id());
 			if (!is_null($subscriber)) {
 				$body_html = str_replace("*|FNAME|*", $subscriber->firstname , $body_html );
