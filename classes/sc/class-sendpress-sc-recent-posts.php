@@ -59,10 +59,12 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 	      	$return_string = $content;
 	  	}
 
-	  	$margin = ($alternate && strtolower($imgalign) === 'left') ? '0px 10px 10px 0px' : '0px 0px 10px 10px';
+	  	//$margin = ($alternate && strtolower($imgalign) === 'left') ? '0px 10px 10px 0px' : '0px 0px 10px 10px';
 
-	  	$return_string .= '<div>';
+	  	//$return_string .= '<div>';
 	   	//query_posts($args);
+
+	  	$template = self::post_text_only();
 
 	   	$query = new WP_Query($args);
 		if($query->have_posts()){
@@ -70,25 +72,44 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 				$query->the_post();
 
 				if(has_post_thumbnail()){
-					$return_string .= '<div style="float:'.strtolower($imgalign).'; margin:'.$margin.';">'.get_the_post_thumbnail(get_the_ID(), 'thumbnail').'</div>';
+					//reset the template because we have an image
+					$template = (strtolower($imgalign) === 'left') ? self::post_img_left() : self::post_img_right();
+					$img = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'single-post-thumbnail' );
+					$template = str_replace('{sp-post-image}',$img[0],$template);
 				}
-				
-				$return_string .= '<div><a href="'.get_permalink().'">'.get_the_title().'</a></div>';
-	          	$return_string .= '<div>'.get_the_excerpt().'</div>';
-	          	$return_string .= '<div><a href="'.get_permalink().'">'.$readmoretext.'</a></div>';
-	          	$return_string .= '<br>';
+
+				$template = str_replace('{sp-post-link}',get_permalink(),$template);
+				$template = str_replace('{sp-post-title}',get_the_title(),$template);
+				$template = str_replace('{sp-post-excerpt}',get_the_excerpt(),$template);
+				$template = str_replace('{sp-post-readmore}',$readmoretext,$template);
 
 	          	$imgalign = ($alternate && strtolower($imgalign) === 'left') ? 'right' : 'left';
-	          	$margin = ($alternate && strtolower($imgalign) === 'left') ? '0px 10px 10px 0px' : '0px 0px 10px 10px';
+
+
+
+
+	          	$return_string .= $template;
 			}
 		}
 		wp_reset_postdata();
 
-	   	$return_string .= '</div>';
+	   	//$return_string .= '</div>';
 	   	wp_reset_query();
 	   	$post = $old_post;
 	   	return $return_string;
 
+	}
+
+	public static function post_text_only(){
+		return '<table width="100%" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row"><tr><td class="col" valign="top" style="width:100%"><div><a href="{sp-post-link}">{sp-post-title}</a></div><div>{sp-post-excerpt}</div><div><a href="{sp-post-link}">{sp-post-readmore}</a></div><br></td></tr></table>';
+	}
+
+	public static function post_img_left(){
+		return '<table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td width="100%"><!--[if mso]><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td width="30%" valign="top"><![endif]--><table width="30%" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row"><tr><td class="col" valign="top" style="width:100%"><img style="margin-bottom:10px;" class="image_fix" width="100%" src="{sp-post-image}"/></td></tr></table><!--[if mso]></td><td width="70%" valign="top"><![endif]--><table width="60%" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row"><tr><td class="col" valign="top" style="width:100%"><div><a href="{sp-post-link}">{sp-post-title}</a></div><div>{sp-post-excerpt}</div><div><a href="{sp-post-link}">{sp-post-readmore}</a></div><br></td></tr></table><!--[if mso]></td></tr></table><![endif]--></td></tr></table><br>';
+	}
+
+	public static function post_img_right(){
+		return '<table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td width="100%"><!--[if mso]><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td width="30%" valign="top"><![endif]--><table width="30%" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row"><tr><td class="col" valign="top" style="width:100%"><img style="margin-bottom:10px;" class="image_fix" width="100%" src="{sp-post-image}"/></td></tr></table><!--[if mso]></td><td width="70%" valign="top"><![endif]--><table width="60%" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row"><tr><td class="col" valign="top" style="width:100%"><div><a href="{sp-post-link}">{sp-post-title}</a></div><div>{sp-post-excerpt}</div><div><a href="{sp-post-link}">{sp-post-readmore}</a></div><br></td></tr></table><!--[if mso]></td></tr></table><![endif]--></td></tr></table><br>';
 	}
 
 	public static function docs(){
