@@ -1774,8 +1774,11 @@ class SendPress_Data extends SendPress_DB_Tables {
 				
                 update_post_meta( $_id, '_guid',  $templateinfo['guid'] );
                 
-                if($slug == 'antwort'){
+                if( $slug == 'antwort' ){
                     update_post_meta( $_id, '_footer_page', SendPress_Tag_Footer_Page::content() );
+                }
+                if( $slug == 'system-base' ){
+                    update_post_meta( $_id, '_system_template', true );
                 }
                 
                 update_post_meta( $_id, '_header_content', SendPress_Tag_Header_Content::content() );

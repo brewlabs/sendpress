@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 4.1.1
-Stable tag: 1.1.3.17
+Stable tag: 1.1.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,14 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.1.4.2 - 2015.4.2 =
+Beta: Overide header and footer when editing email
+Update: Added links to new docs site
+Update: sp-recent-posts resposive email support
+Update: Confirmation email uses new templates
+New: System Starter email Template
+Pro: Run shortcodes on custom templates
 
 = 1.1.3.17 - 2015.3.17 =
 Fix: Manange Page and Shortcode
