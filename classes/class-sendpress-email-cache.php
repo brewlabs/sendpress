@@ -36,6 +36,13 @@ class SendPress_Email_Cache {
       }
   }
 
+  static public function build_cache_for_system_email( $id ){
+     if(!isset(  self::$data[$id] )){
+        $html =  SendPress_Template::get_instance()->render_html( $id , false, false , true );
+        self::set( $id , $html );
+      }
+  }
+
   static public function build_cache(){
     self::getInstance();
     $email_list = SendPress_Data::get_email_id_from_queue();

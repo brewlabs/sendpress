@@ -1728,6 +1728,64 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $_id;
 	} 
 
+/**
+	* Takes a key and looks up or creates a template post for storing data.
+	* 
+	* 
+	* @param mixed $_token Description.
+	*
+	* @access public
+	*
+	* @return mixed Value.
+	*/
+	static function get_email_template( $slug, $templateinfo ) {
+		global $wpdb;
+		$_id = 0;
+		$slug = strtolower( str_replace( ' ', '_', $slug ) );
+		if ( $slug ) {
+			// Tell the static function what to look for in a post.
+			$_args = array('post_parent' => '0',  'post_content'  => json_encode($templateinfo), 'post_type' => 'sp_template', 'post_title' => $templateinfo['name'], 'post_name' => $slug, 'post_status' => $templateinfo['status'], 'comment_status' => 'closed', 'ping_status' => 'closed' );
+
+
+
+			 $querystr = "
+			    SELECT $wpdb->posts.* 
+			    FROM $wpdb->posts 
+			    WHERE $wpdb->posts.post_name = %s
+			    ORDER BY $wpdb->posts.post_date DESC
+			 ";
+			$querystr = $wpdb->prepare($querystr, $slug);
+			$_posts = $wpdb->get_results($querystr, OBJECT);
+ 			//print_r($_posts);
+			// look in the database for a "silent" post that meets our criteria.
+			//$_posts = get_posts( $_args );
+			// If we've got a post, loop through and get it's ID.
+			if ( count( $_posts ) ) {
+				$_id = $_posts[0]->ID;
+			} else {
+				// If no post is present, insert one.
+				// Prepare some additional data to go with the post insertion.
+				
+				//$_post_data = array( 'post_name' => );
+				//$_post_data = array_merge( $_post_data, $_args );
+
+				$_id = wp_insert_post( $_args );
+
+				
+                update_post_meta( $_id, '_guid',  $templateinfo['guid'] );
+                
+                if($slug == 'antwort'){
+                    update_post_meta( $_id, '_footer_page', SendPress_Tag_Footer_Page::content() );
+                }
+                
+                update_post_meta( $_id, '_header_content', SendPress_Tag_Header_Content::content() );
+                update_post_meta( $_id, '_header_padding', 'pad-header' );
+
+			} // End IF Statement
+		}
+		return $_id;
+	} 
+
 	/**
 	* Takes a key and looks up or creates a template post for storing data.
 	* 

@@ -17,6 +17,7 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		SendPress_Option::set('optin_subject', $_POST['subject']);
 		SendPress_Option::set('confirm-page', $_POST['confirm-page']);
 		SendPress_Option::set('confirm-page-id',$_POST['confirm-page-id']);
+		SendPress_Option::set('confirm-notification-template',$_POST['confirm-notification-template']);
 		SendPress_Option::set('manage-page', $_POST['manage-page']);
 		SendPress_Option::set('manage-page-id',$_POST['manage-page-id']);
 		SendPress_Option::set('try-theme', $_POST['try-theme']);
@@ -37,7 +38,7 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 
 		wp_update_post($my_post);
 
-		
+		update_post_meta($optin,'_sendpress_template',$_POST['confirm-notification-template']);
 		SendPress_Admin::redirect('Settings_Activation');
 	}
 	
@@ -175,6 +176,63 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		<!--
 		<p><input type="text" class="regular-text" style="width: 100%;"/></p>
 		-->
+		<b>Select your template</b>:
+					<select name="confirm-notification-template">
+					<?php
+						echo '<option value="0">Default Template</option>';
+
+						$args = array(
+							'post_type' => 'sp_template' ,
+							'post_status' => array('sp-standard'),
+						);
+						$template_id = SendPress_Option::get('confirm-notification-template', 0);
+						$the_query = new WP_Query( $args );
+
+						if ( $the_query->have_posts() ) {
+							echo  '<optgroup label="SendPress Templates">';
+					
+							while ( $the_query->have_posts() ) {
+								$the_query->the_post();
+								$temp_id = $the_query->post->ID;
+								$s = '';
+								
+								if($temp_id == $template_id){
+									$s = 'selected';
+								}
+								echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
+							}
+							echo  '</optgroup>';
+					
+						}
+						wp_reset_postdata();
+						
+						$args = array(
+							'post_type' => 'sp_template' ,
+							'post_status' => array('sp-custom'),
+							);
+
+							$the_query = new WP_Query( $args );
+
+							if ( $the_query->have_posts() ) {
+								echo  '<optgroup label="Custom Templates">';
+								while ( $the_query->have_posts() ) {
+									$the_query->the_post();
+									$temp_id = $the_query->post->ID;
+									$s = '';
+									if($temp_id == $template_id){
+										$s = 'selected';
+								}
+								echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
+							}
+							wp_reset_postdata();
+
+							echo  '</optgroup>';
+							
+						}
+					?>
+					
+					</select>
+				</p>
 		<br class="clear">
 		<br class="clear">
 

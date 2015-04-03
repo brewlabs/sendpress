@@ -35,6 +35,8 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
 		if(is_numeric($formid)){
 			$options = SendPress_Data::get_post_meta_object($formid);
+		} else {
+			$options = false;
 		}
 
 		if( !$options ){

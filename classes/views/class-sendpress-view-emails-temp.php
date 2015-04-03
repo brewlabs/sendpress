@@ -25,7 +25,7 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 		SendPress_Admin::redirect('Emails_Temp');
 	}
 
-	function install(){
+	static function install(){
 		
 		SendPress_Template_Manager::install_template_content();
 		SendPress_Admin::redirect('Emails_Temp');
@@ -73,7 +73,7 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 	    <?php $testListTable->display(); ?>
 	    <?php wp_nonce_field($this->_nonce_value); ?>
 	</form><br>
-	<a href="<?php echo SendPress_Admin::link('Emails_Temp',array('action'=>'install')); ?>" class="btn btn-primary">Install Responsive Starter</a>
+	<a href="<?php echo SendPress_Admin::link('Emails_Temp',array('action'=>'install')); ?>" class="btn btn-primary">Install Starter Tempates</a>
 	<?php
 	}
 

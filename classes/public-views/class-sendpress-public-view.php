@@ -77,7 +77,7 @@ class SendPress_Public_View {
 		
 	}
 
-	function _public_css(){ ?>
+	static function _public_css(){ ?>
 	<style>
 		.subscriber-info{min-height:20px;padding:19px;margin-bottom:20px;background-color:#f5f5f5;border:1px solid #e3e3e3;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);-moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);}.well blockquote{border-color:#ddd;border-color:rgba(0, 0, 0, 0.15);}
 		.sendpress-content table{max-width:100%;background-color:transparent;border-collapse:collapse;border-spacing:0;}
@@ -123,7 +123,7 @@ class SendPress_Public_View {
 		exit;
 	}
 
-	function _public_before(){
+	static function _public_before(){
 		$theme = wp_get_theme();
 		if( isset($theme->Parent ) ){
 			$theme = $theme->Parent;
@@ -172,7 +172,7 @@ class SendPress_Public_View {
 
 	}
 
-	function _public_after(){ ?>
+	static function _public_after(){ ?>
 		</div>
 	<?php
 		$theme = wp_get_theme();

@@ -22,7 +22,7 @@ class SendPress_Tag_Footer_Page extends SendPress_Tag_Base  {
 			if( self::template_post_exists($template_id) ){
 				$content = get_post_meta( $template_id , '_footer_page' , true); 
 			} else {
-				$content = self::content();
+				$content = '';//self::content();
 			}
 			//$content = $content_post->post_content;
 			$link = get_post_meta( $template_id ,'_header_page_link_color',true );

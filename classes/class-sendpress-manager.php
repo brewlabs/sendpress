@@ -266,7 +266,7 @@ class SendPress_Manager {
 			$optin = SendPress_Data::get_template_id_by_slug('double-optin');
 			$user = SendPress_Data::get_template_id_by_slug('user-style');
 			SendPress_Posts::copy_meta_info($optin,$user);
-
+			SendPress_Email_Cache::build_cache_for_system_email($optin);
 		
 			$message = new SendPress_Email();
 			$message->id($optin);
@@ -276,7 +276,6 @@ class SendPress_Manager {
 			$html = $message->html();
 			$message->purge(false);
 			$text = $message->text();
-			
 			
 			$code = array(
 					"id"=>$subscriberID,

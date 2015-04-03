@@ -15,7 +15,7 @@ class SendPress_View_Overview extends SendPress_View{
 
 	
 	function html($sp){
-
+    SendPress_Template_Manager::update_template_content();
 		SendPress_Tracking::event('Overview Tab');
 		//print_r( SendPress_Data::get_subcribers_by_meta('test','test') );
     //echo wp_next_scheduled('wysija_cron_queue') . 'asdf';

@@ -54,6 +54,13 @@ class SendPress_Email_Render_Engine {
 			return spnl_do_content_tags(  $html , $template_id, $email_id, 0, false );
 	}
 
+	static function render_system_template( $template_id, $email_id ){
+		
+			$html = self::render_html_base_by_id($template_id);
+
+			return spnl_do_content_tags(  $html , $template_id, $email_id, 0, false );
+	}
+
 	static function render_html_base_by_id( $id ){
 			$temp_post = get_post( $id );
 			if($temp_post !== null){
