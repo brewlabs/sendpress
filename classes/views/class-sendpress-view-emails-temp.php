@@ -73,7 +73,7 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 	    <?php $testListTable->display(); ?>
 	    <?php wp_nonce_field($this->_nonce_value); ?>
 	</form><br>
-	<a href="<?php echo SendPress_Admin::link('Emails_Temp',array('action'=>'install')); ?>" class="btn btn-primary">Install Starter Tempates</a>
+	<a href="<?php echo SendPress_Admin::link('Emails_Temp',array('action'=>'install')); ?>" class="btn btn-primary">Install Starter Templates</a>
 	<?php
 	}
 
