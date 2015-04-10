@@ -137,7 +137,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 				?>
 				<form action="<?php echo $query_var; ?>" method="post">
 				<?php wp_nonce_field( SendPress_Data::nonce() ); ?>
-				<input type="hidden" name="subscriberid" id="subscriberid" value="<?php echo $info->id; ?>" />
+				<input type="hidden" name="subscriberid" id="subscriberid" value="<?php echo $s; ?>" />
 
 				<table cellpadding="0" cellspacing="0" class="table table-condensed table-striped table-bordered">
 					<tr>
@@ -163,7 +163,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 				);
 
 				foreach($lists as $list){
-					$subscriber = SendPress_Data::get_subscriber_list_status($list->ID, $info->id);
+					$subscriber = SendPress_Data::get_subscriber_list_status($list->ID, $s);
 					?>
 				  	<tr>
 				  	<?php

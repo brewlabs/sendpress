@@ -2249,5 +2249,20 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	/********************* END Widget Settings functionS **************************/
 
+	/*************************** Templating functions *****************************/
+	
+	public static function post_text_only(){
+		return '<table width="100%" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row"><tr><td class="col" valign="top" style="width:100%"><div><a href="{sp-post-link}">{sp-post-title}</a></div><div>{sp-post-excerpt}</div><div><a href="{sp-post-link}">{sp-post-readmore}</a></div><br></td></tr></table>';
+	}
+
+	public static function post_img_left(){
+		return '<table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td width="100%"><!--[if mso]><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td width="30%" valign="top"><![endif]--><table width="30%" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row"><tr><td class="col" valign="top" style="width:100%"><img style="margin-bottom:10px;" class="image_fix" width="100%" src="{sp-post-image}"/></td></tr></table><!--[if mso]></td><td width="70%" valign="top"><![endif]--><table width="60%" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row"><tr><td class="col" valign="top" style="width:100%"><div><a href="{sp-post-link}">{sp-post-title}</a></div><div>{sp-post-excerpt}</div><div><a href="{sp-post-link}">{sp-post-readmore}</a></div><br></td></tr></table><!--[if mso]></td></tr></table><![endif]--></td></tr></table><br>';
+	}
+
+	public static function post_img_right(){
+		return '<table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td width="100%"><!--[if mso]><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td width="30%" valign="top"><![endif]--><table width="30%" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row"><tr><td class="col" valign="top" style="width:100%"><img style="margin-bottom:10px;" class="image_fix" width="100%" src="{sp-post-image}"/></td></tr></table><!--[if mso]></td><td width="70%" valign="top"><![endif]--><table width="60%" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row"><tr><td class="col" valign="top" style="width:100%"><div><a href="{sp-post-link}">{sp-post-title}</a></div><div>{sp-post-excerpt}</div><div><a href="{sp-post-link}">{sp-post-readmore}</a></div><br></td></tr></table><!--[if mso]></td></tr></table><![endif]--></td></tr></table><br>';
+	}
+
+	/*************************** Templating functions *****************************/
 
 }
