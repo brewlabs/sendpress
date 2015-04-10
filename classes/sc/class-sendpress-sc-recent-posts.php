@@ -40,7 +40,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 		$old_post = $post;
 		extract( shortcode_atts( self::options() , $atts ) );
 
-		$args = array('orderby' => 'date', 'order' => 'DESC' , 'showposts' => $posts);
+		$args = array('orderby' => 'date', 'order' => 'DESC' , 'showposts' => $posts, 'post_status' => 'publish');
 
 		if($uid > 0){
 			$args['author'] = $uid;
