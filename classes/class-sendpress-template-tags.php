@@ -15,7 +15,7 @@ class SendPress_Template_Tags {
 	private $email_id;
 	private $template_id;
 	private $email_type;
-
+	private $custom_content;
 	/**
 	 * Add an email tag
 	 *
@@ -240,7 +240,7 @@ class SendPress_Template_Tags {
 	 *
 	 * @return string Content with email tags filtered out.
 	 */
-	public function do_content_tags( $content, $t_id, $email_id , $subscriber_id , $example ) {
+	public function do_content_tags( $content, $t_id, $email_id , $subscriber_id , $example , $custom_content = false) {
 
 		// Check if there is atleast one tag added
 		if ( empty( $this->content_tags ) || ! is_array( $this->content_tags ) ) {
@@ -250,6 +250,7 @@ class SendPress_Template_Tags {
 		$this->subscriber_id = $subscriber_id;
 		$this->email_id = $email_id;
 		$this->template_id = $t_id;
+		$this->custom_content = $custom_content;
 		$email = get_post( $t_id );
 		if($email){
 			if($email->post_type == 'sp_template'){
@@ -291,10 +292,10 @@ class SendPress_Template_Tags {
 		
 
 		if( $this->email_type == 'internal' && isset( $this->content_tags[$tag]['internal'] ) ) {
-			return call_user_func( $this->content_tags[$tag]['internal'], $this->template_id,$this->email_id, $this->subscriber_id, $this->example, $tag );
+			return call_user_func( $this->content_tags[$tag]['internal'], $this->template_id,$this->email_id, $this->subscriber_id, $this->example,$this->custom_content, $tag );
 		}
 
-		return call_user_func( $this->content_tags[$tag]['func'], $this->template_id,$this->email_id, $this->subscriber_id,  $this->example, $tag );
+		return call_user_func( $this->content_tags[$tag]['func'], $this->template_id,$this->email_id, $this->subscriber_id,  $this->example,$this->custom_content, $tag );
 	}
 
 
@@ -516,10 +517,10 @@ function spnl_get_emails_tags_list() {
  *
  * @return string Content with email tags filtered out.
  */
-function spnl_do_content_tags( $content, $t_id , $email_id, $subscriber_id = 0 , $example = false ) {
+function spnl_do_content_tags( $content, $t_id , $email_id, $subscriber_id = 0 , $example = false, $raw = false ) {
 	// Replace Content Tags
 	remove_filter( 'the_content', 'pdfprnt_content' );
-	$content = SPNL()->template_tags->do_content_tags( $content,$t_id ,  $email_id, $subscriber_id , $example );
+	$content = SPNL()->template_tags->do_content_tags( $content,$t_id ,  $email_id, $subscriber_id , $example , $raw);
 	//RE ADD THE FILTER..
 	if( function_exists('pdfprnt_content') ){
 		add_filter( 'the_content', 'pdfprnt_content' );

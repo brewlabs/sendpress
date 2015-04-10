@@ -34,6 +34,7 @@ class SendPress_Email {
 	private $_list_ids = array();
 	private $_purge = false;
 	private $_html = false;
+	private $_tracker = true;
 
 	
 	function SendPress_Email(){
@@ -44,6 +45,12 @@ class SendPress_Email {
 		if ( ! isset( $id ) )
 			return $this->_id;
 		$this->_id = $id;
+	}
+
+	function tracker($tracker = NULL){
+		if ( ! isset( $tracker ) )
+			return $this->_tracker;
+		$this->_tracker = $tracker;
 	}
 
 	function subscriber_id($subscriber_id = NULL){
@@ -182,6 +189,7 @@ class SendPress_Email {
 					$px = $pElement->getAttribute('style');
 					$pElement->setAttribute('style', $px .' margin-top:0;margin-bottom:10px;');
 				}
+				if($this->tracker()){
 				$aTags = $dom->getElementsByTagName('a');
 				foreach ($aTags as $aElement) {
 					$href = $aElement->getAttribute('href');
@@ -238,6 +246,7 @@ class SendPress_Email {
 						
 					}
 				}
+			}
 				$body_html = $dom->saveHtml();
 			}
 			$link_data = array(

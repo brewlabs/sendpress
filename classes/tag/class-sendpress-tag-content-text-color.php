@@ -8,12 +8,12 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Tag_Content_Text_Color extends SendPress_Tag_Base  {
 
-	static function internal( $template_id , $email_id, $subscriber_id , $example ) {
-		$return = self::external( $template_id ,$email_id, $subscriber_id , $example );
+	static function internal( $template_id , $email_id, $subscriber_id , $example ,$x = false) {
+		$return = self::external( $template_id ,$email_id, $subscriber_id , $example, $x );
 		return $return;
 	}
 	
-	static function external(  $template_id , $email_id , $subscriber_id, $example ){
+	static function external(  $template_id , $email_id , $subscriber_id, $example ,$x = false){
 		//if( $example == false ){
 			$color = get_post_meta( $template_id , '_content_text_color' , true); // get_post_meta($email_id);
 			//$content = $content_post->post_content;

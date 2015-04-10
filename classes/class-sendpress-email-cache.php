@@ -42,6 +42,12 @@ class SendPress_Email_Cache {
         self::set( $id , $html );
       }
   }
+  static public function build_cache_for_custom_content( $template_id , $html ){
+     if(!isset(  self::$data[$template_id] )){
+        $html =  SendPress_Template::get_instance()->render_html( $template_id , false, false , true , $html );
+        self::set( $template_id , $html );
+      }
+  }
 
   static public function build_cache(){
     self::getInstance();

@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Tag_Content_Area_One extends SendPress_Tag_Base  {
 
-	static function internal( $template_id , $email_id, $subscriber_id , $example ) {
+	static function internal( $template_id , $email_id, $subscriber_id , $example , $x = false) {
 		$return = self::external( $template_id ,$email_id, $subscriber_id , $example );
 		if( $return != '' ){
 			return self::table_start( $template_id ) . $return . self::table_end( $template_id );
@@ -16,15 +16,24 @@ class SendPress_Tag_Content_Area_One extends SendPress_Tag_Base  {
         return '';
 	}
 	
-	static function external( $template_id ,  $email_id , $subscriber_id, $example ){
+	static function external( $template_id ,  $email_id , $subscriber_id, $example , $x = false){
 		if( $example == false ){
 			do_action('sendpress_template_loaded');
-			$content_post = get_post($email_id);
+			
+			error_log($x);
+
+			if($x == false){
+				$content_post = get_post($email_id);
 			$content = $content_post->post_content;
+			} else {
+				$content = $x;
+			}
+			
 			$content = apply_filters('the_content', $content);
 			$content = str_replace(']]>', ']]&gt;', $content);
 
 		} else {
+
 			$content = self::lipsum_format();
 		}
 		$stat = get_post_status($template_id);

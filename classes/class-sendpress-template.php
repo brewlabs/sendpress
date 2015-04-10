@@ -314,7 +314,7 @@ class SendPress_Template {
 		}
 	}
 
-	function render_html($post_id = false, $render = true, $inline = false, $no_links = false){
+	function render_html($post_id = false, $render = true, $inline = false, $no_links = false, $custom_html = false){
 		global $post;
 
 		$saved = false;
@@ -333,7 +333,7 @@ class SendPress_Template {
 		//$template_list = $this->info();
 		$post_template  = get_post_meta( $post->ID , '_sendpress_template', true );
 		if( $post_template != '' && is_numeric($post_template) ){
-			$HtmlCode  = SendPress_Email_Render_Engine::render_template( $post_template , $post_id ); 
+			$HtmlCode  = SendPress_Email_Render_Engine::render_template( $post_template , $post_id , $custom_html ); 
 		} else {
 			$HtmlCode = file_get_contents(SENDPRESS_PATH .'/templates/simple.html' );
 		}
@@ -348,7 +348,13 @@ class SendPress_Template {
 			$HtmlCode = do_shortcode($HtmlCode);
 
 			add_filter('the_content', 'do_shortcode' , 11);
-			$content = apply_filters( 'the_content' , $post->post_content );
+			if( $custom_html == false){
+				$content =  $post->post_content;
+			} else {
+				$content = $custom_html;
+			}
+
+			$content = apply_filters( 'the_content' , $content);
 			//print_r($post->post_content);
 			$content = str_replace( ']]>' , ']]&gt;' , $content );
 			//$content = do_shortcode( $content );

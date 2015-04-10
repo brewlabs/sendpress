@@ -47,11 +47,11 @@ class SendPress_Email_Render_Engine {
 		return $return;
 	}
 
-	static function render_template( $template_id, $email_id ){
+	static function render_template( $template_id, $email_id, $raw_content ){
 		
 			$html = self::render_html_base_by_id($template_id);
 
-			return spnl_do_content_tags(  $html , $template_id, $email_id, 0, false );
+			return spnl_do_content_tags(  $html , $template_id, $email_id, 0, false, $raw_content );
 	}
 
 	static function render_system_template( $template_id, $email_id ){

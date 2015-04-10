@@ -174,30 +174,37 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
                 return $display;
                  break;
                 case 'opens':
-                    $ou = $this->_sendpress->get_opens_unique_count($item->ID);
-                    $ou = $ou ? $ou : '-';
+                   if( $stat_type == 'new'){
+                        $opens = SPNL()->db->subscribers_tracker->get_opens( $item->ID  );
+                        $opens_total = SPNL()->db->subscribers_tracker->get_opens_total( $item->ID  );
+                        $opens =  $opens == 0 ? '-' : $opens;
+                        $opens_total =  $opens_total == 0 ? '-' : $opens_total;
+                        return '<span class="label label-success">'. $opens .'</span> <span class="label label-info">'. $opens_total .'</span>';
 
-                   
-                    $ot = $this->_sendpress->get_opens_count($item->ID);
-                    $ot = $ot ? $ot : '-';
+                    } else {
+                        $ou = $this->_sendpress->get_opens_unique_count($item->ID);
+                        $ou = $ou ? $ou : '-';
 
-                    return '<span class="label label-success">'. $ou .'</span> <span class="label label-info">'. $ot .'</span>';
-                    case 'clicks':
-                    $ou = $this->_sendpress->get_clicks_unique_count($item->ID);
-                    $ou = $ou ? $ou : '-';
+                       
+                        $ot = $this->_sendpress->get_opens_count($item->ID);
+                        $ot = $ot ? $ot : '-';
 
-                    $ot = $this->_sendpress->get_clicks_count($item->ID);
-                    $ot = $ot ? $ot : '-';
-
-                    return '<span class="label label-success">'. $ou .'</span> <span class="label label-info">'. $ot .'</span>';
-                   break;  
+                        return '<span class="label label-success">'. $ou .'</span> <span class="label label-info">'. $ot .'</span>';
+                    } 
+                     break;  
                 case 'unsubscribe':
-                $clicks = get_post_meta($item->ID, '_unsubscribe_count', true);
-                    if($clicks) { 
+                 if( $stat_type == 'new'){
+                        $clicks = SPNL()->db->subscribers_tracker->get_unsubs( $item->ID  );
+                        $clicks =  $clicks == 0 ? '-' : $clicks;
                         return '<span class="label label-danger">'. $clicks .'</span>';
+
+                    } else {
+                        $clicks = get_post_meta($item->ID, '_unsubscribe_count', true);
+                        if($clicks) { 
+                            return '<span class="label label-danger">'. $clicks .'</span>';
+                         }
                      }
                      return '<span class="label label-danger">0</span>';
-             
                     break;
                case 'subject':
                 $sub = get_post_meta($item->ID, "_sendpress_subject", true);
