@@ -41,6 +41,16 @@ class SendPress_View_Pro extends SendPress_View{
 
     }
 
+    static function wp_mail(){
+        $e = isset($_GET['enable']) ?  $_GET['enable'] : 0 ;
+       
+        if($e == 1){
+            update_option( 'sendpress_wp_mail' , 'true' ); 
+        } else {
+            update_option( 'sendpress_wp_mail' , 'false' ); 
+        }
+    }
+
     function module_deactivate_sendpress_pro(){
         $path = $_POST['plugin_path'];
         $pro_options = SendPress_Option::get('pro_plugins');
@@ -104,6 +114,45 @@ class SendPress_View_Pro extends SendPress_View{
 		}
 
 		echo '<br class="clear"><br></div>';
+
+        ?>
+        <h2 class="clear" style="padding-left: 18px; padding-top: 30px; padding-bottom: 10px;">Addons</h2>
+        <div class="sendpress-module  mod-first"><div class="inner-module">
+        <h4>WordPress Emails</h4>
+            <form method="post" id="post">
+            <div class="description">
+                Wrap WordPress system emails in a SendPress template and send them via your sending settings.
+                <br><br>
+                
+            </div>
+            <?php 
+                $d = get_option( 'sendpress_wp_mail' , false ); 
+                $sp = is_plugin_active('sendpress-pro/sendpress-pro.php');
+            
+                
+            ?>
+
+
+            <div class="inline-buttons">
+            <?php 
+            if($sp){ 
+                if($d === false ) { ?>
+                    <a class=" btn-success btn-activate btn" href="<?php echo SendPress_Admin::link('Pro',array('action'=>'wp-mail','enable'=>true) ); ?>">Activate</a>
+                <?php } else { ?>
+                    <a class="btn btn-default " href="<?php echo SendPress_Admin::link('Pro',array('action'=>'wp-mail','enable'=>false) ); ?>">Deactivate</a>&nbsp;<a class="btn btn-default module-deactivate-plugin" href="#">Settings</a>
+                <?php } ?>
+            <?php  } else { ?>
+                <a class="btn disabled btn-default btn-activate" href="#">Activate</a>
+            <?php } ?>
+            </div>         
+            
+            </div>
+        </div>
+          <br class="clear">
+        <br><br>
+
+        <?php
+
 
 	}
 

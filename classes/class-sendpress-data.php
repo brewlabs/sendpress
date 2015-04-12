@@ -96,7 +96,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$date = date_i18n('Y-m-d H:i:s', current_time( 'timestamp' ) );
 	
 		//SELECT id FROM wp_sendpress_queue WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 and ( date_sent = '0000-00-00 00:00:00' or date_sent < '2015-03-04 20:24:04' ) 
-		$list = $wpdb->get_results($wpdb->prepare("SELECT id FROM ". SendPress_Data::queue_table() ." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 and ( date_sent = '0000-00-00 00:00:00' or date_sent < %s ) ", $date));
+		$list = $wpdb->get_results($wpdb->prepare("SELECT id FROM ". SendPress_Data::queue_table() ." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 and ( date_sent = '0000-00-00 00:00:00' or date_sent < %s ) LIMIT 50 ", $date));
 		if(!empty($list)){
 
 			$ele = array_rand($list);
@@ -1456,7 +1456,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function import_csv_array($data, $map, $list){
 
 		global $wpdb;
-		$query ="INSERT IGNORE INTO ". SendPress_Data::subscriber_table(). "(email,firstname,lastname,join_date,identity_key) VALUES ";
+		$query ="INSERT IGNORE INTO ". SendPress_Data::subscriber_table(). "(email,firstname,lastname,join_date,registered_ip,identity_key) VALUES ";
 		$total = count($data);
 		$emails_added = array();
 		$x = 0;
@@ -1484,6 +1484,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 					$values .=  "'".date('Y-m-d H:i:s') ."',";
+
+					if(array_key_exists('ip',$map)){
+						$values.="'".esc_sql(trim($line[$map['ip']]),$wpdb->dbh)."',";
+					} else {
+						$values .= "'',";
+					}
+
 					$values .= "'".SendPress_Data::random_code()."'";
 					
 					$query .= " ($values) ";

@@ -7,7 +7,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
-	private $_import_fields = array('email','firstname','lastname');
+	private $_import_fields = array('email','firstname','lastname','ip');
   
 
 	function save(){

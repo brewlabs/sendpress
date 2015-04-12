@@ -486,9 +486,15 @@ Author URI: https://sendpress.com/
 			if( SendPress_Option::get('autocron','no') == 'yes'){
 				return;
 			}
-			if(!SendPress_Manager::limit_reached() ){
-				SendPress_Queue::send_mail_cron();
-			}
+			
+			$cron_url = site_url( 'wp-cron.php').'?&action=sendpress&&silent=1';
+			$cron_request = apply_filters( 'cron_request', array(
+						'url' => $cron_url,
+						'args' => array( 'timeout' => 0.01, 'blocking' => false, 'sslverify' => apply_filters( 'https_local_ssl_verify', true ) )
+			) );
+
+			wp_remote_post( $cron_url, $cron_request['args'] );
+
 		}
 
 		function cron_schedule( $schedules ) {

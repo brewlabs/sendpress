@@ -43,6 +43,7 @@ class SendPress_View_Subscribers_Csvimport extends SendPress_View_Subscribers {
         }
         $filedest = $upload_dir['path'] . '/' . $filename;
 
+        $filedest = str_replace('\\','/', $filedest);
         /**
          * Check write permissions
          */
