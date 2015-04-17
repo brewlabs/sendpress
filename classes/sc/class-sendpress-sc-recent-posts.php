@@ -89,7 +89,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 	  	//$return_string .= '<div>';
 	   	//query_posts($args);
 
-	  	$template = SendPress_SC_Recent_Posts::post_text_only();
+	  	
 
 	   	$query = new WP_Query($args);
 		if($query->have_posts()){
@@ -101,16 +101,18 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 					$template = (strtolower($imgalign) === 'left') ? SendPress_SC_Recent_Posts::post_img_left() : SendPress_SC_Recent_Posts::post_img_right();
 					$img = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), $featuredimg);
 					$template = str_replace('{sp-post-image}',$img[0],$template);
+				} else {
+					$template = SendPress_SC_Recent_Posts::post_text_only();
 				}
 
-				$template = str_replace('{sp-post-link}',get_permalink(),$template);
-				$template = str_replace('{sp-post-title}',get_the_title(),$template);
-				$template = str_replace('{sp-post-excerpt}',get_the_excerpt(),$template);
-				$template = str_replace('{sp-post-readmore}',$readmoretext,$template);
-				$template = str_replace('{sp-post-img-col-width}',$imgcolwidth,$template);
-				$template = str_replace('{sp-post-text-col-width}',$textcolwidth,$template);
-				$template = str_replace('{sp-post-style-title}',$styletitle,$template);
-				$template = str_replace('{sp-post-style-readmore}',$stylereadmore,$template);
+				$template = str_replace( '{sp-post-link}' , get_permalink() ,$template);
+				$template = str_replace( '{sp-post-title}',  get_the_title() ,$template);
+				$template = str_replace( '{sp-post-excerpt}', get_the_excerpt() ,$template);
+				$template = str_replace( '{sp-post-readmore}', $readmoretext ,$template);
+				$template = str_replace( '{sp-post-img-col-width}' , $imgcolwidth ,$template);
+				$template = str_replace( '{sp-post-text-col-width}' , $textcolwidth ,$template);
+				$template = str_replace( '{sp-post-style-title}' , $styletitle ,$template);
+				$template = str_replace( '{sp-post-style-readmore}' , $stylereadmore ,$template);
 
 	          	$imgalign = ($alternate && strtolower($imgalign) === 'left') ? 'right' : 'left';
 
@@ -118,6 +120,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 
 
 	          	$return_string .= $template;
+	          	$template = '';
 			}
 		}
 		wp_reset_postdata();
