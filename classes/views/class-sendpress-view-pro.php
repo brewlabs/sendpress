@@ -116,6 +116,7 @@ class SendPress_View_Pro extends SendPress_View{
 		echo '<br class="clear"><br></div>';
 
         ?>
+        <!--
         <h2 class="clear" style="padding-left: 18px; padding-top: 30px; padding-bottom: 10px;">Addons</h2>
         <div class="sendpress-module  mod-first"><div class="inner-module">
         <h4>WordPress Emails</h4>
@@ -148,6 +149,7 @@ class SendPress_View_Pro extends SendPress_View{
             
             </div>
         </div>
+        -->
           <br class="clear">
         <br><br>
 

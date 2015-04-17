@@ -43,7 +43,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 	public static function output( $atts , $content = null ) {
 		global $post , $wp;
 		$old_post = $post;
-		extract( shortcode_atts( SendPress_Data::options() , $atts ) );
+		extract( shortcode_atts( SendPress_SC_Recent_Posts::options() , $atts ) );
 
 		$args = array('orderby' => 'date', 'order' => 'DESC' , 'showposts' => $posts, 'post_status' => 'publish');
 
@@ -89,7 +89,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 	  	//$return_string .= '<div>';
 	   	//query_posts($args);
 
-	  	$template = SendPress_Data::post_text_only();
+	  	$template = SendPress_SC_Recent_Posts::post_text_only();
 
 	   	$query = new WP_Query($args);
 		if($query->have_posts()){
@@ -98,7 +98,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 
 				if(has_post_thumbnail()){
 					//reset the template because we have an image
-					$template = (strtolower($imgalign) === 'left') ? SendPress_Data::post_img_left() : SendPress_Data::post_img_right();
+					$template = (strtolower($imgalign) === 'left') ? SendPress_SC_Recent_Posts::post_img_left() : SendPress_SC_Recent_Posts::post_img_right();
 					$img = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), $featuredimg);
 					$template = str_replace('{sp-post-image}',$img[0],$template);
 				}
