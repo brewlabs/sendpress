@@ -23,8 +23,6 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 		$db_url = SPNL()->db->url;
 
 
-
-		
 		$url_in_db = $db_url->get( $info->url );  //= SendPress_Data::get_url_by_hash( $hash );
 		
 		if ( $url_in_db == false ) {
@@ -56,8 +54,10 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 
 		SPNL()->db->subscribers_tracker->open( $info->report , $info->id , 2 );
 
-		if(strrpos( $url, "mailto" ) === false){
-				header("Location: $url");
+
+
+		if(strrpos( $url, "mailto" ) !== false){
+			header("Location: $url");
 		} else {
 			wp_redirect( $url );
 		}
