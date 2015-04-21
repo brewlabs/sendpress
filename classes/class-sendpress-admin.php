@@ -15,7 +15,7 @@ class SendPress_Admin {
 	static $_cap = array();
 		static $_primary = array();
 
-	static function link( $classname = false, $params = array()){
+	static function link( $classname = false, $params = array() , $escape = true){
 		if($classname == false){
 			return admin_url( 'admin.php?page=sp-overview');
 		}
@@ -39,8 +39,10 @@ class SendPress_Admin {
 		} else {
 			$params = '';
 		}
-
-		return  admin_url( 'admin.php'. $l . $params );
+		if($escpae == false){
+			return  admin_url( 'admin.php'. $l . $params );
+		}
+		return esc_url( admin_url( 'admin.php'. $l . $params ) );
 	}
 
 
@@ -48,10 +50,11 @@ class SendPress_Admin {
 
 		$url = self::link(  $classname , $params );
 		if ( headers_sent() ) {
-			echo "<script>document.location.href='".$url."';</script>";
+			//echo esc_url( $url );
+			echo "<script>window.location.replace('". esc_url_raw( $url ) ."');</script>";
 		}
 		else {
-			wp_redirect(  $url );
+			wp_redirect(  esc_url_raw( $url ) );
 		}
 		exit;
 	}

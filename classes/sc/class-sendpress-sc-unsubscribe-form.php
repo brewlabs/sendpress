@@ -52,7 +52,7 @@ class SendPress_SC_Unsubscribe_Form extends SendPress_SC_Base {
 			?><form method="post" action="<?php echo home_url(); ?>">
 			<input type="hidden" name="sendpress" value="post" />
 			<input type="hidden" name="sp-shortcode" value="SC-Unsubscribe-Form" />
-			<input type="hidden" name="sp-current-page" value="<?php echo $current_url; ?>" />
+			<input type="hidden" name="sp-current-page" value="<?php echo esc_url( $current_url ); ?>" />
 			<input type="text" name="sp-email" class="sp-input" placeholder="<?php echo $placeholder; ?>"/>
 			<input type="submit" value="<?php echo $btntxt; ?>" />
 			</form><?php
@@ -86,7 +86,7 @@ class SendPress_SC_Unsubscribe_Form extends SendPress_SC_Base {
 
 					
 
-					wp_redirect($permalink);
+					wp_safe_redirect( $permalink );
 				}
 		
 	}

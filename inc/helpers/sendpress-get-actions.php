@@ -21,23 +21,23 @@ switch ( $this->_current_action ) {
                 
                    $this->delete_queue_email($qID);
                 }
-                wp_redirect( '?page='.$_GET['page'] );
+                wp_redirect( esc_url_raw( admin_url('?page='.$_GET['page'] ) ) );
 
             break;
             case 'queue-delete':
                 $email_delete = $_GET['emailID'];
                 $this->delete_queue_email($email_delete);
-                wp_redirect( '?page='.$_GET['page'] );
+                 wp_redirect( esc_url_raw( admin_url('?page='.$_GET['page'] ) ) );
             break;
             case 'requeue':
                 $email = $_GET['emailID'];
                 $this->requeue_email($email);
-                wp_redirect( '?page='.$_GET['page'] );
+                 wp_redirect( esc_url_raw( admin_url('?page='.$_GET['page'] ) ) );
 
             break;
             case 'delete-list':
                 $this->deleteList($_GET['listID']);
-                wp_redirect( '?page='.$_GET['page'] );
+                 wp_redirect( esc_url_raw( admin_url('?page='.$_GET['page'] ) ) );
             break;
             case 'delete-lists-bulk':
                 $list_delete = $_GET['list'];
@@ -45,12 +45,12 @@ switch ( $this->_current_action ) {
                 foreach ($list_delete as $listID) {
                    $this->deleteList($listID);
                 }
-                wp_redirect( '?page='.$_GET['page'] );
+                 wp_redirect( esc_url_raw( admin_url('?page='.$_GET['page'] ) ) );
             break;
 
             case 'delete-subscriber':
                 $this->unlink_list_subscriber($_GET['listID'] , $_GET['subscriberID']);
-                wp_redirect( '?page='.$_GET['page'] .'&view=subscribers&listID='.$_GET['listID']);
+                wp_redirect( esc_url_raw( admin_url( '?page='.$_GET['page'] .'&view=subscribers&listID='.$_GET['listID'] ) ) );
             break;
 
             case 'delete-subscribers-bulk':
@@ -59,13 +59,13 @@ switch ( $this->_current_action ) {
                 foreach ($subscriber_delete as $subscriberID) {
                     $this->unlink_list_subscriber($_GET['listID'] , $subscriberID);
                 }
-               wp_redirect( '?page='.$_GET['page'] .'&view=subscribers&listID='.$_GET['listID']);
+                wp_redirect( esc_url_raw( admin_url( '?page='.$_GET['page'] .'&view=subscribers&listID='.$_GET['listID'] ) ) );
             break;
 
             case 'delete-report':
 
                 SendPress_Posts::report_delete($_GET['reportID']);
-                wp_redirect( '?page='.$_GET['page'] );
+                wp_redirect( esc_url_raw( admin_url('?page='.$_GET['page'] ) ) );
             break;
             case 'delete-reports-bulk':
            
@@ -74,12 +74,12 @@ switch ( $this->_current_action ) {
                 foreach ($email_delete as $emailID) {
                     SendPress_Posts::report_delete($emailID);
                 }
-                wp_redirect( '?page='.$_GET['page'] );
+                wp_redirect( esc_url_raw( admin_url('?page='.$_GET['page'] ) ) );
             break;
             case 'delete-email':
             
                 SendPress_Posts::delete($_GET['emailID']);
-                wp_redirect( '?page='.$_GET['page'] );
+                wp_redirect( esc_url_raw( admin_url('?page='.$_GET['page'] ) ) );
             break;
             case 'delete-emails-bulk':
                 $email_delete = $_GET['email'];
@@ -87,7 +87,7 @@ switch ( $this->_current_action ) {
                 foreach ($email_delete as $emailID) {
                     SendPress_Posts::delete($emailID);
                 }
-                wp_redirect( '?page='.$_GET['page'] );
+                wp_redirect( esc_url_raw( admin_url('?page='.$_GET['page'] ) ) );
             break;
           
             case 'export-list':

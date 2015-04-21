@@ -24,7 +24,7 @@ switch ( $this->_current_action ) {
         }
 
         $this->createList( array('name'=> $name, 'public'=>$public ) );
-        wp_redirect( '?page='.$_GET['page'] );
+         wp_redirect( esc_url_raw( admin_url('?page='.$_GET['page'] ) ) );
     
     break;
 
@@ -41,7 +41,7 @@ switch ( $this->_current_action ) {
 
         $page = apply_filters('sendpress_edit_list_redirect',$_GET['page']);
       
-        wp_redirect( '?page='.$page );
+        wp_redirect( esc_url_raw( admin_url('?page='. $page  ) ) );
     
     break;
 
@@ -76,7 +76,7 @@ switch ( $this->_current_action ) {
         SendPress_Option::set($options);
 
         $this->send_test();
-        wp_redirect( admin_url('admin.php?page=sp-settings&view=account') );
+        wp_redirect( esc_url_raw( admin_url('admin.php?page=sp-settings&view=account') ) );
     
     break;
      case 'feedback-setup':
@@ -91,7 +91,7 @@ switch ( $this->_current_action ) {
         SendPress_Option::set($options);
 
         
-        wp_redirect( admin_url('admin.php?page=sp-settings&view=feedback') );
+        wp_redirect( esc_url_raw( admin_url('admin.php?page=sp-settings&view=feedback') ));
     
     break;
 
@@ -131,7 +131,7 @@ switch ( $this->_current_action ) {
             //$this->linkListSubscriber($listID, $result, 1);
         }
 
-        wp_redirect( '?page='.$_GET['page']. "&view=subscribers&listID=".$listID );
+        wp_redirect(  esc_url_raw( admin_url('?page='.$_GET['page']. "&view=subscribers&listID=".$listID )));
 
     break;
     case 'template-default-style':
@@ -181,7 +181,7 @@ switch ( $this->_current_action ) {
 
        
 
-        wp_redirect( admin_url('admin.php?page=sp-settings&view=styles') );
+        wp_redirect( esc_url_raw( admin_url('admin.php?page=sp-settings&view=styles') ));
 
     break;
 
@@ -237,7 +237,7 @@ switch ( $this->_current_action ) {
         SendPress_Option::set('fromemail', $fromemail );
         SendPress_Option::set('fromname', $fromname );
 
-         wp_redirect( admin_url('admin.php?page=sp-settings') );
+         wp_redirect( esc_url_raw( admin_url('admin.php?page=sp-settings') ));
 
     break;
 
@@ -315,7 +315,7 @@ switch ( $this->_current_action ) {
       $this->log('END ADD QUEUE');
 
 
-        wp_redirect( '?page=sp-queue' );
+        wp_redirect( esc_url_raw(admin_url( '?page=sp-queue' )));
 
     break;
 
@@ -336,7 +336,7 @@ switch ( $this->_current_action ) {
             }
         }
     
-        wp_redirect( '?page='.$_GET['page']. "&view=subscribers&listID=".$listID );
+        wp_redirect( esc_url_raw(admin_url( '?page='.$_GET['page']. "&view=subscribers&listID=".$listID )));
     
     break;
 
@@ -482,7 +482,7 @@ switch ( $this->_current_action ) {
         }
 
         SendPress_Option::set($widget_options);        
-        wp_redirect( admin_url('admin.php?page=sp-settings&view=widget') );
+        wp_redirect( esc_url_raw( admin_url('admin.php?page=sp-settings&view=widget') ) );
 
     break;
 

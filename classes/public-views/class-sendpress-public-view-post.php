@@ -87,7 +87,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			if(isset($_POST['redirect']) && $_POST['redirect'] > 0 ){
 				$plink = get_permalink( $_POST['redirect'] );
 							if($plink != ""){
-								wp_redirect( $plink );
+								wp_redirect( esc_url_raw( $plink ) );
 								exit();
 							}
 			}
@@ -130,12 +130,12 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 						} else {
 							$plink = get_permalink($post_redirect);
 							if($plink != ""){
-								wp_redirect( $plink );
+								wp_safe_redirect( esc_url_raw( $plink) );
 								exit();
 							}
 						}
 
-						wp_redirect($post_redirect);
+						wp_redirect( esc_url_raw( $post_redirect ));
 						exit();
 				break;
 				case "redirect":
@@ -144,7 +144,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 							$post_redirect = site_url();
 						}
 
-						wp_redirect($post_redirect);
+						wp_redirect( esc_url_raw ( $post_redirect ) );
 						exit();
 
 				break;

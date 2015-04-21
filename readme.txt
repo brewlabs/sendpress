@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 4.1.1
-Stable tag: 1.1.4.3
+Stable tag: 1.1.4.21
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,9 +12,7 @@ Easy to use Email Newsletter Plugin for WordPress to create, send, manage and tr
 
 == Description ==
 
-SendPress is a plugin for WordPress that allows to create and send newsletters. You can easily grow your newlsetter subscription list with widgets to gather and manage your subscribers. Built on the WordPress UI you already know creating a newsleter is just as easy as creating a new Post.
-
-Sending great emails and newsletters is something that should be easy and not require a third party system forget MailChimp, Aweber, etc. Start sending great newsletters and tracking what your subscribers are doing.
+SendPress is an easy to use WordPress newsletter plugin that has all the features you need. Create newsletter templates with your style and edit content just like you would a post in WordPress. Easily import post content from your site and schedule newsletters to be sent at the right time. Start sending great emails and newsletters today right from WordPress with our newsletter plugin. 
 
 = Check out our 2 minute run through video =
 
@@ -100,6 +98,15 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.1.4.21 - 2015.4.21 =
+Fix: XSS Fixes and security review
+Fix: Test report stats
+Fix: Manage shortcode display
+Fix: Link tracking for mailto links
+Update: Recent Post shortcode - responsive update
+Update: Added IP to CSV Import
+
 
 = 1.1.4.3 - 2015.4.3 =
 Fix: error_log call removed
@@ -645,6 +652,9 @@ Fix: Some Ajax calls not working on Front End
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.1.4.21 =
+Security Updates and bug fixes
 
 = 1.1.3.17 =
 Manage Page Fix

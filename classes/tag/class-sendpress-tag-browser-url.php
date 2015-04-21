@@ -24,6 +24,8 @@ class SendPress_Tag_Browser_Url extends SendPress_Tag_Base{
 		$link = SendPress_Manager::public_url('email');
 		
 		$email_key = str_replace( '=', '', base64_encode( $email_id ) );
+
+		//Uses a known internal url - 4/20
 		return add_query_arg(array('sid'=> '{sp-subscriber-id-encoded}', 'eid'=> $email_key), $link );
 
 		return $xlink;

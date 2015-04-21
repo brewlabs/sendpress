@@ -18,16 +18,19 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		switch($action){
 			case 'copy':
 				$postid = SendPress_Data::create_settings_post($post['post_subject'], "", $post['copy_from']);
-				wp_redirect( '?page=sp-settings&view=widgets&id='. $postid );
+				//wp_redirect( '?page=sp-settings&view=widgets&id='. $postid );
+				SendPress_Admin::redirect( 'Settings_Widgets' , array( 'id' => $postid ) );
 				break;
 			case 'create':
 
 				$postid = SendPress_Data::create_settings_post($post['post_subject'], $post['form_type']);
-				wp_redirect( '?page=sp-settings&view=widgets&id='. $postid );
+				//wp_redirect( '?page=sp-settings&view=widgets&id='. $postid );
+				SendPress_Admin::redirect( 'Settings_Widgets' , array( 'id' => $postid ) );
 				break;
 			case 'delete':
 				self::delete_form_save($post, $sp);
-				wp_redirect( '?page=sp-settings&view=widgets' );
+				//wp_redirect( '?page=sp-settings&view=widgets' );
+				SendPress_Admin::redirect( 'Settings_Widgets' );
 				break;
 			default:
 				self::save_form($post, $sp);
