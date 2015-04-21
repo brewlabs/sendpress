@@ -646,6 +646,14 @@ function spnl_setup_template_tags() {
 			'function'    => array('SendPress_Tag_Unsubscribe_Link_Html','external'),
 			'internal'    => array('SendPress_Tag_Unsubscribe_Link_Html','internal'),
 			'copy'    => array('SendPress_Tag_Unsubscribe_Link_Html','copy'),
+		),
+
+		array(
+			'tag'         => 'sp-manage-subscription-url',
+			'description' => __( 'Inserts a manage subscription html link.', 'sendpress' ),
+			'function'    => array('SendPress_Tag_Manage_Subscriptions','external'),
+			'internal'    => array('SendPress_Tag_Manage_Subscriptions','internal'),
+			'copy'    => array('SendPress_Tag_Manage_Subscriptions','copy'),
 		)
 		
 

@@ -2254,6 +2254,11 @@ class SendPress_Data extends SendPress_DB_Tables {
 		
 	}
 
+	static function get_system_email_types(){
+		return array("opt_in" => "Opt In","manage_subscriptions" => "Manage Subscriptions");
+		
+	}
+
 	/********************* END Widget Settings functionS **************************/
 
 	/*************************** Templating functions *****************************/
