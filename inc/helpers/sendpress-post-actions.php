@@ -24,7 +24,7 @@ switch ( $this->_current_action ) {
         }
 
         $this->createList( array('name'=> $name, 'public'=>$public ) );
-         wp_redirect( esc_url_raw( admin_url('?page='.$_GET['page'] ) ) );
+         wp_redirect( esc_url_raw( admin_url('admin.php?page='.$_GET['page'] ) ) );
     
     break;
 
@@ -41,7 +41,7 @@ switch ( $this->_current_action ) {
 
         $page = apply_filters('sendpress_edit_list_redirect',$_GET['page']);
       
-        wp_redirect( esc_url_raw( admin_url('?page='. $page  ) ) );
+        wp_redirect( esc_url_raw( admin_url('admin.php?page='. $page  ) ) );
     
     break;
 
@@ -111,7 +111,7 @@ switch ( $this->_current_action ) {
 
         }
 
-        wp_redirect( '?page='.$_GET['page']. "&view=subscribers&listID=".$listID );
+        wp_redirect( 'admin.php?page='.$_GET['page']. "&view=subscribers&listID=".$listID );
         */
     
     break;
@@ -131,7 +131,7 @@ switch ( $this->_current_action ) {
             //$this->linkListSubscriber($listID, $result, 1);
         }
 
-        wp_redirect(  esc_url_raw( admin_url('?page='.$_GET['page']. "&view=subscribers&listID=".$listID )));
+        wp_redirect(  esc_url_raw( admin_url('admin.php?page='.$_GET['page']. "&view=subscribers&listID=".$listID )));
 
     break;
     case 'template-default-style':
@@ -315,7 +315,7 @@ switch ( $this->_current_action ) {
       $this->log('END ADD QUEUE');
 
 
-        wp_redirect( esc_url_raw(admin_url( '?page=sp-queue' )));
+        wp_redirect( esc_url_raw(admin_url( 'admin.php?page=sp-queue' )));
 
     break;
 
@@ -336,7 +336,7 @@ switch ( $this->_current_action ) {
             }
         }
     
-        wp_redirect( esc_url_raw(admin_url( '?page='.$_GET['page']. "&view=subscribers&listID=".$listID )));
+        wp_redirect( esc_url_raw(admin_url( 'admin.php?page='.$_GET['page']. "&view=subscribers&listID=".$listID )));
     
     break;
 
