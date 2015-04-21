@@ -333,7 +333,7 @@ Author URI: https://sendpress.com/
 
 			}
 			add_image_size( 'sendpress-max', 600, 600 );
-			add_filter( 'template_include', array( $this, 'template_include' ) );
+			add_filter( 'template_include', array( $this, 'template_include' ) , 5 );
 			add_action( 'sendpress_cron_action', array( $this,'sendpress_cron_action_run') );
 
 
