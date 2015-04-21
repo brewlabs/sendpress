@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 4.1.1
-Stable tag: 1.1.4.21
+Stable tag: 1.1.4.22
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,6 +99,10 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.1.4.22 - 2015.4.22 =
+Fix: lowered filter priority on 'template_include'
+Fix: Some redirects missing admin.php
+
 = 1.1.4.21 - 2015.4.21 =
 Fix: XSS Fixes and security review
 Fix: Test report stats
@@ -106,7 +110,6 @@ Fix: Manage shortcode display
 Fix: Link tracking for mailto links
 Update: Recent Post shortcode - responsive update
 Update: Added IP to CSV Import
-
 
 = 1.1.4.3 - 2015.4.3 =
 Fix: error_log call removed
