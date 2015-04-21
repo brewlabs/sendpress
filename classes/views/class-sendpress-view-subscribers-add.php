@@ -24,7 +24,7 @@ class SendPress_View_Subscribers_Add extends SendPress_View_Subscribers {
 
         }
 
-        wp_redirect( '?page='.$_GET['page']. "&view=subscribers&listID=".$listID );
+		SendPress_Admin::redirect( 'Subscribers_Subscribers' , array( 'listID' => $listID ) );
 
 	}
 

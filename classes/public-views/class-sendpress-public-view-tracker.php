@@ -57,9 +57,9 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 
 
 		if(strrpos( $url, "mailto" ) !== false){
-			header("Location: $url");
+			header("Location: " . esc_url_raw( $url ) );
 		} else {
-			wp_redirect( $url );
+			wp_redirect( esc_url_raw( $url ) );
 		}
 		exit;
 

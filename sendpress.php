@@ -683,7 +683,8 @@ Author URI: https://sendpress.com/
 		$this->add_caps();
 		$this->maybe_upgrade();
 		if ( !empty($_GET['_wp_http_referer']) && (isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)) ) {
-			wp_redirect( remove_query_arg( array('_wp_http_referer', '_wpnonce'), stripslashes($_SERVER['REQUEST_URI']) ) );
+			//safe redirect with esc_url 4/20
+			wp_safe_redirect( esc_url_raw( remove_query_arg( array('_wp_http_referer', '_wpnonce'), stripslashes($_SERVER['REQUEST_URI']) )) );
 	 		exit;
 		}
 
@@ -853,12 +854,13 @@ Author URI: https://sendpress.com/
 				wp_register_script('sendpress-flot-resize', SENDPRESS_URL .'js/flot/jquery.flot.resize.js' ,'', SENDPRESS_VERSION );
 				
 
-				wp_register_script('sendpress-admin-js', SENDPRESS_URL .'js/sendpress.js','', SENDPRESS_VERSION );
+				wp_register_script('sendpress-admin-js', SENDPRESS_URL .'js/sendpress.js',array('backbone'), SENDPRESS_VERSION );
+				//wp_register_script('sendpress-backbone-js', SENDPRESS_URL .'js/spnl-backbone.js',array('wp-backbone','jquery','underscore'), SENDPRESS_VERSION );
 				wp_register_script('sendpress_bootstrap', SENDPRESS_URL .'bootstrap/js/bootstrap.min.js' ,'',SENDPRESS_VERSION);
 
 				wp_register_style( 'sendpress_bootstrap_css', SENDPRESS_URL . 'bootstrap/css/bootstrap.css', '', SENDPRESS_VERSION );
 
-wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array('sendpress_bootstrap_css','sendpress_css_base'), SENDPRESS_VERSION );
+				wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array('sendpress_bootstrap_css','sendpress_css_base'), SENDPRESS_VERSION );
 				wp_register_style( 'sendpress_css_base', SENDPRESS_URL . 'css/style.css', array('sendpress_bootstrap_css'), SENDPRESS_VERSION );
 
 				wp_register_script('sendpress_ls', SENDPRESS_URL .'js/jquery.autocomplete.js' ,'', SENDPRESS_VERSION );
@@ -889,6 +891,9 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 				wp_enqueue_script('sendpress_ls');
 
     		}
+    		wp_enqueue_script('sendpress-backbone-js');
+
+    		
     			wp_localize_script( 'sendpress-admin-js', 'spvars', array(
 	    // URL to wp-admin/admin-ajax.php to process the request
 	    'ajaxurl'   => admin_url( 'admin-ajax.php' ),
@@ -948,19 +953,19 @@ wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', array
 	    if( isset($_POST['save-action']) ){
 		    switch ( $_POST['save-action'] ) {
 		    	case 'save-confirm-send':
-					 wp_redirect( '?page='.$_GET['page']. '&view=send-confirm&emailID='. $_POST['post_ID'] );
+					 wp_redirect( esc_url_raw(admin_url( '?page='.$_GET['page']. '&view=send-confirm&emailID='. $_POST['post_ID'] )));
 				break;
 				case 'save-style':
-					 wp_redirect( '?page='.$_GET['page']. '&view=style&emailID='. $_POST['post_ID'] );
+					 wp_redirect( esc_url_raw(admin_url( '?page='.$_GET['page']. '&view=style&emailID='. $_POST['post_ID'] )));
 				break;
 				case 'save-create':
-					 wp_redirect( '?page='.$_GET['page']. '&view=style&emailID='. $_POST['post_ID'] );
+					wp_redirect( esc_url_raw(admin_url( '?page='.$_GET['page']. '&view=style&emailID='. $_POST['post_ID'] )));
 				break;
 				case 'save-send':
-					 wp_redirect( '?page='.$_GET['page']. '&view=send&emailID='. $_POST['post_ID'] );
+					wp_redirect( esc_url_raw(admin_url('?page='.$_GET['page']. '&view=send&emailID='. $_POST['post_ID'] )));
 				break;
 				default:
-					wp_redirect( $_POST['_wp_http_referer'] );
+					wp_redirect( esc_url_raw(admin_url($_POST['_wp_http_referer'] )));
 				break;
 		    }
 		}

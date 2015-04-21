@@ -40,7 +40,7 @@ class SendPress_Admin {
 			$params = '';
 		}
 
-		return  admin_url( 'admin.php'. $l . $params );
+		return esc_url( admin_url( 'admin.php'. $l . $params ) );
 	}
 
 
@@ -48,10 +48,10 @@ class SendPress_Admin {
 
 		$url = self::link(  $classname , $params );
 		if ( headers_sent() ) {
-			echo "<script>document.location.href='".$url."';</script>";
+			echo "<script>document.location.href='". esc_url_raw( $url ) ."';</script>";
 		}
 		else {
-			wp_redirect(  $url );
+			wp_safe_redirect( esc_url_raw( $url ) );
 		}
 		exit;
 	}

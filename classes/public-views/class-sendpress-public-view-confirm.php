@@ -30,7 +30,7 @@ class SendPress_Public_View_Confirm extends SendPress_Public_View{
 			if($page != false){
 				$plink = get_permalink($page);
 				if($plink != ""){
-					wp_redirect( $plink );
+					wp_safe_redirect( esc_url_raw( $plink) );
 					exit();
 				}
 

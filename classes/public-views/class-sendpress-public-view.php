@@ -115,10 +115,10 @@ class SendPress_Public_View {
 	static function redirect( $link ){
 		
 		if ( headers_sent() ) {
-			echo "<script>document.location.href='".$link."';</script>"; 
+			echo "<script>document.location.href='" . esc_url_raw( $link ) . "';</script>"; 
 		}
 		else {
-			wp_redirect(  $link ); 
+			wp_redirect(  esc_url_raw( $link ) ); 
 		}
 		exit;
 	}

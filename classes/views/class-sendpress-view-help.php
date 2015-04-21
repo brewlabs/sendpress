@@ -265,10 +265,12 @@ function sp_add_help_widget( $widget_id, $widget_name, $callback, $location =nul
 	if ( $control_callback && current_user_can( 'edit_dashboard' ) && is_callable( $control_callback ) ) {
 		$wp_dashboard_control_callbacks[$widget_id] = $control_callback;
 		if ( isset( $_GET['edit'] ) && $widget_id == $_GET['edit'] ) {
+			//Uses esc_url
 			list($url) = explode( '#', add_query_arg( 'edit', false ), 2 );
 			$widget_name .= ' <span class="postbox-title-action"><a href="' . esc_url( $url ) . '">' . __( 'Cancel' ) . '</a></span>';
 			$callback = '_sp_help_control_callback';
 		} else {
+			//Uses esc_url
 			list($url) = explode( '#', add_query_arg( 'edit', $widget_id ), 2 );
 			$widget_name .= ' <span class="postbox-title-action"><a href="' . esc_url( "$url#$widget_id" ) . '" class="edit-box open-box">' . __( 'Configure' ) . '</a></span>';
 		}
