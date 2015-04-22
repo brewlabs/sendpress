@@ -81,15 +81,12 @@ class SendPress_System_Email_Table extends WP_List_Table {
 			   return $item->$column_name;
 		   
 		   */
-			   case 'subject':
+			case 'subject':
 				$sub = get_post_meta($item->ID, "_sendpress_subject", true);
 				return $sub;
-				case 'lastsend':
-				$date = get_post_meta($item->ID, "send_date", true);
-				if(!empty( $date ) ){
-					return date_i18n(get_option('date_format') ,strtotime($date) );
-				}
-				return '';
+			case 'type':
+				$type = get_post_meta($item->ID, "_system_email_type", true);
+				return ($type === "manage_subscriptions") ? "Manage Subscription" : "Double Opt-in";
 			case 'created':
 				 return date_i18n(get_option('date_format') , strtotime( $item->post_date ) );
 			
@@ -99,11 +96,11 @@ class SendPress_System_Email_Table extends WP_List_Table {
 				
 				$editwindow = 'style';
 				if(get_post_meta($item->ID  , '_sendpress_system', true) == 'new'){
-					$editwindow = 'edit';
+					$editwindow = 'emailedit';
 				}
-				$a .= '<a class="btn btn-primary" href="?page='.$_REQUEST['page'].'&view='.$editwindow.'&emailID='. $item->ID .'"><span class="glyphicon glyphicon-edit"></span> '. __('Content','sendpress') .'</a> ';
-				$a = apply_filters('sendpress_email_table', $a, $item);
-				$a .= '<a class="btn  btn-success " href="'. SendPress_Admin::link('Emails_Autoedit').'&emailID='. $item->ID .'"><span class="glyphicon glyphicon-cog"></span> Settings</a>';
+				$a .= '<a class="btn btn-primary" href="?page='.$_REQUEST['page'].'&view='.$editwindow.'&emailID='. $item->ID .'"><span class="glyphicon glyphicon-edit"></span> '. __('Edit','sendpress') .'</a> ';
+				//$a = apply_filters('sendpress_email_table', $a, $item);
+				//$a .= '<a class="btn  btn-success " href="'. SendPress_Admin::link('Emails_Autoedit').'&emailID='. $item->ID .'"><span class="glyphicon glyphicon-cog"></span> Settings</a>';
 				
 
 				$a .= '</div>';
@@ -186,7 +183,7 @@ class SendPress_System_Email_Table extends WP_List_Table {
 			/*'title' => 'Email Template',*/
 			'subject' => __('Subject','sendpress'),
 			'created' => __('Created','sendpress'),
-			'lastsend' => __('Last Send','sendpress'),
+			'type' => __('Type','sendpress'),
 			'actions' => ''
 			//'count_subscribers' => 'Subscribers'
 

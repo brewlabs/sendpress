@@ -12,7 +12,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 * @uses     SendPress_View
 *
 * @package  SendPress
-* @since 0.8.7
+* @since 1.0
 *
 */
 class SendPress_View_Settings_Systememailcreate extends SendPress_View_Settings {
@@ -23,6 +23,7 @@ class SendPress_View_Settings_Systememailcreate extends SendPress_View_Settings 
         // Update post 37 (37!)
 
         $my_post = _wp_translate_postdata(true);
+        $system_emais = SendPress_Option::base_get('system-emails');
         /*            
         $my_post['ID'] = $_POST['post_ID'];
         $my_post['post_content'] = $_POST['content'];
@@ -43,8 +44,13 @@ class SendPress_View_Settings_Systememailcreate extends SendPress_View_Settings 
         delete_transient( 'sendpress_email_html_'. $my_post['ID'] );
 
         
-        SendPress_Admin::redirect( 'Emails_Edit' , array('emailID' =>  $my_post['ID']  )   );
+        SendPress_Admin::redirect( 'Settings_Systememailedit' , array('emailID' =>  $my_post['ID']  )   );
     	
+
+    	if( !in_array($_POST['email_type'],$system_emais) ){
+    		$system_emais[] = $_POST['email_type'];
+    	}
+    	SendPress_Option::base_set('system-emails',$system_emais);
         
         //$this->save_redirect( $_POST  );
 
