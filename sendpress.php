@@ -1,7 +1,7 @@
 <?php
 /**
 Plugin Name: SendPress Newsletters
-Version: 1.1.4.21
+Version: 1.1.4.22
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -16,7 +16,7 @@ Author URI: https://sendpress.com/
 	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 	define( 'SENDPRESS_API_VERSION', 1 );
 	define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-	define( 'SENDPRESS_VERSION', '1.1.4.21' );
+	define( 'SENDPRESS_VERSION', '1.1.4.22' );
 	define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -333,7 +333,7 @@ Author URI: https://sendpress.com/
 
 			}
 			add_image_size( 'sendpress-max', 600, 600 );
-			add_filter( 'template_include', array( $this, 'template_include' ) );
+			add_filter( 'template_include', array( $this, 'template_include' ) , 5 );
 			add_action( 'sendpress_cron_action', array( $this,'sendpress_cron_action_run') );
 
 
@@ -470,7 +470,7 @@ Author URI: https://sendpress.com/
 				$ready = false;
 				$this->show_message('settings');
 			}
-	 */
+	 		*/
 
 			$this->ready = $ready;
 		}
@@ -2264,10 +2264,10 @@ Author URI: https://sendpress.com/
 
 }// End SP CLASS
 
-add_filter( 'query_vars', array( 'SendPress', 'add_vars' ) );
-add_action('admin_init', array( 'SendPress', 'add_cron' ) );
-register_activation_hook( __FILE__, array( 'SendPress', 'plugin_activation' ) );
-register_deactivation_hook( __FILE__, array( 'SendPress', 'plugin_deactivation' ) );
+add_filter( 'query_vars' , array( 'SendPress', 'add_vars' ) );
+add_action( 'admin_init' , array( 'SendPress', 'add_cron' ) );
+register_activation_hook( __FILE__ , array( 'SendPress' , 'plugin_activation' ) );
+register_deactivation_hook( __FILE__ , array( 'SendPress' , 'plugin_deactivation' ) );
 add_action( 'wpmu_new_blog', array('SendPress','on_activate_blog' ));
 add_action( 'activate_blog', array('SendPress','on_activate_blog' ));
 
