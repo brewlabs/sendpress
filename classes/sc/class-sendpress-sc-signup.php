@@ -48,6 +48,7 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 	public static function output( $atts , $content = null ) {
 		global $load_signup_js, $sendpress_show_thanks, $sendpress_signup_error;
 		$load_signup_js = true;
+		$sendpress_signup_exists = __("You've already signed up, Thanks!",'sendpress');
 
 
 	   	$lists = SendPress_Data::get_lists(
@@ -83,7 +84,7 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 					}
 
 				?>
-
+				<div id="exists"><?php echo $sendpress_signup_exists; ?></div>
 				<div id="error"><?php echo $sendpress_signup_error; ?></div>
 				<div id="thanks" <?php if( $sendpress_show_thanks ){ echo 'style="display:block;"'; }else{ echo 'style="display:none;"'; } ?>><?php echo $thank_you; ?></div>
 				<div id="form-wrap" <?php if( $sendpress_show_thanks ){ echo 'style="display:none;"'; } ?>>

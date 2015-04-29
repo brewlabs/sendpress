@@ -2254,6 +2254,22 @@ class SendPress_Data extends SendPress_DB_Tables {
 		
 	}
 
+	static function get_system_email_types(){
+		$system_emails = SendPress_Option::base_get('system-emails');
+		$defaults = array("opt_in" => "Opt In","manage_subscriptions" => "Manage Subscriptions");
+
+		foreach ($system_emails as $key => $value) {
+			unset($defaults[$value]);
+		}
+
+		if(count($defaults) === 0){
+			return false;
+		}
+
+		return $defaults;
+		
+	}
+
 	/********************* END Widget Settings functionS **************************/
 
 	/*************************** Templating functions *****************************/
@@ -2271,5 +2287,33 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 	/*************************** Templating functions *****************************/
+
+	public static function manage_sub_content(){
+		return "Howdy.
+
+		Here is your link from *|SITE:TITLE|*.  Clicking the link will bring you to a personalized form so you can manage your subscriptions.
+
+		-----------------------------------------------------------
+		MANAGE YOUR SUBSCRIPTIONS BY VISITING THE LINK BELOW:
+
+		{sp-manage-subscription-url}
+
+		-----------------------------------------------------------
+		If you do not want to manage your subscriptions, simply ignore this message.
+		";
+	}
+
+	public static function get_sysemail_content($type){
+		$ret = '';
+		switch($type){
+			case 'opt_in':
+				$ret = SendPress_Data::optin_content();
+			break;
+			case 'manage_subscriptions':
+				$ret = SendPress_Data::manage_sub_content();
+			break;
+		}
+		return $ret;
+	}
 
 }
