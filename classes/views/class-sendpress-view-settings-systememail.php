@@ -22,10 +22,16 @@ class SendPress_View_Settings_Systememail extends SendPress_View_Settings{
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="email-filter" method="get">
 		<div id="taskbar" class="lists-dashboard rounded group">
-
-		<div id="button-area">
-			<a class="btn btn-primary btn-large" href="?page=<?php echo $_REQUEST['page']; ?>&view=systememailcreate"><?php _e('Create System E-mail','sendpress'); ?></a>
-		</div>
+		<?php 
+			$form_types = SendPress_Data::get_system_email_types(); 
+			if($form_types){
+			?>
+				<div id="button-area">
+					<a class="btn btn-primary btn-large" href="?page=<?php echo $_REQUEST['page']; ?>&view=systememailcreate"><?php _e('Create System E-mail','sendpress'); ?></a>
+				</div>
+			<?php
+			}
+			?>
 
 	</div>
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
@@ -35,6 +41,10 @@ class SendPress_View_Settings_Systememail extends SendPress_View_Settings{
 	    <?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
 	<?php
+	}
+
+	function view_buttons(){
+
 	}
 
 }

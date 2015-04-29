@@ -23,13 +23,14 @@ class SendPress_View_Settings_Systememailcreate extends SendPress_View_Settings 
         // Update post 37 (37!)
 
         $my_post = _wp_translate_postdata(true);
-        $system_emais = SendPress_Option::base_get('system-emails');
+        $system_emails = SendPress_Option::base_get('system-emails');
         /*            
         $my_post['ID'] = $_POST['post_ID'];
         $my_post['post_content'] = $_POST['content'];
         $my_post['post_title'] = $_POST['post_title'];
         */
         $my_post['post_status'] = 'sp-systememail';
+        $my_post['content'] = SendPress_Data::get_sysemail_content($_POST['email_type']);
         // Update the post into the database
         wp_update_post( $my_post );
         update_post_meta( $my_post['ID'], '_sendpress_subject', $_POST['post_subject'] );
@@ -43,14 +44,12 @@ class SendPress_View_Settings_Systememailcreate extends SendPress_View_Settings 
         //clear the cached file.
         delete_transient( 'sendpress_email_html_'. $my_post['ID'] );
 
-        
-        SendPress_Admin::redirect( 'Settings_Systememailedit' , array('emailID' =>  $my_post['ID']  )   );
-    	
-
-    	if( !in_array($_POST['email_type'],$system_emais) ){
-    		$system_emais[] = $_POST['email_type'];
+        if( !in_array($_POST['email_type'],$system_emails) ){
+    		$system_emails[] = $_POST['email_type'];
     	}
-    	SendPress_Option::base_set('system-emails',$system_emais);
+    	SendPress_Option::base_set('system-emails',$system_emails);
+        
+        SendPress_Admin::redirect( 'Settings_emailedit' , array('emailID' =>  $my_post['ID']  )   );
         
         //$this->save_redirect( $_POST  );
 
@@ -145,18 +144,22 @@ class SendPress_View_Settings_Systememailcreate extends SendPress_View_Settings 
 			<?php $this->panel_start( __('Email Type','sendpress') ); ?>
 			<?php
 				$form_types = SendPress_Data::get_system_email_types();
+
+				if($form_types){
 				?>
-				
-				<select class="form-control" name="email_type" id="email_type">
-					<option value="0"></option>
-					<?php
-						foreach ($form_types as $key => $value) {
-							echo '<option value="'.$key .'">' . $value . '</option>';
-						}
-					?>
-				
-				</select>
-			<?php $this->panel_end(  ); ?>
+					<select class="form-control" name="email_type" id="email_type">
+						<option value="0"></option>
+						<?php
+							foreach ($form_types as $key => $value) {
+								echo '<option value="'.$key .'">' . $value . '</option>';
+							}
+						?>
+					
+					</select>
+				<?php 
+				}
+
+				$this->panel_end(  ); ?>
 			</div>
 			</div>
 
@@ -168,6 +171,10 @@ class SendPress_View_Settings_Systememailcreate extends SendPress_View_Settings 
 		 </form>
 		 
 		<?php
+	}
+
+	function view_buttons(){
+
 	}
 
 }
