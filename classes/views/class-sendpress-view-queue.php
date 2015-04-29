@@ -151,8 +151,25 @@ echo $time;//11:09
 		$time = date('H:i:s', $time_delay);
 
 echo $time;//11:09
-	*/
-     
+	*/ $autocron = SendPress_Option::get('autocron','no');
+	 	if($autocron == 'yes') {
+
+	  		$api_info = json_decode( SendPress_Cron::get_info() );
+
+	  		if(isset( $api_info->active) &&  $api_info->active === 0 ){
+	  			echo "<p class='alert alert-danger'><strong>Oh no!</strong> It looks like AutoCron disconnected itself. To get max send speed please re-enable it <a href='".SendPress_Admin::link('Settings_Account')."'>here</a>.</p>";
+				delete_transient('sendpress_autocron_cache');
+	  			SendPress_Option::set('autocron','no');
+	  		} else {
+
+	  		if(isset( $api_info->lastcheck)){
+				echo "<p class='alert alert-success'><strong>Looking good!</strong> Autocron is running and last checked your site at:&nbsp;" . $api_info->lastcheck ." UTC</p>";
+			}
+			}
+		} else {
+			echo "<p class='alert alert-danger'><strong>Oh snap!</strong> It looks like AutoCron was not enabled or it disconnected itself. To get max send speed please re-enable it <a href='".SendPress_Admin::link('Settings_Account')."'>here</a>.</p>";
+		}
+
 	?>
 
 <br>
@@ -181,15 +198,10 @@ echo $time;//11:09
 	  $emails_per_hour =  SendPress_Option::get('emails-per-hour');
 	  $hourly_emails = SendPress_Data::emails_sent_in_queue("hour");
 	  $emails_so_far = SendPress_Data::emails_sent_in_queue("day");
-	  $autocron = SendPress_Option::get('autocron','no');
+	 
 		//print_r(SendPress_Data::emails_stuck_in_queue());
 
-	  	if($autocron == 'yes') {
-	  		$api_info = json_decode( SendPress_Cron::get_info() );
-	  		if(isset( $api_info->lastcheck)){
-				echo "<b>Autocron last check:&nbsp;" . $api_info->lastcheck ." UTC</b><br>";
-			}
-		}
+	  	
 		?>
 
 		
@@ -201,10 +213,25 @@ echo $time;//11:09
 $offset = get_option( 'gmt_offset' ) * 60 * 60; // Time offset in seconds
 $local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
 
+
+
+
+
+
+
+
+
 ?><br><small><?php _e('The cron will run again around','sendpress'); ?>: <?php
 echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $local_timestamp);
 ?></small>
-<?php }  ?>
+<?php } 
+
+
+
+
+
+
+ ?>
  		<br><br>
 		</div>
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->

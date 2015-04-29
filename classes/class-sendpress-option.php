@@ -212,6 +212,26 @@ class SendPress_Option extends SendPress_Base {
 	}	
 
 
+	static function set_sender($sender, $settings_array ){
+		$optkey = 'sendpress_sender_settings';
+		$options = get_option( $optkey );
+		$options[$sender] = self::_encrypt( serialize( $settings_array) , SENDPRESS_SENDER_KEY);
+
+		return update_option( $optkey , $options);
+	}	
+
+	static function get_sender( $sender ){
+		$optkey = 'sendpress_sender_settings';
+		$options = get_option( $optkey );
+		return unserialize( self::_decrypt( $options[$sender] , SENDPRESS_SENDER_KEY));
+	}	
+
+
+
+
+	
+
+
 
 	static function check_for_keys(){
 		$options = get_option( self::$key );

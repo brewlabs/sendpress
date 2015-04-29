@@ -21,7 +21,7 @@ Author URI: https://sendpress.com/
 	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
 	define( 'SENDPRESS_IRON','http://sendpress.com/iron');
-
+	define('SENDPRESS_SENDER_KEY', md5( __FILE__ . $blog_id ) );
    	define('SENDPRESS_CRON', md5( __FILE__ . $blog_id ) );
 
 	if ( ! defined( 'SENDPRESS_FILE' ) ) {

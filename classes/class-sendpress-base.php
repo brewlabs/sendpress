@@ -11,9 +11,9 @@ class SendPress_Base {
 	 /**
      * Encrypt text data
      **/
-    static  function _encrypt( $text ) {
+    static  function _encrypt( $text, $key = 'E0fRGYRjiMlAZsubeDYzPfpJHuUjRWigHuSRRFkm1wKPCrjeKM' ) {
         if  ( function_exists( 'mcrypt_encrypt' ) ) {
-            return base64_encode( @mcrypt_encrypt( MCRYPT_RIJNDAEL_256, 'E0fRGYRjiMlAZsubeDYzPfpJHuUjRWigHuSRRFkm1wKPCrjeKM', $text, MCRYPT_MODE_ECB ) );
+            return base64_encode( @mcrypt_encrypt( MCRYPT_RIJNDAEL_256, $key, $text, MCRYPT_MODE_ECB ) );
         } else {
             return $text;
         }
@@ -22,9 +22,9 @@ class SendPress_Base {
     /**
      * Decrypt Text Data
      **/
-   static  function _decrypt( $text ) {
+   static  function _decrypt( $text, $key = 'E0fRGYRjiMlAZsubeDYzPfpJHuUjRWigHuSRRFkm1wKPCrjeKM' ) {
         if ( function_exists( 'mcrypt_decrypt' ) ) {
-            return trim( @mcrypt_decrypt( MCRYPT_RIJNDAEL_256, 'E0fRGYRjiMlAZsubeDYzPfpJHuUjRWigHuSRRFkm1wKPCrjeKM', base64_decode( $text ), MCRYPT_MODE_ECB ) );
+            return trim( @mcrypt_decrypt( MCRYPT_RIJNDAEL_256, $key, base64_decode( $text ), MCRYPT_MODE_ECB ) );
         } else {
             return $text;
         }
