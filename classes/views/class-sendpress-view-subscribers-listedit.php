@@ -25,6 +25,9 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
       
         update_post_meta($listid, '_test_list', $_POST['test_list']);
 		update_post_meta($listid, 'sync_role', $_POST['sync_role']);
+		update_post_meta($listid, 'meta-key', $_POST['meta-key']);
+		update_post_meta($listid, 'meta-compare', $_POST['meta-compare']);
+		update_post_meta($listid, 'meta-value', $_POST['meta-value']);
       	SendPress_Admin::redirect('Subscribers');
 	}
 	
@@ -76,7 +79,27 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
     		<input type="radio" name="sync_role" value="<?php echo $role_name ?>" <?php echo $d; ?> /> <?php echo translate_user_role($role_info['name']); ?><br>
     		
        
-  <?php endforeach; ?>
+  			<?php endforeach; ?>
+  			<?php 
+  			if( $roles == 'meta'){
+	   	 		$d = 'checked';
+	   	 	} else {
+	   	 		$d = '';
+	   	 	}
+  			?>
+
+
+
+  			<input type="radio" name="sync_role" value="meta"  <?php echo $d; ?> /> <?php _e('User Meta Query - Advanced','sendpress'); ?> ( <?php _e('Use this to sync a list based on user meta data.','sendpress'); ?> )<br><br>
+	   		<label>Meta Key</label>
+  			<input type="text" name="meta-key" value="<?php echo get_post_meta($listinfo->ID, 'meta-key', true); ?>" />
+			<?php $this->select('meta-compare', get_post_meta($listinfo->ID, 'meta-compare', true) , array( '=', '!=', '>', '>=', '<', '<=', 'LIKE', 'NOT LIKE', 'IN', 'NOT IN') ); ?>
+
+			<label>Meta Value</label>
+  			<input type="text" name="meta-value" value="<?php echo get_post_meta($listinfo->ID, 'meta-value', true); ?>" />
+
+
+
 	   	<?php wp_nonce_field($sp->_nonce_value); ?>
 	</form>
 	<?php

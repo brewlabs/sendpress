@@ -46,12 +46,36 @@ class SendPress_View_Subscribers_Sync extends SendPress_View_Subscribers {
 		*/
 		$role_to_sync = get_post_meta($_GET['listID'],'sync_role',true);
 		SendPress_Data::drop_active_subscribers_for_sync( $_GET['listID'] );
-		$result = count_users();
+
+		if( $role_to_sync == 'meta' ){
+			$meta_key = get_post_meta( $_GET['listID'],'meta-key',true);
+			$meta_value = get_post_meta( $_GET['listID'],'meta-value',true);
+			$meta_compare = get_post_meta( $_GET['listID'],'meta-compare',true);
+			// WP_User_Query arguments
+			$args = array (
+				'meta_query'     => array(
+					array(
+						'key'       => $meta_key,
+						'value'     => $meta_value,
+						'compare'   => $meta_compare,
+					),
+				),
+			);
+			$user_query = new WP_User_Query( $args );
+
+			$blogusers = $user_query->get_total();
+			
+
+			
+		} else {
+
+			$result = count_users();
 			foreach($result['avail_roles'] as $role => $count){
 				if($role == $role_to_sync){
 					$blogusers = $count;
 				}
 			}
+		}
 		//$blogusers = get_users( 'role=' . $role );
 		//echo count($blogusers);
     	?>

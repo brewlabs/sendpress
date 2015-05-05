@@ -269,7 +269,14 @@ class SendPress_Ajax_Loader{
 		$offset = isset($_POST['offset']) ? $_POST['offset'] : 0;
 		$role = get_post_meta( $listid,'sync_role',true);
 		$load = SendPress_Option::get('sync-per-call',250);
-		$blogusers = get_users( 'role=' . $role .'&number='.$load.'&offset='. $offset );
+		if( $role != 'meta'){
+			$blogusers = get_users( 'role=' . $role .'&number='.$load.'&offset='. $offset );
+		} else {
+			$meta_key = get_post_meta( $listid,'meta-key',true);
+			$meta_value = get_post_meta( $listid,'meta-value',true);
+			$meta_compare = get_post_meta( $listid,'meta-compare',true);
+			$blogusers = get_users( 'meta_key=' .$meta_key. '&meta_value=' .$meta_value. '&meta_compare=' .$meta_compare. '&number='.$load.'&offset='. $offset );
+		}
 		$email_list = array();
 		foreach ($blogusers as $user) {
 		SendPress_Data::update_subscriber_by_wp_user( $user->ID , array('email'=>$user->user_email,'firstname'=>$user->first_name,'lastname'=>$user->last_name) );
