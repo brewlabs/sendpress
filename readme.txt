@@ -661,6 +661,9 @@ Fix: Some Ajax calls not working on Front End
 
 == Upgrade Notice ==
 
+= 1.1.5.4 =
+Bug fixes from security updates
+
 = 1.1.4.21 =
 Security Updates and bug fixes
 
