@@ -28,7 +28,10 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 			 'textcolwidth' => '60%',
 			 'stylereadmore' => '',
 			 'styletitle' => '',
-			 'featuredimg' => 'thumbnail'
+			 'featuredimg' => 'thumbnail',
+			 'cat' => '',
+			 'tag' => '',
+			 'category_name' => ''
 			);
 	}
 
@@ -78,6 +81,18 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 		if(strlen($featuredimg) === 0){
 			$featuredimg = 'thumbnail';
 		}
+
+		if(strlen($cat) > 0){
+			$args['cat'] = $cat;
+		}
+		if(strlen($category_name) > 0){
+			$args['category_name'] = $category_name;
+		}
+		if(strlen($tag) > 0){
+			$args['tag'] = $tag;
+		}
+
+		//SendPress_Error::log($args);
 
 		$return_string = '';
 	   	if($content){
