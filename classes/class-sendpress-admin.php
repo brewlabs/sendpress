@@ -39,7 +39,7 @@ class SendPress_Admin {
 		} else {
 			$params = '';
 		}
-		if($escpae == false){
+		if($escape == false){
 			return  admin_url( 'admin.php'. $l . $params );
 		}
 		return esc_url( admin_url( 'admin.php'. $l . $params ) );
@@ -48,7 +48,7 @@ class SendPress_Admin {
 
 	static function redirect( $classname =false , $params = array() ){
 
-		$url = self::link(  $classname , $params );
+		$url = self::link(  $classname , $params , false);
 		if ( headers_sent() ) {
 			//echo esc_url( $url );
 			echo "<script>window.location.replace('". esc_url_raw( $url ) ."');</script>";

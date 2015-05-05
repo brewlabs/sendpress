@@ -63,7 +63,7 @@ class SendPress_View_Subscribers_Sync extends SendPress_View_Subscribers {
 <div class='well' id="sync-wordpress-roles">
 <h2><strong><?php _e('Syncing ','sendpress'); ?> <?php echo ucwords($role); ?> <?php _e(' Role to List','sendpress'); ?>  <?php echo get_the_title($_GET['listID']); ?> </strong></h2>
 <br>
-<!-- <p>email:  <?php echo stripslashes(esc_attr( htmlspecialchars( $subject ) )); ?></p>-->
+
 <div class="progress progress-striped active">
 	<div class="progress-bar sp-queueit" style="width: 0%;"></div>
 </div>

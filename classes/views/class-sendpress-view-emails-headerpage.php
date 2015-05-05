@@ -12,7 +12,7 @@ class SendPress_View_Emails_Headerpage extends SendPress_View_Emails {
 		$saveid = $_POST['templateID'];
       
         update_post_meta( $saveid, '_header_page', $_POST['header-content'] );
-       
+        SendPress_Admin::redirect('Emails_Headerpage',array('templateID' => $saveid));
         }
    
    function html($sp) { 

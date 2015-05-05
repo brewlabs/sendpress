@@ -12,7 +12,7 @@ class SendPress_View_Emails_Footerpage extends SendPress_View_Emails {
 		$saveid = $_POST['templateID'];
       
         update_post_meta( $saveid, '_footer_page', $_POST['footer-content'] );
-       
+        SendPress_Admin::redirect('Emails_Footerpage',array('templateID' => $saveid));
         }
    
    function html($sp) { 

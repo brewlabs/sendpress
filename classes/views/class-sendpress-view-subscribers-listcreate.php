@@ -41,14 +41,11 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
 	   	
 	   	 <?php 
 
-	   	$roles = get_post_meta($listinfo->ID, 'sync_role', true);
-	   	if($roles == false){
-	   		$roles = 'none';
-	   	}
-	   	$d ='';
-	   	if( $roles == 'none'){
+	 
+	   $roles = 'none';
 	   	 		$d = 'checked';
-	   	 	}
+	   	 	
+
 	   	?>
 	   	<p><H4><?php _e('Select List Type','sendpress'); ?></h4>
 	   		<?php _e('Pick SendPress list if you want to use SendPress to manage your subscribers. Pick a WordPress Role if you want to send emails to your users. <br>Synced lists can only have users that have a login to your WordPress site.','sendpress'); ?></p>
