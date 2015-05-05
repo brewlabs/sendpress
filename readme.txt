@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
-Tested up to: 4.1.2
-Stable tag: 1.1.4.22
+Tested up to: 4.2
+Stable tag: 1.1.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.1.5.4 - 2015.5.4 =
+Fix: Update redirects causing premission issue
+Fix: Removed unused vars
+Fix: Small bug fixes
 
 = 1.1.4.22 - 2015.4.22 =
 Fix: lowered filter priority on 'template_include'
