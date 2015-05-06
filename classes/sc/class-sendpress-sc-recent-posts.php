@@ -131,9 +131,6 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 
 	          	$imgalign = ($alternate && strtolower($imgalign) === 'left') ? 'right' : 'left';
 
-
-
-
 	          	$return_string .= $template;
 	          	$template = '';
 			}
