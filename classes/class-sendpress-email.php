@@ -122,6 +122,7 @@ class SendPress_Email {
 	function html(){
 			$post_template = $this->id();
 			global $wpdb;
+			
 			//$email =  $this->email();
 			// Get any existing copy of our transient data
 			if( SendPress_Email_Cache::get( $this->id() ) != null ){

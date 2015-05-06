@@ -31,7 +31,7 @@ class SendPress_Tag_Footer_Page extends SendPress_Tag_Base  {
 			}
 
 			//$content = SendPress_Template::link_style($link, $content);
-
+			add_filter( 'bj_lazy_load_run_filter', '__return_false' );
 			remove_filter('the_content','wpautop');
 			$content = apply_filters('the_content', $content);
 			add_filter('the_content','wpautop');

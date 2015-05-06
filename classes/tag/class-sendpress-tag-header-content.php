@@ -31,6 +31,7 @@ class SendPress_Tag_Header_Content extends SendPress_Tag_Base  {
 			// get_post_meta($email_id);
 			//$content = $content_post->post_content;
 			//remove_filter('the_content','wpautop');
+			add_filter( 'bj_lazy_load_run_filter', '__return_false' );
 			$content = apply_filters('the_content', $content);
 			add_filter('the_content','wpautop');
 			$content = str_replace(']]>', ']]&gt;', $content);

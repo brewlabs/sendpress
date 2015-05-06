@@ -17,6 +17,7 @@ class SendPress_Tag_Content_Area_One extends SendPress_Tag_Base  {
 	}
 	
 	static function external( $template_id ,  $email_id , $subscriber_id, $example , $x = false){
+		add_filter( 'bj_lazy_load_run_filter', '__return_false' );
 		if( $example == false ){
 			do_action('sendpress_template_loaded');
 			
