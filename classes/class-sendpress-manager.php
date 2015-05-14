@@ -415,8 +415,11 @@ class SendPress_Manager {
 	   		}
 	   		return $sender->send_email( $to, $subject, $body, $text, $test, $sid , $list_id, $report_id );
    		}
+   		return false;
+   		/*
    		$website = new SendPress_Sender_Website();
    		return  $website->send_email( $to, $subject, $body, $text, $test, $sid , $list_id, $report_id );
+   		*/
 
 	}
 
