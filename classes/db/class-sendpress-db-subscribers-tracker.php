@@ -29,6 +29,7 @@ class SendPress_DB_Subscribers_Tracker extends SendPress_DB {
 			'opened_count'    => '%s',
 			'sent_at' 		  => '%s',
 			'status'          => '%d',
+			'type'			  => '%d',
 			'subscriber_id'   => '%d',
 		);
 	}
@@ -43,7 +44,8 @@ class SendPress_DB_Subscribers_Tracker extends SendPress_DB {
 		return array(
 			'sent_at' => get_gmt_from_date( date('Y-m-d H:i:s') ),
 			'status'  => 0,
-			'opened_count' => 0
+			'opened_count' => 0,
+			'type' => 0
 		);
 	}
 
@@ -174,9 +176,10 @@ class SendPress_DB_Subscribers_Tracker extends SendPress_DB {
 		  	sent_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
 		  	opened_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 		  	status tinyint(4) NOT NULL DEFAULT '0',
+		  	type tinyint(4) NOT NULL DEFAULT '0',
 		  	opened_count int(11) unsigned NOT NULL,
-		  	PRIMARY KEY  (subscriber_id,email_id)
-		  	
+		  	PRIMARY KEY  (subscriber_id,email_id),
+		  	KEY  type
 			) $collate;";
 
 

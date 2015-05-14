@@ -55,7 +55,7 @@ class SendPress_Cron {
                 $count = SendPress_Data::emails_in_queue();
                 $bg = 0;
                 if($count > 0){
-                     SendPress_Queue::send_mail();
+                    SendPress_Queue::send_mail();
                     $count = SendPress_Data::emails_in_queue();
                 } else {
                     SPNL()->log->prune_logs();

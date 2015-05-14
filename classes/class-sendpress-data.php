@@ -1247,6 +1247,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function add_subscribe_event( $sid, $lid, $type ){
 		global $wpdb;
 
+
+		/*
 		$event_type = 'unknown_event_type';
 		if( is_numeric($type) ){
 
@@ -1269,7 +1271,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		);
 		
 		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $event_data);
-
+		*/
 		//if instant, check if we need a notification and send one
 		SendPress_Notifications_Manager::send_instant_notification($event_data);
 	}

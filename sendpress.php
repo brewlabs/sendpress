@@ -1,7 +1,7 @@
 <?php
 /**
 Plugin Name: SendPress Newsletters
-Version: 1.1.5.4
+Version: 1.1.5.5
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -16,7 +16,7 @@ Author URI: https://sendpress.com/
 	defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 	define( 'SENDPRESS_API_VERSION', 1 );
 	define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-	define( 'SENDPRESS_VERSION', '1.1.5.4' );
+	define( 'SENDPRESS_VERSION', '1.1.5.5' );
 	define( 'SENDPRESS_URL', plugin_dir_url(__FILE__) );
 	define( 'SENDPRESS_PATH', plugin_dir_path(__FILE__) );
 	define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -729,13 +729,7 @@ Author URI: https://sendpress.com/
 
 		*/
 
-		wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' ,'', SENDPRESS_VERSION);
-
-
-		wp_register_style( 'sendpress_css_admin', SENDPRESS_URL . 'css/admin.css', false, SENDPRESS_VERSION );
-    	wp_enqueue_style( 'sendpress_css_admin' );
-    	wp_register_script('sendpress-widget-js', SENDPRESS_URL .'js/sendpress.widget.js','', SENDPRESS_VERSION );
-
+		
 
 
 
@@ -842,6 +836,11 @@ Author URI: https://sendpress.com/
 
 			global $pagenow;
 
+			wp_register_script('sendpress-widget-js', SENDPRESS_URL .'js/sendpress.widget.js','', SENDPRESS_VERSION );
+			if( $pagenow === 'widgets.php' ){
+    			wp_enqueue_script('sendpress-widget-js');
+    		}
+
     		//MAKE SURE WE ARE ON AN ADMIN PAGE
 			if(is_admin() && isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)){
 
@@ -864,7 +863,13 @@ Author URI: https://sendpress.com/
 				wp_register_style( 'sendpress_css_base', SENDPRESS_URL . 'css/style.css', array('sendpress_bootstrap_css'), SENDPRESS_VERSION );
 
 				wp_register_script('sendpress_ls', SENDPRESS_URL .'js/jquery.autocomplete.js' ,'', SENDPRESS_VERSION );
-					wp_enqueue_script('sendpress-doughnut');
+				wp_enqueue_script('sendpress-doughnut');
+
+				wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' ,'', SENDPRESS_VERSION);
+
+
+			
+
 
 			wp_enqueue_script('sendpress_bootstrap');
 			wp_enqueue_style( 'sendpress_bootstrap_css' );
@@ -873,9 +878,7 @@ Author URI: https://sendpress.com/
     		if( ( isset($_GET['page']) && $_GET['page'] == 'sp-templates' ) || (isset( $_GET['view'] ) && $_GET['view'] == 'style-email' )) {
 				wp_enqueue_script('sendpress_js_styler');
 			}
-			if( $pagenow === 'widgets.php' ){
-    			wp_enqueue_script('sendpress-widget-js');
-    		}
+			
 
 				if($this->_page == 'help'){
 					wp_enqueue_script( 'dashboard' );

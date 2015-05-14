@@ -18,7 +18,6 @@ class SendPress_Public_View_Confirm extends SendPress_Public_View{
 					$status = SendPress_Data::get_subscriber_list_status( $list_id , $info->id );
 					if( !isset($status) || $status->status != '2' ) {				
 						SendPress_Data::update_subscriber_status($list_id, $info->id, '2');
-						SendPress_Data::add_subscriber_event( $info->id, $rid=NULL, $list_id, 0, $ip , $this->_device_type, $this->_device );
 					}
 				}
 			}
