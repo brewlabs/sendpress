@@ -21,8 +21,7 @@ class SendPress_Tag_Content_Area_One extends SendPress_Tag_Base  {
 		if( $example == false ){
 			do_action('sendpress_template_loaded');
 			
-			error_log($x);
-
+			
 			if($x == false){
 				$content_post = get_post($email_id);
 			$content = $content_post->post_content;

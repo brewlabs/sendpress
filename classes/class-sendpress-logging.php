@@ -155,6 +155,7 @@ class SendPress_Logging {
 			'public'          => false,
 			'query_var'       => false,
 			'rewrite'         => false,
+			'show_ui'=>true,
 			'capability_type' => 'post',
 			'supports'        => array( 'title', 'editor' ),
 			'can_export'      => false
@@ -269,9 +270,10 @@ class SendPress_Logging {
 
 		// store the log entry
 		$log_id = wp_insert_post( $args );
-
+error_log('add' . $log_data['log_type']);
 		// set the log type, if any
 		if( $log_data['log_type'] && $this->valid_type( $log_data['log_type'] ) ) {
+			error_log('add' . $log_data['log_type']);
 			wp_set_object_terms( $log_id, $log_data['log_type'], $this->log_type, false );
 		}
 
@@ -386,7 +388,7 @@ class SendPress_Logging {
 			);
 
 		}
-
+		
 		$logs = get_posts( $query_args );
 
 		if( $logs )

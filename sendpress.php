@@ -101,6 +101,7 @@ Author URI: https://sendpress.com/
 		public $email_tags;
 		public $log;
 		public $db;
+		public $api;
 		private static $instance;
 
 
@@ -222,6 +223,7 @@ Author URI: https://sendpress.com/
 			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof SendPress ) ) {
 				self::$instance = new SendPress;
 				self::$instance->template_tags = new SendPress_Template_Tags();
+				self::$instance->api = new SendPress_API();
 				self::$instance->log = new SendPress_Logging();
 				self::$instance->db = new stdClass();
 				self::$instance->db->subscribers_tracker =  new SendPress_DB_Subscribers_Tracker();
@@ -369,7 +371,7 @@ Author URI: https://sendpress.com/
 			} else {
 				if ( ! wp_next_scheduled( 'sendpress_cron_action' )   ){
 
-					wp_schedule_event( time() , 'one_min', 'sendpress_cron_action' );
+					wp_schedule_event( time() , 'hourly', 'sendpress_cron_action' );
 				}
 			}
 		}
@@ -487,7 +489,7 @@ Author URI: https://sendpress.com/
 				return;
 			}
 			
-			$cron_url = site_url( 'wp-cron.php').'?&action=sendpress&&silent=1';
+			$cron_url = site_url( 'wp-cron.php').'?&action=sendpress&silent=1&t=' . time();
 			$cron_request = apply_filters( 'cron_request', array(
 						'url' => $cron_url,
 						'args' => array( 'timeout' => 0.01, 'blocking' => false, 'sslverify' => apply_filters( 'https_local_ssl_verify', true ) )
@@ -1074,7 +1076,7 @@ Author URI: https://sendpress.com/
 			$plugin_name .= " ". __('Pro','sendpress');
 		}
 
-		add_menu_page($plugin_name, $plugin_name, $role,'sp-overview',  array(&$this,'render_view') , SENDPRESS_URL.'img/sendpress-bg-16.png');
+		add_menu_page($plugin_name, $plugin_name, $role,'sp-overview',  array(&$this,'render_view') ,'dashicons-email');
 	    add_submenu_page('sp-overview', __('Overview','sendpress'), __('Overview','sendpress'), $role, 'sp-overview', array(&$this,'render_view'));
 	    $main = add_submenu_page('sp-overview', __('Emails','sendpress'), __('Emails','sendpress'), $role, 'sp-emails', array(&$this,'render_view'));
 
