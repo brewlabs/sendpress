@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
-Tested up to: 4.2
-Stable tag: 1.1.5.4
+Tested up to: 4.2.2
+Stable tag: 1.1.6.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,12 +99,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
-= 1.1.6.3 - 2015.6.3 =
+= 1.1.6.4 - 2015.6.4 =
 * Fix: sp-recent-posts shortcode update
-* Fix: updates to tracker
+* Fix: link tracker encoding
 * New: SendPress JSON API
 * New: User Meta Query SYNC for lists
-
 
 = 1.1.5.4 - 2015.5.4 =
 * Fix: Update redirects causing premission issue
@@ -667,6 +666,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.1.6.4 =
+New API and bug fixes
 
 = 1.1.5.4 =
 Bug fixes from security updates
