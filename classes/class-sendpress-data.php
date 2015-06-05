@@ -1995,50 +1995,44 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 	static function encrypt( $message ) {
-		$key = self::get_key();
 		$message = json_encode($message);
-		$encstring = '';
-		$keylength = strlen($key);
-		$messagelength = strlen($message);
-		/*
-		for($i=0;$i<=$messagelength - 1;$i++)
-		{
-			$msgord = ord(substr($message,$i,1));
-			$keyord = ord(substr($key,$i % $keylength,1));
-
-			if ($msgord + $keyord <= 255){$encstring .= chr($msgord + $keyord);}
-			if ($msgord + $keyord > 255){$encstring .= chr(($msgord + $keyord)-256);}
-		}
-		*/
-		
-		return urlencode(str_replace("=","",base64_encode( $message)));
+		return SendPress_Data::urlsafeB64Encode($message);
 	}
 
 	static function decrypt($message) {
-		$key = self::get_key();
-		$decstring ='';
-		$keylength = strlen($key);
-		$message = base64_decode($message);
-
-		$json = json_decode($message);
-
-		if( is_object($json) && !is_null($json) ){
-			return $json;
-		} else {
-			$messagelength = strlen($message);
-			for($i=0;$i<=$messagelength - 1;$i++)
-			{
-				$msgord = ord(substr($message,$i,1));
-				$keyord = ord(substr($key,$i % $keylength,1));
-
-				if ($msgord - $keyord >= 0){$decstring .= chr($msgord - $keyord);}
-				if ($msgord + $keyord < 0){$decstring .= chr(($msgord - $keyord)+256);}
-			}
-			return json_decode($decstring);
-		}
+		return json_decode( SendPress_Data::urlsafeB64Decode($message) );
 	}
 
 
+
+	/**
+     * Decode a string with URL-safe Base64.
+     *
+     * @param string $input A Base64 encoded string
+     *
+     * @return string A decoded string
+     */
+    public static function urlsafeB64Decode($input)
+    {
+        $remainder = strlen($input) % 4;
+        if ($remainder) {
+            $padlen = 4 - $remainder;
+            $input .= str_repeat('=', $padlen);
+        }
+        return base64_decode(strtr($input, '-_', '+/'));
+    }
+
+    /**
+     * Encode a string with URL-safe Base64.
+     *
+     * @param string $input The string you want encoded
+     *
+     * @return string The base64 encode of what you passed in
+     */
+    public static function urlsafeB64Encode($input)
+    {
+        return str_replace('=', '', strtr(base64_encode($input), '+/', '-_'));
+    }
 
 
 	/********************* Widget Settings functionS **************************/

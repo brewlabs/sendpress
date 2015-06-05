@@ -17,9 +17,9 @@ class SendPress_Shortcode_Manage{
 
 				$action = get_query_var( 'spmanage' );
 				//Look for encrypted data
-		  		$info = SendPress_Data::decrypt( urldecode($action) );
+		  		$info = SendPress_Data::decrypt( $action );
 
-		  		print_r( $info );
+		  		//print_r( $info );
 	?>
 
 <form action="" method="post">

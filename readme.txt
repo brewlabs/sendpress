@@ -99,40 +99,47 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.1.6.3 - 2015.6.3 =
+* Fix: sp-recent-posts shortcode update
+* Fix: updates to tracker
+* New: SendPress JSON API
+* New: User Meta Query SYNC for lists
+
+
 = 1.1.5.4 - 2015.5.4 =
-Fix: Update redirects causing premission issue
-Fix: Removed unused vars
-Fix: Small bug fixes
+* Fix: Update redirects causing premission issue
+* Fix: Removed unused vars
+* Fix: Small bug fixes
 
 = 1.1.4.22 - 2015.4.22 =
-Fix: lowered filter priority on 'template_include'
-Fix: Some redirects missing admin.php
+* Fix: lowered filter priority on 'template_include'
+* Fix: Some redirects missing admin.php
 
 = 1.1.4.21 - 2015.4.21 =
-Fix: XSS Fixes and security review
-Fix: Test report stats
-Fix: Manage shortcode display
-Fix: Link tracking for mailto links
-Update: Recent Post shortcode - responsive update
-Update: Added IP to CSV Import
+* Fix: XSS Fixes and security review
+* Fix: Test report stats
+* Fix: Manage shortcode display
+* Fix: Link tracking for mailto links
+* Update: Recent Post shortcode - responsive update
+* Update: Added IP to CSV Import
 
 = 1.1.4.3 - 2015.4.3 =
-Fix: error_log call removed
+* Fix: error_log call removed
 
 = 1.1.4.2 - 2015.4.3 =
-Beta: Overide header and footer when editing email
-Update: Added links to new docs site
-Update: sp-recent-posts resposive email support
-Update: Confirmation email uses new templates
-Update: Query to calculate total sent
-New: System Starter email Template
-Pro: Run shortcodes on custom templates
+* Beta: Overide header and footer when editing email
+* Update: Added links to new docs site
+* Update: sp-recent-posts resposive email support
+* Update: Confirmation email uses new templates
+* Update: Query to calculate total sent
+* New: System Starter email Template
+* Pro: Run shortcodes on custom templates
 
 = 1.1.3.17 - 2015.3.17 =
-Fix: Manange Page and Shortcode
+* Fix: Manange Page and Shortcode
 
 = 1.1.3.10.1 - 2015.3.10 =
-Fix: Some Ajax calls not working on Front End
+* Fix: Some Ajax calls not working on Front End
 
 = 1.1.3.10 - 2015.3.10 =
 * New: Manage Page Shortcode with redirect option

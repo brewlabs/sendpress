@@ -81,7 +81,7 @@ class SendPress_API {
 		add_action( 'edit_user_profile',        array( $this, 'user_key_field'   ) );
 		add_action( 'personal_options_update',  array( $this, 'update_key'       ) );
 		add_action( 'edit_user_profile_update', array( $this, 'update_key'       ) );
-		add_action( 'edd_process_api_key',      array( $this, 'process_api_key'  ) );
+		add_action( 'spnl_process_api_key',      array( $this, 'process_api_key'  ) );
 
 		// Determine if JSON_PRETTY_PRINT is available
 		$this->pretty_print = defined( 'JSON_PRETTY_PRINT' ) ? JSON_PRETTY_PRINT : null;
@@ -93,12 +93,12 @@ class SendPress_API {
 
 	
 	public function add_endpoint( $rewrite_rules ) {
-		error_log('here');
 		add_rewrite_endpoint( 'spnl-api', EP_ALL );
 	}
 
 	public function query_vars( $vars ) {
 		$vars[] = 'token';
+		$vars[] = 'help';
 		$vars[] = 'key';
 		$vars[] = 'query';
 		$vars[] = 'type';
@@ -133,16 +133,25 @@ class SendPress_API {
 				$token  = urldecode( $wp_query->query_vars['token'] );
 				$secret = get_user_meta( $user, 'spnl_user_secret_key', true );
 				$public = urldecode( $wp_query->query_vars['key'] );
-
+				//temp key since we only hav one route with no helpfull data
 				if ( hash_equals( md5( $secret . $public ), $token ) )
 					$this->is_valid_request = true;
 				else
 					$this->invalid_auth();
 			endif;
 		} elseif ( !empty( $wp_query->query_vars['spnl-api'] ) && $wp_query->query_vars['spnl-api'] == 'errors' ) {
-			$this->is_valid_request = true;
-			$wp_query->set( 'key', 'public' );
+			$token  = urldecode( $wp_query->query_vars['help'] );
+			if( hash_equals( md5('sendpress'), $token)){
+				$this->is_valid_request = true;
+				$wp_query->set( 'key', 'public' );
+			} else {
+				$this->missing_auth();
+			}
+			
+		}else{
+			$this->missing_auth();
 		}
+		
 	}
 
 	
@@ -174,7 +183,7 @@ class SendPress_API {
 	
 	private function missing_auth() {
 		$error = array();
-		$error['error'] = __( 'You must specify both a token and API key!', 'edd' );
+		$error['error'] = __( 'You must specify both a token and API key!', 'sendpress' );
 
 		$this->data = $error;
 		$this->output( 401 );
@@ -182,7 +191,7 @@ class SendPress_API {
 
 	private function invalid_auth() {
 		$error = array();
-		$error['error'] = __( 'Your request could not be authenticated!', 'edd' );
+		$error['error'] = __( 'Your request could not be authenticated!', 'sendpress' );
 
 		$this->data = $error;
 		$this->output( 401 );
@@ -190,7 +199,7 @@ class SendPress_API {
 
 	private function invalid_key() {
 		$error = array();
-		$error['error'] = __( 'Invalid API key!', 'edd' );
+		$error['error'] = __( 'Invalid API key!', 'sendpress' );
 
 		$this->data = $error;
 		$this->output( 401 );
@@ -200,7 +209,7 @@ class SendPress_API {
 	public function process_query() {
 		global $wp_query;
 
-		// Check for edd-api var. Get out if not present
+		// Check for sendpress-api var. Get out if not present
 		if ( ! isset( $wp_query->query_vars['spnl-api'] ) )
 			return;
 
@@ -223,9 +232,10 @@ class SendPress_API {
 		switch( $query_mode ) :
 
 			case 'errors' :
+			
 				
 				$type = isset( $wp_query->query_vars['type'] )   ? $wp_query->query_vars['type']   : null;
-
+				if($type == 'public'){ $type = "errors"; }
 				$data = $this->get_errors( $type );
 
 				break;
@@ -297,7 +307,8 @@ class SendPress_API {
 
 		// Whitelist our query options
 		$accepted = apply_filters( 'spnl_api_valid_query_modes', array(
-			'errors'
+			'errors',
+			'public'
 		) );
 
 		$query = isset( $wp_query->query_vars['spnl-api'] ) ? $wp_query->query_vars['spnl-api'] : null;
@@ -344,7 +355,7 @@ class SendPress_API {
 		if( $per_page < 0 && $this->get_query_mode() == 'customers' )
 			$per_page = 99999999; // Customers query doesn't support -1
 
-		return apply_filters( 'edd_api_results_per_page', $per_page );
+		return apply_filters( 'sendpress_api_results_per_page', $per_page );
 	}
 
 	/**
@@ -573,7 +584,7 @@ class SendPress_API {
 		);
 
 		$log_meta = array(
-			'request_ip' => edd_get_ip(),
+			'request_ip' => "",
 			'user'       => $this->user_id,
 			'key'        => $wp_query->query_vars['key'],
 			'token'      => $wp_query->query_vars['token']
@@ -618,7 +629,7 @@ class SendPress_API {
 			case 'xml' :
 
 				
-				$xml = SendPress_Array2XML::createXML( 'edd', $this->data );
+				$xml = SendPress_Array2XML::createXML( 'spnl', $this->data );
 				echo $xml->saveXML();
 
 				break;

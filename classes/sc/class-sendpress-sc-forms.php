@@ -424,7 +424,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 	  		$action = $parsed[count($parsed)-2];
 	  	}
 
-	  	return SendPress_Data::decrypt( urldecode($action) );
+	  	return SendPress_Data::decrypt( $action );
 	}
 
 }
