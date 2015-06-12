@@ -107,11 +107,14 @@ class SendPress_Subscribers_Table extends WP_List_Table {
      * @return string Text to be placed inside the column <td> (movie title only)
      **************************************************************************/
     function column_title($item){
-        
+        $l = null;
+        if( isset($_GET["listID"]) ){
+           $l =  $_GET["listID"]; 
+        }
         //Build row actions
         $actions = array(
-            'edit'      => sprintf('<a href="?page=%s&view=%s&subscriberID=%s&listID=%s">Edit</a>',$_REQUEST['page'],'subscriber',$item->subscriberID, $_GET["listID"] ),
-            'delete'    => sprintf('<a href="?page=%s&action=%s&subscriberID=%s&listID=%s">Delete</a>',$_REQUEST['page'],'delete-subscriber',$item->subscriberID, $_GET["listID"] ),
+            'edit'      => sprintf('<a href="?page=%s&view=%s&subscriberID=%s&listID=%s">Edit</a>',$_REQUEST['page'],'subscriber',$item->subscriberID, $l ),
+            'delete'    => sprintf('<a href="?page=%s&action=%s&subscriberID=%s&listID=%s">Delete</a>',$_REQUEST['page'],'delete-subscriber',$item->subscriberID, $l ),
         );
         
         //Return the title contents
@@ -323,8 +326,9 @@ class SendPress_Subscribers_Table extends WP_List_Table {
        
           $query_count = "SELECT count(*) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3";
 
-        
+        if( isset($_GET["listID"]) ){
             $query_count .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND (t2.listID =  ". $_GET["listID"] .")";
+           }
             if(isset($_GET["statusid"] ) && $_GET["statusid"]  > 0){
             $query .= ' AND statusid = '. $_GET["statusid"] ;
              $query_count .=' AND statusid = '. $_GET["statusid"] ;

@@ -99,6 +99,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.1.6.12 - 2015.6.12 =
+* Fix: install on WP Engine
+* Fix: shortcode placeholder issue
+* Fix: shortcode post data
+* Update: Add new phpmailer code for sending emails
+
 = 1.1.6.4 - 2015.6.4 =
 * Fix: sp-recent-posts shortcode update
 * Fix: link tracker encoding
@@ -666,6 +672,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.1.6.12 =
+Shortcode updates and other bug fixes
 
 = 1.1.6.4 =
 New API and bug fixes
