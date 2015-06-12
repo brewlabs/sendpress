@@ -75,9 +75,7 @@
                         }
                     }
 
-                    console.debug(response);
-
-                    if(response.success){
+                   if(response.success){
                         $error.hide();
                         $formwrap.hide();
                         if(response.exists){
@@ -97,7 +95,7 @@
             return false;
             
         });
-
+        /*
     	$('.sendpress-signup input').bind('focus blur',function(e){
     		var $obj = $(this),
     			$value = $obj.val(),
@@ -114,7 +112,7 @@
     		}
 
     	});
-
+        */
         $('.sendpress-signup .post-notifications-list').on('click', function(e){
             var $obj = $(this),
                 $form = $obj.closest('form.sendpress-signup'),

@@ -108,7 +108,7 @@ class SendPress_DB_Url extends SendPress_DB {
 		hash varchar(255) DEFAULT NULL, 
 		PRIMARY KEY  (url_id),
 		KEY hash (hash)
-		) $collate;";
+		) $collate; \n";
 
 
 

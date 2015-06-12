@@ -45,16 +45,8 @@ class SendPress_Sender_Website extends SendPress_Sender {
 }	
 
 	function send_email($to, $subject, $html, $text, $istest = false, $sid , $list_id, $report_id ){
-		global $phpmailer, $wpdb;
-
-
-
-		// (Re)create it, if it's gone missing
-		if ( !is_object( $phpmailer ) || !is_a( $phpmailer, 'PHPMailer' ) ) {
-			require_once ABSPATH . WPINC . '/class-phpmailer.php';
-			require_once ABSPATH . WPINC . '/class-smtp.php';
-			$phpmailer = new PHPMailer();
-		}
+		
+		$phpmailer = new SendPress_PHPMailer;
 		/*
 		 * Make sure the mailer thingy is clean before we start,  should not
 		 * be necessary, but who knows what others are doing to our mailer
@@ -82,7 +74,9 @@ class SendPress_Sender_Website extends SendPress_Sender {
                     
             }
 
-            
+            $from_email = SendPress_Option::get('fromemail');
+		$phpmailer->From = $from_email;
+		$phpmailer->FromName = SendPress_Option::get('fromname');
 
         //$subject = str_replace(array('â€™','â€œ','â€�','â€“'),array("'",'"','"','-'),$subject);
         //$html = str_replace(chr(194),chr(32),$html);
@@ -117,9 +111,7 @@ class SendPress_Sender_Website extends SendPress_Sender {
 		*/
 		do_action_ref_array( 'phpmailer_init', array( &$phpmailer ) );
 		
-		$from_email = SendPress_Option::get('fromemail');
-		$phpmailer->From = $from_email;
-		$phpmailer->FromName = SendPress_Option::get('fromname');
+		
 		//$phpmailer->Sender = 'bounce@sendpress.com';//SendPress_Option::get('fromemail');
 		
 		$hdr = new SendPress_SendGrid_SMTP_API();

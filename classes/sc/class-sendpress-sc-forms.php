@@ -307,7 +307,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 							<?php if( !$_display_labels_inside_fields ): ?>
 								<label for="sp_firstname"><?php echo $_firstname_label; ?>:</label>
 							<?php endif; ?>
-							<input type="text" class="sp_firstname" orig="<?php echo $_firstname_label; ?>" value="<?php if($_display_labels_inside_fields){ echo $_firstname_label; } ?>"  name="sp_firstname" />
+							<input type="text" class="sp_firstname" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_firstname_label; ?>"<?php endif; ?> value=""  name="sp_firstname" />
 						</p>
 					<?php endif; ?>
 
@@ -316,7 +316,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 							<?php if( !$_display_labels_inside_fields ): ?>
 								<label for="sp_lastname"><?php echo $_lastname_label; ?>:</label>
 							<?php endif; ?>
-							<input type="text" class="sp_lastname" orig="<?php echo $_lastname_label; ?>" value="<?php if($_display_labels_inside_fields){ echo $_lastname_label; } ?>" name="sp_lastname" />
+							<input type="text" class="sp_lastname" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_lastname_label; ?>"<?php endif; ?> value="" name="sp_lastname" />
 						</p>
 					<?php endif; ?>
 
@@ -324,7 +324,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 						<?php if( !$_display_labels_inside_fields ): ?>
 							<label for="sp_email"><?php echo $_email_label; ?>:</label>
 						<?php endif; ?>
-						<input type="text" class="sp_email" orig="<?php echo $_email_label; ?>" value="<?php if($label){ echo $_email_label; } ?>" name="sp_email" />
+						<input type="text" class="sp_email" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_email_label; ?>"<?php endif; ?> value="" name="sp_email" />
 					</p>
 					<p name="extra_fields" class="signup-fields-bottom">
 						<?php do_action('sendpress_signup_form_bottom'); ?>
