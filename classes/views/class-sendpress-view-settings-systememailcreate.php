@@ -24,13 +24,9 @@ class SendPress_View_Settings_Systememailcreate extends SendPress_View_Settings 
 
         $my_post = _wp_translate_postdata(true);
         $system_emails = SendPress_Option::base_get('system-emails');
-        /*            
-        $my_post['ID'] = $_POST['post_ID'];
-        $my_post['post_content'] = $_POST['content'];
-        $my_post['post_title'] = $_POST['post_title'];
-        */
+        
         $my_post['post_status'] = 'sp-systememail';
-        $my_post['content'] = SendPress_Data::get_sysemail_content($_POST['email_type']);
+        $my_post['post_content'] = SendPress_Data::get_sysemail_content($_POST['email_type']);
         // Update the post into the database
         wp_update_post( $my_post );
         update_post_meta( $my_post['ID'], '_sendpress_subject', $_POST['post_subject'] );
@@ -39,6 +35,12 @@ class SendPress_View_Settings_Systememailcreate extends SendPress_View_Settings 
  		
        	update_post_meta( $my_post['ID'], '_sendpress_system',  'new');
        	update_post_meta( $my_post['ID'], '_system_email_type',  $_POST['email_type'] );
+       	update_post_meta( $my_post['ID'], '_system_default', $_POST['default'] );
+
+       	if($_POST['default']){
+       		//set default system e-mail for this type
+       		SendPress_Data::set_system_email_default($my_post['ID'], $_POST['email_type']);
+       	}
 
         SendPress_Email::set_default_style( $my_post['ID'] );
         //clear the cached file.
@@ -49,7 +51,7 @@ class SendPress_View_Settings_Systememailcreate extends SendPress_View_Settings 
     	}
     	SendPress_Option::base_set('system-emails',$system_emails);
         
-        SendPress_Admin::redirect( 'Settings_emailedit' , array('emailID' =>  $my_post['ID']  )   );
+        SendPress_Admin::redirect( 'Settings_Emailedit' , array('emailID' =>  $my_post['ID']  )   );
         
         //$this->save_redirect( $_POST  );
 
@@ -162,7 +164,8 @@ class SendPress_View_Settings_Systememailcreate extends SendPress_View_Settings 
 				$this->panel_end(  ); ?>
 			</div>
 			</div>
-
+			<input class="checkbox" type="checkbox" id="make_default" name="make_default" value="<?php echo $options['default']; ?>" <?php checked( $options['default'], true ); ?>/> 
+			<label for="make_default">Send This E-Mail by Default</label>
 			
 		<br><br>
 		<?php //wp_editor($post->post_content,'textversion'); ?>

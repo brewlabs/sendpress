@@ -2260,15 +2260,21 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$system_emails = SendPress_Option::base_get('system-emails');
 		$defaults = array("opt_in" => "Opt In","manage_subscriptions" => "Manage Subscriptions");
 
-		foreach ($system_emails as $key => $value) {
-			unset($defaults[$value]);
-		}
+		// foreach ($system_emails as $key => $value) {
+		// 	unset($defaults[$value]);
+		// }
 
-		if(count($defaults) === 0){
-			return false;
-		}
+		// if(count($defaults) === 0){
+		// 	return false;
+		// }
 
 		return $defaults;
+		
+	}
+
+	static function set_system_email_default($id, $type){
+
+		
 		
 	}
 

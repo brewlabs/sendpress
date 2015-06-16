@@ -44,7 +44,7 @@
             });
 
             $('#delete-this-user').click(function(){
-        $('#subscriber-save').val( $(this).is(':checked') ? 'This will delete this Subscriber!' : 'Save' );
+            $('#subscriber-save').val( $(this).is(':checked') ? 'This will delete this Subscriber!' : 'Save' );
                 if($(this).is(':checked')){
                    $('#subscriber-save').removeClass("btn-primary");
                    $('#subscriber-save').addClass("btn-danger");
@@ -53,7 +53,7 @@
                      $('#subscriber-save').addClass("btn-primary");
                 }
 
-        });
+            });
 
 
             $('#send-test-email-btn').click(function(e){
