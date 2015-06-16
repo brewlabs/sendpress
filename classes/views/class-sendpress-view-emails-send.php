@@ -150,6 +150,8 @@ dateFormat : 'yy/mm/dd'
 <?php 
 $this->panel_end();
 
+do_action('spnl_add_to_sending' , $this);
+
 $this->panel_start('<span class="glyphicon glyphicon-list"></span> '. __('Lists','sendpress'));
 $post_args = array( 'post_type' => 'sendpress_list','numberposts'     => -1,
     	'offset'          => 0,

@@ -13,15 +13,12 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 	function page_end(){}
 
 	function html() {
-
-		
 		//$ip = $_SERVER['REMOTE_ADDR'];
 
 		$info = $this->data();
 		//$hash = wp_hash( $info->url , 'sendpress' );
 
 		$db_url = SPNL()->db->url;
-
 
 		$url_in_db = $db_url->get( $info->url );  //= SendPress_Data::get_url_by_hash( $hash );
 		
@@ -34,6 +31,7 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 		$dk = SendPress_Data::devicetypes( $this->_device_type );
 
 		$url = $info->url;
+		
 		switch($info->url){
 			case '{sp-browser-url}':
 				$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Browser_Url::external( $info->url, $info->report , $info->id, false ), $info->report, $info->report, $info->id, false );
@@ -44,26 +42,27 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 			case '{sp-manage-subscription-url}':
 				$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Manage_Subscriptions::external( $info->url, $info->report , $info->id, false ), $info->report, $info->report, $info->id, false );
 			break;
-
 		}
-
-		
-
 
 		SPNL()->db->subscribers_url->add_update( array('subscriber_id'=> $info->id, 'email_id' => $info->report, 'url_id' => $id  ) );
 
 		SPNL()->db->subscribers_tracker->open( $info->report , $info->id , 2 );
 
-
-
 		if(strrpos( $url, "mailto" ) !== false){
 			header("Location: " . esc_url_raw( $url ) );
 		} else {
+			
+			if(defined("SENDPRESS_PRO_VERSION")){
+				$url = add_query_arg( 'utm_medium' , 'email' , $url );
+				$url = add_query_arg( 'utm_source' , 'sendpress' , $url );
+				$sub = get_post_meta( $info->report , '_sendpress_subject' , true );
+				$url = add_query_arg( 'utm_campaign' , $sub , $url );
+			}
+			
 			wp_redirect( esc_url_raw( $url ) );
 		}
-		exit;
 
-	
+		exit;
 		//
 		//$link = SendPress_Data::get_url_by_id( $info->urlID );
 		//SendPress_Data::track_click( $info->id , $info->report, $info->urlID , $ip , $this->_device_type, $this->_device );
