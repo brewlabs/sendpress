@@ -77,10 +77,6 @@ class SendPress_API {
 		add_action( 'init',                     array( $this, 'add_endpoint'     ) );
 		add_action( 'template_redirect',        array( $this, 'process_query'    ), -1 );
 		add_filter( 'query_vars',               array( $this, 'query_vars'       ) );
-		add_action( 'show_user_profile',        array( $this, 'user_key_field'   ) );
-		add_action( 'edit_user_profile',        array( $this, 'user_key_field'   ) );
-		//add_action( 'personal_options_update',  array( $this, 'update_key'       ) );
-		//add_action( 'edit_user_profile_update', array( $this, 'update_key'       ) );
 		add_action( 'spnl_process_api_key',      array( $this, 'process_api_key'  ) );
 
 		// Determine if JSON_PRETTY_PRINT is available
@@ -659,7 +655,6 @@ class SendPress_API {
 		spnl_die();
 	}
 
-	
 	/**
 	 * Generate the public key for a user
 	 *
