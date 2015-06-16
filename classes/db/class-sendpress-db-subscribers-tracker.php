@@ -29,7 +29,7 @@ class SendPress_DB_Subscribers_Tracker extends SendPress_DB {
 			'opened_count'    => '%s',
 			'sent_at' 		  => '%s',
 			'status'          => '%d',
-			'type'			  => '%d',
+			'tracker_type'			  => '%d',
 			'subscriber_id'   => '%d',
 		);
 	}
@@ -45,7 +45,7 @@ class SendPress_DB_Subscribers_Tracker extends SendPress_DB {
 			'sent_at' => get_gmt_from_date( date('Y-m-d H:i:s') ),
 			'status'  => 0,
 			'opened_count' => 0,
-			'type' => 0
+			'tracker_type' => 0
 		);
 	}
 
@@ -170,17 +170,17 @@ class SendPress_DB_Subscribers_Tracker extends SendPress_DB {
                
         }
 
-		$sql = " CREATE TABLE {$this->table_name} (
-			subscriber_id int(11) unsigned NOT NULL,
-		  	email_id int(11) unsigned NOT NULL,
-		  	sent_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
-		  	opened_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-		  	status tinyint(4) NOT NULL DEFAULT '0',
-		  	type tinyint(4) NOT NULL DEFAULT '0',
-		  	opened_count int(11) unsigned NOT NULL,
-		  	PRIMARY KEY  (subscriber_id,email_id),
-		  	KEY  type
-			) $collate;";
+$sql = " CREATE TABLE {$this->table_name} (
+subscriber_id int(11) unsigned NOT NULL,
+email_id int(11) unsigned NOT NULL,
+sent_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
+opened_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+status tinyint(4) NOT NULL DEFAULT '0',
+tracker_type tinyint(4) NOT NULL DEFAULT '0',
+opened_count int(11) unsigned NOT NULL,
+PRIMARY KEY  (subscriber_id,email_id),
+KEY  tracker_type
+) $collate;\n";
 
 
 

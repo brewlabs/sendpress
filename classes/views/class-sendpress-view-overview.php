@@ -23,8 +23,7 @@ class SendPress_View_Overview extends SendPress_View{
   //SPNL()->db->subscribers_tracker->add( array('subscriber_id'=> 101, 'email_id'=> 20 ) );
   //SPNL()->db->subscribers_url->add_update( array('subscriber_id'=> 101, 'email_id'=> 20 , 'url_id' => 123 ) );
 
-
-  
+  //SPNL()->log->add(  'Email Skiped' , 'Email test',' did not have any Text.', 'sending');
 //print_r(_get_cron_array());
 
 global $wp_version;

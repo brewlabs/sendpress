@@ -51,7 +51,7 @@ if(isset($_GET['listID']) && $_GET['listID'] > 0 ){
 			
 			<a class="btn btn-primary btn-large" href="?page=<?php echo $_REQUEST['page']; ?>&view=add<?php echo $list; ?>"><?php _e('Add Subscriber','sendpress'); ?></a>
 		</div>
-		<h2><?php _e('Subscribers','sendpress'); ?> <?php echo $listname; ?> </h2>
+		<h2><?php _e('Subscribers','sendpress'); ?> <?php if(isset($listname)){ echo $listname; } ?> </h2>
 	</div>
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="movies-filter" method="get">
@@ -70,7 +70,9 @@ if(isset($_GET['listID']) && $_GET['listID'] > 0 ){
 		<input type='hidden' value="<?php echo $_GET['page']; ?>" name="page" />
 		
 		<input type='hidden' value="unlink-lisk" name="action" />
+		<?php if(isset($_GET['listID'])){ ?>
 		<input type='hidden' name="listid" value="<?php echo $_GET['listID'] ?>" />
+		<?php } ?>
 
 		<br>
 		<a class="btn btn-danger " data-toggle="modal" href="#sendpress-empty-list" ><i class="icon-warning-sign "></i> <?php _e('Remove All Subscribers from List','sendpress'); ?></a>
