@@ -951,6 +951,24 @@ class SendPress_Data extends SendPress_DB_Tables {
 		//$result = $wpdb->update($table, $values, array('email'=> $email) );
 	}
 
+	static function update_subscriber_post_notification_schedule($listId, $schedule){
+		global $wpdb;
+		
+		$wpdb->update(SendPress_Data::list_subcribers_table() , array('status' => 2), array( 'listID' => $listId ) );
+		//$wpdb->update(SendPress_Data::subscriber_meta_table(); , array('status'=> 2), array( 'listID' => $listId ) );
+		$query_get = "SELECT subscriberID FROM ".SendPress_Data::list_subcribers_table()." WHERE listID = " . $listId;
+		$subs = $wpdb->get_results($query_get);
+
+		SendPress_Error::log($subs);
+
+		foreach ($subs as $key => $sub) {
+			SendPress_Data::update_subscriber_meta($sub->subscriberID,'post_notifications', $schedule, $listId);
+		}
+
+		//SendPress_Error::log($data);
+		
+	}
+
 
 	static function get_subcribers_by_meta($meta_key = false, $meta_value = false, $list_id= false){
 
