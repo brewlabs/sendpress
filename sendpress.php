@@ -1091,9 +1091,7 @@ Author URI: https://sendpress.com/
 	   add_submenu_page('sp-overview', __('Pro','sendpress'), __('Pro','sendpress'), $role, 'sp-pro', array(&$this,'render_view'));
 
 
-	   	if(SendPress_Option::get('feedback') == 'yes' || SendPress_Option::get('allow_tracking') == 'yes'){
-			SendPress_Tracking::data();
-		}
+	   	
 	}
 
 	function render_view(){

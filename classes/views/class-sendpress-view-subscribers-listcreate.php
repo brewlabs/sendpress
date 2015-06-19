@@ -17,7 +17,7 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
         }
       
 
-        $list_id = SendPress_Data::create_list( array('name'=> $name, 'public'=>$public ) );
+        $list_id = SendPress_Data::create_list( array('name'=> $name, 'public'=> $public ) );
         update_post_meta($list_id, 'sync_role', $_POST['sync_role']);
         SendPress_Admin::redirect('Subscribers');
 	}

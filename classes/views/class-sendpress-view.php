@@ -141,6 +141,9 @@ class SendPress_View {
 		
 		<?php
 
+		if(SendPress_Option::get('feedback') == 'yes' || SendPress_Option::get('allow_tracking') == 'yes'){
+			SendPress_Tracking::data();
+		}
 		//delete_transient( 'current_sp_pro_version' );
 
 		//call api to get current version of pro if pro installed
