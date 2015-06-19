@@ -328,6 +328,9 @@ jQuery( document ).ready(function($) {
 
 -->
 <?php
+    if(SendPress_Option::get('feedback') == 'yes' || SendPress_Option::get('allow_tracking') == 'yes'){
+      SendPress_Tracking::data();
+    }
 	}
 
 }
