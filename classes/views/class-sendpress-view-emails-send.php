@@ -33,18 +33,23 @@ class SendPress_View_Emails_Send extends SendPress_View_Emails {
         } else {
              update_post_meta($_POST['post_ID'],'istest', false);
         }
+
+        if( isset($_POST['google-campaign-name']) ) {
+            update_post_meta($_POST['post_ID'],'google-campaign-name', $_POST['google-campaign-name']);
+        }
         if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
         	 SendPress_Admin::redirect('Emails_Send_Confirm', array('emailID'=>$_GET['emailID'] ));
         } else {
         	SendPress_Admin::redirect('Emails_Style', array('emailID'=>$_GET['emailID'] ));
         }
+
        
 	}
 	
 	function admin_init(){
 		wp_enqueue_script('jquery-ui-datepicker');
 		wp_register_style( 'sendpress_css_jquery-ui', SENDPRESS_URL . 'css/smoothness/jquery-ui-1.10.3.custom.min.css', false, SENDPRESS_VERSION );
-    		wp_enqueue_style( 'sendpress_css_jquery-ui' );
+    	wp_enqueue_style( 'sendpress_css_jquery-ui' );
 	}
 
 	function html($sp) {

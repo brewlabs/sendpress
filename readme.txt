@@ -99,6 +99,13 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.1.6.23 - 2015.6.23 =
+* Update: Sending Code
+* Update: link tracker
+* Fix: API bug
+* Fix: Slow loading on pages
+* Fix: Error when plugin can't connect to sendpress.com
+
 = 1.1.6.12 - 2015.6.12 =
 * Fix: install on WP Engine
 * Fix: shortcode placeholder issue
@@ -672,6 +679,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.1.6.23 =
+Sending fixes and tracking updates
 
 = 1.1.6.12 =
 Shortcode updates and other bug fixes

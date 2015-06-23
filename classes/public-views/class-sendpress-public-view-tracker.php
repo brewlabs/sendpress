@@ -56,6 +56,10 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 				$url = add_query_arg( 'utm_medium' , 'email' , $url );
 				$url = add_query_arg( 'utm_source' , 'sendpress' , $url );
 				$sub = get_post_meta( $info->report , '_sendpress_subject' , true );
+				$alt = get_post_meta( $info->report , 'google-campaign-name', true);
+				if( $alt !== false ) {
+					$sub = $alt;
+				}
 				$url = add_query_arg( 'utm_campaign' , $sub , $url );
 			}
 			

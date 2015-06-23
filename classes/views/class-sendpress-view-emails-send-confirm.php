@@ -137,7 +137,9 @@ $subject = SendPress_Option::get('current_send_subject_'.$post->ID ,true);
 } else {
     echo "Your email will start sending on " .date('Y/m/d',strtotime($info['send_at'])) . " at " .date('h:i A',strtotime($info['send_at']))  ;
 }?>
-<?php $this->panel_end(); 
+<?php 
+$this->panel_end(); 
+
 $this->panel_start('<span class="glyphicon glyphicon-list"></span> '. __('Lists','sendpress'));
 ?>
 
