@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 4.2.2
-Stable tag: 1.1.6.12
+Stable tag: 1.1.6.23
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,13 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.1.6.23 - 2015.6.23 =
+* Update: Sending Code
+* Update: link tracker
+* Fix: API bug
+* Fix: Slow loading on pages
+* Fix: Error when plugin can't connect to sendpress.com
 
 = 1.1.6.12 - 2015.6.12 =
 * Fix: install on WP Engine
@@ -672,6 +679,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.1.6.23 =
+Sending fixes and tracking updates
 
 = 1.1.6.12 =
 Shortcode updates and other bug fixes
