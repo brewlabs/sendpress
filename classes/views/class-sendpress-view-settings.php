@@ -42,7 +42,9 @@ class SendPress_View_Settings extends SendPress_View {
 		  -->
 		<li <?php if($sp->_current_view == 'account'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>"><i class="icon-envelope "></i> <?php _e('Sending','sendpress'); ?></a></li>
 		<li <?php if($sp->_current_view == 'activation'){ ?>class="active"<?php } ?> ><a <?php if($sp->_current_view == 'activation'){ ?>class="wp-ui-primary"<?php } ?>  href="<?php echo SendPress_Admin::link('Settings_Activation'); ?>"><i class=" icon-bullhorn"></i> <?php _e('Confirmation','sendpress'); ?></a></li>
+		<!--
 		<li <?php if(strpos($sp->_current_view,'systememail') !== false){ ?>class="active"<?php } ?> ><a <?php if(strpos($sp->_current_view,'systememail') !== false){ ?>class="wp-ui-primary"<?php } ?>  href="<?php echo SendPress_Admin::link('Settings_Systememail'); ?>"><i class=" icon-bullhorn"></i> <?php _e('System Email','sendpress'); ?></a></li>
+		-->
 		
 		<li <?php if($sp->_current_view == 'access'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings_Access'); ?>"><i class="icon-user "></i> <?php _e('Permissions','sendpress'); ?></a></li>
 		<li <?php if($sp->_current_view == 'notifications'){ ?>class="active"<?php } ?> ><a href="<?php echo SendPress_Admin::link('Settings_Notifications'); ?>"><i class="icon-bell"></i> <?php _e('Notifications','sendpress'); ?></a></li>

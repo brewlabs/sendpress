@@ -249,6 +249,7 @@ class SendPress_Manager {
 
 
 	static function send_optin($subscriberID, $listids, $lists){
+			SendPress_Error::log('send optin');
 			$subscriber = SendPress_Data::get_subscriber( $subscriberID );
 			$l = '';
 			foreach($lists as $list){

@@ -953,19 +953,18 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	static function update_subscriber_post_notification_schedule($listId, $schedule){
 		global $wpdb;
-		
-		$wpdb->update(SendPress_Data::list_subcribers_table() , array('status' => 2), array( 'listID' => $listId ) );
-		//$wpdb->update(SendPress_Data::subscriber_meta_table(); , array('status'=> 2), array( 'listID' => $listId ) );
-		$query_get = "SELECT subscriberID FROM ".SendPress_Data::list_subcribers_table()." WHERE listID = " . $listId;
-		$subs = $wpdb->get_results($query_get);
+		$subs_table = SendPress_Data::list_subcribers_table();
+		$meta_table = SendPress_Data::subscriber_meta_table();
 
-		SendPress_Error::log($subs);
+		//insert new meta values for users with a status of 1 AND on the post notifications list
+		$q = $wpdb->prepare("insert into $meta_table (subscriberID, listID, meta_key, meta_value) select subscriberID, $listId, 'post_notifications', '$schedule' from $subs_table where listID = $listId and status = 1");
+		$wpdb->query($q);
 
-		foreach ($subs as $key => $sub) {
-			SendPress_Data::update_subscriber_meta($sub->subscriberID,'post_notifications', $schedule, $listId);
-		}
+		//update meta values to the new value based on the schedule
+		$updated = $wpdb->update($meta_table , array('meta_value' => $schedule), array( 'listID' => $listId, 'meta_key' => 'post_notifications' ) );
 
-		//SendPress_Error::log($data);
+		//set all users in post notification list to a status of 2 (active)
+		$updated = $wpdb->update($subs_table , array('status' => 2), array( 'listID' => $listId, 'status' => 1 ) );
 		
 	}
 
