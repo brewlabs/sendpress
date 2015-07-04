@@ -12,7 +12,7 @@ class SendPress_DB_Subscribers_Tracker extends SendPress_DB {
 		global $wpdb;
 
 		$this->table_name  = $wpdb->prefix . $this->prefix . 'subscribers_tracker';
-		$this->version     = '1.1';
+		$this->version     = '1.2';
 	
 	}
 
@@ -179,7 +179,7 @@ status tinyint(4) NOT NULL DEFAULT '0',
 tracker_type tinyint(4) NOT NULL DEFAULT '0',
 opened_count int(11) unsigned NOT NULL,
 PRIMARY KEY  (subscriber_id,email_id),
-KEY  tracker_type
+KEY  tracker_type (tracker_type)
 ) $collate;\n";
 
 
