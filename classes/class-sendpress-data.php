@@ -1418,6 +1418,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$success = false;
 		$subscriberID = SendPress_Data::add_subscriber(array('firstname' => $first,'lastname' => $last,'email' => $email));
 		
+		//SendPress_Error::log($subscriberID);
+
 		if( false === $subscriberID ){
 			return false;
 		}
@@ -1440,6 +1442,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$already_subscribed = false;
 		if( $status == 2 && SendPress_Option::is_double_optin() ) {
 			$inlists = SendPress_Data::get_active_list_ids_for_subscriber( $subscriberID );
+			
+			//SendPress_Error::log($inlists);
+
 			if( $inlists ){
 				$already_subscribed = true;
 			} else { 

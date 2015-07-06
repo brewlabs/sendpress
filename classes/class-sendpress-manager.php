@@ -249,7 +249,7 @@ class SendPress_Manager {
 
 
 	static function send_optin($subscriberID, $listids, $lists){
-			SendPress_Error::log('send optin');
+			//SendPress_Error::log('send optin');
 			$subscriber = SendPress_Data::get_subscriber( $subscriberID );
 			$l = '';
 			foreach($lists as $list){
@@ -366,9 +366,14 @@ class SendPress_Manager {
 
 	static function send($to , $subject, $body, $text, $test = false, $sid=0 ,$list_id = 0, $report_id = 0 ){
 
+		//SendPress_Error::log('Send me an email!');
+		
 		global $sendpress_sender_factory;
 	   //	$senders = $sendpress_sender_factory->get_all_senders();
    		$method = SendPress_Option::get( 'sendmethod' );
+
+		//SendPress_Error::log(array($to, $subject,$method));
+
    		$sender = $sendpress_sender_factory->get_sender($method);
    		if( $sender != false ){
    			if( empty($text) || $text == '' || empty($body) || $body== '' || $body == " "){
