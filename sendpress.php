@@ -399,7 +399,27 @@ Author URI: https://sendpress.com/
 
 
 		function load_plugin_language(){
-			load_plugin_textdomain( 'sendpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+				//load_plugin_textdomain( 'sendpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+
+				// Set filter for plugin's languages directory
+				$sendpress_lang_dir = dirname( plugin_basename( __FILE__ ) )  . '/languages/';
+				$sendpress_lang_dir = apply_filters( 'sendpress_languages_directory', $sendpress_lang_dir );
+				// Traditional WordPress plugin locale filter
+				$locale        = apply_filters( 'plugin_locale',  get_locale(), 'sendpress' );
+				$mofile        = sprintf( '%1$s-%2$s.mo', 'sendpress', $locale );
+				// Setup paths to current locale file
+				$mofile_local  = $sendpress_lang_dir . $mofile;
+				$mofile_global = WP_LANG_DIR . '/sendpress/' . $mofile;
+				if ( file_exists( $mofile_global ) ) {
+					// Look in global /wp-content/languages/sendpress folder
+					load_textdomain( 'sendpress', $mofile_global );
+				} elseif ( file_exists( $mofile_local ) ) {
+					// Look in local /wp-content/plugins/easy-digital-downloads/languages/ folder
+					load_textdomain( 'sendpress', $mofile_local );
+				} else {
+					// Load the default language files
+					load_plugin_textdomain( 'sendpress', false, $sendpress_lang_dir );
+				}
 		}
 
 		/**

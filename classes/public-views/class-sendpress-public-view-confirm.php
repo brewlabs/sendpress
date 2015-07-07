@@ -11,16 +11,18 @@ class SendPress_Public_View_Confirm extends SendPress_Public_View{
 		$ip = $_SERVER['REMOTE_ADDR'];
 		//print_r($info);
 		$info = $this->data();
-		if(isset($info->listids)){
-			$lists = explode(',',$info->listids);
-			foreach ($lists as $list_id) {
-				if( $list_id > 0){
-					$status = SendPress_Data::get_subscriber_list_status( $list_id , $info->id );
-					if( !isset($status) || $status->status != '2' ) {				
-						SendPress_Data::update_subscriber_status($list_id, $info->id, '2');
-					}
+		if(isset($info->id)){
+
+			$lists = SendPress_Data::get_list_ids_for_subscriber($info->id);
+			
+			//$lists = explode(',',$info->listids);
+			foreach ($lists as $list) {
+				$status = SendPress_Data::get_subscriber_list_status( $list->listID, $info->id );
+				if( $status->statusid == 1 ) {				
+					SendPress_Data::update_subscriber_status($list->listID, $info->id, '2');
 				}
 			}
+			SPNL()->db->subscribers_tracker->open( $info->report , $info->id , 2 );
 		}
 		
 

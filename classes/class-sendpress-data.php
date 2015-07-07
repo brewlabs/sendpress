@@ -1292,9 +1292,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 		);
 		
 		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $event_data);
-		*/
+		
 		//if instant, check if we need a notification and send one
-		SendPress_Notifications_Manager::send_instant_notification($event_data);
+		//SendPress_Notifications_Manager::send_instant_notification($event_data);
+		*/
 	}
 
 	static function unsubscribe_from_list( $sid, $rid, $lid ) {

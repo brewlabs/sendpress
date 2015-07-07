@@ -308,6 +308,26 @@ class SendPress_Email {
 				$body_html = str_replace("*|LNAME|*", $subscriber->lastname , $body_html );
 				$body_html = str_replace("*|EMAIL|*", $subscriber->email , $body_html );
 				$body_html = str_replace("*|ID|*", $subscriber->subscriberID , $body_html );
+
+
+			$code = array(
+					"id"=>$subscriber->subscriberID,
+					"report"=> $this->id(),
+					"view"=>"confirm"
+				);
+			$code = SendPress_Data::encrypt( $code );
+
+			if( SendPress_Option::get('old_permalink') || !get_option('permalink_structure') ){
+				$link = home_url() ."?sendpress=".$code;
+			} else {
+				$link = home_url() ."/sendpress/".$code;
+			}
+			
+			$href = $link;
+			$html_href = "<a href='". $link  ."'>". $link  ."</a>";
+			
+			
+			$body_html = str_replace("*|SP:CONFIRMLINK|*", $html_href , $body_html );
 			}
 			
             //$body_html = apply_filters('sendpress_post_render_email', $body_html);

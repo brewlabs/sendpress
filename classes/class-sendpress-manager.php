@@ -262,7 +262,23 @@ class SendPress_Manager {
 			$user = SendPress_Data::get_template_id_by_slug('user-style');
 			SendPress_Posts::copy_meta_info($optin,$user);
 			SendPress_Email_Cache::build_cache_for_system_email($optin);
-		
+
+			 $go = array(
+                'from_name' => 'queue',
+                'from_email' => 'queue',
+                'to_email' => $subscriber->email,
+                'emailID'=> intval( $optin),
+                'subscriberID'=> intval( $subscriberID ),
+                //'to_name' => $email->fistname .' '. $email->lastname,
+                'subject' => '',
+                //'date_sent' => $time,
+                'listID'=> 0
+                );
+           
+            SendPress_Data::add_email_to_queue($go);	
+			SPNL()->db->subscribers_tracker->add( array('subscriber_id' => intval( $subscriberID ), 'email_id' => intval( $optin), 'tracker_type' => SendPress_Enum_Tracker_Type::Confirm ) );
+			
+			/*
 			$message = new SendPress_Email();
 			$message->id($optin);
 			$message->subscriber_id($subscriberID);
@@ -296,6 +312,7 @@ class SendPress_Manager {
 			SPNL()->db->subscribers_tracker->add( array('subscriber_id' => intval( $subscriberID ), 'email_id' => intval( $optin), 'tracker_type' => SendPress_Enum_Tracker_Type::Confirm ) );
 			//SendPress_Data::register_event( 'confirm_sent', $subscriberID );			
 			SendPress_Manager::send( $subscriber->email, $sub , $html, $text, false );
+			*/
 	}
 
 	static function send_manage_subscription($subscriberID, $listids, $lists){
