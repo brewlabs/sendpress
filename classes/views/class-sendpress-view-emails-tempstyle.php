@@ -154,7 +154,7 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
     <h2><?php echo $postdata->post_title; ?></h2>
     <br><br>
     <form method="post">
-    <div class="alert alert-danger visible-xs">Sorry the Styler does not support screens smaller then 768px.</div>
+    <div class="alert alert-danger visible-xs"><?php _e('Sorry the Styler does not support screens smaller then 768px.','sendpress'); ?></div>
     <div class="sp-row">
         <input type="hidden" id="post_ID" name="post_ID" value="<?php echo $postdata->ID; ?>" />
 

@@ -11,6 +11,11 @@ if(!class_exists('SendPress_Sender_Website')){
 
 class SendPress_Sender_Website extends SendPress_Sender {
 
+	var $emailText = '';
+	var $sid = '' ;
+	var $list_id = '';
+	var $report_id = '';
+
 	function label(){
 		return __('Your Website','sendpress');
 	}
@@ -44,7 +49,61 @@ class SendPress_Sender_Website extends SendPress_Sender {
 
 }	
 
+	function wpmail_init( $phpmailer ){
+		/*
+		$phpmailer->ClearCustomHeaders();
+		$phpmailer->Body = $this->AltBody;
+		$phpmailer->AltBody = $this->AltBody;
+		$phpmailer->Subject = $this->Subject;
+		$phpmailer->From = $this->From;
+		$phpmailer->FromName = $this->FromName;
+		$phpmailer->Sender = $this->Sender;
+		$phpmailer->MessageID = $this->MessageID;
+
+		$phpmailer->AddAddress( $this->to[0][0], $this->to[0][1] );
+		$phpmailer->AddReplyTo( $this->ReplyTo[0][0], $this->ReplyTo[0][1] );
+		*/
+		$phpmailer->ClearCustomHeaders();
+		$from_email = SendPress_Option::get('fromemail');
+		$phpmailer->From = $from_email;
+		$phpmailer->FromName = SendPress_Option::get('fromname');
+		
+		$phpmailer->AddCustomHeader('X-SP-METHOD: website wp_mail');
+		$charset = SendPress_Option::get('email-charset','UTF-8');
+		$encoding = SendPress_Option::get('email-encoding','8bit');
+		
+		$phpmailer->CharSet = $charset;
+		$phpmailer->Encoding = $encoding;
+		$phpmailer->ContentType = 'text/html';
+
+		$phpmailer->AddCustomHeader('X-SP-LIST: ' . $this->list_id );
+		$phpmailer->AddCustomHeader('X-SP-REPORT: ' . $this->report_id );
+		$phpmailer->AddCustomHeader('X-SP-SUBSCRIBER: '. $this->sid );
+
+		$phpmailer->AltBody = $this->emailText;
+		$phpmailer->IsHTML( true );
+		
+		//$phpmailer->WordWrap = $this->WordWrap;
+
+		return $phpmailer;
+	}
+
 	function send_email($to, $subject, $html, $text, $istest = false, $sid , $list_id, $report_id ){
+		
+		$this->emailText = $text;
+		$this->sid = $sid;
+		$this->list_id = $list_id;
+		$this->report_id = $report_id;
+
+		add_filter( 'phpmailer_init' , array( $this , 'wpmail_init' ) , 90 );
+		
+		$r = wp_mail($to, $subject, $html, $headers);
+		
+		return $r;
+	}
+
+
+	function send_emailx($to, $subject, $html, $text, $istest = false, $sid , $list_id, $report_id ){
 		
 		$phpmailer = new SendPress_PHPMailer;
 		/*

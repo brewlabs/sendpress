@@ -72,7 +72,7 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 			</div>
 		</div>
 		
-		<h2>Create Email</h2>
+		<h2><?php _e('Create Email','sendpres'); ?></h2>
 		<br>
 		<!--
 		has-right-sidebar">
@@ -108,11 +108,11 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
         		<div class="sp-50 sp-first">
 			<?php $this->panel_start( __('1.0 Template','sendpress') ); ?>
 			<label>
-			<input type="radio"  name="template_system" checked value="new" /> Use New System
+			<input type="radio"  name="template_system" checked value="new" /> <?php _e('Use New System','sendpres'); ?>
 			</label>
 			<br>
 			
-			<h5>Select your template:</h5>
+			<h5><?php _e('Select your template','sendpress'); ?>:</h5>
 			<select class="form-control" name="template">
 			<?php
 			$args = array(
@@ -166,8 +166,8 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 			<div class="sp-50">
 			<?php $this->panel_start( __('Original Template','sendpress') ); ?>
 			<label>
-			<input type="radio"  name="template_system"  value="old" /> Use Old Email System
-			</label><br>Currently emails cannot be upgraded directly to the new Template system.
+			<input type="radio"  name="template_system"  value="old" /> <?php _e('Use Old Email System','sendpress'); ?>
+			</label><br><?php _e('Currently emails cannot be upgraded directly to the new Template system.','sendpress'); ?>
 
 			<?php $this->panel_end(  ); ?>
 			</div>

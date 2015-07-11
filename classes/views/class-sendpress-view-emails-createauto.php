@@ -72,7 +72,7 @@ class SendPress_View_Emails_Createauto extends SendPress_View_Emails {
 			</div>
 		</div>
 		
-		<h2>Create Autoresponder</h2>
+		<h2><?php _e('Create Autoresponder','sendpress'); ?></h2>
 		<br>
 		<!--
 		has-right-sidebar">

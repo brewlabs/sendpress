@@ -31,10 +31,10 @@ class SendPress_View_Emails_Footerpage extends SendPress_View_Emails {
    	<div class="pull-right">
      <a href="<?php echo SendPress_Admin::link('Emails_Tempstyle', array('templateID' => $_GET['templateID']  ) ); ?>">Back to Template</a>&nbsp;&nbsp;&nbsp;<button class="btn btn-primary " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Save','sendpress'); ?></button>
    	</div>
-   <h2><?php echo $postdata->post_title; ?> Template Page Footer</h2><br>
+   <h2><?php echo $postdata->post_title; ?> <?php _e('Template Page Footer','sendpress'); ?></h2><br>
      <div class="tab-pane fade in active" id="home"><?php wp_editor( get_post_meta( $postdata->ID , '_footer_page' , true) , 'footer-content'); ?></div>
      <br><br>
-     Default Content
+     <?php _e('Default Content','sendpress'); ?>
 <textarea class="form-control" rows="3">
 <?php echo SendPress_Tag_Footer_Page::content(); ?>
 </textarea>

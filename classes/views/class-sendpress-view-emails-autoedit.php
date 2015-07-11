@@ -87,16 +87,16 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
 	
 
 </div>
-        <h2>Autoresponder Settings</h2>
+        <h2><?php _e('Autoresponder Settings','sendpress'); ?></h2>
         <br>
-        <h4>Subject: <?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?></h4>
+        <h4><?php _e('Subject','sendpress'); ?>: <?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?></h4>
         
         <div class="sp-row">
 <div class="sp-75 sp-first">
 <br>
 <select name="sp-autoresponder-type" id="params-auto" >
-<option value="subscribe"  <?php if($options['type']== 'subscribe' ){ echo "selected"; } ?> >When someone subscribes to the list...</option>
-<!--<option value="user-new" <?php if($options['type']== 'user-new' ){ echo "selected"; } ?> >When a new WordPress user is added to your site...</option>-->
+<option value="subscribe"  <?php if($options['type']== 'subscribe' ){ echo "selected"; } ?> ><?php _e('When someone subscribes to the list','sendpress'); ?>...</option>
+<option value="user-new" <?php if($options['type']== 'user-new' ){ echo "selected"; } ?> ><?php _e('When a new WordPress user is added to your site','sendpres'); ?>...</option>
 </select>
 <select name="" id="params-list">
 <?php
@@ -119,10 +119,10 @@ foreach($current_lists as $list){
 </select>
 <input type="text"  name="sp-delay" style="width:30px; <?php if($options['when']== 'immediate' ){ echo "display:none;"; } ?>"   class="text" id="timer" value="<?php echo $options['delay']; ?>" />
 <select name="sp-timing"  id="when-to-send" >
-<option value="immediate" <?php if($options['when']== 'immediate' ){ echo "selected"; } ?>  >immediately.</option>
-<option value="hours" <?php if($options['when']== 'hours' ){ echo "selected"; } ?>  >hour(s) after.</option>
-<option value="days" <?php if($options['when']== 'days' ){ echo "selected"; } ?>  >day(s) after.</option>
-<option value="weeks" <?php if($options['when']== 'weeks' ){ echo "selected"; } ?>  >week(s) after.</option>
+<option value="immediate" <?php if($options['when']== 'immediate' ){ echo "selected"; } ?>  ><?php _e('immediately','sendpress'); ?>.</option>
+<option value="hours" <?php if($options['when']== 'hours' ){ echo "selected"; } ?>  ><?php _e('hour(s) after','sendpres'); ?>.</option>
+<option value="days" <?php if($options['when']== 'days' ){ echo "selected"; } ?>  ><?php _e('day(s) after','sendpress'); ?>.</option>
+<option value="weeks" <?php if($options['when']== 'weeks' ){ echo "selected"; } ?>  ><?php _e('week(s) after','sendpress'); ?>.</option>
 </select>
 
 <br><br>

@@ -159,7 +159,7 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 	</div>	
 	<div style="width: 45%; margin-right: 10%">
 		<br><b><?php _e('Send Double Opt-in Email','sendpress'); ?>:&nbsp;&nbsp;&nbsp;<input type="radio" value="yes" <?php if(SendPress_Option::get('send_optin_email')=='yes'){ echo "checked='checked'"; } ?> name="optin"> Yes&nbsp;&nbsp;&nbsp;<input type="radio" value="no" <?php if(SendPress_Option::get('send_optin_email')=='no'){ echo "checked='checked'"; } ?> name="optin"> No</b>
-			<br><?php _e('Keep the spammers, robots and other riff-raff off your list','sendpress'); ?>. <br><?php _e('Read more about why to use double opt-in on out support site','sendpress'); ?>.
+			<br><?php _e('Keep the spammers, robots and other riff-raff off your list','sendpress'); ?>. <br><?php _e('Read more about why to use double opt-in on our support site','sendpress'); ?>.
 			<br><br><br>
 			
 

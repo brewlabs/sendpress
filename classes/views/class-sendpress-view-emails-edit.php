@@ -116,7 +116,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 	
 
 </div>
-        <h2>Edit Email Content</h2>
+        <h2><?php _e('Edit Email Content','sendpress'); ?></h2>
         <br>
         <?php $this->panel_start('<span class="glyphicon glyphicon-envelope"></span> '.  __('Subject','sendpress') ); ?>
         <input type="text" name="post_subject" size="30" tabindex="1" class="form-control" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />

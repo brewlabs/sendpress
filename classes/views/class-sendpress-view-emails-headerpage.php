@@ -29,9 +29,9 @@ class SendPress_View_Emails_Headerpage extends SendPress_View_Emails {
     <input type="hidden" value="<?php echo $_GET['templateID'];  ?>" name="templateID" />
      
    	<div class="pull-right">
-     <a href="<?php echo SendPress_Admin::link('Emails_Tempstyle', array('templateID' => $_GET['templateID']  ) ); ?>">Back to Template</a>&nbsp;&nbsp;&nbsp;<button class="btn btn-primary " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Save','sendpress'); ?></button>
+     <a href="<?php echo SendPress_Admin::link('Emails_Tempstyle', array('templateID' => $_GET['templateID']  ) ); ?>"><?php _e('Back to Template','sendpress'); ?></a>&nbsp;&nbsp;&nbsp;<button class="btn btn-primary " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Save','sendpress'); ?></button>
    	</div>
-   <h2><?php echo $postdata->post_title; ?> Template Page Header</h2><br>
+   <h2><?php echo $postdata->post_title; ?> <?php _e('Template Page Header','sendpress'); ?></h2><br>
      <div class="tab-pane fade in active" id="home"><?php wp_editor( get_post_meta( $postdata->ID , '_header_page' , true) , 'header-content'); ?></div>
 
 		<?php SendPress_Data::nonce_field(); ?>

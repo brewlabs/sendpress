@@ -185,7 +185,7 @@ class SendPress_Posts{
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,
-			'label_count'               => _n_noop( 'Custom <span class="count">(%s)</span>', 'Custom <span class="count">(%s)</span>', 'sendpress' )
+			'label_count'               => _n_noop( 'Custom Templates <span class="count">(%s)</span>', 'Custom Templates <span class="count">(%s)</span>', 'sendpress' )
 		)  );
 
 		register_post_status( 'sp-form', array(

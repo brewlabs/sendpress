@@ -103,9 +103,9 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 		// Set the other options
 		$phpmailer->Host = 'smtp.gmail.com';
 		$phpmailer->SMTPAuth = true;  // authentication enabled
-		$phpmailer->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
+		$phpmailer->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
 
-		$phpmailer->Port = 465;
+		$phpmailer->Port = 587;
 		// If we're using smtp auth, set the username & password
 		$phpmailer->SMTPAuth = TRUE;
 		$phpmailer->Username = SendPress_Option::get('gmailuser');

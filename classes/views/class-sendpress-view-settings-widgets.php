@@ -293,7 +293,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 			</div>
 			<div class="sp-50">
 				<?php $this->panel_start( __('Shortcode','sendpress') ); ?>
-					<p><?php _e('Use the shortcode belot to insert this signup form into your posts and pages','sendpress'); ?>.</p>
+					<p><?php _e('Use the shortcode below to insert this signup form into your posts and pages','sendpress'); ?>.</p>
 					<pre>[sp-form formid=<?php echo $settings['_settings_id']; ?>]</pre>
 				<?php $this->panel_end(); ?>
 

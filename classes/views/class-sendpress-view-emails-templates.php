@@ -36,25 +36,25 @@ class SendPress_View_Emails_Templates extends SendPress_View_Emails{
 </div>
 -->
 <div class="changelog">
-	<h2 class="about-headline-callout">Introducing Custom HTML Templates</h2>
+	<h2 class="about-headline-callout"><?php _e('Introducing Custom HTML Templates','sendpress'); ?></h2>
 
-<p style="text-align:center;">Custom Templates Requires SendPress Pro v1.0+</p>
+<p style="text-align:center;"><?php _e('Custom Templates Requires SendPress Pro v1.0+','sendpress'); ?></p>
 	<img class="about-overview-img" src="<?php echo SENDPRESS_URL; ?>img/customedit.png">
 	<div class="feature-section col three-col about-updates">
 		<div class="col-1">
 			<!--<img src="<?php echo SENDPRESS_URL;?>/img/sending-errors.png?1">-->
-			<h3>Send Any Template</h3>
-			<p>SendPress allows you to send any HTML email template you wish.</p>
+			<h3><?php _e('Send Any Template','sendpress'); ?></h3>
+			<p><?php _e('SendPress allows you to send any HTML email template you wish.','sendpress'); ?></p>
 		</div>
 		<div class="col-2">
 			<!--<img src="<?php echo SENDPRESS_URL;?>/img/sendhistory.png?1">-->
-			<h3>Template Tags</h3>
-			<p>Quickly insert email content, subscriber information and social icons with our new tag system.</p>
+			<h3><?php _e('Template Tags','sendpress'); ?></h3>
+			<p><?php _e('Quickly insert email content, subscriber information and social icons with our new tag system.','sendpress'); ?></p>
 		</div>
 		<div class="col-3 last-feature">
 			<!--<img src="<?php echo SENDPRESS_URL;?>/img/autocron.png?1">-->
-			<h3>Upgrade to Pro</h3>
-			<p>Go to <a href="https://sendpress.com/purchase-pricing/">SendPress.com</a> to get a liscense for SendPress Pro. Also if you enable AutoCron you should recive a 20% discount.</p>
+			<h3><?php _e('Upgrade to Pro','sendpress'); ?></h3>
+			<p><?php _e('Go to <a href="https://sendpress.com/purchase-pricing/">SendPress.com</a> to get a liscense for SendPress Pro. Also if you enable AutoCron you should recive a 20% discount.','sendpress'); ?></p>
 		</div>
 	</div>
 </div>

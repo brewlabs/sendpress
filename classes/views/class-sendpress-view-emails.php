@@ -66,7 +66,7 @@ class SendPress_View_Emails extends SendPress_View{
 				  	</li>
 				  	<!--
 				  	<li <?php if(isset($_GET['view']) &&  in_array($_GET['view'], array('autoresponder','autoedit')) ) { ?>class="active"<?php } ?> >
-				    	<a href="<?php echo SendPress_Admin::link('Emails_Autoresponder'); ?>"><?php _e('Autoreponders','sendpress'); ?></a>
+				    	<a href="<?php echo SendPress_Admin::link('Emails_Autoresponder'); ?>"><?php _e('Autoresponders','sendpress'); ?></a>
 				  	</li>
             -->
 			
@@ -89,8 +89,8 @@ class SendPress_View_Emails extends SendPress_View{
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">×</button>
     <ul class="nav nav-tabs" id="myTab">
-      <li class="active tabs-first"><a href="#posts">Single Post</a></li>
-        <li ><a href="#merge">Personalize</a></li>
+      <li class="active tabs-first"><a href="#posts"><?php _e('Single Post','sendpress'); ?></a></li>
+        <li ><a href="#merge"><?php _e('Personalize','sendpress'); ?></a></li>
      
         <!--
       <li><a href="#messages">Messages</a></li>
@@ -104,9 +104,9 @@ class SendPress_View_Emails extends SendPress_View{
 <div class="tab-content">
    <div class="tab-pane active" id="posts">
 
-    <div id="search-header">Search Posts: <input type="text" name="q" id="sp-single-query"></div>
+    <div id="search-header"><?php _e('Search Posts','sendpress'); ?>: <input type="text" name="q" id="sp-single-query"></div>
     <div  id="sp-post-preview" class="well">
-      No Post Selected
+      <?php _e('No Post Selected','sendpress'); ?>
     </div>
 
     <p>Header HTML:&nbsp;

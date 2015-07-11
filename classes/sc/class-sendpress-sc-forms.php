@@ -344,7 +344,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
 		add_action('sendpress_shortcode_examples_forms',array('SendPress_SC_Forms','example_shortcodes'));
 
-		return __('This shortcode loads a form based on a formid.', 'sendpress');
+		return __('This shortcode loads a form based on a form id.', 'sendpress');
 	}
 
 	public static function example_shortcodes(){
