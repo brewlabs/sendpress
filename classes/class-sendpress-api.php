@@ -103,7 +103,7 @@ class SendPress_API {
 		$vars[] = 'startdate';
 		$vars[] = 'enddate';
 		$vars[] = 'customer';
-		$vars[] = 'discount';
+		$vars[] = 'url';
 		$vars[] = 'format';
 		$vars[] = 'id';
 		$vars[] = 'email';
@@ -144,7 +144,11 @@ class SendPress_API {
 				$this->missing_auth();
 			}
 			
-		}else{
+		} elseif( !empty( $wp_query->query_vars['spnl-api'] ) && $wp_query->query_vars['spnl-api'] == 'tracker' ){
+			$this->is_valid_request = true;
+			$wp_query->set( 'key', 'public' );
+		}
+		else{
 			$this->missing_auth();
 		}
 		
@@ -226,7 +230,18 @@ class SendPress_API {
 		$data = array();
 
 		switch( $query_mode ) :
+			case 'tracker':
 
+
+			
+				$data = $this->track_stats( array(
+					'type'      => isset( $wp_query->query_vars['type'] )      ? $wp_query->query_vars['type']      : null,
+					'id'   => isset( $wp_query->query_vars['id'] )   ? $wp_query->query_vars['id']   : null,
+					'email'      => isset( $wp_query->query_vars['email'] )      ? $wp_query->query_vars['email']      : null,
+					'url' => isset( $wp_query->query_vars['url'] ) ? $wp_query->query_vars['url'] : null
+				) );
+
+				break;
 			case 'errors' :
 			
 				
@@ -304,7 +319,8 @@ class SendPress_API {
 		// Whitelist our query options
 		$accepted = apply_filters( 'spnl_api_valid_query_modes', array(
 			'errors',
-			'public'
+			'public',
+			'tracker'
 		) );
 
 		$query = isset( $wp_query->query_vars['spnl-api'] ) ? $wp_query->query_vars['spnl-api'] : null;
@@ -553,7 +569,40 @@ class SendPress_API {
 		return  SPNL()->log->get_logs(0, 'sending',  1);;
 	}
 
+	public function track_stats($tracker_data){
 
+		$url = $tracker_data['url'];
+		$report_id = $tracker_data['email'];
+		$sid = $tracker_data['id'];
+
+		$db_url = SPNL()->db->url;
+
+		$url_in_db = $db_url->get( $url );  //= SendPress_Data::get_url_by_hash( $hash );
+		
+		if ( $url_in_db == false ) {
+			$id = $db_url->add( $url );
+		} else {
+			$id = $url_in_db;
+		}
+
+
+		SPNL()->db->subscribers_url->add_update( array('subscriber_id'=> $sid, 'email_id' => $report_id, 'url_id' => $id  ) );
+
+		SPNL()->db->subscribers_tracker->open( $report_id , $sid , 2 );
+
+		return true;
+		/*
+		$data = $this->track_stats( array(
+					'type'      => isset( $wp_query->query_vars['type'] )      ? $wp_query->query_vars['type']      : null,
+					'id'   => isset( $wp_query->query_vars['id'] )   ? $wp_query->query_vars['id']   : null,
+					'email'      => isset( $wp_query->query_vars['email'] )      ? $wp_query->query_vars['email']      : null,
+					'url' => isset( $wp_query->query_vars['url'] ) ? $wp_query->query_vars['url'] : null
+				) );
+		*/
+	}
+
+
+				
 	private function log_request( $data = array() ) {
 		if ( ! $this->log_requests )
 			return;

@@ -18,15 +18,6 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 		$info = $this->data();
 		//$hash = wp_hash( $info->url , 'sendpress' );
 
-		$db_url = SPNL()->db->url;
-
-		$url_in_db = $db_url->get( $info->url );  //= SendPress_Data::get_url_by_hash( $hash );
-		
-		if ( $url_in_db == false ) {
-			$id = $db_url->add( $info->url );
-		} else {
-			$id = $url_in_db;
-		}
 
 		$dk = SendPress_Data::devicetypes( $this->_device_type );
 
@@ -44,9 +35,18 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 			break;
 		}
 
-		SPNL()->db->subscribers_url->add_update( array('subscriber_id'=> $info->id, 'email_id' => $info->report, 'url_id' => $id  ) );
+		$args = array(
+		 'timeout' => 0.1,
+		 'blocking' => false,
+		 'headers' => array(),
+		 'sslverify' => false,
+		);
 
-		SPNL()->db->subscribers_tracker->open( $info->report , $info->id , 2 );
+		$request = home_url('/spnl-api/tracker');
+		// Parameters as separate arguments
+		$request =  add_query_arg( array( 'email' =>$info->report , 'url' => urlencode( $info->url ) , 'id' => $info->id ), $request );
+ 
+		wp_remote_get($request, $args);	
 
 		if(strrpos( $url, "mailto" ) !== false){
 			header("Location: " . esc_url_raw( $url ) );
