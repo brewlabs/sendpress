@@ -1815,6 +1815,8 @@ class SendPress_Data extends SendPress_DB_Tables {
                 }
                 if( $slug == 'system-base' ){
                     update_post_meta( $_id, '_system_template', true );
+                    $fcp = SendPress_Tag_Footer_Page::content( true );
+                    update_post_meta( $_id, '_footer_page', $fcp   );
                 }
                 
                 update_post_meta( $_id, '_header_content', SendPress_Tag_Header_Content::content() );

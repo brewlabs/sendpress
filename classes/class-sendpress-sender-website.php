@@ -99,6 +99,8 @@ class SendPress_Sender_Website extends SendPress_Sender {
 		
 		$r = wp_mail($to, $subject, $html, $headers);
 		
+		remove_filter( 'phpmailer_init' , array( $this , 'wpmail_init' ) , 90 );
+
 		return $r;
 	}
 

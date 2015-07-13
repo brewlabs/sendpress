@@ -157,18 +157,6 @@ class SendPress_Email {
 
 		
 
-			$open_info = array(
-				"id"=>$this->subscriber_id(),
-				"report"=> $this->id(),
-				"view"=>"open"
-			);
-			$code = SendPress_Data::encrypt( $open_info );
-
-			$link = SendPress_Manager::public_url( $code );
-
-
-			$tracker = "<img src='". $link ."' width='1' height='1'/></body>";
-			$body_html = str_replace("</body>",$tracker , $body_html );
 			$body_link			=	get_post_meta( $this->id() , 'body_link', true );
 
 			
@@ -334,6 +322,19 @@ class SendPress_Email {
 			//echo  $body_html;
 			//print_r($email);
 			
+			$open_info = array(
+				"id"=>$this->subscriber_id(),
+				"report"=> $this->id(),
+				"view"=>"open"
+			);
+			$code = SendPress_Data::encrypt( $open_info );
+
+			$link = SendPress_Manager::public_url( $code );
+			$link = add_query_arg( 'img', uniqid(  $this->id() . '-' ) , $link );
+
+			$tracker = "<img src='". $link ."' width='1' height='1'  alt='' border='0' style='height:1px !important; width:1px !important; border-width:0 !important; margin-top:0 !important; margin-bottom:0 !important; margin-right:0 !important; margin-left:0 !important; padding-top:0 !important; padding-bottom:0 !important; padding-right:0 !important; padding-left:0 !important;'/></body>";
+			$body_html = str_replace("</body>",$tracker , $body_html );
+
 			return $body_html;
 
 	}

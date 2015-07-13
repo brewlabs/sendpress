@@ -52,7 +52,11 @@ class SendPress_Tag_Footer_Page extends SendPress_Tag_Base  {
 		
 	}
 
-	static function content(){
+	static function content( $system = false ){
+
+		if( $system == true ){
+			return "<br><!--page footer -->";
+		}
 		$display_correct = __("Is this email not displaying correctly?","sendpress");
 		$view = __("View it in your browser","sendpress");
 		$unsubscribe =  __("unsubscribe from this list","sendpress");
