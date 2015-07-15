@@ -325,7 +325,7 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 = 0.9.9.6 - 2014.4.8 =
 * Fix: List Sync not updating all users
 * Fix: multiple sptemplates being created on some hosts
-* New: Duplicate tempalte check added to Advanced Settings
+* New: Duplicate template check added to Advanced Settings
 * Update: Trvix CLI tests updated
 * Update: Pro installer should always use SSL
  

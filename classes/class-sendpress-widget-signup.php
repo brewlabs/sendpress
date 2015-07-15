@@ -261,7 +261,9 @@ class SendPress_Widget_Signup extends WP_Widget {
 		<p><b><?php __('Check off the lists you would like<br>users to subscribe to','sendpress') ?>.</b></p>
 		<?php 
 		if( count($lists) === 0 ){
-			_e('<p>No public lists available</p>','sendpress');
+			?><p><?php
+			_e('No public lists available','sendpress');
+			?></p><?php
 		}else{
 			foreach($lists as $list){
 				?>

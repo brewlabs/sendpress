@@ -346,7 +346,9 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 				<p><b><?php _e('Check off the lists you would like','sendpress'); ?><br><?php _e('users to subscribe to','sendpress'); ?>.</b></p>
 				<?php 
 				if( count($lists) === 0 ){
-					echo '<p>No public lists available</p>';
+					?><p><?php
+					_e('No public lists available','sendpress');
+					?></p><?php
 				}else{
 					foreach($lists as $list){
 						?>
