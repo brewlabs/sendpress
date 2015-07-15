@@ -147,6 +147,10 @@ class SendPress_API {
 		} elseif( !empty( $wp_query->query_vars['spnl-api'] ) && $wp_query->query_vars['spnl-api'] == 'tracker' ){
 			$this->is_valid_request = true;
 			$wp_query->set( 'key', 'public' );
+		
+		} elseif( !empty( $wp_query->query_vars['spnl-api'] ) && $wp_query->query_vars['spnl-api'] == 'system-check' ){
+			$this->is_valid_request = true;
+			$wp_query->set( 'key', 'public' );
 		}
 		else{
 			$this->missing_auth();
@@ -230,9 +234,10 @@ class SendPress_API {
 		$data = array();
 
 		switch( $query_mode ) :
+			case 'system-check':
+				$data = array( 'status' => 'active' );
+				break;
 			case 'tracker':
-
-
 			
 				$data = $this->track_stats( array(
 					'type'      => isset( $wp_query->query_vars['type'] )      ? $wp_query->query_vars['type']      : null,
@@ -320,7 +325,8 @@ class SendPress_API {
 		$accepted = apply_filters( 'spnl_api_valid_query_modes', array(
 			'errors',
 			'public',
-			'tracker'
+			'tracker',
+			'system-check'
 		) );
 
 		$query = isset( $wp_query->query_vars['spnl-api'] ) ? $wp_query->query_vars['spnl-api'] : null;

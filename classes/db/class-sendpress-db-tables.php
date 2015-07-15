@@ -184,6 +184,30 @@ class SendPress_DB_Tables {
         global $wpdb;
 
         echo "<b>Database Tables</b>: <br>";
+        $subscriber_events_table =  new SendPress_DB_Subscribers_Tracker();
+        $subscriber_events_table = $subscriber_events_table->table_name;
+        if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
+            echo $subscriber_events_table . " Not Installed<br>";
+        } else {
+             echo $subscriber_events_table . " OK<br>";
+        }
+
+        $subscriber_events_table =  new SendPress_DB_Subscribers_Url();
+        $subscriber_events_table = $subscriber_events_table->table_name;
+        if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
+            echo $subscriber_events_table . " Not Installed<br>";
+        } else {
+             echo $subscriber_events_table . " OK<br>";
+        }
+
+        $subscriber_events_table =  new SendPress_DB_Url();
+        $subscriber_events_table = $subscriber_events_table->table_name;
+        if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
+            echo $subscriber_events_table . " Not Installed<br>";
+        } else {
+             echo $subscriber_events_table . " OK<br>";
+        }
+
         $subscriber_events_table =  SendPress_DB_Tables::subscriber_event_table();
         if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
             echo $subscriber_events_table . " Not Installed<br>";
