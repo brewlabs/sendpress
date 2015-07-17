@@ -964,7 +964,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$updated = $wpdb->update($meta_table , array('meta_value' => $schedule), array( 'listID' => $listId, 'meta_key' => 'post_notifications' ) );
 
 		//set all users in post notification list to a status of 2 (active)
-		$updated = $wpdb->update($subs_table , array('status' => 2), array( 'listID' => $listId, 'status' => 1 ) );
+		$updated = $wpdb->update($subs_table , array('status' => 2), array( 'listID' => $listId ) );
 		
 	}
 
