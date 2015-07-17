@@ -36,7 +36,13 @@ class SendPress_View_Emails_Footerpage extends SendPress_View_Emails {
      <br><br>
      <?php _e('Default Content','sendpress'); ?>
 <textarea class="form-control" rows="3">
-<?php echo SendPress_Tag_Footer_Page::content(); ?>
+<?php 
+$sys = false;
+get_post_meta( $postdata->ID , '_system_template' , true);
+if(  true == get_post_meta( $postdata->ID , '_system_template' , true) ){
+  $sys = true;
+}
+echo SendPress_Tag_Footer_Page::content(true); ?>
 </textarea>
      
 		<?php SendPress_Data::nonce_field(); ?>

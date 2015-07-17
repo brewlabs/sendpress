@@ -113,8 +113,11 @@ class SendPress_View_Help extends SendPress_View{
 		
 		echo '<b>MySQL Version</b>: ' . $wpdb->db_version() . '<br><br>';
 
+		echo '<b>Send Setup</b>: ' . SendPress_Option::get( 'sendmethod' ) . '<br><br>';
+	
 		SendPress_DB_Tables::check_setup();
 
+		/*
 		echo "<b>Ports:</b><br>";
 	  	$server  = "smtp.sendgrid.net";
 	  	$port   = "25";
@@ -144,7 +147,8 @@ class SendPress_View_Help extends SendPress_View{
 	  	 _e('blocked','sendpress');
 	  } else {
 	  	_e('open','sendpress');
-	  } ?><br><br>
+	  }  */?><br><br>
+
 	  	<b>Support Info:</b>
 	  	<textarea readonly="readonly" class="sendpress-sysinfo"  name="sendpress-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'sendpress' ); ?>"><?php echo esc_html( $this->display() ); ?></textarea>
 

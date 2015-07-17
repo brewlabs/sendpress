@@ -91,7 +91,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 		<div class="sp-row">
 			<div class="sp-50 sp-first">
 			<?php $this->panel_start( __('Database Repair','sendpress') ); ?>
-				<p><?php _e('Reset our new tempalte system back to default and fix some postmeta issues','sendpress'); ?>.</p>
+				<p><?php _e('Reset our new template system back to default and fix some postmeta issues','sendpress'); ?>.</p>
 				<a class="btn btn-primary btn-block" href="<?php echo SendPress_Admin::link('Settings_Dbfix'); ?>"><?php _e('Data Fix Options','sendpress'); ?></a>
 			<?php $this->panel_end(); ?>
 			<div class="panel panel-default">
