@@ -956,16 +956,12 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$subs_table = SendPress_Data::list_subcribers_table();
 		$meta_table = SendPress_Data::subscriber_meta_table();
 
-		//insert new meta values for users with a status of 1 AND on the post notifications list
-		$q = $wpdb->prepare("insert into $meta_table (subscriberID, listID, meta_key, meta_value) select subscriberID, $listId, 'post_notifications', '$schedule' from $subs_table where listID = %d and status = 1", $listId);
-		$wpdb->query($q);
-
 		//update meta values to the new value based on the schedule
 		$updated = $wpdb->update($meta_table , array('meta_value' => $schedule), array( 'listID' => $listId, 'meta_key' => 'post_notifications' ) );
 
-		//set all users in post notification list to a status of 2 (active)
-		$updated = $wpdb->update($subs_table , array('status' => 2), array( 'listID' => $listId, 'status' => 1 ) );
-		
+		//insert new meta values for users with a status of 1 AND on the post notifications list
+		$q = $wpdb->prepare("insert into $meta_table (subscriberID, listID, meta_key, meta_value) select s.subscriberID, $listId, 'post_notifications', '$schedule' from $subs_table as s where s.listID = %d and s.status in (1,2) and s.subscriberID not in (select m.subscriberID from $meta_table as m)", $listId);
+		$wpdb->query($q);
 	}
 
 
