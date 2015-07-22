@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 4.2.2
-Stable tag: 1.1.7.14
+Stable tag: 1.1.7.21
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,15 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.1.7.21 - 2015.7.21 =
+* Update: Pro post notification list setup
+* Update: Translation files
+* New: Linked plugin to http://wp-translations.org/
+* Pro: Elastive Email module
+* Fix: email tracker in gmail not always getting stats
+* Fix: slow link tracker response to click
+* Fix: Various spelling and missing tranlated text
 
 = 1.1.7.14 - 2015.7.14 =
 * Update: Language Translations
@@ -686,6 +695,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.1.7.21 =
+Bug fixes and translation updates
 
 = 1.1.7.14 =
 Support for Postman SMTP
