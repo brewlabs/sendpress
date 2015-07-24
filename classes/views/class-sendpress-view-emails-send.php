@@ -33,7 +33,7 @@ class SendPress_View_Emails_Send extends SendPress_View_Emails {
             if(isset($_POST['test_report'])){
                 update_post_meta($post_info_id,'istest', true);
             } else {
-                 update_post_meta($post_info_id),'istest', false);
+                 update_post_meta($post_info_id,'istest', false);
             }
 
             if( isset($_POST['google-campaign-name']) ) {
