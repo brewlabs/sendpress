@@ -18,7 +18,7 @@ switch ( $this->_current_action ) {
                 $email_delete = $_GET['qemail'];
 
                 foreach ($email_delete as $qID) {
-                    $q = SPNL()->validate->int($qID)
+                    $q = SPNL()->validate->int($qID);
                     if($q > 0 ){
                         $this->delete_queue_email($q);
                     }
