@@ -30,8 +30,8 @@ class SendPress_View_Emails_Send_Cancel extends SendPress_View_Emails {
 
 
         if(isset($_GET['emailID'])){
-        	$emailID = $_GET['emailID'];
-        	$post = get_post( $_GET['emailID'] );
+        	$emailID = SPNL()->validate->int($_GET['emailID']);
+        	$post = get_post( $emailID );
         	$post_ID = $post->ID;
         }
 

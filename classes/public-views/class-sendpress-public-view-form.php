@@ -122,32 +122,7 @@ class SendPress_Public_View_Form extends SendPress_Public_View{
 		</body>
 	</html>
 	<?php
-		//echo do_shortcode('[sendpress-signup listids="1115"]');
-		/*
-		$email = $_POST['sp'];	
-		//foreach()
-
 		
-	
-		/*
-
-		$sp->track_click( $info->id , $info->report, $info->urlID , $ip  );
-
-		$link = get_query_var('spurl');
-
-		if( get_query_var('fxti') &&  get_query_var('spreport') ){
-
-
-		$this->register_click(get_query_var('fxti'), get_query_var('spreport'), $link);
-
-		}
-
-		
-
-
-
-		header( 'Location: '.$link ) ;
-		*/
 	}
 
 }

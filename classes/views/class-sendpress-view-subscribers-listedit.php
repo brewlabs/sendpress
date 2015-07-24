@@ -35,7 +35,6 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
 		
 	$list ='';
 	if(isset($_GET['listID'])){
-		//$listinfo = $this->getDetail( $this->lists_table(),'listID', $_GET['listID'] );	
 		$listinfo = get_post($_GET['listID']);
 		$list = '&listID='.$_REQUEST['listID'];
 		$listname = 'for '. $listinfo->post_title;

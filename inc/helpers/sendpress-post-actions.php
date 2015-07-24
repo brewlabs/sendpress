@@ -24,7 +24,7 @@ switch ( $this->_current_action ) {
         }
 
         $this->createList( array('name'=> $name, 'public'=>$public ) );
-         wp_redirect( esc_url_raw( admin_url('admin.php?page='.$_GET['page'] ) ) );
+         wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page($_GET['page']) ) ) );
     
     break;
 
@@ -39,7 +39,7 @@ switch ( $this->_current_action ) {
       
         $this->updateList($listid, array( 'name'=>$name, 'public'=>$public ) );
 
-        $page = apply_filters('sendpress_edit_list_redirect',$_GET['page']);
+        $page = apply_filters('sendpress_edit_list_redirect',SPNL()->validate->page($_GET['page']));
       
         wp_redirect( esc_url_raw( admin_url('admin.php?page='. $page  ) ) );
     
@@ -111,7 +111,7 @@ switch ( $this->_current_action ) {
 
         }
 
-        wp_redirect( 'admin.php?page='.$_GET['page']. "&view=subscribers&listID=".$listID );
+        wp_redirect( 'admin.php?page='.SPNL()->validate->page($_GET['page']). "&view=subscribers&listID=".$listID );
         */
     
     break;
@@ -131,7 +131,7 @@ switch ( $this->_current_action ) {
             //$this->linkListSubscriber($listID, $result, 1);
         }
 
-        wp_redirect(  esc_url_raw( admin_url('admin.php?page='.$_GET['page']. "&view=subscribers&listID=".$listID )));
+        wp_redirect(  esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page($_GET['page']). "&view=subscribers&listID=".$listID )));
 
     break;
     case 'template-default-style':
@@ -241,84 +241,6 @@ switch ( $this->_current_action ) {
 
     break;
 
-    case 'save-send-confirm':
-        $saveid = $_POST['post_ID'];
-
-        update_post_meta( $saveid, 'send_date', date('Y-m-d H:i:s') );
-
-        $email_post = get_post( $saveid );
-
-        $subject = SendPress_Option::get('current_send_subject_'. $saveid);
-
-        $info = SendPress_Option::get('current_send_'.$saveid);
-        $slug = $this->random_code();
-
-        $new_id = SendPress_Posts::copy($email_post, $subject, $slug, $this->_report_post_type );
-        SendPress_Posts::copy_meta_info($new_id, $saveid);
-
-        $this->log('ADD QUEUE');
-
-        $count = 0;    
-
-        if(isset($info['listIDS'])){
-            foreach($info['listIDS'] as $list_id){
-                $_email = $this->get_active_subscribers( $list_id );
-
-                foreach($_email as $email){
-                   
-                     $go = array(
-                        'from_name' => 'Josh',
-                        'from_email' => 'joshlyford@gmail.com',
-                        'to_email' => $email->email,
-                        'emailID'=> $new_id,
-                        'subscriberID'=> $email->subscriberID,
-                        //'to_name' => $email->fistname .' '. $email->lastname,
-                        'subject' => $subject,
-                        'listID'=> $list_id
-                        );
-                   
-                    $this->add_email_to_queue($go);
-                    $count++;
-
-                }
-
-
-            }
-        }
-
-
-        if(isset($info['testemails'])){
-            foreach($info['testemails'] as $email){
-                   
-                     $go = array(
-                        'from_name' => 'Josh',
-                        'from_email' => 'joshlyford@gmail.com',
-                        'to_email' => $email['email'],
-                        'emailID'=> $new_id,
-                        'subscriberID'=> 0,
-                        'subject' => $subject,
-                        'listID' => 0
-                        );
-                   
-                    $this->add_email_to_queue($go);
-                    $count++;
-
-                
-
-
-            }
-        }
-
-        update_post_meta($new_id,'_send_count', $count );
-        update_post_meta($new_id,'_send_data', $info );
-
-      $this->log('END ADD QUEUE');
-
-
-        wp_redirect( esc_url_raw(admin_url( 'admin.php?page=sp-queue' )));
-
-    break;
-
 
 
     case 'create-subscribers':
@@ -336,7 +258,7 @@ switch ( $this->_current_action ) {
             }
         }
     
-        wp_redirect( esc_url_raw(admin_url( 'admin.php?page='.$_GET['page']. "&view=subscribers&listID=".$listID )));
+        wp_redirect( esc_url_raw(admin_url( 'admin.php?page='.SPNL()->validate->page($_GET['page']). "&view=subscribers&listID=".$listID )));
     
     break;
 

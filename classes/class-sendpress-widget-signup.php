@@ -143,7 +143,6 @@ class SendPress_Widget_Signup extends WP_Widget {
     		'order'         => 'DESC'
     	);
 		$lists = get_posts( $args );
-	    //$lists = $s->getData($s->lists_table());
 	    $listids = array();
 
 		foreach($lists as $list){

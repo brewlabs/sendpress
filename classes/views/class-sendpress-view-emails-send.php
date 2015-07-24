@@ -9,40 +9,43 @@ class SendPress_View_Emails_Send extends SendPress_View_Emails {
 
 	function save(){
 
-        if(isset($_POST['send-date']) && $_POST['send-date'] == 'later'){
-            $send_at = $_POST['date-pickit'] . " " . $_POST['send-later-time'];
-        } else {
-            $send_at = '0000-00-00 00:00:00';
-        }   
-        if(isset($_POST['test-add'])){
-		$csvadd ="email,firstname,lastname\n" . trim($_POST['test-add']);
+        $post_info_id =  SPNL()->validate->int( $_POST['post_ID'])
+        if($post_info_id > 0){
+            if(isset($_POST['send-date']) && $_POST['send-date'] == 'later'){
+                $send_at = $_POST['date-pickit'] . " " . $_POST['send-later-time'];
+            } else {
+                $send_at = '0000-00-00 00:00:00';
+            }   
+            if(isset($_POST['test-add'])){
+    		$csvadd ="email,firstname,lastname\n" . sanitize_text_field( trim($_POST['test-add']) ) ;
 
-    	$data=  SendPress_Data::subscriber_csv_post_to_array($csvadd);
-    } else {
-        $data = false;
-    }
-        $listids = isset($_POST['listIDS']) ? $_POST['listIDS'] : array();
-        SendPress_Option::set('current_send_'. $_POST['post_ID'], array(
-            'listIDS' =>  $listids,
-            'testemails'=> $data,
-            'send_at' => $send_at
-            ));
-        SendPress_Option::set('current_send_subject_'. $_POST['post_ID'],$_POST['post_subject']);
-        if(isset($_POST['test_report'])){
-            update_post_meta($_POST['post_ID'],'istest', true);
-        } else {
-             update_post_meta($_POST['post_ID'],'istest', false);
-        }
+        	$data=  SendPress_Data::subscriber_csv_post_to_array($csvadd);
+            } else {
+                $data = false;
+            }
+            $listids = isset($_POST['listIDS']) ? $_POST['listIDS'] : array();
+            SendPress_Option::set('current_send_'. $post_info_id, array(
+                'listIDS' =>  $listids,
+                'testemails'=> $data,
+                'send_at' => $send_at
+                ));
+            SendPress_Option::set('current_send_subject_'. $post_info_id , sanitize_text_field($_POST['post_subject']) );
+            if(isset($_POST['test_report'])){
+                update_post_meta($post_info_id,'istest', true);
+            } else {
+                 update_post_meta($post_info_id),'istest', false);
+            }
 
-        if( isset($_POST['google-campaign-name']) ) {
-            update_post_meta($_POST['post_ID'],'google-campaign-name', $_POST['google-campaign-name']);
-        }
-        if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
-        	 SendPress_Admin::redirect('Emails_Send_Confirm', array('emailID'=>$_GET['emailID'] ));
-        } else {
-        	SendPress_Admin::redirect('Emails_Style', array('emailID'=>$_GET['emailID'] ));
-        }
+            if( isset($_POST['google-campaign-name']) ) {
+                update_post_meta( $post_info_id , 'google-campaign-name', sanitize_text_field($_POST['google-campaign-name']));
+            }
 
+            if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
+            	 SendPress_Admin::redirect('Emails_Send_Confirm', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+            } else {
+            	SendPress_Admin::redirect('Emails_Style', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+            }
+        }
        
 	}
 	
@@ -78,7 +81,7 @@ $post_type_object = get_post_type_object($sp->_email_post_type);
 <form method="POST" name="sendpress_post" id="sendpress_post">
 <div style="float:right;"  class="btn-toolbar">
 <div id="sp-cancel-btn" class="btn-group">
-<a href="?page=<?php echo $_GET['page']; ?>"  class="btn btn-default "><?php echo __('Cancel','sendpress'); ?></a>
+<a href="?page=<?php echo SPNL()->validate->page($_GET['page']); ?>"  class="btn btn-default "><?php echo __('Cancel','sendpress'); ?></a>
 </div> 
 
 <div class="btn-group">

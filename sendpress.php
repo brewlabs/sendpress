@@ -102,7 +102,9 @@ Author URI: https://sendpress.com/
 		public $log;
 		public $db;
 		public $api;
+		public $validate;
 		private static $instance;
+
 
 
 		function nonce_value(){
@@ -224,6 +226,7 @@ Author URI: https://sendpress.com/
 				self::$instance = new SendPress;
 				self::$instance->template_tags = new SendPress_Template_Tags();
 				self::$instance->api = new SendPress_API();
+				self::$instance->validate = new SendPress_Security();
 				self::$instance->log = new SendPress_Logging();
 				self::$instance->db = new stdClass();
 				self::$instance->db->subscribers_tracker =  new SendPress_DB_Subscribers_Tracker();
@@ -591,26 +594,7 @@ Author URI: https://sendpress.com/
 	  		return $template;
 		}
 
-	    /**
-	 * has_identity_key
-	 *
-	 * @access public
-	 *
-	 * @return mixed Value.
-	 */
-		function has_identity_key(){
-			$key = (get_query_var('fxti')) ? get_query_var('fxti') : false;
-			if(false == $key)
-				return $key;
-			$result =  $this->getSubscriberbyKey( $key );
-			if(!empty( $result ) ) {
-				return true;
-			}
-			return false;
-		}
-
 		static function add_vars($public_query_vars) {
-			$public_query_vars[] = 'fxti';
 			$public_query_vars[] = 'sendpress';
 			$public_query_vars[] = 'spmanage';
 			$public_query_vars[] = 'splist';
@@ -620,6 +604,7 @@ Author URI: https://sendpress.com/
 			$public_query_vars[] = 'spms';
 			return $public_query_vars;
 		}
+
 
 		function add_custom_post(){
 			SendPress_Posts::email_post_type( $this->_email_post_type );
@@ -703,7 +688,7 @@ Author URI: https://sendpress.com/
 	function admin_init(){
 		$this->add_caps();
 		$this->maybe_upgrade();
-		if ( !empty($_GET['_wp_http_referer']) && (isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)) ) {
+		if ( !empty($_GET['_wp_http_referer']) && (isset($_GET['page']) && in_array(SPNL()->validate->page($_GET['page']), $this->adminpages)) ) {
 			//safe redirect with esc_url 4/20
 			wp_safe_redirect( esc_url_raw( remove_query_arg( array('_wp_http_referer', '_wpnonce'), stripslashes($_SERVER['REQUEST_URI']) )) );
 	 		exit;
@@ -756,7 +741,7 @@ Author URI: https://sendpress.com/
 
 
 		//MAKE SURE WE ARE ON AN ADMIN PAGE
-		if(isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)){
+		if(isset($_GET['page']) && in_array( $_GET['page'] , $this->adminpages)){
 
 				remove_action('admin_init', 'Zotpress_add_meta_box', 1);
 				remove_filter('mce_external_plugins', 'cforms_plugin');
@@ -771,7 +756,7 @@ Author URI: https://sendpress.com/
 				$wp_filter['admin_notices'] = array();
 
 			
-			if( ( isset($_GET['page']) && $_GET['page'] == 'sp-templates' ) || (isset( $_GET['view'] ) && $_GET['view'] == 'style-email' )) {
+			if( SPNL()->validate->page($_GET['page']) == 'sp-templates' || (isset( $_GET['view'] ) && $_GET['view'] == 'style-email' )) {
 				wp_register_script('sendpress_js_styler', SENDPRESS_URL .'js/styler.js' ,'', SENDPRESS_VERSION);
 			}
 			if(defined('WPE_PLUGIN_BASE') ){
@@ -779,7 +764,7 @@ Author URI: https://sendpress.com/
 			}
 
 
-			$this->_page = $_GET['page'];
+			$this->_page = SPNL()->validate->page($_GET['page']);
 			add_filter('tiny_mce_before_init',  array($this,'myformatTinyMCE') );
 
 
@@ -793,9 +778,9 @@ Author URI: https://sendpress.com/
 			remove_action( 'transition_post_status', 'fb_publish_later', 10, 3);
 
 			$tiny = new SendPress_TinyMCE();
-	   		$this->_current_view = isset( $_GET['view'] ) ? $_GET['view'] : '' ;
+	   		$this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '' ;
 
-
+	   		
 
 	    	$view_class = $this->get_view_class($this->_page, $this->_current_view);
 			$view_class = NEW $view_class;
@@ -803,10 +788,10 @@ Author URI: https://sendpress.com/
 			add_action('sendpress_admin_scripts',array($view_class, 'admin_scripts_load'));
 			$view_class = $this->get_view_class($this->_page, $this->_current_view);
 
-	    	$this->_current_action = isset( $_GET['action'] ) ? $_GET['action'] : '' ;
-		    $this->_current_action = isset( $_GET['action2'] ) ? $_GET['action2'] : $this->_current_action ;
-		    $this->_current_action = isset( $_POST['action2'] ) ? $_POST['action2'] : $this->_current_action ;
-		    $this->_current_action = isset( $_POST['action'] ) && $_POST['action'] !== '-1' ? $_POST['action'] : $this->_current_action ;
+	    	$this->_current_action = isset( $_GET['action'] ) ? sanitize_text_field($_GET['action']) : '' ;
+		    $this->_current_action = isset( $_GET['action2'] ) ? sanitize_text_field($_GET['action2']) : $this->_current_action ;
+		    $this->_current_action = isset( $_POST['action2'] ) ? sanitize_text_field($_POST['action2']) : $this->_current_action ;
+		    $this->_current_action = isset( $_POST['action'] ) && sanitize_text_field($_POST['action']) !== '-1' ? sanitize_text_field($_POST['action']) : $this->_current_action ;
 		    $method = str_replace("-","_", $this->_current_action);
 	    	$method = str_replace(" ","_",$method);
 
@@ -834,8 +819,8 @@ Author URI: https://sendpress.com/
 
 	    	} else if ( isset( $_GET['action']) || isset( $_GET['action2'] )  ){
 
-		    	$this->_current_action = $_GET['action'];
-		    	$this->_current_action = ( isset( $_GET['action2'] ) && $_GET['action2'] !== '-1')  ? $_GET['action2'] : $this->_current_action ;
+		    	$this->_current_action = sanitize_text_field($_GET['action']);
+		    	$this->_current_action = ( isset( $_GET['action2'] ) && sanitize_text_field($_GET['action2']) !== '-1')  ? sanitize_text_field($_GET['action2']) : $this->_current_action ;
 		    	$method = str_replace("-","_", $this->_current_action);
 	    		$method = str_replace(" ","_",$method);
 	    		if( method_exists( $view_class , $method ) ){
@@ -863,7 +848,7 @@ Author URI: https://sendpress.com/
     		}
 
     		//MAKE SURE WE ARE ON AN ADMIN PAGE
-			if(is_admin() && isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)){
+			if(is_admin() && isset($_GET['page']) && in_array(SPNL()->validate->page($_GET['page']), $this->adminpages)){
 
 				wp_enqueue_style('thickbox');
 				wp_register_script('spfarb', SENDPRESS_URL .'js/farbtastic.js' ,'', SENDPRESS_VERSION );
@@ -896,7 +881,7 @@ Author URI: https://sendpress.com/
 			wp_enqueue_style( 'sendpress_bootstrap_css' );
 			wp_enqueue_style( 'sendpress_css_base' );
 			wp_enqueue_style( 'sendpress_css_admin' );
-    		if( ( isset($_GET['page']) && $_GET['page'] == 'sp-templates' ) || (isset( $_GET['view'] ) && $_GET['view'] == 'style-email' )) {
+    		if( ( isset($_GET['page']) && SPNL()->validate->page($_GET['page']) == 'sp-templates' ) || (isset( $_GET['view'] ) && sanitize_text_field($_GET['view']) == 'style-email' )) {
 				wp_enqueue_script('sendpress_js_styler');
 			}
 			
@@ -947,7 +932,7 @@ Author URI: https://sendpress.com/
 
    	function handle_front_end_posts(){
    		if ( !empty($_POST) ){
-	    	$this->_current_action = isset( $_POST['action'] ) ? $_POST['action'] : '';
+	    	$this->_current_action = isset( $_POST['action'] ) ? sanitize_text_field($_POST['action']) : '';
 	    	require_once( SENDPRESS_PATH . 'inc/helpers/sendpress-fe-post-actions.php' );
     	}
    	}
@@ -977,16 +962,16 @@ Author URI: https://sendpress.com/
 	    if( isset($_POST['save-action']) ){
 		    switch ( $_POST['save-action'] ) {
 		    	case 'save-confirm-send':
-					 wp_redirect( esc_url_raw(admin_url( '?page='.$_GET['page']. '&view=send-confirm&emailID='. $_POST['post_ID'] )));
+					 wp_redirect( esc_url_raw(admin_url( '?page='.SPNL()->validate->page($_GET['page']). '&view=send-confirm&emailID='. $_POST['post_ID'] )));
 				break;
 				case 'save-style':
-					 wp_redirect( esc_url_raw(admin_url( '?page='.$_GET['page']. '&view=style&emailID='. $_POST['post_ID'] )));
+					 wp_redirect( esc_url_raw(admin_url( '?page='.SPNL()->validate->page($_GET['page']). '&view=style&emailID='. $_POST['post_ID'] )));
 				break;
 				case 'save-create':
-					wp_redirect( esc_url_raw(admin_url( '?page='.$_GET['page']. '&view=style&emailID='. $_POST['post_ID'] )));
+					wp_redirect( esc_url_raw(admin_url( '?page='.SPNL()->validate->page($_GET['page']). '&view=style&emailID='. $_POST['post_ID'] )));
 				break;
 				case 'save-send':
-					wp_redirect( esc_url_raw(admin_url('?page='.$_GET['page']. '&view=send&emailID='. $_POST['post_ID'] )));
+					wp_redirect( esc_url_raw(admin_url('?page='.SPNL()->validate->page($_GET['page']). '&view=send&emailID='. $_POST['post_ID'] )));
 				break;
 				default:
 					wp_redirect( esc_url_raw(admin_url($_POST['_wp_http_referer'] )));
@@ -1013,14 +998,14 @@ Author URI: https://sendpress.com/
 				<a href="#" id="save-update" class="btn btn-primary btn-large "><i class="icon-white icon-ok"></i> <?php echo __('Update','sendpress'); ?></a><a href="#" id="save-send-email" class="btn btn-primary btn-large "><i class="icon-envelope icon-white"></i> <?php echo __('Send','sendpress'); ?></a>
 				<?php } ?>
 				<?php if($this->_current_view == 'send'){ ?>
-				<a href="?page=<?php echo $_GET['page']; ?>&view=style&emailID=<?php echo $_GET['emailID']; ?>" class="btn btn-primary btn-large "><i class="icon-white icon-pencil"></i> <?php echo __('Edit','sendpress'); ?></a><a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-envelope"></i> <?php echo __('Send','sendpress'); ?></a>
+				<a href="?page=<?php echo SPNL()->validate->page($_GET['page']); ?>&view=style&emailID=<?php echo $_GET['emailID']; ?>" class="btn btn-primary btn-large "><i class="icon-white icon-pencil"></i> <?php echo __('Edit','sendpress'); ?></a><a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-envelope"></i> <?php echo __('Send','sendpress'); ?></a>
 				<?php } ?>
 				<?php if($this->_current_view == 'create'){ ?>
 				<a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-ok icon-white"></i> <?php echo __('Save & Next','sendpress'); ?></a>
 				<?php } ?>
 			</div>
 			<div id="sp-cancel-btn" style="float:right; margin-top: 5px;">
-				<a href="?page=<?php echo $_GET['page']; ?>" id="cancel-update" class="btn"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+				<a href="?page=<?php echo SPNL()->validate->page($_GET['page']); ?>" id="cancel-update" class="btn"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
 			</div>
 		</div>
 		<?php
@@ -1087,7 +1072,7 @@ Author URI: https://sendpress.com/
 			$role = "manage_options";
 		}
 		$queue = '';
-		if(isset($_GET['page']) && in_array($_GET['page'], $this->adminpages)){
+		if(isset($_GET['page']) && in_array( SPNL()->validate->page($_GET['page']) , $this->adminpages)){
 			$queue = '(<span id="queue-count-menu">-</span>)';//SendPress_Data::emails_in_queue();
 		}
 		$plugin_name = __('SendPress','sendpress');
@@ -1176,42 +1161,6 @@ Author URI: https://sendpress.com/
 	}
 
 
-
-	function upgrade_lists_to_custom_postype(){
-		$table = $this->lists_table();
-
-		$list = $this->getData($table);
-
-		//print_r($list);
-
-		foreach($list as $newlist){
-			// Create post object
-			  $my_post = array(
-			     'post_title' => $newlist->name,
-			     'post_content' => '',
-			     'post_status' => 'publish',
-			     'post_type'=>'sendpress_list'
-			  );
-
-			// Insert the post into the database
-	  		$new_id = wp_insert_post( $my_post );
-	  		update_post_meta($new_id,'public',$newlist->public);
-			update_post_meta($new_id,'last_send_date',$newlist->last_send_date);
-			update_post_meta($new_id,'legacy_id',$newlist->listID);
-			$this->upgrade_lists_new_id( $newlist->listID, $new_id);
-
-		}
-
-	}
-
-	function upgrade_lists_new_id( $old , $new ){
-		global $wpdb;
-
-		$table = $this->list_subcribers_table();
-		$values = array('listID'=> $new);
-		$result = $wpdb->update($table,$values, array('listID'=> $old) );
-		//return $result;
-	}
 
 	function maybe_upgrade() {
 		
@@ -1476,21 +1425,10 @@ Author URI: https://sendpress.com/
 		return $result;
 	}
 
-	// GET DATA
-	function getData($table) {
-		$result = $this->wpdbQuery("SELECT * FROM $table", 'get_results');
-		return $result;
-	}
-
-	// GET DETAIL (RETURN X WHERE Y = Z)
-	function getDetail($table, $entry, $value) {
-		$result = $this->wpdbQuery("SELECT * FROM $table WHERE $entry = '$value'", 'get_results');
-		return $result;
-	}
-
+	
 	function getUrl($report, $url) {
 		$table = SendPress_Data::report_url_table();
-		$result = $this->wpdbQuery("SELECT * FROM $table WHERE reportID = '$report' AND url = '$url'", 'get_results');
+		$result = $this->wpdbQuery($wpdb->prepare("SELECT * FROM $table WHERE reportID = %d AND url = %s ", $report, $url), 'get_results');
 		return $result;
 	}
 
@@ -1498,47 +1436,47 @@ Author URI: https://sendpress.com/
 
 	function get_opens_unique_count($rid){
 		$table = SendPress_Data::subscriber_event_table();
-		$result = $this->wpdbQuery("SELECT COUNT( DISTINCT subscriberID ) FROM $table WHERE reportID = '$rid' AND type = 'open';", 'get_var');
+		$result = $this->wpdbQuery($wpdb->prepare("SELECT COUNT( DISTINCT subscriberID ) FROM $table WHERE reportID = %d AND type = 'open';",$rid), 'get_var');
 		return $result;
 	}
 	function get_opens_unique($rid){
 		$table = SendPress_Data::subscriber_event_table();
-		$result = $this->wpdbQuery("SELECT * FROM $table WHERE reportID = '$rid' AND type = 'open' GROUP BY subscriberID ORDER BY eventID DESC; ", 'get_results');
+		$result = $this->wpdbQuery($wpdb->prepare("SELECT * FROM $table WHERE reportID = %d AND type = 'open' GROUP BY subscriberID ORDER BY eventID DESC; ",$rid), 'get_results');
 		return $result;
 	}
 	function get_opens($rid){
 		$table = SendPress_Data::subscriber_event_table();
-		$result = $this->wpdbQuery("SELECT * FROM $table WHERE reportID = '$rid' AND type = 'open'  ORDER BY eventID DESC;", 'get_results');
+		$result = $this->wpdbQuery($wpdb->prepare("SELECT * FROM $table WHERE reportID =  %d AND type = 'open'  ORDER BY eventID DESC;",$rid), 'get_results');
 		return $result;
 	}
 	function get_opens_count($rid){
 		$table = SendPress_Data::subscriber_event_table();
-		$result = $this->wpdbQuery("SELECT COUNT(1) as count FROM $table WHERE reportID = '$rid' AND type = 'open';", 'get_var');
+		$result = $this->wpdbQuery($wpdb->prepare("SELECT COUNT(1) as count FROM $table WHERE reportID = %d AND type = 'open';",$rid), 'get_var');
 		return $result;
 	}
 	function get_clicks_unique_count($rid){
 		$table = SendPress_Data::subscriber_event_table();
-		$result = $this->wpdbQuery("SELECT COUNT( DISTINCT subscriberID )  FROM $table WHERE reportID = '$rid' AND type = 'click';", 'get_var');
+		$result = $this->wpdbQuery($wpdb->prepare("SELECT COUNT( DISTINCT subscriberID )  FROM $table WHERE reportID =  %d AND type = 'click';",$rid), 'get_var');
 		return $result;
 	}
 	function get_clicks_unique($rid){
 		$table = SendPress_Data::subscriber_event_table();
-		$result = $this->wpdbQuery("SELECT * FROM $table WHERE reportID = '$rid' AND type = 'click' GROUP BY subscriberID ORDER BY eventID DESC;", 'get_results');
+		$result = $this->wpdbQuery($wpdb->prepare("SELECT * FROM $table WHERE reportID = %d AND type = 'click' GROUP BY subscriberID ORDER BY eventID DESC;",$rid), 'get_results');
 		return $result;
 	}
 	function get_clicks($rid){
 		$table = SendPress_Data::subscriber_event_table();
-		$result = $this->wpdbQuery("SELECT * FROM $table WHERE reportID = '$rid' AND type = 'click'  ORDER BY eventID DESC;", 'get_results');
+		$result = $this->wpdbQuery($wpdb->prepare("SELECT * FROM $table WHERE reportID = %d AND type = 'click'  ORDER BY eventID DESC;",$rid), 'get_results');
 		return $result;
 	}
 	function get_clicks_count($rid){
 		$table = SendPress_Data::subscriber_event_table();
-		$result = $this->wpdbQuery("SELECT COUNT(1) FROM $table WHERE reportID = '$rid' AND type = 'click';", 'get_var');
+		$result = $this->wpdbQuery($wpdb->prepare("SELECT COUNT(1) FROM $table WHERE reportID = %d AND type = 'click';",$rid), 'get_var');
 		return $result;
 	}
 	function get_clicks_and_opens($rid){
 		$table = SendPress_Data::subscriber_event_table();
-		$result = $this->wpdbQuery("SELECT * FROM $table WHERE reportID = '$rid' ORDER BY eventID DESC;", 'get_results');
+		$result = $this->wpdbQuery($wpdb->prepare("SELECT * FROM $table WHERE reportID = %d ORDER BY eventID DESC;" , $rid) , 'get_results');
 		return $result;
 	}
 
@@ -1548,7 +1486,7 @@ Author URI: https://sendpress.com/
 		//$result = $this->wpdbQuery("DELETE FROM $table WHERE listID = '$listID'", 'query');
 		wp_delete_post( $listID, true);
 		$table = SendPress_Data::list_subcribers_table();
-		$result = $this->wpdbQuery("DELETE FROM $table WHERE listID = '$listID'", 'query');
+		$result = $this->wpdbQuery($wpdb->prepare("DELETE FROM $table WHERE listID = %d",$listID), 'query');
 
 		return $result;
 	}
@@ -1556,7 +1494,7 @@ Author URI: https://sendpress.com/
 	// GET DETAIL (RETURN X WHERE Y = Z)
 	function delete_queue_email( $emailID ) {
 		$table = SendPress_Data::queue_table();
-		$result = $this->wpdbQuery("DELETE FROM $table WHERE id = '$emailID'", 'query');
+		$result = $this->wpdbQuery($wpdb->prepare("DELETE FROM $table WHERE id = %d", $emailID) , 'query');
 
 		return $result;
 	}
@@ -1582,7 +1520,7 @@ Author URI: https://sendpress.com/
 	// GET DETAIL (RETURN X WHERE Y = Z)
 	function unlink_list_subscriber($listID, $subscriberID) {
 		$table = SendPress_Data::list_subcribers_table();
-		$result = $this->wpdbQuery("DELETE FROM $table WHERE listID = '$listID' AND subscriberID = '$subscriberID' ", 'query');
+		$result = $this->wpdbQuery($wpdb->prepare("DELETE FROM $table WHERE listID = %d AND subscriberID = %d  ", $listID, $subscriberID) , 'query');
 		return $result;
 	}
 
@@ -1615,37 +1553,14 @@ Author URI: https://sendpress.com/
 		return $count;
 	}
 
-	function add_subscriber_with_optin(){
-		$table = SendPress_Data::subscriber_table();
-		$email = $values['email'];
-
-		if(!isset($values['join_date'])){
-			$values['join_date'] =  date('Y-m-d H:i:s');
-		}
-		if(!isset($values['identity_key'])){
-			$values['identity_key'] =  SendPress_Data::random_code();
-		}
-
-		if( !filter_var($email, FILTER_VALIDATE_EMAIL) ){
-			return false;
-		}
-
-		$result = $this->get_subscriber_by_email($email);
-		if(	$result ){ return $result; }
-
-		global $wpdb;
-		$result = $wpdb->insert($table, $values);
-		//$result = $this->wpdbQuery("SELECT @lastid2 := LAST_INSERT_ID()",'query');
-		return $wpdb->insert_id;
-	}
-
+	
 
 
 	function updateSubscriber($subscriberID, $values){
 		$table = SendPress_Data::subscriber_table();
 		$email = $values['email'];
 		global $wpdb;
-		$result = $this->wpdbQuery("SELECT subscriberID FROM $table WHERE email = '$email' ", 'get_var');
+		$result = $this->wpdbQuery($wpdb->prepare("SELECT subscriberID FROM $table WHERE email = %s ", $email), 'get_var');
 		if($result == false || $result == $subscriberID){
 
 		$result = $wpdb->update($table,$values, array('subscriberID'=> $subscriberID) );
@@ -1656,50 +1571,26 @@ Author URI: https://sendpress.com/
 
 
 
-	function getSubscriberLists( $value ) {
-		$table = SendPress_Data::list_subcribers_table();
-		$result = $this->wpdbQueryArray("SELECT listID FROM $table WHERE subscriberID = '$value'", 'get_results');
-		return $result;
-	}
+
 
 	function getSubscriberListsStatus( $listID,$subscriberID ) {
 		_deprecated_function( __FUNCTION__, '0.8.9', 'SendPress_Data::get_subscriber_list_status($listID, $subscriberID)' );
 		return SendPress_Data::get_subscriber_list_status($listID, $subscriberID);
 	}
 
-	function getSubscribers($listID = false){
-		$query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
 
-        $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.listID =  ". $listID .")";
 
-        return $this->wpdbQuery($query, 'get_results');
-	}
-	function get_active_subscribers($listID = false){
-		$query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
 
-        $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.listID =  ". $listID .") AND (t2.status = 2)";
 
-        return $this->wpdbQuery($query, 'get_results');
-	}
 
-	function getSubscriberbyKey($key){
-		return $this->getDetail(SendPress_Data::subscriber_table(), 'identity_key', $key );
-	}
 
-	function getSubscriberKey($id){
-		$subscriber = $this->getSubscriber( $id );
-		if($subscriber){
-			return $subscriber->identity_key;
-		}
-		return md5('testemailsentfromsendpress');
-	}
 
 	function exportList($listID = false){
 		if($listID){
-        $query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
+        	$query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
 
 
-            $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.listID =  ". $listID .")";
+            $query .= $wpdb->prepare(" WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.listID =  %d)", $listID);
         } else {
             $query = "SELECT * FROM " .  SendPress_Data::subscriber_table();
         }
@@ -1719,18 +1610,6 @@ Author URI: https://sendpress.com/
 		}
 
 		return $content;
-
-	}
-
-	function create_initial_list(){
-
-		//check if you have lists
-		$lists = wp_count_posts('sendpress_list');
-
-		if( intval($lists->publish) === 0 ){
-			//add in a fresh list
-			$id = $this->createList( array('name'=> 'My First SendPress Newsletter', 'public'=>1 ) );
-		}
 
 	}
 
@@ -1877,54 +1756,6 @@ Author URI: https://sendpress.com/
 
 
 
-
-
-	/**
-	 * Returns an array of all PHP files in the specified absolute path.
-	 * Equivalent to glob( "$absolute_path/*.php" ).
-	 *
-	 * @param string $absolute_path The absolute path of the directory to search.
-	 * @return array Array of absolute paths to the PHP files.
-	 */
-	function glob_php( $absolute_path ) {
-		$absolute_path = untrailingslashit( $absolute_path );
-		$files = array();
-		if(is_dir($absolute_path)){
-		if (!$dir = @opendir( $absolute_path ) ) {
-			return $files;
-		}
-
-		while ( false !== $file = readdir( $dir ) ) {
-			if ( '.' == substr( $file, 0, 1 ) || '.php' != substr( $file, -4 ) ) {
-				continue;
-			}
-
-			$file2 = "$absolute_path/$file";
-
-			if ( !is_file( $file2 ) ) {
-				continue;
-			}
-			$basename = str_replace($absolute_path, '', $file);
-			$files[] = array($file2, $basename);
-		}
-
-		closedir( $dir );
-		}
-
-		return $files;
-	}
-
-
-
-	function get_lists(){
-		return	$this->getData( $this->lists_table() );
-	}
-
-	function get_list_details($id){
-		return get_post( $id  );
-	}
-
-
 	function email_template_dropdown( $default = '' ) {
 		$templates = SendPress_Template::get_instance()->info();
 		ksort( $templates );
@@ -2029,14 +1860,6 @@ Author URI: https://sendpress.com/
 
 
 	function add_email_to_queue($values){
-		/*
-		global $wpdb;
-		$table = SendPress_Data::queue_table();
-		$messageid = $this->unique_message_id();
-		$values["messageID"] = $messageid;
-		$values["date_published"] = date('Y-m-d H:i:s');
-		$wpdb->insert( $table, $values);
-		*/
 		SendPress_Data::add_email_to_queue($values);
 	}
 
@@ -2044,40 +1867,6 @@ Author URI: https://sendpress.com/
 	function set_default_email_style( $id ){
 		SendPress_Email::set_default_style( $id );
 	}
-
-	function register_open( $subscriberKey, $report ){
-		global $wpdb;
-		$stat = get_post_meta($report, '_open_count', true );
-		$stat++;
-		update_post_meta($report, '_open_count', $stat );
-		$subscriber = $this->getSubscriberbyKey($subscriberKey);
-		if( isset($subscriber[0]) ) {
-			$wpdb->update( $this->subscriber_open_table() , array('openat'=>date('Y-m-d H:i:s') ) , array('reportID'=> $report,'subscriberID'=>$subscriber[0]->subscriberID ));
-		}
-	}
-
-	function register_unsubscribe($subscriber_key, $report_id, $list_id){
-		global $wpdb;
-		$stat = get_post_meta($report_id, '_unsubscribe_count', true );
-		$stat++;
-		update_post_meta($report_id, '_unsubscribe_count', $stat );
-		$subscriber = $this->getSubscriberbyKey($subscriber_key);
-		if( isset($subscriber[0]) ) {
-			$wpdb->update( $this->list_subcribers_table() , array('status'=> 3) , array('listID'=> $list_id,'subscriberID'=>$subscriber[0]->subscriberID ));
-		}
-	}
-
-	function register_unsubscribed( $sid, $rid, $lid ) {
-		global $wpdb;
-
-		$stat = get_post_meta($rid, '_unsubscribe_count', true );
-		$stat++;
-		update_post_meta($rid, '_unsubscribe_count', $stat );
-		$wpdb->update( $this->list_subcribers_table() , array('status'=> 3) , array('listID'=> $lid,'subscriberID'=>$sid ));
-	}
-
-
-
 
 
 
@@ -2093,37 +1882,7 @@ Author URI: https://sendpress.com/
 
 
 
-	function register_click($subscriberKey, $report, $url){
-		global $wpdb;
-		$stat = get_post_meta($report, '_click_count', true );
-		$stat++;
-		update_post_meta($report, '_click_count', $stat );
 
-		$urlinDB = $this->getUrl($report, $url);
-		$subscriber = $this->getSubscriberbyKey($subscriberKey);
-
-		if(!isset($urlinDB[0])){
-			$urlData = array(
-				'url' => trim($url),
-				'reportID' => $report,
-			);
-			$wpdb->insert( $this->report_url_table(),  $urlData);
-			$urlID = $wpdb->insert_id;
-
-		} else {
-			$urlID  = $urlinDB[0]->urlID;
-		}
-
-		if(isset($subscriber[0]) && isset($urlID) ){
-			$clickData = array(
-				'urlID' => $urlID,
-				'reportID' => $report,
-				'subscriberID'=> $subscriber[0]->subscriberID,
-				'clickedat'=>date('Y-m-d H:i:s')
-			);
-			$result = $wpdb->insert($this->subscriber_click_table() ,$clickData);
-		}
-	}
 
 	/*
 	*

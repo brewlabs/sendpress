@@ -229,7 +229,7 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
 
              break;
             case 'actions':
-                return '<div class="inline-buttons"><a class="spbutton left" href="'. get_permalink( $item->ID  ). '">View</a><a class="spbutton right" href="?page='.$_REQUEST['page'].'&view=edit-email&emailID='. $item->ID .'">Edit</a><a class="spbutton bluebtn" href="?page='.$_REQUEST['page'].'&view=send-email&emailID='. $item->ID .'">Send</a></div>';
+                return '<div class="inline-buttons"><a class="spbutton left" href="'. get_permalink( $item->ID  ). '">View</a><a class="spbutton right" href="?page='.SPNL()->validate->page($_REQUEST['page']).'&view=edit-email&emailID='. $item->ID .'">Edit</a><a class="spbutton bluebtn" href="?page='.SPNL()->validate->page($_REQUEST['page']).'&view=send-email&emailID='. $item->ID .'">Send</a></div>';
             default:
                 return apply_filters('sendpress_reports_column_'.$column_name, $item); //Show the whole array for troubleshooting purposes
         }
@@ -257,9 +257,9 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
         //Build row actions
         
         $actions = array(
-           // 'edit'      => sprintf('<a href="?page=%s&view=%s&report=%s">Edit</a>',$_REQUEST['page'],'edit-email',$item->ID),
+           // 'edit'      => sprintf('<a href="?page=%s&view=%s&report=%s">Edit</a>',SPNL()->validate->page($_REQUEST['page']),'edit-email',$item->ID),
             'view'      => sprintf('<a href="%s">View Email</a>',get_permalink( $item->ID  )),
-            'delete'    => sprintf('<a href="?page=%s&action=%s&reportID=%s">Delete</a>',$_REQUEST['page'],'delete-report',$item->ID),
+            'delete'    => sprintf('<a href="?page=%s&action=%s&reportID=%s">Delete</a>',SPNL()->validate->page($_REQUEST['page']),'delete-report',$item->ID),
         );
         
         //Return the title contents

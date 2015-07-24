@@ -34,12 +34,12 @@ class SendPress_View_Subscribers_Subscribers extends SendPress_View_Subscribers 
 	function html($sp) {
 	
 		$list ='';
-if(isset($_GET['listID']) && $_GET['listID'] > 0 ){
-	//$listinfo = $this->getDetail( $this->lists_table(),'listID', $_GET['listID'] );	
-	$listinfo = get_post($_GET['listID']);
-	$list = '&listID='.$_REQUEST['listID'];
-	$listname = 'for '. $listinfo->post_title;
-}
+		if(isset($_GET['listID']) && $_GET['listID'] > 0 ){
+			$list_id_clean =  SPNL()->validate->int( $_GET['listID'] );	
+			$listinfo = get_post( );
+			$list = '&listID='.$list_id_clean;
+			$listname = 'for '. $listinfo->post_title;
+		}
 	//Create an instance of our package class...
 	$testListTable = new SendPress_Subscribers_Table();
 	//Fetch, prepare, sort, and filter our data...
@@ -49,14 +49,14 @@ if(isset($_GET['listID']) && $_GET['listID'] > 0 ){
 	<div id="taskbar" class="lists-dashboard rounded group"> 
 		<div id="button-area">  
 			
-			<a class="btn btn-primary btn-large" href="?page=<?php echo $_REQUEST['page']; ?>&view=add<?php echo $list; ?>"><?php _e('Add Subscriber','sendpress'); ?></a>
+			<a class="btn btn-primary btn-large" href="?page=<?php echo SPNL()->validate->page($_REQUEST['page']); ?>&view=add<?php echo $list; ?>"><?php _e('Add Subscriber','sendpress'); ?></a>
 		</div>
 		<h2><?php _e('Subscribers','sendpress'); ?> <?php if(isset($listname)){ echo $listname; } ?> </h2>
 	</div>
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="movies-filter" method="get">
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	    <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page($_REQUEST['page']) ?>" />
 	    <?php if(isset($_GET['listID']) && $_GET['listID'] > 0 ){ ?>
 	    <input type="hidden" name="listID" value="<?php echo $_GET['listID']; ?>" />
 	    <?php  } ?>
@@ -67,11 +67,11 @@ if(isset($_GET['listID']) && $_GET['listID'] > 0 ){
 	    <?php wp_nonce_field($sp->_nonce_value); ?>
 	</form>
 	<form  method='get'>
-		<input type='hidden' value="<?php echo $_GET['page']; ?>" name="page" />
+		<input type='hidden' value="<?php echo SPNL()->validate->page($_GET['page']); ?>" name="page" />
 		
 		<input type='hidden' value="unlink-lisk" name="action" />
-		<?php if(isset($_GET['listID'])){ ?>
-		<input type='hidden' name="listid" value="<?php echo $_GET['listID'] ?>" />
+		<?php if(isset($list_id_clean )){ ?>
+		<input type='hidden' name="listid" value="<?php echo $list_id_clean ; ?>" />
 		<?php } ?>
 
 		<br>

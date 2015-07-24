@@ -125,9 +125,9 @@ class SendPress_Queue_Stuck_Table extends WP_List_Table {
             case 'actions':
                 $buttons ='';
                 if($item->attempts >= $item->max_attempts){
-                    $buttons .='<a class="btn resend-btn btn-success" href="?page='.$_REQUEST['page'].'&action=requeue&emailID='. $item->id .'"><i class="icon-repeat icon-white"></i> Requeue</a> ';
+                    $buttons .='<a class="btn resend-btn btn-success" href="?page='.SPNL()->validate->page($_REQUEST['page']).'&action=requeue&emailID='. $item->id .'"><i class="icon-repeat icon-white"></i> Requeue</a> ';
                 }
-                $buttons .='<a class="btn resend-btn btn-primary" href="?page='.$_REQUEST['page'].'&action=queue-delete&emailID='. $item->id .'"><i class="icon-trash "></i> Delete</a> ';
+                $buttons .='<a class="btn resend-btn btn-primary" href="?page='.SPNL()->validate->page($_REQUEST['page']).'&action=queue-delete&emailID='. $item->id .'"><i class="icon-trash "></i> Delete</a> ';
              return '<div class="inline-buttons">'.$buttons.'</div>';
            
             default:
@@ -156,8 +156,8 @@ class SendPress_Queue_Stuck_Table extends WP_List_Table {
         
         //Build row actions
         $actions = array(
-            //'edit'      => sprintf('<a href="?page=%s&view=%s&subscriberID=%s&listID=%s">Edit</a>',$_REQUEST['page'],'subscriber',$item->subscriberID, $_GET["listID"] ),
-            //'delete'    => sprintf('<a href="?page=%s&action=%s&movie=%s">Delete</a>',$_REQUEST['page'],'delete',$item->subscriberID),
+            //'edit'      => sprintf('<a href="?page=%s&view=%s&subscriberID=%s&listID=%s">Edit</a>',SPNL()->validate->page($_REQUEST['page']),'subscriber',$item->subscriberID, $_GET["listID"] ),
+            //'delete'    => sprintf('<a href="?page=%s&action=%s&movie=%s">Delete</a>',SPNL()->validate->page($_REQUEST['page']),'delete',$item->subscriberID),
         );
         
         //Return the title contents

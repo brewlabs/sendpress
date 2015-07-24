@@ -48,11 +48,11 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
 			$_wp_autoresize_on = true;
 		}
 		*/
-		$view = isset($_GET['view']) ? $_GET['view'] : '' ;
+		$view = isset($_GET['view']) ? sanitize_text_field( $_GET['view'] ) : '' ;
 
 		if(isset($_GET['emailID'])){
-			$emailID = $_GET['emailID'];
-			$post = get_post( $_GET['emailID'] );
+			$emailID = SPNL()->validate->int($_GET['emailID']);
+			$post = get_post( $emailID );
 			$post_ID = $post->ID;
 		}
 	
@@ -71,7 +71,7 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
        <div style="float:right;" class="btn-toolbar">
             <div id="sp-cancel-btn" class="btn-group">
                <?php if($post->post_status != 'sp-autoresponder'  ) { ?>
-                <a href="?page=<?php echo $_GET['page']; ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+                <a href="?page=<?php echo SPNL()->validate->page($_GET['page']); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
             
             <?php 
             } else { ?>

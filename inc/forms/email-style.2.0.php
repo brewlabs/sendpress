@@ -7,8 +7,8 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 global $post_ID, $post;
 if(isset($_GET['emailID'])){
-			$emailID = $_GET['emailID'];
-			$post = get_post( $_GET['emailID'] );
+			$emailID = SPNL()->validate->int($_GET['emailID']);
+			$post = get_post( $emailID );
 			$post_ID = $post->ID;
 } else {
 	if(!defined('SENDPRESS_STYLER_PAGE')){

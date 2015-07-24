@@ -9,28 +9,29 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Settings_Styles extends SendPress_View_Settings {
 
 	function save($data,$sp){
-		$saveid = $_POST['post_ID'];
-        $bodybg = $_POST['body_bg'];
-        $bodytext = $_POST['body_text'];
-        $bodylink = $_POST['body_link'];
-        $contentbg = $_POST['content_bg'];
-        $contenttext = $_POST['content_text'];
-        $contentlink = $_POST['sp_content_link_color'];
-        $contentborder = $_POST['content_border'];
+        $saveid = SPNL()->validate->int( $_POST['post_ID']);
+		if( $saveid > 0){
+        $bodybg = SPNL()->validate->hex( $_POST['body_bg'] );
+        $bodytext = SPNL()->validate->hex( $_POST['body_text']);
+        $bodylink = SPNL()->validate->hex( $_POST['body_link']);
+        $contentbg = SPNL()->validate->hex( $_POST['content_bg']);
+        $contenttext = SPNL()->validate->hex( $_POST['content_text']);
+        $contentlink = SPNL()->validate->hex( $_POST['sp_content_link_color']);
+        $contentborder = SPNL()->validate->hex( $_POST['content_border']);
         $upload_image = $_POST['upload_image'];
 
         
-        $headerbg = $_POST['header_bg'];
-        $headertextcolor = $_POST['header_text_color'];
-        $headertext = $_POST['header_text'];
-        $headerlink = $_POST['header_link'];
-        $imageheaderurl = $_POST['image_header_url'];
+        $headerbg = SPNL()->validate->hex( $_POST['header_bg'] );
+        $headertextcolor =  SPNL()->validate->hex($_POST['header_text_color']);
+        $headertext = sanitize_text_field($_POST['header_text']);
+        $headerlink = esc_url_raw( $_POST['header_link'] );
+        $imageheaderurl = esc_url_raw( $_POST['image_header_url'] );
         
-        $subheadertext = $_POST['sub_header_text'];
+        $subheadertext = sanitize_text_field( $_POST['sub_header_text'] );
 
         $activeHeader = $_POST['active_header'];
 
-                      update_post_meta($saveid ,'upload_image', $upload_image );
+        update_post_meta($saveid ,'upload_image', $upload_image );
 
         update_post_meta($saveid ,'body_bg', $bodybg);
         update_post_meta($saveid ,'body_text', $bodytext );
@@ -52,52 +53,32 @@ class SendPress_View_Settings_Styles extends SendPress_View_Settings {
 
         update_post_meta($saveid ,'active_header', $activeHeader );
 
-       	$canspam= $_POST['can-spam'];
+       	$canspam= sanitize_text_field($_POST['can-spam']);
         $linkedin = '';
         if(isset($_POST['linkedin'])){
-            $linkedin= $_POST['linkedin'];
+            $linkedin= esc_url_raw($_POST['linkedin']);
         } 
 
         $twitter = '';
         if(isset($_POST['twitter'])){
-            $twitter= $_POST['twitter'];
+            $twitter= esc_url_raw($_POST['twitter']);
         }
 
         $facebook = '';
         if(isset($_POST['facebook'])){
-            $facebook= $_POST['facebook'];
+            $facebook= esc_url_raw($_POST['facebook']);
         }
 
         if(isset($_POST['fromname'])){
-            $fromname= $_POST['fromname'];
+            $fromname= sanitize_text_field($_POST['fromname']);
         }
 
-        // From email and name
-        // If we don't have a name from the input headers
-        if ( !isset( $fromname ) || $fromname == '' ){
-            $fromname = get_bloginfo('name'); 
-        }
         
-        if(isset($_POST['fromemail'])){
-            $fromemail= $_POST['fromemail'];
-        }
-
-
-        if ( !isset( $fromemail )  || $fromemail == '') {
-            // Get the site domain and get rid of www.
-            $sitename = strtolower( $_SERVER['SERVER_NAME'] );
-            if ( substr( $sitename, 0, 4 ) == 'www.' ) {
-                $sitename = substr( $sitename, 4 );
-            }
-
-            $fromemail = 'wordpress@' . $sitename;
-        }
-
         SendPress_Option::set('canspam', $canspam);
         SendPress_Option::set('linkedin', $linkedin);
         SendPress_Option::set('facebook', $facebook);
         SendPress_Option::set('twitter', $twitter);
-       
+        }
        // SendPress_Option::set('unsubscribetext', $unsubtext);
 
         SendPress_Admin::redirect('Settings_Styles');
@@ -111,8 +92,8 @@ class SendPress_View_Settings_Styles extends SendPress_View_Settings {
 		$list ='';
 
 		if(isset($_GET['emailID'])){
-			$emailID = $_GET['emailID'];
-			$post = get_post( $_GET['emailID'] );
+			$emailID = SPNL()->validate->int($_GET['emailID']);
+			$post = get_post( $emailID );
 			$post_ID = $post->ID;
 		}
 

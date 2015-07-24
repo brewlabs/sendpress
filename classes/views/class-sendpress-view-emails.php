@@ -284,12 +284,12 @@ class SendPress_View_Emails extends SendPress_View{
 		<div id="taskbar" class="lists-dashboard rounded group">
 
 		<div id="button-area">
-			<a class="btn btn-primary btn-large" href="?page=<?php echo $_REQUEST['page']; ?>&view=create"><?php _e('Create Email','sendpress'); ?></a>
+			<a class="btn btn-primary btn-large" href="?page=<?php echo SPNL()->validate->page($_REQUEST['page']); ?>&view=create"><?php _e('Create Email','sendpress'); ?></a>
 		</div>
 
 	</div>
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	    <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page($_REQUEST['page']) ?>" />
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display(); ?>
 	    <?php wp_nonce_field($this->_nonce_value); ?>

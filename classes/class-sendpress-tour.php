@@ -55,8 +55,8 @@ class SendPress_Tour {
 		global $pagenow, $current_user;
 
 		$page = '';
-		if ( isset( $_GET['page'] ) )
-			$page = $_GET['page'];
+		if ( isset( SPNL()->validate->page($_GET['page']) ) )
+			$page = SPNL()->validate->page($_GET['page']);
 
 		$function = '';
 		$button2  = '';

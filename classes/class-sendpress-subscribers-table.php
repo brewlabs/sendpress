@@ -113,8 +113,8 @@ class SendPress_Subscribers_Table extends WP_List_Table {
         }
         //Build row actions
         $actions = array(
-            'edit'      => sprintf('<a href="?page=%s&view=%s&subscriberID=%s&listID=%s">Edit</a>',$_REQUEST['page'],'subscriber',$item->subscriberID, $l ),
-            'delete'    => sprintf('<a href="?page=%s&action=%s&subscriberID=%s&listID=%s">Delete</a>',$_REQUEST['page'],'delete-subscriber',$item->subscriberID, $l ),
+            'edit'      => sprintf('<a href="?page=%s&view=%s&subscriberID=%s&listID=%s">Edit</a>',SPNL()->validate->page($_REQUEST['page']),'subscriber',$item->subscriberID, $l ),
+            'delete'    => sprintf('<a href="?page=%s&action=%s&subscriberID=%s&listID=%s">Delete</a>',SPNL()->validate->page($_REQUEST['page']),'delete-subscriber',$item->subscriberID, $l ),
         );
         
         //Return the title contents

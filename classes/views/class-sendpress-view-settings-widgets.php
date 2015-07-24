@@ -150,12 +150,12 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		<form id="forms-filter" method="get">
 			<div id="taskbar" class="lists-dashboard rounded group"> 
 				<div id="button-area">  
-					<a class="btn btn-primary btn-large" href="?page=<?php echo $_REQUEST['page']; ?>&view=widgets&create=1"><?php _e('Create Form','sendpress'); ?></a>
+					<a class="btn btn-primary btn-large" href="?page=<?php echo SPNL()->validate->page($_REQUEST['page']); ?>&view=widgets&create=1"><?php _e('Create Form','sendpress'); ?></a>
 				</div>
 				<h2><?php _e('Forms','sendpress'); ?></h2>
 			</div>
 			<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-		    <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+		    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page($_REQUEST['page']) ?>" />
 		    <!-- Now we can render the completed list table -->
 		    <?php $testListTable->display(); ?>
 		    <?php wp_nonce_field($this->_nonce_value); ?>

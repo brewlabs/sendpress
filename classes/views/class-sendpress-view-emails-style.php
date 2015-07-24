@@ -136,7 +136,7 @@ class SendPress_View_Emails_Style extends SendPress_View_Emails {
 		-->
 		<div style="float:right;" class="btn-toolbar">
             <div id="sp-cancel-btn" class="btn-group">
-                <a href="?page=<?php echo $_GET['page']; ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+                <a href="?page=<?php echo SPNL()->validate->page($_GET['page']); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
             </div>
             <div class="btn-group">
             <button class="btn btn-default " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Update','sendpress'); ?></button>

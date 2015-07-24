@@ -152,11 +152,12 @@ class SendPress_Data extends SendPress_DB_Tables {
 			 $query.=" AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s', current_time( 'timestamp' ) )."') ";
        
 	        if(isset($_GET["listid"]) &&  $_GET["listid"]> 0 ){
-	            $query .= ' AND listID = '. $_GET["listid"];
+	           $wpdb->prepare(" AND listID = %d", $_GET["listid"]);
 	        }
 
 	        if(isset($_GET["qs"] )){
-	            $query .= ' AND to_email LIKE "%'. $_GET["qs"] .'%"';
+	        	
+	          $query .=  $wpdb->prepare("AND to_email LIKE '%%s%'", $_GET["qs"] ) ;
 
 	        }
 
@@ -723,21 +724,21 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function get_subscriber_event_count_month($date, $type){
 		global $wpdb;
 		$table = SendPress_Data::subscriber_event_table();//SELECT * FROM table_name WHERE MONTH(date_column) = 4;
-		$result = $wpdb->get_var("SELECT COUNT(eventdate) as count FROM $table WHERE type = '$type' AND MONTH(eventdate) = $date");
+		$result = $wpdb->get_var($wpdb->prepare("SELECT COUNT(eventdate) as count FROM $table WHERE type = %s AND MONTH(eventdate) = %s", $type, $date));
 		return $result;
 	}
 	//date_column between "2001-01-05" and "2001-01-10"
 	static function get_subscriber_event_count_week($date1, $date2, $type){
 		global $wpdb;
 		$table = SendPress_Data::subscriber_event_table();
-		$result = $wpdb->get_var("SELECT COUNT(eventdate) as count FROM $table WHERE type = '$type' AND date(eventdate) BETWEEN '$date1' AND '$date2'");
+		$result = $wpdb->get_var($wpdb->prepare("SELECT COUNT(eventdate) as count FROM $table WHERE type = %s AND date(eventdate) BETWEEN %s AND %s ", $type , $date1, $date2 ));
 		return $result;
 	}
 
 	static function get_subscriber_event_count_day($date, $type){
 		global $wpdb;
 		$table = SendPress_Data::subscriber_event_table();//SELECT * FROM table_name WHERE MONTH(date_column) = 4;
-		$result = $wpdb->get_var("SELECT COUNT(eventdate) as count FROM $table WHERE type = '$type' AND date(eventdate) = '$date'");
+		$result = $wpdb->get_var($wpdb->prepare("SELECT COUNT(eventdate) as count FROM $table WHERE type = %s AND date(eventdate) = %s" , $type, $date));
 		return $result;
 	}
 
@@ -1433,8 +1434,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		$listids = explode(',', $listid);
 		
-	    //$lists = $s->getData($s->lists_table());
-	    //$listids = array();
 
 		$already_subscribed = false;
 		if( $status == 2 && SendPress_Option::is_double_optin() ) {
