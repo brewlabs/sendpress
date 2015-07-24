@@ -58,7 +58,7 @@ switch ( $this->_current_action ) {
                 $l = SPNL()->validate->int($_GET['listID']);
                 $s = SPNL()->validate->int($_GET['subscriberID']);
                 if($l > 0 && $s > 0){
-                    $this->unlink_list_subscriber( , $_GET['subscriberID']);
+                    $this->unlink_list_subscriber($l , $s);
                 }
                 wp_redirect( esc_url_raw( admin_url( 'admin.php?page='.SPNL()->validate->page($_GET['page']) .'&view=subscribers&listID='.$_GET['listID'] ) ) );
             break;
