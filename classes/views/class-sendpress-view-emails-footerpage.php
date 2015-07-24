@@ -27,7 +27,7 @@ class SendPress_View_Emails_Footerpage extends SendPress_View_Emails {
         //print_r( $postdata );
     ?>
     <form method="post" name="post" >
-    <input type="hidden" value="<?php echo $list];  ?>" name="templateID" />
+    <input type="hidden" value="<?php echo $list;  ?>" name="templateID" />
      
    	<div class="pull-right">
      <a href="<?php echo SendPress_Admin::link('Emails_Tempstyle', array('templateID' => $list  ) ); ?>">Back to Template</a>&nbsp;&nbsp;&nbsp;<button class="btn btn-primary " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Save','sendpress'); ?></button>
