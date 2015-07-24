@@ -11,7 +11,7 @@ class SendPress_View_Settings_Emailedit extends SendPress_View_Settings {
 	
 
 	function save_email(){
-		$clean_post_id = SPNL()->validate->int( $_POST['post_ID'])
+		$clean_post_id = SPNL()->validate->int( $_POST['post_ID']);
 		if($clean_post_id > 0 ){
 	 	$post_update = array(
 	 		'ID'           => $clean_post_id,
