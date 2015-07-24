@@ -19,20 +19,22 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
  	//$my_post = _wp_translate_postdata(true);
  	//print_r($my_post);
  	//$template['post_content'] = $my_post->content_area_one_edit;
- 	$post_update = array(
- 		'ID'           => $_POST['post_ID'],
-      	'post_content' => $_POST['content_area_one_edit']
-    );
- 	
-	update_post_meta( $_POST['post_ID'], '_sendpress_template', $_POST['template'] );
-	update_post_meta( $_POST['post_ID'], '_sendpress_subject', $_POST['post_subject'] );
-	update_post_meta( $_POST['post_ID'], '_header_content', $_POST['header_content_edit'] );
-	update_post_meta( $_POST['post_ID'], '_footer_content', $_POST['footer_content_edit'] );
+	$post =	SPNL()->validate->int($_POST['post_ID']);
+		if($post > 0){
+		 	$post_update = array(
+		 		'ID'           => $_POST['post_ID'],
+		      	'post_content' => $_POST['content_area_one_edit']
+		    );
+		 	
+			update_post_meta( $_POST['post_ID'], '_sendpress_template', SPNL()->validate->int($_POST['template']) );
+			update_post_meta( $_POST['post_ID'], '_sendpress_subject', sanitize_text_field( $_POST['post_subject'] ) );
+			update_post_meta( $_POST['post_ID'], '_header_content', $_POST['header_content_edit'] );
+			update_post_meta( $_POST['post_ID'], '_footer_content', $_POST['footer_content_edit'] );
 
- 	//	print_r($template);
-	wp_update_post( $post_update );
-	
-
+		 	//	print_r($template);
+			wp_update_post( $post_update );
+		
+		}
         if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
             SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->int($_GET['emailID']) ) );
         } else if (isset($_POST['submit']) && $_POST['submit'] == 'send-test'){

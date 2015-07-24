@@ -11,22 +11,22 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
 	
 
 	function save_email(){
- 		$post_id =  $_POST['post_ID'];
+ 		$post_id =  SPNL()->validate->int($_POST['post_ID']);
+ 		if($post_id > 0){
+	 		
+	 		$myData = array(
+	 			'type' => $_POST['sp-autoresponder-type'],
+	 			'when' => $_POST['sp-timing'],
+	 			'delay' => $_POST['sp-delay']
+	 		);
 
- 		$myData = array(
- 			'type' => $_POST['sp-autoresponder-type'],
- 			'when' => $_POST['sp-timing'],
- 			'delay' => $_POST['sp-delay']
- 		);
-
-
-
- 		SendPress_Option::email_set( 'autoresponder_' . $post_id  ,  $myData );
+	 		SendPress_Option::email_set( 'autoresponder_' . $post_id  ,  $myData );
+ 		}
 	}
 
 	function admin_init(){
 		global $is_IE;
-		remove_filter('the_editor',					'qtrans_modifyRichEditor');
+		remove_filter('the_editor','qtrans_modifyRichEditor');
 		/*
 		if (  ! wp_is_mobile() &&
 			 ! ( $is_IE && preg_match( '/MSIE [5678]/', $_SERVER['HTTP_USER_AGENT'] ) ) ) {

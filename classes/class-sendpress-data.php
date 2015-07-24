@@ -582,28 +582,28 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function get_clicks_and_opens($rid){
 		global $wpdb;
 		$table = self::subscriber_event_table();
-		$result = $wpdb->get_results("SELECT COUNT(eventID) as count,date(eventdate) as day FROM $table WHERE reportID = '$rid' GROUP BY date(eventdate) ORDER BY eventID DESC ;");
+		$result = $wpdb->get_results($wpdb->prepare("SELECT COUNT(eventID) as count,date(eventdate) as day FROM $table WHERE reportID = %d GROUP BY date(eventdate) ORDER BY eventID DESC ;", $rid));
 		return $result;
 	}
 
 	static function get_clicks_count($rid){
 		global $wpdb;
 		$table = self::subscriber_event_table();
-		$result = $wpdb->get_results("SELECT COUNT(eventID) as count,date(eventdate) as day FROM $table WHERE reportID = '$rid' AND type = 'click' GROUP BY date(eventdate) ORDER BY eventID DESC ;");
+		$result = $wpdb->get_results($wpdb->prepare("SELECT COUNT(eventID) as count,date(eventdate) as day FROM $table WHERE reportID = %d AND type = 'click' GROUP BY date(eventdate) ORDER BY eventID DESC ;", $rid));
 		return $result;
 	}
 
 	static function get_opens_count($rid){
 		global $wpdb;
 		$table = self::subscriber_event_table();
-		$result = $wpdb->get_results("SELECT COUNT(eventID) as count,date(eventdate) as day FROM $table WHERE reportID = '$rid' AND type = 'open' GROUP BY date(eventdate) ORDER BY eventID DESC ;");
+		$result = $wpdb->get_results($wpdb->prepare("SELECT COUNT(eventID) as count,date(eventdate) as day FROM $table WHERE reportID = %d AND type = 'open' GROUP BY date(eventdate) ORDER BY eventID DESC ;", $rid));
 		return $result;
 	}
 	
 	static function get_opens($rid){
 		global $wpdb;
 		$table = SendPress_Data::subscriber_event_table();
-		$result =  $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $table WHERE reportID = '%d' AND type = 'open'  ORDER BY eventID DESC", $rid));
+		$result =  $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $table WHERE reportID = %d AND type = 'open'  ORDER BY eventID DESC", $rid));
 		return $result;
 	}
 
@@ -611,7 +611,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function get_open_total($rid){
 		global $wpdb;
 		$table = self::subscriber_event_table();
-		$result = $wpdb->get_var("SELECT COUNT(*) FROM $table WHERE reportID = '$rid' AND type = 'open' GROUP BY subscriberID ;");
+		$result = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $table WHERE reportID = %d AND type = 'open' GROUP BY subscriberID ;", $rid));
 		if(empty($result)){
 			return 0;
 		}
@@ -621,7 +621,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function get_opens_unique_count($rid){
 		global $wpdb;
 		$table = self::subscriber_event_table();
-		$result = $wpdb->get_results("SELECT COUNT(t.eventID) as count,date(t.eventdate) as day FROM  (Select eventdate,eventID FROM $table  WHERE  reportID = '$rid' AND type = 'open' GROUP BY subscriberID) as t GROUP BY date(eventdate) ORDER BY eventID DESC ");
+		$result = $wpdb->get_results($wpdb->prepare("SELECT COUNT(t.eventID) as count,date(t.eventdate) as day FROM  (Select eventdate,eventID FROM $table  WHERE  reportID = %d AND type = 'open' GROUP BY subscriberID) as t GROUP BY date(eventdate) ORDER BY eventID DESC ",$rid));
 
 		return $result;
 	}
@@ -643,14 +643,14 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function get_clicks_unique_count($rid){
 		global $wpdb;
 		$table = self::subscriber_event_table();
-		$result = $wpdb->get_results("SELECT COUNT(t.eventID) as count,date(t.eventdate) as day FROM  (Select eventdate,eventID FROM $table  WHERE  reportID = '$rid' AND type = 'click' GROUP BY subscriberID) as t GROUP BY date(eventdate) ORDER BY eventID DESC ");
+		$result = $wpdb->get_results($wpdb->prepare("SELECT COUNT(t.eventID) as count,date(t.eventdate) as day FROM  (Select eventdate,eventID FROM $table  WHERE  reportID = %d AND type = 'click' GROUP BY subscriberID) as t GROUP BY date(eventdate) ORDER BY eventID DESC ",$rid));
 		return $result;
 	}
 
 	static function get_click_total($rid){
 		global $wpdb;
 		$table = self::subscriber_event_table();
-		$result = $wpdb->get_var("SELECT COUNT(*) FROM $table WHERE reportID = '$rid' AND type = 'click' GROUP BY subscriberID ;");
+		$result = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $table WHERE reportID = %d AND type = 'click' GROUP BY subscriberID ;", $rid));
 		if(empty($result)){
 			return 0;
 		}
@@ -677,7 +677,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function get_bounce_total($rid){
 		global $wpdb;
 		$table = self::subscriber_event_table();
-		$result = $wpdb->get_var("SELECT COUNT(*) FROM $table WHERE reportID = '$rid' AND type = 'bounce' GROUP BY subscriberID ;");
+		$result = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $table WHERE reportID = %d AND type = 'bounce' GROUP BY subscriberID ;", $rid));
 		if(empty($result)){
 			return 0;
 		}
@@ -688,7 +688,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function get_unsubscribed_total($rid){
 		global $wpdb;
 		$table = self::subscriber_event_table();
-		$result = $wpdb->get_var("SELECT COUNT(*) FROM $table WHERE reportID = '$rid' AND type = 'unsubscribed' GROUP BY subscriberID ;");
+		$result = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $table WHERE reportID = %d AND type = 'unsubscribed' GROUP BY subscriberID ;", $rid));
 		if(empty($result)){
 			return 0;
 		}
@@ -867,8 +867,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function sync_emails_to_list($listid, $emails){
 		global $wpdb;
 
+		$listid = SPNL()->validate->int( $listid );
 
-		$query_get = "SELECT subscriberID FROM ". SendPress_Data::subscriber_table(). " WHERE email in ('".implode("','", $emails)."')";
+		$query_get = "SELECT subscriberID FROM ". SendPress_Data::subscriber_table(). " WHERE email in ('".implode("','", sanitize_text_field($emails) )."')";
 		$data = $wpdb->get_results($query_get);
 	
 		$query_update_status ="INSERT IGNORE INTO ". SendPress_Data::list_subcribers_table(). "(subscriberID,listID,status,updated ) VALUES ";
@@ -894,8 +895,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	static function drop_active_subscribers_for_sync( $listid  = false ) {
 		if( $listid != false ){
+			$listid = SPNL()->validate->int( $listid );
 			global $wpdb;
-			$clean_list_query =  "DELETE FROM "	.SendPress_Data::list_subcribers_table(). " WHERE listID = ".$listid." AND status = 2";
+			$clean_list_query =  "DELETE FROM "	. SendPress_Data::list_subcribers_table() . " WHERE listID = ".$listid." AND status = 2";
 			$wpdb->query($clean_list_query);	
 
 		}
@@ -903,14 +905,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
-	static function sync_lists_micro( $listid, $emails ) {
-
-
-
-	}
-
-
-
+	
 	static function update_subscriber($subscriberID, $values){
 		$table = SendPress_Data::subscriber_table();
 		global $wpdb;

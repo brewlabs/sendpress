@@ -103,7 +103,7 @@ class SendPress_View_Subscribers_Csvimport extends SendPress_View_Subscribers {
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form method="post" enctype="multipart/form-data" accept-charset="utf-8" >
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	    <input type="hidden" name="listID" value="<?php echo $_GET['listID']; ?>" />
+	    <input type="hidden" name="listID" value="<?php echo SPNL()->validate->int( $_POST['listID'] ); ?>" />
 	   	<table>
 	   	<tr>
     <td class="left_label"> <?php

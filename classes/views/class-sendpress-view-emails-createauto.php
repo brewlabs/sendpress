@@ -31,8 +31,8 @@ class SendPress_View_Emails_Createauto extends SendPress_View_Emails {
         $my_post['post_status'] = 'sp-autoresponder';
         // Update the post into the database
         wp_update_post( $my_post );
-        update_post_meta( $my_post['ID'], '_sendpress_subject', $_POST['post_subject'] );
-        update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
+        update_post_meta( $my_post['ID'], '_sendpress_subject', sanitize_text_field( $_POST['post_subject'] ) );
+        update_post_meta( $my_post['ID'], '_sendpress_template', SPNL()->validate->int($_POST['template']) );
         update_post_meta( $my_post['ID'], '_sendpress_status', 'private');
  		
        	update_post_meta( $my_post['ID'], '_sendpress_system',  'new');

@@ -58,9 +58,9 @@ class SendPress_View_Subscribers_Subscribers extends SendPress_View_Subscribers 
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page($_REQUEST['page']) ?>" />
 	    <?php if(isset($_GET['listID']) && $_GET['listID'] > 0 ){ ?>
-	    <input type="hidden" name="listID" value="<?php echo $_GET['listID']; ?>" />
+	    <input type="hidden" name="listID" value="<?php echo $list_id_clean; ?>" />
 	    <?php  } ?>
-	    <input type="hidden" name="view" value="<?php echo $_GET['view']; ?>" />
+	    <input type="hidden" name="view" value="<?php echo esc_html($_GET['view']); ?>" />
 
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display() ?>

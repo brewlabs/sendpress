@@ -40,7 +40,7 @@ class SendPress_View_Subscribers_Add extends SendPress_View_Subscribers {
 	<form id="subscriber-create" method="post">
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	    <input type="hidden" name="action" value="create-subscriber" />
-	    <input type="hidden" name="listID" value="<?php echo $_GET['listID']; ?>" />
+	    <input type="hidden" name="listID" value="<?php echo SPNL()->validate->int( $_POST['listID'] ); ?>" />
 	    <span class="sublabel"><?php _e('Email','sendpress') ?>:</span><input type="text" name="email" value="" class="regular-text sp-text" /><br>
 	    <span class="sublabel"><?php _e('Firstname','sendpress'); ?>:</span><input type="text" name="firstname" value="" class="regular-text sp-text" /><br>
 	    <span class="sublabel"><?php _e('Lastname','sendpress'); ?>:</span><input type="text" name="lastname" value="" class="regular-text sp-text" /><br>
@@ -77,7 +77,7 @@ class SendPress_View_Subscribers_Add extends SendPress_View_Subscribers {
 			<form id="subscribers-create" method="post">
 					<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 				    <input type="hidden" name="action" value="create-subscribers" />
-				    <input type="hidden" name="listID" value="<?php echo $_GET['listID']; ?>" />
+				    <input type="hidden" name="listID" value="<?php echo SPNL()->validate->int( $_POST['listID'] ); ?>" />
 				   	<textarea name="csv-add"></textarea>
 				   	<button type="submit" class="btn btn-primary"><?php _e('Submit','sendpress'); ?></button>
 				   	<?php SendPress_Data::nonce_field(); ?>
