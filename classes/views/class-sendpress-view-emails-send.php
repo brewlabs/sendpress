@@ -9,7 +9,7 @@ class SendPress_View_Emails_Send extends SendPress_View_Emails {
 
 	function save(){
 
-        $post_info_id =  SPNL()->validate->int( $_POST['post_ID'])
+        $post_info_id =  SPNL()->validate->int( $_POST['post_ID']);
         if($post_info_id > 0){
             if(isset($_POST['send-date']) && $_POST['send-date'] == 'later'){
                 $send_at = $_POST['date-pickit'] . " " . $_POST['send-later-time'];
