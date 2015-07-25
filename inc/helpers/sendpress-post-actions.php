@@ -67,18 +67,7 @@ switch ( $this->_current_action ) {
         */
     
     break;
-     case 'test-account-setup':
-    
-        
-        
-        $options['testemail'] = $_POST['testemail'];
-        
-        SendPress_Option::set($options);
 
-        $this->send_test();
-        wp_redirect( esc_url_raw( admin_url('admin.php?page=sp-settings&view=account') ) );
-    
-    break;
      case 'feedback-setup':
     
         
@@ -95,45 +84,8 @@ switch ( $this->_current_action ) {
     
     break;
 
-    case 'create-subscriber':
-        /*
-        $email = $_POST['email'];
-        $fname = $_POST['firstname'];
-        $lname = $_POST['lastname'];
-        $listID = $_POST['listID'];
-        $status = $_POST['status'];
-
-        if( is_email($email) ){
-
-            $result = $this->addSubscriber( array('firstname'=> $fname ,'email'=> $email,'lastname'=>$lname ) );
-
-            SendPress_Data::update_subscriber_status($listID, $result, $status ,false);
-
-        }
-
-        wp_redirect( 'admin.php?page='.SPNL()->validate->page($_GET['page']). "&view=subscribers&listID=".$listID );
-        */
+   
     
-    break;
-    case 'edit-subscriber':
-        $email = $_POST['email'];
-        $fname = $_POST['firstname'];
-        $lname = $_POST['lastname'];
-        $listID = $_POST['listID'];
-        $status = $_POST['status'];
-        $subscriberID = $_POST['subscriberID'];
-        if( is_email($email) ){
-
-            $result = $this->updateSubscriber($subscriberID, array('firstname'=> $fname ,'email'=> $email,'lastname'=>$lname ) );
-
-            $this->updateStatus($listID,$subscriberID, $status);
-
-            //$this->linkListSubscriber($listID, $result, 1);
-        }
-
-        wp_redirect(  esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page($_GET['page']). "&view=subscribers&listID=".$listID )));
-
-    break;
     case 'template-default-style':
 
         $saveid = $_POST['post_ID'];
@@ -243,41 +195,8 @@ switch ( $this->_current_action ) {
 
 
 
-    case 'create-subscribers':
+
     
-        $csvadd = "email,firstname,lastname\n" . trim($_POST['csv-add']);
-        $listID = $_POST['listID'];
-
-        $newsubscribers = $this->subscriber_csv_post_to_array($csvadd);
-
-        foreach( $newsubscribers as $subscriberx){
-            if( is_email( trim($subscriberx['email'] ) ) ){
-          
-            $result = SendPress_Data::add_subscriber( array('firstname'=> trim($subscriberx['firstname']) ,'email'=> trim($subscriberx['email']),'lastname'=> trim($subscriberx['lastname']) ) );
-            SendPress_Data::update_subscriber_status($listID, $result, 2, false);
-            }
-        }
-    
-        wp_redirect( esc_url_raw(admin_url( 'admin.php?page='.SPNL()->validate->page($_GET['page']). "&view=subscribers&listID=".$listID )));
-    
-    break;
-
-    case 'save-send':
-    /*
-    $csvadd ="email,firstname,lastname\n" . trim($_POST['test-add']);
-    $data=   $this->subscriber_csv_post_to_array($csvadd);
-    $listids = isset($_POST['listIDS']) ? $_POST['listIDS'] : array();
-        SendPress_Option::set('current_send_'. $_POST['post_ID'], array(
-            'listIDS' =>  $listids,
-            'testemails'=> $data
-            ));
-        SendPress_Option::set('current_send_subject_'. $_POST['post_ID'],$_POST['post_subject']);
-
-
-
-        $this->save_redirect( $_POST  );
-        */
-    break;   
     case 'save-style':
 
         $saveid = $_POST['post_ID'];

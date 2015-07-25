@@ -15,17 +15,8 @@ class SendPress_View_Overview extends SendPress_View{
 
 	
 	function html($sp){
-    //SendPress_Template_Manager::update_template_content();
-		SendPress_Tracking::event('Overview Tab');
-		//print_r( SendPress_Data::get_subcribers_by_meta('test','test') );
-    //echo wp_next_scheduled('wysija_cron_queue') . 'asdf';
-
-  //SPNL()->db->subscribers_tracker->add( array('subscriber_id'=> 101, 'email_id'=> 20 ) );
-  //SPNL()->db->subscribers_url->add_update( array('subscriber_id'=> 101, 'email_id'=> 20 , 'url_id' => 123 ) );
-
-  //SPNL()->log->add(  'Email Skiped' , 'Email test',' did not have any Text.', 'sending');
-//print_r(_get_cron_array());
-
+   	SendPress_Tracking::event('Overview Tab');
+	
 global $wp_version;
 
 $classes = 'sp-welcome-panel';
@@ -33,30 +24,8 @@ $classes = 'sp-welcome-panel';
 $option = get_user_meta( get_current_user_id(), 'show_sp_welcome_panel', true );
 // 0 = hide, 1 = toggled to show or single site creator, 2 = multisite site owner
 $hide = 0 == $option || ( 2 == $option && wp_get_current_user()->user_email != get_option( 'admin_email' ) );
-//if ( $hide )
-//	$classes .= ' hidden';
-/*
-$args = array( 'post_type' => 'sendpress_list','numberposts'     => -1,
-	    'offset'          => 0,
-	    'orderby'         => 'post_title',
-	    'order'           => 'DESC', );
-		$lists = get_posts( $args );
-$sp->send_optin(1,array('1','2','3'),$lists);
-*/
+
 list( $display_version ) = explode( '-', $wp_version );
-//SendPress_Template_Manager::update_template_content();
-/*
-
-
-
-echo spnl_do_email_tags( 'here is some {subscriber_list} content that should run tags' , 0 , 0 );
-
-
-SPNL()->log->add('Bad Email','This email can not be sent');
-echo "<pre>";
-print_r( SPNL()->log->get_logs() );
-echo "</pre>";
-*/
 
 ?>
 <br>

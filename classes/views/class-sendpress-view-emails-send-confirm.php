@@ -33,34 +33,7 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
 
          update_post_meta($new_id ,'_sendpress_subject', $subject );
 
-        /*
-
-        if(isset($info['listIDS'])){
-           // foreach($info['listIDS'] as $list_id){
-                $_email = SendPress_Data::get_active_subscribers_lists($info['listIDS']); //$sp->get_active_subscribers( $list_id );
-
-                foreach($_email as $email){
-                   
-                     $go = array(
-                        'from_name' => '',
-                        'from_email' => '',
-                        'to_email' => $email->email,
-                        'emailID'=> $new_id,
-                        'subscriberID'=> $email->subscriberID,
-                        //'to_name' => $email->fistname .' '. $email->lastname,
-                        'subject' => '',
-                        'listID'=> $email->listid
-                        );
-                   
-                    $sp->add_email_to_queue($go);
-                    $count++;
-
-                }
-
-
-          //  }
-        }
-            */
+        
 
         if(isset($info['testemails']) && $info['testemails'] != false ){
             foreach($info['testemails'] as $email){
@@ -82,12 +55,10 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
         }
 
         update_post_meta($new_id,'_send_count', $count );
-       // update_post_meta($new_id,'_send_data', $info );
-
+       
    
         SendPress_Admin::redirect('Emails_Send_Queue',array('emailID'=> $new_id));
-        //wp_redirect( '?page=sp-queue' );
-
+        
   }
 
 

@@ -40,53 +40,23 @@ class SendPress_View_Queue_Errors extends SendPress_View_Queue {
 	function html($sp) {
 
 		 SendPress_Tracking::event('Queue Tab');
-	if(isset($_GET['cron'])){
-		$sp->fetch_mail_from_queue();
-	}	
 
-		//Create an instance of our package class...
+
+		
 	$testListTable = new SendPress_Queue_Errors_Table();
-	//Fetch, prepare, sort, and filter our data...
+	
 	$testListTable->prepare_items();
 	SendPress_Option::set('no_cron_send', 'false');
-	//$sp->fetch_mail_from_queue();
+	
 	$sp->cron_start();
-	//echo $sp->get_key(). "<br>";
+	
 
 	$open_info = array(
 				"id"=>13,
 				"report"=> 10,
 				"view"=>"open"
 				);
-	/*
-			$x = $sp->encrypt_data($open_info);
-
-		echo $x."<br>";
-		$x = $sp->decrypt_data($x);
-
-		print_r($x);
-			echo "<br>";
-
-		$d = $_GET['t'];
-		$x = $sp->decrypt_data($d);
-
-		print_r($x->id);
-			echo "<br>";
-		
-		
-		//echo wp_get_schedule('sendpress_cron_action_run');
-		//
-		$time_delay =  SendPress_Option::get('time-delay');
-		echo $time_delay;
-		echo date('l jS \of F Y H:i:s A',$time_delay );
-		echo "<br>";
-		$time = date('H:i:s');
-
-echo $time;//11:09
-		$time = date('H:i:s', $time_delay);
-
-echo $time;//11:09
-	*/
+	
 
 	?>
 

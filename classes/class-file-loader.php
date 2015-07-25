@@ -1,36 +1,36 @@
 <?php
 
 // Prevent loading this file directly
-if ( !defined('SENDPRESS_VERSION') ) {
-	header('HTTP/1.0 403 Forbidden');
+if ( ! defined( 'SENDPRESS_VERSION' ) ) {
+	header( 'HTTP/1.0 403 Forbidden' );
 	die;
 }
 
-class File_Loader{
+class File_Loader {
 
 	private $type;
 
-	function __construct($identifier) {
+	function __construct( $identifier ) {
 		$this->type = $identifier;
 
 		$this->load_modules();
 	}
 
 	/**
- 	* Loads the modules.
-	*/
+	 * Loads the modules.
+	 */
 	function load_modules() {
-	
+
 		$modules = $this->get_available_modules();
-		
-		 
-		if( $modules ){
-			usort($modules,'sendpress_sort');
+
+
+		if ( $modules ) {
+			usort( $modules, 'sendpress_sort' );
 			foreach ( $modules as $module ) {
-				require $this->get_module_path( $module[0] , $module[1] );
+				require $this->get_module_path( $module[0], $module[1] );
 			}
 		}
-		do_action('SendPress_Classes_Loaded');
+		do_action( 'SendPress_Classes_Loaded' );
 	}
 
 	/**
@@ -41,15 +41,18 @@ class File_Loader{
 
 		$modules = false;
 
-		$files = $this->glob_php( plugin_dir_path(__FILE__) );
+		$files = $this->glob_php( plugin_dir_path( __FILE__ ) );
 
 		foreach ( $files as $file ) {
-			
-			if ( $headers = $this->get_module( $file , plugin_dir_path(__FILE__) ) ) {
-				$modules[$this->get_module_slug( $file ) ] = array( $this->get_module_slug( $file ) , plugin_dir_path(__FILE__) );
+
+			if ( $headers = $this->get_module( $file, plugin_dir_path( __FILE__ ) ) ) {
+				$modules[ $this->get_module_slug( $file ) ] = array(
+					$this->get_module_slug( $file ),
+					plugin_dir_path( __FILE__ )
+				);
 			}
 		}
-		
+
 		return $modules;
 	}
 
@@ -64,13 +67,16 @@ class File_Loader{
 			'sort' => 'Sort Order'
 		);
 
-		$file = $this->get_module_path( $this->get_module_slug( $module  ) , $dir);
-		$mod = get_file_data( $file, $headers );
+		$file = $this->get_module_path( $this->get_module_slug( $module ), $dir );
+		$mod  = get_file_data( $file, $headers );
 
-		if ( empty( $mod['sort'] ) )
+		if ( empty( $mod['sort'] ) ) {
 			$mod['sort'] = 10;
-		if ( !empty( $mod['name'] )  )
+		}
+		if ( ! empty( $mod['name'] ) ) {
 			return $mod;
+		}
+
 		return false;
 	}
 
@@ -84,7 +90,7 @@ class File_Loader{
 	/**
 	 * Generate a module's path from its slug.
 	 */
-	function get_module_path( $slug , $dir) {
+	function get_module_path( $slug, $dir ) {
 		return $dir . "/$slug.php";
 	}
 
@@ -93,23 +99,24 @@ class File_Loader{
 	 * Equivalent to glob( "$absolute_path/*.php" ).
 	 *
 	 * @param string $absolute_path The absolute path of the directory to search.
+	 *
 	 * @return array Array of absolute paths to the PHP files.
 	 */
 	function glob_php( $absolute_path ) {
 		$absolute_path = untrailingslashit( $absolute_path );
-		$files = array();
-		if ( !$dir = @opendir( $absolute_path ) ) {
+		$files         = array();
+		if ( ! $dir = @opendir( $absolute_path ) ) {
 			return $files;
 		}
 
 		while ( false !== $file = readdir( $dir ) ) {
-			if ( '.' == substr( $file, 0, 1 ) || '.php' != substr( $file, -4 ) ) {
+			if ( '.' == substr( $file, 0, 1 ) || '.php' != substr( $file, - 4 ) ) {
 				continue;
 			}
 
 			$file = "$absolute_path/$file";
 
-			if ( !is_file( $file ) ) {
+			if ( ! is_file( $file ) ) {
 				continue;
 			}
 

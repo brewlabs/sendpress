@@ -16,6 +16,20 @@ class SendPress_View_Subscribers extends SendPress_View {
 		//add_action('sendpress-subscribers-sub-menu', array('SendPress_View_Subscribers','default_header'));
 	}
 
+	function export_list(){
+    	$l = SPNL()->validate->int($_GET['listID']);
+         if( $l > 0 ){
+            $items = SendPress_Data::export_subscirbers( $l );
+            header("Content-type:text/octect-stream");
+            header("Content-Disposition:attachment;filename=sendpress.csv");
+            print "email,firstname,lastname,status \n";
+            foreach($items as $user) {
+                print  $user->email . ",". $user->firstname.",". $user->lastname.",". $user->status."\n" ;
+            }
+        }
+        exit;
+	}
+
 	function sub_menu($sp = false){
 		?>
 		<div class="navbar navbar-default" >

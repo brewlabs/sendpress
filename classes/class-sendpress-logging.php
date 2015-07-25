@@ -155,7 +155,7 @@ class SendPress_Logging {
 			'public'          => false,
 			'query_var'       => false,
 			'rewrite'         => false,
-			'show_ui'=>true,
+			'show_ui'		  =>false,
 			'capability_type' => 'post',
 			'supports'        => array( 'title', 'editor' ),
 			'can_export'      => false

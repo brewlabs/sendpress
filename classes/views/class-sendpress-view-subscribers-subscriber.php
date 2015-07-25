@@ -123,9 +123,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 		</div>
 		<div class="media-body">
 	
-		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	    <!--<input type="hidden" name="action" value="edit-subscriber" />-->
-	    <input type="hidden" name="listID" value="<?php echo SPNL()->validate->int($_GET['listID']); ?>" />
+		<input type="hidden" name="listID" value="<?php echo SPNL()->validate->int($_GET['listID']); ?>" />
 	    <input type="hidden" name="subscriberID" value="<?php echo SPNL()->validate->int($_GET['subscriberID']); ?>" />
 	    <strong><?php _e('Email','sendpress'); ?></strong>: <input type="text" name="email" class="regular-text sp-text" value="<?php echo $sub->email; ?>" /><br><br>
 	    <strong><?php _e('Firstname','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="firstname" value="<?php echo $sub->firstname; ?>" /><br><br>

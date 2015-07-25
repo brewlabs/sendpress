@@ -82,11 +82,11 @@ class SendPress_Lists_Table extends WP_List_Table {
                     $add = " - <a href='". SendPress_Admin::link('Subscribers_Sync') . "&listID=".$item->ID."'>". __('Sync','sendpress') . "</a>";
                 }
 
-                return  $this->_sendpress->countSubscribers($item->ID) . $add ;
+                return  SendPress_data::get_count_subscribers($item->ID) . $add ;
             case 'count_unsubscribes':
-                return  $this->_sendpress->countSubscribers($item->ID, 3);
+                return  SendPress_data::get_count_subscribers($item->ID, 3);
             case 'count_bounced':
-                return  $this->_sendpress->countSubscribers($item->ID, 4);
+                return  SendPress_data::get_count_subscribers($item->ID, 4);
             case 'last_send_date':
                 return date('Y-m-d');        
             case 'actions':

@@ -113,15 +113,6 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
      **************************************************************************/
     function column_title($item){
         
-        //Build row actions
-        //
-        /*
-        $actions = array(
-            'edit'      => sprintf('<a href="?page=%s&view=%s&subscriberID=%s&listID=%s">Edit</a>',SPNL()->validate->page($_REQUEST['page']),'subscriber',$item->subscriberID, $_GET["listID"] ),
-            'delete'    => sprintf('<a href="?page=%s&action=%s&subscriberID=%s&listID=%s">Delete</a>',SPNL()->validate->page($_REQUEST['page']),'delete-subscriber',$item->subscriberID, $_GET["listID"] ),
-        );
-        */
-        
         //Return the title contents - $this->row_actions($actions) was in %3
         return sprintf('%1$s <span style="color:silver">(id:%2$s)</span>%3$s',
             /*$1%s*/ $item->email,

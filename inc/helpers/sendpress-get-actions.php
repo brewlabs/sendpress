@@ -58,7 +58,7 @@ switch ( $this->_current_action ) {
                 $l = SPNL()->validate->int($_GET['listID']);
                 $s = SPNL()->validate->int($_GET['subscriberID']);
                 if($l > 0 && $s > 0){
-                    $this->unlink_list_subscriber($l , $s);
+                    SendPress_Data::remove_subscriber_status($l , $s);
                 }
                 wp_redirect( esc_url_raw( admin_url( 'admin.php?page='.SPNL()->validate->page($_GET['page']) .'&view=subscribers&listID='.$_GET['listID'] ) ) );
             break;
@@ -67,7 +67,7 @@ switch ( $this->_current_action ) {
                  $subscriber_delete = $_GET['subscriber'];
                  $list  = SPNL()->validate->int($_GET['listID']); 
                 foreach ($subscriber_delete as $subscriberID) {
-                    $this->unlink_list_subscriber( $list  , SPNL()->validate->int( $subscriberID ));
+                    SendPress_Data::remove_subscriber_status( $list  , SPNL()->validate->int( $subscriberID ));
                 }
                 wp_redirect( esc_url_raw( admin_url( 'admin.php?page='.SPNL()->validate->page($_GET['page']) .'&view=subscribers&listID='.$_GET['listID'] ) ) );
             break;
@@ -110,22 +110,7 @@ switch ( $this->_current_action ) {
                 wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page($_GET['page']) ) ) );
             break;
           
-            case 'export-list':
-               
-                 $l = SPNL()->validate->int($_GET['listID']);
-                 if( $l > 0 ){
-                    $items = $this->exportList($_GET['listID']);
-                    header("Content-type:text/octect-stream");
-                    header("Content-Disposition:attachment;filename=sendpress.csv");
-                    print "email,firstname,lastname,status \n";
-                    foreach($items as $user) {
-                        print  $user->email . ",". $user->firstname.",". $user->lastname.",". $user->status."\n" ;
-                    }
-                }
-                exit;
-
-            
-            break;
+          
        
 
         
