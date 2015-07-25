@@ -106,7 +106,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
 			// print_r($sub);
 			?>
-			<link rel="stylesheet" type="text/css" href="http://dev.wp/sendpress/wp-content/plugins/sendpress/css/manage-front-end.css">
+			<link rel="stylesheet" type="text/css" href="<?php echo SENDPRESS_URL; ?>/css/manage-front-end.css">
 			<div class="sendpress-content">
 				<h4>Manage Subscriptions</h4>
 				<div class="subscriber-info">
