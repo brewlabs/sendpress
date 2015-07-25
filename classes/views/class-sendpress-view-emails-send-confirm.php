@@ -120,7 +120,7 @@ $this->panel_start('<span class="glyphicon glyphicon-list"></span> '. __('Lists'
 
 if( !empty($info['listIDS']) ){
     foreach($info['listIDS'] as $list_id){
-        $list = $sp->get_list_details( $list_id );
+        $list = SendPress_Data::get_list_details( $list_id );
         echo $list->post_title. " <small>(".SendPress_Data::get_count_subscribers($list_id). ")</small><br>";      
 
     } 

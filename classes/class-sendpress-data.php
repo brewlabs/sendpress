@@ -114,6 +114,12 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 
+	static function remove_email_from_queue($id){
+		global $wpdb;
+		$table = self::queue_table();
+		$wpdb->query( $wpdb->prepare("DELETE FROM $table WHERE id = %d", $id ) );
+	}
+
 	static function remove_from_queue($id){
 		global $wpdb;
 		$table = self::queue_table();
@@ -141,6 +147,15 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$table = self::queue_table();
 		global $wpdb;
 		$result = $wpdb->update( $table ,array('attempts'=>'0'), array('attempts'=> '1' ,'success'=>'0') );
+
+	}
+
+	function requeue_email( $emailid ) {
+		global $wpdb;
+
+		$table = SendPress_Data::queue_table();
+
+		$result = $wpdb->update( $table, array( 'attempts' => 0, 'inprocess' => 0 ), array( 'id' => $emailid ) );
 
 	}
 

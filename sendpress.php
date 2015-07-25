@@ -1614,14 +1614,7 @@ class SendPress {
 		return $result;
 	}
 
-	// GET DETAIL (RETURN X WHERE Y = Z)
-	function delete_queue_email( $emailID ) {
-		$table  = SendPress_Data::queue_table();
-		$result = $this->wpdbQuery( $wpdb->prepare( "DELETE FROM $table WHERE id = %d", $emailID ), 'query' );
-
-		return $result;
-	}
-
+	
 	// GET DETAIL (RETURN X WHERE Y = Z)
 	function createList( $values ) {
 		return SendPress_Data::create_list( $values );
@@ -1631,14 +1624,7 @@ class SendPress {
 		return SendPress_Data::update_list( $listID, $values );
 	}
 
-	function requeue_email( $emailid ) {
-		global $wpdb;
-
-		$table = SendPress_Data::queue_table();
-
-		$result = $wpdb->update( $table, array( 'attempts' => 0, 'inprocess' => 0 ), array( 'id' => $emailid ) );
-
-	}
+	
 
 
 

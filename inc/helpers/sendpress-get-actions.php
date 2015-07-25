@@ -13,14 +13,17 @@ if ( !defined('SENDPRESS_VERSION') ) {
 *
 **/
 
+error_log($this->_current_action);
+
 switch ( $this->_current_action ) {
+
             case 'delete-email-queue':
                 $email_delete = $_GET['qemail'];
-
+                 print_r( 'e: ' . $email_delete );
                 foreach ($email_delete as $qID) {
                     $q = SPNL()->validate->int($qID);
                     if($q > 0 ){
-                        $this->delete_queue_email($q);
+                        SendPress_Data::remove_email_from_queue($q);
                     }
                 }
                 wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page($_GET['page']) ) ) );
@@ -28,15 +31,17 @@ switch ( $this->_current_action ) {
             break;
             case 'queue-delete':
                 $email_delete = SPNL()->validate->int($_GET['emailID']);
+                
                 if($email_delete > 0){
-                    $this->delete_queue_email($email_delete);
+                    SendPress_Data::remove_email_from_queue($email_delete);
                 }
-                 wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page($_GET['page']) ) ) );
+                
+                wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page($_GET['page']) ) ) );
             break;
             case 'requeue':
                 $email = SPNL()->validate->int($_GET['emailID']);
                 if($email > 0){
-                    $this->requeue_email($email);
+                   SendPress_Data::requeue_email($email);
                 }
                 wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page($_GET['page']) ) ) );
 
