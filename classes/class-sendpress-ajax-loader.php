@@ -115,11 +115,11 @@ class SendPress_Ajax_Loader {
 			$s = NEW SendPress;
 
 			// get the credit card details submitted by the form
-			$listid = $_POST['id'];
-			$name   = $_POST['name'];
+			$listid = SPNL()->validate->int($_POST['id']);
+			$name   =  sanitize_text_field($_POST['name']);
 			$public = ( $_POST['public'] === '1' ) ? 1 : 0;
 
-			$list = $s->updateList( $listid, array( 'name' => $name, 'public' => $public ) );
+			$list = SendPress_Data::update_list( $listid, array( 'name' => $name, 'public' => $public ) );
 
 			if ( false !== $list ) {
 				$response['success'] = true;

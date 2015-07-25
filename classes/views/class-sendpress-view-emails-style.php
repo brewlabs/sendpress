@@ -9,23 +9,25 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Style extends SendPress_View_Emails {
 	
 	function save(){
-		  $saveid = $_POST['post_ID'];
-        $bodybg = $_POST['body_bg'];
-        $bodytext = $_POST['body_text'];
-        $bodylink = $_POST['body_link'];
-        $contentbg = $_POST['content_bg'];
-        $contenttext = $_POST['content_text'];
-        $contentlink = $_POST['sp_content_link_color'];
-        $contentborder = $_POST['content_border'];
-        $upload_image = $_POST['upload_image'];
+		  $saveid = SPNL()->validate->int( $_POST['post_ID']);
+          $bodybg = SPNL()->validate->hex( $_POST['body_bg'] );
+            $bodytext = SPNL()->validate->hex( $_POST['body_text']);
+            $bodylink = SPNL()->validate->hex( $_POST['body_link']);
+            $contentbg = SPNL()->validate->hex( $_POST['content_bg']);
+            $contenttext = SPNL()->validate->hex( $_POST['content_text']);
+            $contentlink = SPNL()->validate->hex( $_POST['sp_content_link_color']);
+            $contentborder = SPNL()->validate->hex( $_POST['content_border']);
+            $upload_image = $_POST['upload_image'];
         
-        $headerbg = $_POST['header_bg'];
-        $headertextcolor = $_POST['header_text_color'];
-        $headertext = $_POST['header_text'];
 
-        $headerlink = $_POST['header_link'];
-        $imageheaderurl = $_POST['image_header_url'];
-        $subheadertext = $_POST['sub_header_text'];
+
+         $headerbg = SPNL()->validate->hex( $_POST['header_bg'] );
+        $headertextcolor =  SPNL()->validate->hex($_POST['header_text_color']);
+        $headertext = sanitize_text_field($_POST['header_text']);
+        $headerlink = esc_url_raw( $_POST['header_link'] );
+        $imageheaderurl = esc_url_raw( $_POST['image_header_url'] );
+        
+        $subheadertext = sanitize_text_field( $_POST['sub_header_text'] );
 
         $activeHeader = $_POST['active_header'];
 
@@ -59,8 +61,8 @@ class SendPress_View_Emails_Style extends SendPress_View_Emails {
         $my_post['post_status'] = 'publish';
         // Update the post into the database
         wp_update_post( $my_post );
-        update_post_meta( $my_post['ID'], '_sendpress_subject', $_POST['post_subject'] );
-        update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
+        update_post_meta( $my_post['ID'], '_sendpress_subject',  sanitize_text_field($_POST['post_subject'] ));
+        update_post_meta( $my_post['ID'], '_sendpress_template', SPNL()->validate->int($_POST['template'] ));
         update_post_meta( $my_post['ID'], '_sendpress_status', 'private');
 
         SendPress_Email::set_default_style($my_post['ID']);
@@ -87,7 +89,7 @@ class SendPress_View_Emails_Style extends SendPress_View_Emails {
         update_post_meta($saveid ,'active_header', $activeHeader );
         
         if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
-            SendPress_Admin::redirect('Emails_Send', array('emailID'=>$_GET['emailID'] ));
+            SendPress_Admin::redirect('Emails_Send', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
         } else if (isset($_POST['submit']) && $_POST['submit'] == 'send-test'){
             $email = new stdClass;
             $email->emailID  = $my_post['ID'];
@@ -96,9 +98,9 @@ class SendPress_View_Emails_Style extends SendPress_View_Emails {
             $email->to_email = $_POST['test-email'];
             $d =SendPress_Manager::send_test_email( $email );
             //print_r($d);
-            SendPress_Admin::redirect('Emails_Style', array('emailID'=>$_GET['emailID'] ));
+            SendPress_Admin::redirect('Emails_Style', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
         } else {
-            SendPress_Admin::redirect('Emails_Style', array('emailID'=>$_GET['emailID'] ));
+            SendPress_Admin::redirect('Emails_Style', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
         }
 
 
@@ -116,8 +118,8 @@ class SendPress_View_Emails_Style extends SendPress_View_Emails {
 		$list ='';
 
 		if(isset($_GET['emailID'])){
-			$emailID = $_GET['emailID'];
-			$post = get_post( $_GET['emailID'] );
+			$emailID = SPNL()->validate->int($_GET['emailID']);
+			$post = get_post($emailID );
 			$post_ID = $post->ID;
 		}
 	

@@ -1413,6 +1413,16 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $result;	
 	}
 
+	static function delete_list( $listID ) {
+		global $wpdb;
+		wp_delete_post( $listID, true );
+		$table  = SendPress_Data::list_subcribers_table();
+		$result = $wpdb->query( $wpdb->prepare( "DELETE FROM $table WHERE listID = %d", $listID ) );
+
+		return $result;
+	}
+
+
 	static function get_active_list_ids_for_subscriber( $value ) {
 		global $wpdb;
 		$table = SendPress_Data::list_subcribers_table();

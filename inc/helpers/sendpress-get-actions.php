@@ -13,13 +13,10 @@ if ( !defined('SENDPRESS_VERSION') ) {
 *
 **/
 
-error_log($this->_current_action);
-
 switch ( $this->_current_action ) {
 
             case 'delete-email-queue':
                 $email_delete = $_GET['qemail'];
-                 print_r( 'e: ' . $email_delete );
                 foreach ($email_delete as $qID) {
                     $q = SPNL()->validate->int($qID);
                     if($q > 0 ){
@@ -47,14 +44,14 @@ switch ( $this->_current_action ) {
 
             break;
             case 'delete-list':
-                $this->deleteList(SPNL()->validate->int($_GET['listID']));
+                SendPress_Data::delete_list( SPNL()->validate->int($_GET['listID']) );
                  wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page($_GET['page']) ) ) );
             break;
             case 'delete-lists-bulk':
                 $list_delete = $_GET['list'];
 
                 foreach ($list_delete as $listID) {
-                   $this->deleteList( SPNL()->validate->int($listID));
+                   SendPress_Data::delete_list( SPNL()->validate->int($listID));
                 }
                  wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page($_GET['page']) ) ) );
             break;

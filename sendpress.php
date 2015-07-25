@@ -1603,22 +1603,7 @@ class SendPress {
 		return $result;
 	}
 
-	// GET DETAIL (RETURN X WHERE Y = Z)
-	function deleteList( $listID ) {
-		//$table = $this->lists_table();
-		//$result = $this->wpdbQuery("DELETE FROM $table WHERE listID = '$listID'", 'query');
-		wp_delete_post( $listID, true );
-		$table  = SendPress_Data::list_subcribers_table();
-		$result = $this->wpdbQuery( $wpdb->prepare( "DELETE FROM $table WHERE listID = %d", $listID ), 'query' );
 
-		return $result;
-	}
-
-	
-	// GET DETAIL (RETURN X WHERE Y = Z)
-	function createList( $values ) {
-		return SendPress_Data::create_list( $values );
-	}
 
 	function updateList( $listID, $values ) {
 		return SendPress_Data::update_list( $listID, $values );
