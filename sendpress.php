@@ -1,12 +1,12 @@
 <?php
-/**
- Plugin Name: SendPress Newsletters
- Version: 1.2.1
- Plugin URI: https://sendpress.com
- Description: Easy to manage Newsletters for WordPress.
- Author: SendPress
- Author URI: https://sendpress.com/
- */
+/*
+Plugin Name: SendPress Newsletters
+Version: 1.2.1
+Plugin URI: https://sendpress.com
+Description: Easy to manage Newsletters for WordPress.
+Author: SendPress
+Author URI: https://sendpress.com/
+*/
 
 if ( ! defined( 'DB_NAME' ) ) {
 	header( 'HTTP/1.0 403 Forbidden' );
