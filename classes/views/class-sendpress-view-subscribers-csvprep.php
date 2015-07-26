@@ -11,7 +11,9 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
   
 
 	function save(){
-		$file= trim(SendPress_Data::read_file_to_str(get_post_meta($_GET['listID'],'csv_import',true)));
+
+    $list_id_clean = SPNL()->validate->int( $_GET['listID'] );
+		$file= trim(SendPress_Data::read_file_to_str(get_post_meta($list_id_clean ,'csv_import',true)));
     $subscribers = SendPress_Data::csv_to_array($file);
    
     $total = count($subscribers);
@@ -30,14 +32,14 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
     $chunks_count = 0;
     $wpdb->query('set session wait_timeout=600');
     foreach($file_chunks as $key_chunk => $csv_chunk){
-          $result = SendPress_Data::import_csv_array( $csv_chunk, $map ,$_GET['listID']);
+          $result = SendPress_Data::import_csv_array( $csv_chunk, $map ,$list_id_clean );
 
           if($result !== false) $chunks_count++;
           else{
                 // there was an error we try 3
                 $try=0;
                 while($result === false && $try < 3){
-                    $result = SendPress_Data::import_csv_array( $csv_chunk , $map, $_GET['listID']);
+                    $result = SendPress_Data::import_csv_array( $csv_chunk , $map, $list_id_clean );
                     if($result !== false){
                          break;
                     }
@@ -51,7 +53,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
             unset($file_chunks[$key_chunk]);
         }
 
-        SendPress_Admin::redirect('Subscribers_Subscribers',array('listID'=> $_GET['listID']));
+        SendPress_Admin::redirect('Subscribers_Subscribers',array('listID'=> $list_id_clean));
 
 
 	}
@@ -85,9 +87,11 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
   }
 
 
-	function html($sp) { ?>
+	function html($sp) { 
+    $list_id_clean = SPNL()->validate->int( $_GET['listID'] );
+    ?>
 	<div id="taskbar" class="lists-dashboard rounded group"> 
-	<h2><?php _e('Import CSV to ','sendpress'); ?><?php echo get_the_title($_GET['listID']); ?></h2>
+	<h2><?php _e('Import CSV to ','sendpress'); ?><?php echo get_the_title( $list_id_clean ); ?></h2>
 	</div>
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form method="post" enctype="multipart/form-data" accept-charset="utf-8" >
@@ -95,7 +99,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
     $row = 1;
     $header = array();
 
-    $file= trim(SendPress_Data::read_file_to_str(get_post_meta($_GET['listID'],'csv_import',true)));
+    $file= trim(SendPress_Data::read_file_to_str(get_post_meta(  $list_id_clean ,'csv_import',true)));
     $subscribers = SendPress_Data::csv_to_array($file);
     $total = count($subscribers);
     ?>

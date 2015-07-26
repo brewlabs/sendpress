@@ -71,12 +71,15 @@ class SendPress_Email_Render_Engine {
 
 				$temp = json_decode( $temp_post->post_content );
 			 
-
+				/*
 				if( $temp === false || $temp === null){
 					$path = SENDPRESS_PATH.'templates/v1-0/master.html';
 				} else {
 					$path = $temp->path;
 				}
+				*/
+				$path = SENDPRESS_PATH . 'templates/v1-0/master.html';
+
 				$html = file_get_contents($path);
 				return $html;
 			}
@@ -89,12 +92,15 @@ class SendPress_Email_Render_Engine {
 	static function render_html_base_by_post( $post ){
 			
 			$temp = json_decode( $post->post_content );
+			/*
 			if( is_object($temp) ){
 				$path = $temp->path;
 			} else {
 				$path = SENDPRESS_PATH.'templates/v1-0/master.html';
 				
 			}
+			*/
+			$path = SENDPRESS_PATH.'templates/v1-0/master.html';
 			$html = file_get_contents($path);
 			return $html;
 	}
