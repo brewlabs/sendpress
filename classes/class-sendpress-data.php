@@ -1139,6 +1139,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 	static function set_subscriber_status($listID, $subscriberID, $status = 0) {
+		global $wpdb;
 		$table = self::list_subcribers_table();
 		$result = self::wpdbQuery( $wpdb->prepare("SELECT id FROM $table WHERE listID = %d AND subscriberID = %d ", $listID, $subscriberID ) , 'get_var');
 		
