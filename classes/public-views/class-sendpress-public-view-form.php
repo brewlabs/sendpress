@@ -26,7 +26,7 @@ class SendPress_Public_View_Form extends SendPress_Public_View{
 				$user_info['list'] = array($user_info['list']);
 			}
 			if( isset($user_info['status']) ){
-				$valid_user['status'] = $user_info['status'];
+				$valid_user['status'] = SPNL()->validate->int( $user_info['status'] );
 			} else {
 				$valid_user['status'] = 2;
 			}
@@ -39,13 +39,13 @@ class SendPress_Public_View_Form extends SendPress_Public_View{
 			}
 
 			if( isset($user_info['firstname']) ){
-				$valid_user['firstname'] = $user_info['firstname'];
+				$valid_user['firstname'] = sanitize_text_field( $user_info['firstname'] );
 			} else {
 				$valid_user['firstname'] = '';
 			}
 			
 			if( isset($user_info['lastname']) ){
-				$valid_user['lastname'] = $user_info['lastname'];
+				$valid_user['lastname'] = sanitize_text_field( $user_info['lastname'] );
 			} else {
 				$valid_user['lastname'] = '';
 			}

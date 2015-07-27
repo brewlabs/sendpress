@@ -16,7 +16,7 @@ class SendPress_Public_View_Process extends SendPress_Public_View {
 		
 		$info = $this->data();
 		if(isset($_GET['id'])){
-			$id = $_GET['id'];
+			$id = SPNL()->validate->int( $_GET['id'] );
 		} else{
 			$id =$info->id;
 		}

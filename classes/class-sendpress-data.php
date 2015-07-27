@@ -190,13 +190,12 @@ class SendPress_Data extends SendPress_DB_Tables {
 			 $query.=" AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s')."') ";
        
 	        if(isset($_GET["listid"]) &&  $_GET["listid"]> 0 ){
-	            $query .= ' AND listID = '. $_GET["listid"];
+	            $query .= $wpdb->prepare(" AND listID = %d", SPNL()->validate->int( $_GET["listid"] ));
 	        }
 
-	        if(isset($_GET["qs"] )){
-	            $query .= ' AND to_email LIKE "%'. $_GET["qs"] .'%"';
-
-	        }
+	        if(isset( $_GET["qs"] )){
+	            $query .= $wpdb->prepare(" AND to_email LIKE '%%s%'",  sanitize_text_field( $_GET["qs"] ) );
+			}
 
 	        $query .= " AND max_attempts = attempts ";
 
@@ -211,16 +210,15 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$table = self::queue_table();
 		if($id == false){
 			$query = "SELECT COUNT(*) FROM $table where success = 0";
-			 $query.=" AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s')."') ";
+			$query.=" AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s')."') ";
        
-	        if(isset($_GET["listid"]) &&  $_GET["listid"]> 0 ){
-	            $query .= ' AND listID = '. $_GET["listid"];
+	       	if(isset($_GET["listid"]) &&  $_GET["listid"]> 0 ){
+	            $query .= $wpdb->prepare(" AND listID = %d", SPNL()->validate->int( $_GET["listid"] ));
 	        }
 
-	        if(isset($_GET["qs"] )){
-	            $query .= ' AND to_email LIKE "%'. $_GET["qs"] .'%"';
-
-	        }
+	        if(isset( $_GET["qs"] )){
+	            $query .= $wpdb->prepare(" AND to_email LIKE '%%s%'",  sanitize_text_field( $_GET["qs"] ) );
+			}
 
 	        $query .= " AND max_attempts > attempts ";
 
@@ -311,7 +309,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if($id == false){
 			return 0;
 		}
-
 		
 		$table = self::queue_table();
 		$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where emailID = %d AND success >= %d", $id, 1 );
@@ -323,7 +320,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function process_with_iron( $id ){
 		global $wpdb;
 		$table = self::queue_table();
-		$query = $wpdb->prepare("SELECT id from $table where id = %d and inprocess = %d" , $id,0);
+		$query = $wpdb->prepare("SELECT id from $table where id = %d and inprocess = %d" , $id , 0 );
 		$id = $wpdb->get_var($query);
 		if(!isset($id)){
 			return 0;
@@ -348,14 +345,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 				}
 		}
 
-
-
-
-
 		$query = $wpdb->prepare("SELECT * FROM $table  WHERE id > %d LIMIT 10" , $counter);
 
-
-		$data =  $wpdb->get_results($query,ARRAY_A);
+		$data =  $wpdb->get_results( $query , ARRAY_A );
 
 		$end = end($data);
 		if($end['id']){
@@ -575,7 +567,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	static function get_url_by_report_url( $id , $url_string ){
 		$table = self::report_url_table();
-		$result = self::wpdbQuery("SELECT * FROM $table WHERE reportID = '$id' AND url = '$url_string'", 'get_results');
+		$result = self::wpdbQuery( $wpdb->prepare("SELECT * FROM $table WHERE reportID = %d AND url = %s", $id , $url_string ) , 'get_results');
 		return $result;	
 	}
 
@@ -719,9 +711,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		$urlData = array(
 			'eventdate'=>date('Y-m-d H:i:s'),
-			'subscriberID' => $sid,
-			'reportID' => $rid,
-			'urlID'=>$lid,
+			'subscriberID' => SPNL()->validate->int( $sid ),
+			'reportID' => SPNL()->validate->int( $rid ),
+			'urlID'=> SPNL()->validate->int( $lid ),
 			'ip'=>$ip,
 			'devicetype'=> $device_type,
 			'device'=> $device,
@@ -1094,9 +1086,9 @@ class SendPress_Data extends SendPress_DB_Tables {
         	$query = "SELECT t1.*, t3.status FROM " .  self::subscriber_table() ." as t1,". self::list_subcribers_table()." as t2,". self::subscriber_status_table()." as t3 " ;
 
         
-            $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.listID =  ". $listID ." AND t2.subscriberID = ". $subscriberID .")";
+            $query .= $wpdb->prepare(" WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.listID =  %d AND t2.subscriberID = %d )", $listID, $subscriberID );
         } else {
-            $query = "SELECT * FROM " .  self::subscriber_table() ." WHERE subscriberID = ". $subscriberID ;
+            $query = $wpdb->prepare("SELECT * FROM " .  self::subscriber_table() ." WHERE subscriberID = %d ", $subscriberID);
         }
 
         return self::wpdbQuery($query, 'get_row');
@@ -1117,6 +1109,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if(!empty($list_ids)){
 			global $wpdb;
 			$lists = implode(',', $list_ids);
+			$id = SPNL()->validate->int( $id );
 			$get = intval( SendPress_Option::get('queue-per-call' , 1000 ) );
 			$query = "SELECT t1.subscriberID,t1.email, t3.status, t2.listid, count(*) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
 
@@ -1146,7 +1139,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	static function set_subscriber_status($listID, $subscriberID, $status = 0) {
 		$table = self::list_subcribers_table();
-		$result = self::wpdbQuery("SELECT id FROM $table WHERE listID = $listID AND subscriberID = $subscriberID ", 'get_var');
+		$result = self::wpdbQuery( $wpdb->prepare("SELECT id FROM $table WHERE listID = %d AND subscriberID = %d ", $listID, $subscriberID ) , 'get_var');
 		
 		if($result == false){
 			$result = self::wpdbQuery("INSERT INTO $table (listID, subscriberID, status, updated) VALUES( '" . $listID . "', '" . $subscriberID . "','".$status."','".date('Y-m-d H:i:s')."')", 'query');

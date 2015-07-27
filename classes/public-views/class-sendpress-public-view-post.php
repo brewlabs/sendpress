@@ -37,7 +37,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 
 			$data_error = false;
 			if( $user_info['status'] !== false ){
-				$valid_user['status'] = $user_info['status'];
+				$valid_user['status'] = SPNL()->validate->int( $user_info['status'] );
 			} else {
 				$valid_user['status'] = 2;
 			}
@@ -49,13 +49,13 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			}
 
 			if( $user_info['firstname'] !== false ){
-				$valid_user['firstname'] = $user_info['firstname'];
+				$valid_user['firstname'] =  sanitize_text_field( $user_info['firstname'] );
 			} else {
 				$valid_user['firstname'] = '';
 			}
 			
 			if( $user_info['lastname'] !== false ){
-				$valid_user['lastname'] = $user_info['lastname'];
+				$valid_user['lastname'] =  sanitize_text_field( $user_info['lastname'] );
 			} else {
 				$valid_user['lastname'] = '';
 			}
@@ -63,7 +63,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			
 			if($data_error ==  false){
 				$list = implode(",", $user_info['list']);
-			$custom = apply_filters('sendpress_subscribe_to_list_custom_fields', array(), $_POST);
+				$custom = apply_filters('sendpress_subscribe_to_list_custom_fields', array(), $_POST);
 
 		
 				$status =  SendPress_Data::subscribe_user($list, $valid_user['email'], $valid_user['firstname'], $valid_user['lastname'], $valid_user['status'], $custom);

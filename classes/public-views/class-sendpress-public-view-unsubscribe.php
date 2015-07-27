@@ -13,7 +13,7 @@ class SendPress_Public_View_Unsubscribe extends SendPress_Public_View {
 		$s = $_GET['sid'];
 
 		$r = (int) base64_decode($r);
-		$s = (int)  base64_decode($s);
+		$s = (int) base64_decode($s);
 
 		if(is_numeric($r)){	
 			$lists =  get_post_meta($r,'_send_lists', true);

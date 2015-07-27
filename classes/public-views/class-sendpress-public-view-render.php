@@ -14,7 +14,7 @@ class SendPress_Public_View_Render extends SendPress_Public_View{
 
 
 	function html(){
-		$email_id = get_query_var( 'spemail' );
+		$email_id = SPNL()->validate->int( get_query_var( 'spemail' ) );
 		global $post;
 		
 		$post = get_post($email_id);

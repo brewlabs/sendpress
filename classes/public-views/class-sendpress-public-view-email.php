@@ -21,11 +21,11 @@ class SendPress_Public_View_Email extends SendPress_Public_View{
 			$email_id = $this->data()->id;
 		} 
 		if(isset($_GET['eid'])){
-			$email_id = base64_decode( $_GET['eid'] );
+			$email_id = SPNL()->validate->int( base64_decode( $_GET['eid'] ) );
 		}
 		// If there's a subscriber ID in the URL, we need to get the subscriber object from it to use for the str_replace below.
 		if(isset($_GET['sid'])) {
-			$subscriber_id = base64_decode( $_GET['sid'] );
+			$subscriber_id =  SPNL()->validate->int( base64_decode( $_GET['sid'] ) );
 		} else {
 			$subscriber_id = 0;
 		}
@@ -43,7 +43,7 @@ class SendPress_Public_View_Email extends SendPress_Public_View{
 	   	$body = $message->html();
 		
 	   	//print_r( $body );
-	   	unset($message);
+	   	unset( $message );
 
 		echo $body; 
 		//echo SendPress_Template::get_instance()->render_html(false, true, $inline );
