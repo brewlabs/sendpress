@@ -1082,6 +1082,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 	static function get_subscriber($subscriberID, $listID = false){
+		global $wpdb;
 		if($listID){
         	$query = "SELECT t1.*, t3.status FROM " .  self::subscriber_table() ." as t1,". self::list_subcribers_table()." as t2,". self::subscriber_status_table()." as t3 " ;
 
@@ -1396,13 +1397,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function get_lists_for_subscriber( $value ) {
 		global $wpdb;
 		$table = SendPress_Data::list_subcribers_table();
-		$result = $wpdb->get_results("SELECT * FROM $table WHERE subscriberID = '$value'");
+		$result = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table WHERE subscriberID = %d", $value));
 		return $result;	
 	}
 	static function get_list_ids_for_subscriber( $value ) {
 		global $wpdb;
 		$table = SendPress_Data::list_subcribers_table();
-		$result = $wpdb->get_results("SELECT listID FROM $table WHERE subscriberID = '$value'");
+		$result = $wpdb->get_results($wpdb->prepare("SELECT listID FROM $table WHERE subscriberID = %d" , $value));
 		return $result;	
 	}
 
@@ -1410,7 +1411,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		global $wpdb;
 		wp_delete_post( $listID, true );
 		$table  = SendPress_Data::list_subcribers_table();
-		$result = $wpdb->query( $wpdb->prepare( "DELETE FROM $table WHERE listID = %d", $listID ) );
+		$result = $wpdb->query( $wpdb->prepare("DELETE FROM $table WHERE listID = %d", $listID ) );
 
 		return $result;
 	}
@@ -1419,7 +1420,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function get_active_list_ids_for_subscriber( $value ) {
 		global $wpdb;
 		$table = SendPress_Data::list_subcribers_table();
-		$result = $wpdb->get_results("SELECT listID FROM $table WHERE subscriberID = '$value' AND status = 2 ");
+		$result = $wpdb->get_results( $wpdb->prepare("SELECT listID FROM $table WHERE subscriberID = %d AND status = 2 ",$value  ));
 		return $result;	
 	}
 
