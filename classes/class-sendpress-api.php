@@ -107,6 +107,8 @@ class SendPress_API {
 		$vars[] = 'format';
 		$vars[] = 'id';
 		$vars[] = 'email';
+		$vars[] = 'to';
+		$vars[] = 'status';
 
 		return $vars;
 	}
@@ -144,15 +146,21 @@ class SendPress_API {
 				$this->missing_auth();
 			}
 			
-		} elseif( !empty( $wp_query->query_vars['spnl-api'] ) && $wp_query->query_vars['spnl-api'] == 'tracker' ){
-			$this->is_valid_request = true;
-			$wp_query->set( 'key', 'public' );
-		
-		} elseif( !empty( $wp_query->query_vars['spnl-api'] ) && $wp_query->query_vars['spnl-api'] == 'system-check' ){
-			$this->is_valid_request = true;
-			$wp_query->set( 'key', 'public' );
-		}
-		else{
+		} elseif( !empty( $wp_query->query_vars['spnl-api'] )  ){
+			$t = $wp_query->query_vars['spnl-api'] == 'tracker';
+			switch( $query_mode ) :
+				case 'tracker':
+				case 'system-check':
+				case 'elastic':
+					$this->is_valid_request = true;
+					$wp_query->set( 'key', 'public' );
+				break;
+				default:
+					$this->missing_auth();
+				break;
+			endswitch;
+
+		} else{
 			$this->missing_auth();
 		}
 		
@@ -248,8 +256,6 @@ class SendPress_API {
 
 				break;
 			case 'errors' :
-			
-				
 				$type = isset( $wp_query->query_vars['type'] )   ? $wp_query->query_vars['type']   : null;
 				if($type == 'public'){ $type = "errors"; }
 				$data = $this->get_errors( $type );
@@ -267,37 +273,13 @@ class SendPress_API {
 				) );
 
 				break;
-
-			case 'products' :
-
-				$product = isset( $wp_query->query_vars['product'] )   ? $wp_query->query_vars['product']   : null;
-
-				$data = $this->get_products( $product );
+			case 'elastic' :
+				$to =  isset( $wp_query->query_vars['to'] ) ? $wp_query->query_vars['to']      : null ;
+				$status =  isset( $wp_query->query_vars['status'] ) ? $wp_query->query_vars['status']      : null ;
+				$data = $this->elastic_bounce( $to , $status );
 
 				break;
-
-			case 'customers' :
-
-				$customer = isset( $wp_query->query_vars['customer'] ) ? $wp_query->query_vars['customer']  : null;
-
-				$data = $this->get_customers( $customer );
-
-				break;
-
-			case 'sales' :
-
-				$data = $this->get_recent_sales();
-
-				break;
-
-			case 'discounts' :
-
-				$discount = isset( $wp_query->query_vars['discount'] ) ? $wp_query->query_vars['discount']  : null;
-
-				$data = $this->get_discounts( $discount );
-
-				break;
-
+			
 		endswitch;
 
 		// Allow extensions to setup their own return data
@@ -605,6 +587,10 @@ class SendPress_API {
 					'url' => isset( $wp_query->query_vars['url'] ) ? $wp_query->query_vars['url'] : null
 				) );
 		*/
+	}
+
+	public function elastic_bounce( $email , $status ){
+
 	}
 
 
