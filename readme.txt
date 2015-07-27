@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 4.2.2
-Stable tag: 1.2.7.26
+Stable tag: 1.2.7.27
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.2.7.26 - 2015.7.26 =
+* Fix: Signup widget
+* Update: add signup tracker to emails sent out
+* Update: add ability to validate hex codes 
 
 = 1.2.7.26 - 2015.7.26 =
 * Fix: Import CSV not loading correctly
@@ -709,6 +714,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.2.7.27 =
+Subscriber Signup update to use tracker
 
 = 1.2.7.26 =
 CSV Import fix and template updates
