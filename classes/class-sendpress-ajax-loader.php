@@ -258,18 +258,25 @@ class SendPress_Ajax_Loader {
 
 	function sync_list() {
 		$this->verify_ajax_call();
-		$listid = isset( $_POST['listid'] ) ? $_POST['listid'] : 0;
-		$offset = isset( $_POST['offset'] ) ? $_POST['offset'] : 0;
+		$listid = isset( $_POST['listid'] ) ? SPNL()->validate->int( $_POST['listid'] ) : 0;
+		$offset = isset( $_POST['offset'] ) ? SPNL()->validate->int( $_POST['offset'] ) : 0;
 		$role   = get_post_meta( $listid, 'sync_role', true );
 		$load   = SendPress_Option::get( 'sync-per-call', 250 );
-		if ( $role != 'meta' ) {
-			$blogusers = get_users( 'role=' . $role . '&number=' . $load . '&offset=' . $offset );
+		
+		$custom = apply_filters('spnl-role-sync-get-user-args', false , $listid , $offset_for_this_run , $number_to_sync_at_once , $role );
+		if($custom !== false){
+			$blogusers = get_users( $custom );
 		} else {
-			$meta_key     = get_post_meta( $listid, 'meta-key', true );
-			$meta_value   = get_post_meta( $listid, 'meta-value', true );
-			$meta_compare = get_post_meta( $listid, 'meta-compare', true );
-			$blogusers    = get_users( 'meta_key=' . $meta_key . '&meta_value=' . $meta_value . '&meta_compare=' . $meta_compare . '&number=' . $load . '&offset=' . $offset );
+			if ( $role != 'meta' ) {
+				$blogusers = get_users( 'role=' . $role . '&number=' . $load . '&offset=' . $offset );
+			} else {
+				$meta_key     = get_post_meta( $listid, 'meta-key', true );
+				$meta_value   = get_post_meta( $listid, 'meta-value', true );
+				$meta_compare = get_post_meta( $listid, 'meta-compare', true );
+				$blogusers    = get_users( 'meta_key=' . $meta_key . '&meta_value=' . $meta_value . '&meta_compare=' . $meta_compare . '&number=' . $load . '&offset=' . $offset );
+			}
 		}
+
 		$email_list = array();
 		foreach ( $blogusers as $user ) {
 			SendPress_Data::update_subscriber_by_wp_user( $user->ID, array( 'email'     => $user->user_email,
