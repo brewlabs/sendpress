@@ -14,7 +14,7 @@ class SendPress_Security{
 		if( in_array($page, $this->_adminpage) ){
 			return $page;
 		} else {
-			return 'sp-overview';
+			return false;
 		}
 	}
 
