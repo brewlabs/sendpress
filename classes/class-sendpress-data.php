@@ -876,7 +876,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		$listid = SPNL()->validate->int( $listid );
 
-		$query_get = "SELECT subscriberID FROM ". SendPress_Data::subscriber_table(). " WHERE email in ('".implode("','", sanitize_text_field($emails) )."')";
+		$query_get = "SELECT subscriberID FROM ". SendPress_Data::subscriber_table(). " WHERE email in ('".implode("','", $emails )."')";
 		$data = $wpdb->get_results($query_get);
 	
 		$query_update_status ="INSERT IGNORE INTO ". SendPress_Data::list_subcribers_table(). "(subscriberID,listID,status,updated ) VALUES ";
