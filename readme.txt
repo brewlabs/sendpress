@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 4.2.2
-Stable tag: 1.2.7.27
+Stable tag: 1.2.7.29
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,7 +99,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
-= 1.2.7.26 - 2015.7.26 =
+= 1.2.7.29 - 2015.7.29 =
+* New: custom filter for list syncing - spnl-role-sync-get-user-args
+* Fix: Security update causeing files to load on non SendPress pages
+* Fix: List sync not pulling all WordPress users
+
+= 1.2.7.27 - 2015.7.27 =
 * Fix: Signup widget
 * Update: add signup tracker to emails sent out
 * Update: add ability to validate hex codes 
@@ -714,6 +719,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.2.7.29 =
+Update list sync with custom filter
 
 = 1.2.7.27 =
 Subscriber Signup update to use tracker
