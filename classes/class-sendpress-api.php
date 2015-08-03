@@ -147,8 +147,8 @@ class SendPress_API {
 			}
 			
 		} elseif( !empty( $wp_query->query_vars['spnl-api'] )  ){
-			$t = $wp_query->query_vars['spnl-api'] == 'tracker';
-			switch( $query_mode ) :
+			$t = $wp_query->query_vars['spnl-api'];
+			switch( $t ) :
 				case 'tracker':
 				case 'system-check':
 				case 'elastic':
