@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
 Requires at least: 3.7
 Tested up to: 4.2.2
-Stable tag: 1.2.7.29
+Stable tag: 1.2.8.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.2.8.3 - 2015.8.3 =
+*Fix: Missing $wpdb when using prepare
+*Fix: Links not always tracked properly
+*Update: Add Subscriber Screen
 
 = 1.2.7.29 - 2015.7.29 =
 * New: custom filter for list syncing - spnl-role-sync-get-user-args
@@ -719,6 +724,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.2.8.3 =
+Bug fixes and some UI updates
 
 = 1.2.7.29 =
 Update list sync with custom filter
