@@ -1533,6 +1533,7 @@ class SendPress {
 
 
 	function getUrl( $report, $url ) {
+		global $wpdb;
 		$table  = SendPress_Data::report_url_table();
 		$result = $this->wpdbQuery( $wpdb->prepare( "SELECT * FROM $table WHERE reportID = %d AND url = %s ", $report, $url ), 'get_results' );
 
@@ -1541,6 +1542,7 @@ class SendPress {
 
 
 	function get_opens_unique_count( $rid ) {
+		global $wpdb;
 		$table  = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery( $wpdb->prepare( "SELECT COUNT( DISTINCT subscriberID ) FROM $table WHERE reportID = %d AND type = 'open';", $rid ), 'get_var' );
 
@@ -1548,6 +1550,7 @@ class SendPress {
 	}
 
 	function get_opens_unique( $rid ) {
+		global $wpdb;
 		$table  = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery( $wpdb->prepare( "SELECT * FROM $table WHERE reportID = %d AND type = 'open' GROUP BY subscriberID ORDER BY eventID DESC; ", $rid ), 'get_results' );
 
@@ -1555,6 +1558,7 @@ class SendPress {
 	}
 
 	function get_opens( $rid ) {
+		global $wpdb;
 		$table  = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery( $wpdb->prepare( "SELECT * FROM $table WHERE reportID =  %d AND type = 'open'  ORDER BY eventID DESC;", $rid ), 'get_results' );
 
@@ -1562,6 +1566,7 @@ class SendPress {
 	}
 
 	function get_opens_count( $rid ) {
+		global $wpdb;
 		$table  = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery( $wpdb->prepare( "SELECT COUNT(1) as count FROM $table WHERE reportID = %d AND type = 'open';", $rid ), 'get_var' );
 
@@ -1569,6 +1574,7 @@ class SendPress {
 	}
 
 	function get_clicks_unique_count( $rid ) {
+		global $wpdb;
 		$table  = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery( $wpdb->prepare( "SELECT COUNT( DISTINCT subscriberID )  FROM $table WHERE reportID =  %d AND type = 'click';", $rid ), 'get_var' );
 
@@ -1576,6 +1582,7 @@ class SendPress {
 	}
 
 	function get_clicks_unique( $rid ) {
+		global $wpdb;
 		$table  = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery( $wpdb->prepare( "SELECT * FROM $table WHERE reportID = %d AND type = 'click' GROUP BY subscriberID ORDER BY eventID DESC;", $rid ), 'get_results' );
 
@@ -1583,6 +1590,7 @@ class SendPress {
 	}
 
 	function get_clicks( $rid ) {
+		global $wpdb;
 		$table  = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery( $wpdb->prepare( "SELECT * FROM $table WHERE reportID = %d AND type = 'click'  ORDER BY eventID DESC;", $rid ), 'get_results' );
 
@@ -1590,6 +1598,7 @@ class SendPress {
 	}
 
 	function get_clicks_count( $rid ) {
+		global $wpdb;
 		$table  = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery( $wpdb->prepare( "SELECT COUNT(1) FROM $table WHERE reportID = %d AND type = 'click';", $rid ), 'get_var' );
 
@@ -1597,6 +1606,7 @@ class SendPress {
 	}
 
 	function get_clicks_and_opens( $rid ) {
+		global $wpdb;
 		$table  = SendPress_Data::subscriber_event_table();
 		$result = $this->wpdbQuery( $wpdb->prepare( "SELECT * FROM $table WHERE reportID = %d ORDER BY eventID DESC;", $rid ), 'get_results' );
 
