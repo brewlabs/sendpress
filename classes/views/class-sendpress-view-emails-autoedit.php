@@ -97,6 +97,7 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
 <select name="sp-autoresponder-type" id="params-auto" >
 <option value="subscribe"  <?php if($options['type']== 'subscribe' ){ echo "selected"; } ?> ><?php _e('When someone subscribes to the list','sendpress'); ?>...</option>
 <option value="user-new" <?php if($options['type']== 'user-new' ){ echo "selected"; } ?> ><?php _e('When a new WordPress user is added to your site','sendpres'); ?>...</option>
+<option value="user-click" <?php if($options['type']== 'user-click' ){ echo "selected"; } ?> ><?php _e('When a subscriber clicks a link','sendpres'); ?>...</option>
 </select>
 <select name="" id="params-list">
 <?php

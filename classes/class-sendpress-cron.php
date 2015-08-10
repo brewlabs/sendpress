@@ -60,6 +60,7 @@ class SendPress_Cron {
                 } else {
                     SPNL()->log->prune_logs();
                     SendPress_Data::clean_queue_table();
+                    SendPress_DB_Tables::repair_tables();
                     //SendPress_Logging::prune_logs();
                     $bg = 1;
                 }

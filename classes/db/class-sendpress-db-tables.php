@@ -402,6 +402,17 @@ class SendPress_DB_Tables {
         }
 
 
+        static function repair_tables(){
+            global $wpdb;
+             $subscriber_table = SendPress_DB_Tables::subscriber_table();
+             $subscriber_queue = SendPress_DB_Tables::queue_table();
+             
+             $wpdb->query("REPAIR TABLE  $subscriber_queue, $subscriber_table");
+
+             SPNL()->db->subscribers_tracker->repair_table();
+        }
+
+
 
     static function install(){
 

@@ -143,11 +143,8 @@ function _spnl_die_handler() {
 /**
  * Wrapper function for wp_die(). This function adds filters for wp_die() which
  * kills execution of the script using wp_die(). This allows us to then to work
- * with functions using edd_die() in the unit tests.
+ * with functions using spnl_die() in the unit tests.
  *
- * @author Sunny Ratilal
- * @since 1.6
- * @return void
  */
 function spnl_die( $message = '', $title = '', $status = 400 ) {
 	add_filter( 'wp_die_ajax_handler', '_spnl_die_handler', 10, 3 );

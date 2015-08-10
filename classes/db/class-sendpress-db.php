@@ -272,4 +272,9 @@ abstract class SendPress_DB {
 		return true;
 	}
 
+	public function repair_table(){
+	    global $wpdb;
+	    $wpdb->query("REPAIR TABLE  $this->table_name");
+	}
+
 }

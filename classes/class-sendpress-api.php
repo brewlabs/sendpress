@@ -236,6 +236,10 @@ class SendPress_API {
 			define( 'SPNL_DOING_API', true );
 		}
 
+		ignore_user_abort(true);
+
+		ini_set('max_execution_time',600);
+		
 		// Determine the kind of query
 		$query_mode = $this->get_query_mode();
 
@@ -674,7 +678,7 @@ class SendPress_API {
 			case 'json' :
 
 				header( 'Content-Type: application/json' );
-				if ( ! empty( $this->pretty_print ) )
+				if ( ! empty( $this->pretty_print ) && (strnatcmp(phpversion(),'5.4') >= 0) )
 					echo json_encode( $this->data, $this->pretty_print );
 				else
 					echo json_encode( $this->data );
