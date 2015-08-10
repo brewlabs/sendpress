@@ -27,7 +27,6 @@ class SendPress_Widget_Signup extends WP_Widget {
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'sendpress-widget' );
 
 		/* Create the widget. */
-		//$this->WP_Widget( 'sendpress-widget', __('SendPress Signup', 'sendpress'), $widget_ops, $control_ops );
 
 		parent::__construct(
 	            'sendpress-widget', // Base ID

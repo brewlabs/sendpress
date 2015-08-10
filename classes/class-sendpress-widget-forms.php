@@ -27,7 +27,6 @@ class SendPress_Widget_Forms extends WP_Widget {
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'sendpress-forms-widget' );
 
 		/* Create the widget. */
-		//$this->WP_Widget( 'sendpress-forms-widget', __('SendPress Forms', 'sendpress'), $widget_ops, $control_ops );
 		parent::__construct(
             'sendpress-forms-widget', // Base ID
     	    __('SendPress Forms', 'sendpress'), // Name
