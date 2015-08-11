@@ -282,21 +282,8 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
   <div id="sendbar-inner" class="progress-bar"
        style="width: 40%;"></div>
 </div>
-	<?php _e('Sent','sendpress'); ?> <span id="queue-sent">-</span> <?php _e('of','sendpress');?> <span id="queue-total">-</span> <?php _e('emails','sendpress'); ?>.<br>
-	<?php _e('You are currently sending 1 email approximately every','sendpress'); ?> <?php 
-	$hour = SendPress_Option::get('emails-per-hour');
-	if($hour != 0){
-	$rate = 3600 / $hour; 
-	if($rate > 8){
-			$rate = 8;
-		}
-	} else {
-		$rate = "0.25";
-	}
-
-	echo $rate;
-
-	?> <?php _e('seconds','sendpress'); ?>.<br>
+	<span id="queue-sent">-</span> <?php _e('of','sendpress');?> <span id="queue-total">-</span> <?php _e('emails left to send','sendpress'); ?>.<br>
+	<br>
 	<?php _e('You are also limited to','sendpress'); ?> <?php echo $hour; ?> <?php _e('emails per hour','sendpress'); ?>.<br>
 	<?php _e('To change these settings go to','sendpress'); ?> <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>"> <?php _e('Settings','sendpress'); ?> > <?php _e('Sending Account','sendpress'); ?></a>.
   </div>

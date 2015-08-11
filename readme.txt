@@ -1,40 +1,60 @@
 === SendPress Newsletters ===
 Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
-Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill
+Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
-Tested up to: 4.2.2
-Stable tag: 1.2.8.3
+Tested up to: 4.3
+Stable tag: 1.2.8.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easy to use Email Newsletter Plugin for WordPress to create, send, manage and track your Newsletters.
+A Newsletter Plugin for WordPress to create, send, manage and track your Newsletters in one place. 
 
 == Description ==
 
-SendPress is an easy to use WordPress newsletter plugin that has all the features you need. Create newsletter templates with your style and edit content just like you would a post in WordPress. Easily import post content from your site and schedule newsletters to be sent at the right time. Start sending great emails and newsletters today right from WordPress with our newsletter plugin. 
+SendPress Newsletters is an easy to use WordPress newsletter plugin that has all the features you need. Create newsletter templates with your style and edit content just like you would a post in WordPress. Easily import post content from your site and schedule newsletters to be sent at the right time. Start sending great emails and newsletters today right from WordPress with our newsletter plugin. 
+
+= Newsletter Features =
+
+* **Unlimited Subscribers**
+* **Unlimited Responsive Newsletters** with tracking
+* Simple editor. With an **code-free experience**
+* Customizable **subscription widget**, **page** or **custom form**
+* Sync WordPress roles to newsletter subscriber lists
+* **Single** And **Double Opt-In**
+* Html and Text versions of Newsletters 
+* **Customizable Newsletter Templates** with easy to use theme styler
+* Stat tracking for each email: clicks, opens and unsubscribes. 
+* Send with your web host or Gmail for free
+* Verified compatible with: [Postman SMTP Mailer/Email Log](https://wordpress.org/plugins/postman-smtp/)
+* **Scheduled Sending** of newsletters
+
+= Auto Cron =
+
+We help make sure your newsletters are sent. You can enable Auto Cron from the admin panel and then our systems will check your site every 15 minutes to make sure your newsletters are sent. Check out our knowledge base article [What is AutoCron?](http://docs.sendpress.com/article/65-what-is-autocron) for more info.
+
 
 = Check out our 2 minute run through video =
 
 http://vimeo.com/56978344
 
-Features of the plugin include:
+= SendPress Newsletters Pro Features =
 
-* Simple editor. With an html-free experience
-* Easy to use theme styler with ability to create a default style
-* Stat tracking for each email: clicks, opens and unsubscribes. Bounce handling and report details with [SendPress Pro](https://sendpress.com/).
-* Add a subscription form as a sidebar widget or in your pages
-* Send with your web host or Gmail for free (Mandrill, Sendgrid, Amazon SES and more with PRO).
-* Scheduled Sending of emails
-* Sync Lists to WordPress Roles
-
-More information at [SendPress.com](https://sendpress.com/).
+* **API Sending** for Mandrill, Sendgrid, Mailgun and Elastic Email
+* Automated **Bounce handling** 
+* Advanced report details ( see clicked links and subscriber details )
+* **Custom HTML Templates** use any newsletter template you want
+* Campaign Tracking: **Google Analytics**, KissMetrics, etc…
+* Check your **spam** score ( Spamassasin )
+* 1 Year of updates and Premium Support
 
 = Support =
 
-Please check out our Docs site [http://docs.sendpress.com/](http://docs.sendpress.com/) if you need help with anything. Also feel free to post to the WordPress support forum.
+Please check out our Docs site [http://docs.sendpress.com/](http://docs.sendpress.com/) if you need help with anything or our [WordPress Forum](https://wordpress.org/support/plugin/sendpress).
 
-**Follow this plugin on [Git Hub](https://github.com/brewlabs/sendpress)**
+Pro customers have direct access to our ticket system via [Your Account](https://sendpress.com/your-account/) page on SendPress.com.
+
+**Follow [SendPress Newsletters on GitHub](https://github.com/brewlabs/sendpress)**
 
 == Installation ==
 
@@ -62,11 +82,11 @@ Please check out our Docs site [http://docs.sendpress.com/](http://docs.sendpres
 
 = Getting a 404 error? =
 
-To get rid of the 404 error when viewing an email, you need to resave your permalink structure. Go to Settings > Permalinks and click "Save Changes".
+To get rid of the 404 error when viewing an email, you need to re-save your permalink structure. Go to Settings > Permalinks and click "Save Changes".
 
 = How do I test Beta releases? =
 
-We only recommend you do this only in a test enviroment. You can get the [SendPress Beta Tester Plugin](https://github.com/brewlabs/sendpress-beta-tester) from GitHub. This will pull the most recent code from github using the WordPress updater.
+We only recommend you do this only in a test environment. You can get the [SendPress Beta Tester Plugin](https://github.com/brewlabs/sendpress-beta-tester) from GitHub. This will pull the most recent code from Github using the WordPress updater.
 
 
 = How do you contact us? =
@@ -74,7 +94,6 @@ We only recommend you do this only in a test enviroment. You can get the [SendPr
 Main Site: [https://sendpress.com](https://sendpress.com)
 
 Twitter: [@sendpress](http://twitter.com/sendpress)
-
 
 
 == Screenshots ==
@@ -99,14 +118,21 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.2.8.9 - 2015.8.10 =
+* Update: Ready for WordPress 4.3
+* Update: add option to repair db tables
+* Update: Updated all reports to new stats
+* Fix: Email sending count
+* New: Basic system check
+
 = 1.2.8.3 - 2015.8.3 =
-*Fix: Missing $wpdb when using prepare
-*Fix: Links not always tracked properly
-*Update: Add Subscriber Screen
+* Fix: Missing $wpdb when using prepare
+* Fix: Links not always tracked properly
+* Update: Add Subscriber Screen
 
 = 1.2.7.29 - 2015.7.29 =
 * New: custom filter for list syncing - spnl-role-sync-get-user-args
-* Fix: Security update causeing files to load on non SendPress pages
+* Fix: Security update causing files to load on non SendPress pages
 * Fix: List sync not pulling all WordPress users
 
 = 1.2.7.27 - 2015.7.27 =
@@ -132,10 +158,10 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * Update: Pro post notification list setup
 * Update: Translation files
 * New: Linked plugin to http://wp-translations.org/
-* Pro: Elastive Email module
+* Pro: Elastic Email module
 * Fix: email tracker in gmail not always getting stats
 * Fix: slow link tracker response to click
-* Fix: Various spelling and missing tranlated text
+* Fix: Various spelling and missing translated text
 
 = 1.1.7.14 - 2015.7.14 =
 * Update: Language Translations
@@ -164,7 +190,7 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * New: User Meta Query SYNC for lists
 
 = 1.1.5.4 - 2015.5.4 =
-* Fix: Update redirects causing premission issue
+* Fix: Update redirects causing permission issue
 * Fix: Removed unused vars
 * Fix: Small bug fixes
 
@@ -184,16 +210,16 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * Fix: error_log call removed
 
 = 1.1.4.2 - 2015.4.3 =
-* Beta: Overide header and footer when editing email
+* Beta: Override header and footer when editing email
 * Update: Added links to new docs site
-* Update: sp-recent-posts resposive email support
+* Update: sp-recent-posts responsive email support
 * Update: Confirmation email uses new templates
 * Update: Query to calculate total sent
 * New: System Starter email Template
 * Pro: Run shortcodes on custom templates
 
 = 1.1.3.17 - 2015.3.17 =
-* Fix: Manange Page and Shortcode
+* Fix: Manage Page and Shortcode
 
 = 1.1.3.10.1 - 2015.3.10 =
 * Fix: Some Ajax calls not working on Front End
@@ -204,7 +230,7 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * Fix: Optimized subscriber tables
 * Fix: SP edit button on visual editor
 * Update: Better Stat Notification Query
-* Update: Ajax subscribe call return status for existing subscibers
+* Update: Ajax subscribe call return status for existing subscribers
 
 
 = 1.1.2.25 - 2015.2.25 =
@@ -252,12 +278,12 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * Fix: Whats new page showing more then it should
 
 = 1.0.12.10 - 2014.12.10 =
-* Fix: dont track links starting with #
+* Fix: don't track links starting with #
 * Fix: pro custom templates not loading 
 * Fix: SSL error on template style page
 * Fix: Multiple templates created in some cases
 * Fix: Moved update script to admin init and check user permissions first
-* Fix: Update dwidget code to prevent broken widgets page
+* Fix: Update widget code to prevent broken widgets page
 * Fix: Changed plugin widget loader
 
 
@@ -289,9 +315,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 
 
 = 1.0 - 2014.9.5 =
-* Fix: Mising variables in cron
+* Fix: Missing variables in cron
 * Update: Pro table easier to use
-* Update: Better style inliner
+* Update: Better style in-liner
 * New: Email tag system
 * New: Form builder/Widget
 * New: Responsive Templates
@@ -312,7 +338,7 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 
 = 0.9.9.9.6 - 2014.7.22 =
 * Fix: sending stoping at random points
-* Fix: Linebreaks not formated correctly
+* Fix: Line breaks not formatted correctly
 
 = 0.9.9.9.5 - 2014.7.21 =
 * Fix: Blank email sending
@@ -333,7 +359,7 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * New: Overview has preview of Pro Charts 2.0
 
 = 0.9.9.9.2 - 2014.5.21 =
-* Fix: requeue all emails fixed
+* Fix: re-queue all emails fixed
 * Fix: UI display issues
 * Fix: Overview subscriber count
 
@@ -355,7 +381,7 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 
 = 0.9.9.8 - 2014.4.15 =
 * Fix: Import changing status of users
-* Fix: Import not check for valid csv
+* Fix: Import not check for valid .CSV
 * Fix: ob_start in shortcode (fixes broken front-ends)
 * Fix: Pro key management
 
@@ -366,7 +392,7 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * Fix: List Sync not updating all users
 * Fix: multiple sptemplates being created on some hosts
 * New: Duplicate template check added to Advanced Settings
-* Update: Trvix CLI tests updated
+* Update: Travis CLI tests updated
 * Update: Pro installer should always use SSL
  
 
@@ -387,7 +413,7 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * Fix: Saving Sending Account
 * Fix: Social Icon sorting 
 * Fix: Converted all SendPress API calls to SSL
-* New: App.net Socail Icon
+* New: App.net Social Icon
 * New: SendPress Pro update reminder
 * New: Set add Emails to Queue Ajax call count
 
@@ -455,7 +481,7 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 
 = 0.9.8 - 2014.1.29 =
 * Fix: Pro Activation
-* Fix: Reque Buttons fixed
+* Fix: Re-queue Buttons fixed
 * New: Admin UI Upgrade
 * New: New Overview Page
 
@@ -724,6 +750,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.2.8.10 =
+WordPress 4.3 Compatibility updates
 
 = 1.2.8.3 =
 Bug fixes and some UI updates

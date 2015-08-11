@@ -551,10 +551,10 @@
         batchsent: function(response){
             response = $.parseJSON(response);
             if( response != undefined && parseInt(response.queue) > 0 && response.limit === false ){
-                spadmin.queue.count = spadmin.queue.total - parseInt(response.queue);
+                spadmin.queue.count = parseInt(response.queue);
                 var $qt =$("#queue-sent");
                 $qt.html(spadmin.queue.count);
-                $p = parseInt( spadmin.queue.count / spadmin.queue.total * 100 );
+                $p = parseInt(  (spadmin.queue.total - spadmin.queue.count) / spadmin.queue.total * 100 );
                 $('#sendbar-inner').css('width', $p+'%');
 
                 spadmin.queue.sendbatch();

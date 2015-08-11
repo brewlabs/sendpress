@@ -39,9 +39,24 @@ class SendPress_View {
 		
 		?>
 		<div class="sp-footer">
-			<a href="<?php echo SendPress_Admin::link('Help_Whatsnew'); ?>">What's New</a> | <a href="http://docs.sendpress.com/" target="_blank">Knowledge Base</a> | <a href="http://sendpress.uservoice.com/" target="_blank">Feedback</a> | SendPress Version: <?php echo SENDPRESS_VERSION; ?> 
+			<a href="<?php echo SendPress_Admin::link('Help_Whatsnew'); ?>">What's New</a> | <a href="http://docs.sendpress.com/" target="_blank">Knowledge Base</a> | <a href="http://sendpress.uservoice.com/" target="_blank">Feedback</a> | SendPress Version: <?php echo SENDPRESS_VERSION; ?> | System <span id="sendpress-system-icon" class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
 		</div>
-
+		<?php
+			$url = home_url( '/' );
+		?>	
+		<script>
+			jQuery(function() {
+				jQuery.getJSON( "<?php echo $url ; ?>spnl-api/system-check", function( data ) {
+					if(data.status){
+						if(data.status === "active"){
+							jQuery("#sendpress-system-icon").addClass("glyphicon-ok-sign").removeClass("glyphicon-remove-sign").css("color","#5cb85c");
+						} else {
+							jQuery("#sendpress-system-icon").removeClass("glyphicon-ok-sign").addClass("glyphicon-remove-sign").css("color","#d9534f");
+						}
+					}
+				});
+			});
+		</script>
 
 		<!-- src/templates/metabox.templ.php  -->
  
