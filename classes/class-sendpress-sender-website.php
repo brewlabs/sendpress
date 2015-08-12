@@ -96,6 +96,8 @@ class SendPress_Sender_Website extends SendPress_Sender {
 		$this->report_id = $report_id;
 
 		add_filter( 'phpmailer_init' , array( $this , 'wpmail_init' ) , 90 );
+
+		$headers = array('Content-Type: text/html; charset=UTF-8');
 		
 		$r = wp_mail($to, $subject, $html, $headers);
 		
