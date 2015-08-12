@@ -95,13 +95,20 @@ class SendPress_Sender_Website extends SendPress_Sender {
 		$this->list_id = $list_id;
 		$this->report_id = $report_id;
 
-		add_filter( 'phpmailer_init' , array( $this , 'wpmail_init' ) , 90 );
+		//add_filter( 'phpmailer_init' , array( $this , 'wpmail_init' ) , 90 );
 
-		$headers = array('Content-Type: text/html; charset=UTF-8');
+		$headers = array(
+			'Content-Type: text/html; charset=' . SendPress_Option::get('email-charset','UTF-8'), 
+			'X-SP-LIST: ' . $this->list_id . ';',
+			'X-SP-REPORT: ' . $this->report_id . ';',
+			'X-SP-SUBSCRIBER: '. $this->sid . ';',
+			'X-SP-METHOD: website wp_mail',
+			'From: '. SendPress_Option::get('fromname') .' <'.SendPress_Option::get('fromemail').'>';
+			 );
 		
 		$r = wp_mail($to, $subject, $html, $headers);
 		
-		remove_filter( 'phpmailer_init' , array( $this , 'wpmail_init' ) , 90 );
+		//remove_filter( 'phpmailer_init' , array( $this , 'wpmail_init' ) , 90 );
 
 		return $r;
 	}
