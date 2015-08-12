@@ -103,7 +103,7 @@ class SendPress_Sender_Website extends SendPress_Sender {
 			'X-SP-REPORT: ' . $this->report_id . ';',
 			'X-SP-SUBSCRIBER: '. $this->sid . ';',
 			'X-SP-METHOD: website wp_mail',
-			'From: '. SendPress_Option::get('fromname') .' <'.SendPress_Option::get('fromemail').'>';
+			'From: '. SendPress_Option::get('fromname') .' <'.SendPress_Option::get('fromemail').'>'
 			 );
 		
 		$r = wp_mail($to, $subject, $html, $headers);
