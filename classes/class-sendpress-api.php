@@ -289,8 +289,10 @@ class SendPress_API {
 		// Allow extensions to setup their own return data
 		$this->data = apply_filters( 'spnl_api_output_data', $data, $query_mode, $this );
 
-		// Log this API request, if enabled. We log it here because we have access to errors.
-		//$this->log_request( $this->data );
+		if($query_mode != "system-check"){
+			// Log this API request, if enabled. We log it here because we have access to errors.
+			$this->log_request( $this->data );
+		}
 
 		// Send out data to the output function
 		$this->output();
@@ -578,11 +580,11 @@ class SendPress_API {
 		}
 
 
-		SPNL()->db->subscribers_url->add_update( array('subscriber_id'=> $sid, 'email_id' => $report_id, 'url_id' => $id  ) );
+		$add_update = SPNL()->db->subscribers_url->add_update( array('subscriber_id'=> $sid, 'email_id' => $report_id, 'url_id' => $id  ) );
 
-		SPNL()->db->subscribers_tracker->open( $report_id , $sid , 2 );
+		$open = SPNL()->db->subscribers_tracker->open( $report_id , $sid , 2 );
 
-		return true;
+		return ($add_update && $open) ? true : false;
 		/*
 		$data = $this->track_stats( array(
 					'type'      => isset( $wp_query->query_vars['type'] )      ? $wp_query->query_vars['type']      : null,
@@ -605,10 +607,10 @@ class SendPress_API {
 
 		global $spnl_logs, $wp_query;
 
-		$query = array(
-			'spnl-api'     => $wp_query->query_vars['spnl-api'],
-			'key'         => $wp_query->query_vars['key'],
-			'token'       => $wp_query->query_vars['token'],
+		$info = array(
+			'spnl-api'     => isset( $wp_query->query_vars['spnl-api'] ) ?$wp_query->query_vars['spnl-api'] : '' ,
+			'key'         => isset( $wp_query->query_vars['key'] ) ?$wp_query->query_vars['key'] : '' ,
+			'token'       => isset( $wp_query->query_vars['token'] ) ? $wp_query->query_vars['token'] : '' ,
 			'query'       => isset( $wp_query->query_vars['query'] )       ? $wp_query->query_vars['query']       : null,
 			'type'        => isset( $wp_query->query_vars['type'] )        ? $wp_query->query_vars['type']        : null,
 			'date'        => isset( $wp_query->query_vars['date'] )        ? $wp_query->query_vars['date']        : null,
@@ -616,22 +618,19 @@ class SendPress_API {
 			'enddate'     => isset( $wp_query->query_vars['enddate'] )     ? $wp_query->query_vars['enddate']     : null,
 			'id'          => isset( $wp_query->query_vars['id'] )          ? $wp_query->query_vars['id']          : null,
 			'email'       => isset( $wp_query->query_vars['email'] )       ? $wp_query->query_vars['email']       : null,
+			'url'       => isset( $wp_query->query_vars['url'] )       ? $wp_query->query_vars['url']       : null,
 		);
 
+		$info['data'] =  $data;
 		$log_data = array(
 			'log_type'     => 'api_request',
-			'post_excerpt' => http_build_query( $query ),
-			'post_content' => ! empty( $data['error'] ) ? $data['error'] : '',
+			'post_content' => json_encode( $info ),
+			'post_title' => 'API Action '. $info['spnl-api']
 		);
 
-		$log_meta = array(
-			'request_ip' => "",
-			'user'       => $this->user_id,
-			'key'        => $wp_query->query_vars['key'],
-			'token'      => $wp_query->query_vars['token']
-		);
+		$log_meta = array();
 
-		$spnl_logs->insert_log( $log_data, $log_meta );
+		SPNL()->log->insert_log( $log_data , $log_meta );
 	}
 
 

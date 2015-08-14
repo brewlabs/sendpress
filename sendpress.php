@@ -244,6 +244,7 @@ class SendPress {
 	}
 
 	public static function get_instance() {
+		
 		if ( ! isset( self::$instance ) && ! ( self::$instance instanceof SendPress ) ) {
 			self::$instance                          = new SendPress;
 			self::$instance->template_tags           = new SendPress_Template_Tags();
@@ -660,10 +661,6 @@ class SendPress {
 		do_action( 'sendpress_custom_post_types_created', $this );
 	}
 
-
-	function SendPress() {
-		//$this->_templates = $this->get_templates();
-	}
 
 	function create_color_picker( $value ) { ?>
 		<input class="cpcontroller " data-id="<?php echo $value['id']; ?>" css-id="<?php echo $value['css']; ?>"

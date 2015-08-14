@@ -96,14 +96,25 @@ class SendPress_Sender_Website extends SendPress_Sender {
 		$this->report_id = $report_id;
 
 		//add_filter( 'phpmailer_init' , array( $this , 'wpmail_init' ) , 90 );
+		$link2 = array(
+								"id"=>$sid,
+								"report"=> $list_id,
+								"view"=>"tracker",
+								"url" => "{sp-unsubscribe-url}"
+							);
 
+
+
+							$code2 = SendPress_Data::encrypt( $link2 );
+							$link2 = SendPress_Manager::public_url($code2);
 		$headers = array(
 			'Content-Type: text/html; charset=' . SendPress_Option::get('email-charset','UTF-8'), 
 			'X-SP-LIST: ' . $this->list_id . ';',
 			'X-SP-REPORT: ' . $this->report_id . ';',
 			'X-SP-SUBSCRIBER: '. $this->sid . ';',
 			'X-SP-METHOD: website wp_mail',
-			'From: '. SendPress_Option::get('fromname') .' <'.SendPress_Option::get('fromemail').'>'
+			'From: '. SendPress_Option::get('fromname') .' <'.SendPress_Option::get('fromemail').'>',
+			'List-Unsubscribe: <'.$link2.'>'
 			 );
 		
 		$r = wp_mail($to, $subject, $html, $headers);

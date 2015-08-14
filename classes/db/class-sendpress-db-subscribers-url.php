@@ -52,7 +52,31 @@ class SendPress_DB_Subscribers_Url extends SendPress_DB {
 	 * @since   1.0
 	*/
 	public function add( $data ) {
+		$data = $this->validate( $data );
+		if($data == false) {
+			return $data;
+		}
 		return $this->insert( $data , 'subscribers_url' );
+
+	}
+
+	public function validate( $data ) {
+		if(	isset($data['email_id']) && isset($data['subscriber_id']) && isset($data['url_id'])  ){
+			$data['email_id'] = SPNL()->validate->int( $data['email_id'] );
+			if( $data['email_id'] == 0){
+				return false;
+			}
+			$data['subscriber_id'] = SPNL()->validate->int( $data['subscriber_id'] );
+			if( $data['subscriber_id'] == 0){
+				return false;
+			}
+			$data['url_id'] = SPNL()->validate->int( $data['url_id'] );
+			if( $data['url_id'] == 0){
+				return false;
+			}
+			return $data;
+		}
+		return false;
 	}
 
 	/**
@@ -63,6 +87,12 @@ class SendPress_DB_Subscribers_Url extends SendPress_DB {
 	*/
 	public function add_update( $data ) {
 		global $wpdb;
+
+		$data = $this->validate( $data );
+		if($data == false) {
+			return $data;
+		}
+
 		if( ( $surl = $this->get_by_all( $data ) ) !== NULL ){
 			if ( false === $wpdb->update( $this->table_name, array('click_count' => $surl->click_count + 1) , $data ) ) {
 				return false;

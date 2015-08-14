@@ -149,7 +149,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 			</tr>
 			<?php 
 		global $post;
-		$args = array( 'post_type' => 'sendpress_list','post_status' => array('publish','draft'),'posts_per_page' => 100, 'order'=> 'ASC', 'orderby' => 'title' );
+		$args = array( 'post_type' => 'sendpress_list','post_status' => array('publish','draft'),'posts_per_page' => 500, 'order'=> 'ASC', 'orderby' => 'title' );
 		$postslist = get_posts( $args );
 		foreach ( $postslist as $post ) :
 		  setup_postdata( $post ); ?> 

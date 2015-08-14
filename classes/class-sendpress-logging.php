@@ -128,7 +128,7 @@ class SendPress_Logging {
 
 	private function log_types() {
 		$terms = array(
-			'sending','error', 'event'
+			'sending','error', 'event','api_request'
 		);
 
 		return apply_filters( $this->log_type , $terms );
@@ -149,16 +149,18 @@ class SendPress_Logging {
 	public function register_post_type() {
 
 		/* logs post type */
-
+		$t = SendPress_Option::get('show_logs', false) ? true : false;
+		
 		$log_args = array(
-			'labels'          => array( 'name' => __( 'Logs', 'sendpress' ) ),
+			'labels'          => array( 'name' => __( 'SPNL Logs', 'sendpress' ) ),
 			'public'          => false,
 			'query_var'       => false,
 			'rewrite'         => false,
-			'show_ui'		  =>false,
+			'show_ui'		  => $t,
 			'capability_type' => 'post',
-			'supports'        => array( 'title', 'editor' ),
-			'can_export'      => false
+			'supports'        => array( 'title', 'editor'),
+			'can_export'      => false,
+			'menu_position'	=> 150
 		);
 		register_post_type( $this->log_post_type , apply_filters( 'spnl_logging_post_type_args', $log_args ) );
 
@@ -270,10 +272,10 @@ class SendPress_Logging {
 
 		// store the log entry
 		$log_id = wp_insert_post( $args );
-error_log('add' . $log_data['log_type']);
+
 		// set the log type, if any
 		if( $log_data['log_type'] && $this->valid_type( $log_data['log_type'] ) ) {
-			error_log('add' . $log_data['log_type']);
+		
 			wp_set_object_terms( $log_id, $log_data['log_type'], $this->log_type, false );
 		}
 

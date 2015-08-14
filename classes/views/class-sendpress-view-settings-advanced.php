@@ -35,6 +35,11 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 			SendPress_Option::set('enable_email_template_edit', false );
 		}
 
+		if(isset( $post['show_logs'] )){
+			SendPress_Option::set('show_logs', true );
+		} else {
+			SendPress_Option::set('show_logs', false );
+		}
 
 
 
@@ -139,8 +144,10 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 				<br><br>
 				<?php $ctype = SendPress_Option::get('enable_email_template_edit'); ?>
 				<input type="checkbox" name="enable_email_template_edit" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> <?php _e('Override email template settings','sendpress'); ?>.
+				<br><br>
+				<?php $ctype = SendPress_Option::get('show_logs'); ?>
+				<input type="checkbox" name="show_logs" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> <?php _e('Show SPNL Logs','sendpress'); ?>.
 				
-
 				</div>
 			</div>
 

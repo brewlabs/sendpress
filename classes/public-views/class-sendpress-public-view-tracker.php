@@ -36,7 +36,6 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 		}
 
 		$args = array(
-		 'timeout' => 0.1,
 		 'blocking' => false,
 		 'headers' => array(),
 		 'sslverify' => false,
@@ -46,7 +45,7 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 		// Parameters as separate arguments
 		$request =  add_query_arg( array( 'email' =>$info->report , 'url' => urlencode( $info->url ) , 'id' => $info->id ), $request );
  
-		wp_remote_get($request, $args);	
+		wp_remote_post($request, $args);	
 
 		if(strrpos( $url, "mailto" ) !== false){
 			header("Location: " . esc_url_raw( $url ) );
