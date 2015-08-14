@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
 Tested up to: 4.3
-Stable tag: 1.2.8.10
+Stable tag: 1.2.8.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+
+= 1.2.8.13 - 2015.8.13 =
+* Update: Link tracker
+* New: SPNL Logger
+* Fix: Issue when using wp_mail for sending
 
 = 1.2.8.9 - 2015.8.10 =
 * Update: Ready for WordPress 4.3
@@ -750,6 +756,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.2.8.13 =
+Send using wp_mail added new logger and link tracker
 
 = 1.2.8.10 =
 WordPress 4.3 Compatibility updates
