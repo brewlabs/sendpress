@@ -23,6 +23,21 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 
 		$url = $info->url;
 		
+		$db_url = SPNL()->db->url;
+
+		$url_in_db = $db_url->get( $url );  //= SendPress_Data::get_url_by_hash( $hash );
+		
+		if ( $url_in_db == false ) {
+			$id = $db_url->add( $url );
+		} else {
+			$id = $url_in_db;
+		}
+
+
+		$add_update = SPNL()->db->subscribers_url->add_update( array('subscriber_id'=>  $info->id, 'email_id' =>$info->report, 'url_id' =>  $id  ) );
+
+		$open = SPNL()->db->subscribers_tracker->open( $info->report , $info->id , 2 );
+
 		switch($info->url){
 			case '{sp-browser-url}':
 				$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Browser_Url::external( $info->url, $info->report , $info->id, false ), $info->report, $info->report, $info->id, false );
@@ -34,7 +49,7 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 				$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Manage_Subscriptions::external( $info->url, $info->report , $info->id, false ), $info->report, $info->report, $info->id, false );
 			break;
 		}
-
+		/*
 		$args = array(
 		 'blocking' => false,
 		 'headers' => array(),
@@ -46,6 +61,9 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 		$request =  add_query_arg( array( 'email' =>$info->report , 'url' => urlencode( $info->url ) , 'id' => $info->id ), $request );
  
 		wp_remote_post($request, $args);	
+		*/
+
+
 
 		if(strrpos( $url, "mailto" ) !== false){
 			header("Location: " . esc_url_raw( $url ) );
