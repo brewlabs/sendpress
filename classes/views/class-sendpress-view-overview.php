@@ -267,6 +267,7 @@ echo "<td >";
 	</div>
 </div>
 <div class="sp-33">
+  <?php if(!defined('SENDPRESS_PRO_VERSION')){ ?>
 	<div class="panel panel-default">
 	  <div class="panel-heading">
 	    <h3 class="panel-title"><?php _e('Go Pro!', 'sendpress');?></h3>
@@ -280,6 +281,7 @@ echo "<td >";
    
 	  </div>
 	</div>
+  <?php } ?>
 </div>
 </div>
 
