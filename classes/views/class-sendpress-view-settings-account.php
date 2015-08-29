@@ -300,11 +300,11 @@ foreach ( $charsete as $type) {
 <br><br><br>
 <h2><?php _e('AutoCron Information','sendpress'); ?></h2>
 <?php
- $api_info = json_decode( SendPress_Cron::get_info() );
+ 
 $autocron = SendPress_Option::get('autocron','no');
 if($autocron == 'yes') {
 	
-
+$api_info = json_decode( SendPress_Cron::get_info() );
 
  	?>
 <ul>

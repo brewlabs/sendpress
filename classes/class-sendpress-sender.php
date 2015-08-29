@@ -29,6 +29,7 @@ class SendPress_Sender {
 	static function init(){
 		add_filter('sendpress_sending_method_gmail',array('SendPress_Sender','gmail'),10,1);
 		add_filter('sendpress_sending_method_sendpress',array('SendPress_Sender','sendpress'),10,1);
+		//add_filter('sendpress_sending_method_spnl',array('SendPress_Sender_SPNL','sendpress'),10,1);
 	}
 
 	//Legacy Sending
