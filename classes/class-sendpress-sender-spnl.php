@@ -42,7 +42,7 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 		
 		//$user = SendPress_Option::get( 'mandrilluser' );
 		//$pass = SendPress_Option::get( 'mandrillpass' );
-		//$from_email = SendPress_Option::get('fromemail');
+		$from_email = SendPress_Option::get('fromemail');
 		//$hdr = new SendPress_SendGrid_SMTP_API();
 		$m = SendPress_Option::get_sender( 'sendpress' );
 		//$hdr->addFilterSetting('dkim', 'domain', SendPress_Manager::get_domain_from_email($from_email) );
@@ -54,7 +54,7 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 			"X-SP-SUBSCRIBER"=>$sid
 			);
 
-			$url = 'http://spnl.dev/send/' . $m['sendpress-key'];
+			$url = 'https://gateway.spnl.io/send/';
 
 		    $message = array(
 			    'to'        => array( 
@@ -63,11 +63,12 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 			    'subject'   => $subject,
 			    'html'      => $html,
 			    'text'      => $text,
-			    'from_email'      => $from_email,
+			    'from_email'  => $from_email,
 			    'from_name'=>SendPress_Option::get('fromname'),
 			    //'x-smtpapi'=>$hdr->asJSON(),
 			    'headers'=> $info,
-			    'inline_css' =>true
+			    'inline_css' =>true,
+			    'subaccount' => $m['sendpress-key']
 		     );
 		    
 		    if( isset($m['signing_domain'])  && $m['signing_domain'] != '' ){
@@ -80,8 +81,8 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 				'redirection' => 5,
 				'httpversion' => '1.0',
 				'blocking' => true,
-				'headers' => array(),
-				'body' => $message,
+				'headers' => array('Content-Type' => 'application/json'),
+				'body' => json_encode( $message ),
 				'cookies' => array()
 			    )
 			);

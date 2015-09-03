@@ -297,7 +297,7 @@ class SendPress {
 
 		sendpress_register_sender( 'SendPress_Sender_Website' );
 		sendpress_register_sender( 'SendPress_Sender_Gmail' );
-		//sendpress_register_sender( 'SendPress_Sender_SPNL' );
+		sendpress_register_sender( 'SendPress_Sender_SPNL' );
 
 		add_action( 'sendpress_event', array( 'SendPress_Tracking', 'event' ), 1, 1 );
 
