@@ -84,7 +84,7 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 					}
 
 				?>
-				<div id="exists" style="display:block;"><?php echo $sendpress_signup_exists; ?></div>
+				<div id="exists" style="display:none;"><?php echo $sendpress_signup_exists; ?></div>
 				<div id="error"><?php echo $sendpress_signup_error; ?></div>
 				<div id="thanks" <?php if( $sendpress_show_thanks ){ echo 'style="display:block;"'; }else{ echo 'style="display:none;"'; } ?>><?php echo $thank_you; ?></div>
 				<div id="form-wrap" <?php if( $sendpress_show_thanks ){ echo 'style="display:none;"'; } ?>>
