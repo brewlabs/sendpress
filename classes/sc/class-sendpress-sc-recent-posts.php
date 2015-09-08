@@ -27,6 +27,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 			 'imgcolwidth' => '30%',
 			 'textcolwidth' => '60%',
 			 'stylereadmore' => '',
+			 'readmoretext'=>'',
 			 'styletitle' => '',
 			 'featuredimg' => 'thumbnail',
 			 'cat' => '',
