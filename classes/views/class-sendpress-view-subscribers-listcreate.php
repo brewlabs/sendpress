@@ -18,7 +18,13 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
       
 
         $list_id = SendPress_Data::create_list( array('name'=> $name, 'public'=> $public ) );
+
+        update_post_meta($list_id, '_test_list', $_POST['test_list']);
         update_post_meta($list_id, 'sync_role', $_POST['sync_role']);
+        update_post_meta($list_id, 'meta-key', $_POST['meta-key']);
+		update_post_meta($list_id, 'meta-compare', $_POST['meta-compare']);
+		update_post_meta($list_id, 'meta-value', $_POST['meta-value']);
+
         SendPress_Admin::redirect('Subscribers');
 	}
 	
@@ -36,6 +42,8 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
 	    <input type="hidden" name="action" value="create-list" />
 	    <p><input type="text" name="name" value="" /></p>
 	    <p><input type="checkbox" class="edit-list-checkbox" name="public" value="1" checked /><label for="public"><?php _e('Allow user to sign up to this list','sendpress'); ?></label> <small>( <?php _e('synced lists will be made private','sendpress'); ?> )</small></p>
+	    <p><input type="checkbox" class="edit-list-checkbox" name="test_list" value="0"/><label for="public"><?php _e('Mark list as test. Adds <span class="label label-info">Test List</span> to list title every where.','sendpress'); ?></label></p>
+
 	    <!-- Now we can render the completed list table -->
 	     <!-- Now we can render the completed list table -->
 	   	
@@ -60,7 +68,16 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
     		<input type="radio" name="sync_role" value="<?php echo $role_name ?>" <?php echo $d; ?> /> <?php echo translate_user_role($role_info['name']); ?><br>
     		
        
-  <?php endforeach; ?>
+  		<?php endforeach; ?>
+
+		<input type="radio" name="sync_role" value="meta"  <?php echo $d; ?> /> <?php _e('User Meta Query - Advanced','sendpress'); ?> ( <?php _e('Use this to sync a list based on user meta data.','sendpress'); ?> )<br><br>
+   		<label>Meta Key</label>
+			<input type="text" name="meta-key" value="<?php echo get_post_meta($listinfo->ID, 'meta-key', true); ?>" />
+		<?php $this->select('meta-compare', get_post_meta($listinfo->ID, 'meta-compare', true) , array( '=', '!=', '>', '>=', '<', '<=', 'LIKE', 'NOT LIKE', 'IN', 'NOT IN') ); ?>
+
+		<label>Meta Value</label>
+			<input type="text" name="meta-value" value="<?php echo get_post_meta($listinfo->ID, 'meta-value', true); ?>" />
+
 </p>
 	  
 	   	<?php wp_nonce_field($sp->_nonce_value); ?>
