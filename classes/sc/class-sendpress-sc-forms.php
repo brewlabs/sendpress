@@ -211,7 +211,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		//print_r($options);
 
 		global $load_signup_js, $sendpress_show_thanks, $sendpress_signup_error;
-		$sendpress_signup_exists = $sendpress_signup_exists = __("You've already signed up, Thanks!",'sendpress');
+		$sendpress_signup_exists = __("You've already signed up, Thanks!",'sendpress');
 		$load_signup_js = true;
 		$no_list_error = '-- NO LIST HAS BEEN SET! --';
 		$_listids = '';
@@ -268,7 +268,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					}
 
 				?>
-				<div id="exists"><?php echo $sendpress_signup_exists; ?></div>
+				<div id="exists" style="display:none;"><?php echo $sendpress_signup_exists; ?></div>
 				<div id="error"><?php echo $sendpress_signup_error; ?></div>
 				<div id="thanks" <?php if( $sendpress_show_thanks ){ echo 'style="display:block;"'; }else{ echo 'style="display:none;"'; } ?>><?php echo $_thankyou_message; ?></div>
 				<div id="form-wrap" <?php if( $sendpress_show_thanks ){ echo 'style="display:none;"'; } ?>>
@@ -331,7 +331,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					</p>
 
 					<p class="submit">
-						<input value="<?php echo $_button_label; ?>" class="sendpress-submit" type="submit"  id="submit" name="submit"><img class="ajaxloader" src="<?php echo SENDPRESS_URL; ?>/img/ajax-loader.gif" />
+						<input value="<?php echo $_button_label; ?>" class="sendpress-submit" type="submit"  id="submit" name="submit"><img class="ajaxloader" style="display:none;" src="<?php echo SENDPRESS_URL; ?>/img/ajax-loader.gif" />
 					</p>
 				</div>
 			</form>

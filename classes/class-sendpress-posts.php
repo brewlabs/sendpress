@@ -179,6 +179,7 @@ class SendPress_Posts{
 			'label_count'               => _n_noop( 'Standard <span class="count">(%s)</span>', 'Standard <span class="count">(%s)</span>', 'sendpress' )
 		)  );
 
+	
 		register_post_status( 'sp-custom', array(
 			'label'                     => _x(  'Custom Template', 'sendpress' ),
 			'public'                    => true,

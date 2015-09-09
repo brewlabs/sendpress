@@ -167,7 +167,7 @@ echo $time;//11:09
 			}
 			}
 		} else {
-			echo "<p class='alert alert-danger'><strong>Oh snap!</strong> It looks like AutoCron was not enabled or it disconnected itself. To get max send speed please re-enable it <a href='".SendPress_Admin::link('Settings_Account')."'>here</a>.</p>";
+			echo "<p class='alert alert-info'><strong>Howdy.</strong> It looks like AutoCron was not enabled or it disconnected itself. To get max send speed please re-enable it <a href='".SendPress_Admin::link('Settings_Account')."'>here</a>.</p>";
 		}
 
 	?>

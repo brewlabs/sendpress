@@ -294,10 +294,18 @@ class SendPress {
 		SendPress_Sender::init();
 		SendPress_Cron::get_instance();
 		SendPress_Videos::init();
+		
+		if( !defined('SPNL_DISABLE_SENDING_WP_MAIL') && apply_filters('spnl_wpmail_sending', true ) ){
+			sendpress_register_sender( 'SendPress_Sender_Website' );
+		}
+		
+		if( !defined('SPNL_DISABLE_SENDING_GMAIL') && apply_filters('spnl_gmail_sending', true ) ){
+			sendpress_register_sender( 'SendPress_Sender_Gmail' );
+		}
 
-		sendpress_register_sender( 'SendPress_Sender_Website' );
-		sendpress_register_sender( 'SendPress_Sender_Gmail' );
-		sendpress_register_sender( 'SendPress_Sender_SPNL' );
+		if( !defined('SPNL_DISABLE_SENDING_DELIVERY') && apply_filters('spnl_delivery_sending', true ) ){
+			sendpress_register_sender( 'SendPress_Sender_SPNL' );
+		}
 
 		add_action( 'sendpress_event', array( 'SendPress_Tracking', 'event' ), 1, 1 );
 

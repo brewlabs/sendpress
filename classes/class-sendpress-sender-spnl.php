@@ -28,7 +28,7 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 
 		$m = SendPress_Option::get_sender( 'sendpress' );
 		?>
-		<p><?php _e( '<b>SendPress Sending Account</b>', 'sendpress' ); ?>.</p>
+		<p><?php _e( '<b>SendPress Delivery Key</b>', 'sendpress' ); ?>.</p>
 		<?php _e( 'API Key' , 'sendpress'); ?>
 		<p><input name="sendpress-key" type="text" value="<?php echo $m['sendpress-key']; ?>" style="width:100%;" /></p>
 		<?php
