@@ -1777,7 +1777,7 @@ register_deactivation_hook( __FILE__, array( 'SendPress', 'plugin_deactivation' 
 add_action( 'wpmu_new_blog', array( 'SendPress', 'on_activate_blog' ) );
 add_action( 'activate_blog', array( 'SendPress', 'on_activate_blog' ) );
 
-
+add_filter('spnl_delivery_sending','__return_false');
 // Initialize!
 function SPNL() {
 	return SendPress::get_instance();

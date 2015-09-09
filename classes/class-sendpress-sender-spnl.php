@@ -10,7 +10,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Sender_SPNL extends SendPress_Sender {
 	function label(){
-		return __('SendPress Rocket Mail','sendpress');
+		return __('SendPress Email Delivery','sendpress');
 	}
 
 
