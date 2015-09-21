@@ -90,8 +90,6 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
 	   	 	}
   			?>
 
-
-
   			<input type="radio" name="sync_role" value="meta"  <?php echo $d; ?> /> <?php _e('User Meta Query - Advanced','sendpress'); ?> ( <?php _e('Use this to sync a list based on user meta data.','sendpress'); ?> )<br><br>
 	   		<label>Meta Key</label>
   			<input type="text" name="meta-key" value="<?php echo get_post_meta($listinfo->ID, 'meta-key', true); ?>" />

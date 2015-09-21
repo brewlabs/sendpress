@@ -73,6 +73,10 @@ class SendPress_View_Emails extends SendPress_View{
             <li <?php if(isset($_GET['view']) &&  in_array($_GET['view'], array('postnotifications')) ) { ?>class="active"<?php } ?> >
               <a href="<?php echo SendPress_Admin::link('Emails_Postnotifications'); ?>"><?php _e('Post Notifications','sendpress'); ?></a>
             </li>
+
+            <?php if(SendPress_Option::get('beta')){ ?>
+              <li <?php if(strpos($sp->_current_view,'systememail') !== false){ ?>class="active"<?php } ?> ><a <?php if(strpos($sp->_current_view,'systememail') !== false){ ?>class="wp-ui-primary"<?php } ?>  href="<?php echo SendPress_Admin::link('Emails_Systememail'); ?>"><i class=" icon-bullhorn"></i> <?php _e('System Email','sendpress'); ?></a></li>
+            <?php } ?>
 				</ul>
 			</div>
 		</div>

@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 
 
-class SendPress_View_Settings_Systememail extends SendPress_View_Settings{
+class SendPress_View_Emails_Systememail extends SendPress_View_Emails{
 
 	function html($sp){
 		 SendPress_Tracking::event('Emails Tab');

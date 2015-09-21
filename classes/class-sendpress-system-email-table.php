@@ -96,7 +96,7 @@ class SendPress_System_Email_Table extends WP_List_Table {
 				
 				$editwindow = 'style';
 				if(get_post_meta($item->ID  , '_sendpress_system', true) == 'new'){
-					$editwindow = 'emailedit';
+					$editwindow = 'systememailedit';
 				}
 				$a .= '<a class="btn btn-primary" href="?page='.SPNL()->validate->page($_REQUEST['page']).'&view='.$editwindow.'&emailID='. $item->ID .'"><span class="glyphicon glyphicon-edit"></span> '. __('Edit','sendpress') .'</a> ';
 				//$a = apply_filters('sendpress_email_table', $a, $item);

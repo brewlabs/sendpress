@@ -6,7 +6,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 	die;
 }
 
-class SendPress_View_Settings_Emailedit extends SendPress_View_Settings {
+class SendPress_View_Emails_Systememailedit extends SendPress_View_Emails {
 	
 	
 
@@ -37,7 +37,7 @@ class SendPress_View_Settings_Emailedit extends SendPress_View_Settings {
 	            $email->to_email = $_POST['test-email'];
 	            $d =SendPress_Manager::send_test_email( $email );
 	            //print_r($d);
-	           SendPress_Admin::redirect('Settings_Emailedit', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+	           SendPress_Admin::redirect('Settings_Systememailedit', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
 	        } else {
 	            SendPress_Admin::redirect('Settings_Systememail', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
 	        }

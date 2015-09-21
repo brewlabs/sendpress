@@ -15,7 +15,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 * @since 1.0
 *
 */
-class SendPress_View_Settings_Systememailcreate extends SendPress_View_Settings {
+class SendPress_View_Emails_Systememailcreate extends SendPress_View_Emails {
 
 	function save(){
 
@@ -76,7 +76,7 @@ class SendPress_View_Settings_Systememailcreate extends SendPress_View_Settings 
 				<input type="submit" value="<?php _e('Save & Next','sendpress'); ?>" class="btn btn-primary" />
 			</div>
 			<div id="sp-cancel-btn" style="float:right; ">
-				<a href="<?php echo SendPress_Admin::link('Settings_Systememail'); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+				<a href="<?php echo SendPress_Admin::link('Emails_Systememail'); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
 			</div>
 		</div>
 		
