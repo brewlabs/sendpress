@@ -124,6 +124,10 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 				$number_of_columns = $columns;
 			}
 
+			if($number_of_columns > 3){
+				$number_of_columns = 3;
+			}
+
 			SendPress_Error::log("number of cols: ".$number_of_columns);
 
 			$column_template = "";
@@ -282,7 +286,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 	}
 
 	public static function docs(){
-		return __('This shortcode creates a listing of Posts in emails or on pages.  Use the following options to customize the output: <br><br><b>posts</b> - number of posts to display. (defaults to 1)<br><b>uid</b> - the user id of the author you would like to see.<br><b>imgalign</b> - Align images left or right. (defaults to left)<br><b>alternate</b> - when writing posts, alternate the thumbnail images. (defaults to false)<br><b>readmoretext</b> - the text for the readmore link (defaults to Read More)', 'sendpress');
+		return __('This shortcode creates a listing of Posts in emails or on pages.  Use the following options to customize the output: <br><br><b>posts</b> - number of posts to display. (defaults to 1)<br><b>uid</b> - the user id of the author you would like to see.<br><b>imgalign</b> - Align images left or right. (defaults to left)<br><b>alternate</b> - when writing posts, alternate the thumbnail images. (defaults to false)<br><b>readmoretext</b> - the text for the readmore link (defaults to Read More)<br><b>columns</b> - the number of columns your posts should display in.  Max number of columns is 3.', 'sendpress');
 	}
 
 
