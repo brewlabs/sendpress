@@ -54,7 +54,7 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 			"X-SP-SUBSCRIBER"=>$sid
 			);
 
-			$url = 'https://gateway.spnl.io/send/';
+			$url = 'https://gateway.wped.co/send/';
 
 		    $message = array(
 			    'to'        => array( 
