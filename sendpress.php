@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: SendPress Newsletters
-Version: 1.2.9.13
+Version: 1.2.9.22
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -16,7 +16,7 @@ global $blog_id;
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-define( 'SENDPRESS_VERSION', '1.2.9.13' );
+define( 'SENDPRESS_VERSION', '1.2.9.22' );
 define( 'SENDPRESS_URL', plugin_dir_url( __FILE__ ) );
 define( 'SENDPRESS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -294,9 +294,8 @@ class SendPress {
 		SendPress_Sender::init();
 		SendPress_Cron::get_instance();
 		SendPress_Videos::init();
-		if( !SendPress_Option::get('beta') ){ 
-			add_filter('spnl_delivery_sending','__return_false');
-		}
+		
+		
 
 		
 		if( !defined('SPNL_DISABLE_SENDING_WP_MAIL') && apply_filters('spnl_wpmail_sending', true ) ){
@@ -306,9 +305,10 @@ class SendPress {
 		if( !defined('SPNL_DISABLE_SENDING_GMAIL') && apply_filters('spnl_gmail_sending', true ) ){
 			sendpress_register_sender( 'SendPress_Sender_Gmail' );
 		}
-
-		if( !defined('SPNL_DISABLE_SENDING_DELIVERY') && apply_filters('spnl_delivery_sending', true ) ){
-			sendpress_register_sender( 'SendPress_Sender_SPNL' );
+		if( SendPress_Option::get('beta') ){ 
+			if( !defined('SPNL_DISABLE_SENDING_DELIVERY') && apply_filters('spnl_delivery_sending', true ) ){
+				sendpress_register_sender( 'SendPress_Sender_SPNL' );
+			}
 		}
 
 		add_action( 'sendpress_event', array( 'SendPress_Tracking', 'event' ), 1, 1 );

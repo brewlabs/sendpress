@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
 Tested up to: 4.3
-Stable tag: 1.2.9.13
+Stable tag: 1.2.9.22
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.2.9.22 - 2015.9.22 =
+* Update: Column support for sp-recent-posts
+* Fix: List Create Error
+* Fix: Post notifiction display errors
 
 = 1.2.9.13 - 2015.9.13 =
 * Fix: Widget text showing when it should not
@@ -772,6 +777,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.2.9.22 =
+Bug fixes and Shortcode updates
 
 = 1.2.9.13 =
 Widget fixes and list releated updates
