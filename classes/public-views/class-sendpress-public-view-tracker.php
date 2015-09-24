@@ -23,31 +23,37 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 
 		$url = $info->url;
 		
-		$db_url = SPNL()->db->url;
+		try {
 
-		$url_in_db = $db_url->get( $url );  //= SendPress_Data::get_url_by_hash( $hash );
-		
-		if ( $url_in_db == false ) {
-			$id = $db_url->add( $url );
-		} else {
-			$id = $url_in_db;
-		}
+			$db_url = SPNL()->db->url;
+
+			$url_in_db = $db_url->get( $url );  //= SendPress_Data::get_url_by_hash( $hash );
+			
+			if ( $url_in_db == false ) {
+				$id = $db_url->add( $url );
+			} else {
+				$id = $url_in_db;
+			}
 
 
-		$add_update = SPNL()->db->subscribers_url->add_update( array('subscriber_id'=>  $info->id, 'email_id' =>$info->report, 'url_id' =>  $id  ) );
+			$add_update = SPNL()->db->subscribers_url->add_update( array('subscriber_id'=>  $info->id, 'email_id' =>$info->report, 'url_id' =>  $id  ) );
 
-		$open = SPNL()->db->subscribers_tracker->open( $info->report , $info->id , 2 );
+			$open = SPNL()->db->subscribers_tracker->open( $info->report , $info->id , 2 );
 
-		switch($info->url){
-			case '{sp-browser-url}':
-				$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Browser_Url::external( $info->url, $info->report , $info->id, false ), $info->report, $info->report, $info->id, false );
-			break;
-			case '{sp-unsubscribe-url}':
-				$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Unsubscribe::external( $info->url, $info->report, $info->id, false ), $info->report, $info->report, $info->id, false );
-			break;
-			case '{sp-manage-subscription-url}':
-				$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Manage_Subscriptions::external( $info->url, $info->report , $info->id, false ), $info->report, $info->report, $info->id, false );
-			break;
+			switch($info->url){
+				case '{sp-browser-url}':
+					$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Browser_Url::external( $info->url, $info->report , $info->id, false ), $info->report, $info->report, $info->id, false );
+				break;
+				case '{sp-unsubscribe-url}':
+					$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Unsubscribe::external( $info->url, $info->report, $info->id, false ), $info->report, $info->report, $info->id, false );
+				break;
+				case '{sp-manage-subscription-url}':
+					$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Manage_Subscriptions::external( $info->url, $info->report , $info->id, false ), $info->report, $info->report, $info->id, false );
+				break;
+			}
+
+		} catch (Exception $e) {
+			SPNL()->log->add(  'Tracking Error' , $e->getMessage() , 0 , 'error' );
 		}
 		/*
 		$args = array(
