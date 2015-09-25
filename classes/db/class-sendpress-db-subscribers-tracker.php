@@ -57,6 +57,14 @@ class SendPress_DB_Subscribers_Tracker extends SendPress_DB {
 		return $wpdb->get_var( $q );	
 	}
 
+	public function get_most_active($limit = 10){
+		global $wpdb;
+		$q = $wpdb->prepare("SELECT  subscriber_id , SUM(opened_count) as count FROM $this->table_name WHERE status > 0 group by subscriber_id order by SUM(opened_count) DESC LIMIT %d ", $limit);
+		return $wpdb->get_results( $q );	
+	}
+
+
+
 	public function get_opens( $email_id ) {
 		global $wpdb;
 		$q = $wpdb->prepare("SELECT COUNT(*) FROM $this->table_name WHERE email_id = %d and status > 0 ", $email_id);

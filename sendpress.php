@@ -305,7 +305,7 @@ class SendPress {
 		if( !defined('SPNL_DISABLE_SENDING_GMAIL') && apply_filters('spnl_gmail_sending', true ) ){
 			sendpress_register_sender( 'SendPress_Sender_Gmail' );
 		}
-		if( SendPress_Option::get('beta') ){ 
+		if( SendPress_Option::get('wped_sending') ){ 
 			if( !defined('SPNL_DISABLE_SENDING_DELIVERY') && apply_filters('spnl_delivery_sending', true ) ){
 				sendpress_register_sender( 'SendPress_Sender_SPNL' );
 			}

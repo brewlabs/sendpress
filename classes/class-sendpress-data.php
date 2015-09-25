@@ -1193,6 +1193,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return false;
 	}
 
+	static function get_recent_subscribers($limit = 10){
+		global $wpdb;
+		$table = SendPress_Data::list_subcribers_table();
+		$list = $wpdb->get_results( $wpdb->prepare("SELECT subscriberID,updated,listID FROM $table WHERE status = 2 order by updated DESC limit %d ", $limit) );
+		return $list;
+
+	}
 
 	static function get_subscriber_events($sid){
 		global $wpdb;
@@ -1207,6 +1214,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $wpdb->get_results( $wpdb->prepare("SELECT * FROM $table WHERE type = 'optin' order by eventID DESC LIMIT %d", $limit) );
 
 	}
+
+
 
 	static function get_subscribed_events($limit = 10){
 		global $wpdb;
