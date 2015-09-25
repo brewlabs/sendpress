@@ -9,11 +9,10 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 
 class SendPress_Sender_SPNL extends SendPress_Sender {
+	
 	function label(){
-		return __('SendPress Email Delivery','sendpress');
+		return __('WP Email Delivery (Beta) ','sendpress');
 	}
-
-
 
 	function save(){
 		
@@ -28,17 +27,14 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 
 		$m = SendPress_Option::get_sender( 'sendpress' );
 		?>
-		<p><?php _e( '<b>SendPress Delivery Key</b>', 'sendpress' ); ?>.</p>
+		<p><?php _e( '<b>Access Key</b>', 'sendpress' ); ?>.</p>
 		<?php _e( 'API Key' , 'sendpress'); ?>
 		<p><input name="sendpress-key" type="text" value="<?php echo $m['sendpress-key']; ?>" style="width:100%;" /></p>
 		<?php
 
 	}
 
-
 	function send_email($to, $subject, $html, $text, $istest = false ,$sid , $list_id, $report_id ){
-		
-		
 		
 		//$user = SendPress_Option::get( 'mandrilluser' );
 		//$pass = SendPress_Option::get( 'mandrillpass' );
@@ -48,10 +44,10 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 		//$hdr->addFilterSetting('dkim', 'domain', SendPress_Manager::get_domain_from_email($from_email) );
 		//$phpmailer->AddCustomHeader(sprintf( 'X-SMTPAPI: %s', $hdr->asJSON() ) );
 			$info = array(
-			"X-SP-METHOD"=>"SendPress",
-			"X-SP-LIST"=> $list_id,
-			"X-SP-REPORT"=> $report_id ,
-			"X-SP-SUBSCRIBER"=>$sid
+				"X-SP-METHOD"=>"WPED.co",
+				"X-SP-LIST"=> $list_id,
+				"X-SP-REPORT"=> $report_id ,
+				"X-SP-SUBSCRIBER"=>$sid
 			);
 
 			$url = 'https://gateway.wped.co/send/';

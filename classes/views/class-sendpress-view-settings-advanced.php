@@ -41,6 +41,11 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 			SendPress_Option::set('show_logs', false );
 		}
 
+		if(isset( $post['wped_sending'] )){
+			SendPress_Option::set('wped_sending', true );
+		} else {
+			SendPress_Option::set('wped_sending', false );
+		}
 
 
 		if(isset( $post['prerelease_templates'] )){
@@ -147,6 +152,9 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 				<br><br>
 				<?php $ctype = SendPress_Option::get('show_logs'); ?>
 				<input type="checkbox" name="show_logs" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> <?php _e('Show SPNL Logs','sendpress'); ?>.
+				<br><br>
+				<?php $ctype = SendPress_Option::get('wped_sending'); ?>
+				<input type="checkbox" name="wped_sending" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> <?php _e('Enable WP Email Delivery Early Access','sendpress'); ?>.
 				
 				</div>
 			</div>

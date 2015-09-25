@@ -29,7 +29,6 @@ class SendPress_DB_Subscribers_Tracker extends SendPress_DB {
 			'opened_count'    => '%s',
 			'sent_at' 		  => '%s',
 			'status'          => '%d',
-			'tracker_type'			  => '%d',
 			'subscriber_id'   => '%d',
 		);
 	}
@@ -44,8 +43,7 @@ class SendPress_DB_Subscribers_Tracker extends SendPress_DB {
 		return array(
 			'sent_at' => get_gmt_from_date( date('Y-m-d H:i:s') ),
 			'status'  => 0,
-			'opened_count' => 0,
-			'tracker_type' => 0
+			'opened_count' => 0
 		);
 	}
 

@@ -28,8 +28,12 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 		 	
 			update_post_meta( $_POST['post_ID'], '_sendpress_template', SPNL()->validate->int($_POST['template']) );
 			update_post_meta( $_POST['post_ID'], '_sendpress_subject', sanitize_text_field( $_POST['post_subject'] ) );
-			update_post_meta( $_POST['post_ID'], '_header_content', $_POST['header_content_edit'] );
-			update_post_meta( $_POST['post_ID'], '_footer_content', $_POST['footer_content_edit'] );
+			if( isset( $_POST['header_content_edit'])){
+				update_post_meta( $_POST['post_ID'], '_header_content', $_POST['header_content_edit'] );
+			} 
+			if( isset( $_POST['footer_content_edit'])){
+				update_post_meta( $_POST['post_ID'], '_footer_content', $_POST['footer_content_edit'] );
+			}
 
 		 	//	print_r($template);
 			wp_update_post( $post_update );
