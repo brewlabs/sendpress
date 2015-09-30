@@ -6,6 +6,9 @@ Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
 Author URI: https://sendpress.com/
+
+Text Domain: sendpress
+Domain Path: /languages/
 */
 
 if ( ! defined( 'DB_NAME' ) ) {
