@@ -42,7 +42,7 @@ static function send_mail(){
 		for ($i=0; $i < $attempted_count; $i++) { 
 				$email = SendPress_Data::get_single_email_from_queue();
 				if( $email != null ) {
-					if( is_email(  $email->to_email ) ){
+					if( is_email(  $email->to_email ) && SendPress_Data::is_subsriber_active_on_any_list($email->subscriberID ) ){
 						$attempts++;
 						SendPress_Data::queue_email_process( $email->id );
 						$result = SendPress_Manager::send_email_from_queue( $email );

@@ -758,6 +758,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
+
 	/********************* END REPORTS static functionS **************************/
 
 	/************************* LIST static functionS ****************************/
@@ -1187,6 +1188,16 @@ class SendPress_Data extends SendPress_DB_Tables {
 		global $wpdb;
 		$table = SendPress_Data::list_subcribers_table();
 		$id = $wpdb->get_var( $wpdb->prepare("SELECT id FROM $table WHERE listID = %d AND subscriberID = %d ", $lid, $sid) );
+		if($id > 0 ){
+			return true;
+		}
+		return false;
+	}
+
+	static function is_subsriber_active_on_any_list( $sid ){
+		global $wpdb;
+		$table = SendPress_Data::list_subcribers_table();
+		$id = $wpdb->get_var( $wpdb->prepare("SELECT id FROM $table WHERE subscriberID = %d AND status  = 2 ", $sid) );
 		if($id > 0 ){
 			return true;
 		}
