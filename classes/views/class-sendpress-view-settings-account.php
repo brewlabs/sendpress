@@ -304,17 +304,27 @@ foreach ( $charsete as $type) {
 $autocron = SendPress_Option::get('autocron','no');
 if($autocron == 'yes') {
 	
-$api_info = json_decode( SendPress_Cron::get_info() );
+	$api_info = json_decode( SendPress_Cron::get_info() );
 
- 	?>
-<ul>
-	<li>Last Check: <?php echo $api_info->lastcheck; ?> UTC</li>
-	<li>Errors: <?php echo $api_info->errors; ?> </li>
-	<li>Active: <?php  if($api_info->active == 0 ) { echo "false"; } else { echo "true"; } ?> </li>
-	
-</ul>
+	if(is_object($api_info)){
+		?>
+		<ul>
+			<li>Last Check: <?php echo $api_info->lastcheck; ?> UTC</li>
+			<li>Errors: <?php echo $api_info->errors; ?> </li>
+			<li>Active: <?php  if($api_info->active == 0 ) { echo "false"; } else { echo "true"; } ?> </li>
+			
+		</ul>
+		<?php
+	}else{
+		?>
+		<p>AutoCron has no information at this time, please check back later.</p>
+		<?php
+	}
 
-<?php } else { ?>
+ 	
+
+
+} else { ?>
 	<p>AutoCron is not enabled.</p>
 <?php } ?>
 

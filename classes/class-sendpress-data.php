@@ -1046,6 +1046,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	static function update_subscriber_meta($subscriber_id,$meta_key,$meta_value,$list_id = false){
 		global $wpdb;
+		$lists = SendPress_Option::get('pro_notification_lists');
+		$pnid = $lists['post_notifications']['id'];
+
+		if($pnid !== $list_id && $meta_key === 'post_notifications'){
+			return;
+		}
+
 		$meta_table = SendPress_Data::subscriber_meta_table();
 		$has_data = SendPress_Data::get_subscriber_meta( $subscriber_id, $meta_key, $list_id, true );
 		if(empty($has_data)){

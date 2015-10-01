@@ -33,9 +33,15 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 			 'cat' => '',
 			 'tag' => '',
 			 'category_name' => '',
-			 'columns' => 1
+			 'columns' => 1,
+			 'datespan' => ''
 			);
 	}
+
+	 //'show_title'=>true,
+	 //'show_text'=>true,
+	 //'show_readmore'=>true,
+	 //'show_photo'=>true,
 
 	public static function html(){
 		return __('You can provide a Title. This is added before the post loop begins.','sendpress');
@@ -110,7 +116,40 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 	  	//$return_string .= '<div>';
 	   	//query_posts($args);
 
-	  	
+	  	/*
+
+		$after = get_date_from_gmt(date('Y-m-d H:i:s',strtotime('-1 day')));
+		$before = get_date_from_gmt(date('Y-m-d H:i:s',strtotime('now')));
+
+		$default_args = array(
+			'date_query' => array(
+				array(
+					'after'     => $after,
+					'before'    => $before,
+					'inclusive' => true
+				)
+			)
+		);
+
+		if($type === 'weekly'){
+
+			$after = get_date_from_gmt(date('Y-m-d H:i:s',strtotime('-1 week')));
+			$before = get_date_from_gmt(date('Y-m-d H:i:s',strtotime('now')));
+
+			$default_args = array(
+				'date_query' => array(
+					array(
+						'after'     => $after,
+						'before'    => $before,
+						'inclusive' => true
+					)
+				)
+			);
+		}
+		*/
+
+
+
 
 	   	$query = new WP_Query($args);
 		if($query->have_posts()){
