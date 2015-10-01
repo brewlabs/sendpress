@@ -29,7 +29,6 @@ class SendPress_DB_Subscribers_Tracker extends SendPress_DB {
 			'opened_count'    => '%s',
 			'sent_at' 		  => '%s',
 			'status'          => '%d',
-			'tracker_type'			  => '%d',
 			'subscriber_id'   => '%d',
 		);
 	}
@@ -44,8 +43,7 @@ class SendPress_DB_Subscribers_Tracker extends SendPress_DB {
 		return array(
 			'sent_at' => get_gmt_from_date( date('Y-m-d H:i:s') ),
 			'status'  => 0,
-			'opened_count' => 0,
-			'tracker_type' => 0
+			'opened_count' => 0
 		);
 	}
 
@@ -58,6 +56,14 @@ class SendPress_DB_Subscribers_Tracker extends SendPress_DB {
 		$q = $wpdb->prepare("SELECT SUM(opened_count) FROM $this->table_name WHERE email_id = %d and status > 0 ", $email_id);
 		return $wpdb->get_var( $q );	
 	}
+
+	public function get_most_active($limit = 10){
+		global $wpdb;
+		$q = $wpdb->prepare("SELECT  subscriber_id , SUM(opened_count) as count FROM $this->table_name WHERE status > 0 group by subscriber_id order by SUM(opened_count) DESC LIMIT %d ", $limit);
+		return $wpdb->get_results( $q );	
+	}
+
+
 
 	public function get_opens( $email_id ) {
 		global $wpdb;

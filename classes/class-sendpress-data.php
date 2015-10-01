@@ -758,6 +758,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
+
 	/********************* END REPORTS static functionS **************************/
 
 	/************************* LIST static functionS ****************************/
@@ -1200,6 +1201,23 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return false;
 	}
 
+	static function is_subsriber_active_on_any_list( $sid ){
+		global $wpdb;
+		$table = SendPress_Data::list_subcribers_table();
+		$id = $wpdb->get_var( $wpdb->prepare("SELECT id FROM $table WHERE subscriberID = %d AND status  = 2 ", $sid) );
+		if($id > 0 ){
+			return true;
+		}
+		return false;
+	}
+
+	static function get_recent_subscribers($limit = 10){
+		global $wpdb;
+		$table = SendPress_Data::list_subcribers_table();
+		$list = $wpdb->get_results( $wpdb->prepare("SELECT subscriberID,updated,listID FROM $table WHERE status = 2 order by updated DESC limit %d ", $limit) );
+		return $list;
+
+	}
 
 	static function get_subscriber_events($sid){
 		global $wpdb;
@@ -1214,6 +1232,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $wpdb->get_results( $wpdb->prepare("SELECT * FROM $table WHERE type = 'optin' order by eventID DESC LIMIT %d", $limit) );
 
 	}
+
+
 
 	static function get_subscribed_events($limit = 10){
 		global $wpdb;

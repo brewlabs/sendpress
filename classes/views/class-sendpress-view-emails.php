@@ -64,11 +64,11 @@ class SendPress_View_Emails extends SendPress_View{
 				  	<li <?php if(isset($_GET['view']) &&  $_GET['view'] === 'social'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails_Social'); ?>"><?php _e('Social Icons','sendpress'); ?></a>
 				  	</li>
-				  	<!--
+				  	
 				  	<li <?php if(isset($_GET['view']) &&  in_array($_GET['view'], array('autoresponder','autoedit')) ) { ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails_Autoresponder'); ?>"><?php _e('Autoresponders','sendpress'); ?></a>
 				  	</li>
-            -->
+            
 
             <li <?php if(isset($_GET['view']) &&  in_array($_GET['view'], array('postnotifications')) ) { ?>class="active"<?php } ?> >
               <a href="<?php echo SendPress_Admin::link('Emails_Postnotifications'); ?>"><?php _e('Post Notifications','sendpress'); ?></a>

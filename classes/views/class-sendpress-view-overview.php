@@ -208,7 +208,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
     <th><div style="text-align:right;">Email</div></th>
     </tr>
   	<?php 
-  		$recent = SendPress_Data::get_subscribed_events();
+  		$recent = SendPress_Data::get_recent_subscribers();
   		foreach($recent as $item){
         echo "<tr>";
          echo "<td>";
@@ -216,8 +216,8 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
        
   			$d = 	SendPress_Data::get_subscriber($item->subscriberID);
         
-        if(property_exists($item,'eventdate')){
-  			   echo date_i18n("m.d.y" ,strtotime($item->eventdate) );
+        if(property_exists($item,'updated')){
+  			   echo date_i18n("m.d.y" ,strtotime($item->updated) );
         }
           echo "</td>";
 echo "<td >";
@@ -250,11 +250,12 @@ echo "<td >";
 	  <div class="panel-body">
 	  	<ul>
 	  	<?php
-	  	$recent = SendPress_Data::get_most_active_subscriber();
-  		foreach($recent as $item){
-        if(property_exists($item,'subscriberID')){
+	  	$recent =  SPNL()->db->subscribers_tracker->get_most_active(); // SendPress_Data::get_most_active_subscriber();
+  		
+      foreach($recent as $item){
+        if(property_exists($item,'subscriber_id')){
   			echo "<li>";
-  			$d = 	SendPress_Data::get_subscriber($item->subscriberID);
+  			$d = 	SendPress_Data::get_subscriber($item->subscriber_id);
         if(is_object($d)){
   		    echo  $d->email;
         }

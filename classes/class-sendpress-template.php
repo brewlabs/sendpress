@@ -332,10 +332,17 @@ class SendPress_Template {
 		//$selected_template = $this->get_template( $post_id );
 		//$template_list = $this->info();
 		$post_template  = get_post_meta( $post->ID , '_sendpress_template', true );
-		if( $post_template != '' && is_numeric($post_template) ){
+		if( $post_template != '' && is_numeric($post_template) &&  $post_template  > 0 ){
 			$HtmlCode  = SendPress_Email_Render_Engine::render_template( $post_template , $post_id , $custom_html ); 
 		} else {
-			$HtmlCode = file_get_contents(SENDPRESS_PATH .'/templates/simple.html' );
+			$old = get_post_meta( $post->ID , '_sendpress_system', true );
+			if($old == 'old'){
+				$HtmlCode = file_get_contents(SENDPRESS_PATH .'/templates/original.html' );
+			}else {
+				$HtmlCode = file_get_contents(SENDPRESS_PATH .'/templates/simple.html' );
+			}
+			
+			
 		}
 		
 
