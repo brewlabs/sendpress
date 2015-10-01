@@ -321,9 +321,6 @@ if($autocron == 'yes') {
 		<?php
 	}
 
- 	
-
-
 } else { ?>
 	<p>AutoCron is not enabled.</p>
 <?php } ?>
