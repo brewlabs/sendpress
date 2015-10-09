@@ -84,6 +84,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		$_nonce_value = 'sendpress-is-awesome';
 		$info = self::data();
 
+		//SendPress_Error::log($info->id);
 		//print_r($info);
 
 		if(!isset($info->id)){
@@ -92,6 +93,8 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		}
 
 		$s = $info->id;
+
+		//SendPress_Error::log($s);
 
 		extract($options);
 
@@ -421,7 +424,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		
 	}
 
-	private static function data(){
+	static function data(){
 		$data = '';
 		if( (get_query_var( 'spms' ) || get_query_var( 'sendpress' )) ){
 		  	$action = (get_query_var( 'spms' )) ? get_query_var( 'spms' ) : get_query_var( 'sendpress' );
@@ -430,7 +433,13 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 	  		$action = $parsed[count($parsed)-2];
 	  	}
 
-	  	return SendPress_Data::decrypt( $action );
+	  	//SendPress_Error::log($action);
+
+	  	$data = SendPress_Data::decrypt( $action );
+
+	  	//print_r($data);
+
+	  	return $data;
 	}
 
 }

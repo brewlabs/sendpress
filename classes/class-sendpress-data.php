@@ -2066,7 +2066,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 	static function decrypt($message) {
-		return json_decode( SendPress_Data::urlsafeB64Decode($message) );
+
+		
+		$json = json_decode( SendPress_Data::urlsafeB64Decode(trim($message)) );
+
+		//SendPress_Error::log(print_r($json,true));
+
+		return $json;
 	}
 
 

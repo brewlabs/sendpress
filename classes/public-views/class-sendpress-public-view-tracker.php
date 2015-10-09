@@ -40,6 +40,8 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 
 			$open = SPNL()->db->subscribers_tracker->open( $info->report , $info->id , 2 );
 
+			//SendPress_Error::log($info->url);
+
 			switch($info->url){
 				case '{sp-browser-url}':
 					$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Browser_Url::external( $info->url, $info->report , $info->id, false ), $info->report, $info->report, $info->id, false );
