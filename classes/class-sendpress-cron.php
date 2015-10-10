@@ -54,15 +54,22 @@ class SendPress_Cron {
                 $time_start = microtime(true);
                 $count = SendPress_Data::emails_in_queue();
                 $bg = 0;
-                if($count > 0){
-                    SendPress_Queue::send_mail();
-                    $count = SendPress_Data::emails_in_queue();
-                } else {
-                    SPNL()->log->prune_logs();
-                    SendPress_Data::clean_queue_table();
-                    SendPress_DB_Tables::repair_tables();
-                    //SendPress_Logging::prune_logs();
-                    $bg = 1;
+                $error = '';
+                try{
+                    if($count > 0){
+                        SendPress_Queue::send_mail();
+                        $count = SendPress_Data::emails_in_queue();
+                    } else {
+                        SPNL()->log->prune_logs();
+                        SendPress_Data::clean_queue_table();
+                        SendPress_DB_Tables::repair_tables();
+                        //SendPress_Logging::prune_logs();
+                        $bg = 1;
+                    }
+                }
+                catch( Exception $e ){
+                    $error = $e->getMessage();
+                    SPNL()->log->add(  'Autocron' , $error , 0 , 'error' );
                 }
 
                
@@ -83,7 +90,7 @@ class SendPress_Cron {
                 $limits = array('autocron'=> $attempted_count,'dl'=>$emails_per_day,'hl'=>$emails_per_hour,'ds'=>$emails_so_far,'hs'=>$hourly_emails);
                 $time_end = microtime(true);
                 $time = $time_end - $time_start;
-                echo json_encode(array("background"=> $bg , "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits ,'time'=> number_format( $time , 3 ) ) );
+                echo json_encode(array( "error" => $error , "background"=> $bg , "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits ,'time'=> number_format( $time , 3 ) ) );
                 die();
             }
 

@@ -88,6 +88,7 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 			if( is_wp_error( $response ) ) {
 			   	$error_message = $response->get_error_message();
 			  	// error_log( "Something went wrong: $error_message" );
+			  	SPNL()->log->add( 'WPED Sending' , $error_message , 0 , 'sending' );
 			   	return false;
 			} else {
 				return true;
