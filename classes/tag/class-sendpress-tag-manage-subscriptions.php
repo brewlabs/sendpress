@@ -18,8 +18,13 @@ class SendPress_Tag_Manage_Subscriptions extends SendPress_Tag_Base{
 			"id"=>$subscriber_id,
 			"view"=>'manage'
 		);
+
+		//SendPress_Error::log($link_data);
+
 		$code = SendPress_Data::encrypt( $link_data );
 		$link = SendPress_Manager::public_url($code);
+
+
 
 		if(SendPress_Option::get('manage-page') == 'custom' ){
 			$page = SendPress_Option::get('manage-page-id');
