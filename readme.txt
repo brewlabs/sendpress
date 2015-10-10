@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
 Tested up to: 4.3
-Stable tag: 1.2.10.6.1
+Stable tag: 1.2.10.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.2.10.10 -  2015.10.10 =
+* Fix: manage shortcode url
+* Update: Added error handling around autocron
+* Update: wped sending with error tracking
 
 = 1.2.10.6.1 -  2015.10.6 =
 * Fix: WP Email Delivery Url
@@ -791,6 +796,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.2.10.10 =
+shortode fix and sending updates
 
 = 1.2.10.6.1 =
 Bug fixes and other updates
