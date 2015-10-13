@@ -1201,10 +1201,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return false;
 	}
 
-	static function is_subsriber_active_on_any_list( $sid ){
+	static function is_subscriber_active_or_unconfirmed( $sid ){
 		global $wpdb;
 		$table = SendPress_Data::list_subcribers_table();
-		$id = $wpdb->get_var( $wpdb->prepare("SELECT id FROM $table WHERE subscriberID = %d AND status  = 2 ", $sid) );
+		$id = $wpdb->get_var( $wpdb->prepare("SELECT id FROM $table WHERE subscriberID = %d AND status <= 2 ", $sid) );
 		if($id > 0 ){
 			return true;
 		}
