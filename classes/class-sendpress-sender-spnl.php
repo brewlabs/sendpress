@@ -30,7 +30,12 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 		<p><?php _e( '<b>Access Key</b>', 'sendpress' ); ?>.</p>
 		<?php _e( 'API Key' , 'sendpress'); ?>
 		<p><input name="sendpress-key" type="text" value="<?php echo $m['sendpress-key']; ?>" style="width:100%;" /></p>
+		<br>
+		<?php _e( 'Disable SSL Verification' , 'sendpress'); ?>
+		<?php $ctype = isset( $m['verifyssl'] ) ? true : false ; ?>
+		<p><input name="verifyssl" type="checkbox"  <?php if($ctype=='donotverify'){echo "checked='checked'"; } ?>  value="donotverify" /> <small>Not Recommended but required on some hosts.</small></p>
 		<?php
+
 
 	}
 
@@ -52,7 +57,10 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 
 			$url = 'https://gateway.wped.co/send/';
 			//$url = 'http://spnl.dev/';
-
+			$verify_ssl = true;
+			if( isset( $m['verifyssl'] ) && $m['verifyssl'] == 'donotverify' ){
+				$verify_ssl = false;
+			}
 
 		    $message = array(
 			    'to'        => array( 
@@ -73,7 +81,7 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 		    	$message['signing_domain'] = $m['signing_domain'];
 		    }
 			
-			$response = wp_remote_post( $url, array(
+			$response = wp_remote_post( $url , array(
 				'method' => 'POST',
 				'timeout' => 45,
 				'redirection' => 5,
@@ -81,6 +89,7 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 				'blocking' => true,
 				'headers' => array('Content-Type' => 'application/json'),
 				'body' => json_encode( $message ),
+				'sslverify' => $verify_ssl,
 				'cookies' => array()
 			    )
 			);
