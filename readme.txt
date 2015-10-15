@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
 Tested up to: 4.3
-Stable tag: 1.2.10.12
+Stable tag: 1.2.10.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,10 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.2.10.15 -  2015.10.15 =
+* Fix: Autoresponders being release early
+* Update: Add sslverifiy option to wped
 
 = 1.2.10.12 -  2015.10.12 =
 * Fix: Confirmation emails not always sending 
@@ -799,6 +803,10 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+
+= 1.2.10.12 =
+bug fix with wped and autoresponders
 
 = 1.2.10.12 =
 confirmation email sending update
