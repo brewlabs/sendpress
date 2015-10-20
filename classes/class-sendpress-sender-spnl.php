@@ -55,7 +55,8 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 				"X-SP-METHOD"=>"WPED.co",
 				"X-SP-LIST"=> $list_id,
 				"X-SP-REPORT"=> $report_id ,
-				"X-SP-SUBSCRIBER"=>$sid
+				"X-SP-SUBSCRIBER"=>$sid,
+				"X-SP-DOMAIN"=> home_url()
 			);
 
 			$url = 'https://gateway.wped.co/send/';
@@ -63,6 +64,7 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 			$verify_ssl = true;
 			if( isset( $m['verifyssl'] ) && $m['verifyssl'] == 'donotverify' ){
 				$verify_ssl = false;
+				$url = 'http://api.wped.co/send';
 			}
 
 		    $message = array(
@@ -77,7 +79,10 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 			    //'x-smtpapi'=>$hdr->asJSON(),
 			    'headers'=> $info,
 			    'inline_css' =>true,
-			    'subaccount' => $m['sendpress-key']
+			    'subaccount' => $m['sendpress-key'],
+			    'metadata' => array(
+			    	'return'=> home_url()
+			    	)
 		     );
 		    
 		  
@@ -94,10 +99,9 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 				'cookies' => array()
 			    )
 			);
-			//error_log( print_r( $response , true ) );
+			error_log( print_r( $response , true ) );
 			if( is_wp_error( $response ) ) {
 			   	$error_message = $response->get_error_message();
-			  	// error_log( "Something went wrong: $error_message" );
 			  	SPNL()->log->add( 'WPED Sending' , $error_message , 0 , 'sending' );
 			   	return false;
 			} else {

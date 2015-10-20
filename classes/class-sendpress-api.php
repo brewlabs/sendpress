@@ -152,6 +152,7 @@ class SendPress_API {
 				case 'tracker':
 				case 'system-check':
 				case 'elastic':
+				case 'bounce':
 					$this->is_valid_request = true;
 					$wp_query->set( 'key', 'public' );
 				break;
@@ -249,6 +250,11 @@ class SendPress_API {
 			case 'system-check':
 				$data = array( 'status' => 'active' );
 				break;
+			case 'bounce':
+				$e = isset( $wp_query->query_vars['email'] )      ? $wp_query->query_vars['email']      : null;
+				$this->bounce($e);
+				$data = array('status' => 'proccessed');
+			break;
 			case 'tracker':
 			
 				$data = $this->track_stats( array(
@@ -314,7 +320,8 @@ class SendPress_API {
 			'errors',
 			'public',
 			'tracker',
-			'system-check'
+			'system-check',
+			'bounce'
 		) );
 
 		$query = isset( $wp_query->query_vars['spnl-api'] ) ? $wp_query->query_vars['spnl-api'] : null;
@@ -561,6 +568,12 @@ class SendPress_API {
 
 	public function get_errors( $product = null ) {
 		return  SPNL()->log->get_logs(0, 'sending',  1);;
+	}
+
+	public function bounce($email){
+		if($email != null && is_email($email) ){
+			SendPress_Data::bounce_email( $email );
+		}
 	}
 
 	public function track_stats($tracker_data){
