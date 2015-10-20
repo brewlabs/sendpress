@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
 Tested up to: 4.3
-Stable tag: 1.2.10.15
+Stable tag: 1.2.10.20
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,13 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.2.10.20 -  2015.10.20 =
+* Fix: Confirmations not sending fast
+* Fix: Emails being marked as bounce when they send correctly
+* Update: AutoCron background jobs set to daily and weekly now
+* Update: add support for api.wped.co
+
 
 = 1.2.10.15 -  2015.10.15 =
 * Fix: Autoresponders being release early
@@ -804,8 +811,10 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 
 == Upgrade Notice ==
 
+= 1.2.10.20 =
+Confirmation sending updates and Autocron fixes
 
-= 1.2.10.12 =
+= 1.2.10.15 =
 bug fix with wped and autoresponders
 
 = 1.2.10.12 =
