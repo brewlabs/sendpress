@@ -41,35 +41,45 @@ static function send_mail(){
 		if($count > 0 ){
 		for ($i=0; $i < $attempted_count; $i++) { 
 				$email = SendPress_Data::get_single_email_from_queue();
-				if( $email != null ) {
-					if( is_email(  $email->to_email ) && SendPress_Data::is_subscriber_active_or_unconfirmed($email->subscriberID ) ){
-						$attempts++;
-						SendPress_Data::queue_email_process( $email->id );
-						$result = SendPress_Manager::send_email_from_queue( $email );
-						$email_count++;
-						if ($result) {
-							if($result === true){
-								$wpdb->update( SendPress_Data::queue_table() , array('success'=>1,'inprocess'=>3 ) , array('id'=> $email->id ));
-								SPNL()->db->subscribers_tracker->add( array('subscriber_id' => intval( $email->subscriberID ), 'email_id' => intval( $email->emailID) ) );
-							} else {
-								$wpdb->update( SendPress_Data::queue_table() , array('success'=>2,'inprocess'=>3 ) , array('id'=> $email->id ));
-								SendPress_Data::bounce_subscriber_by_id( $email->subscriberID );
-							}
-						} else {
-							$wpdb->update( SendPress_Data::queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
-						}
-					} else {
-						$wpdb->update( SendPress_Data::queue_table() , array('success'=>2,'inprocess'=>3 ) , array('id'=> $email->id ));
-						SendPress_Data::bounce_subscriber_by_id( $email->subscriberID );
-					}
-				} 
+				SendPress_Queue::send_the_queue($email);
 				
-		}
+		}		
 		
 		}
 
 		
 	}
+
+
+	static function send_the_queue($email){
+			if( $email != null ) {
+			
+				global $wpdb;
+						if( is_email(  $email->to_email ) && SendPress_Data::is_subscriber_active_or_unconfirmed($email->subscriberID ) ){
+							SendPress_Data::queue_email_process( $email->id );
+							$result = SendPress_Manager::send_email_from_queue( $email );
+						
+							if ($result) {
+								if($result == true){
+									$wpdb->update( SendPress_Data::queue_table() , array('success'=>1,'inprocess'=>3 ) , array('id'=> $email->id ));
+									SPNL()->db->subscribers_tracker->add( array('subscriber_id' => intval( $email->subscriberID ), 'email_id' => intval( $email->emailID) ) );
+								} else {
+									$wpdb->update( SendPress_Data::queue_table() , array('success'=>2,'inprocess'=>3 ) , array('id'=> $email->id ));
+									
+									if($result != false) {
+										SendPress_Data::bounce_subscriber_by_id( $email->subscriberID );
+									}
+								}
+							} else {
+								$wpdb->update( SendPress_Data::queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
+							}
+						} else {
+							$wpdb->update( SendPress_Data::queue_table() , array('success'=>2,'inprocess'=>3 ) , array('id'=> $email->id ));
+							SendPress_Data::bounce_subscriber_by_id( $email->subscriberID );
+						}
+					} 
+	}
+
 
 
 	static function send_mail_cron(){

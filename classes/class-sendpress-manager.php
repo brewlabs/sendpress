@@ -284,9 +284,13 @@ class SendPress_Manager {
                 'listID'=> 0
                 );
            
-            SendPress_Data::add_email_to_queue($go);	
+            $id = SendPress_Data::add_email_to_queue($go);	
 			SPNL()->db->subscribers_tracker->add( array('subscriber_id' => intval( $subscriberID ), 'email_id' => intval( $optin), 'tracker_type' => SendPress_Enum_Tracker_Type::Confirm ) );
 			
+			$confirm_email = SendPress_Data::get_single_email_from_queue_by_id( $id );
+			SendPress_Email_Cache::build_cache_for_system_email($confirm_email->id);
+			SendPress_Queue::send_the_queue($confirm_email);
+
 			/*
 			$message = new SendPress_Email();
 			$message->id($optin);

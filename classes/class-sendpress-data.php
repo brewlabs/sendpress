@@ -114,6 +114,24 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 
+	static function get_single_email_from_queue_by_id( $id ){
+		global $wpdb;
+		//$date = date_i18n('Y-m-d H:i:s', current_time( 'timestamp' ) );
+	
+		//SELECT id FROM wp_sendpress_queue WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 and ( date_sent = '0000-00-00 00:00:00' or date_sent < '2015-03-04 20:24:04' ) 
+		
+
+			$info = $wpdb->get_row( $wpdb->prepare("SELECT * FROM ". SendPress_Data::queue_table() ." WHERE id = %d ", $id ) );
+			
+			if( $info->success > 0 || $info->inprocess > 0 || $info->max_attempts <= $info->attempts ){
+				return null;
+			}
+
+			return $info;
+		
+
+	}
+
 	static function remove_email_from_queue($id){
 		global $wpdb;
 		$table = self::queue_table();
@@ -367,6 +385,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$values["max_attempts"] = 1;
 		$values["date_published"] = date('Y-m-d H:i:s');
 		$wpdb->insert( $table, $values);
+		return $wpdb->insert_id;
 	}
 
 	static	function unique_message_id() {
