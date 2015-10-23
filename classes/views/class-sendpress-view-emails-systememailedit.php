@@ -28,7 +28,7 @@ class SendPress_View_Emails_Systememailedit extends SendPress_View_Emails {
 		
 
 	        if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
-	            SendPress_Admin::redirect('Settings_Systememail', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+	            SendPress_Admin::redirect('Emails_Systememail', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
 	        } else if (isset($_POST['submit']) && $_POST['submit'] == 'send-test'){
 	            $email = new stdClass;
 	            $email->emailID  = $clean_post_id;
@@ -37,9 +37,9 @@ class SendPress_View_Emails_Systememailedit extends SendPress_View_Emails {
 	            $email->to_email = $_POST['test-email'];
 	            $d =SendPress_Manager::send_test_email( $email );
 	            //print_r($d);
-	           SendPress_Admin::redirect('Settings_Systememailedit', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+	           SendPress_Admin::redirect('Emails_Systememail', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
 	        } else {
-	            SendPress_Admin::redirect('Settings_Systememail', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+	            SendPress_Admin::redirect('Emails_Systememail', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
 	        }
 	    }
 

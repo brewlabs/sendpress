@@ -252,13 +252,22 @@ class SendPress_Manager {
 			//SendPress_Error::log('send optin');
 			$subscriber = SendPress_Data::get_subscriber( $subscriberID );
 			$l = '';
+			$optin_id = 0;
 			foreach($lists as $list){
 				if( in_array($list->ID, $listids) ){
 					$l .= $list->post_title ." <br>";
+
+					if($optin_id === 0){
+						$o = get_post_meta($list->ID, 'opt-in-id', true);
+
+						if($o > 0){
+							$optin_id = $o;
+						}
+					}	
 				}
 			}
 			//	add_filter( 'the_content', array( $this, 'the_content') );	
-			$optin = SendPress_Data::get_template_id_by_slug('double-optin');
+			$optin = ($optin_id > 0) ? $optin_id : SendPress_Data::get_template_id_by_slug('double-optin');
 			$user = SendPress_Data::get_template_id_by_slug('user-style');
 			SendPress_Posts::copy_meta_info($optin,$user);
 			SendPress_Email_Cache::build_cache_for_system_email($optin);
@@ -267,7 +276,7 @@ class SendPress_Manager {
                 'from_name' => 'queue',
                 'from_email' => 'queue',
                 'to_email' => $subscriber->email,
-                'emailID'=> intval( $optin),
+                'emailID'=> intval($optin),
                 'subscriberID'=> intval( $subscriberID ),
                 //'to_name' => $email->fistname .' '. $email->lastname,
                 'subject' => '',

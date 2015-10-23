@@ -29,6 +29,7 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
 		update_post_meta($listid, 'meta-key', $_POST['meta-key']);
 		update_post_meta($listid, 'meta-compare', $_POST['meta-compare']);
 		update_post_meta($listid, 'meta-value', $_POST['meta-value']);
+		update_post_meta($listid, 'opt-in-id', $_POST['opt-in-id']);
 		}
       	SendPress_Admin::redirect('Subscribers');
 	}
@@ -81,24 +82,43 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
     		<input type="radio" name="sync_role" value="<?php echo $role_name ?>" <?php echo $d; ?> /> <?php echo translate_user_role($role_info['name']); ?><br>
     		
        
-  			<?php endforeach; ?>
-  			<?php 
-  			if( $roles == 'meta'){
-	   	 		$d = 'checked';
-	   	 	} else {
-	   	 		$d = '';
-	   	 	}
-  			?>
+		<?php endforeach; ?>
+			<?php 
+		if( $roles == 'meta'){
+   	 		$d = 'checked';
+   	 	} else {
+   	 		$d = '';
+   	 	}
+		?>
 
-  			<input type="radio" name="sync_role" value="meta"  <?php echo $d; ?> /> <?php _e('User Meta Query - Advanced','sendpress'); ?> ( <?php _e('Use this to sync a list based on user meta data.','sendpress'); ?> )<br><br>
-	   		<label>Meta Key</label>
-  			<input type="text" name="meta-key" value="<?php echo get_post_meta($listinfo->ID, 'meta-key', true); ?>" />
-			<?php $this->select('meta-compare', get_post_meta($listinfo->ID, 'meta-compare', true) , array( '=', '!=', '>', '>=', '<', '<=', 'LIKE', 'NOT LIKE', 'IN', 'NOT IN') ); ?>
+		<input type="radio" name="sync_role" value="meta"  <?php echo $d; ?> /> <?php _e('User Meta Query - Advanced','sendpress'); ?> ( <?php _e('Use this to sync a list based on user meta data.','sendpress'); ?> )<br><br>
+   		<label>Meta Key</label>
+			<input type="text" name="meta-key" value="<?php echo get_post_meta($listinfo->ID, 'meta-key', true); ?>" />
+		<?php $this->select('meta-compare', get_post_meta($listinfo->ID, 'meta-compare', true) , array( '=', '!=', '>', '>=', '<', '<=', 'LIKE', 'NOT LIKE', 'IN', 'NOT IN') ); ?>
 
-			<label>Meta Value</label>
-  			<input type="text" name="meta-value" value="<?php echo get_post_meta($listinfo->ID, 'meta-value', true); ?>" />
+		<label>Meta Value</label>
+		<input type="text" name="meta-value" value="<?php echo get_post_meta($listinfo->ID, 'meta-value', true); ?>" />
 
+		<br><br>
+		
+		<?php 
 
+		$optin_emails = SendPress_Data::get_list_sys_emails('opt_in');
+		$current_opt_in_id = get_post_meta($listinfo->ID, 'opt-in-id', true);
+		?>
+		<label>Double Opt In E-mail</label>
+		<select name="opt-in-id">
+			<option value="0">Default</option>
+			<?php
+
+				foreach ($optin_emails as $key => $email) {
+					
+					?>
+					<option value="<?php echo $email->ID; ?>"<?php if( intval($current_opt_in_id) === intval($email->ID) ){echo ' selected';} ?>><?php echo get_post_meta($email->ID, '_sendpress_subject', true);?></option>
+					<?php
+				}
+			?>
+		</select>
 
 	   	<?php wp_nonce_field($sp->_nonce_value); ?>
 	</form>
