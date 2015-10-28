@@ -100,60 +100,40 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 			$args['tag'] = $tag;
 		}
 
-		if($columns < 1){
-			$columns = 1;
-		}
+		if( strlen($datespan) > 0 ){
+			$after = get_date_from_gmt(date('Y-m-d H:i:s',strtotime('-1 day')));
+			$before = get_date_from_gmt(date('Y-m-d H:i:s',strtotime('now')));
 
-		//SendPress_Error::log($args);
+			if(is_numeric($datespan)){
+				$after = get_date_from_gmt(date('Y-m-d H:i:s',strtotime('-'.$datespan.' day')));
+				$before = get_date_from_gmt(date('Y-m-d H:i:s',strtotime('now')));
+			}
 
-		$return_string = '';
-	   	if($content){
-	      	$return_string = $content;
-	  	}
+			if($datespan === 'weekly'){
+				$after = get_date_from_gmt(date('Y-m-d H:i:s',strtotime('-1 week')));
+				$before = get_date_from_gmt(date('Y-m-d H:i:s',strtotime('now')));
+			}
 
-	  	//$margin = ($alternate && strtolower($imgalign) === 'left') ? '0px 10px 10px 0px' : '0px 0px 10px 10px';
-
-	  	//$return_string .= '<div>';
-	   	//query_posts($args);
-
-	  	/*
-
-		$after = get_date_from_gmt(date('Y-m-d H:i:s',strtotime('-1 day')));
-		$before = get_date_from_gmt(date('Y-m-d H:i:s',strtotime('now')));
-
-		$default_args = array(
-			'date_query' => array(
+			$args['date_query'] = array(
 				array(
 					'after'     => $after,
 					'before'    => $before,
 					'inclusive' => true
 				)
-			)
-		);
-
-		if($type === 'weekly'){
-
-			$after = get_date_from_gmt(date('Y-m-d H:i:s',strtotime('-1 week')));
-			$before = get_date_from_gmt(date('Y-m-d H:i:s',strtotime('now')));
-
-			$default_args = array(
-				'date_query' => array(
-					array(
-						'after'     => $after,
-						'before'    => $before,
-						'inclusive' => true
-					)
-				)
 			);
 		}
-		*/
 
+		if($columns < 1){
+			$columns = 1;
+		}
 
-
-
+		$return_string = '';
+	   	if($content){
+	      	$return_string = $content;
+	  	}		
+		
 	   	$query = new WP_Query($args);
 		if($query->have_posts()){
-
 
 			SendPress_Error::log("cols: ".$columns);
 			SendPress_Error::log("posts found: ".$query->found_posts);
