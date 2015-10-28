@@ -75,8 +75,10 @@ class SendPress_View_Emails extends SendPress_View{
                 <a href="<?php echo SendPress_Admin::link('Emails_Autoresponder'); ?>"><?php _e('Autoresponders','sendpress'); ?></a>
               </li>
            
-              <li <?php if(strpos($sp->_current_view,'systememail') !== false){ ?>class="active"<?php } ?> ><a <?php if(strpos($sp->_current_view,'systememail') !== false){ ?>class="wp-ui-primary"<?php } ?>  href="<?php echo SendPress_Admin::link('Emails_Systememail'); ?>"><i class=" icon-bullhorn"></i> <?php _e('System Email','sendpress'); ?></a></li>
+              
             <?php } ?>
+
+            <li <?php if(strpos($sp->_current_view,'systememail') !== false){ ?>class="active"<?php } ?> ><a <?php if(strpos($sp->_current_view,'systememail') !== false){ ?>class="wp-ui-primary"<?php } ?>  href="<?php echo SendPress_Admin::link('Emails_Systememail'); ?>"><i class=" icon-bullhorn"></i> <?php _e('System Email','sendpress'); ?></a></li>
 				</ul>
 			</div>
 		</div>

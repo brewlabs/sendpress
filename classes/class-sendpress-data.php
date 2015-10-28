@@ -2345,13 +2345,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$system_emails = SendPress_Option::base_get('system-emails');
 		$defaults = array("opt_in" => "Opt In","manage_subscriptions" => "Manage Subscriptions");
 
-		// foreach ($system_emails as $key => $value) {
-		// 	unset($defaults[$value]);
-		// }
+		//remove manage subscription for now so i can work on other things
+		unset($defaults['manage_subscriptions']);
 
-		// if(count($defaults) === 0){
-		// 	return false;
-		// }
 
 		return $defaults;
 		
@@ -2415,6 +2411,60 @@ class SendPress_Data extends SendPress_DB_Tables {
 			break;
 		}
 		return $ret;
+	}
+
+	static function get_optin_sys_emails(){
+		$query = new WP_Query(
+			array(
+				'posts_per_page'=>-1,
+				'post_type' => 'sp_newsletters',
+				//'post_status' => array('sp-systememail'),
+				'meta_query' => array(
+				array(
+					'key'     => '_system_email_type',
+					'value'   => 'opt_in',
+					'compare' => '=',
+				),
+			),
+			)
+		);
+
+		wp_reset_postdata();
+		return $query->posts;
+	}
+
+	static function get_manage_sys_emails(){
+		$query = new WP_Query(
+			array(
+				'posts_per_page'=>-1,
+				'post_type' => $_email_post_type,
+				//'post_status' => array('sp-systememail'),
+				'meta_query' => array(
+				array(
+					'key'     => '_system_email_type',
+					'value'   => 'manage_subscriptions',
+					'compare' => '=',
+				),
+			),
+			)
+		);
+		wp_reset_postdata();
+		return $query->posts;
+	}
+
+	static function get_list_sys_emails($type){
+		
+		switch($type){
+			case 'opt_in':
+				$ret = SendPress_Data::get_optin_sys_emails();
+			break;
+			case 'manage_subscriptions':
+				$ret = SendPress_Data::get_manage_sys_emails();
+			break;
+		}
+
+		return $ret;
+
 	}
 
 }

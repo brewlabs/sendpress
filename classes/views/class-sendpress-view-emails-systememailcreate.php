@@ -51,7 +51,7 @@ class SendPress_View_Emails_Systememailcreate extends SendPress_View_Emails {
     	}
     	SendPress_Option::base_set('system-emails',$system_emails);
         
-        SendPress_Admin::redirect( 'Settings_Emailedit' , array('emailID' =>  $my_post['ID']  )   );
+        SendPress_Admin::redirect( 'Emails_Systememailedit' , array('emailID' =>  $my_post['ID']  )   );
         
         //$this->save_redirect( $_POST  );
 
@@ -164,9 +164,10 @@ class SendPress_View_Emails_Systememailcreate extends SendPress_View_Emails {
 				$this->panel_end(  ); ?>
 			</div>
 			</div>
+			<!--
 			<input class="checkbox" type="checkbox" id="make_default" name="make_default" value="<?php echo $options['default']; ?>" <?php checked( $options['default'], true ); ?>/> 
 			<label for="make_default">Send This E-Mail by Default</label>
-			
+			-->			
 		<br><br>
 		<?php //wp_editor($post->post_content,'textversion'); ?>
 

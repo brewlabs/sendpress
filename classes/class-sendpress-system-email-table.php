@@ -241,10 +241,10 @@ class SendPress_System_Email_Table extends WP_List_Table {
 	 * @return array An associative array containing all the bulk actions: 'slugs'=>'Visible Titles'
 	 **************************************************************************/
 	function get_bulk_actions() {
-		$actions = array(
-			'delete-emails-bulk'    => __('Delete','sendpress')
-		);
-		return $actions;
+		// $actions = array(
+		// 	'delete-emails-bulk'    => __('Delete','sendpress')
+		// );
+		return array();
 	}
 	
 	

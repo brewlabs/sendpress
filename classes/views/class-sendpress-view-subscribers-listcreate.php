@@ -24,6 +24,7 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
         update_post_meta($list_id, 'meta-key', $_POST['meta-key']);
 		update_post_meta($list_id, 'meta-compare', $_POST['meta-compare']);
 		update_post_meta($list_id, 'meta-value', $_POST['meta-value']);
+		update_post_meta($list_id, 'opt-in-id', $_POST['opt-in-id']);
 
         SendPress_Admin::redirect('Subscribers');
 	}
@@ -77,6 +78,33 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
 
 		<label>Meta Value</label>
 			<input type="text" name="meta-value" value="" />
+
+
+		<br><br>
+		
+		<?php 
+
+		$optin_emails = SendPress_Data::get_list_sys_emails('opt_in');
+		// echo '<pre>';
+		// print_r($optin_emails);
+
+		// echo '</pre>';
+
+
+		?>
+		<label>Double Opt In E-mail</label>
+		<select name="opt-in-id">
+			<option value="0">Default</option>
+			<?php
+
+				foreach ($optin_emails as $key => $email) {
+					
+					?>
+					<option value="<?php echo $email->ID; ?>"><?php echo get_post_meta($email->ID, '_sendpress_subject', true);?></option>
+					<?php
+				}
+			?>
+		</select>
 
 </p>
 	  
