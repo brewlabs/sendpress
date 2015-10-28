@@ -107,14 +107,21 @@ class SendPress_Sender_Website extends SendPress_Sender {
 
 							$code2 = SendPress_Data::encrypt( $link2 );
 							$link2 = SendPress_Manager::public_url($code2);
-		$headers = array(
-			'Content-Type: text/html; charset=' . SendPress_Option::get('email-charset','UTF-8'), 
-			'X-SP-LIST: ' . $this->list_id . ';',
-			'X-SP-REPORT: ' . $this->report_id . ';',
-			'X-SP-SUBSCRIBER: '. $this->sid . ';',
-			'X-SP-METHOD: website wp_mail',
-			'From: '. SendPress_Option::get('fromname') .' <'.SendPress_Option::get('fromemail').'>',
-			'List-Unsubscribe: <'.$link2.'>'
+
+			$rpath = SendPress_Option::get('bounce_email');
+			if( $rpath != false ){
+				$rpath = SendPress_Option::get('fromname');
+			}
+
+			$headers = array(
+				'Content-Type: text/html; charset=' . SendPress_Option::get('email-charset','UTF-8'), 
+				'X-SP-LIST: ' . $this->list_id . ';',
+				'X-SP-REPORT: ' . $this->report_id . ';',
+				'X-SP-SUBSCRIBER: '. $this->sid . ';',
+				'X-SP-METHOD: website wp_mail',
+				'From: '. SendPress_Option::get('fromname') .' <'.SendPress_Option::get('fromemail').'>',
+				'List-Unsubscribe: <'.$link2.'>',
+				'Return-Path: '. $rpath
 			 );
 		
 		$r = wp_mail($to, $subject, $html, $headers);
@@ -155,7 +162,7 @@ class SendPress_Sender_Website extends SendPress_Sender {
                     
             }
 
-            $from_email = SendPress_Option::get('fromemail');
+        $from_email = SendPress_Option::get('fromemail');
 		$phpmailer->From = $from_email;
 		$phpmailer->FromName = SendPress_Option::get('fromname');
 
