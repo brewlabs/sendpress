@@ -144,8 +144,6 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 				$number_of_columns = 3;
 			}
 
-			SendPress_Error::log("number of cols: ".$number_of_columns);
-
 			$column_template = "";
 			$col1 = "";
 			$col2 = "";
@@ -206,8 +204,6 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 	          	$template = '';
 	          	$idx++;
 	          	$current_column++;
-
-	          	SendPress_Error::log("current column: ".$current_column ." - num: ".$number_of_columns);
 
 	          	if( $current_column == $number_of_columns){
 	          		$current_column = 0;

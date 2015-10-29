@@ -22,8 +22,6 @@ class SendPress_View_Subscribers_Csvimport extends SendPress_View_Subscribers {
         //clean filename and extract extension
         $filename = $uploadfiles['name'][$key];
 
-        SendPress_Error::log($filename);
-
         // get file info
         // @fixme: wp checks the file extension....
         $filetype = wp_check_filetype( basename( $filename ), null );
