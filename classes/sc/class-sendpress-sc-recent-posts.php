@@ -135,9 +135,6 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 	   	$query = new WP_Query($args);
 		if($query->have_posts()){
 
-			SendPress_Error::log("cols: ".$columns);
-			SendPress_Error::log("posts found: ".$query->found_posts);
-
 			$number_of_columns = 1;
 			if($query->found_posts > 1){
 				$number_of_columns = $columns;
