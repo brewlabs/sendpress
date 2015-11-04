@@ -154,7 +154,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 				<input type="checkbox" name="show_logs" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> <?php _e('Show SPNL Logs','sendpress'); ?>.
 				<br><br>
 				<?php $ctype = SendPress_Option::get('wped_sending'); ?>
-				<input type="checkbox" name="wped_sending" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> <?php _e('Enable WP Email Delivery Early Access','sendpress'); ?>.
+				<!--<input type="checkbox" name="wped_sending" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> <?php _e('Enable WP Email Delivery Early Access','sendpress'); ?>. -->
 				
 				</div>
 			</div>
