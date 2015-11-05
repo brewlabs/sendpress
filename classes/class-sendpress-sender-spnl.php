@@ -11,7 +11,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_Sender_SPNL extends SendPress_Sender {
 	
 	function label(){
-		return __('WP Email Delivery (Beta) ','sendpress');
+		return __('WP Email Delivery ( API Sending )','sendpress');
 	}
 
 	function save(){
@@ -30,13 +30,19 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 
 		$m = SendPress_Option::get_sender( 'sendpress' );
 		?>
-		<p><?php _e( '<b>Access Key</b>', 'sendpress' ); ?>.</p>
-		<?php _e( 'API Key' , 'sendpress'); ?>
+		<p><?php _e( '<b>Setup</b>', 'sendpress' ); ?></p>
+		<?php _e( 'License Key' , 'sendpress'); ?>
 		<p><input name="sendpress-key" type="text" value="<?php echo $m['sendpress-key']; ?>" style="width:100%;" /></p>
 		<br>
-		<?php _e( 'Disable SSL Verification' , 'sendpress'); ?>
+		<?php _e( 'Disable SSL Sending' , 'sendpress'); ?>
 		<?php $ctype = isset( $m['verifyssl'] ) ? true : false ; ?>
 		<p><input name="sendpress-verifyssl" type="checkbox"  <?php if($ctype=='donotverify'){echo "checked='checked'"; } ?>  value="donotverify" /> <small>Not Recommended but required on some hosts.</small></p>
+		<br>
+				<hr>
+		<br>
+		<p>WP Email Delivery is an email delivery service built for WordPress. You can find out more about it at <a target="_blank" href="https://www.wpemaildelivery.com">https://www.wpemaildelivery.com</a>.</p>
+
+
 		<?php
 
 
@@ -81,6 +87,7 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 			    'inline_css' =>true,
 			    'subaccount' => $m['sendpress-key'],
 			    'metadata' => array(
+			    	'sender' => 'SPNL',
 			    	'return'=> home_url()
 			    	)
 		     );
@@ -99,7 +106,7 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 				'cookies' => array()
 			    )
 			);
-			error_log( print_r( $response , true ) );
+			
 			if( is_wp_error( $response ) ) {
 			   	$error_message = $response->get_error_message();
 			  	SPNL()->log->add( 'WPED Sending' , $error_message , 0 , 'sending' );
