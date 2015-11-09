@@ -260,6 +260,10 @@ class SendPress_Manager {
 					if($optin_id === 0){
 						$o = get_post_meta($list->ID, 'opt-in-id', true);
 
+						if($o === ""){
+							$o = 0;
+						}
+
 						if($o > 0){
 							$optin_id = $o;
 						}
