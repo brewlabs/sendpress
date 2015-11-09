@@ -1228,6 +1228,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		global $wpdb;
 		$table = SendPress_Data::list_subcribers_table();
 		$id = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $table WHERE subscriberID = %d AND status <= 2 ", $sid) );
+		
 		if($id > 0 ){
 			return true;
 		}
