@@ -16,7 +16,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if(is_int($value)){
 			return array_search($value, $v);
 		}
-
 	}
 
 
@@ -1053,7 +1052,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $wpdb->get_results($query);
 
 	}
-	static function add_subscriber_meta($subscriber_id,$meta_key,$meta_value,$list_id = false){
+	static function add_subscriber_meta($subscriber_id,$meta_key,$meta_value,$list_id = false, $app_only = 0){
 		global $wpdb;
 		$meta_table = SendPress_Data::subscriber_meta_table();
 		
@@ -1061,24 +1060,29 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$list_id = 0;
 		}
 
-		return $wpdb->insert( $meta_table, array('subscriberID'=>$subscriber_id,'meta_key' => $meta_key , 'meta_value' => $meta_value ,'listID'=>$list_id) );
+		return $wpdb->insert( $meta_table, array('subscriberID'=>$subscriber_id,'meta_key' => $meta_key , 'meta_value' => $meta_value ,'listID'=>$list_id, 'app_only' => $app_only) );
 	}
 
 	static function update_subscriber_meta($subscriber_id,$meta_key,$meta_value,$list_id = false){
 		global $wpdb;
 		$lists = SendPress_Option::get('pro_notification_lists');
 		$pnid = $lists['post_notifications']['id'];
+		$app_only = 0;
 
 		if($pnid !== $list_id && $meta_key === 'post_notifications'){
 			return;
 		}
 
+		if($meta_key === 'post_notifications'){
+			$app_only = 1;
+		}
+
 		$meta_table = SendPress_Data::subscriber_meta_table();
 		$has_data = SendPress_Data::get_subscriber_meta( $subscriber_id, $meta_key, $list_id, true );
 		if(empty($has_data)){
-			return SendPress_Data::add_subscriber_meta( $subscriber_id, $meta_key, $meta_value, $list_id );
+			return SendPress_Data::add_subscriber_meta( $subscriber_id, $meta_key, $meta_value, $list_id, $app_only );
 		} else {
-			return $wpdb->update( $meta_table, array('meta_value'=>$meta_value), array('subscriberID'=>$subscriber_id,'meta_key' => $meta_key , 'meta_value' => $has_data[0]->meta_value ) );
+			return $wpdb->update( $meta_table, array('meta_value'=>$meta_value), array('subscriberID'=>$subscriber_id,'meta_key' => $meta_key , 'meta_value' => $has_data[0]->meta_value, 'app_only' => $app_only ) );
 		}
 
 
