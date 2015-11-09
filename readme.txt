@@ -118,6 +118,14 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.5 - 2015.11.5 =
+* Fix: return path on boucen handler
+* Fix: old template double footer
+* Update: add date range to recent posts shortcode
+* Update: added more logs around sending
+* New: Support for WP Email Delivery https://www.wpemaildelivery.com
+* New: System email setup
+
 = 1.2.10.20 -  2015.10.20 =
 * Fix: Confirmations not sending fast
 * Fix: Emails being marked as bounce when they send correctly
@@ -810,6 +818,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.5 =
+New email delivery option and system templates
 
 = 1.2.10.20 =
 Confirmation sending updates and Autocron fixes

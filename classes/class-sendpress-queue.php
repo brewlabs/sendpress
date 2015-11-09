@@ -55,7 +55,7 @@ static function send_mail(){
 			if( $email != null ) {
 			
 				global $wpdb;
-						if( is_email(  $email->to_email ) && SendPress_Data::is_subscriber_active_or_unconfirmed($email->subscriberID ) ){
+						if( is_email( trim($email->to_email) ) && SendPress_Data::is_subscriber_active_or_unconfirmed($email->subscriberID ) ){
 							SendPress_Data::queue_email_process( $email->id );
 							$result = SendPress_Manager::send_email_from_queue( $email );
 						
@@ -65,7 +65,8 @@ static function send_mail(){
 									SPNL()->db->subscribers_tracker->add( array('subscriber_id' => intval( $email->subscriberID ), 'email_id' => intval( $email->emailID) ) );
 								} else {
 									$wpdb->update( SendPress_Data::queue_table() , array('success'=>2,'inprocess'=>3 ) , array('id'=> $email->id ));
-									
+									$tfd = print_r($result, true);
+									SPNL()->log->add(  'Odd Return from send_email_from_queue ' . $email->to_email , $tfd  , 0 , 'error' );
 									if($result != false) {
 										SendPress_Data::bounce_subscriber_by_id( $email->subscriberID );
 									}
@@ -74,6 +75,7 @@ static function send_mail(){
 								$wpdb->update( SendPress_Data::queue_table() , array('attempts'=>$email->attempts+1,'inprocess'=>0,'last_attempt'=> date('Y-m-d H:i:s') ) , array('id'=> $email->id ));
 							}
 						} else {
+							SPNL()->log->add(  'Email not on list ' . $email->to_email , '', 0 , 'error' );
 							$wpdb->update( SendPress_Data::queue_table() , array('success'=>2,'inprocess'=>3 ) , array('id'=> $email->id ));
 							SendPress_Data::bounce_subscriber_by_id( $email->subscriberID );
 						}
