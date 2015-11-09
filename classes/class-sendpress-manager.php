@@ -293,6 +293,7 @@ class SendPress_Manager {
 			
 			$confirm_email = SendPress_Data::get_single_email_from_queue_by_id( $id );
 			SendPress_Email_Cache::build_cache_for_system_email($confirm_email->id);
+			$confirm_email->is_confirm = true;
 			SendPress_Queue::send_the_queue($confirm_email);
 
 			/*

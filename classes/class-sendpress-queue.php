@@ -53,9 +53,9 @@ static function send_mail(){
 
 	static function send_the_queue($email){
 			if( $email != null ) {
-			
+
 				global $wpdb;
-						if( is_email( trim($email->to_email) ) && SendPress_Data::is_subscriber_active_or_unconfirmed($email->subscriberID ) ){
+						if( is_email( trim($email->to_email) ) && ( isset($email->is_confirm) || SendPress_Data::is_subscriber_active_or_unconfirmed($email->subscriberID ) )  ){
 							SendPress_Data::queue_email_process( $email->id );
 							$result = SendPress_Manager::send_email_from_queue( $email );
 						
