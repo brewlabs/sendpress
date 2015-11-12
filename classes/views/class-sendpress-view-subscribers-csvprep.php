@@ -47,11 +47,13 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
                 }
 
                 if($result === false ){
-  //                   return false;
+                  //                   return false;
                 }
             }
             unset($file_chunks[$key_chunk]);
         }
+
+        unlink($file);
 
         SendPress_Admin::redirect('Subscribers_Subscribers',array('listID'=> $list_id_clean));
 
