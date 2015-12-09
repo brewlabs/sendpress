@@ -57,7 +57,7 @@ class SendPress_SC_Unsubscribe_Form extends SendPress_SC_Base {
 			<input type="submit" value="<?php echo $btntxt; ?>" />
 			</form><?php
 		} else {
-			return do_shortcode($content);
+			echo do_shortcode($content);
 		}
 
 	}
@@ -81,7 +81,6 @@ class SendPress_SC_Unsubscribe_Form extends SendPress_SC_Base {
 					SendPress_Data::unsubscribe_from_all_lists( $id );
 				}
 			}
-
 		}
 		if(isset($_POST['sp-current-page'])){
 			$permalink = $_POST['sp-current-page'];
