@@ -57,7 +57,7 @@ class SendPress_SC_Unsubscribe_Form extends SendPress_SC_Base {
 			<input type="submit" value="<?php echo $btntxt; ?>" />
 			</form><?php
 		} else {
-			return  do_shortcode($content);
+			return do_shortcode($content);
 		}
 
 	}
@@ -86,11 +86,7 @@ class SendPress_SC_Unsubscribe_Form extends SendPress_SC_Base {
 		if(isset($_POST['sp-current-page'])){
 			$permalink = $_POST['sp-current-page'];
 
-			error_log($permalink);
-
 			$permalink = add_query_arg(array('sp-unsubscribe'=> $message), $permalink );
-
-			error_log($permalink);
 
 			wp_safe_redirect( $permalink );
 		}
