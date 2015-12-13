@@ -163,7 +163,7 @@ if( !defined('MINUTE_IN_SECONDS') ){
  	define( 'YEAR_IN_SECONDS',  365 * DAY_IN_SECONDS    );
 }
 
-if( defined('DAY_IN_SECONDS') ){
+if( !defined('MONTH_IN_SECONDS') ){
 	define( 'MONTH_IN_SECONDS',  28 * DAY_IN_SECONDS    );
 }
 
