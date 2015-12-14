@@ -30,7 +30,7 @@ class SendPress_Sender_Website extends SendPress_Sender {
 	}
 
 	function settings(){ ?>
-		This option uses your host's local mail server to send emails.
+		This option uses your host's local mail server to send emails.<br>Use this option for plugins like Postman SMTP.
 
 		<?php 
 
