@@ -40,7 +40,7 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 		<br>
 				<hr>
 		<br>
-		<p>WP Email Delivery is an email delivery service built for WordPress. You can find out more about it at <a target="_blank" href="https://www.wpemaildelivery.com">https://www.wpemaildelivery.com</a>. </p>
+		<p>WP Email Delivery is an email delivery service built for WordPress. You can find out more about it at <a target="_blank" href="https://www.wpemaildelivery.com">https://www.wpemaildelivery.com</a>. Give it a try for free with <strong>50 emails per month</strong> you just need a key from WP Email Delivery.</p>
 
 
 		<?php
