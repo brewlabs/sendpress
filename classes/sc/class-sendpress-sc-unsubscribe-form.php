@@ -7,7 +7,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 /**
  * Unsubscribe Form Shortcode
  *
- * 
+ *
  * @author 		SendPress
  * @category 	Shortcodes
  * @version     0.9.9.4
@@ -39,9 +39,9 @@ class SendPress_SC_Unsubscribe_Form extends SendPress_SC_Base {
 	 */
 	public static function output( $atts , $content = null ) {
 		global $post , $wp;
-		
+
 		extract( shortcode_atts( self::options() , $atts ) );
-		
+
 		if($content == null){
 			$content = self::content();
 		}
@@ -57,7 +57,7 @@ class SendPress_SC_Unsubscribe_Form extends SendPress_SC_Base {
 			<input type="submit" value="<?php echo $btntxt; ?>" />
 			</form><?php
 		} else {
-			return  do_shortcode($content);
+			echo do_shortcode($content);
 		}
 
 	}
@@ -70,25 +70,26 @@ class SendPress_SC_Unsubscribe_Form extends SendPress_SC_Base {
 		global $wp;
 		$email = isset( $_POST['sp-email'] ) ? $_POST['sp-email'] : false ;
 		$message = 'true';
+
+		error_log($email);
+
 		if ( $email !== false ) {
 			if(is_email( $email ) ){
 				$id = SendPress_Data::get_subscriber_by_email( $email );
+				error_log($id);
 				if($id != false){
 					SendPress_Data::unsubscribe_from_all_lists( $id );
 				}
 			}
-
 		}
 		if(isset($_POST['sp-current-page'])){
-					$permalink = $_POST['sp-current-page'];
+			$permalink = $_POST['sp-current-page'];
 
-					$permalink = add_query_arg($wp->query_string, array('sp-unsubscribe'=> $message), $permalink );
+			$permalink = add_query_arg(array('sp-unsubscribe'=> $message), $permalink );
 
-					
+			wp_safe_redirect( $permalink );
+		}
 
-					wp_safe_redirect( $permalink );
-				}
-		
 	}
 
 }
