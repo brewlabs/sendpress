@@ -831,7 +831,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		$args = apply_filters('sendpress_get_lists', array_merge($args, array(
 			'numberposts'     => -1,
-	    	'offset'          => 0,
 	    	'orderby'         => 'post_title',
 	    	'order'           => 'DESC'
 	    )));

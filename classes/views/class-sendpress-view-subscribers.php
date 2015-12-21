@@ -102,7 +102,7 @@ class SendPress_View_Subscribers extends SendPress_View {
 			<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 		    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page($_REQUEST['page']) ?>" />
 		    <!-- Now we can render the completed list table -->
-		    <?php $testListTable->display() ?>
+		    <?php $testListTable->display(); ?>
 		    <?php wp_nonce_field($sp->_nonce_value); ?>
 		</form>
 	<?php 
