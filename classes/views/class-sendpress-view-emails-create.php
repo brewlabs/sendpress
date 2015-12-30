@@ -118,8 +118,10 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 			$args = array(
 			'post_type' => 'sp_template' ,
 			'post_status' => array('sp-standard'),
+			'orderby' => 'title',
+			'order' => 'ASC',
 			);
-			$template_id= 0;
+
 			$the_query = new WP_Query( $args );
 
 			if ( $the_query->have_posts() ) {
@@ -127,11 +129,8 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 			while ( $the_query->have_posts() ) {
 				$the_query->the_post();
 				$temp_id = $the_query->post->ID;
-				$s = '';
-				if($temp_id == $template_id){
-					$s = 'selected';
-				}
-				echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
+				
+				echo '<option value="'.$temp_id .'">' . get_the_title() . '</option>';
 			}
 			echo  '</optgroup>';
 			
@@ -140,6 +139,8 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 		$args = array(
 			'post_type' => 'sp_template' ,
 			'post_status' => array('sp-custom'),
+			'orderby' => 'title',
+			'order' => 'ASC',
 			);
 
 			$the_query = new WP_Query( $args );
@@ -149,11 +150,8 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 			while ( $the_query->have_posts() ) {
 				$the_query->the_post();
 				$temp_id = $the_query->post->ID;
-				$s = '';
-				if($temp_id == $template_id){
-					$s = 'selected';
-				}
-				echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
+				
+				echo '<option value="'.$temp_id .'">' . get_the_title() . '</option>';
 			}
 			echo  '</optgroup>';
 			

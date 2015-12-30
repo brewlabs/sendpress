@@ -994,7 +994,7 @@ class SendPress {
 			wp_localize_script( 'sendpress-signup-form-js', 'sendpress', array(
 				'invalidemail' => __( "Please enter your e-mail address", "sendpress" ),
 				'missingemail' => __( "Please enter your e-mail address", "sendpress" ),
-				'ajaxurl'      => admin_url( 'admin-ajax.php', 'http' )
+				'ajaxurl'      => admin_url( 'admin-ajax.php' )
 			) );
 		}
 	}
