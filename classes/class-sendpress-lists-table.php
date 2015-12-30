@@ -340,7 +340,7 @@ class SendPress_Lists_Table extends WP_List_Table {
 
             //$args = apply_filters('sendpress_list_table_query',array('post_type' => 'sendpress_list','post_status' => array('publish','draft')));
 
-            $query = SendPress_Data::get_lists(array('post_status' => array('publish','draft')));
+            $query = SendPress_Data::get_lists();
             //$query = new WP_Query( $args );
            
             $totalitems = $query->found_posts;
@@ -364,7 +364,7 @@ class SendPress_Lists_Table extends WP_List_Table {
            
 
             //Which page is this?
-            $paged = !empty($_GET["paged"]) ? esc_sql($_GET["paged"]) : '';
+            $paged = !empty($_GET["paged"]) ? SPNL()->validate->int( $_GET["paged"] ) : 1;
             //Page Number
             if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
             //How many pages do we have in total?
@@ -386,7 +386,6 @@ class SendPress_Lists_Table extends WP_List_Table {
 
             $args = array(
             'post_type' => 'sendpress_list' ,
-            'post_status' => array('publish','draft'),
             'posts_per_page' => $per_page,
             'paged'=> $paged,
             );

@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
-Tested up to: 4.3
-Stable tag: 1.5.11.9
+Tested up to: 4.4
+Stable tag: 1.5.12.20
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,9 +118,21 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.5.12.20 - 2015.12.20 =
+* Fix: Jetpack sharing icons showing in email
+* Fix: Subscriber list not paging
+
+
+= 1.5.12.13 - 2015.12.13 =
+* Fix: remove unused code
+* Fix: deleting of uploaded lists
+* Fix: added new defines
+* Fix: removed loggin messages
+* Fix: unsubscribe shortcode redirect fix
+* Update: add new text for setup
+
 = 1.5.11.9 - 2015.11.9 =
 * Fix: send confirmation emails directly
-
 
 = 1.5 - 2015.11.5 =
 * Fix: return path on boucen handler
@@ -822,6 +834,12 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.5.12.20 =
+Bug fixes
+
+= 1.5.12.13 =
+Bug fixes and code cleanup
 
 = 1.5 =
 New email delivery option and system templates
