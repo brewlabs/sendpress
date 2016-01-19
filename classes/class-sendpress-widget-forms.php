@@ -19,7 +19,7 @@ class SendPress_Widget_Forms extends WP_Widget {
 	/**
 	 * Widget setup.
 	 */
-	function SendPress_Widget_Forms() {
+	function __construct() {
 		/* Widget settings. */
 		$widget_ops = array( 'classname' => 'sendpress', 'description' => __('Displays a form so your users can interact with SendPress.', 'sendpress') );
 

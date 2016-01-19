@@ -17,7 +17,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_Sender_Factory {
 	var $senders = array();
 
-	function SendPress_Sender_Factory() {
+	function __construct() {
 		//add_action( 'senders_init', array( $this, '_register_senders' ), 100 );
 	}
 

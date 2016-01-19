@@ -64,7 +64,7 @@ class SendPress_Public_View {
 	
 
 
-	function SendPress_Public_View( $title='' ) {
+	function __construct( $title='' ) {
 
 		
 		

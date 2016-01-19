@@ -37,7 +37,7 @@ class SendPress_Email {
 	private $_tracker = true;
 
 	
-	function SendPress_Email(){
+	function __construct(){
 
 		}
 

@@ -10,7 +10,7 @@ if(!class_exists('SendPress_Screen_Options')){
 
 class SendPress_Screen_Options {
 
-	function SendPress_Screen_Options(){
+	function __construct(){
 		add_filter('set-screen-option', array(&$this,'set_screen_options'), 10, 3);
 
 	}

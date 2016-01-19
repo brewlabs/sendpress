@@ -185,10 +185,8 @@ status tinyint(4) NOT NULL DEFAULT '0',
 tracker_type tinyint(4) NOT NULL DEFAULT '0',
 opened_count int(11) unsigned NOT NULL,
 PRIMARY KEY  (subscriber_id,email_id),
-KEY  tracker_type (tracker_type)
+KEY tracker_type (tracker_type)
 ) $collate;\n";
-
-
 
 		dbDelta( $sql );
 

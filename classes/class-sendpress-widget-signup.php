@@ -19,7 +19,7 @@ class SendPress_Widget_Signup extends WP_Widget {
 	/**
 	 * Widget setup.
 	 */
-	function SendPress_Widget_Signup() {
+	function __construct() {
 		/* Widget settings. */
 		$widget_ops = array( 'classname' => 'sendpress', 'description' => __('Displays a signup form so your users can sign up for your public e-mail lists.', 'sendpress') );
 

@@ -221,7 +221,7 @@
 
 		public $OPERATING_SYSTEM_UNKNOWN = 'unknown';
 
-		function SendPress_Browser($useragent="") {
+		function __construct($useragent="") {
 			$this->reset();
 			if( $useragent != "" ) {
 				$this->setUserAgent($useragent);

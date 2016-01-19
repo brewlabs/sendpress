@@ -556,11 +556,11 @@ KEY type (type)
             
 $report_url_table =  SendPress_DB_Tables::report_url_table();
 $command .= " CREATE TABLE $report_url_table (
-urlID int(11) unsigned NOT NULL AUTO_INCREMENT, 
-url varchar(2000) DEFAULT NULL, 
-reportID int(11) DEFAULT NULL, 
-PRIMARY KEY  (urlID), 
-KEY reportID (reportID), 
+urlID int(11) unsigned NOT NULL AUTO_INCREMENT,
+url varchar(2000) DEFAULT NULL,
+reportID int(11) DEFAULT NULL,
+PRIMARY KEY  (urlID),
+KEY reportID (reportID),
 KEY url (url(255))
 ) $collate;\n"; 
             //  dbDelta($command); 
