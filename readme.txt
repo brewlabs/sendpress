@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
 Tested up to: 4.4
-Stable tag: 1.5.12.20
+Stable tag: 1.6.1.20
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,13 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.6.1.19 - 2016.1.19 =
+* Fix: Update classes for PHP7
+* Fix: test report page
+* Fix: Updated template order
+* Fix: remove unused vars
+* Fix: SSL support for links
 
 = 1.5.12.20 - 2015.12.20 =
 * Fix: Jetpack sharing icons showing in email
@@ -834,6 +841,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.6.1.20 =
+Bug fixes and PHP7 support
 
 = 1.5.12.20 =
 Bug fixes
