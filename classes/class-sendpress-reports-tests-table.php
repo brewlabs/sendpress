@@ -57,7 +57,7 @@ class SendPress_Reports_Tests_Table extends WP_List_Table {
      */
     function single_row( $item ) {
         static $row_class = '';
-$canceled = get_post_meta($item->ID, '_canceled', true);
+        $canceled = get_post_meta($item->ID, '_canceled', true);
                     
         $info = get_post_meta($item->ID, '_send_time', true);
         $cl ='';
@@ -193,6 +193,26 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
                     } 
                     */
                      break;  
+                  case 'clicks':
+                    //if( $stat_type == 'new'){
+                        $clicks = SPNL()->db->subscribers_url->clicks_email_id( $item->ID  );
+                        $clicks_total = SPNL()->db->subscribers_url->clicks_total_email_id( $item->ID  );
+                        $clicks =  $clicks == 0 ? '-' : $clicks;
+                        $clicks_total =  $clicks_total == 0 ? '-' : $clicks_total;
+                        return '<span class="label label-success">'. $clicks .'</span> <span class="label label-info">'. $clicks_total .'</span>';
+                    /*
+                    } else {
+
+                        $ou = $this->_sendpress->get_clicks_unique_count($item->ID);
+                        $ou = $ou ? $ou : '-';
+
+                        $ot = $this->_sendpress->get_clicks_count($item->ID);
+                        $ot = $ot ? $ot : '-';
+
+                        return '<span class="label label-success">'. $ou .'</span> <span class="label label-info">'. $ot .'</span>';
+                    }
+                    */
+                break;
                 case 'unsubscribe':
                     //if( $stat_type == 'new'){
                         $clicks = SPNL()->db->subscribers_tracker->get_unsubs( $item->ID  );
@@ -205,9 +225,10 @@ $canceled = get_post_meta($item->ID, '_canceled', true);
                             return '<span class="label label-danger">'. $clicks .'</span>';
                          }
                      }
-                     return '<span class="label label-danger">0</span>';
                      */
-                    break;
+                    // return '<span class="label label-danger">0</span>';
+             
+                break;
                case 'subject':
                 $sub = get_post_meta($item->ID, "_sendpress_subject", true);
                 return $sub;
