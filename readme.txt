@@ -118,7 +118,7 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
-= 1.6.1.19 - 2016.1.19 =
+= 1.6.1.19 - 2016.1.20 =
 * Fix: Update classes for PHP7
 * Fix: test report page
 * Fix: Updated template order
