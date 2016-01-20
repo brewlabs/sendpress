@@ -28,7 +28,7 @@ class SendPress_View_Reports_Tests extends SendPress_View_Reports{
 
 	function html($sp){
 		//Create an instance of our package class...
-		$sp_reports_table = new SendPress_Reports_Tests_Table	();
+		$sp_reports_table = new SendPress_Reports_Tests_Table();
 		//Fetch, prepare, sort, and filter our data...
 		$sp_reports_table->prepare_items();
 		?>
