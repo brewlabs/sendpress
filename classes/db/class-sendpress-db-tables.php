@@ -409,7 +409,7 @@ class SendPress_DB_Tables {
              
              $wpdb->query("REPAIR TABLE  $subscriber_queue, $subscriber_table");
 
-             SPNL()->db->subscribers_tracker->repair_table();
+             SPNL()->db("Subscribers_Tracker")->repair_table();
         }
 
 
@@ -531,7 +531,7 @@ KEY success_date (success,last_attempt,max_attempts,attempts,inprocess,date_sent
 ) $collate;\n";
 // dbDelta($command); 
             
-
+/*
 $subscriber_events_table =  SendPress_DB_Tables::subscriber_event_table();
 $command .= " CREATE TABLE $subscriber_events_table (
 eventID int(11) unsigned NOT NULL AUTO_INCREMENT, 
@@ -553,7 +553,7 @@ KEY eventdate (eventdate),
 KEY type (type)
 ) $collate;\n";
              //dbDelta($command);  
-            
+  /*          
 $report_url_table =  SendPress_DB_Tables::report_url_table();
 $command .= " CREATE TABLE $report_url_table (
 urlID int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -564,7 +564,7 @@ KEY reportID (reportID),
 KEY url (url(255))
 ) $collate;\n"; 
             //  dbDelta($command); 
-              
+    */          
 
 $subscriber_status_table =  SendPress_DB_Tables::subscriber_status_table();
 $command .= " CREATE TABLE $subscriber_status_table (

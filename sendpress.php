@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: SendPress Newsletters
-Version: 1.6.1.20
+Version: 1.6.1.23
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -19,7 +19,7 @@ global $blog_id;
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-define( 'SENDPRESS_VERSION', '1.6.1.20' );
+define( 'SENDPRESS_VERSION', '1.6.1.23' );
 define( 'SENDPRESS_URL', plugin_dir_url( __FILE__ ) );
 define( 'SENDPRESS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -74,6 +74,7 @@ if ( ! defined( 'SENDPRESS_TRANSIENT_LENGTH' ) ) {
  */
 class SendPress {
 
+	
 	var $prefix = 'sendpress_';
 	var $ready = false;
 	var $_nonce_value = 'sendpress-is-awesome';
@@ -246,6 +247,23 @@ class SendPress {
 
 	}
 
+	static $array_of_db_objects;
+	public function db( $object ){
+		$class_name = "SendPress_DB_" . $object;
+		if(isset(self::$array_of_db_objects[$object])) {
+			return self::$array_of_db_objects[$object];
+		}
+		if(class_exists($class_name)){
+			$class =  new $class_name();
+			self::$array_of_db_objects[$object] = $class;
+		} else {
+			$class =  new WP_Error();
+		}
+		return $class;
+	}
+	
+
+
 	public static function get_instance() {
 		
 		if ( ! isset( self::$instance ) && ! ( self::$instance instanceof SendPress ) ) {
@@ -254,10 +272,10 @@ class SendPress {
 			self::$instance->api                     = new SendPress_API();
 			self::$instance->validate                = new SendPress_Security();
 			self::$instance->log                     = new SendPress_Logging();
-			self::$instance->db                      = new stdClass();
-			self::$instance->db->subscribers_tracker = new SendPress_DB_Subscribers_Tracker();
-			self::$instance->db->url                 = new SendPress_DB_Url();
-			self::$instance->db->subscribers_url     = new SendPress_DB_Subscribers_Url();
+			//self::$instance->db                      = new stdClass();
+			//self::$instance->db->subscribers_tracker = new SendPress_DB_Subscribers_Tracker();
+			//self::$instance->db->url                 = new SendPress_DB_Url();
+			//self::$instance->db->subscribers_url     = new SendPress_DB_Subscribers_Url();
 		}
 
 		return self::$instance;
@@ -293,10 +311,7 @@ class SendPress {
 		//add_action('register_form',array( $this , 'add_registration_fields'));
 
 		SendPress_Ajax_Loader::init();
-		//SendPress_Signup_Shortcode::init();
-		SendPress_Sender::init();
-		SendPress_Cron::get_instance();
-		SendPress_Videos::init();
+		
 		
 		
 
@@ -401,6 +416,10 @@ class SendPress {
 		add_action( 'wp_enqueue_scripts', array( $this, 'add_front_end_styles' ) );
 
 		add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
+
+		add_action( 'wp_loaded', array( 'SendPress_Cron' , 'auto_cron' ) );
+        add_filter( 'cron_schedules', array( 'SendPress_Cron', 'cron_schedules' ) );
+        add_action('sendpress_template_loaded', array('SendPress_Videos', 'add_video_filter') );
 
 	}
 
@@ -1297,9 +1316,10 @@ class SendPress {
 		}
 
 		SendPress_DB_Tables::install();
-		@SPNL()->db->subscribers_tracker->create_table();
-		@SPNL()->db->subscribers_url->create_table();
-		@SPNL()->db->url->create_table();
+		@SPNL()->db("Subscribers_Tracker")->create_table();
+		@SPNL()->db("Subscribers_Url")->create_table();
+		@SPNL()->db("Url")->create_table();
+		@SPNL()->db("Autoresponder")->create_table();
 
 
 		SendPress_Option::base_set( 'update-info', 'show' );
@@ -1723,9 +1743,9 @@ class SendPress {
 			wp_die( sprintf( __( 'SendPress requires WordPress version %s or later.', 'sendpress' ), SENDPRESS_MINIMUM_WP_VERSION ) );
 		} else {
 			SendPress_DB_Tables::install();
-			@SPNL()->db->subscribers_tracker->create_table();
-			@SPNL()->db->subscribers_url->create_table();
-			@SPNL()->db->url->create_table();
+			@SPNL()->db("Subscribers_Tracker")->create_table();
+			@SPNL()->db("Subscribers_Url")->create_table();
+			@SPNL()->db("Url")->create_table();
 		}
 		//Make sure we stop the old action from running
 		wp_clear_scheduled_hook( 'sendpress_cron_action_run' );

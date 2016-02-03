@@ -25,7 +25,7 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 		
 		try {
 
-			$db_url = SPNL()->db->url;
+			$db_url = SPNL()->db("Url");
 
 			$url_in_db = $db_url->get( $url );  //= SendPress_Data::get_url_by_hash( $hash );
 			
@@ -36,9 +36,9 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 			}
 
 
-			$add_update = SPNL()->db->subscribers_url->add_update( array('subscriber_id'=>  $info->id, 'email_id' =>$info->report, 'url_id' =>  $id  ) );
+			$add_update = SPNL()->db("Subscribers_Url")->add_update( array('subscriber_id'=>  $info->id, 'email_id' =>$info->report, 'url_id' =>  $id  ) );
 
-			$open = SPNL()->db->subscribers_tracker->open( $info->report , $info->id , 2 );
+			$open = SPNL()->db("Subscribers_Tracker")->open( $info->report , $info->id , 2 );
 
 			//SendPress_Error::log($info->url);
 

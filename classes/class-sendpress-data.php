@@ -1360,7 +1360,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		}
 		update_post_meta($rid, '_unsubscribe_count', $stat );
 
-		SPNL()->db->subscribers_tracker->unsub( $rid , $sid );
+		SPNL()->db("Subscribers_Tracker")->unsub( $rid , $sid );
 		
 		$wpdb->update( SendPress_Data::list_subcribers_table() , array('status'=> 3) , array('listID'=> $lid,'subscriberID'=>$sid ));
 	}

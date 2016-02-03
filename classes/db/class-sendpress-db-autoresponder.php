@@ -23,7 +23,7 @@ class SendPress_DB_Autoresponder extends SendPress_DB {
 	*/
 	public function get_columns() {
 		return array(
-			'responder_id'   => '%d',
+			'post_id'   => '%d',
 			'delay_time'       => '%d',
 			'action_type' => '%d',
 			'when_to_send'    => '%s',
@@ -46,6 +46,9 @@ class SendPress_DB_Autoresponder extends SendPress_DB {
 		);
 	}
 
+	public function add( $data ){
+		return $this->replace( $data , 'autoresponder' );
+	}
 	/**
 	 * Create the table
 	 *
@@ -69,10 +72,12 @@ class SendPress_DB_Autoresponder extends SendPress_DB {
         }
 
 $sql = " CREATE TABLE {$this->table_name} (
-responder_id int(11) unsigned NOT NULL,
+post_id int(11) unsigned NOT NULL,
 delay_time int(11) unsigned NOT NULL,
 action_type int(11) unsigned NOT NULL,
 when_to_send varchar(255) DEFAULT NULL,
+active int(1) DEFAULT 0,
+PRIMARY KEY  (post_id)
 ) $collate;\n";
 
 		dbDelta( $sql );

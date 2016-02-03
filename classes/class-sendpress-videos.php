@@ -19,31 +19,31 @@ class SendPress_Videos{
     }
 
     function add_hooks(){
-        add_action('sendpress_template_loaded', array($this, 'add_video_filter') );
+        
     }
 
-    function add_video_filter(){
-        add_filter('embed_oembed_html', array($this,'avoid_cache'),10, 4);
-        add_filter( 'oembed_dataparse', array($this, 'fix_video'), 10, 3 );
+    static function add_video_filter(){
+        add_filter('embed_oembed_html', array('SendPress_Videos','avoid_cache'),10, 4);
+        add_filter( 'oembed_dataparse', array('SendPress_Videos', 'fix_video'), 10, 3 );
     }
 
-    function avoid_cache($cache, $url, $attr, $post_ID ){
+    static function avoid_cache($cache, $url, $attr, $post_ID ){
         return wp_oembed_get($url,$attr);
     }
 
-    function fix_video( $return, $data, $url ){
+    static function fix_video( $return, $data, $url ){
 
         $output = '';
 
         if ($data->provider_name == 'YouTube' || $data->provider_name == 'Vimeo') {
-            return $this->get_video($url, $data->thumbnail_url);
+            return self::get_video($url, $data->thumbnail_url);
             //return "<a href='{$url}' target='_blank'><img src='{$data->thumbnail_url}'></a>";
         }
         return $return;
 
     }
 
-    function get_video($url, $img){
+    static function get_video($url, $img){
         ob_start();
         ?>
         

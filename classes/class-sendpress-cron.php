@@ -42,8 +42,7 @@ class SendPress_Cron {
 	function __construct(){
         //$this->auto();
 		  /* some processing for cron management */
-        add_action( 'wp_loaded', array( $this , 'auto_cron' ) );
-        add_filter( 'cron_schedules', array( $this , 'cron_schedules' ) );
+
 
 	}
 
@@ -51,7 +50,7 @@ class SendPress_Cron {
 
 
 
-    function auto_cron(){
+    static function auto_cron(){
           // make sure we're in wp-cron.php
         if ( false !== strpos( $_SERVER['REQUEST_URI'], '/wp-cron.php' ) ) {
 
@@ -141,7 +140,7 @@ class SendPress_Cron {
         }
     }
 
-    function cron_schedules( $param ) {
+   static function cron_schedules( $param ) {
         $frequencies=array(
             'one_min' => array(
                 'interval' => 60,

@@ -15,12 +15,13 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
  		if($post_id > 0){
 	 		
 	 		$myData = array(
-	 			'type' => $_POST['sp-autoresponder-type'],
-	 			'when' => $_POST['sp-timing'],
-	 			'delay' => $_POST['sp-delay']
+	 			'action_type' => $_POST['sp-autoresponder-type'],
+	 			'when_to_send' => $_POST['sp-timing'],
+	 			'delay_time' => $_POST['sp-delay'],
+	 			'post_id' => $post_id
 	 		);
-
-	 		SendPress_Option::email_set( 'autoresponder_' . $post_id  ,  $myData );
+	 		SPNL()->db('Autoresponder')->add($myData);
+	 		//SendPress_Option::email_set( 'autoresponder_' . $post_id  ,  $myData );
  		}
 	}
 

@@ -17,9 +17,9 @@ class SendPress_View_Settings_Install extends SendPress_View_Settings {
 		echo "<h2>". __('Attempting to install or repair missing data','sendpress') . "</h2><br>";
 
 		SendPress_Data::install();
-		@SPNL()->db->subscribers_tracker->create_table();
-		@SPNL()->db->url->create_table();
-		@SPNL()->db->subscribers_url->create_table();
+		@SPNL()->db("Subscribers_Tracker")->create_table();
+		@SPNL()->db("Url")->create_table();
+		@SPNL()->db("Subscribers_Url")->create_table();
 		echo "<pre>";
 		echo SendPress_DB_Tables::check_setup_support();
 		echo "</pre>";

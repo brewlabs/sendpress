@@ -582,7 +582,7 @@ class SendPress_API {
 		$report_id = $tracker_data['email'];
 		$sid = $tracker_data['id'];
 
-		$db_url = SPNL()->db->url;
+		$db_url = SPNL()->db("Url");
 
 		$url_in_db = $db_url->get( $url );  //= SendPress_Data::get_url_by_hash( $hash );
 		
@@ -593,9 +593,9 @@ class SendPress_API {
 		}
 
 
-		$add_update = SPNL()->db->subscribers_url->add_update( array('subscriber_id'=> $sid, 'email_id' => $report_id, 'url_id' => $id  ) );
+		$add_update = SPNL()->db("Subscribers_Url")->add_update( array('subscriber_id'=> $sid, 'email_id' => $report_id, 'url_id' => $id  ) );
 
-		$open = SPNL()->db->subscribers_tracker->open( $report_id , $sid , 2 );
+		$open = SPNL()->db("Subscribers_Tracker")->open( $report_id , $sid , 2 );
 
 		return ($add_update && $open) ? true : false;
 		/*
