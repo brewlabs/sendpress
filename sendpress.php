@@ -248,7 +248,7 @@ class SendPress {
 	}
 
 	static $array_of_db_objects;
-	public function db( $object ){
+	public function load( $object ){
 		$class_name = "SendPress_DB_" . $object;
 		if(isset(self::$array_of_db_objects[$object])) {
 			return self::$array_of_db_objects[$object];
@@ -272,10 +272,10 @@ class SendPress {
 			self::$instance->api                     = new SendPress_API();
 			self::$instance->validate                = new SendPress_Security();
 			self::$instance->log                     = new SendPress_Logging();
-			//self::$instance->db                      = new stdClass();
-			//self::$instance->db->subscribers_tracker = new SendPress_DB_Subscribers_Tracker();
-			//self::$instance->db->url                 = new SendPress_DB_Url();
-			//self::$instance->db->subscribers_url     = new SendPress_DB_Subscribers_Url();
+			self::$instance->db                      = new stdClass();
+			self::$instance->db->subscribers_tracker = new SendPress_DB_Subscribers_Tracker();
+			self::$instance->db->url                 = new SendPress_DB_Url();
+			self::$instance->db->subscribers_url     = new SendPress_DB_Subscribers_Url();
 		}
 
 		return self::$instance;
@@ -1316,10 +1316,10 @@ class SendPress {
 		}
 
 		SendPress_DB_Tables::install();
-		@SPNL()->db("Subscribers_Tracker")->create_table();
-		@SPNL()->db("Subscribers_Url")->create_table();
-		@SPNL()->db("Url")->create_table();
-		@SPNL()->db("Autoresponder")->create_table();
+		@SPNL()->load("Subscribers_Tracker")->create_table();
+		@SPNL()->load("Subscribers_Url")->create_table();
+		@SPNL()->load("Url")->create_table();
+		@SPNL()->load("Autoresponder")->create_table();
 
 
 		SendPress_Option::base_set( 'update-info', 'show' );
@@ -1743,9 +1743,9 @@ class SendPress {
 			wp_die( sprintf( __( 'SendPress requires WordPress version %s or later.', 'sendpress' ), SENDPRESS_MINIMUM_WP_VERSION ) );
 		} else {
 			SendPress_DB_Tables::install();
-			@SPNL()->db("Subscribers_Tracker")->create_table();
-			@SPNL()->db("Subscribers_Url")->create_table();
-			@SPNL()->db("Url")->create_table();
+			@SPNL()->load("Subscribers_Tracker")->create_table();
+			@SPNL()->load("Subscribers_Url")->create_table();
+			@SPNL()->load("Url")->create_table();
 		}
 		//Make sure we stop the old action from running
 		wp_clear_scheduled_hook( 'sendpress_cron_action_run' );

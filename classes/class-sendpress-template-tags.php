@@ -141,7 +141,7 @@ class SendPress_Template_Tags {
 	 * @return string Content with email tags filtered out.
 	 */
 	public function do_email_tags( $content, $t_id, $email_id , $subscriber_id , $example ) {
-
+		
 		// Check if there is atleast one tag added
 		if ( empty( $this->email_tags ) || ! is_array( $this->email_tags ) ) {
 			return $content;
@@ -178,7 +178,7 @@ class SendPress_Template_Tags {
 	 * @return mixed
 	 */
 	public function do_email_tag( $m ) {
-
+		
 		// Get tag
 		$tag = $m[1];
 

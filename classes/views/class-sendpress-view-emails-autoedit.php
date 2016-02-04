@@ -56,8 +56,8 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
 			$post = get_post( $emailID );
 			$post_ID = $post->ID;
 		}
-	
-        if($post->post_type !== 'sp_newsletters'){
+		$auto = SPNL()->db('Autoresponder')->get( SPNL()->validate->int( $_REQUEST['emailID'] ) );
+		if($post->post_type !== 'sp_newsletters'){
             SendPress_Admin::redirect('Emails');
         }
       
@@ -68,10 +68,10 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
      <form method="post" id="post" role="form">
         <input type="hidden" name="post_ID" id="post_ID" value="<?php echo $post->ID; ?>" />
         <input type="hidden" name="action" id="action" value="save-email" />
-       <div  >
+       <div>
        <div style="float:right;" class="btn-toolbar">
             <div id="sp-cancel-btn" class="btn-group">
-               <?php if($post->post_status != 'sp-autoresponder'  ) { ?>
+            <?php if($post->post_status != 'sp-autoresponder'  ) { ?>
                 <a href="?page=<?php echo SPNL()->validate->page($_GET['page']); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
             
             <?php 

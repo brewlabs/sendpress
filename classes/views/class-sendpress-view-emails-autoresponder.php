@@ -16,7 +16,7 @@ class SendPress_View_Emails_Autoresponder extends SendPress_View_Emails{
 	$testListTable = new SendPress_Autoresponder_Table();
 	//Fetch, prepare, sort, and filter our data...
 	$testListTable->prepare_items();
-
+	
 	?>
 
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->

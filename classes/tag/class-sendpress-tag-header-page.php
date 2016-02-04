@@ -17,6 +17,7 @@ class SendPress_Tag_Header_Page extends SendPress_Tag_Base  {
 	}
 	
 	static function external(  $template_id , $email_id , $subscriber_id, $example ){
+		
 		//if( $example == false ){
 			if( self::template_post_exists($template_id) ){
 				$content = get_post_meta( $template_id , '_header_page' , true); 

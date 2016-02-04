@@ -316,7 +316,8 @@ class SendPress_Template {
 
 	function render_html($post_id = false, $render = true, $inline = false, $no_links = false, $custom_html = false){
 		global $post;
-
+		remove_filter( 'the_content', 'sharing_display', 19 );
+		remove_filter( 'the_excerpt', 'sharing_display', 19 );
 		$saved = false;
 		if($post_id !== false){
 			$post = get_post( $post_id );

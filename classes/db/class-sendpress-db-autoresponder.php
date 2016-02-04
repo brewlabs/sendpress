@@ -12,7 +12,7 @@ class SendPress_DB_Autoresponder extends SendPress_DB {
 		global $wpdb;
 		$this->table_name  = $wpdb->prefix . $this->prefix . 'autoresponders';
 		$this->version     = '1.0';
-	
+		$this->primary_key = 'post_id';
 	}
 
 	/**
