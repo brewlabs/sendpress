@@ -289,7 +289,7 @@ class SendPress_Manager {
                 );
            
             $id = SendPress_Data::add_email_to_queue($go);	
-			SPNL()->db("Subscribers_Tracker")->add( array('subscriber_id' => intval( $subscriberID ), 'email_id' => intval( $optin), 'tracker_type' => SendPress_Enum_Tracker_Type::Confirm ) );
+			SPNL()->load("Subscribers_Tracker")->add( array('subscriber_id' => intval( $subscriberID ), 'email_id' => intval( $optin), 'tracker_type' => SendPress_Enum_Tracker_Type::Confirm ) );
 			
 			$confirm_email = SendPress_Data::get_single_email_from_queue_by_id( $id );
 			SendPress_Email_Cache::build_cache_for_system_email($confirm_email->id);
@@ -327,7 +327,7 @@ class SendPress_Manager {
 			$text = str_replace("*|SP:CONFIRMLINK|*", $href , $text );
 			$text = nl2br($text);
 			$sub =  $message->subject();
-			SPNL()->db("Subscribers_Tracker")->add( array('subscriber_id' => intval( $subscriberID ), 'email_id' => intval( $optin), 'tracker_type' => SendPress_Enum_Tracker_Type::Confirm ) );
+			SPNL()->load("Subscribers_Tracker")->add( array('subscriber_id' => intval( $subscriberID ), 'email_id' => intval( $optin), 'tracker_type' => SendPress_Enum_Tracker_Type::Confirm ) );
 			//SendPress_Data::register_event( 'confirm_sent', $subscriberID );			
 			SendPress_Manager::send( $subscriber->email, $sub , $html, $text, false );
 			*/

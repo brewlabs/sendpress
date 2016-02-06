@@ -409,7 +409,7 @@ class SendPress_DB_Tables {
              
              $wpdb->query("REPAIR TABLE  $subscriber_queue, $subscriber_table");
 
-             SPNL()->db("Subscribers_Tracker")->repair_table();
+             SPNL()->load("Subscribers_Tracker")->repair_table();
         }
 
 

@@ -22,7 +22,7 @@ class SendPress_Public_View_Confirm extends SendPress_Public_View{
 					SendPress_Data::update_subscriber_status($list->listID, $info->id, '2');
 				}
 			}
-			SPNL()->db("Subscribers_Tracker")->open( $info->report , $info->id , 4);
+			SPNL()->load("Subscribers_Tracker")->open( $info->report , $info->id , 4);
 		}
 		
 

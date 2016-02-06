@@ -16,7 +16,7 @@ class SendPress_Public_View_Open extends SendPress_Public_View{
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$info = $this->data();
 
-		SPNL()->db("Subscribers_Tracker")->open( $info->report , $info->id );
+		SPNL()->load("Subscribers_Tracker")->open( $info->report , $info->id );
 	
 		//Get the filesize of the image for headers
 		$filesize = filesize( SENDPRESS_PATH . 'img/icon.png' );

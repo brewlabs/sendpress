@@ -70,8 +70,8 @@ $this->panel_start($report->post_title ." <small style='color:#333;'>".__('This 
 
 $stat_type = get_post_meta($report->ID, '_stat_type', true);
          
-          $clicks = SPNL()->db("Subscribers_Url")->clicks_email_id( $report->ID  );
-          $clicks_total = SPNL()->db("Subscribers_Url")->clicks_total_email_id( $report->ID  );
+          $clicks = SPNL()->load("Subscribers_Url")->clicks_email_id( $report->ID  );
+          $clicks_total = SPNL()->load("Subscribers_Url")->clicks_total_email_id( $report->ID  );
 ?>
 
 <div class="sp-row">
@@ -83,7 +83,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
         $rec = get_post_meta($report->ID, '_send_last_count', true);
           if($report){
             if($stat_type == 'new'){
-                $open = SPNL()->db("Subscribers_Tracker")->get_opens_total( $report->ID  );
+                $open = SPNL()->load("Subscribers_Tracker")->get_opens_total( $report->ID  );
             } else {
                 $open= SendPress_Data::get_opens($report->ID);
             }
@@ -106,7 +106,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
           $ou = 0;
 
             if($stat_type == 'new'){
-               $ou = SPNL()->db("Subscribers_Tracker")->get_opens( $report->ID  );
+               $ou = SPNL()->load("Subscribers_Tracker")->get_opens( $report->ID  );
             } else {
                $ou =  SendPress_Data::get_opens_unique_total($report->ID);
             }
@@ -139,7 +139,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
           if($report){
               
             if($stat_type == 'new'){
-                $click = SPNL()->db("Subscribers_Url")->clicks_email_id( $report->ID  );
+                $click = SPNL()->load("Subscribers_Url")->clicks_email_id( $report->ID  );
             } else {
                 $click= SendPress_Data::get_clicks($report->ID);
             }
@@ -162,7 +162,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
           $ou = 0;
 
           if($stat_type == 'new'){
-                $ou = SPNL()->db("Subscribers_Url")->clicks_total_email_id( $report->ID  );
+                $ou = SPNL()->load("Subscribers_Url")->clicks_total_email_id( $report->ID  );
             } else {
                 $ou = SendPress_Data::get_clicks_unique_total($report->ID);
             }
@@ -250,7 +250,7 @@ echo "<td >";
 	  <div class="panel-body">
 	  	<ul>
 	  	<?php
-	  	$recent =  SPNL()->db("Subscribers_Tracker")->get_most_active(); // SendPress_Data::get_most_active_subscriber();
+	  	$recent =  SPNL()->load("Subscribers_Tracker")->get_most_active(); // SendPress_Data::get_most_active_subscriber();
   		
       foreach($recent as $item){
         if(property_exists($item,'subscriber_id')){

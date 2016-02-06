@@ -145,7 +145,7 @@ class SendPress_DB_Subscribers_Url extends SendPress_DB {
 
 	public function links_with_counts( $email_id ){
 		global $wpdb;
-		$url_table = SPNL()->db("Url")->table_name;
+		$url_table = SPNL()->load("Url")->table_name;
 		$q = $wpdb->prepare(" SELECT COUNT(subscriber_id) as clicks, SUM(click_count) as totalclicks , su.url_id , su.url FROM $this->table_name as ssu INNER JOIN $url_table as su on su.url_id = ssu.url_id WHERE ssu.email_id = %d GROUP BY su.url_id ORDER BY totalclicks  ", $email_id );
 		return $wpdb->get_results( $q );
 	}
