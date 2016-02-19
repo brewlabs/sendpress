@@ -72,7 +72,7 @@ class SendPress_View_Emails extends SendPress_View{
             <?php if(SendPress_Option::get('beta')){ ?>
          
               <li <?php if(isset($_GET['view']) &&  in_array($_GET['view'], array('autoresponder','autoedit')) ) { ?>class="active"<?php } ?> >
-                <a href="<?php echo SendPress_Admin::link('Emails_Autoresponder'); ?>"><?php _e('Autoresponders','sendpress'); ?></a>
+                <a href="<?php echo SendPress_Admin::link('Emails_Autoresponder'); ?>"><?php _e('Automation','sendpress'); ?></a>
               </li>
            
               

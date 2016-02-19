@@ -16,11 +16,11 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
 	 		
 	 		$myData = array(
 	 			'action_type' => $_POST['sp-autoresponder-type'],
-	 			'when_to_send' => $_POST['sp-timing'],
+	 			'when_to_send' => $_POST['when-to-send'],
 	 			'delay_time' => $_POST['sp-delay'],
 	 			'post_id' => $post_id
 	 		);
-	 		SPNL()->db('Autoresponder')->add($myData);
+	 		SPNL()->load('Autoresponder')->add($myData);
 	 		//SendPress_Option::email_set( 'autoresponder_' . $post_id  ,  $myData );
  		}
 	}
@@ -56,7 +56,7 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
 			$post = get_post( $emailID );
 			$post_ID = $post->ID;
 		}
-		$auto = SPNL()->db('Autoresponder')->get( SPNL()->validate->int( $_REQUEST['emailID'] ) );
+		$auto = SPNL()->load('Autoresponder')->get( SPNL()->validate->int( $_REQUEST['emailID'] ) );
 		if($post->post_type !== 'sp_newsletters'){
             SendPress_Admin::redirect('Emails');
         }
@@ -119,13 +119,19 @@ foreach($current_lists as $list){
 
 ?>
 </select>
-<input type="text"  name="sp-delay" style="width:30px; <?php if($options['when']== 'immediate' ){ echo "display:none;"; } ?>"   class="text" id="timer" value="<?php echo $options['delay']; ?>" />
-<select name="sp-timing"  id="when-to-send" >
-<option value="immediate" <?php if($options['when']== 'immediate' ){ echo "selected"; } ?>  ><?php _e('immediately','sendpress'); ?>.</option>
-<option value="hours" <?php if($options['when']== 'hours' ){ echo "selected"; } ?>  ><?php _e('hour(s) after','sendpres'); ?>.</option>
-<option value="days" <?php if($options['when']== 'days' ){ echo "selected"; } ?>  ><?php _e('day(s) after','sendpress'); ?>.</option>
-<option value="weeks" <?php if($options['when']== 'weeks' ){ echo "selected"; } ?>  ><?php _e('week(s) after','sendpress'); ?>.</option>
-</select>
+<input type="text"  name="sp-delay" style="width:30px; <?php if($auto->when_to_send == 'immediate' ){ echo "display:none;"; } ?>"   class="text" id="timer" value="<?php echo $options['delay']; ?>" />
+<?php
+$opts = array(
+	array ('immediate','immediately.'),
+	array ('hours','hour(s) after.'),
+	array ('days','day(s) after.'),
+	array ('weeks','week(s) after.')
+);
+?>
+<?php $this->select('when-to-send',$auto->when_to_send, $opts  ); ?> 
+
+
+
 
 <br><br>
 </div>

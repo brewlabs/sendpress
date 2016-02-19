@@ -272,10 +272,18 @@ class SendPress_View {
 		echo " <select id='$id' name='$id' >";
 		foreach ($values as $item) {
 			$active = '';
-			if($value == $item ){
+			
+			if(is_array($item)){
+				if($value == $item[0] ){
+				$active = 'selected';
+			}
+				echo "<option value='$item[0]' $active> $item[1]</option>";
+			} else {
+				if($value == $item ){
 				$active = 'selected';
 			}
 			echo "<option value='$item' $active> $item</option>";
+			}
 			# code...
 		}
 		echo "</select>";

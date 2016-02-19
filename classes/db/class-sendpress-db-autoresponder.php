@@ -40,7 +40,7 @@ class SendPress_DB_Autoresponder extends SendPress_DB {
 	public function get_column_defaults() {
 		return array(
 			'delay_time' => 0,
-			'when_to_send'  => 'never',
+			'when_to_send'  => 'immediate',
 			'action_type' => 0,
 			'active' => 0
 		);
