@@ -224,7 +224,7 @@ class SendPress_Lists_Table extends WP_List_Table {
         $columns = array(
             'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
             'title' => 'Name',
-            'count_subscribers' => __('Active','sendpress'),
+            'count_subscribers' => _x('Active','Count subscribers','sendpress'),
             'last_send_date' => __('Last Send','sendpress'),
             //'count_bounced' => 'Bounced',
             'actions'=> __('Subscribers','sendpress')
