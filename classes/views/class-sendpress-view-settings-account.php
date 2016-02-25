@@ -179,7 +179,15 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 		<div class="panel-body">
 
 			<input type="hidden" name="action" value="account-setup" />
-			
+			<?php
+
+$new =array();
+foreach ( $senders as $key => $sender ) {
+	array_push($new, array($key,$sender->label() ));
+}
+echo '<strong>Delivery Method: </strong>';
+ $this->select('sendpress-sender',$method, $new ); 
+			?><br><br>
 			<?php if( count($senders) < 3 ){
 				$c= 0;
 				foreach ( $senders as $key => $sender ) {
@@ -187,7 +195,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 					if ( $c >= 1 ) { $class = "margin-left: 4%"; }
 					echo "<div style=' float:left; width: 48%; $class' id='$key'>";
 					?>
-					<p>&nbsp;<input name="sendpress-sender" type="radio"  <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> <?php _e('Send Emails via','sendpress'); ?>
+					<p>&nbsp;<!--<input name="sendpress-sender" type="radio"  <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> <?php _e('Send Emails via','sendpress'); ?> -->
 						<?php
 						echo $sender->label();
 						echo "</p><div class='well'>";
@@ -219,9 +227,9 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 							if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { $class = "active"; }
 							echo "<div class='tab-pane $class' id='$key'>";
 							?>
-							<p>&nbsp;<input name="sendpress-sender" type="radio"  <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> <?php _e('Activate','sendpress'); ?>
+							<!--<p>&nbsp;<input name="sendpress-sender" type="radio"  <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> <?php _e('Activate','sendpress'); ?>-->
 								<?php
-								echo $sender->label();
+								//echo $sender->label();
 								echo "</p><div class='well'>";
 								echo $sender->settings();
 								echo "</div></div>";
