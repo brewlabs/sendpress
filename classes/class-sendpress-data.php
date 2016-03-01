@@ -1345,9 +1345,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 		
 		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $event_data);
 		
+		*/
+	
 		//if instant, check if we need a notification and send one
 		//SendPress_Notifications_Manager::send_instant_notification($event_data);
-		*/
 	}
 
 	static function unsubscribe_from_list( $sid, $rid, $lid ) {
@@ -1512,6 +1513,18 @@ class SendPress_Data extends SendPress_DB_Tables {
 				$status = 1;
 				SendPress_Manager::send_optin( $subscriberID, $listids, $lists);
 			}
+		}else{
+			//send instant notification
+			foreach ($listids as $key => $listid) {
+				$event_data = array(
+					'eventdate'=>SendPress_Data::gmdate(),
+					'subscriberID' => $subscriberID,
+					'listID'=>$listid,
+					'type'=>'subscribed'
+				);
+				SendPress_Notifications_Manager::send_instant_notification($event_data);
+			}
+			
 		}
 		
 		foreach($lists as $list){

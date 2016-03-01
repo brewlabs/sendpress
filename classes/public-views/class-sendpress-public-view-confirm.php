@@ -20,6 +20,15 @@ class SendPress_Public_View_Confirm extends SendPress_Public_View{
 				$status = SendPress_Data::get_subscriber_list_status( $list->listID, $info->id );
 				if( $status->statusid == 1 ) {				
 					SendPress_Data::update_subscriber_status($list->listID, $info->id, '2');
+
+					$event_data = array(
+						'eventdate'=>SendPress_Data::gmdate(),
+						'subscriberID' => $info->id,
+						'listID'=>$list->listID,
+						'type'=>'subscribed'
+					);
+					SendPress_Notifications_Manager::send_instant_notification($event_data);
+
 				}
 			}
 			SPNL()->load("Subscribers_Tracker")->open( $info->report , $info->id , 4);
