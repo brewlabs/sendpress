@@ -120,8 +120,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 
 = 1.6.3.3 - 2016.3.3 =
 * Update: Security fixes around views
-* Update: defined variable conflicted
+* Update: defined variable conflict
 * Fix: admin notifications not sending instant
+* Fix: typo in view
 
 = 1.6.2.22 - 2016.2.22 =
 * Fix: Cron sending url
