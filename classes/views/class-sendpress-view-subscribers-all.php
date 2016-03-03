@@ -12,9 +12,7 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 	}
 
 	function export_all(){
-
-                $items = SendPress_Data::export_subscirbers();
-                    
+				$items = SendPress_Data::export_subscirbers();
                 header("Content-type:text/octect-stream");
                 header("Content-Disposition:attachment;filename=SendPressAll.csv");
                 print "email,firstname,lastname \n";

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: SendPress Newsletters
-Version: 1.6.2.22
+Version: 1.6.3.3
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -19,7 +19,7 @@ global $blog_id;
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-define( 'SENDPRESS_VERSION', '1.6.2.22' );
+define( 'SENDPRESS_VERSION', '1.6.3.3' );
 define( 'SENDPRESS_URL', plugin_dir_url( __FILE__ ) );
 define( 'SENDPRESS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -312,8 +312,9 @@ class SendPress {
 
 		SendPress_Ajax_Loader::init();
 		
-		
-		
+		add_action( 'admin_init', array( $this, 'admin_init' ) );
+		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+		add_action( 'admin_notices', array( $this, 'admin_notice' ) );
 
 		
 		if( !defined('SPNL_DISABLE_SENDING_WP_MAIL') && apply_filters('spnl_wpmail_sending', true ) ){
@@ -359,50 +360,9 @@ class SendPress {
 		//add_filter( 'cron_schedules', array($this,'cron_schedule' ));
 		//add_action( 'wp_loaded', array( $this, 'add_cron' ) );
 
-		if ( is_admin() ) {
-
-			SendPress_Pro_Manager::init();
-			SendPress_Tracking::init();
-			SendPress_Notifications_Manager::init();
-
-			if ( isset( $_GET['spv'] ) ) {
-				SendPress_Option::set( 'version', $_GET['spv'] );
-			}
-
-			if ( isset( $_GET['sp-admin-code'] ) && current_user_can( 'manage_options' ) ) {
-				switch ( $_GET['sp-admin-code'] ) {
-					case 'install-tables':
-						$this->install_tables();
-						break;
-					case 'remove-key':
-						SendPress_Option::set( 'api_key', '' );
-						SendPress_Pro_Manager::set_pro_state( false ); //this will delete the transient
-						break;
-					default:
-						# code...
-						break;
-				}
-
-
-			}
-
-			$this->ready_for_sending();
-			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-			add_action( 'admin_init', array( $this, 'admin_init' ) );
-			add_action( 'admin_notices', array( $this, 'admin_notice' ) );
-			add_action( 'admin_print_scripts', array( $this, 'editor_insidepopup' ) );
-			add_filter( 'gettext', array( $this, 'change_button_text' ), null, 2 );
-			add_action( 'sendpress_notices', array( $this, 'sendpress_notices' ) );
-			add_filter( 'user_has_cap', array( $this, 'user_has_cap' ), 10, 3 );
-
-			//SendPress_Option::set('default-signup-widget-settings',false);
-
-		} else {
-			if ( SendPress_Option::get( 'sp_widget_shortdoces' ) ) {
+		if ( SendPress_Option::get( 'sp_widget_shortdoces' ) ) {
 				add_filter( 'widget_text', 'do_shortcode' );
 			}
-
-		}
 		add_image_size( 'sendpress-max', 600, 600 );
 		add_filter( 'template_include', array( $this, 'template_include' ), 1 );
 		add_action( 'sendpress_cron_action', array( $this, 'sendpress_cron_action_run' ) );
@@ -743,7 +703,7 @@ class SendPress {
 	}
 
 
-	function add_caps() {
+	static function add_caps() {
 		global $wp_roles;
 
 		if ( ! isset( $wp_roles ) ) {
@@ -775,7 +735,7 @@ class SendPress {
 
 
 	function admin_init() {
-		$this->add_caps();
+		
 		$this->maybe_upgrade();
 		if ( ! empty( $_GET['_wp_http_referer'] ) && ( isset( $_GET['page'] ) && in_array( SPNL()->validate->page( $_GET['page'] ), $this->adminpages ) ) ) {
 			//safe redirect with esc_url 4/20
@@ -829,6 +789,55 @@ class SendPress {
 
 		//MAKE SURE WE ARE ON AN ADMIN PAGE
 		if ( isset( $_GET['page'] ) && in_array( $_GET['page'], $this->adminpages ) ) {
+			$this->_page = SPNL()->validate->page( $_GET['page'] );
+			$view_class = $this->get_view_class( $this->_page, $this->_current_view );
+
+			//Securiry check for view 
+			if( !SendPress_Admin::access($class) ){
+				wp_die('Cheating I see..');
+			};
+
+
+
+			
+
+			SendPress_Pro_Manager::init();
+			SendPress_Tracking::init();
+			SendPress_Notifications_Manager::init();
+
+			if ( isset( $_GET['spv'] ) ) {
+				SendPress_Option::set( 'version', $_GET['spv'] );
+			}
+
+			if ( isset( $_GET['sp-admin-code'] ) && current_user_can( 'manage_options' ) ) {
+				switch ( $_GET['sp-admin-code'] ) {
+					case 'install-tables':
+						$this->install_tables();
+						break;
+					case 'remove-key':
+						SendPress_Option::set( 'api_key', '' );
+						SendPress_Pro_Manager::set_pro_state( false ); //this will delete the transient
+						break;
+					default:
+						# code...
+						break;
+				}
+
+
+			}
+
+			$this->ready_for_sending();
+			
+			add_action( 'admin_print_scripts', array( $this, 'editor_insidepopup' ) );
+			add_filter( 'gettext', array( $this, 'change_button_text' ), null, 2 );
+			add_action( 'sendpress_notices', array( $this, 'sendpress_notices' ) );
+			add_filter( 'user_has_cap', array( $this, 'user_has_cap' ), 10, 3 );
+
+			//SendPress_Option::set('default-signup-widget-settings',false);
+
+		
+
+
 
 			remove_action( 'admin_init', 'Zotpress_add_meta_box', 1 );
 			remove_filter( 'mce_external_plugins', 'cforms_plugin' );
@@ -851,7 +860,7 @@ class SendPress {
 			}
 
 
-			$this->_page = SPNL()->validate->page( $_GET['page'] );
+			
 			add_filter( 'tiny_mce_before_init', array( $this, 'myformatTinyMCE' ) );
 
 
@@ -868,12 +877,11 @@ class SendPress {
 			$this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
 
 
-			$view_class = $this->get_view_class( $this->_page, $this->_current_view );
+			
+			//Securiry check for view
 			$view_class = NEW $view_class;
 			$view_class->admin_init();
 			add_action( 'sendpress_admin_scripts', array( $view_class, 'admin_scripts_load' ) );
-			$view_class = $this->get_view_class( $this->_page, $this->_current_view );
-
 			$this->_current_action = isset( $_GET['action'] ) ? sanitize_text_field( $_GET['action'] ) : '';
 			$this->_current_action = isset( $_GET['action2'] ) ? sanitize_text_field( $_GET['action2'] ) : $this->_current_action;
 			$this->_current_action = isset( $_POST['action2'] ) ? sanitize_text_field( $_POST['action2'] ) : $this->_current_action;
@@ -887,14 +895,14 @@ class SendPress {
 				if ( method_exists( $view_class, $method ) ) {
 
 
-					$save_class = new $view_class;
+					//view_class$save_class = new $view_class;
 
-					$save_class->$method();
+					$view_class->$method();
 					//print_r($save_class);
 				} elseif ( method_exists( $view_class, 'save' ) ) {
 					//$view_class::save($this);
-					$save_class = new $view_class;
-					$save_class->save( $_POST, $this );
+					//$save_class = new $view_class;
+					$view_class->save( $_POST, $this );
 				} else {
 
 
@@ -909,7 +917,7 @@ class SendPress {
 				$method                = str_replace( "-", "_", $this->_current_action );
 				$method                = str_replace( " ", "_", $method );
 				if ( method_exists( $view_class, $method ) ) {
-					$save_class = new $view_class;
+					//$save_class = new $view_class;
 
 					call_user_func( array( $view_class, $method ), $_GET, $this );
 				}
@@ -1751,6 +1759,7 @@ class SendPress {
 		wp_clear_scheduled_hook( 'sendpress_cron_action_run' );
 		flush_rewrite_rules();
 		SendPress::add_cron();
+		SendPress::add_caps();
 		SendPress_Option::set( 'install_date', time() );
 	}
 

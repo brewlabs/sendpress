@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
 Tested up to: 4.4
-Stable tag: 1.6.2.22
+Stable tag: 1.6.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.6.3.3 - 2016.3.3 =
+* Update: Security fixes around views
+* Update: defined variable conflicted
+* Fix: admin notifications not sending instant
 
 = 1.6.2.22 - 2016.2.22 =
 * Fix: Cron sending url
