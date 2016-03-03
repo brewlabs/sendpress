@@ -174,7 +174,7 @@ class SendPress_View {
 				  	} else {
 				  		$current_sp_pro_version = 0;
 				  	}
-				  	set_transient( 'current_sp_pro_version', $current_sp_pro_version, 24 * HOUR_IN_SECONDS );
+				  	set_transient( 'current_sp_pro_version', $current_sp_pro_version, 86400 );
 				 
 				}
 

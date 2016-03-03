@@ -153,20 +153,6 @@ function spnl_die( $message = '', $title = '', $status = 400 ) {
 }
 
 
-
-if( !defined('MINUTE_IN_SECONDS') ){
-	//we aren't in WordPress 3.5, so lets add the constants they added so we can be cool too
-	define( 'MINUTE_IN_SECONDS', 60 );
- 	define( 'HOUR_IN_SECONDS',   60 * MINUTE_IN_SECONDS );
- 	define( 'DAY_IN_SECONDS',    24 * HOUR_IN_SECONDS   );
-	define( 'WEEK_IN_SECONDS',    7 * DAY_IN_SECONDS    );
- 	define( 'YEAR_IN_SECONDS',  365 * DAY_IN_SECONDS    );
-}
-
-if( !defined('MONTH_IN_SECONDS') ){
-	define( 'MONTH_IN_SECONDS',  28 * DAY_IN_SECONDS    );
-}
-
 define('SENDPRESS_PRO_VALID', 'valid');
 define('SENDPRESS_PRO_DEACTIVATED', 'deactivated');
 define('SENDPRESS_PRO_FAILED', 'failed');

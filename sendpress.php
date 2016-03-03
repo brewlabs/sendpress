@@ -62,7 +62,7 @@ $sp_loader = new File_Loader('SendPress Required Class');
 */
 //require_once( SENDPRESS_PATH . 'classes/selective-loader.php' );
 if ( ! defined( 'SENDPRESS_TRANSIENT_LENGTH' ) ) {
-	define( 'SENDPRESS_TRANSIENT_LENGTH', WEEK_IN_SECONDS );
+	define( 'SENDPRESS_TRANSIENT_LENGTH', 7 * 86400 );
 }
 
 /**

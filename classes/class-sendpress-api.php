@@ -182,7 +182,7 @@ class SendPress_API {
 
 		if ( false === $user ) {
 			$user = $wpdb->get_var( $wpdb->prepare( "SELECT user_id FROM $wpdb->usermeta WHERE meta_key = 'spnl_user_public_key' AND meta_value = %s LIMIT 1", $key ) );
-			set_transient( md5( 'spnl_api_user_' . $key ) , $user, DAY_IN_SECONDS );
+			set_transient( md5( 'spnl_api_user_' . $key ) , $user, 86400 );
 		}
 
 		if ( $user != NULL ) {

@@ -26,7 +26,7 @@ if ( !class_exists( 'SendPress_Tracking' ) ) {
 			}
 
 			// Make sure to only send tracking data once a week
-			set_transient( $transient_key, 1, WEEK_IN_SECONDS );
+			set_transient( $transient_key, 1, 7 * 86400 );
 
 			// Start of Metrics
 			global $blog_id, $wpdb;

@@ -211,7 +211,7 @@ class SendPress_Pro_Manager {
 			return false;
 		}
 
-		$failed = false; //array('state'=>'valid', 'transient_time'=>DAY_IN_SECONDS, 'sp_state'=>'failed');
+		$failed = false; 
         
         // data to send in our API request
         $api_params = array( 
@@ -243,7 +243,7 @@ class SendPress_Pro_Manager {
 		$key = SendPress_Option::get('api_key');
 		global $pro_names;
 
-		$check = array('state'=>'valid', 'transient_time'=>DAY_IN_SECONDS, 'sp_state'=>'failed');
+		$check = array('state'=>'valid', 'transient_time'=>86400, 'sp_state'=>'failed');
 		foreach($pro_names as $name){
 			$check = SendPress_Pro_Manager::check_key($key,$name);
 			if( $check['sp_state'] === 'passed' ){
