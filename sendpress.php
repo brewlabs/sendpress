@@ -309,13 +309,42 @@ class SendPress {
 	function init() {
 
 		//add_action('register_form',array( $this , 'add_registration_fields'));
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX )
+		{
+			SendPress_Ajax_Loader::init();
+		} else {
+			add_action( 'admin_init', array( $this, 'admin_init' ) );
+			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+			add_action( 'admin_notices', array( $this, 'admin_notice' ) );
+			add_action( 'sendpress_event', array( 'SendPress_Tracking', 'event' ), 1, 1 );
+			if ( defined( 'WP_ADMIN' ) && WP_ADMIN == true ) {
+				$sendpress_screen_options = new SendPress_Screen_Options();
+			}
+				//add_filter( 'cron_schedules', array($this,'cron_schedule' ));
+				//add_action( 'wp_loaded', array( $this, 'add_cron' ) );
 
-		SendPress_Ajax_Loader::init();
-		
-		add_action( 'admin_init', array( $this, 'admin_init' ) );
-		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		add_action( 'admin_notices', array( $this, 'admin_notice' ) );
+				if ( SendPress_Option::get( 'sp_widget_shortdoces' ) ) {
+						add_filter( 'widget_text', 'do_shortcode' );
+					}
+				add_image_size( 'sendpress-max', 600, 600 );
+				add_filter( 'template_include', array( $this, 'template_include' ), 1 );
+				add_action( 'sendpress_cron_action', array( $this, 'sendpress_cron_action_run' ) );
 
+
+				//using this for now, might find a different way to include things later
+				// global $load_signup_js;
+				// $load_signup_js = false;
+
+				add_action( 'wp_enqueue_scripts', array( $this, 'add_front_end_scripts' ) );
+				add_action( 'wp_enqueue_scripts', array( $this, 'add_front_end_styles' ) );
+
+				add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
+
+				add_action( 'wp_loaded', array( 'SendPress_Cron' , 'auto_cron' ) );
+		        add_filter( 'cron_schedules', array( 'SendPress_Cron', 'cron_schedules' ) );
+		        add_action('sendpress_template_loaded', array('SendPress_Videos', 'add_video_filter') );
+
+		}
 		
 		if( !defined('SPNL_DISABLE_SENDING_WP_MAIL') && apply_filters('spnl_wpmail_sending', true ) ){
 			sendpress_register_sender( 'SendPress_Sender_Website' );
@@ -329,7 +358,7 @@ class SendPress {
 			sendpress_register_sender( 'SendPress_Sender_SPNL' );
 		}
 		
-		add_action( 'sendpress_event', array( 'SendPress_Tracking', 'event' ), 1, 1 );
+	
 
 		do_action( 'sendpress_init' );
 
@@ -350,36 +379,11 @@ class SendPress {
 			'index.php?sendpress=$matches[1]',
 			"top" );
 
-		if ( defined( 'WP_ADMIN' ) && WP_ADMIN == true ) {
-			$sendpress_screen_options = new SendPress_Screen_Options();
-		}
-
+		
 		$this->add_custom_post();
 
 
-		//add_filter( 'cron_schedules', array($this,'cron_schedule' ));
-		//add_action( 'wp_loaded', array( $this, 'add_cron' ) );
-
-		if ( SendPress_Option::get( 'sp_widget_shortdoces' ) ) {
-				add_filter( 'widget_text', 'do_shortcode' );
-			}
-		add_image_size( 'sendpress-max', 600, 600 );
-		add_filter( 'template_include', array( $this, 'template_include' ), 1 );
-		add_action( 'sendpress_cron_action', array( $this, 'sendpress_cron_action_run' ) );
-
-
-		//using this for now, might find a different way to include things later
-		// global $load_signup_js;
-		// $load_signup_js = false;
-
-		add_action( 'wp_enqueue_scripts', array( $this, 'add_front_end_scripts' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'add_front_end_styles' ) );
-
-		add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
-
-		add_action( 'wp_loaded', array( 'SendPress_Cron' , 'auto_cron' ) );
-        add_filter( 'cron_schedules', array( 'SendPress_Cron', 'cron_schedules' ) );
-        add_action('sendpress_template_loaded', array('SendPress_Videos', 'add_video_filter') );
+	
 
 	}
 

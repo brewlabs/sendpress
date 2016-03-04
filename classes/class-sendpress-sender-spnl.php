@@ -73,6 +73,11 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 				$url = 'http://api.wped.co/send';
 			}
 
+			if(defined('SPNL_TESTING')){
+				$url = 'http://spnl.io/';
+			}
+
+
 		    $message = array(
 			    'to'        => array( 
 			    	array( 'email' => $to)
