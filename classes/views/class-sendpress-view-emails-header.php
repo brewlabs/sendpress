@@ -9,6 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Header extends SendPress_View_Emails {
 	
 	function save(){
+        $this->security_check();
 		$saveid = SPNL()->validate->int( $_GET['templateID'] );
         if( $saveid > 0 ){
             update_post_meta( $saveid, '_header_content', $_POST['header-content'] );

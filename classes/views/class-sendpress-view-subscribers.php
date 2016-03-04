@@ -17,6 +17,7 @@ class SendPress_View_Subscribers extends SendPress_View {
 	}
 
 	function export_list(){
+		$this->security_check();
     	$l = SPNL()->validate->int($_GET['listID']);
          if( $l > 0 ){
             $items = SendPress_Data::export_subscirbers( $l );

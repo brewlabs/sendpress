@@ -9,6 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 
 	function save($post, $sp){
+		$this->security_check();
 		$options = SendPress_Option::get('notification_options');
 
 		$options['email'] = $post['toemail'];

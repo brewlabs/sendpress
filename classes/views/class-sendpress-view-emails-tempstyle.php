@@ -9,6 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
 	
 	function save(){
+        $this->security_check();
 		$saveid = $_POST['post_ID'];
         /*
         $bodybg = $_POST['body_bg'];

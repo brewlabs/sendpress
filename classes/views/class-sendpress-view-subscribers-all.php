@@ -12,15 +12,15 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 	}
 
 	function export_all(){
-				$items = SendPress_Data::export_subscirbers();
-                header("Content-type:text/octect-stream");
-                header("Content-Disposition:attachment;filename=SendPressAll.csv");
-                print "email,firstname,lastname \n";
-                foreach($items as $user) {
-                    print  $user->email . ",". $user->firstname.",". $user->lastname."\n" ;
-                }
-                exit;
-
+		$this->security_check();
+		$items = SendPress_Data::export_subscirbers();
+        header("Content-type:text/octect-stream");
+        header("Content-Disposition:attachment;filename=SendPressAll.csv");
+        print "email,firstname,lastname \n";
+        foreach($items as $user) {
+            print  $user->email . ",". $user->firstname.",". $user->lastname."\n" ;
+        }
+        exit;
 	}
 
 	function screen_options(){
@@ -38,11 +38,13 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 	
 
 	function remove_subscribers( $get, $sp ){
+		$this->security_check();
 		SendPress_Data::delete_all_subscribers( );
 		SendPress_Admin::redirect('Subscribers_All' );
 	}
 
-	static function delete_subscribers_bulk_all(){
+	function delete_subscribers_bulk_all(){
+		$this->security_check();
 		if( isset($_GET['subscriber']) && is_array($_GET['subscriber']) ) {
 			foreach ($_GET['subscriber'] as $value) {
 				SendPress_Data::delete_subscriber( $value );

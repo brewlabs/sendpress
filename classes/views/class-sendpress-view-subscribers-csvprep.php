@@ -11,7 +11,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
   
 
 	function save(){
-
+    $this->security_check();
     $list_id_clean = SPNL()->validate->int( $_GET['listID'] );
 		$file= trim(SendPress_Data::read_file_to_str(get_post_meta($list_id_clean ,'csv_import',true)));
     $subscribers = SendPress_Data::csv_to_array($file);
@@ -61,7 +61,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
 	}
 
   function dropdown($value,$id){
-    
+    $this->security_check();
     $match = array_search($value,$this->_import_fields);
 
 

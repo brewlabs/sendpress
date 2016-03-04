@@ -18,6 +18,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Tempclone extends SendPress_View_Emails {
 
 	function save(){
+		$this->security_check();
   		$postdata = get_post( $_GET['templateID'] );
   		$new_post = SendPress_Posts::copy($postdata, $_POST['post_title'], '' , '');
   		SendPress_Posts::copy_meta_info($new_post, $_GET['templateID']  );

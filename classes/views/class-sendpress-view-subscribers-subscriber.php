@@ -9,6 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 
 	function status_select($status, $listid){
+		$this->security_check();
         $info = SendPress_Data::get_statuses();
         echo '<select name="'.$listid.'-status">';
         echo "<option cls value='-1' >No Status</option>";
@@ -27,6 +28,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 
 
     function pn_select( $sub_id, $listid ){
+    	$this->security_check();
     	$pro_list = SendPress_Option::get('pro_notification_lists');
     	if(isset($pro_list['post_notifications']['id']) && $listid == $pro_list['post_notifications']['id'] ) {
 		$current = SendPress_Data::get_subscriber_meta($sub_id,'post_notifications',$listid);
@@ -56,6 +58,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 
 
     function save(){
+    	$this->security_check();
     	if(isset($_POST['delete-this-user']) && $_POST['delete-this-user'] == 'yes'){
     		SendPress_Data::delete_subscriber( $_POST['subscriberID'] );
     		if($_GET['listID']){

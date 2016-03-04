@@ -24,7 +24,7 @@ wp_enqueue_style( 'sendpress_codemirror_css' );
 }
 
 function save(){
-
+	$this->security_check();
 	$template = get_post($_POST['post_ID']);
 	$template->post_content = stripcslashes($_POST['template-content'] );
 	$template->post_title = $_POST['post_subject'];

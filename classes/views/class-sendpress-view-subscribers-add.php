@@ -9,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Subscribers_Add extends SendPress_View_Subscribers {
 	
 	function create_subscriber(){
-
+		$this->security_check();
 		$email = $_POST['email'];
         $fname = $_POST['firstname'];
         $lname = $_POST['lastname'];
@@ -30,7 +30,7 @@ class SendPress_View_Subscribers_Add extends SendPress_View_Subscribers {
 
 
     function create_subscribers(){
-        
+        $this->security_check();
         $csvadd = "email,firstname,lastname\n" . trim( $_POST['csv-add'] );
         $listID = SPNL()->validate->int( $_POST['listID'] );
         if($listID > 0 ){

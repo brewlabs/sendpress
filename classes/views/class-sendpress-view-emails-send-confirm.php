@@ -9,6 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
 	
   function save($post, $sp){
+        $this->security_check();
         $saveid = SPNL()->validate->int($_POST['post_ID']);
 
         update_post_meta( $saveid, 'send_date', date('Y-m-d H:i:s') );

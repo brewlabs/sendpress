@@ -11,7 +11,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 	
 
 	function save_email(){
-		
+		$this->security_check();
 	   //print_r($_POST['content-1']);
 //content-area-one-edit
 	//$template = get_post();

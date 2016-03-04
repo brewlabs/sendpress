@@ -18,7 +18,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Tempcreate extends SendPress_View_Emails {
 
 	function save(){
-
+		$this->security_check();
 		$post = get_default_post_to_edit( 'sp_template' , true );
 		$post_ID = $post->ID;
 	

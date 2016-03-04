@@ -735,7 +735,7 @@ class SendPress {
 
 
 	function admin_init() {
-		
+			
 		$this->maybe_upgrade();
 		if ( ! empty( $_GET['_wp_http_referer'] ) && ( isset( $_GET['page'] ) && in_array( SPNL()->validate->page( $_GET['page'] ), $this->adminpages ) ) ) {
 			//safe redirect with esc_url 4/20
@@ -790,10 +790,12 @@ class SendPress {
 		//MAKE SURE WE ARE ON AN ADMIN PAGE
 		if ( isset( $_GET['page'] ) && in_array( $_GET['page'], $this->adminpages ) ) {
 			$this->_page = SPNL()->validate->page( $_GET['page'] );
+			$this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
+
 			$view_class = $this->get_view_class( $this->_page, $this->_current_view );
 
 			//Securiry check for view 
-			if( !SendPress_Admin::access($class) ){
+			if( !is_user_logged_in() ){
 				wp_die('Cheating I see..');
 			};
 
@@ -874,8 +876,7 @@ class SendPress {
 			remove_action( 'transition_post_status', 'fb_publish_later', 10, 3 );
 
 			$tiny                = new SendPress_TinyMCE();
-			$this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
-
+			
 
 			
 			//Securiry check for view
@@ -911,15 +912,13 @@ class SendPress {
 				}
 
 			} else if ( isset( $_GET['action'] ) || isset( $_GET['action2'] ) ) {
-
 				$this->_current_action = sanitize_text_field( $_GET['action'] );
 				$this->_current_action = ( isset( $_GET['action2'] ) && sanitize_text_field( $_GET['action2'] ) !== '-1' ) ? sanitize_text_field( $_GET['action2'] ) : $this->_current_action;
 				$method                = str_replace( "-", "_", $this->_current_action );
 				$method                = str_replace( " ", "_", $method );
 				if ( method_exists( $view_class, $method ) ) {
-					//$save_class = new $view_class;
-
 					call_user_func( array( $view_class, $method ), $_GET, $this );
+					die();
 				}
 
 

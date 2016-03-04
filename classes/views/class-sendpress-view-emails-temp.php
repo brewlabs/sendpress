@@ -16,7 +16,7 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 	}
 
 	function delete(){
-
+		$this->security_check();
 		$p = $_GET['templateID'];
 		//$type = get_post_meta( $p , "_template_type", true);
 		//if($type == 'clone'){
@@ -25,8 +25,8 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 		SendPress_Admin::redirect('Emails_Temp');
 	}
 
-	static function install(){
-		
+	function install(){
+		$this->security_check();
 		SendPress_Template_Manager::install_template_content();
 		SendPress_Admin::redirect('Emails_Temp');
 	}

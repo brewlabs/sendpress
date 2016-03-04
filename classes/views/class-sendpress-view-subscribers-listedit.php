@@ -9,6 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
 
 	function save(){
+		$this->security_check();
 		$listid = SPNL()->validate->int( $_POST['listID'] );
 		if($listid > 0 ){
         $name = sanitize_text_field($_POST['name']);

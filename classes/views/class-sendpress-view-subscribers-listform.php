@@ -9,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 
 	function save(){
-
+		$this->security_check();
 		if(isset($_POST['listID'])){
 			$list_id = $_POST['listID'];
 			$postpage = $_POST['post-page'];

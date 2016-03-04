@@ -23,7 +23,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 }
 
 	function save() {
-		  
+		$this->security_check();
 		foreach ($this->get_editable_roles() as $role => $role_name) 
 		{
 			if($role != 'administrator'){
@@ -233,6 +233,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 	}
 
 	function get_role($role){
+		$this->security_check();
 		global $wp_roles;
 
 	    if ( ! isset( $wp_roles ) )
@@ -242,6 +243,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 	}
 
 	function get_editable_roles() {
+		$this->security_check();
 	    global $wp_roles;
 
 	    if ( ! isset( $wp_roles ) )

@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Send extends SendPress_View_Emails {
 
 	function save(){
-
+        $this->security_check();
         $post_info_id =  SPNL()->validate->int( $_POST['post_ID']);
         if($post_info_id > 0){
             if(isset($_POST['send-date']) && $_POST['send-date'] == 'later'){

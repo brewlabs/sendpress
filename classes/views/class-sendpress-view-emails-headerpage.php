@@ -9,11 +9,11 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Headerpage extends SendPress_View_Emails {
 	
 	function save(){
-		$saveid = SPNL()->validate->int( $_GET['templateID'] );
-        if( $saveid > 0 ){
-      
-        update_post_meta( $saveid, '_header_page', $_POST['header-content'] );
-        SendPress_Admin::redirect('Emails_Headerpage',array('templateID' => $saveid));
+      $this->security_check();
+		  $saveid = SPNL()->validate->int( $_GET['templateID'] );
+      if( $saveid > 0 ){
+          update_post_meta( $saveid, '_header_page', $_POST['header-content'] );
+          SendPress_Admin::redirect('Emails_Headerpage',array('templateID' => $saveid));
         }
       }
    

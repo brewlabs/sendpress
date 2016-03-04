@@ -11,6 +11,7 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
 	
 
 	function save_email(){
+		$this->security_check();
  		$post_id =  SPNL()->validate->int($_POST['post_ID']);
  		if($post_id > 0){
 	 		

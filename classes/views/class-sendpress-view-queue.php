@@ -77,16 +77,19 @@ class SendPress_View_Queue extends SendPress_View {
 	}
 	
 	function empty_queue( $get, $sp ){
+		$this->security_check();
 		SendPress_Data::delete_queue_emails();
 		SendPress_Admin::redirect('Queue');
 	}
 
 	function reset_queue(){
+		$this->security_check();
 		SendPress_Data::requeue_emails();
 		SendPress_Admin::redirect('Queue');
 	}
 
 	function pause_queue(){
+		$this->security_check();
 		$pause_sending = SendPress_Option::get('pause-sending','no');
 		//Stop Sending for now
 		if($pause_sending == 'yes'){
@@ -98,6 +101,7 @@ class SendPress_View_Queue extends SendPress_View {
 	}
 
 	function reset_counters(){
+		$this->security_check();
 		SendPress_Manager::reset_counters();
 		SendPress_Admin::redirect('Queue');
 	}

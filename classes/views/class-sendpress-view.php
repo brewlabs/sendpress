@@ -202,6 +202,12 @@ class SendPress_View {
 
 	function prerender( $sp = false )  {}
 
+	function security_check(){
+		if( ! SendPress_Admin::access( $this ) ){
+			die('You are not allowed to perform this action');
+		}
+	}
+
 	/**
 	 * Renders the view.
 	 */
