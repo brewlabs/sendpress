@@ -307,7 +307,7 @@ class SendPress {
 	}
 
 	function init() {
-
+		add_action('sendpress_template_loaded', array('SendPress_Videos', 'add_video_filter') );
 		//add_action('register_form',array( $this , 'add_registration_fields'));
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX )
 		{
@@ -342,7 +342,7 @@ class SendPress {
 
 				add_action( 'wp_loaded', array( 'SendPress_Cron' , 'auto_cron' ) );
 		        add_filter( 'cron_schedules', array( 'SendPress_Cron', 'cron_schedules' ) );
-		        add_action('sendpress_template_loaded', array('SendPress_Videos', 'add_video_filter') );
+		        
 
 		}
 		
