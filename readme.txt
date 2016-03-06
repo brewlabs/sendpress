@@ -118,7 +118,7 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
-= 1.6.3.3 - 2016.3.3 =
+= 1.7 - 2016.3.3 =
 * Update: Security fixes around views
 * Update: defined variable conflict
 * Fix: admin notifications not sending instant
@@ -854,6 +854,8 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+= 1.7 =
+Security fixes place update
 
 = 1.6.1.20 =
 Bug fixes and PHP7 support
