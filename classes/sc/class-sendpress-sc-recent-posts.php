@@ -34,7 +34,8 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 			 'tag' => '',
 			 'category_name' => '',
 			 'columns' => 1,
-			 'datespan' => ''
+			 'datespan' => '',
+			 'displayimages' => true
 			);
 	}
 
@@ -163,7 +164,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 			while($query->have_posts()){
 				$query->the_post();
 
-				if(has_post_thumbnail()){
+				if(has_post_thumbnail() && $displayimages){
 					//reset the template because we have an image
 					$template = (strtolower($imgalign) === 'left') ? SendPress_Data::post_img_left() : SendPress_Data::post_img_right();
 					$img = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), $featuredimg);
@@ -298,7 +299,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 	}
 
 	public static function docs(){
-		return __('This shortcode creates a listing of Posts in emails or on pages.  Use the following options to customize the output: <br><br><b>posts</b> - number of posts to display. (defaults to 1)<br><b>uid</b> - the user id of the author you would like to see.<br><b>imgalign</b> - Align images left or right. (defaults to left)<br><b>alternate</b> - when writing posts, alternate the thumbnail images. (defaults to false)<br><b>readmoretext</b> - the text for the readmore link (defaults to Read More)<br><b>columns</b> - the number of columns your posts should display in.  Max number of columns is 3.<br><b>datespan</b> - number of days of posts to render.  Can be set to "daily", "weekly", or a number of days (datespan=3 for the last three days for exmaple) (defaults to daily.)', 'sendpress');
+		return __('This shortcode creates a listing of Posts in emails or on pages.  Use the following options to customize the output: <br><br><b>posts</b> - number of posts to display. (defaults to 1)<br><b>uid</b> - the user id of the author you would like to see.<br><b>imgalign</b> - Align images left or right. (defaults to left)<br><b>alternate</b> - when writing posts, alternate the thumbnail images. (defaults to false)<br><b>readmoretext</b> - the text for the readmore link (defaults to Read More)<br><b>columns</b> - the number of columns your posts should display in.  Max number of columns is 3.<br><b>datespan</b> - number of days of posts to render.  Can be set to "daily", "weekly", or a number of days (datespan=3 for the last three days for exmaple) (defaults to daily.)<br><b>displayimages</b> - Set to true by default, set to false if you want no images to display.', 'sendpress');
 	}
 
 
