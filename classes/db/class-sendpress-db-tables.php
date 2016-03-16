@@ -208,13 +208,7 @@ class SendPress_DB_Tables {
              echo $subscriber_events_table . " OK<br>";
         }
 
-        $subscriber_events_table =  SendPress_DB_Tables::subscriber_event_table();
-        if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
-            echo $subscriber_events_table . " Not Installed<br>";
-        } else {
-             echo $subscriber_events_table . " OK<br>";
-        }
-
+        
         $report_url_table =  SendPress_DB_Tables::report_url_table();
         if($wpdb->get_var("show tables like '$report_url_table'") != $report_url_table) {
             echo $report_url_table . " Not Installed<br>";
@@ -256,10 +250,7 @@ class SendPress_DB_Tables {
     static function check_setup_support(){
         global $wpdb;
         $tables  =  true;
-        $subscriber_events_table =  SendPress_DB_Tables::subscriber_event_table();
-        if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
-           $tables =false;
-        } 
+       
 
         $report_url_table =  SendPress_DB_Tables::report_url_table();
         if($wpdb->get_var("show tables like '$report_url_table'") != $report_url_table) {
@@ -392,14 +383,6 @@ class SendPress_DB_Tables {
         }
 
         
-
-
-        static function repair_events_table(){
-            global $wpdb;
-            $table_to_update = SendPress_DB_Tables::subscriber_event_table();
-            $wpdb->query("DROP INDEX listID ON ". $table_to_update );
-
-        }
 
 
         static function repair_tables(){
