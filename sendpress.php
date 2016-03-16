@@ -313,6 +313,7 @@ class SendPress {
 		{
 			SendPress_Ajax_Loader::init();
 		} else {
+			SendPress_Pro_Manager::init();
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
 			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 			add_action( 'admin_notices', array( $this, 'admin_notice' ) );
@@ -807,7 +808,7 @@ class SendPress {
 
 			
 
-			SendPress_Pro_Manager::init();
+			
 			SendPress_Tracking::init();
 			SendPress_Notifications_Manager::init();
 
