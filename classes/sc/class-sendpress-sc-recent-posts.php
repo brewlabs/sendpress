@@ -35,7 +35,8 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 			 'category_name' => '',
 			 'columns' => 1,
 			 'datespan' => '',
-			 'displayimages' => true
+			 'displayimages' => true,
+			 'display_author' => false
 			);
 	}
 
@@ -182,6 +183,15 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 				$template = str_replace( '{sp-post-style-title}' , $styletitle ,$template);
 				$template = str_replace( '{sp-post-style-readmore}' , $stylereadmore ,$template);
 
+				if( $display_author ){
+					$template = str_replace( '{sp-author-template}' , '<a href="{sp-post-author-link}">{sp-post-author}</a>' ,$template);
+
+					$template = str_replace( '{sp-post-author}' , get_the_author() ,$template);
+					$template = str_replace( '{sp-post-author-link}' , get_the_author_link() ,$template);
+				}else{
+
+				}
+				
 	          	$imgalign = ($alternate && strtolower($imgalign) === 'left') ? 'right' : 'left';
 
 	          	//put things into columns always
@@ -234,7 +244,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 	}
 
 	public static function post_text_only(){
-		return '<table width="100%" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row"><tr><td class="col" valign="top" style="width:100%"><div><a href="{sp-post-link}">{sp-post-title}</a></div><div>{sp-post-excerpt}</div><div><a href="{sp-post-link}">{sp-post-readmore}</a></div><br></td></tr></table>';
+		return '<table width="100%" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row"><tr><td class="col" valign="top" style="width:100%"><div><a href="{sp-post-link}">{sp-post-title}</a></div><div>{sp-author-template}</div><div>{sp-post-excerpt}</div><div><a href="{sp-post-link}">{sp-post-readmore}</a></div><br></td></tr></table>';
 	}
 
 	public static function post_img_left(){
@@ -256,6 +266,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 			<tr>
 				<td class="col" valign="top">
 					<div class="post-title"><a href="{sp-post-link}" style="{sp-post-style-title}"><span style="{sp-post-style-title}">{sp-post-title}</span></a></div>
+					<div>{sp-author-template}</div>
 					<div class="post-excerpt">{sp-post-excerpt}</div>
 					<div class="post-readmore"><a href="{sp-post-link}" style="{sp-post-style-readmore}"><span style="{sp-post-style-readmore}">{sp-post-readmore}</span></a></div>
 					<br>
@@ -279,6 +290,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 			<tr>
 				<td class="col" valign="top">
 					<div class="post-title"><a href="{sp-post-link}" style="{sp-post-style-title}"><span style="{sp-post-style-title}">{sp-post-title}</span></a></div>
+					<div>{sp-author-template}</div>
 					<div class="post-excerpt">{sp-post-excerpt}</div>
 					<div class="post-readmore"><a href="{sp-post-link}" style="{sp-post-style-readmore}"><span style="{sp-post-style-readmore}">{sp-post-readmore}</span></a></div>
 					<br>
@@ -299,7 +311,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 	}
 
 	public static function docs(){
-		return __('This shortcode creates a listing of Posts in emails or on pages.  Use the following options to customize the output: <br><br><b>posts</b> - number of posts to display. (defaults to 1)<br><b>uid</b> - the user id of the author you would like to see.<br><b>imgalign</b> - Align images left or right. (defaults to left)<br><b>alternate</b> - when writing posts, alternate the thumbnail images. (defaults to false)<br><b>readmoretext</b> - the text for the readmore link (defaults to Read More)<br><b>columns</b> - the number of columns your posts should display in.  Max number of columns is 3.<br><b>datespan</b> - number of days of posts to render.  Can be set to "daily", "weekly", or a number of days (datespan=3 for the last three days for exmaple) (defaults to daily.)<br><b>displayimages</b> - Set to true by default, set to false if you want no images to display.', 'sendpress');
+		return __('This shortcode creates a listing of Posts in emails or on pages.  Use the following options to customize the output: <br><br><b>posts</b> - number of posts to display. (defaults to 1)<br><b>uid</b> - the user id of the author you would like to see.<br><b>imgalign</b> - Align images left or right. (defaults to left)<br><b>alternate</b> - when writing posts, alternate the thumbnail images. (defaults to false)<br><b>readmoretext</b> - the text for the readmore link (defaults to Read More)<br><b>columns</b> - the number of columns your posts should display in.  Max number of columns is 3.<br><b>datespan</b> - number of days of posts to render.  Can be set to "daily", "weekly", or a number of days (datespan=3 for the last three days for exmaple) (defaults to daily.)<br><b>displayimages</b> - Set to true by default, set to false if you want no images to display.<br><b>display_author</b> - Set to false by default, set to true the author link will display.', 'sendpress');
 	}
 
 
