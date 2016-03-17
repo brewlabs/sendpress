@@ -32,10 +32,24 @@ class SendPress_Public_View_Unsubscribe extends SendPress_Public_View {
 				"action"=>""
 			);
 			$code = SendPress_Data::encrypt( $link_data );
-			$link =  SendPress_Manager::public_url($code);
+
+			if(SendPress_Option::get('unsubscribe-page') == 'custom' ){
+
+				$page = SendPress_Option::get('unsubscribe-page-id');
+				if($page != false){
+					$plink = get_permalink($page);
+					error_log($plink);
+					if($plink != ""){
+						$link = $plink . '?spms='. $code;
+					}
+				}
+
+			} else {
+				$link =  SendPress_Manager::public_url($code);
+			}
+
 			$this->redirect(  $link ); 
 			exit;
-
 		
 	}
 
