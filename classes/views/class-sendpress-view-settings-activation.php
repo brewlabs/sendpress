@@ -100,7 +100,7 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 				<div class='well'>
 					<?php _e('This is the page subscribers are directed to to unsubscribe from your list','sendpress'); ?>.
 					<br><br>
-					<?php $ctype = SendPress_Option::get('unsubscribe-page'); ?>
+					<?php $ctype = SendPress_Option::get('unsubscribe-page','default'); ?>
 					<input type="radio" name="unsubscribe-page" value="default" <?php if($ctype=='default'){echo "checked='checked'"; } ?> /> <?php _e('Use Default Manage description Page','sendpress'); ?><br><br>
 					<input type="radio" name="unsubscribe-page" value="custom"  <?php if($ctype=='custom'){echo "checked='checked'";} ?>/> <?php _e('Redirect to','sendpress'); ?> 
 					<select name="unsubscribe-page-id"> 

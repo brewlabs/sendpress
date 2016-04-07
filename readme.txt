@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
 Tested up to: 4.4
-Stable tag: 1.7
+Stable tag: 1.7.3.19
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,14 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.7.3.19 - 2016.3.19 =
+* New: Display images option for sp-recent-posts
+* New: Added option to send unsubscribe page
+* Update: Removed unused code mirror files
+* Update: Table instal check updated for new tables
+* Fix: SendPress Widgets
+* Fix: Pro installer
 
 = 1.7 - 2016.3.3 =
 * Update: Security fixes around views
@@ -854,6 +862,10 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.7.3.19 =
+Bug fixes and security updates
+
 = 1.7 =
 Security fixes place update
 
