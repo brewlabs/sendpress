@@ -934,7 +934,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function update_subscriber($subscriberID, $values){
 		$table = SendPress_Data::subscriber_table();
 		global $wpdb;
-		
 		$result = $wpdb->update($table,$values, array('subscriberID'=> $subscriberID) );
 	}
 	static function update_subscriber_by_email($email, $values){
@@ -943,7 +942,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$key = SendPress_Data::random_code();
 		//$id = SendPress_Data::get_subscriber_by_email($email);
 		$q = "INSERT INTO $table (email,wp_user_id,identity_key,join_date,firstname,lastname) VALUES (%s,%d,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE wp_user_id=%d,firstname=%s,lastname=%s";
-		$q = $wpdb->prepare($q,$email,$values['wp_user_id'],$key,date('Y-m-d H:i:s'),$values['firstname'],$values['lastname'],$values['wp_user_id'],$values['firstname'],$values['lastname']);
+		$q = $wpdb->prepare($q,$email,$values['wp_user_id'],$key,date('Y-m-d H:i:s'),$values['firstname'],$values['lastname'],$values['wp_user_id'],$values['firstname'],$values['lastname'],$values['phonenumber'],$values['salutation']);
 		$result = $wpdb->query($q);
 		//$result = $wpdb->update($table, $values, array('email'=> $email) );
 	}
@@ -1380,6 +1379,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 	static function add_subscriber($values){
+
 		$table =  SendPress_Data::subscriber_table();
 		$email = $values['email'];
 
@@ -1477,10 +1477,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
-	static function subscribe_user($listid, $email, $first, $last, $status = 2, $custom = array()){
-		
+	static function subscribe_user($listid, $email, $first, $last, $status = 2, $custom = array(), $phonenumber), $salutation{
+
 		$success = false;
-		$subscriberID = SendPress_Data::add_subscriber(array('firstname' => $first,'lastname' => $last,'email' => $email));
+		$subscriberID = SendPress_Data::add_subscriber(array('firstname' => $first,'lastname' => $last,'email' => $email, 'phonenumber' => $phonenumber, 'salutation' => $salutation));
 		
 		//SendPress_Error::log($subscriberID);
 
@@ -2156,9 +2156,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$prefix."_form_description" => "",
 			$prefix."_collect_firstname" => false,
 			$prefix."_collect_lastname" => false,
+			$prefix."_collect_phonenumber" => false,
+			$prefix."_collect_salutation" => false,
 			$prefix."_display_labels_inside_fields" => 0,
 			$prefix."_firstname_label" => "First Name",
 			$prefix."_lastname_label" => "Last Name",
+			$prefix."_phonenumber_label" => "Phone Number",
+			$prefix."_salutation_label" => "Salutation",
 			$prefix."_email_label" => "E-Mail",
 			$prefix."_button_label" => "Submit",
 			$prefix."_list_label" => "List Selection",

@@ -329,6 +329,15 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 						</p>
 					<?php endif; ?>
 
+					<?php if( filter_var($_collect_phonenumber, FILTER_VALIDATE_BOOLEAN) ): ?>
+						<p name="sp_phonenumber">
+							<?php if( !$_display_labels_inside_fields ): ?>
+								<label for="sp_phonenumber"><?php echo $_phonenumber_label; ?>:</label>
+							<?php endif; ?>
+							<input type="text" class="sp_phonenumber" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_phonenumber_label; ?>"<?php endif; ?> value="" name="sp_phonenumber" />
+						</p>
+					<?php endif; ?>
+
 					<p name="sp_email">
 						<?php if( !$_display_labels_inside_fields ): ?>
 							<label for="sp_email"><?php echo $_email_label; ?>:</label>

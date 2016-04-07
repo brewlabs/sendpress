@@ -272,6 +272,11 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 				</p>
 
 				<p>
+					<label for="_phonenumber_label"><?php _e('Phone Number Label:', 'sendpress'); ?></label>
+					<input type="text" class="widefat" id="_phonenumber_label" name="_phonenumber_label" value="<?php echo $settings['_phonenumber_label']; ?>" style="width:100%;" />
+				</p>
+
+				<p>
 					<label for="_email_label"><?php _e('E-Mail Label:', 'sendpress'); ?></label>
 					<input type="text" class="widefat" id="_email_label" name="_email_label" value="<?php echo $settings['_email_label']; ?>" style="width:100%;" />
 				</p>
@@ -309,6 +314,11 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 				<p>
 					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_lastname'], 'on' ); ?> id="_collect_lastname" name="_collect_lastname" /> 
 					<label for="_collect_lastname"><?php _e('Collect Last Name', 'sendpress'); ?></label>
+				</p> 
+
+				<p>
+					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_phonenumber'], 'on' ); ?> id="_collect_phonenumber" name="_collect_phonenumber" /> 
+					<label for="_collect_phonenumber"><?php _e('Collect Phone Number', 'sendpress'); ?></label>
 				</p> 
 
 				<p>

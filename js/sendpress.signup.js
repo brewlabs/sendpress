@@ -33,6 +33,7 @@
             signup['first'] = $form.find('.sp_firstname').val();
             signup['last'] = $form.find('.sp_lastname').val();
             signup['email'] = $form.find('.sp_email').val();
+            signup['phonenumber'] = $form.find('.sp_phonenumber').val();
             signup['listid'] = "";//$form.find('.sp_list').val();
 
             $form.find("input:checkbox.sp_list:checked").each(function(){

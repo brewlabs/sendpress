@@ -234,6 +234,9 @@ outline: none;
 .column-firstname,.column-firstname{
     width: 200px;
 }
+.column-phonenumber{
+    width: 150px;
+}
 .column-actions{
     width: 390px;
 }
@@ -842,7 +845,7 @@ width: 150px;
 #subscriber-edit .sublabel,
 #subscriber-create .sublabel{
     display: inline-block;
-    min-width:65px;
+    min-width:100px;
 }
 #subscriber-edit .sp-text,
 #subscriber-create .sp-text{
@@ -879,6 +882,10 @@ width: 150px;
 
 #subscribers-create .btn{
     
+}
+
+.subscribers .column-actions{
+    width: 100px;
 }
 
 /* -- edit list css -- */

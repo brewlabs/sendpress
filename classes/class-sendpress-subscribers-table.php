@@ -77,6 +77,8 @@ class SendPress_Subscribers_Table extends WP_List_Table {
             case 'firstname':
             case 'lastname':
                 return $item->$column_name;
+            case 'phonenumber':
+                return $item->$column_name;
             case 'status':
                return $item->$column_name;
             case 'gravatar':
@@ -164,6 +166,7 @@ class SendPress_Subscribers_Table extends WP_List_Table {
             'title' => 'Email',
             'firstname' => 'First Name',
             'lastname' => 'Last Name',
+            'phonenumber' => 'Phone Number',
             'status' => 'Status',
             'joindate' => 'Date Joined'
             //'count_subscribers' => 'Subscribers'
@@ -192,6 +195,7 @@ class SendPress_Subscribers_Table extends WP_List_Table {
             'title' =>array('email',true), 
             'firstname' =>array('firstname',false),
             'lastname' =>array('lastname',false), 
+            'phonenumber' =>array('phonenumber', false),
              //'status' =>array('status',false), 
              'joindate' =>array('join_date',false),   //true means its already sorted
             /*
@@ -400,7 +404,9 @@ class SendPress_Subscribers_Table extends WP_List_Table {
          $sortable = $this->get_sortable_columns();
          $this->_column_headers = array($columns, $hidden, $sortable);
     /* -- Fetch the items -- */
+
         $this->items = $wpdb->get_results($query);
+        
     }
     
    
