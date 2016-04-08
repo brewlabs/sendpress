@@ -86,7 +86,7 @@ class SendPress_Public_View_Form extends SendPress_Public_View{
 	
 	
 			<form id="sendpress_signup" method="POST" >
-				<input type="hidden" name="sp_list" id="list" value="<? echo $_GET['list']; ?>">
+				<input type="hidden" name="sp_list" id="list" value="<?php echo $_GET['list']; ?>">
 				<input type="hidden" name="sendpress" value="post">
 				<?php if($this->message !=''){ ?>
 					<div id="thanks"><?php echo $this->message; ?></div>

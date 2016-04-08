@@ -114,7 +114,7 @@ class SendPress_Widget_Forms extends WP_Widget {
 					?>
 					</select>
 				</p>
-				<?
+				<?php
 			}else{
 				?>
 				<input type="hidden" name="<?php echo $this->get_field_name( 'form_to_display' ); ?>" id="<?php echo $this->get_field_name( 'form_to_display' ); ?>" value="<?php echo $forms[0]->ID; ?>" />

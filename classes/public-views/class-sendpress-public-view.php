@@ -353,7 +353,7 @@ class SendPress_Public_View {
 		?>
 		<h1>Whoops</h1>
 		<p>We couldn't find the page you are looking for.</p>
-		Back to our <a href="<? echo site_url(); ?>">site</a>
+		Back to our <a href="<?php echo site_url(); ?>">site</a>
 	<?php
 	}
 

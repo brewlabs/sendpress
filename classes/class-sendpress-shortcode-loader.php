@@ -50,7 +50,7 @@ class SendPress_Shortcode_Loader {
 				<div class="panel panel-default">
 				    <div class="panel-heading">
 				      <h4 class="panel-title">
-				        <!--<a data-toggle="collapse" data-parent="#accordion" href="#<? echo $classname; ?>">-->
+				        <!--<a data-toggle="collapse" data-parent="#accordion" href="#<?php echo $classname; ?>">-->
 				        	<?php
 				        		$sc_title = "[sp-". $shortcode ."]";
 				        		$title = call_user_func(array($classname, 'title'));
@@ -62,7 +62,7 @@ class SendPress_Shortcode_Loader {
 				        <!--</a>-->
 				      </h4>
 				    </div>
-					<div id="<? echo $classname ?>">
+					<div id="<?php echo $classname ?>">
 						<div class="panel-body">
 						<?php
 							$docs = call_user_func(array($classname, 'docs'));
