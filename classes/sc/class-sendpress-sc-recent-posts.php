@@ -189,7 +189,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 					$template = str_replace( '{sp-post-author}' , get_the_author() ,$template);
 					$template = str_replace( '{sp-post-author-link}' , get_the_author_link() ,$template);
 				}else{
-
+					$template = str_replace( '{sp-author-template}' , '' ,$template);
 				}
 				
 	          	$imgalign = ($alternate && strtolower($imgalign) === 'left') ? 'right' : 'left';
