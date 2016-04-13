@@ -77,6 +77,10 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
             case 'firstname':
             case 'lastname':
                 return $item->$column_name;
+            case 'phonenumber':
+                return $item->$column_name;
+            case 'salutation':
+                return $item->$column_name;
             case 'status':
                return $item->$column_name;
             case 'gravatar':
@@ -160,6 +164,8 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
             'title' => __('Email','sendpress'),
             'firstname' => __('First Name','sendpress'),
             'lastname' => __('Last Name','sendpress'),
+            'phonenumber' => __('Phone Number', 'sendpress'),
+            'salutation' => __('Salutation', 'salutation'),
             //'status' => 'Status',
             'joindate' => __('Date Joined','sendpress'),
             'actions' => __('Actions','sendpress')
@@ -189,6 +195,8 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
             'title' =>array('email',true), 
             'firstname' =>array('firstname',false),
             'lastname' =>array('lastname',false), 
+            'phonenumber' =>array('phonenumber', false),
+            'salutation' =>array('salutation', false),
              //'status' =>array('status',false), 
              'joindate' =>array('join_date',false),   //true means its already sorted
             /*

@@ -444,6 +444,8 @@ bounced int(1) NOT NULL DEFAULT '0',
 firstname varchar(250) NOT NULL DEFAULT '', 
 lastname varchar(250) NOT NULL DEFAULT '', 
 wp_user_id bigint(20) DEFAULT NULL, 
+phonenumber varchar(12) DEFAULT NULL, 
+salutation varchar(40) DEFAULT NULL
 PRIMARY KEY  (subscriberID), 
 UNIQUE KEY email (email) , 
 UNIQUE KEY identity_key (identity_key), 

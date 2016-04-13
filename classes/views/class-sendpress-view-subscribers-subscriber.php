@@ -74,7 +74,8 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 				'email' => $_POST['email'],
 				'firstname' => $_POST['firstname'],
 				'lastname' => $_POST['lastname'],
-
+				'phonenumber' => $_POST['phonenumber'],
+				'salutation' => $_POST['salutation']
 				);
 			SendPress_Data::update_subscriber($_POST['subscriberID'], $subscriber_info);
 
@@ -129,8 +130,10 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 		<input type="hidden" name="listID" value="<?php echo SPNL()->validate->int($_GET['listID']); ?>" />
 	    <input type="hidden" name="subscriberID" value="<?php echo SPNL()->validate->int($_GET['subscriberID']); ?>" />
 	    <strong><?php _e('Email','sendpress'); ?></strong>: <input type="text" name="email" class="regular-text sp-text" value="<?php echo $sub->email; ?>" /><br><br>
+	    <strong><?php _e('Salutation','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="salutation" value="<?php echo $sub->salutation; ?>" /><br>
 	    <strong><?php _e('Firstname','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="firstname" value="<?php echo $sub->firstname; ?>" /><br><br>
 	    <strong><?php _e('Lastname','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="lastname" value="<?php echo $sub->lastname; ?>" /><br>
+	    <strong><?php _e('Phone Number','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="phonenumber" value="<?php echo $sub->phonenumber; ?>" /><br>
 	    <br>
 <input type="checkbox" id="delete-this-user" name="delete-this-user" value="yes"/> Checking this box will remove this subscriber and all related data from the system.<br><br>
 

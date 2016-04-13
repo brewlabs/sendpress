@@ -152,12 +152,14 @@ class SendPress_Ajax_Loader {
 			// get the credit card details submitted by the form
 			$first  = isset( $_POST['first'] ) ? $_POST['first'] : '';
 			$last   = isset( $_POST['last'] ) ? $_POST['last'] : '';
+			$phone  = isset( $_POST['phonenumber'] ) ? $_POST['phonenumber'] : '';
+			$salutation = isset( $_POST['salutation'] ) ? $_POST['salutation'] : '';
 			$email  = isset( $_POST['email'] ) ? $_POST['email'] : '';
 			$listid = isset( $_POST['listid'] ) ? $_POST['listid'] : '';
 
 			$custom = apply_filters( 'sendpress_subscribe_to_list_custom_fields', array(), $_POST );
 
-			$success = SendPress_Data::subscribe_user( $listid, $email, $first, $last, 2, $custom );
+			$success = SendPress_Data::subscribe_user( $listid, $email, $first, $last, 2, $custom, $phone, $salutation );
 
 			if ( false !== $success ) {
 				$response['success'] = true;

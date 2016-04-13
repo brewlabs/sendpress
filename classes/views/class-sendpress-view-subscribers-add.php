@@ -13,12 +13,14 @@ class SendPress_View_Subscribers_Add extends SendPress_View_Subscribers {
 		$email = $_POST['email'];
         $fname = $_POST['firstname'];
         $lname = $_POST['lastname'];
+        $phonenumber = $_POST['phonenumber'];
+        $salutation = $_POST['salutation'];
         $listID = $_POST['listID'];
         $status = $_POST['status'];
 
         if( is_email($email) ){
 
-            $result = SendPress_Data::add_subscriber( array('firstname'=> $fname ,'email'=> $email,'lastname'=>$lname ) );
+            $result = SendPress_Data::add_subscriber( array('firstname'=> $fname ,'email'=> $email,'lastname'=>$lname, 'phonenumber'=>$phonenumber, 'salutation'=>$salutation) );
 
             SendPress_Data::update_subscriber_status($listID, $result, $status ,false);
 
@@ -63,8 +65,10 @@ class SendPress_View_Subscribers_Add extends SendPress_View_Subscribers {
 	    <input type="hidden" name="action" value="create-subscriber" />
 	    <input type="hidden" name="listID" value="<?php echo SPNL()->validate->int( $_GET['listID'] ); ?>" />
 	    <span class="sublabel"><?php _e('Email','sendpress') ?>:</span><input type="text" name="email" value="" class="regular-text sp-text" /><br>
+	    <span class="sublabel"><?php _e('Salutation','sendpress'); ?>:</span><input type="text" name="salutation" value="" class="regular-text sp-text" /><br>
 	    <span class="sublabel"><?php _e('Firstname','sendpress'); ?>:</span><input type="text" name="firstname" value="" class="regular-text sp-text" /><br>
 	    <span class="sublabel"><?php _e('Lastname','sendpress'); ?>:</span><input type="text" name="lastname" value="" class="regular-text sp-text" /><br>
+	    <span class="sublabel"><?php _e('Phone Number','sendpress'); ?>:</span><input type="text" name="phonenumber" value="" class="regular-text sp-text" /><br>
 	    <span class="sublabel"><?php _e('Status','sendpress'); ?>:</span><select name="status">
 	    			<?php 
 	    				$results =  SendPress_Data::get_statuses();
