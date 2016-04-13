@@ -262,6 +262,11 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 				</p>
 
 				<p>
+					<label for="_salutation_label"><?php _e('Salutation Label:', 'sendpress'); ?></label>
+					<input type="text" class="widefat" id="_salutation_label" name="_salutation_label" value="<?php echo $settings['_salutation_label']; ?>" style="width:100%;" />
+				</p>
+
+				<p>
 					<label for="_firstname_label"><?php _e('First Name Label:', 'sendpress'); ?></label>
 					<input type="text" class="widefat" id="_firstname_label" name="_firstname_label" value="<?php echo $settings['_firstname_label']; ?>" style="width:100%;" />
 				</p>
@@ -306,6 +311,11 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 				<?php $this->panel_start( __('Signup Settings','sendpress') ); ?>
 				
+				<p>
+					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_salutation'], 'on' ); ?> id="_collect_salutation" name="_collect_salutation" /> 
+					<label for="_collect_salutation"><?php _e('Collect Salutation', 'sendpress'); ?></label>
+				</p> 
+
 				<p>
 					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_firstname'], 'on' ); ?> id="_collect_firstname" name="_collect_firstname" /> 
 					<label for="_collect_firstname"><?php _e('Collect First Name', 'sendpress'); ?></label>

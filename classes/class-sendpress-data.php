@@ -1477,7 +1477,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
-	static function subscribe_user($listid, $email, $first, $last, $status = 2, $custom = array(), $phonenumber), $salutation{
+	static function subscribe_user($listid, $email, $first, $last, $status = 2, $custom = array(), $phonenumber, $salutation) {
 
 		$success = false;
 		$subscriberID = SendPress_Data::add_subscriber(array('firstname' => $first,'lastname' => $last,'email' => $email, 'phonenumber' => $phonenumber, 'salutation' => $salutation));

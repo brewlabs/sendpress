@@ -237,6 +237,9 @@ outline: none;
 .column-phonenumber{
     width: 150px;
 }
+.column-salutation{
+    width: 150px;
+}
 .column-actions{
     width: 390px;
 }
