@@ -187,7 +187,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 					$template = str_replace( '{sp-author-template}' , '<a href="{sp-post-author-link}">{sp-post-author}</a>' ,$template);
 
 					$template = str_replace( '{sp-post-author}' , get_the_author() ,$template);
-					$template = str_replace( '{sp-post-author-link}' , get_author_posts_url(get_the_author_meta( 'ID' ),get_the_author_meta( 'user_nicename' )) ,$template);
+					$template = str_replace( '{sp-post-author-link}' , get_author_posts_url(get_the_author_meta( 'id' ),get_the_author_meta( 'user_nicename' )) ,$template);
 				}else{
 					$template = str_replace( '{sp-author-template}' , '' ,$template);
 				}
