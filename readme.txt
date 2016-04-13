@@ -118,6 +118,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.7.4.13 - 2016.4.13 =
+* New: Subscriber fields for Phone and Salutations
+* Fix: Add to Any Share button conflict
+* Fix: php shortage usage
+
 = 1.7.3.19 - 2016.3.19 =
 * New: Display images option for sp-recent-posts
 * New: Added option to send unsubscribe page

@@ -19,7 +19,8 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
 	 			'action_type' => $_POST['sp-autoresponder-type'],
 	 			'when_to_send' => $_POST['when-to-send'],
 	 			'delay_time' => $_POST['sp-delay'],
-	 			'post_id' => $post_id
+	 			'post_id' => $post_id,
+	 			'list_id' => $_POST['sp-autoresponser-list']
 	 		);
 	 		SPNL()->load('Autoresponder')->add($myData);
 	 		//SendPress_Option::email_set( 'autoresponder_' . $post_id  ,  $myData );
@@ -62,9 +63,8 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
             SendPress_Admin::redirect('Emails');
         }
       
-        $options = SendPress_Option::email_get( 'autoresponder_' . $post_ID  );
-
-
+        $options = array();// = SendPress_Option::email_get( 'autoresponder_' . $post_ID  );
+        
 		?>
      <form method="post" id="post" role="form">
         <input type="hidden" name="post_ID" id="post_ID" value="<?php echo $post->ID; ?>" />
@@ -101,26 +101,30 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
 <option value="user-new" <?php if($options['type']== 'user-new' ){ echo "selected"; } ?> ><?php _e('When a new WordPress user is added to your site','sendpres'); ?>...</option>
 <option value="user-click" <?php if($options['type']== 'user-click' ){ echo "selected"; } ?> ><?php _e('When a subscriber clicks a link','sendpres'); ?>...</option>
 </select>
-<select name="" id="params-list">
+<select name="sp-autoresponser-list" id="params-list">
 <?php
 $post_args = array( 'post_type' => 'sendpress_list','numberposts'     => -1,
     	'offset'          => 0,
     	'orderby'         => 'post_title',
-    	'order'           => 'DESC', );
+    	'order'           => 'DESC');
 		
 $current_lists = get_posts( $post_args );
 foreach($current_lists as $list){
 
      $t = '';
+     $selected = '';
      $tlist = '';
-       
-	echo "<option value=" . $list->ID. "> ".$list->post_title . " <small>(".SendPress_Data::get_count_subscribers($list->ID). ")</small></option>";
+     if($auto->list_id == $list->ID )
+     { 
+     	$selected = " selected "; 
+ 	} 
+	echo "<option $selected value=" . $list->ID. "> ".$list->post_title . " <small>(".SendPress_Data::get_count_subscribers($list->ID). ")</small></option>";
 }
 
 
 ?>
 </select>
-<input type="text"  name="sp-delay" style="width:30px; <?php if($auto->when_to_send == 'immediate' ){ echo "display:none;"; } ?>"   class="text" id="timer" value="<?php echo $options['delay']; ?>" />
+<input type="text"  name="sp-delay" style="width:30px; <?php if($auto->when_to_send == 'immediate' ){ echo "display:none;"; } ?>"   class="text" id="timer" value="<?php echo $auto->delay_time; ?>" />
 <?php
 $opts = array(
 	array ('immediate','immediately.'),

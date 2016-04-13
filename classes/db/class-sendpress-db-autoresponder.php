@@ -11,7 +11,7 @@ class SendPress_DB_Autoresponder extends SendPress_DB {
 	public function __construct() {
 		global $wpdb;
 		$this->table_name  = $wpdb->prefix . $this->prefix . 'autoresponders';
-		$this->version     = '1.0';
+		$this->version     = '1.1';
 		$this->primary_key = 'post_id';
 	}
 
@@ -27,7 +27,8 @@ class SendPress_DB_Autoresponder extends SendPress_DB {
 			'delay_time'       => '%d',
 			'action_type' => '%d',
 			'when_to_send'    => '%s',
-			'active' => '%d'
+			'active' => '%d',
+			'list_id' => '%d'
 		);
 	}
 
@@ -42,7 +43,8 @@ class SendPress_DB_Autoresponder extends SendPress_DB {
 			'delay_time' => 0,
 			'when_to_send'  => 'immediate',
 			'action_type' => 0,
-			'active' => 0
+			'active' => 0,
+			'list_id' => 0
 		);
 	}
 
@@ -75,6 +77,7 @@ $sql = " CREATE TABLE {$this->table_name} (
 post_id int(11) unsigned NOT NULL,
 delay_time int(11) unsigned NOT NULL,
 action_type int(11) unsigned NOT NULL,
+list_id int(11) DEFAULT 0,
 when_to_send varchar(255) DEFAULT NULL,
 active int(1) DEFAULT 0,
 PRIMARY KEY  (post_id)
