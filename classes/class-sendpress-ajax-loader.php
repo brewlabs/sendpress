@@ -82,15 +82,20 @@ class SendPress_Ajax_Loader {
 		global $post;
 		while ( $the_query->have_posts() ) : $the_query->the_post();
 
-			$d->suggestions[] = get_the_title();
+			$t = get_the_title();
 			$content          = get_the_content();
 			$content          = apply_filters( 'the_content', $content );
 			$content          = str_replace( ']]>', ']]&gt;', $content );
-			$d->data[]        = array(
+			$dx        = array(
 				"content" => $content,
 				"excerpt" => get_the_excerpt(),
-				"url"     => get_permalink()
+				"url"     => get_permalink(),
+				"title" => $t
 			);
+			$d->suggestions[] = array(
+				'value' => $t,
+				'data' =>$dx
+				);
 
 		endwhile;
 

@@ -139,7 +139,7 @@
                 }
             });
 
-            var a = $('#sp-single-query').autocomplete({
+            var a = $('#sp-single-query').devbridgeAutocomplete({
                 serviceUrl: spvars.ajaxurl,
                 maxHeight:400,
                 width:300,
@@ -151,9 +151,10 @@
                 }, //aditional parameters
                 noCache: true, //default is false, set to true to disable caching
                 // callback function:
-                onSelect: function(value, data){
-                    data.title = value;
-                    spadmin.active_post = data;
+                onSelect: function(s){
+                    console.log(s); 
+                    s.title = s.value;
+                    spadmin.active_post = s.data;
                     spadmin.update_post_html();
                 },
                
