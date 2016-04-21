@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
-Tested up to: 4.4
-Stable tag: 1.7.4.13
+Tested up to: 4.5
+Stable tag: 1.7.4.20
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.7.4.20 - 2016.4.20 =
+* Fix: Post search on email edit screen
 
 = 1.7.4.13 - 2016.4.13 =
 * New: Subscriber fields for Phone and Salutations
@@ -867,6 +870,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.7.4.20 =
+Post search on email edit screen fix
 
 = 1.7.3.19 =
 Bug fixes and security updates
