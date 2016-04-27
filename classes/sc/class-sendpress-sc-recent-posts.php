@@ -56,6 +56,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 	public static function output( $atts , $content = null ) {
 		global $post , $wp;
 		$old_post = $post;
+		$swap = false;
 		extract( shortcode_atts( SendPress_SC_Recent_Posts::options() , $atts ) );
 
 		$args = array('orderby' => 'date', 'order' => 'DESC' , 'showposts' => $posts, 'post_status' => 'publish');
@@ -67,7 +68,11 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 		if(strlen($readmoretext) === 0){
 			$readmoretext = 'Read More';
 		}
-
+		
+		if($alternate === 1 || $alternate === '1' || $alternate === 'true' || $alternate === true){
+			$swap = true;
+		}
+		
 		if(strlen($imgalign) === 0){
 			$imgalign = 'left';
 		}
@@ -193,8 +198,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 				}
 
 				//get_author_posts_url
-				
-	          	$imgalign = ($alternate && strtolower($imgalign) === 'left') ? 'right' : 'left';
+	          	$imgalign = ($swap && strtolower($imgalign) === 'left') ? 'right' : 'left';
 
 	          	//put things into columns always
 	          	if($number_of_columns < 2){
