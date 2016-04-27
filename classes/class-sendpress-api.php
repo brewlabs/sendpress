@@ -109,6 +109,7 @@ class SendPress_API {
 		$vars[] = 'email';
 		$vars[] = 'to';
 		$vars[] = 'status';
+		$vars[] = 'send';
 
 		return $vars;
 	}
@@ -153,6 +154,7 @@ class SendPress_API {
 				case 'system-check':
 				case 'elastic':
 				case 'bounce':
+				case 'cron':
 					$this->is_valid_request = true;
 					$wp_query->set( 'key', 'public' );
 				break;
@@ -289,6 +291,9 @@ class SendPress_API {
 				$data = $this->elastic_bounce( $to , $status );
 
 				break;
+			case 'cron' :
+				$data = $this->background_stuff();
+				break;
 			
 		endswitch;
 
@@ -321,7 +326,8 @@ class SendPress_API {
 			'public',
 			'tracker',
 			'system-check',
-			'bounce'
+			'bounce',
+			'cron'
 		) );
 
 		$query = isset( $wp_query->query_vars['spnl-api'] ) ? $wp_query->query_vars['spnl-api'] : null;
@@ -349,6 +355,10 @@ class SendPress_API {
 		global $wp_query;
 
 		return isset( $wp_query->query_vars['page'] ) ? $wp_query->query_vars['page'] : 1;
+	}
+
+	public function background_stuff(){
+		return	SendPress_Cron::run_cron_functions();
 	}
 
 

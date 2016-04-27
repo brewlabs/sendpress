@@ -543,8 +543,11 @@
         },
         sendbatch: function(){
             $.post(
-                spvars.wpcronurl + '?action=sendpress',
-                {}, 
+                spvars.ajaxurl,
+                {
+                    action:'sendpress-sendcron',
+                    spnonce: spvars.sendpressnonce
+                },
                 function(data){
                     spadmin.queue.batchsent(data);
                 }); 

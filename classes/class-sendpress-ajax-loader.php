@@ -38,6 +38,7 @@ class SendPress_Ajax_Loader {
 		add_action( 'wp_ajax_sendpress-findpost', array( &$this, 'find_post' ) );
 		add_action( 'wp_ajax_sendpress-list-subscription', array( &$this, 'list_subscription' ) );
 		add_action( "wp_ajax_sendpress-synclist", array( &$this, 'sync_list' ) );
+		add_action( 'wp_ajax_sendpress-sendcron', array( &$this, 'sendcron' ) );
 
 		add_action( "wp_ajax_nopriv_sendpress_save_list", array( &$this, 'save_list' ) );
 		add_action( "wp_ajax_nopriv_sendpress_subscribe_to_list", array( &$this, 'subscribe_to_list' ) );
@@ -109,6 +110,7 @@ class SendPress_Ajax_Loader {
 	}
 
 	function save_list() {
+		$this->verify_ajax_call();
 		global $wpdb;
 
 		// Create the response array
@@ -146,6 +148,7 @@ class SendPress_Ajax_Loader {
 	}
 
 	function subscribe_to_list() {
+		$this->verify_ajax_call();
 		global $wpdb;
 
 		// Create the response array
@@ -187,6 +190,7 @@ class SendPress_Ajax_Loader {
 	}
 
 	function autocron() {
+		$this->verify_ajax_call();
 		$enable = isset( $_POST['enable'] ) ? $_POST['enable'] : false;
 		if ( $enable !== false ) {
 			SendPress_Option::set( 'autocron', 'yes' );
@@ -236,6 +240,17 @@ class SendPress_Ajax_Loader {
 		$response = array(
 			'total' => $count
 		);
+		echo json_encode( $response );
+		exit();
+	}
+
+
+	function sendcron() {
+		$this->verify_ajax_call();
+		// Create the response arrayecho SendPress_Data::emails_active_in_queue();
+		// 
+		$response = SendPress_Cron::run_cron_functions(); //emails_allowed_to_send();
+		//$sp = new SendPress;
 		echo json_encode( $response );
 		exit();
 	}
