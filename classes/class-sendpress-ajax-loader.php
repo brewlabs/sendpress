@@ -148,7 +148,7 @@ class SendPress_Ajax_Loader {
 	}
 
 	function subscribe_to_list() {
-		$this->verify_ajax_call();
+		//$this->verify_ajax_call();
 		global $wpdb;
 
 		// Create the response array
