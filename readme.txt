@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
-Tested up to: 4.5
-Stable tag: 1.7.4.28
+Tested up to: 4.5.1
+Stable tag: 1.7.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.7.5.2 - 2016.5.2 =
+* Fix: Update AJAX for widgets to save properly
+* Update: Added row count option to subscriber view pages
+* New: Added new api route /spnl-api/cron for sending moving away from wp-cron.php
 
 = 1.7.4.27 - 2016.4.27 =
 * Fix: Table install script

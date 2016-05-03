@@ -164,8 +164,8 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
             'title' => __('Email','sendpress'),
             'firstname' => __('First Name','sendpress'),
             'lastname' => __('Last Name','sendpress'),
-            'phonenumber' => __('Phone Number', 'sendpress'),
-            'salutation' => __('Salutation', 'salutation'),
+            //'phonenumber' => __('Phone Number', 'sendpress'),
+            //'salutation' => __('Salutation', 'salutation'),
             //'status' => 'Status',
             'joindate' => __('Date Joined','sendpress'),
             'actions' => __('Actions','sendpress')
@@ -249,6 +249,19 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
         echo "<input type='text' value='' name='qs' />";
     }
 
+     function email_count(){
+        echo '<select name="page_count">';
+        $counts = array(10,25,50,100);
+        foreach ($counts as $list) {
+            if(isset($_GET['page_count']) && $_GET['page_count'] == $list){
+                $cls = " selected='selected' ";
+            }
+
+           echo "<option $cls value='".$list."'>".$list." Rows</option>";
+        }
+        echo '</select> ';
+    }
+
 
     function status_select(){
         $info = SendPress_Data::get_statuses();
@@ -278,6 +291,8 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
         if ( 'top' == $which && !is_singular() ) {
 
           // $this->status_select();
+            $this->email_count();
+            submit_button( __( 'Apply' ), 'button', false, false, array( 'id' => 'post-query-submit' ) );
            $this->email_finder();
            submit_button( __( 'Filter' ), 'button', false, false, array( 'id' => 'post-query-submit' ) );
         }
@@ -356,6 +371,9 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
                     // get the default value if none is set
                     $per_page = $screen->get_option( 'per_page', 'default' );
                 }
+            }
+             if(!empty($_GET["page_count"])){
+                 $per_page = $_GET["page_count"];
             }
         //Which page is this?
         $paged = !empty($_GET["paged"]) ? esc_sql($_GET["paged"]) : '';
