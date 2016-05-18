@@ -116,6 +116,7 @@ class SendPress_Shortcode_Loader {
 	public static function shortcode_wrapper(
 		$function,
 		$atts    = array(),
+		$content = null,
 		$wrapper = array(
 			'class'  => 'sendpress',
 			'before' => null,
@@ -128,7 +129,7 @@ class SendPress_Shortcode_Loader {
 		$after 		= empty( $wrapper['after'] ) ? '</div>' : $wrapper['after'];
 
 		echo $before;
-		call_user_func( $function, $atts );
+		call_user_func( $function, $atts, $content );
 		echo $after;
 
 		return ob_get_clean();
@@ -164,8 +165,8 @@ class SendPress_Shortcode_Loader {
 	 * @param mixed $atts
 	 * @return string
 	 */
-	public static function unsubscribe_form( $atts ) {
-		return self::shortcode_wrapper( array( 'SendPress_SC_Unsubscribe_Form', 'output' ), $atts );
+	public static function unsubscribe_form( $atts, $content) {
+		return self::shortcode_wrapper( array( 'SendPress_SC_Unsubscribe_Form', 'output' ), $atts, $content );
 	}
 	/**
 	 * Recent Posts shortcode.

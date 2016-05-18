@@ -42,7 +42,7 @@ class SendPress_SC_Unsubscribe_Form extends SendPress_SC_Base {
 
 		extract( shortcode_atts( self::options() , $atts ) );
 
-		if($content == null){
+		if($content === null){
 			$content = self::content();
 		}
 
