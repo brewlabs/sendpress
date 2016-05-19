@@ -834,6 +834,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	    	'orderby'         => 'post_title',
 	    	'order'           => 'DESC'
 	    )));
+	   
 		//set the post type after filter so our function name always makes sense ;)
 	    $args['post_type'] = 'sendpress_list';
 
