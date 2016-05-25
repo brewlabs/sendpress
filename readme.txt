@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
-Tested up to: 4.5.1
-Stable tag: 1.7.5.2
+Tested up to: 4.5.2
+Stable tag: 1.7.5.24
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,13 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+
+= 1.7.5.24 - 2016.5.24 =
+* Fix: AutoCron activation
+* Fix: Fix for unsubscribe shortcode missing custom text
+* Update: Optimized database calls
+
 
 = 1.7.5.2 - 2016.5.2 =
 * Fix: Update AJAX for widgets to save properly
@@ -878,6 +885,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WP.org
 
 == Upgrade Notice ==
+
+= 1.7.5.24 =
+Fix for AutoCron
 
 = 1.7.4.27 =
 Table install fix
