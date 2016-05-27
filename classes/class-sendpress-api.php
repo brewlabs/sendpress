@@ -155,6 +155,7 @@ class SendPress_API {
 				case 'elastic':
 				case 'bounce':
 				case 'cron':
+				case 'sendgrid':
 					$this->is_valid_request = true;
 					$wp_query->set( 'key', 'public' );
 				break;
@@ -222,6 +223,7 @@ class SendPress_API {
 
 
 	public function process_query() {
+
 		global $wp_query;
 
 		// Check for sendpress-api var. Get out if not present
@@ -249,6 +251,12 @@ class SendPress_API {
 		$data = array();
 
 		switch( $query_mode ) :
+			case 'sendgrid':
+				$data = file_get_contents("php://input");
+				$events = json_decode($data, true);
+				$count = $this->process_sendgrid($events);
+				$data = array('status' => 'proccessed','count'=> $count);
+				break;
 			case 'system-check':
 				$data = array( 'status' => 'active' );
 				break;
@@ -327,7 +335,8 @@ class SendPress_API {
 			'tracker',
 			'system-check',
 			'bounce',
-			'cron'
+			'cron',
+			'sendgrid'
 		) );
 
 		$query = isset( $wp_query->query_vars['spnl-api'] ) ? $wp_query->query_vars['spnl-api'] : null;
@@ -585,6 +594,20 @@ class SendPress_API {
 			SendPress_Data::bounce_email( $email );
 		}
 	}
+
+	public function process_sendgrid($events){
+		$count = 0;
+		foreach ($events as $event) {
+			if($event['event'] == 'bounce' || $event['event'] == 'spamreport' ||$event['event'] == 'unsubscribe'){
+				$this->bounce($event['email']);
+				$count++;
+			}
+		}
+		return $count;
+	}
+
+
+	
 
 	public function track_stats($tracker_data){
 
