@@ -89,7 +89,7 @@ $subject = SendPress_Option::get('current_send_subject_'.$post->ID ,true);
   </div>
 </div>
 <div id="sp-cancel-btn" style="float:right; ">
-<a class="btn btn-default" href="<?php echo '?page='.SPNL()->validate->page('page'). '&view=send&emailID='. $emailID ; ?>"><?php _e('Cancel Send','sendpress'); ?></a>&nbsp;
+<a class="btn btn-default" href="<?php echo '?page='.SPNL()->validate->page(). '&view=send&emailID='. $emailID ; ?>"><?php _e('Cancel Send','sendpress'); ?></a>&nbsp;
 </div>
 <h2><?php _e('Confirm Send','sendpress'); ?></h2>
 <br>

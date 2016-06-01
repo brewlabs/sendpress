@@ -742,7 +742,7 @@ class SendPress {
 	function admin_init() {
 			
 		$this->maybe_upgrade();
-		if ( ! empty( $_GET['_wp_http_referer'] ) && ( isset( $_GET['page'] ) && in_array( SPNL()->validate->page('page'), $this->adminpages ) ) ) {
+		if ( ! empty( $_GET['_wp_http_referer'] ) && ( isset( $_GET['page'] ) && in_array( SPNL()->validate->page(), $this->adminpages ) ) ) {
 			//safe redirect with esc_url 4/20
 			wp_safe_redirect( esc_url_raw( remove_query_arg( array(
 				'_wp_http_referer',
@@ -794,10 +794,12 @@ class SendPress {
 
 		//MAKE SURE WE ARE ON AN ADMIN PAGE
 		if ( isset( $_GET['page'] ) && in_array( $_GET['page'], $this->adminpages ) ) {
-			$this->_page = SPNL()->validate->page('page');
+			$this->_page = SPNL()->validate->page();
 			$this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
-
+			echo $this->_page;
 			$view_class = $this->get_view_class( $this->_page, $this->_current_view );
+
+			print_r($view_class);
 
 			//Securiry check for view 
 			if( !is_user_logged_in() ){
@@ -859,7 +861,7 @@ class SendPress {
 			$wp_filter['admin_notices'] = array();
 
 
-			if ( SPNL()->validate->page('page') == 'sp-templates' || ( isset( $_GET['view'] ) && $_GET['view'] == 'style-email' ) ) {
+			if ( SPNL()->validate->page() == 'sp-templates' || ( isset( $_GET['view'] ) && $_GET['view'] == 'style-email' ) ) {
 				wp_register_script( 'sendpress_js_styler', SENDPRESS_URL . 'js/styler.js', '', SENDPRESS_VERSION );
 			}
 			if ( defined( 'WPE_PLUGIN_BASE' ) ) {
@@ -944,7 +946,7 @@ class SendPress {
 		}
 
 		//MAKE SURE WE ARE ON AN ADMIN PAGE
-		if ( is_admin() && isset( $_GET['page'] ) && in_array( SPNL()->validate->page('page'), $this->adminpages ) ) {
+		if ( is_admin() && isset( $_GET['page'] ) && in_array( SPNL()->validate->page(), $this->adminpages ) ) {
 
 			wp_enqueue_style( 'thickbox' );
 			wp_register_script( 'spfarb', SENDPRESS_URL . 'js/farbtastic.js', '', SENDPRESS_VERSION );
@@ -977,7 +979,7 @@ class SendPress {
 			wp_enqueue_style( 'sendpress_bootstrap_css' );
 			wp_enqueue_style( 'sendpress_css_base' );
 			wp_enqueue_style( 'sendpress_css_admin' );
-			if ( ( isset( $_GET['page'] ) && SPNL()->validate->page('page') == 'sp-templates' ) || ( isset( $_GET['view'] ) && sanitize_text_field( $_GET['view'] ) == 'style-email' ) ) {
+			if ( ( isset( $_GET['page'] ) && SPNL()->validate->page() == 'sp-templates' ) || ( isset( $_GET['view'] ) && sanitize_text_field( $_GET['view'] ) == 'style-email' ) ) {
 				wp_enqueue_script( 'sendpress_js_styler' );
 			}
 
@@ -1066,16 +1068,16 @@ class SendPress {
 		if ( !empty($act) ) {
 			switch ( $act ) {
 				case 'save-confirm-send':
-					wp_redirect( esc_url_raw( admin_url( '?page=' . SPNL()->validate->page('page') . '&view=send-confirm&emailID=' . SPNL()->validate->_int('post_ID')) ) );
+					wp_redirect( esc_url_raw( admin_url( '?page=' . SPNL()->validate->page() . '&view=send-confirm&emailID=' . SPNL()->validate->_int('post_ID')) ) );
 					break;
 				case 'save-style':
-					wp_redirect( esc_url_raw( admin_url( '?page=' . SPNL()->validate->page('page') . '&view=style&emailID=' . SPNL()->validate->_int('post_ID') )) );
+					wp_redirect( esc_url_raw( admin_url( '?page=' . SPNL()->validate->page() . '&view=style&emailID=' . SPNL()->validate->_int('post_ID') )) );
 					break;
 				case 'save-create':
-					wp_redirect( esc_url_raw( admin_url( '?page=' . SPNL()->validate->page('page') . '&view=style&emailID=' . SPNL()->validate->_int('post_ID') ) ) );
+					wp_redirect( esc_url_raw( admin_url( '?page=' . SPNL()->validate->page() . '&view=style&emailID=' . SPNL()->validate->_int('post_ID') ) ) );
 					break;
 				case 'save-send':
-					wp_redirect( esc_url_raw( admin_url( '?page=' . SPNL()->validate->page('page') . '&view=send&emailID=' . SPNL()->validate->_int('post_ID') ) ) );
+					wp_redirect( esc_url_raw( admin_url( '?page=' . SPNL()->validate->page() . '&view=send&emailID=' . SPNL()->validate->_int('post_ID') ) ) );
 					break;
 				default:
 					wp_redirect( esc_url_raw( admin_url( SPNL()->validate->_string('_wp_http_referer') ) ) );
@@ -1112,7 +1114,7 @@ class SendPress {
 							class="icon-envelope icon-white"></i> <?php echo __( 'Send', 'sendpress' ); ?></a>
 				<?php } ?>
 				<?php if ( $this->_current_view == 'send' ) { ?>
-					<a href="?page=<?php echo SPNL()->validate->page('page'); ?>&view=style&emailID=<?php echo $_GET['emailID']; ?>"
+					<a href="?page=<?php echo SPNL()->validate->page(); ?>&view=style&emailID=<?php echo $_GET['emailID']; ?>"
 					   class="btn btn-primary btn-large "><i
 							class="icon-white icon-pencil"></i> <?php echo __( 'Edit', 'sendpress' ); ?></a><a href="#"
 					                                                                                           id="save-update"
@@ -1125,7 +1127,7 @@ class SendPress {
 				<?php } ?>
 			</div>
 			<div id="sp-cancel-btn" style="float:right; margin-top: 5px;">
-				<a href="?page=<?php echo SPNL()->validate->page('page'); ?>" id="cancel-update"
+				<a href="?page=<?php echo SPNL()->validate->page(); ?>" id="cancel-update"
 				   class="btn"><?php echo __( 'Cancel', 'sendpress' ); ?></a>&nbsp;
 			</div>
 		</div>
@@ -1195,7 +1197,7 @@ class SendPress {
 			$role = "manage_options";
 		}
 		$queue = '';
-		if ( isset( $_GET['page'] ) && in_array( SPNL()->validate->page('page'), $this->adminpages ) ) {
+		if ( isset( $_GET['page'] ) && in_array( SPNL()->validate->page(), $this->adminpages ) ) {
 			$queue = '(<span id="queue-count-menu">-</span>)';//SendPress_Data::emails_in_queue();
 		}
 		$plugin_name = __( 'SendPress', 'sendpress' );
