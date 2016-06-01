@@ -16,7 +16,7 @@ class SendPress_Public_View_Form extends SendPress_Public_View{
 		$post_options = array('list','email','firstname','lastname','status');
 		$user_info = array();
 		foreach ($post_options as $opt) {
-			$user_info[$opt] = isset($_POST['sp_' . $opt]) ?  $_POST['sp_' . $opt]: false ;
+			$user_info[$opt] = SPNL()->validate->_string('sp_' . $opt) ?  SPNL()->validate->_string('sp_' . $opt) : false ;
 		}
 		
 		$valid_user = array();
@@ -86,20 +86,20 @@ class SendPress_Public_View_Form extends SendPress_Public_View{
 	
 	
 			<form id="sendpress_signup" method="POST" >
-				<input type="hidden" name="sp_list" id="list" value="<?php echo $_GET['list']; ?>">
+				<input type="hidden" name="sp_list" id="list" value="<?php echo SPNL()->validate->_int('list'); ?>">
 				<input type="hidden" name="sendpress" value="post">
 				<?php if($this->message !=''){ ?>
 					<div id="thanks"><?php echo $this->message; ?></div>
 				<?php }  else { ?>
 				<div id="form-wrap">
 											
-					<?php if(isset($_GET['f'])) { ?>
+					<?php if(SPNL()->validate->_string('f')) { ?>
 					<p name="firstname">
 						<label for="firstname">First Name:</label>
 						<input class="sp-text" type="text" id="sp_firstname" orig="EMail" value="" name="sp_firstname">
 					</p>
 					<?php } ?>
-					<?php if(isset($_GET['l'])) { ?>
+					<?php if(SPNL()->validate->_string('l')) { ?>
 					<p name="lastname">
 						<label for="lastname">Last Name:</label>
 						<input class="sp-text" type="text" id="sp_lastname" orig="EMail" value="" name="sp_lastname">

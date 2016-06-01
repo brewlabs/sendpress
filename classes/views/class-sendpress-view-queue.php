@@ -288,7 +288,7 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
 </div>
 	<span id="queue-sent">-</span> <?php _e('of','sendpress');?> <span id="queue-total">-</span> <?php _e('emails left to send','sendpress'); ?>.<br>
 	<br>
-	<?php _e('You are also limited to','sendpress'); ?> <?php echo $hour; ?> <?php _e('emails per hour','sendpress'); ?>.<br>
+	<?php _e('You are also limited to','sendpress'); ?> <?php echo $emails_per_hour; ?> <?php _e('emails per hour','sendpress'); ?>.<br>
 	<?php _e('To change these settings go to','sendpress'); ?> <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>"> <?php _e('Settings','sendpress'); ?> > <?php _e('Sending Account','sendpress'); ?></a>.
   </div>
   <div class="modal-footer">

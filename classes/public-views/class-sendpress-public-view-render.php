@@ -24,7 +24,7 @@ class SendPress_Public_View_Render extends SendPress_Public_View{
 			
 			echo SendPress_Email_Render_Engine::render_template_example( $post );		
 		} else {
-			if(isset($_GET['inline']) ){
+			if(SPNL()->validate->_bool('inline')){
 				$inline = true;
 			}
 			echo $post->post_content;

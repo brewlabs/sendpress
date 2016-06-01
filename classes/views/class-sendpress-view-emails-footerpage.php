@@ -10,9 +10,9 @@ class SendPress_View_Emails_Footerpage extends SendPress_View_Emails {
 	
 	function save(){
         $this->security_check();
-		    $saveid = SPNL()->validate->int( $_GET['templateID'] );
+		    $saveid = SPNL()->validate->_int( 'templateID' );
         if( $saveid > 0 ){
-        update_post_meta( $saveid, '_footer_page', $_POST['footer-content'] );
+        update_post_meta( $saveid, '_footer_page', SPNL()->validate->_html('footer-content') );
         SendPress_Admin::redirect('Emails_Footerpage',array('templateID' => $saveid));
         }
     }
@@ -20,8 +20,7 @@ class SendPress_View_Emails_Footerpage extends SendPress_View_Emails {
    function html($sp) { 
     global $sendpress_html_templates;
 
-        //print_r($sendpress_html_templates[$_GET['templateID']]);
-    $list = SPNL()->validate->int( $_GET['templateID'] );
+    $list = SPNL()->validate->_int( 'templateID' );
     $postdata = get_post( $list );
 
 

@@ -9,8 +9,8 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_Public_View_Unsubscribe extends SendPress_Public_View {
 	function prerender(){
 		
-		$r = $_GET['rid'];
-		$s = $_GET['sid'];
+		$r = SPNL()->validate->_string('rid');
+		$s = SPNL()->validate->_string('sid');
 
 		$r = (int) base64_decode($r);
 		$s = (int) base64_decode($s);

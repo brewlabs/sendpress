@@ -20,18 +20,20 @@ class SendPress_Public_View_Email extends SendPress_Public_View{
 		if( is_object($this->data()) &&  $this->data()->id){
 			$email_id = $this->data()->id;
 		} 
-		if(isset($_GET['eid'])){
-			$email_id = SPNL()->validate->int( base64_decode( $_GET['eid'] ) );
+		$email_id_encoded = SPNL()->validate->_string('eid');
+		if( !empty($email_id_encoded) ){
+			$email_id = SPNL()->validate->int( base64_decode( $email_id_encoded ) );
 		}
 		// If there's a subscriber ID in the URL, we need to get the subscriber object from it to use for the str_replace below.
-		if(isset($_GET['sid'])) {
-			$subscriber_id =  SPNL()->validate->int( base64_decode( $_GET['sid'] ) );
+		$s_id_encoded = SPNL()->validate->_string('eid');
+		if(!empty($s_id_encoded)) {
+			$subscriber_id =  SPNL()->validate->int( base64_decode( $s_id_encoded ) );
 		} else {
 			$subscriber_id = 0;
 		}
 		//$post = get_post($email_id);
 		$inline = false;
-		if(isset($_GET['inline']) ){
+		if(SPNL()->validate->_bool('inline') ){
 			$inline = true;
 		}
 		SendPress_Email_Cache::build_cache_for_email( $email_id );

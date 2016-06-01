@@ -329,7 +329,7 @@ class SendPress_Autoresponder_Table extends WP_List_Table {
 				}
 			}
 			//Which page is this?
-			$paged = !empty($_GET["paged"]) ? $_GET["paged"] : '';
+			  $paged = $sp_validate->_int("paged");
 			//Page Number
 			if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
 			//How many pages do we have in total?
@@ -354,14 +354,16 @@ class SendPress_Autoresponder_Table extends WP_List_Table {
 			'posts_per_page' => $per_page,
 			'paged'=> $paged,
 			);
-			if ( !empty( $_GET['s'] ) )
-				$args['s'] = $_GET['s'];
-			if(isset($_GET['order'])){
-				$args['order'] = $_GET['order'];
+			$s = SPNL()->validate->_string("s");
+			if ( !empty( $s ) ){
+				$args['s'] = $s;
 			}
 
-			if(isset($_GET['orderby'])){
-				$orderby = $_GET['orderby'];
+			
+			$args['order'] = SPNL()->validate->_string("order")   == 'DESC' ?  'DESC' : 'ASC';
+			
+			$orderby = SPNL()->validate->orderby(SPNL()->validate->_string("orderby"));
+			if(!empty($orderby)){
 				$args['orderby']  = $orderby;
 				if($orderby == 'subject'){
 					$args['orderby']  = 'meta_value';

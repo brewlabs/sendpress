@@ -51,7 +51,7 @@ class SendPress_Ajax_Loader {
 	}
 
 	function verify_ajax_call() {
-		$nonce = isset( $_POST['spnonce'] ) ? $_POST['spnonce'] : $_GET['spnonce'];
+		$nonce = SPNL()->validate->_string('spnonce');
 		if ( ! wp_verify_nonce( $nonce, SendPress_Ajax_Loader::$ajax_nonce ) ) {
 			die ( 'Busted!' );
 		}
@@ -60,9 +60,9 @@ class SendPress_Ajax_Loader {
 	function list_subscription() {
 		$this->verify_ajax_call();
 		$s      = NEW SendPress;
-		$lid    = $_POST['lid'];
-		$sid    = $_POST['sid'];
-		$status = $_POST['status'];
+		$lid    = SPNL()->validate->_int('lid');
+		$sid    = SPNL()->validate->_int('sid');
+		$status = SPNL()->validate->_int('status');
 		echo json_encode( SendPress_Data::update_subscriber_status( $lid, $sid, $status ) );
 		die();
 	}
@@ -70,7 +70,7 @@ class SendPress_Ajax_Loader {
 
 	function find_post() {
 		$this->verify_ajax_call();
-		$q = $_GET['query'];
+		$q = SPNL()->validate->_string('query');
 
 		$the_query = new WP_Query( 's=' . $q );
 		//$response = array('empty','test');
@@ -122,8 +122,8 @@ class SendPress_Ajax_Loader {
 			$s = NEW SendPress;
 
 			// get the credit card details submitted by the form
-			$listid = SPNL()->validate->int($_POST['id']);
-			$name   =  sanitize_text_field($_POST['name']);
+			$listid = SPNL()->validate->_int('id');
+			$name   =  sanitize_text_field( SPNL()->validate->_string('name') );
 			$public = ( $_POST['public'] === '1' ) ? 1 : 0;
 
 			$list = SendPress_Data::update_list( $listid, array( 'name' => $name, 'public' => $public ) );
@@ -158,12 +158,13 @@ class SendPress_Ajax_Loader {
 
 		if ( $_POST ) {
 			// get the credit card details submitted by the form
-			$first  = isset( $_POST['first'] ) ? $_POST['first'] : '';
-			$last   = isset( $_POST['last'] ) ? $_POST['last'] : '';
-			$phone  = isset( $_POST['phonenumber'] ) ? $_POST['phonenumber'] : '';
-			$salutation = isset( $_POST['salutation'] ) ? $_POST['salutation'] : '';
-			$email  = isset( $_POST['email'] ) ? $_POST['email'] : '';
-			$listid = isset( $_POST['listid'] ) ? $_POST['listid'] : '';
+			$data = SPNL()->validate;
+			$first  = $data->_string('first');
+			$last   = $data->_string('last');
+			$phone  = $data->_string('phonenumber');
+			$salutation = $data->_string('salutation');
+			$email  = $data->_string('email');
+			$listid = $data->_int('listid');
 
 			$custom = apply_filters( 'sendpress_subscribe_to_list_custom_fields', array(), $_POST );
 
@@ -191,7 +192,7 @@ class SendPress_Ajax_Loader {
 
 	function autocron() {
 		$this->verify_ajax_call();
-		$enable = isset( $_POST['enable'] ) ? $_POST['enable'] : false;
+		$enable = SPNL()->validate->_bool('enable');
 		if ( $enable !== false ) {
 			SendPress_Option::set( 'autocron', 'yes' );
 			SendPress_Option::set( 'allow_tracking', 'yes' );

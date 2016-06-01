@@ -253,7 +253,8 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
         echo '<select name="page_count">';
         $counts = array(10,25,50,100);
         foreach ($counts as $list) {
-            if(isset($_GET['page_count']) && $_GET['page_count'] == $list){
+            $cls = '';
+            if(SPNL()->validate->_int('page_count') == $list){
                 $cls = " selected='selected' ";
             }
 
@@ -266,13 +267,10 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
     function status_select(){
         $info = SendPress_Data::get_statuses();
         echo '<select name="statusid">';
-         if(!isset($_GET['statusid']) ){
-                $cls = " selected='selected' ";
-            }
         echo "<option cls value='-1' >Any Status</option>";
         foreach ($info as $list) {
             $cls = '';
-            if(isset($_GET['statusid']) && $_GET['statusid'] == $list->statusid){
+            if( SPNL()->validate->_int('statusid') == $list->statusid){
                 $cls = " selected='selected' ";
             }
 
@@ -322,36 +320,22 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
     function prepare_items() {
         global $wpdb, $_wp_column_headers;
         $screen = get_current_screen();
+        $sp_validate = SPNL()->validate;
           /*      
         select t1.* from `sp_sendpress_list_subscribers` as t1 , `sp_sendpress_subscribers` as t2
         where t1.subscriberID = t2.subscriberID and t1.listID = 2*/
 
 
- 
-        /* -- Preparing your query -- */
-        if(isset($_GET["listID"]) && $_GET["listID"] > 0){
-        $query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3";
+       $query = "SELECT * FROM " .  SendPress_Data::subscriber_table() . " as t1";
+       $query_count = "SELECT count(*) FROM " .  SendPress_Data::subscriber_table() ." as t1";
+        $qs =  $sp_validate->_string("qs");
+        if($qs) {
+            $qs = '%' . $qs . '%';
+            $query .= $wpdb->prepare(' WHERE ( t1.email LIKE %s or t1.firstname LIKE %s or t1.lastname LIKE %s )', $qs,$qs,$qs);
+            $query_count .= $wpdb->prepare(' WHERE ( t1.email LIKE %s or t1.firstname LIKE %s or t1.lastname LIKE %s )', $qs,$qs,$qs);
+        }
 
         
-            $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND (t2.listID =  ". $_GET["listID"] .")";
-        } else {
-            $query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3";
-             $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) ";
-        }
-        /* -- Ordering parameters -- */
-        //Parameters that are going to be used to order the result
-       
-        if(isset($_GET["statusid"] ) && $_GET["statusid"]  > 0){
-            $query .= ' AND statusid = '. $_GET["statusid"] ;
-
-        }
-
-        if(isset($_GET["qs"] )){
-            $query .= ' AND ( email LIKE "%'. $_GET["qs"] .'%" or firstname LIKE "%'. $_GET["qs"] .'%" or lastname LIKE "%'. $_GET["qs"] .'%" )';
-
-        }
-
-         $query_count = "SELECT count(*) FROM " .  SendPress_Data::subscriber_table();
         /* -- Pagination parameters -- */
         //Number of elements in your table?
         $totalitems = $wpdb->get_var($query_count); //return the total number of affected rows
@@ -372,27 +356,26 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
                     $per_page = $screen->get_option( 'per_page', 'default' );
                 }
             }
-             if(!empty($_GET["page_count"])){
-                 $per_page = $_GET["page_count"];
-            }
+            
+            $per_page = $sp_validate->_int("page_count") > 0 ? $sp_validate->_int("page_count"): $per_page ;
+            
         //Which page is this?
-        $paged = !empty($_GET["paged"]) ? esc_sql($_GET["paged"]) : '';
+        $paged = $sp_validate->_int("paged");
         //Page Number
         if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
         //How many pages do we have in total?
         $totalpages = ceil($totalitems/$per_page);
 
-        if(!isset($_GET["listID"]) ){
-            $query.= ' group by t1.email';
+      
+        $orderby = $sp_validate->_string("orderby") ? $sp_validate->orderby($sp_validate->_string("orderby")) : '';
 
-        }
-         $orderby = !empty($_GET["orderby"]) ? esc_sql($_GET["orderby"]) : 'ASC';
-        $order = !empty($_GET["order"]) ? esc_sql($_GET["order"]) : '';
-        if($orderby == 'status'){
-            $orderby = 't2.status';
-        }
 
-        if(!empty($orderby) & !empty($order)){ $query.=' ORDER BY '.$orderby.' '.$order; }
+        $order = $sp_validate->_string("order")   == 'DESC' ?  'DESC' : 'ASC';
+        
+
+        if(!empty($orderby) & !empty($order)){ 
+            $query.=  ' ORDER BY '. $orderby .' ' . $order; 
+        }
        
         //adjust the query to take pagination into account
         if(!empty($paged) && !empty($per_page)){
@@ -410,7 +393,7 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
         //The pagination links are automatically built according to those parameters
 
     /* -- Register the Columns -- */
-       $columns = $this->get_columns();
+        $columns = $this->get_columns();
          $hidden = array();
          $sortable = $this->get_sortable_columns();
          $this->_column_headers = array($columns, $hidden, $sortable);

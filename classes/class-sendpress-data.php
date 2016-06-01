@@ -183,15 +183,15 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$query = "SELECT COUNT(*) FROM $table where success = 0";
 			 $query.=" AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s', current_time( 'timestamp' ) )."') ";
        
-	        if(isset($_GET["listid"]) &&  $_GET["listid"]> 0 ){
-	           $wpdb->prepare(" AND listID = %d", $_GET["listid"]);
+       		$list_id = SPNL()->validate->_int('listid');
+	        if( $list_id > 0 ){
+	           $wpdb->prepare(" AND listID = %d", $list_id );
 	        }
 
-	        if(isset($_GET["qs"] )){
-	        	
-	          $query .=  $wpdb->prepare("AND to_email LIKE '%%s%'", $_GET["qs"] ) ;
-
-	        }
+	        $qs = SPNL()->validate->_string('qs');
+	        if(!empty($qs)){
+	          $query .=  $wpdb->prepare("AND to_email LIKE '%%s%'", $qs ) ;
+			}
 
 		} else {
 			$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where emailID = %d and success = 0", $id );
@@ -206,12 +206,14 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$query = "SELECT COUNT(*) FROM $table where success = 0";
 			 $query.=" AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s')."') ";
        
-	        if(isset($_GET["listid"]) &&  $_GET["listid"]> 0 ){
-	            $query .= $wpdb->prepare(" AND listID = %d", SPNL()->validate->int( $_GET["listid"] ));
+	        $list_id = SPNL()->validate->_int('listid');
+	        if( $list_id > 0 ){
+	           $wpdb->prepare(" AND listID = %d", $list_id );
 	        }
 
-	        if(isset( $_GET["qs"] )){
-	            $query .= $wpdb->prepare(" AND to_email LIKE '%%s%'",  sanitize_text_field( $_GET["qs"] ) );
+	        $qs = SPNL()->validate->_string('qs');
+	        if(!empty($qs)){
+	          $query .=  $wpdb->prepare("AND to_email LIKE '%%s%'", $qs ) ;
 			}
 
 	        $query .= " AND max_attempts = attempts ";
@@ -229,12 +231,14 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$query = "SELECT COUNT(*) FROM $table where success = 0";
 			$query.=" AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s')."') ";
        
-	       	if(isset($_GET["listid"]) &&  $_GET["listid"]> 0 ){
-	            $query .= $wpdb->prepare(" AND listID = %d", SPNL()->validate->int( $_GET["listid"] ));
+	       	 $list_id = SPNL()->validate->_int('listid');
+	        if( $list_id > 0 ){
+	           $wpdb->prepare(" AND listID = %d", $list_id );
 	        }
 
-	        if(isset( $_GET["qs"] )){
-	            $query .= $wpdb->prepare(" AND to_email LIKE '%%s%'",  sanitize_text_field( $_GET["qs"] ) );
+	        $qs = SPNL()->validate->_string('qs');
+	        if(!empty($qs)){
+	          $query .=  $wpdb->prepare("AND to_email LIKE '%%s%'", $qs ) ;
 			}
 
 	        $query .= " AND max_attempts > attempts ";
