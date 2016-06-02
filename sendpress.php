@@ -796,10 +796,7 @@ class SendPress {
 		if ( isset( $_GET['page'] ) && in_array( $_GET['page'], $this->adminpages ) ) {
 			$this->_page = SPNL()->validate->page();
 			$this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
-			echo $this->_page;
 			$view_class = $this->get_view_class( $this->_page, $this->_current_view );
-
-			print_r($view_class);
 
 			//Securiry check for view 
 			if( !is_user_logged_in() ){
@@ -1197,9 +1194,11 @@ class SendPress {
 			$role = "manage_options";
 		}
 		$queue = '';
-		if ( isset( $_GET['page'] ) && in_array( SPNL()->validate->page(), $this->adminpages ) ) {
+
+		if ( SPNL()->validate->page() !== false ) {
 			$queue = '(<span id="queue-count-menu">-</span>)';//SendPress_Data::emails_in_queue();
 		}
+		
 		$plugin_name = __( 'SendPress', 'sendpress' );
 		if ( defined( 'SENDPRESS_PRO_VERSION' ) ) {
 			$plugin_name .= " " . __( 'Pro', 'sendpress' );
