@@ -20,8 +20,8 @@ class SendPress_SC_Unsubscribe_Form extends SendPress_SC_Base {
 
 	public static function options(){
 		return 	array(
-			'placeholder'	=> __('Email','senpress'),
-			'btntxt'		=> __('Unsubscribe','senpress') // Possible values are 'IN', 'NOT IN', 'AND'.
+			'placeholder'	=> __('Email','sendpress'),
+			'btntxt'		=> __('Unsubscribe','sendpress') // Possible values are 'IN', 'NOT IN', 'AND'.
 			);
 	}
 
