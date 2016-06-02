@@ -13,8 +13,6 @@ if ( !defined('SENDPRESS_VERSION') ) {
 	die;
 }
 
-
-
 class SendPress_Security{
 	private $_adminpage = array('sp','sp-overview','sp-reports','sp-emails','sp-templates','sp-subscribers','sp-settings','sp-queue','sp-pro','sp-help');
 	private $_orderby = array('firstname','lastname','email','join_date','lastsend','subject');
@@ -165,6 +163,9 @@ class SendPress_Security{
 		}
 		$action .= $type;
 		$output = null;
+
+
+
 		switch($action)
 		{
 			case 'get_string':

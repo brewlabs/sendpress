@@ -796,20 +796,15 @@ class SendPress {
 		if ( isset( $_GET['page'] ) && in_array( $_GET['page'], $this->adminpages ) ) {
 			$this->_page = SPNL()->validate->page();
 			$this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
-			echo $this->_page;
+			//echo $this->_page;
 			$view_class = $this->get_view_class( $this->_page, $this->_current_view );
 
-			print_r($view_class);
+			//print_r($view_class);
 
 			//Securiry check for view 
 			if( !is_user_logged_in() ){
 				wp_die('Cheating I see..');
 			};
-
-
-
-			
-
 			
 			SendPress_Tracking::init();
 			SendPress_Notifications_Manager::init();
