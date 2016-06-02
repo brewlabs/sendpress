@@ -42,9 +42,6 @@ class SendPress_View_Settings_Styles extends SendPress_View_Settings {
         update_post_meta($saveid ,'sp_content_link_color', $contentlink );
         update_post_meta($saveid ,'content_border', $contentborder );
 
-
-
-
         update_post_meta($saveid ,'header_bg', $headerbg );
         update_post_meta($saveid ,'header_text_color', $headertextcolor );
         update_post_meta($saveid ,'header_text', $headertext );
@@ -54,7 +51,8 @@ class SendPress_View_Settings_Styles extends SendPress_View_Settings {
 
         update_post_meta($saveid ,'active_header', $activeHeader );
 
-       	$canspam= sanitize_text_field($_POST['can-spam']);
+       	$canspam = SPNL()->validate->_html('can-spam');
+
         $linkedin = '';
         if(isset($_POST['linkedin'])){
             $linkedin= esc_url_raw($_POST['linkedin']);
