@@ -16,8 +16,8 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 
 	function save(){
 		$options =  array();
-	 	$options['gmailuser'] = $_POST['gmailuser'];
-        $options['gmailpass'] = $_POST['gmailpass'];
+	 	$options['gmailuser'] = (array_key_exists('gmailuser',$_POST)) ? $_POST['gmailuser'] : "";
+        $options['gmailpass'] = (array_key_exists('gmailpass',$_POST)) ? $_POST['gmailpass'] : "";
         SendPress_Option::set( $options );
 	}
 

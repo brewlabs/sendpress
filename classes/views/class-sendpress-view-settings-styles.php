@@ -54,7 +54,7 @@ class SendPress_View_Settings_Styles extends SendPress_View_Settings {
 
         update_post_meta($saveid ,'active_header', $activeHeader );
 
-       	$canspam= sanitize_text_field($_POST['can-spam']);
+       	$canspam = sanitize_text_field($_POST['can-spam']);
         $linkedin = '';
         if(isset($_POST['linkedin'])){
             $linkedin= esc_url_raw($_POST['linkedin']);
