@@ -432,6 +432,7 @@ class SendPress_Reports_Tests_Table extends WP_List_Table {
     function prepare_items() {
         global $wpdb, $_wp_column_headers;
         $screen = get_current_screen();
+        $sp_validate = SPNL()->validate;
           /*      
         select t1.* from `sp_sendpress_list_subscribers` as t1 , `sp_sendpress_subscribers` as t2
         where t1.subscriberID = t2.subscriberID and t1.listID = 2*/
@@ -488,7 +489,7 @@ class SendPress_Reports_Tests_Table extends WP_List_Table {
                 }
             }
             //Which page is this?
-            $paged = !empty($_GET["paged"]) ? esc_sql($_GET["paged"]) : '';
+            $paged = $sp_validate->_int("paged");
             //Page Number
             if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
             //How many pages do we have in total?
@@ -534,13 +535,16 @@ class SendPress_Reports_Tests_Table extends WP_List_Table {
             'posts_per_page' => $per_page,
             'paged'=> $paged,
             );
-
-            if(isset($_GET['order'])){
-                $args['order'] = $_GET['order'];
+            $s = $sp_validate->_string("s");
+            if ( !empty( $s ) ){
+                $args['s'] = $s;
             }
 
-            if(isset($_GET['orderby'])){
-                $orderby = $_GET['orderby'];
+            
+            $args['order'] = $sp_validate->_string("order")   == 'DESC' ?  'DESC' : 'ASC';
+            
+            $orderby = $sp_validate->orderby($sp_validate->_string("orderby"));
+            if(!empty($orderby)){
                 $args['orderby']  = $orderby;
                 if($orderby == 'subject'){
                     $args['orderby']  = 'meta_value';

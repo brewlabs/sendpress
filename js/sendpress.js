@@ -79,7 +79,8 @@
                 event.preventDefault();
                 $.post( ajaxurl, {
                             enable: true,
-                            action: 'sendpress-autocron'
+                            action: 'sendpress-autocron',
+                             spnonce: spvars.sendpressnonce,
                         }); 
                 $('#sp-disable-cron').show();
                 $('#sp-enable-cron').hide();             
@@ -89,7 +90,8 @@
                 event.preventDefault();
                 $.post( ajaxurl, {
                             
-                            action: 'sendpress-autocron'
+                            action: 'sendpress-autocron',
+                             spnonce: spvars.sendpressnonce,
                   }); 
                   $('#sp-disable-cron').hide();  
                   $('#sp-enable-cron').show();             
@@ -768,6 +770,7 @@ jQuery(document).ready(function($) {
             list['name'] = $form.find('#list-name').val();
             list['public'] = $form.find('#list-public').val();
             list['action'] = 'sendpress_save_list';
+            list['spnonce'] = spvars.sendpressnonce;
 
             //console.debug(list);
 

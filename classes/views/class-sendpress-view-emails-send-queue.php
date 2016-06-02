@@ -16,13 +16,13 @@ class SendPress_View_Emails_Send_Queue extends SendPress_View_Emails
     function html($sp) {
         global $post_ID, $post;
         $list = '';
-        
-        if (isset($_GET['emailID'])) {
-            $emailID = SPNL()->validate->int($_GET['emailID']);
+        $emailID = SPNL()->validate->_int('emailID');
+        if ($emailID > 0) {
+            
             $post = get_post($emailID);
             $post_ID = $post->ID;
         }
-?><?php
+
         update_post_meta($post->ID, '_send_last', 0);
         
         $info = get_post_meta($post->ID, '_send_data', true);
@@ -31,8 +31,7 @@ class SendPress_View_Emails_Send_Queue extends SendPress_View_Emails
         
         $list = explode(",", $lists);
         
-        $view = isset($_GET['view']) ? $_GET['view'] : '';
-        if (isset($_GET['finished'])) {
+        if ( SPNL()->validate->_isset('finished') ) {
             $time = get_post_meta($post->ID, '_send_time', true);
             if ($time == '0000-00-00 00:00:00') {
                 SendPress_Admin::redirect('Queue');

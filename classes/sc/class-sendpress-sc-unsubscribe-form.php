@@ -48,7 +48,7 @@ class SendPress_SC_Unsubscribe_Form extends SendPress_SC_Base {
 
 		$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
 
-		if(!isset($_GET['sp-unsubscribe'])){
+		if(empty(SPNL()->validate->_string('sp-unsubscribe')) ){
 			?><form method="post" action="<?php echo home_url(); ?>">
 			<input type="hidden" name="sendpress" value="post" />
 			<input type="hidden" name="sp-shortcode" value="SC-Unsubscribe-Form" />
@@ -68,25 +68,19 @@ class SendPress_SC_Unsubscribe_Form extends SendPress_SC_Base {
 
 	public static function form_post(){
 		global $wp;
-		$email = isset( $_POST['sp-email'] ) ? $_POST['sp-email'] : false ;
+		$email = SPNL()->validate->_email('sp-email');
 		$message = 'true';
-
-		error_log($email);
-
 		if ( $email !== false ) {
 			if(is_email( $email ) ){
 				$id = SendPress_Data::get_subscriber_by_email( $email );
-				error_log($id);
 				if($id != false){
 					SendPress_Data::unsubscribe_from_all_lists( $id );
 				}
 			}
 		}
-		if(isset($_POST['sp-current-page'])){
-			$permalink = $_POST['sp-current-page'];
-
+		if( !empty( SPNL()->validate->_string('sp-current-page') ) ){
+			$permalink = SPNL()->validate->_string('sp-current-page');
 			$permalink = add_query_arg(array('sp-unsubscribe'=> $message), $permalink );
-
 			wp_safe_redirect( $permalink );
 		}
 

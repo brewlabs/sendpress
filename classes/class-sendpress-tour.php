@@ -24,6 +24,7 @@ class SendPress_Tour {
 	 * Enqueue styles and scripts needed for the pointers.
 	 */
 	function enqueue() {
+		/*
 		if ( ! current_user_can('manage_options') )
 			return;
 			
@@ -41,11 +42,12 @@ class SendPress_Tour {
 			add_action( 'admin_print_footer_scripts', array( $this, 'tracking_request' ) );
 		} 
 		else if ( $tour == 'false' || $tour == false) {
-			/*
+			
 			add_action( 'admin_print_footer_scripts', array( $this, 'intro_tour' ) );
 			add_action( 'admin_head', array( $this, 'admin_head' ) );
-			*/
+			
 		}
+		*/
 	}
 
 	/**
@@ -54,10 +56,9 @@ class SendPress_Tour {
 	function intro_tour() {
 		global $pagenow, $current_user;
 
-		$page = '';
-		if ( isset( $_GET['page'] ) ){
-			$page = SPNL()->validate->page($_GET['page']);
-		}
+		
+		$page = SPNL()->validate->page();
+		
 
 		$function = '';
 		$button2  = '';

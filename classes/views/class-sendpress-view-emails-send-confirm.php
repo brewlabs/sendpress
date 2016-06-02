@@ -10,7 +10,7 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
 	
   function save($post, $sp){
         $this->security_check();
-        $saveid = SPNL()->validate->int($_POST['post_ID']);
+        $saveid = SPNL()->validate->_int('post_ID');
 
         update_post_meta( $saveid, 'send_date', date('Y-m-d H:i:s') );
 
@@ -68,12 +68,11 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
 	function html($sp) {
 		global $post_ID, $post;
 
-$view = isset($_GET['view']) ? $_GET['view'] : '' ;
 
 $list ='';
-
-if(isset($_GET['emailID'])){
-	$emailID = SPNL()->validate->int($_GET['emailID']);
+$emailID = SPNL()->validate->_int('emailID');
+if($emailID > 0){
+	
 	$post = get_post( $emailID );
 	$post_ID = $post->ID;
 }
@@ -90,7 +89,7 @@ $subject = SendPress_Option::get('current_send_subject_'.$post->ID ,true);
   </div>
 </div>
 <div id="sp-cancel-btn" style="float:right; ">
-<a class="btn btn-default" href="<?php echo '?page='.SPNL()->validate->page($_GET['page']). '&view=send&emailID='. $emailID ; ?>"><?php _e('Cancel Send','sendpress'); ?></a>&nbsp;
+<a class="btn btn-default" href="<?php echo '?page='.SPNL()->validate->page(). '&view=send&emailID='. $emailID ; ?>"><?php _e('Cancel Send','sendpress'); ?></a>&nbsp;
 </div>
 <h2><?php _e('Confirm Send','sendpress'); ?></h2>
 <br>

@@ -10,11 +10,14 @@ class SendPress_View_Emails_Send_Cancel extends SendPress_View_Emails {
 	
   function save($post, $sp){
     $this->security_check();
-    $value = $_POST['submit'];
+    $value = SPNL()->validate->_string( 'submit');
     
     if($value == 'delete'){
-        SendPress_Data::remove_from_queue($_POST['post_ID']);
-        update_post_meta( $_POST['post_ID'] ,'_canceled' , true);
+        $p =SPNL()->validate->_int( 'post_ID');
+        if($p > 0){
+            SendPress_Data::remove_from_queue($p);
+            update_post_meta( $p ,'_canceled' , true);
+        }
     }
     SendPress_Admin::redirect('Reports');
   }
@@ -24,14 +27,9 @@ class SendPress_View_Emails_Send_Cancel extends SendPress_View_Emails {
 
 	function html($sp) {
 		global $post_ID, $post;
-
-        $view = isset($_GET['view']) ? $_GET['view'] : '' ;
-       
-
-
-
-        if(isset($_GET['emailID'])){
-        	$emailID = SPNL()->validate->int($_GET['emailID']);
+        $emailID = SPNL()->validate->_int('emailID');
+        if($emailID > 0){
+        	
         	$post = get_post( $emailID );
         	$post_ID = $post->ID;
         }

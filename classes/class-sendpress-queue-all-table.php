@@ -165,10 +165,7 @@ class SendPress_Queue_All_Table extends WP_List_Table {
     function column_title($item){
         
         //Build row actions
-        $actions = array(
-            //'edit'      => sprintf('<a href="?page=%s&view=%s&subscriberID=%s&listID=%s">Edit</a>',SPNL()->validate->page($_REQUEST['page']),'subscriber',$item->subscriberID, $_GET["listID"] ),
-            //'delete'    => sprintf('<a href="?page=%s&action=%s&movie=%s">Delete</a>',SPNL()->validate->page($_REQUEST['page']),'delete',$item->subscriberID),
-        );
+        $actions = array();
         
         //Return the title contents
         return sprintf('%1$s <span style="color:silver">(subscriber id:%2$s)</span>%3$s',
@@ -284,13 +281,11 @@ class SendPress_Queue_All_Table extends WP_List_Table {
     function list_select(){
         $info = SendPress_Data::get_lists_in_queue();
         echo '<select name="listid">';
-         if(!isset($_GET['listid']) ){
-                $cls = " selected='selected' ";
-            }
+        $list_id = SPNL()->validate->_int('listid');
         echo "<option cls value='-1' >".__('All Lists','sendpress')."</option>";
         foreach ($info as $list) {
             $cls = '';
-            if(isset($_GET['listid']) && $_GET['listid'] == $list['id']){
+            if($list_id == $list['id']){
                 $cls = " selected='selected' ";
             }
 
@@ -358,6 +353,7 @@ class SendPress_Queue_All_Table extends WP_List_Table {
     function prepare_items() {
         global $wpdb, $_wp_column_headers;
         $screen = get_current_screen();
+        $sp_validate = SPNL()->validate;
           /*      
         select t1.* from `sp_sendpress_list_subscribers` as t1 , `sp_sendpress_subscribers` as t2
         where t1.subscriberID = t2.subscriberID and t1.listID = 2*/
@@ -391,25 +387,27 @@ class SendPress_Queue_All_Table extends WP_List_Table {
             }
             
         //Which page is this?
-        $paged = !empty($_GET["paged"]) ? esc_sql($_GET["paged"]) : '';
+        $paged = $sp_validate->_int("paged");
         //Page Number
         if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
         //How many pages do we have in total?
         $totalpages = ceil($totalitems/$per_page);
         $query.=' WHERE success = 1 ';
         //$query.="AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s')."') ";
-        if(isset($_GET["listid"]) &&  $_GET["listid"]> 0 ){
-            $query .= ' AND listID = '. $_GET["listid"];
+        $list_id = $sp_validate->_int("listid");
+        if($list_id  > 0 ){
+            $query .= ' AND listID = '. $list_id;
         }
-
-        if(isset($_GET["qs"] )){
-            $query .= ' AND to_email LIKE "%'. $_GET["qs"] .'%"';
+        
+        $qs = $sp_validate->_string("qs");
+        if(!empty($qs)){
+            $query .= $wpdb->prepare(' AND to_email LIKE %%s% ', $qs);
 
         }
          /* -- Ordering parameters -- */
         //Parameters that are going to be used to order the result
-        $orderby = !empty($_GET["orderby"]) ? esc_sql($_GET["orderby"]) : '';
-        $order = !empty($_GET["order"]) ? esc_sql($_GET["order"]) : 'ASC';
+         $orderby = $sp_validate->_string("orderby") ? $sp_validate->orderby($sp_validate->_string("orderby")) : '';
+        $order = $sp_validate->_string("order")   == 'DESC' ?  'DESC' : 'ASC';
         if(!empty($orderby) & !empty($order)){ $query.=' ORDER BY '.$orderby.' '.$order; }
 
         if( empty( $orderby ) ){

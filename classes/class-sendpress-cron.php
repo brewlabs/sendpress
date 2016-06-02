@@ -136,7 +136,7 @@ class SendPress_Cron {
         if ( false !== strpos( $_SERVER['REQUEST_URI'], '/wp-cron.php' ) ) {
 
             // make sure a secret string is provided in the ur
-            if ( isset( $_GET['action'] ) && $_GET['action'] == 'sendpress' ) {
+            if ( SPNL()->validate->_string('action') == 'sendpress' ) {
 
                  //* Use cache
                 static $cron_bg_run = null;

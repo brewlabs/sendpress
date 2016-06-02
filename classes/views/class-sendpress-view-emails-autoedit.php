@@ -12,15 +12,15 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
 
 	function save_email(){
 		$this->security_check();
- 		$post_id =  SPNL()->validate->int($_POST['post_ID']);
+ 		$post_id =  SPNL()->validate->_int('post_ID');
  		if($post_id > 0){
 	 		
 	 		$myData = array(
-	 			'action_type' => $_POST['sp-autoresponder-type'],
-	 			'when_to_send' => $_POST['when-to-send'],
-	 			'delay_time' => $_POST['sp-delay'],
+	 			'action_type' => SPNL()->validate->_string('sp-autoresponder-type'),
+	 			'when_to_send' => SPNL()->validate->_string('when-to-send'),
+	 			'delay_time' => SPNL()->validate->_int('sp-delay'),
 	 			'post_id' => $post_id,
-	 			'list_id' => $_POST['sp-autoresponser-list']
+	 			'list_id' => SPNL()->validate->_int('sp-autoresponser-list')
 	 		);
 	 		SPNL()->load('Autoresponder')->add($myData);
 	 		//SendPress_Option::email_set( 'autoresponder_' . $post_id  ,  $myData );
@@ -51,14 +51,13 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
 			$_wp_autoresize_on = true;
 		}
 		*/
-		$view = isset($_GET['view']) ? sanitize_text_field( $_GET['view'] ) : '' ;
-
-		if(isset($_GET['emailID'])){
-			$emailID = SPNL()->validate->int($_GET['emailID']);
+		$emailID = SPNL()->validate->_int('emailID');
+		if( $emailID > 0 ){
 			$post = get_post( $emailID );
 			$post_ID = $post->ID;
 		}
-		$auto = SPNL()->load('Autoresponder')->get( SPNL()->validate->int( $_REQUEST['emailID'] ) );
+
+		$auto = SPNL()->load('Autoresponder')->get( $emailID  );
 		if($post->post_type !== 'sp_newsletters'){
             SendPress_Admin::redirect('Emails');
         }
@@ -73,7 +72,7 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
        <div style="float:right;" class="btn-toolbar">
             <div id="sp-cancel-btn" class="btn-group">
             <?php if($post->post_status != 'sp-autoresponder'  ) { ?>
-                <a href="?page=<?php echo SPNL()->validate->page($_GET['page']); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+                <a href="?page=<?php echo SPNL()->validate->page(); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
             
             <?php 
             } else { ?>
