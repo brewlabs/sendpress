@@ -23,7 +23,8 @@ class SendPress_View_Emails_Tempdelete extends SendPress_View_Emails {
 		
 		?>
 		<?php 
-		$template = get_post($_GET['templateID']);
+		$t_id = SPNL()->validate->_int('templateID');
+		$template = get_post( $t_id );
 		
 	?>
 
@@ -31,7 +32,7 @@ class SendPress_View_Emails_Tempdelete extends SendPress_View_Emails {
 		
 		<h2><?php _e('You are about to delete template','sendpress'); ?>: <?php echo $template->post_title; ?></h2>
 		<br>
-				<a class="btn btn-danger" href="<?php echo SendPress_Admin::link('Emails_Temp',array('templateID'=>$_GET['templateID'] , 'action'=>'delete' )); ?>"><?php _e('Delete Template','sendpress'); ?></a>
+				<a class="btn btn-danger" href="<?php echo SendPress_Admin::link('Emails_Temp',array('templateID'=>$t_id , 'action'=>'delete' )); ?>"><?php _e('Delete Template','sendpress'); ?></a>
 			
 				<a class="btn btn-default" href="<?php echo SendPress_Admin::link('Emails_Temp'); ?>"><?php _e('Cancel','sendpress'); ?></a>
 			

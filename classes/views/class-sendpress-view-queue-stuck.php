@@ -172,7 +172,7 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="email-filter" action="<?php echo SendPress_Admin::link('Queue_Stuck'); ?>" method="get">
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	     <input type="hidden" name="page" value="<?php echo SPNL()->validate->page($_REQUEST['page']) ?>" /> 
+	     <input type="hidden" name="page" value="<?php echo SPNL()->validate->page() ?>" /> 
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display() ?>
 	    <?php wp_nonce_field($sp->_nonce_value); ?>
@@ -180,7 +180,7 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
 	<br>
 		<a class="btn btn-large btn-success " href="<?php echo SendPress_Admin::link('Queue'); ?>&action=reset-queue" ><i class="icon-repeat icon-white "></i> <?php _e('Re-queue All Emails','sendpress'); ?></a><br><br>
 	<form  method='get'>
-		<input type='hidden' value="<?php echo SPNL()->validate->page($_GET['page']); ?>" name="page" />
+		<input type='hidden' value="<?php echo SPNL()->validate->page(); ?>" name="page" />
 		
 		<input type='hidden' value="empty-queue" name="action" />
 		<a class="btn btn-large  btn-danger" data-toggle="modal" href="#sendpress-empty-queue" ><i class="icon-warning-sign "></i> <?php _e('Delete All Stuck Emails','sendpress'); ?></a>

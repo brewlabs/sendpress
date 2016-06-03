@@ -255,7 +255,7 @@ class SendPress_Reports_Table extends WP_List_Table {
 
             break;
             case 'actions':
-                return '<div class="inline-buttons"><a class="spbutton left" href="'. get_permalink( $item->ID  ). '">View</a><a class="spbutton right" href="?page='.SPNL()->validate->page($_REQUEST['page']).'&view=edit-email&emailID='. $item->ID .'">Edit</a><a class="spbutton bluebtn" href="?page='.SPNL()->validate->page($_REQUEST['page']).'&view=send-email&emailID='. $item->ID .'">Send</a></div>';
+                return '<div class="inline-buttons"><a class="spbutton left" href="'. get_permalink( $item->ID  ). '">View</a><a class="spbutton right" href="?page='.SPNL()->validate->page().'&view=edit-email&emailID='. $item->ID .'">Edit</a><a class="spbutton bluebtn" href="?page='.SPNL()->validate->page().'&view=send-email&emailID='. $item->ID .'">Send</a></div>';
             break;
             default:
                 return apply_filters('sendpress_reports_column_'.$column_name, $item); //Show the whole array for troubleshooting purposes
@@ -284,9 +284,9 @@ class SendPress_Reports_Table extends WP_List_Table {
         //Build row actions
         
         $actions = array(
-           // 'edit'      => sprintf('<a href="?page=%s&view=%s&report=%s">Edit</a>',SPNL()->validate->page($_REQUEST['page']),'edit-email',$item->ID),
+           // 'edit'      => sprintf('<a href="?page=%s&view=%s&report=%s">Edit</a>',SPNL()->validate->page(),'edit-email',$item->ID),
             'view'      => sprintf('<a href="%s">View Email</a>',get_permalink( $item->ID  )),
-            'delete'    => sprintf('<a href="?page=%s&action=%s&reportID=%s">Delete</a>',SPNL()->validate->page($_REQUEST['page']),'delete-report',$item->ID),
+            'delete'    => sprintf('<a href="?page=%s&action=%s&reportID=%s">Delete</a>',SPNL()->validate->page(),'delete-report',$item->ID),
         );
         
         //Return the title contents

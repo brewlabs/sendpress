@@ -135,9 +135,9 @@ class SendPress_Queue_All_Table extends WP_List_Table {
             case 'actions':
                 $buttons ='';
                 if($item->attempts >= $item->max_attempts){
-                    $buttons .='<a class="btn resend-btn btn-success" href="?page='.SPNL()->validate->page($_REQUEST['page']).'&action=requeue&emailID='. $item->id .'"><i class="icon-repeat icon-white"></i> Requeue</a> ';
+                    $buttons .='<a class="btn resend-btn btn-success" href="?page='.SPNL()->validate->page().'&action=requeue&emailID='. $item->id .'"><i class="icon-repeat icon-white"></i> Requeue</a> ';
                 }
-                $buttons .='<a class="btn resend-btn btn-primary" href="?page='.SPNL()->validate->page($_REQUEST['page']).'&action=queue-delete&emailID='. $item->id .'"><i class="icon-trash "></i> Delete</a> ';
+                $buttons .='<a class="btn resend-btn btn-primary" href="?page='.SPNL()->validate->page().'&action=queue-delete&emailID='. $item->id .'"><i class="icon-trash "></i> Delete</a> ';
             // return '<div class="inline-buttons">'.$buttons.'</div>';
             break;
             default:

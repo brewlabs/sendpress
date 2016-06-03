@@ -7,7 +7,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 global $post_ID, $post;
 if(isset($_GET['emailID'])){
-			$emailID = SPNL()->validate->int($_GET['emailID']);
+			$emailID = SPNL()->validate->_int('emailID');
 			$post = get_post( $emailID );
 			$post_ID = $post->ID;
 } else {

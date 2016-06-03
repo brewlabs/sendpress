@@ -47,7 +47,7 @@ class SendPress_View_Subscribers_Add extends SendPress_View_Subscribers {
         }
     	
     	}
-        wp_redirect( esc_url_raw(admin_url( 'admin.php?page='.SPNL()->validate->page($_GET['page']). "&view=subscribers&listID=".$listID )));
+        wp_redirect( esc_url_raw(admin_url( 'admin.php?page='.SPNL()->validate->page(). "&view=subscribers&listID=".$listID )));
         
     }
 

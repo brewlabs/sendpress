@@ -114,7 +114,7 @@ class SendPress_Email_Local_Table extends WP_List_Table {
 				/*
 				$a .= '<a class="btn btn-default view-btn" title="'.  get_post_meta($item->ID, "_sendpress_subject", true) . '" href="'. get_permalink( $item->ID  ). '"><span class="glyphicon  glyphicon-eye-open"></span> View</a> ';
 				
-				$a .= '<a class="btn btn-primary" href="?page='.SPNL()->validate->page($_REQUEST['page']).'&view=tempedit&templateID='. $item->ID .'"><span class="glyphicon glyphicon-edit"></span> Edit</a> ';
+				$a .= '<a class="btn btn-primary" href="?page='.SPNL()->validate->page().'&view=tempedit&templateID='. $item->ID .'"><span class="glyphicon glyphicon-edit"></span> Edit</a> ';
 				/*
 				$a = apply_filters('sendpress_email_table', $a, $item);
 				if( SendPress_Admin::access('Emails_Send') ) { 
@@ -151,8 +151,8 @@ class SendPress_Email_Local_Table extends WP_List_Table {
 		//Build row actions
 		
 		$actions = array(
-			'edit'      => sprintf('<a href="?page=%s&view=%s&emailID=%s">%s</a>',SPNL()->validate->page($_REQUEST['page']),'style',$item->ID, __('Edit','sendpress') ),
-			'delete'    => sprintf('<a href="?page=%s&action=%s&emailID=%s">%s</a>',SPNL()->validate->page($_REQUEST['page']),'delete-email',$item->ID,__('Delete','sendpress') ),
+			'edit'      => sprintf('<a href="?page=%s&view=%s&emailID=%s">%s</a>',SPNL()->validate->page(),'style',$item->ID, __('Edit','sendpress') ),
+			'delete'    => sprintf('<a href="?page=%s&action=%s&emailID=%s">%s</a>',SPNL()->validate->page(),'delete-email',$item->ID,__('Delete','sendpress') ),
 		);
 		
 		//Return the title contents

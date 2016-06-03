@@ -47,7 +47,7 @@ class SendPress_View_Pro extends SendPress_View{
 
     function wp_mail(){
         $this->security_check();
-        $e = isset($_GET['enable']) ?  $_GET['enable'] : 0 ;
+        $e = SPNL()->validate->_int('enable');
        
         if($e == 1){
             update_option( 'sendpress_wp_mail' , 'true' ); 

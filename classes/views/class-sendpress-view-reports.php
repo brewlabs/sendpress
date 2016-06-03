@@ -71,7 +71,7 @@ class SendPress_View_Reports extends SendPress_View{
 		<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 		<form id="email-filter" method="get">
 			<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-		    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page($_REQUEST['page']); ?>" />
+		    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page(); ?>" />
 		    <!-- Now we can render the completed list table -->
 		    <?php $sp_reports_table->display(); ?>
 		    <?php wp_nonce_field( $this->_nonce_value ); ?>

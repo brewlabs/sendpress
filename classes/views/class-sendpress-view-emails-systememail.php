@@ -27,7 +27,7 @@ class SendPress_View_Emails_Systememail extends SendPress_View_Emails{
 			if($form_types){
 			?>
 				<div id="button-area">
-					<a class="btn btn-primary btn-large" href="?page=<?php echo SPNL()->validate->page($_REQUEST['page']); ?>&view=systememailcreate"><?php _e('Create System E-mail','sendpress'); ?></a>
+					<a class="btn btn-primary btn-large" href="?page=<?php echo SPNL()->validate->page(); ?>&view=systememailcreate"><?php _e('Create System E-mail','sendpress'); ?></a>
 				</div>
 			<?php
 			}
@@ -35,7 +35,7 @@ class SendPress_View_Emails_Systememail extends SendPress_View_Emails{
 
 	</div>
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page($_REQUEST['page']) ?>" />
+	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page() ?>" />
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display(); ?>
 	    <?php wp_nonce_field($this->_nonce_value); ?>

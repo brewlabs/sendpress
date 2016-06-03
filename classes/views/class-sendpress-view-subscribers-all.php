@@ -72,14 +72,14 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 	<div id="taskbar" class="lists-dashboard rounded group"> 
 		<div id="button-area">  
 			
-			<a class="btn btn-primary btn-large" href="?page=<?php echo SPNL()->validate->page($_REQUEST['page']); ?>&view=add<?php echo $list; ?>"><?php _e('Add Subscriber','sendpress'); ?></a>
+			<a class="btn btn-primary btn-large" href="?page=<?php echo SPNL()->validate->page(); ?>&view=add<?php echo $list; ?>"><?php _e('Add Subscriber','sendpress'); ?></a>
 		</div>
 		<h2><?php _e('Subscribers','sendpress'); ?></h2>
 	</div>
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="movies-filter" method="get">
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page($_REQUEST['page']) ?>" />
+	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page() ?>" />
 	    <?php if(isset($_GET['listID']) && $_GET['listID'] > 0 ){ ?>
 	    <input type="hidden" name="listID" value="<?php echo SPNL()->validate->int( $_POST['listID'] ); ?>" />
 	    <?php  } ?>
@@ -91,7 +91,7 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 	</form>
 
 	<form  method='get'>
-		<input type='hidden' value="<?php echo SPNL()->validate->page($_GET['page']); ?>" name="page" />
+		<input type='hidden' value="<?php echo SPNL()->validate->page(); ?>" name="page" />
 		<br>
 		<input type='hidden' value="unlink-lisk" name="action" />
 		<div class="btn-group">

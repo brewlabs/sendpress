@@ -19,9 +19,10 @@ class SendPress_View_Emails_Tempclone extends SendPress_View_Emails {
 
 	function save(){
 		$this->security_check();
-  		$postdata = get_post( $_GET['templateID'] );
-  		$new_post = SendPress_Posts::copy($postdata, $_POST['post_title'], '' , '');
-  		SendPress_Posts::copy_meta_info($new_post, $_GET['templateID']  );
+		$t_id = SPNL()->validate->_int('templateID');
+  		$postdata = get_post( );
+  		$new_post = SendPress_Posts::copy($postdata, SPNL()->validate->_string('post_title'), '' , '');
+  		SendPress_Posts::copy_meta_info($new_post, $t_id  );
   		update_post_meta($new_post, '_template_type','clone');
   		update_post_meta($new_post, '_guid','');
   		SendPress_Admin::redirect('Emails_Tempstyle', array('templateID' => $new_post ) );
@@ -30,9 +31,8 @@ class SendPress_View_Emails_Tempclone extends SendPress_View_Emails {
 	function html($sp) {
 		  global $sendpress_html_templates;
 
-        //print_r($sendpress_html_templates[$_GET['templateID']]);
-
-    $postdata = get_post( $_GET['templateID'] );
+$t_id = SPNL()->validate->_int('templateID');
+    $postdata = get_post( $t_id  );
 		?>
 		<form method="POST" name="post" id="post">
 		<div id="styler-menu">

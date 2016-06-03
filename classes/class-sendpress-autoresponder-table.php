@@ -101,7 +101,7 @@ class SendPress_Autoresponder_Table extends WP_List_Table {
 				if(get_post_meta($item->ID  , '_sendpress_system', true) == 'new'){
 					$editwindow = 'edit';
 				}
-				$a .= '<a class="btn btn-primary" href="?page='.SPNL()->validate->page($_REQUEST['page']).'&view='.$editwindow.'&emailID='. $item->ID .'"><span class="glyphicon glyphicon-edit"></span> '. __('Content','sendpress') .'</a> ';
+				$a .= '<a class="btn btn-primary" href="?page='.SPNL()->validate->page().'&view='.$editwindow.'&emailID='. $item->ID .'"><span class="glyphicon glyphicon-edit"></span> '. __('Content','sendpress') .'</a> ';
 				$a = apply_filters('sendpress_email_table', $a, $item);
 				$a .= '<a class="btn  btn-success " href="'. SendPress_Admin::link('Emails_Autoedit').'&emailID='. $item->ID .'"><span class="glyphicon glyphicon-cog"></span> Settings</a>';
 				
@@ -135,8 +135,8 @@ class SendPress_Autoresponder_Table extends WP_List_Table {
 		//Build row actions
 		
 		$actions = array(
-			'edit'      => sprintf('<a href="?page=%s&view=%s&emailID=%s">%s</a>',SPNL()->validate->page($_REQUEST['page']),'style',$item->ID, __('Edit','sendpress') ),
-			'delete'    => sprintf('<a href="?page=%s&action=%s&emailID=%s">%s</a>',SPNL()->validate->page($_REQUEST['page']),'delete-email',$item->ID,__('Delete','sendpress') ),
+			'edit'      => sprintf('<a href="?page=%s&view=%s&emailID=%s">%s</a>',SPNL()->validate->page(),'style',$item->ID, __('Edit','sendpress') ),
+			'delete'    => sprintf('<a href="?page=%s&action=%s&emailID=%s">%s</a>',SPNL()->validate->page(),'delete-email',$item->ID,__('Delete','sendpress') ),
 		);
 		
 		//Return the title contents

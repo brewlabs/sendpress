@@ -91,7 +91,7 @@ class SendPress_View_Settings_Styles extends SendPress_View_Settings {
 		$list ='';
 
 		if(isset($_GET['emailID'])){
-			$emailID = SPNL()->validate->int($_GET['emailID']);
+			$emailID = SPNL()->validate->_int('emailID');
 			$post = get_post( $emailID );
 			$post_ID = $post->ID;
 		}

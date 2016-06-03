@@ -82,7 +82,7 @@ class SendPress_View_Queue_All extends SendPress_View_Queue {
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="email-filter" action="<?php echo SendPress_Admin::link('Queue_All'); ?>" method="get">
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	     <input type="hidden" name="page" value="<?php echo SPNL()->validate->page($_REQUEST['page']) ?>" /> 
+	     <input type="hidden" name="page" value="<?php echo SPNL()->validate->page() ?>" /> 
 	       <?php if(isset($_GET['listID']) && $_GET['listID'] > 0 ){ ?>
 	    <input type="hidden" name="listID" value="<?php echo SPNL()->validate->int( $_POST['listID'] ); ?>" />
 	    <?php  } ?>
@@ -94,7 +94,7 @@ class SendPress_View_Queue_All extends SendPress_View_Queue {
 	<br>
 	
 	<form  method='get'>
-		<input type='hidden' value="<?php echo SPNL()->validate->page($_GET['page']); ?>" name="page" />
+		<input type='hidden' value="<?php echo SPNL()->validate->page(); ?>" name="page" />
 		
 		
 		<?php wp_nonce_field($sp->_nonce_value); ?>

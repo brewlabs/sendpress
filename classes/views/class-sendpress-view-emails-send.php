@@ -41,9 +41,9 @@ class SendPress_View_Emails_Send extends SendPress_View_Emails {
             }
 
             if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
-            	 SendPress_Admin::redirect('Emails_Send_Confirm', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+            	 SendPress_Admin::redirect('Emails_Send_Confirm', array('emailID'=>SPNL()->validate->_int('emailID') ));
             } else {
-            	SendPress_Admin::redirect('Emails_Style', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+            	SendPress_Admin::redirect('Emails_Style', array('emailID'=>SPNL()->validate->_int('emailID') ));
             }
         }
        
@@ -60,13 +60,12 @@ class SendPress_View_Emails_Send extends SendPress_View_Emails {
 global $current_user;
 global $post_ID, $post;
 
-$view = isset($_GET['view']) ? $_GET['view'] : '' ;
+
 
 $list ='';
-
-if(isset($_GET['emailID'])){
-	$emailID = $_GET['emailID'];
-	$post = get_post( $_GET['emailID'] );
+$emailID = SPNL()->validate->_int('emailID');
+if($emailID  > 0){
+	$post = get_post( $emailID );
 	$post_ID = $post->ID;
 }
 
@@ -81,7 +80,7 @@ $post_type_object = get_post_type_object($sp->_email_post_type);
 <form method="POST" name="sendpress_post" id="sendpress_post">
 <div style="float:right;"  class="btn-toolbar">
 <div id="sp-cancel-btn" class="btn-group">
-<a href="?page=<?php echo SPNL()->validate->page($_GET['page']); ?>"  class="btn btn-default "><?php echo __('Cancel','sendpress'); ?></a>
+<a href="?page=<?php echo SPNL()->validate->page(); ?>"  class="btn btn-default "><?php echo __('Cancel','sendpress'); ?></a>
 </div> 
 
 <div class="btn-group">

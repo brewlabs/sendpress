@@ -98,24 +98,24 @@ class SendPress_Lists_Table extends WP_List_Table {
 
 
                 $str = '<div class="inline-buttons">
-                    <a class="btn btn-info" href="?page='.SPNL()->validate->page($_REQUEST['page']).'&view=subscribers&listID='.$item->ID.'"><span class="glyphicon glyphicon-edit"></span> '. __('View','sendpress') . '/'. __('Edit','sendpress') . '</a> ';
+                    <a class="btn btn-info" href="?page='.SPNL()->validate->page().'&view=subscribers&listID='.$item->ID.'"><span class="glyphicon glyphicon-edit"></span> '. __('View','sendpress') . '/'. __('Edit','sendpress') . '</a> ';
                 $role = get_post_meta($item->ID,'sync_role',true);
                 $add = '';
                 if($role != 'none' && $role != false){
                     $str .= "<a class='btn btn-primary' href='". SendPress_Admin::link('Subscribers_Sync') . "&listID=".$item->ID."'><span class='glyphicon glyphicon-refresh'></span> ". __('Sync','sendpress') . "</a> ";
                 } else {
                     if(apply_filters( 'sendpress_show_import_button', true, $this->_sendpress )){
-                         $str .=  '<a class="list-import btn btn-primary" href="?page='.SPNL()->validate->page($_REQUEST['page']).'&view=csvimport&listID='. $item->ID .'"><span class="glyphicon glyphicon-upload"></span> '. __('Import','sendpress') . '</a> ';
+                         $str .=  '<a class="list-import btn btn-primary" href="?page='.SPNL()->validate->page().'&view=csvimport&listID='. $item->ID .'"><span class="glyphicon glyphicon-upload"></span> '. __('Import','sendpress') . '</a> ';
                     }
                     
-                    $str .= '<a class="btn btn-primary" href="?page='.SPNL()->validate->page($_REQUEST['page']).'&view=add&listID='. $item->ID .'"><span class="glyphicon glyphicon-user"></span> '. __('Add','sendpress') . '</a> ';
-                    $str .='<a class="btn btn-primary" href="?page='.SPNL()->validate->page($_REQUEST['page']).'&action=export-list&listID='. $item->ID .'"><span class="glyphicon glyphicon-download"></span> '. __('Export','sendpress') . '</a> ';
+                    $str .= '<a class="btn btn-primary" href="?page='.SPNL()->validate->page().'&view=add&listID='. $item->ID .'"><span class="glyphicon glyphicon-user"></span> '. __('Add','sendpress') . '</a> ';
+                    $str .='<a class="btn btn-primary" href="?page='.SPNL()->validate->page().'&action=export-list&listID='. $item->ID .'"><span class="glyphicon glyphicon-download"></span> '. __('Export','sendpress') . '</a> ';
                     
                     $str .=    '<a class="btn btn-primary" href="'. SendPress_Admin::link('Subscribers_Listform', array('listID' => $item->ID)) .'"><span class="glyphicon glyphicon-list"></span> '. __('Form','sendpress') . '</a> ';
                 }
 
                
-                 $str .=   '<a class="btn " href="?page='.SPNL()->validate->page($_REQUEST['page']).'&view=listedit&listID='. $item->ID .'"><i class="icon-cog"></i></a>
+                 $str .=   '<a class="btn " href="?page='.SPNL()->validate->page().'&view=listedit&listID='. $item->ID .'"><i class="icon-cog"></i></a>
                     </div>';
                 return $str;
             default:

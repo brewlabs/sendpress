@@ -43,35 +43,36 @@ class SendPress_View_Emails extends SendPress_View{
 	</div>
 		 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav">
-					<li <?php if(!isset($_GET['view']) || isset($_GET['view']) && $_GET['view'] === 'style' || isset($_GET['view']) && $_GET['view'] === 'create' || isset($_GET['view']) && $_GET['view'] === 'send' || isset($_GET['view']) && $_GET['view'] === 'send-confirm'  || isset($_GET['view']) && $_GET['view'] === 'send-queue'  ){ ?>class="active"<?php } ?> >
+        <?php $the_view = SPNL()->validate->_string('view'); ?>
+					<li <?php if( $the_view === 'style' || $the_view === 'create' || $the_view === 'send' || $the_view === 'send-confirm'  || $the_view === 'send-queue'  ){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails'); ?>"><?php _e('Newsletters','sendpress'); ?></a>
 				  	</li>
 				  	<?php  if(  false == true) {  //if(SendPress_Option::get('prerelease_templates') == 'yes') { ?>
 				 	
-				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'all'){ ?>class="active"<?php } ?> >
+				  	<li <?php if($the_view === 'all'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails_Auto'); ?>"><?php _e('Autoresponders','sendpress'); ?></a>
 				  	</li>
 				  	  	<!--	-->
 				  	<?php } ?>
 
-				  	<li <?php if(isset($_GET['view']) && ( $_GET['view'] === 'temp' || $_GET['view'] === 'tempstyle' )){ ?>class="active"<?php } ?> >
+				  	<li <?php if($the_view === 'temp' || $the_view === 'tempstyle' ){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails_Temp'); ?>"><?php _e('Templates','sendpress'); ?></a>
 				  	</li>
-				  	<li <?php if(isset($_GET['view']) && ( $_GET['view'] === 'templates' || $_GET['view'] === 'tempedit' )){ ?>class="active"<?php } ?> >
+				  	<li <?php if($the_view === 'templates' || $the_view === 'tempedit' ){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails_Templates'); ?>"><?php _e('Custom Templates','sendpress'); ?></a>
 				  	</li>
 				  	<?php //} ?>
-				  	<li <?php if(isset($_GET['view']) &&  $_GET['view'] === 'social'){ ?>class="active"<?php } ?> >
+				  	<li <?php if($the_view === 'social'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails_Social'); ?>"><?php _e('Social Icons','sendpress'); ?></a>
 				  	</li>
-				  	<li <?php if(isset($_GET['view']) &&  in_array($_GET['view'], array('postnotifications')) ) { ?>class="active"<?php } ?> >
+				  	<li <?php if(in_array($the_view, array('postnotifications')) ) { ?>class="active"<?php } ?> >
               <a href="<?php echo SendPress_Admin::link('Emails_Postnotifications'); ?>"><?php _e('Post Notifications','sendpress'); ?></a>
             </li>
 				  	
             
             <?php if(SendPress_Option::get('beta')){ ?>
          
-              <li <?php if(isset($_GET['view']) &&  in_array($_GET['view'], array('autoresponder','autoedit')) ) { ?>class="active"<?php } ?> >
+              <li <?php if( in_array($the_view, array('autoresponder','autoedit')) ) { ?>class="active"<?php } ?> >
                 <a href="<?php echo SendPress_Admin::link('Emails_Autoresponder'); ?>"><?php _e('Automation','sendpress'); ?></a>
               </li>
            
@@ -293,12 +294,12 @@ class SendPress_View_Emails extends SendPress_View{
 		<div id="taskbar" class="lists-dashboard rounded group">
 
 		<div id="button-area">
-			<a class="btn btn-primary btn-large" href="?page=<?php echo SPNL()->validate->page($_REQUEST['page']); ?>&view=create"><?php _e('Create Email','sendpress'); ?></a>
+			<a class="btn btn-primary btn-large" href="?page=<?php echo SPNL()->validate->page(); ?>&view=create"><?php _e('Create Email','sendpress'); ?></a>
 		</div>
 
 	</div>
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page($_REQUEST['page']) ?>" />
+	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page(); ?>" />
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display(); ?>
 	    <?php wp_nonce_field($this->_nonce_value); ?>

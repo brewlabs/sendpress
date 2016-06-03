@@ -17,7 +17,7 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 
 	function delete(){
 		$this->security_check();
-		$p = $_GET['templateID'];
+		$p = SPNL()->validate->_int('templateID');
 		//$type = get_post_meta( $p , "_template_type", true);
 		//if($type == 'clone'){
 			wp_delete_post($p, true);
@@ -68,7 +68,7 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 		<small><?php _e('Help','sendpress'); ?>: <a target="_blank" href="http://docs.sendpress.com/article/58-setting-up-a-newsletter-template/"><?php _e('Getting Started with Templates','sendpress'); ?></a></small>
 	</div>
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page($_REQUEST['page']) ?>" />
+	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page(); ?>" />
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display(); ?>
 	    <?php wp_nonce_field($this->_nonce_value); ?>

@@ -90,7 +90,7 @@ class SendPress_View_Emails_Style extends SendPress_View_Emails {
         update_post_meta($saveid ,'active_header', $activeHeader );
         
         if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
-            SendPress_Admin::redirect('Emails_Send', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+            SendPress_Admin::redirect('Emails_Send', array('emailID'=>SPNL()->validate->_int('emailID') ));
         } else if (isset($_POST['submit']) && $_POST['submit'] == 'send-test'){
             $email = new stdClass;
             $email->emailID  = $my_post['ID'];
@@ -99,9 +99,9 @@ class SendPress_View_Emails_Style extends SendPress_View_Emails {
             $email->to_email = $_POST['test-email'];
             $d =SendPress_Manager::send_test_email( $email );
             //print_r($d);
-            SendPress_Admin::redirect('Emails_Style', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+            SendPress_Admin::redirect('Emails_Style', array('emailID'=>SPNL()->validate->_int('emailID') ));
         } else {
-            SendPress_Admin::redirect('Emails_Style', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+            SendPress_Admin::redirect('Emails_Style', array('emailID'=>SPNL()->validate->_int('emailID') ));
         }
 
 
@@ -114,16 +114,13 @@ class SendPress_View_Emails_Style extends SendPress_View_Emails {
 	function html($sp) {
 		global $post_ID, $post;
 
-		$view = isset($_GET['view']) ? $_GET['view'] : '' ;
-
 		$list ='';
 
-		if(isset($_GET['emailID'])){
-			$emailID = SPNL()->validate->int($_GET['emailID']);
-			$post = get_post($emailID );
-			$post_ID = $post->ID;
-		}
-	
+		$emailID = SPNL()->validate->_int('emailID');
+        if($emailID  > 0){
+            $post = get_post( $emailID );
+            $post_ID = $post->ID;
+        }
 
         if($post->post_type !== 'sp_newsletters'){
             SendPress_Admin::redirect('Emails');
@@ -139,7 +136,7 @@ class SendPress_View_Emails_Style extends SendPress_View_Emails {
 		-->
 		<div style="float:right;" class="btn-toolbar">
             <div id="sp-cancel-btn" class="btn-group">
-                <a href="?page=<?php echo SPNL()->validate->page($_GET['page']); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+                <a href="?page=<?php echo SPNL()->validate->page(); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
             </div>
             <div class="btn-group">
             <button class="btn btn-default " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Update','sendpress'); ?></button>

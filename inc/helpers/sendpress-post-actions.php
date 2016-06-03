@@ -18,28 +18,23 @@ switch ( $this->_current_action ) {
     case 'create-list':
     
         $name =  sanitize_text_field($_POST['name']);
-        $public = 0;
-        if(isset($_POST['public'])){
-            $public = SPNL()->validate->int($_POST['public']);
-        }
-
+        $public = SPNL()->validate->_int('public');
+       
         SendPress_Data::create_list( array('name'=> $name, 'public'=>$public ) );
-         wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page($_GET['page']) ) ) );
+         wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page() ) ) );
     
     break;
 
     case 'edit-list':
        
-        $listid = SPNL()->validate->int($_POST['listID']);
-        $name =  sanitize_text_field($_POST['name']);
-        $public = 0;
-        if(isset($_POST['public'])){
-            $public = $_POST['public'];
-        }
+        $listid = SPNL()->validate->_int('listID');
+        $name =  sanitize_text_field(SPNL()->validate->_srting('name'));
+        $public = SPNL()->validate->_int('public');
+       
       
         SendPress_Data::update_list($listid, array( 'name'=>$name, 'public'=>$public ) );
 
-        $page = apply_filters('sendpress_edit_list_redirect', SPNL()->validate->page($_GET['page']));
+        $page = apply_filters('sendpress_edit_list_redirect', SPNL()->validate->page());
       
         wp_redirect( esc_url_raw( admin_url('admin.php?page='. $page  ) ) );
     
@@ -58,8 +53,8 @@ switch ( $this->_current_action ) {
         $my_post['post_status'] = 'publish';
         // Update the post into the database
         wp_update_post( $my_post );
-        update_post_meta( $my_post['ID'], '_sendpress_subject', $_POST['post_subject'] );
-        update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
+        update_post_meta( $my_post['ID'], '_sendpress_subject', SPNL()->validate->_srting('post_subject') );
+        update_post_meta( $my_post['ID'], '_sendpress_template', SPNL()->validate->_srting('template') );
         update_post_meta( $my_post['ID'], '_sendpress_status', 'private');
 
         SendPress_Email::set_default_style( $my_post['ID'] );
@@ -78,14 +73,14 @@ switch ( $this->_current_action ) {
         $widget_options['widget_options']['load_css'] = 0;
         $widget_options['widget_options']['load_ajax'] = 0;
         $widget_options['widget_options']['load_scripts_in_footer'] = 0;
-        if(isset($_POST['load_css'])){
-            $widget_options['widget_options']['load_css'] = $_POST['load_css'];
+        if(SPNL()->validate->_isset('load_css') ){
+            $widget_options['widget_options']['load_css'] = SPNL()->validate->_string('load_css');
         }
-        if(isset($_POST['load_ajax'])){
-            $widget_options['widget_options']['load_ajax'] = $_POST['load_ajax'];
+        if( SPNL()->validate->_isset('load_ajax') ){
+            $widget_options['widget_options']['load_ajax'] =  SPNL()->validate->_string('load_ajax');
         }
-        if(isset($_POST['load_scripts_in_footer'])){
-            $widget_options['widget_options']['load_scripts_in_footer'] = $_POST['load_scripts_in_footer'];
+        if(SPNL()->validate->_isset('load_scripts_in_footer')){
+            $widget_options['widget_options']['load_scripts_in_footer'] = SPNL()->validate->_string('load_scripts_in_footer');
         }
 
         SendPress_Option::set($widget_options);        

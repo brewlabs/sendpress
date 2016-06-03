@@ -25,12 +25,14 @@ wp_enqueue_style( 'sendpress_codemirror_css' );
 
 function save(){
 	$this->security_check();
-	$template = get_post($_POST['post_ID']);
-	$template->post_content = stripcslashes($_POST['template-content'] );
-	$template->post_title = $_POST['post_subject'];
+	$t_id = SPNL()->validate->_int('templateID');
+	$p_id = SPNL()->validate->_int('post_ID');
+	$template = get_post($p_id);
+	$template->post_content = stripcslashes(SPNL()->validate->_string('template-content') );
+	$template->post_title = SPNL()->validate->_string('post_subject');
 	wp_update_post( $template );
 
-	SendPress_Admin::redirect('Emails_Tempedit', array('templateID'=>$_GET['templateID'] ));
+	SendPress_Admin::redirect('Emails_Tempedit', array('templateID'=>$t_id  ));
 }
 
 function screen_options(){
