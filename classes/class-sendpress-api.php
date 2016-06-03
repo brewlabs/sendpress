@@ -295,8 +295,9 @@ class SendPress_API {
 				break;
 			case 'elastic' :
 				$to =  isset( $wp_query->query_vars['to'] ) ? $wp_query->query_vars['to']      : null ;
-				$status =  isset( $wp_query->query_vars['status'] ) ? $wp_query->query_vars['status']      : null ;
-				$data = $this->elastic_bounce( $to , $status );
+				$status =  isset( $wp_query->query_vars['status'] ) ? strtolower( $wp_query->query_vars['status'] )     : null ;
+				$category =  isset( $wp_query->query_vars['category'] ) ? strtolower( $wp_query->query_vars['category']  )   : null ;
+				$data = $this->elastic_bounce( $to , $status, $category );
 
 				break;
 			case 'cron' :
@@ -336,7 +337,8 @@ class SendPress_API {
 			'system-check',
 			'bounce',
 			'cron',
-			'sendgrid'
+			'sendgrid',
+			'elastic'
 		) );
 
 		$query = isset( $wp_query->query_vars['spnl-api'] ) ? $wp_query->query_vars['spnl-api'] : null;
@@ -641,8 +643,13 @@ class SendPress_API {
 		*/
 	}
 
-	public function elastic_bounce( $email , $status ){
+	public function elastic_bounce( $email , $status , $cat){
 
+			if(($status == 'abusereport' || $status == 'unsubscribed' || $status == 'error') && $cat != 'blacklisted') {
+				$count = $this->bounce($email);
+				return array('status' => 'proccessed','count'=> 1,'email'=> $email);
+			}
+			return array('status' => 'wrong event type','count'=> 0,'email'=> $email);
 	}
 
 
