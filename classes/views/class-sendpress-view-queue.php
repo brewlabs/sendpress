@@ -25,7 +25,7 @@ class SendPress_View_Queue extends SendPress_View {
 	}
 
 
-	function sub_menu($sp = false){
+	function sub_menu(){
 
 
 		?>
@@ -106,11 +106,11 @@ class SendPress_View_Queue extends SendPress_View {
 		SendPress_Admin::redirect('Queue');
 	}
 
-	function html($sp) {
+	function html() {
 
 		 SendPress_Tracking::event('Queue Tab');
-	if(isset($_GET['cron'])){
-		$sp->fetch_mail_from_queue();
+	if( SPNL()->validate->_isset('cron') ){
+		SPNL()->fetch_mail_from_queue();
 	}	
 
 		//Create an instance of our package class...
@@ -118,44 +118,14 @@ class SendPress_View_Queue extends SendPress_View {
 	//Fetch, prepare, sort, and filter our data...
 	$testListTable->prepare_items();
 	SendPress_Option::set('no_cron_send', 'false');
-	//$sp->fetch_mail_from_queue();
-	$sp->cron_start();
-	//echo $sp->get_key(). "<br>";
+	SPNL()->cron_start();
 
 	$open_info = array(
 				"id"=>13,
 				"report"=> 10,
 				"view"=>"open"
 				);
-	/*
-			$x = $sp->encrypt_data($open_info);
-
-		echo $x."<br>";
-		$x = $sp->decrypt_data($x);
-
-		print_r($x);
-			echo "<br>";
-
-		$d = $_GET['t'];
-		$x = $sp->decrypt_data($d);
-
-		print_r($x->id);
-			echo "<br>";
-		
-		
-		//echo wp_get_schedule('sendpress_cron_action_run');
-		//
-		$time_delay =  SendPress_Option::get('time-delay');
-		echo $time_delay;
-		echo date('l jS \of F Y H:i:s A',$time_delay );
-		echo "<br>";
-		$time = date('H:i:s');
-
-echo $time;//11:09
-		$time = date('H:i:s', $time_delay);
-
-echo $time;//11:09
-	*/ $autocron = SendPress_Option::get('autocron','no');
+	 $autocron = SendPress_Option::get('autocron','no');
 	 	if($autocron == 'yes') {
 
 	  		$api_info = json_decode( SendPress_Cron::get_info() );
@@ -244,7 +214,7 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
 	     <input type="hidden" name="page" value="<?php echo SPNL()->validate->page(); ?>" /> 
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display(); ?>
-	    <?php wp_nonce_field($sp->_nonce_value); ?>
+	    <?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
 	<br>
 	<!--
@@ -255,7 +225,7 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
 		
 		<input type='hidden' value="empty-queue" name="action" />
 		<a class="btn btn-large  btn-danger" data-toggle="modal" href="#sendpress-empty-queue" ><i class="icon-warning-sign "></i> <?php _e('Delete All Emails in the Queue','sendpress'); ?></a>
-		<?php wp_nonce_field($sp->_nonce_value); ?>
+		<?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
 <div class="modal fade" id="sendpress-empty-queue" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">

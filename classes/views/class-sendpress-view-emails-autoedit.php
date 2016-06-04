@@ -40,7 +40,7 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
 		*/
 	}
 
-	function html($sp) {
+	function html() {
 		global $is_IE;
 		global $post_ID, $post;
 		/*

@@ -35,7 +35,7 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
       	SendPress_Admin::redirect('Subscribers');
 	}
 	
-	function html($sp) {
+	function html() {
 		
 	$list ='';
 	if(isset($_GET['listID'])){
@@ -121,7 +121,7 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
 			?>
 		</select>
 
-	   	<?php wp_nonce_field($sp->_nonce_value); ?>
+	   	<?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
 	<?php
 	}

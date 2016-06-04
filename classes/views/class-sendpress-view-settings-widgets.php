@@ -85,7 +85,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		
 	}
 
-	function html($sp) {
+	function html() {
 
 		$postid = ISSET($_GET['id']) ? $_GET['id'] : 0;
 		$showCreate = (isset($_GET['create']) && $_GET['create'] == 1) ? true : false;
@@ -132,7 +132,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		}
 	
 		if(strlen($settings['_form_type']) > 0){
-			wp_nonce_field($sp->_nonce_value);
+			wp_nonce_field($this->_nonce_value);
 			echo '</form>';
 		}
 

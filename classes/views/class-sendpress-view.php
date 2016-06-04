@@ -211,19 +211,19 @@ class SendPress_View {
 	/**
 	 * Renders the view.
 	 */
-	function render($sp = false) {
+	function render() {
 		
 		$this->page_start();
-		$this->sub_menu($sp);
+		$this->sub_menu();
 		if( SendPress_Admin::access( $this ) ){
-			$this->html($sp);
+			$this->html();
 		} else {
-			$this->noaccess($sp);
+			$this->noaccess();
 		}
 		$this->page_end();
 	}
 
-	function sub_menu($sp = false){}
+	function sub_menu(){}
 
 	function admin_scripts_load(){}
 
@@ -251,10 +251,10 @@ class SendPress_View {
 
 	
 
-	function html($sp){
+	function html(){
 		echo "Page not built yet.";
 	}
-	function noaccess($sp){
+	function noaccess(){
 		echo "<div class='well well-large'><h3>Sorry. You dont have the ability to view this page.</h3></div>";
 	}
 	//static  public function save(){}

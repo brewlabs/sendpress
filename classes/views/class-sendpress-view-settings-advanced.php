@@ -90,7 +90,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 		wp_clear_scheduled_hook('sendpress_post_notification_check');
 	}
 
-	function html($sp) {
+	function html() {
 		?><form method="post" id="post">
 		<!--
 		<div style="float:right;" >
@@ -208,7 +208,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 			</div>
 
 		</div>
-		<?php wp_nonce_field($sp->_nonce_value); ?>
+		<?php wp_nonce_field($this->_nonce_value); ?>
 		</form>
 		<?php
 	}

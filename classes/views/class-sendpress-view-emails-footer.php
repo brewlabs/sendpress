@@ -17,7 +17,7 @@ class SendPress_View_Emails_Footer extends SendPress_View_Emails {
         SendPress_Admin::redirect('Emails_Footer',array('templateID' => $saveid));
         }
    
-   function html($sp) { 
+   function html() { 
     global $sendpress_html_templates;
 
     $templateID = SPNL()->validate->_int( 'templateID' );

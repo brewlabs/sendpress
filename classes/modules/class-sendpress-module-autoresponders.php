@@ -24,7 +24,7 @@ class SendPress_Module_Autoresponders extends SendPress_Module{
 			<?php //$this->buttons($plugin_path);?>
 			<input type="hidden" name="plugin_path" value="<?php echo $plugin_path; ?>" />
 			<input class="action" type="hidden" name="action" value="module-activate-sendpress-pro" />
-			<?php wp_nonce_field($sp->_nonce_value); ?>
+			<?php wp_nonce_field($this->_nonce_value); ?>
 		</form>
 
 	<?php

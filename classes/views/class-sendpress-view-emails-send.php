@@ -55,7 +55,7 @@ class SendPress_View_Emails_Send extends SendPress_View_Emails {
     	wp_enqueue_style( 'sendpress_css_jquery-ui' );
 	}
 
-	function html($sp) {
+	function html() {
 
 global $current_user;
 global $post_ID, $post;
@@ -70,8 +70,8 @@ if($emailID  > 0){
 }
 
 
-$post_type = $sp->_email_post_type;
-$post_type_object = get_post_type_object($sp->_email_post_type);
+$post_type = SPNL()->_email_post_type;
+$post_type_object = get_post_type_object( $post_type );
 
 ?>
 <div class="alert alert-danger fade hide">
@@ -199,7 +199,7 @@ $this->panel_end();
 
 </div>
 -->
-<?php wp_nonce_field($sp->_nonce_value); ?>
+<?php wp_nonce_field($this->_nonce_value); ?>
 </div>
 <div style="margin-left: 250px;">
 <div class="widerightcol">

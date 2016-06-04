@@ -113,7 +113,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 		//SendPress_Admin::redirect('Settings_Access');
 	}
 	
-	function html($sp) {
+	function html() {
 		?>
 		<form method="post" id="post">
 <!--
@@ -227,7 +227,7 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 		echo "</pre>";
 		*/
 		?>
-<?php wp_nonce_field($sp->_nonce_value); ?>
+<?php wp_nonce_field($this->_nonce_value); ?>
 </form>
 		<?php
 	}

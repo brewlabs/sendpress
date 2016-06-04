@@ -44,7 +44,7 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		SendPress_Admin::redirect('Settings_Activation');
 	}
 	
-	function html($sp) {
+	function html() {
 
 		$optin = SendPress_Data::get_template_id_by_slug('double-optin');
 		$dpost = get_post($optin);
@@ -302,7 +302,7 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 </div>
 -->
 
-<?php wp_nonce_field($sp->_nonce_value); ?>
+<?php wp_nonce_field($this->_nonce_value); ?>
 </form>
 		<?php
 	}

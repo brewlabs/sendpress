@@ -17,7 +17,7 @@ class SendPress_View_Emails_Footerpage extends SendPress_View_Emails {
         }
     }
    
-   function html($sp) { 
+   function html() { 
     global $sendpress_html_templates;
 
     $list = SPNL()->validate->_int( 'templateID' );

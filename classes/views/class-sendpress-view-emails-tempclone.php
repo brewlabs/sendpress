@@ -28,7 +28,7 @@ class SendPress_View_Emails_Tempclone extends SendPress_View_Emails {
   		SendPress_Admin::redirect('Emails_Tempstyle', array('templateID' => $new_post ) );
 	}
 	
-	function html($sp) {
+	function html() {
 		  global $sendpress_html_templates;
 
 $t_id = SPNL()->validate->_int('templateID');
@@ -51,7 +51,7 @@ $t_id = SPNL()->validate->_int('templateID');
 		<div id="side-info-column" class="inner-sidebar">
 			
 			<div class="clear"><br>
-			<?php echo do_action('do_meta_boxes', $sp->_email_post_type, 'side', $post); 
+			<?php echo do_action('do_meta_boxes', SPNL()->_email_post_type, 'side', $post); 
 			do_meta_boxes($post_type, 'side', $post);?>
 			</div>
 		</div>
@@ -90,7 +90,7 @@ $this->panel_end();
 		
 		<?php //wp_editor($post->post_content,'textversion'); ?>
 
-		 <?php wp_nonce_field($sp->_nonce_value); ?><br><br>
+		 <?php wp_nonce_field($this->_nonce_value); ?><br><br>
 		 </form>
 		 
 		<?php

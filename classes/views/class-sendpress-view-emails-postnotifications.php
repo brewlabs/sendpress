@@ -23,7 +23,7 @@ class SendPress_View_Emails_Postnotifications extends SendPress_View_Emails {
 		
 	}
 	
-	function html($sp) {
+	function html() {
 		
 		?>
 		

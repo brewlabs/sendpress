@@ -18,7 +18,7 @@ class SendPress_View_Settings_Fixposts extends SendPress_View_Settings {
 		SendPress_Admin::redirect('Settings_Fixposts');
 	}
 
-	function html($sp) {
+	function html() {
 		$count =  SendPress_Data::get_bad_post_count();
 		echo __("We see","sendpress")." ". $count." ". __("bad posts.","sendpress");
 		$link = SendPress_Admin::link('Settings_Fixposts',array('action'=>'posts-repair'));

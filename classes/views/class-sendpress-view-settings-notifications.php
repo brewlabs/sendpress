@@ -51,7 +51,7 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
         SendPress_Admin::redirect('Settings_Notifications');
 	}
 
-	function html($sp) {?>
+	function html() {?>
 		<div class="notifications">
 			<form method="post" id="post">
 
@@ -144,7 +144,7 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 			   		</div>
 			   	</div>
    				<?php do_action('sendpress_notification_settings_bottom'); ?>
-   				<?php wp_nonce_field($sp->_nonce_value); ?>
+   				<?php wp_nonce_field($this->_nonce_value); ?>
    			</form>
    		</div>
 

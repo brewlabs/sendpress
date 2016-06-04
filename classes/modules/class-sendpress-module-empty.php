@@ -27,7 +27,7 @@ class SendPress_Module_Empty extends SendPress_Module{
 
 			echo '<div class="inline-buttons">'.$btn.'</div>';
 			?>
-			<?php wp_nonce_field($sp->_nonce_value); ?>
+			<?php wp_nonce_field($this->_nonce_value); ?>
 		
 
 	<?php

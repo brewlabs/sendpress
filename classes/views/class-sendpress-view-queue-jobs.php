@@ -33,7 +33,7 @@ class SendPress_View_Queue_Jobs extends SendPress_View_Queue {
 	}
 	
 
-	function html($sp) { ?>
+	function html() { ?>
 	
 	<?php
 	}

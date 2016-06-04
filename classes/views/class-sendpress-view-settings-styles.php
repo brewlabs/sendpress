@@ -83,15 +83,11 @@ class SendPress_View_Settings_Styles extends SendPress_View_Settings {
         SendPress_Admin::redirect('Settings_Styles');
 	}
 	
-	function html($sp) {
+	function html() {
 		global $post_ID, $post;
-
-		$view = isset($_GET['view']) ? $_GET['view'] : '' ;
-
-		$list ='';
-
-		if(isset($_GET['emailID'])){
-			$emailID = SPNL()->validate->_int('emailID');
+    	$list ='';
+        $emailID = SPNL()->validate->_int('emailID');
+		if( $emailID > 0 ){
 			$post = get_post( $emailID );
 			$post_ID = $post->ID;
 		}
@@ -113,7 +109,7 @@ class SendPress_View_Settings_Styles extends SendPress_View_Settings {
 		
 <br class="clear">
 
-<?php wp_nonce_field($sp->_nonce_value); ?>
+<?php wp_nonce_field($this->_nonce_value); ?>
 		</form>
 	<?php
 	}

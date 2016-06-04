@@ -237,7 +237,6 @@ class SendPress_Ajax_Loader {
 		// Create the response arrayecho SendPress_Data::emails_active_in_queue();
 		// 
 		$count = SendPress_Data::emails_active_in_queue(); //emails_allowed_to_send();
-		//$sp = new SendPress;
 		$response = array(
 			'total' => $count
 		);
@@ -262,7 +261,6 @@ class SendPress_Ajax_Loader {
 		// Create the response array
 		// 
 		$count = SendPress_Data::emails_in_queue();
-		//$sp = new SendPress;
 		$response = array(
 			'total' => $count
 		);

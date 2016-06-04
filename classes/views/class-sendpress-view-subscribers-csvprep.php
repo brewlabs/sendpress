@@ -89,7 +89,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
   }
 
 
-	function html($sp) { 
+	function html() { 
     $list_id_clean = SPNL()->validate->int( $_GET['listID'] );
     ?>
 	<div id="taskbar" class="lists-dashboard rounded group"> 

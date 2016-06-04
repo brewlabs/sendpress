@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Subscribers_Custom extends SendPress_View_Subscribers {
 	
-	function html($sp) {
+	function html() {
 			$this->panel_start('Upgrade to SendPress Pro');
 			if(defined('SENDPRESS_PRO_VERSION')){
 				?>

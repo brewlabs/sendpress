@@ -26,7 +26,7 @@ class SendPress_View_Emails_Social extends SendPress_View_Emails {
 
 
 
-	function html($sp) { 
+	function html() { 
 		$icon_list = SendPress_Data::social_icons();
 		$socialsize = SendPress_Option::get('socialsize','large');
 ?>
@@ -139,7 +139,7 @@ foreach ($secondhalf as $key => $value) {
 <?php $this->panel_end(); ?>
 		
 
-<?php wp_nonce_field($sp->_nonce_value); ?>
+<?php wp_nonce_field($this->_nonce_value); ?>
 </form>
 <?php
 	}

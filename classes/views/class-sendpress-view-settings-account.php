@@ -372,7 +372,7 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
 <?php
 //Page Nonce
 //wp_nonce_field(  basename(__FILE__) ,'_spnonce' );
-wp_nonce_field( $sp->_nonce_value );
+wp_nonce_field( $this->_nonce_value );
 ?>
 <input type="submit" class="btn btn-primary" value="Save"/> <a href="" class="btn btn-default"><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a>
 </form>
@@ -389,7 +389,7 @@ wp_nonce_field( $sp->_nonce_value );
 //Page Nonce
 //wp_nonce_field(  basename(__FILE__) ,'_spnonce' );
 //SendPress General Nonce
-	wp_nonce_field( $sp->_nonce_value );
+	wp_nonce_field( $this->_nonce_value );
 	?>
 </form>
 <?php

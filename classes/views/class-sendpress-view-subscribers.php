@@ -31,7 +31,7 @@ class SendPress_View_Subscribers extends SendPress_View {
         exit;
 	}
 
-	function sub_menu($sp = false){
+	function sub_menu(){
 		?>
 		<div class="navbar navbar-default" >
 			<div class="navbar-header">
@@ -86,7 +86,7 @@ class SendPress_View_Subscribers extends SendPress_View {
 	<?php
 	}
 	
-	function html($sp) {
+	function html() {
 	 SendPress_Tracking::event('Lists Tab');
 		//Create an instance of our package class...
 		$testListTable = new SendPress_Lists_Table();
@@ -104,7 +104,7 @@ class SendPress_View_Subscribers extends SendPress_View {
 		    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page() ?>" />
 		    <!-- Now we can render the completed list table -->
 		    <?php $testListTable->display(); ?>
-		    <?php wp_nonce_field($sp->_nonce_value); ?>
+		    <?php wp_nonce_field($this->_nonce_value); ?>
 		</form>
 	<?php 
 	}

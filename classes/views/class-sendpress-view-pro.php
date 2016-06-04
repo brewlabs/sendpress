@@ -86,7 +86,7 @@ class SendPress_View_Pro extends SendPress_View{
             $sppro->buttons('sendpress-pro/sendpress-pro.php'); ?> 
             <input type="hidden" name="plugin_path" value="sendpress-pro/sendpress-pro.php" />
             <input class="action" type="hidden" name="action" value="module-activate-sendpress-pro" />
-            <?php wp_nonce_field($sp->_nonce_value); ?>
+            <?php wp_nonce_field($this->_nonce_value); ?>
         </form>
     <h1 style="font-size:35px;">SendPress Pro
     <?php if(defined('SENDPRESS_PRO_VERSION')){ echo "<small>v" . SENDPRESS_PRO_VERSION."</small>"; } ?>

@@ -49,9 +49,9 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 
 	}
 	
-	function html($sp) {
+	function html() {
 		do_action('sendpress_event','Create Email');
-		$post = get_default_post_to_edit( $sp->_email_post_type, true );
+		$post = get_default_post_to_edit( SPNL()->_email_post_type, true );
 		$post_ID = $post->ID;
 	
 		global $current_user;
@@ -79,7 +79,7 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 		<div id="side-info-column" class="inner-sidebar">
 			
 			<div class="clear"><br>
-			<?php echo do_action('do_meta_boxes', $sp->_email_post_type, 'side', $post); 
+			<?php echo do_action('do_meta_boxes', SPNL()->_email_post_type, 'side', $post); 
 			do_meta_boxes($post_type, 'side', $post);?>
 			</div>
 		</div>
@@ -175,7 +175,7 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 		<br><br>
 		<?php //wp_editor($post->post_content,'textversion'); ?>
 
-		 <?php wp_nonce_field($sp->_nonce_value); ?><br><br>
+		 <?php wp_nonce_field($this->_nonce_value); ?><br><br>
 		 </form>
 		 
 		<?php

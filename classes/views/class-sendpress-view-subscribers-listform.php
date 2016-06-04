@@ -25,7 +25,7 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 	}
 
 	
-	function html($sp) {
+	function html() {
 		
 	$list ='';
 	if(isset($_GET['listID'])){

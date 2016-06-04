@@ -111,7 +111,7 @@ class SendPress_View_Emails_Style extends SendPress_View_Emails {
 		remove_filter('the_editor',					'qtrans_modifyRichEditor');
 	}
 
-	function html($sp) {
+	function html() {
 		global $post_ID, $post;
 
 		$list ='';

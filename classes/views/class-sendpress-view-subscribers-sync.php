@@ -18,7 +18,7 @@ class SendPress_View_Subscribers_Sync extends SendPress_View_Subscribers {
 	    }
 	}
 
-	function html($sp) {
+	function html() {
 
 		$list = SPNL()->validate->int($_GET['listID']);
 		if( $list > 0 ){

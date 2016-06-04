@@ -43,7 +43,7 @@ class SendPress_Module_Pro extends SendPress_Module{
 				<?php echo sprintf(	__( 'Enter your API key to enable premium support and automatic updates. Get your API key by logging into <a href="%s">SendPress.com</a>.','sendpress' ), 'http://sendpress.com' ); ?>
 			</div>
 			<input class="action " type="hidden" name="action" value="<?php if($key_active){ echo 'module-deactivate-api-key'; }else{ echo 'module-save-api-key'; }?>" />
-			<?php wp_nonce_field($sp->_nonce_value); ?>
+			<?php wp_nonce_field($this->_nonce_value); ?>
 		</form>
 		
 	<?php

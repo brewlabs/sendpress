@@ -53,7 +53,7 @@ class SendPress_View_Subscribers_Add extends SendPress_View_Subscribers {
 
 
 
-	function html($sp) { ?>
+	function html() { ?>
 	<div id="taskbar" class="lists-dashboard rounded group"> 
 	<h2><?php _e('Add Subscriber','sendpress'); ?></h2>
 	</div>

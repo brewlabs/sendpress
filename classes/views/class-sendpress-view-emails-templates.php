@@ -7,7 +7,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class SendPress_View_Emails_Templates extends SendPress_View_Emails{
-	function prerender($sp = false){
+	function prerender(){
 		wp_enqueue_script( 'dashboard' );
 		/*
 		sp_add_help_widget( 'help_support', 'Support Information', array(&$this,'help_support'));

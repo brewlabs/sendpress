@@ -32,7 +32,7 @@ class SendPress_View_Subscribers_Subscribers extends SendPress_View_Subscribers 
 	}
 
 
-	function html($sp) {
+	function html() {
 	
 		$list ='';
 		if( isset( $_GET['listID'] )  ){
@@ -65,7 +65,7 @@ class SendPress_View_Subscribers_Subscribers extends SendPress_View_Subscribers 
 
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display() ?>
-	    <?php wp_nonce_field($sp->_nonce_value); ?>
+	    <?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
 	<form  method='get'>
 		<input type='hidden' value="<?php echo SPNL()->validate->page(); ?>" name="page" />
@@ -77,7 +77,7 @@ class SendPress_View_Subscribers_Subscribers extends SendPress_View_Subscribers 
 
 		<br>
 		<a class="btn btn-danger " data-toggle="modal" href="#sendpress-empty-list" ><i class="icon-warning-sign "></i> <?php _e('Remove All Subscribers from List','sendpress'); ?></a>
-		<?php wp_nonce_field($sp->_nonce_value); ?>
+		<?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
 <div class="modal  fade" id="sendpress-empty-list" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 

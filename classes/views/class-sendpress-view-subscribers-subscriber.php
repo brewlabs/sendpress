@@ -104,7 +104,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
     }
 
 
-	function html($sp) {
+	function html() {
 		?>
 	<div id="taskbar" class="lists-dashboard rounded group">
 		<form id="subscriber-edit" method="post">
@@ -138,7 +138,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 <input type="checkbox" id="delete-this-user" name="delete-this-user" value="yes"/> Checking this box will remove this subscriber and all related data from the system.<br><br>
 
 	  
-	   <?php wp_nonce_field($sp->_nonce_value); ?>
+	   <?php wp_nonce_field($this->_nonce_value); ?>
 
 	
 	</div></div>

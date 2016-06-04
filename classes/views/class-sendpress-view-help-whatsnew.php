@@ -7,7 +7,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class SendPress_View_Help_Whatsnew extends SendPress_View{
-	function prerender($sp = false){
+	function prerender(){
 		
 		wp_enqueue_script( 'dashboard' );
 		/*

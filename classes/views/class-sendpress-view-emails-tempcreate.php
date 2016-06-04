@@ -56,7 +56,7 @@ class SendPress_View_Emails_Tempcreate extends SendPress_View_Emails {
 
 	}
 	
-	function html($sp) {
+	function html() {
 		
 	}
 

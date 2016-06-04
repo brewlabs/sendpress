@@ -29,7 +29,7 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
         SendPress_Admin::redirect('Subscribers');
 	}
 	
-	function html($sp) {
+	function html() {
 		?>
 	
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
@@ -108,7 +108,7 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
 
 </p>
 	  
-	   	<?php wp_nonce_field($sp->_nonce_value); ?>
+	   	<?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
 	<?php
 	}

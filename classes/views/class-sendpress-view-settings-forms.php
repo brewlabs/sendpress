@@ -12,7 +12,7 @@ class SendPress_View_Settings_Forms extends SendPress_View_Settings {
 		$this->security_check();	
 	}
 
-	function html($sp) {
+	function html() {
 
 		?>testing<?php
 

@@ -47,7 +47,7 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
        wp_enqueue_script( 'wp-color-picker' );
    }
 
-   function html($sp) { 
+   function html() { 
    
     global $sendpress_html_templates;
 
@@ -256,31 +256,7 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
 <br><BR><BR>
 <?php wp_nonce_field($this->_nonce_value); ?>
 </form>
-<!--
 
-
-<?php $this->panel_start( '<span class=" glyphicon glyphicon-tint"></span> '. __('Background Styles','sendpress') ); ?>
-
-Body<br>
-
-<br>
-footer<br>
-<input type="text" value="#bada55" id="bg-color-select" class="my-color-field2" data-default-color="#effeff" />
-
-<br>
-Footer<br>
-<input type="text" value="#bada55" id="bg-color-select" class="my-color-field3" data-default-color="#effeff" />
-
-<?php // $sp->create_color_picker( array('id'=>'body_bg','value'=>$body_bg['value'],'std'=>$body_bg['std'], 'link'=>'#html-view' ,'css'=>'background-color' ) ); ?>
-<br><br>
-Body Text Color<br>
-<?php // $sp->create_color_picker( array('id'=>'body_text','value'=>$body_text['value'],'std'=>$body_text['std'], 'link'=>'.html-view-outer-text' ,'css'=>'color' ) ); ?>
-<br><br>
-Body Link Color<br>
-<?php // $sp->create_color_picker( array('id'=>'body_link','value'=>$body_link['value'],'std'=>$body_link['std'], 'link'=>'.html-view-outer-text a' ,'css'=>'color' ) ); ?>
-
-<?php $this->panel_end(); ?>
--->
 <?php
 echo spnl_get_emails_tags_list();
 ?>

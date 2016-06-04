@@ -25,7 +25,7 @@ class SendPress_View_Emails_Send_Cancel extends SendPress_View_Emails {
 
 
 
-	function html($sp) {
+	function html() {
 		global $post_ID, $post;
         $emailID = SPNL()->validate->_int('emailID');
         if($emailID > 0){

@@ -13,7 +13,7 @@ class SendPress_View_Emails_Send_Queue extends SendPress_View_Emails
         $this->security_check();
     }
     
-    function html($sp) {
+    function html() {
         global $post_ID, $post;
         $list = '';
         $emailID = SPNL()->validate->_int('emailID');

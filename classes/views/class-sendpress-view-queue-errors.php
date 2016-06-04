@@ -37,7 +37,7 @@ class SendPress_View_Queue_Errors extends SendPress_View_Queue {
 	
 	
 
-	function html($sp) {
+	function html() {
 
 		 SendPress_Tracking::event('Queue Tab');
 
@@ -48,7 +48,7 @@ class SendPress_View_Queue_Errors extends SendPress_View_Queue {
 	$testListTable->prepare_items();
 	SendPress_Option::set('no_cron_send', 'false');
 	
-	$sp->cron_start();
+	SPNL()->cron_start();
 	
 
 	$open_info = array(
@@ -68,7 +68,7 @@ class SendPress_View_Queue_Errors extends SendPress_View_Queue {
 	     <input type="hidden" name="page" value="<?php echo SPNL()->validate->page() ?>" /> 
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display() ?>
-	    <?php wp_nonce_field($sp->_nonce_value); ?>
+	    <?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
 	<br>
 	

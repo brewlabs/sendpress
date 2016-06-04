@@ -26,7 +26,7 @@ class SendPress_View_Reports extends SendPress_View{
 
 
 
- function sub_menu($sp = false){
+ function sub_menu(){
  		?>
 		<div class="navbar navbar-default" >
 			<div class="navbar-header">

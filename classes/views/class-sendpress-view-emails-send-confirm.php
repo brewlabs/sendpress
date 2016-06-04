@@ -21,7 +21,7 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
         $info = SendPress_Option::get('current_send_'.$saveid);
         $slug = SendPress_Data::random_code();
 
-        $new_id = SendPress_Posts::copy($email_post, $subject, $slug, $sp->_report_post_type );
+        $new_id = SendPress_Posts::copy($email_post, $subject, $slug, SPNL()->_report_post_type );
         SendPress_Posts::copy_meta_info($new_id, $saveid);
         $lists = implode(',', $info['listIDS']);
         update_post_meta($new_id,'_send_time',  $info['send_at'] );
@@ -49,7 +49,7 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
                         'listID' => 0
                         );
                    
-                    $sp->add_email_to_queue($go);
+                    SPNL()->add_email_to_queue($go);
                     $count++;
 
             }
@@ -65,7 +65,7 @@ class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
 
 
 
-	function html($sp) {
+	function html() {
 		global $post_ID, $post;
 
 
@@ -168,7 +168,7 @@ $link = $url.$sep.'inline=true';
 
 <small><?php _e('Displaying a 404? Please try saving your permalinks','sendpress'); ?> <a href="<?php echo admin_url('options-permalink.php'); ?>"><?php _e('here','sendpress'); ?></a>.</small>
 </div>
-<?php wp_nonce_field($sp->_nonce_value); ?><br><br>
+<?php wp_nonce_field($this->_nonce_value); ?><br><br>
 </div>
 </div>
 <br class="clear" />

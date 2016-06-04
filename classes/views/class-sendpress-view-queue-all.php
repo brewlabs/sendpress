@@ -54,7 +54,7 @@ class SendPress_View_Queue_All extends SendPress_View_Queue {
 		SendPress_Admin::redirect('Queue');
 	}
 
-	function html($sp) {
+	function html() {
 
 		 SendPress_Tracking::event('Queue Tab');
 	
@@ -65,8 +65,7 @@ class SendPress_View_Queue_All extends SendPress_View_Queue {
 	$testListTable->prepare_items();
 	SendPress_Option::set('no_cron_send', 'false');
 	
-	$sp->cron_start();
-	//echo $sp->get_key(). "<br>";
+	SPNL()->cron_start();
 
 	$open_info = array(
 				"id"=>13,
@@ -83,13 +82,13 @@ class SendPress_View_Queue_All extends SendPress_View_Queue {
 	<form id="email-filter" action="<?php echo SendPress_Admin::link('Queue_All'); ?>" method="get">
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	     <input type="hidden" name="page" value="<?php echo SPNL()->validate->page() ?>" /> 
-	       <?php if(isset($_GET['listID']) && $_GET['listID'] > 0 ){ ?>
-	    <input type="hidden" name="listID" value="<?php echo SPNL()->validate->int( $_POST['listID'] ); ?>" />
+	       <?php if(SPNL()->validate->_int('listID') > 0 ){ ?>
+	    <input type="hidden" name="listID" value="<?php echo SPNL()->validate->_int('listID'); ?>" />
 	    <?php  } ?>
-	    <input type="hidden" name="view" value="<?php echo esc_html($_GET['view']); ?>" />
+	    <input type="hidden" name="view" value="<?php echo esc_html( SPNL()->validate->_int('view') ); ?>" />
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display() ?>
-	    <?php wp_nonce_field($sp->_nonce_value); ?>
+	    <?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
 	<br>
 	
@@ -97,7 +96,7 @@ class SendPress_View_Queue_All extends SendPress_View_Queue {
 		<input type='hidden' value="<?php echo SPNL()->validate->page(); ?>" name="page" />
 		
 		
-		<?php wp_nonce_field($sp->_nonce_value); ?>
+		<?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
 
 <?php

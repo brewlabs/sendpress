@@ -25,7 +25,7 @@ class SendPress_View_Settings_Dbfix extends SendPress_View_Settings {
 
 	
 
-	function html($sp) {
+	function html() {
 		?>
 		<form method="post" id="post">
 			<div class="sp-row">
@@ -43,7 +43,7 @@ class SendPress_View_Settings_Dbfix extends SendPress_View_Settings {
 					<?php $this->panel_end(); ?>
 				</div>
 			</div>
-			<?php wp_nonce_field($sp->_nonce_value); ?>
+			<?php wp_nonce_field($this->_nonce_value); ?>
 		</form>
 
 		<?php

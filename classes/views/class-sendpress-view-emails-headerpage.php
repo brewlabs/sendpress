@@ -17,7 +17,7 @@ class SendPress_View_Emails_Headerpage extends SendPress_View_Emails {
         }
       }
    
-   function html($sp) { 
+   function html() { 
     global $sendpress_html_templates;
 
 

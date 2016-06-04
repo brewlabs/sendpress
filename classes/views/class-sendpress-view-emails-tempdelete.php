@@ -19,7 +19,7 @@ class SendPress_View_Emails_Tempdelete extends SendPress_View_Emails {
 
 	
 	
-	function html($sp) {
+	function html() {
 		
 		?>
 		<?php 
@@ -41,7 +41,7 @@ class SendPress_View_Emails_Tempdelete extends SendPress_View_Emails {
 		
 		<?php //wp_editor($post->post_content,'textversion'); ?>
 
-		 <?php wp_nonce_field($sp->_nonce_value); ?><br><br>
+		 <?php wp_nonce_field($this->_nonce_value); ?><br><br>
 		 </form>
 		 
 		<?php

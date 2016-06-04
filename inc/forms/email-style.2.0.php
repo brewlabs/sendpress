@@ -212,39 +212,39 @@ if(strlen($active_header['value']) > 0){
 		<?php $this->panel_start( '<span class=" glyphicon glyphicon-tint"></span> '. __('Body Styles','sendpress') ); ?>
 		
 		Background<br>
-		<?php $sp->create_color_picker( array('id'=>'body_bg','value'=>$body_bg['value'],'std'=>$body_bg['std'], 'link'=>'#html-view' ,'css'=>'background-color' ) ); ?>
+		<?php SPNL()->create_color_picker( array('id'=>'body_bg','value'=>$body_bg['value'],'std'=>$body_bg['std'], 'link'=>'#html-view' ,'css'=>'background-color' ) ); ?>
 		<br><br>
 		Body Text Color<br>
-		<?php $sp->create_color_picker( array('id'=>'body_text','value'=>$body_text['value'],'std'=>$body_text['std'], 'link'=>'.html-view-outer-text' ,'css'=>'color' ) ); ?>
+		<?php SPNL()->create_color_picker( array('id'=>'body_text','value'=>$body_text['value'],'std'=>$body_text['std'], 'link'=>'.html-view-outer-text' ,'css'=>'color' ) ); ?>
 		<br><br>
 		Body Link Color<br>
-		<?php $sp->create_color_picker( array('id'=>'body_link','value'=>$body_link['value'],'std'=>$body_link['std'], 'link'=>'.html-view-outer-text a' ,'css'=>'color' ) ); ?>
+		<?php SPNL()->create_color_picker( array('id'=>'body_link','value'=>$body_link['value'],'std'=>$body_link['std'], 'link'=>'.html-view-outer-text a' ,'css'=>'color' ) ); ?>
 		<?php $this->panel_end(); ?>
 		
 		<?php $this->panel_start('<span class=" glyphicon glyphicon-tint"></span> '.  __('Header Styles','sendpress') ); ?>
 			
 		 Background<br>
-		<?php $sp->create_color_picker( array('id'=>'header_bg','value'=>$header_bg['value'],'std'=>$header_bg['std'], 'link'=>'#html-header' ,'css'=>'background-color' ) ); ?>
+		<?php SPNL()->create_color_picker( array('id'=>'header_bg','value'=>$header_bg['value'],'std'=>$header_bg['std'], 'link'=>'#html-header' ,'css'=>'background-color' ) ); ?>
 		<br><br>
 		
 		 Text Color<br>
-		<?php $sp->create_color_picker( array('id'=>'header_text_color','value'=>$header_text_color['value'],'std'=>$header_text_color['std'], 'link'=>'#html-header' ,'css'=>'color' ) ); ?>
+		<?php SPNL()->create_color_picker( array('id'=>'header_text_color','value'=>$header_text_color['value'],'std'=>$header_text_color['std'], 'link'=>'#html-header' ,'css'=>'color' ) ); ?>
 
 		<?php $this->panel_end(); ?>
 		
 		<?php $this->panel_start('<span class=" glyphicon glyphicon-tint"></span> '.  __('Content Styles','sendpress') ); ?>
 			
 		 Background<br>
-		<?php $sp->create_color_picker( array('id'=>'content_bg','value'=>$content_bg['value'],'std'=>$content_bg['std'], 'link'=>'#html-content','css'=>'background-color' ) ); ?>
+		<?php SPNL()->create_color_picker( array('id'=>'content_bg','value'=>$content_bg['value'],'std'=>$content_bg['std'], 'link'=>'#html-content','css'=>'background-color' ) ); ?>
 		<br><br>
 		Border<br>
-		<?php $sp->create_color_picker( array('id'=>'content_border','value'=>$content_border['value'],'std'=>$content_border['std'], 'link'=>'.html-wrapper','css'=>'border-color' ) ); ?>
+		<?php SPNL()->create_color_picker( array('id'=>'content_border','value'=>$content_border['value'],'std'=>$content_border['std'], 'link'=>'.html-wrapper','css'=>'border-color' ) ); ?>
 		<br><br>
 		Text Color<br>
-		<?php $sp->create_color_picker_iframe( array('id'=>'content_text','value'=>$content_text['value'],'std'=>$content_text['std'], 'link'=>'#html-content' ,'css'=>'color', 'iframe'=>'body' ) ); ?>
+		<?php SPNL()->create_color_picker_iframe( array('id'=>'content_text','value'=>$content_text['value'],'std'=>$content_text['std'], 'link'=>'#html-content' ,'css'=>'color', 'iframe'=>'body' ) ); ?>
 		<br><br>
 		Link Color<br>
-		<?php $sp->create_color_picker_iframe( array('id'=>'sp_content_link_color','value'=>$content_link['value'],'std'=>$content_link['std'],'link'=>'#html-content a' ,'css'=>'color' ,'iframe'=>'a') ); ?>
+		<?php SPNL()->create_color_picker_iframe( array('id'=>'sp_content_link_color','value'=>$content_link['value'],'std'=>$content_link['std'],'link'=>'#html-content a' ,'css'=>'color' ,'iframe'=>'a') ); ?>
 		
 		<?php $this->panel_end(); ?>
 		</div>
@@ -570,4 +570,4 @@ $manage = __("Manage Subscription","sendpress");
 
 
 
-<?php wp_nonce_field($sp->_nonce_value); 
+<?php wp_nonce_field($this->_nonce_value); 

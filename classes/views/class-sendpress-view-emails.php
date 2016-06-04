@@ -27,7 +27,7 @@ class SendPress_View_Emails extends SendPress_View{
 		add_screen_option( 'per_page', $args );
 	}
 
- 	function sub_menu($sp = false){
+ 	function sub_menu(){
 
 		?>
 		<div class="navbar navbar-default" >
@@ -79,7 +79,7 @@ class SendPress_View_Emails extends SendPress_View{
               
             <?php } ?>
 
-            <li <?php if(strpos($sp->_current_view,'systememail') !== false){ ?>class="active"<?php } ?> ><a <?php if(strpos($sp->_current_view,'systememail') !== false){ ?>class="wp-ui-primary"<?php } ?>  href="<?php echo SendPress_Admin::link('Emails_Systememail'); ?>"><i class=" icon-bullhorn"></i> <?php _e('System Email','sendpress'); ?></a></li>
+            <li <?php if(strpos(SPNL()->_current_view,'systememail') !== false){ ?>class="active"<?php } ?> ><a <?php if(strpos(SPNL()->_current_view,'systememail') !== false){ ?>class="wp-ui-primary"<?php } ?>  href="<?php echo SendPress_Admin::link('Emails_Systememail'); ?>"><i class=" icon-bullhorn"></i> <?php _e('System Email','sendpress'); ?></a></li>
 				</ul>
 			</div>
 		</div>
@@ -274,13 +274,13 @@ class SendPress_View_Emails extends SendPress_View{
 	}
 
 
-	function prerender($sp = false){
+	function prerender(){
 
 
 
 	}
 
-	function html($sp){
+	function html(){
 		 SendPress_Tracking::event('Emails Tab');
 	//Create an instance of our package class...
 	$testListTable = new SendPress_Emails_Table();
