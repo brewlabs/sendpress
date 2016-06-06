@@ -75,7 +75,7 @@ class SendPress_View_Pro extends SendPress_View{
     }
 
 	
-	function html($sp){
+	function html(){
 		//SendPress_Option::set('pro_plugins','');
         SendPress_Tracking::event('Pro Tab');
         ?>

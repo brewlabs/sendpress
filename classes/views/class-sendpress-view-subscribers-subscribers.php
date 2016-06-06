@@ -25,18 +25,20 @@ class SendPress_View_Subscribers_Subscribers extends SendPress_View_Subscribers 
 	}
 	
 
-	function remove_subscribers( $get, $sp ){
+	function remove_subscribers(  ){
 		$this->security_check();
-		SendPress_Data::remove_all_subscribers( $get['listID'] );
-		SendPress_Admin::redirect('Subscribers_Subscribers', array('listID'=> $get['listID'] ));
+		$listid = SPNL()->validate->_int( 'listID' );
+		SendPress_Data::remove_all_subscribers( $listid  );
+		SendPress_Admin::redirect('Subscribers_Subscribers', array('listID'=> $listid  ));
 	}
 
 
 	function html() {
 	
 		$list ='';
-		if( isset( $_GET['listID'] )  ){
-			$list_id_clean =  SPNL()->validate->int( $_GET['listID'] );	
+		$listid = SPNL()->validate->_int( 'listID' );
+		if( $listid > 0  ){
+			$list_id_clean =  $listid;	
 			$listinfo = get_post( $list_id_clean );
 			$list = '&listID='.$list_id_clean;
 			$listname = 'for '. $listinfo->post_title;
@@ -58,10 +60,10 @@ class SendPress_View_Subscribers_Subscribers extends SendPress_View_Subscribers 
 	<form id="movies-filter" method="get">
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page() ?>" />
-	    <?php if(isset($_GET['listID']) && $_GET['listID'] > 0 ){ ?>
+	    <?php if($list_id_clean > 0 ){ ?>
 	    <input type="hidden" name="listID" value="<?php echo $list_id_clean; ?>" />
 	    <?php  } ?>
-	    <input type="hidden" name="view" value="<?php echo esc_html($_GET['view']); ?>" />
+	    <input type="hidden" name="view" value="<?php echo esc_html(SPNL()->validate->_string('view')); ?>" />
 
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display() ?>

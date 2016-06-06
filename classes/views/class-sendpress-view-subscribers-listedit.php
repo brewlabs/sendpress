@@ -38,10 +38,10 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
 	function html() {
 		
 	$list ='';
-	if(isset($_GET['listID'])){
-		$id = SPNL()->validate->int( $_GET['listID'] );
-		$listinfo = get_post( $id );
-		$list = '&listID='.$id;
+	$listId = SPNL()->validate->_int( 'listID' );
+	if($listId > 0){
+		$listinfo = get_post( $listId );
+		$list = '&listID='.$listId;
 		$listname = 'for '. $listinfo->post_title;
 	}
 	?>
@@ -55,7 +55,7 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
 	
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	   
-	    <input type="hidden" name="listID" value="<?php echo SPNL()->validate->int( $_GET['listID'] ); ?>" />
+	    <input type="hidden" name="listID" value="<?php echo $listId; ?>" />
 	    <p><input type="text" class="form-control" name="name" value="<?php echo $listinfo->post_title; ?>" /></p>
 	    <p><input type="checkbox" class="edit-list-checkbox" name="public" value="<?php echo get_post_meta($listinfo->ID,'public',true); ?>" <?php if( get_post_meta($listinfo->ID,'public',true) == 1 ){ echo 'checked'; } ?> /><label for="public"><?php _e('Allow user to sign up to this list','sendpress'); ?></label></p>
 	     <p><input type="checkbox" class="edit-list-checkbox" name="test_list" value="<?php echo get_post_meta($listinfo->ID,'_test_list',true); ?>" <?php if( get_post_meta($listinfo->ID,'_test_list',true) == 1 ){ echo 'checked'; } ?> /><label for="public"><?php _e('Mark list as test. Adds <span class="label label-info">Test List</span> to list title every where.','sendpress'); ?></label></p>

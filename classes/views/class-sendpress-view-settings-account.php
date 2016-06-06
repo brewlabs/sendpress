@@ -90,7 +90,7 @@ $this->security_check();
 	}
 
 
-	function html( $sp ) {
+	function html( ) {
 		global  $sendpress_sender_factory;
 		$senders = $sendpress_sender_factory->get_all_senders();
 		ksort($senders);

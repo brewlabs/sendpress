@@ -37,7 +37,7 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 	}
 	
 
-	function remove_subscribers( $get, $sp ){
+	function remove_subscribers( ){
 		$this->security_check();
 		SendPress_Data::delete_all_subscribers( );
 		SendPress_Admin::redirect('Subscribers_All' );
@@ -45,8 +45,9 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 
 	function delete_subscribers_bulk_all(){
 		$this->security_check();
-		if( isset($_GET['subscriber']) && is_array($_GET['subscriber']) ) {
-			foreach ($_GET['subscriber'] as $value) {
+		$dt =  SPNL()->validate->_int_array('subscriber');
+		if( is_array($dt) ) {
+			foreach ($dt as $value) {
 				SendPress_Data::delete_subscriber( $value );
 			}
 		}
@@ -57,10 +58,11 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 	function html() {
 	
 		$list ='';
-	if(isset($_GET['listID']) && $_GET['listID'] > 0 ){
+		$listID = SPNL()->validate->int('listID');
+	if($listID > 0 ){
 		
-		$listinfo = get_post($_GET['listID']);
-		$list = '&listID='.$_REQUEST['listID'];
+		$listinfo = get_post($listID);
+		$list = '&listID='.$listID;
 		$listname = 'for '. $listinfo->post_title;
 	}
 	//Create an instance of our package class...
@@ -80,10 +82,10 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 	<form id="movies-filter" method="get">
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page() ?>" />
-	    <?php if(isset($_GET['listID']) && $_GET['listID'] > 0 ){ ?>
-	    <input type="hidden" name="listID" value="<?php echo SPNL()->validate->int( $_POST['listID'] ); ?>" />
+	    <?php if($listID > 0 ){ ?>
+	    <input type="hidden" name="listID" value="<?php echo $listID; ?>" />
 	    <?php  } ?>
-	    <input type="hidden" name="view" value="<?php echo esc_html($_GET['view']); ?>" />
+	    <input type="hidden" name="view" value="<?php echo esc_html(SPNL()->validate->_string('view')); ?>" />
 
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display() ?>

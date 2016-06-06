@@ -16,7 +16,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 switch ( $this->_current_action ) {
 
             case 'delete-email-queue':
-                $email_delete = $_GET['qemail'];
+                $email_delete = SPNL()->validate->_int_array('qemail');
                 foreach ($email_delete as $qID) {
                     $q = SPNL()->validate->int($qID);
                     if($q > 0 ){
@@ -43,47 +43,35 @@ switch ( $this->_current_action ) {
                 wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page() ) ) );
 
             break;
-            case 'delete-list':
-                SendPress_Data::delete_list( SPNL()->validate->int($_GET['listID']) );
-                 wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page() ) ) );
-            break;
-            case 'delete-lists-bulk':
-                $list_delete = $_GET['list'];
-
-                foreach ($list_delete as $listID) {
-                   SendPress_Data::delete_list( SPNL()->validate->int($listID));
-                }
-                 wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page() ) ) );
-            break;
-
+           
             case 'delete-subscriber':
-                $l = SPNL()->validate->int($_GET['listID']);
-                $s = SPNL()->validate->int($_GET['subscriberID']);
+                $l = SPNL()->validate->_int('listID');
+                $s = SPNL()->validate->_int('subscriberID');
                 if($l > 0 && $s > 0){
                     SendPress_Data::remove_subscriber_status($l , $s);
                 }
-                wp_redirect( esc_url_raw( admin_url( 'admin.php?page='.SPNL()->validate->page() .'&view=subscribers&listID='.$_GET['listID'] ) ) );
+                wp_redirect( esc_url_raw( admin_url( 'admin.php?page='.SPNL()->validate->page() .'&view=subscribers&listID='.$l) ) );
             break;
 
             case 'delete-subscribers-bulk':
-                 $subscriber_delete = $_GET['subscriber'];
-                 $list  = SPNL()->validate->int($_GET['listID']); 
+                 $subscriber_delete = SPNL()->validate->_int_array('subscriber');
+                 $list  = SPNL()->validate->_int('listID'); 
                 foreach ($subscriber_delete as $subscriberID) {
                     SendPress_Data::remove_subscriber_status( $list  , SPNL()->validate->int( $subscriberID ));
                 }
-                wp_redirect( esc_url_raw( admin_url( 'admin.php?page='.SPNL()->validate->page() .'&view=subscribers&listID='.$_GET['listID'] ) ) );
+                wp_redirect( esc_url_raw( admin_url( 'admin.php?page='.SPNL()->validate->page() .'&view=subscribers&listID='. $list ) ) );
             break;
 
             case 'delete-report':
-                $r = SPNL()->validate->int($_GET['reportID']);
+                $r = SPNL()->validate->_int('reportID');
                 if( $r > 0 ){
-                    SendPress_Posts::report_delete($_GET['reportID']);
+                    SendPress_Posts::report_delete($r);
                 }
                 wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page() ) ) );
             break;
             case 'delete-reports-bulk':
            
-                $email_delete = $_GET['report'];
+                $email_delete =SPNL()->validate->_int_array('report');
 
                 foreach ($email_delete as $emailID) {
                     $email = SPNL()->validate->int($emailID);
@@ -101,7 +89,7 @@ switch ( $this->_current_action ) {
                 wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page() ) ) );
             break;
             case 'delete-emails-bulk':
-                $email_delete = $_GET['email'];
+                $email_delete = SPNL()->validate->_int_array('email');
 
                 foreach ($email_delete as $emailID) {
                     $email = SPNL()->validate->int($emailID);

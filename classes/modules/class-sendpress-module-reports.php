@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Module_Reports extends SendPress_Module{
 	
-	function html($sp){
+	function html(){
 		$hide = false;
 		$plugin_path = 'sendpress-advanced-reports/sendpress-advanced-reports.php';
 		if( $this->is_pro_active() ){

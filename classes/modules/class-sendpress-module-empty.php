@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Module_Empty extends SendPress_Module{
 	
-	function html($sp){
+	function html(){
 	?>
 		<h4><?php _e('More Coming Soon!','sendpress');?></h4>
 		

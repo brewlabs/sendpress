@@ -22,7 +22,7 @@ class SendPress_View_Emails_Templates extends SendPress_View_Emails{
 
 	
 
-	function html($sp){
+	function html(){
 			?>
 			
 		<div class="wrap about-wrap">

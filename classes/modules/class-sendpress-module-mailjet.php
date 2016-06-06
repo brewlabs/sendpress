@@ -9,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_Module_Mailjet extends SendPress_Module{
 	
 
-	function html($sp){
+	function html(){
 		$hide = false;
 		$plugin_path = '';
 		if( $this->is_pro_active() ){

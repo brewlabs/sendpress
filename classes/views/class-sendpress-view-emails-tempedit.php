@@ -55,7 +55,7 @@ function prerender($sp= false){
 
 }
 
-function html($sp){
+function html(){
 	SendPress_Tracking::event('Emails Tab');
 
 	

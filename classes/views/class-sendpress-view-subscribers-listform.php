@@ -10,16 +10,16 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 
 	function save(){
 		$this->security_check();
-		if(isset($_POST['listID'])){
-			$list_id = $_POST['listID'];
-			$postpage = $_POST['post-page'];
-			$postpageid = $_POST['post-page-id'];
-			$postredirect = $_POST['post-redirect'];
+		$list_id = SPNL()->validate->_int( 'listID' );
+		if( SPNL()->validate->_isset('post-page') ){
+			$postpage =  SPNL()->validate->_string('post-page');
+			$postpageid = SPNL()->validate->_int('post-page-id');
+			$postredirect = SPNL()->validate->_url('post-redirect');
 			update_post_meta($list_id,'post-page',$postpage  );
 			update_post_meta($list_id,'post-page-id',$postpageid  );
 			update_post_meta($list_id,'post-redirect',$postredirect  );
 		} else {
-			$list_id = $_GET['listID'];
+			
 		}
 		SendPress_Admin::redirect('Subscribers_Listform',array('listID'=> $list_id));
 	}
@@ -28,9 +28,10 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 	function html() {
 		
 	$list ='';
-	if(isset($_GET['listID'])){
-		$list_id = $_GET['listID'];
-		$listinfo = get_post( $_GET['listID'] );
+	$list_id =  SPNL()->validate->_int('listID');
+	if($list_id > 0){
+		
+		$listinfo = get_post( $list_id );
 	}
 
 	$backLink = apply_filters('sendpress_back_to_lists_link', 'Subscribers');

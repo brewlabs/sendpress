@@ -20,14 +20,6 @@ class SendPress_Module {
 	var $_pro_version = 0;
 	//var $_active = false;
 
-	function SendPress_View( $title='' ) {
-		$this->title( $title );
-
-		if ( $this->init() === false ) {
-			$this->set_visible( false );
-			return;
-		}
-	}
 
 	/**
 	 * Initializes the view.
@@ -54,9 +46,9 @@ class SendPress_Module {
 	/**
 	 * Renders the view.
 	 */
-	function render($sp) {
+	function render() {
 		$this->module_start();
-		$this->html($sp);
+		$this->html();
 		//$this->buttons('sendpress-pro/sendpress-pro.php');
 		$this->module_end();
 	}
@@ -64,7 +56,7 @@ class SendPress_Module {
 	/*
 	* Page HTML
 	*/
-	function html($sp){
+	function html(){
 		echo "Page not built yet.";
 	}
 

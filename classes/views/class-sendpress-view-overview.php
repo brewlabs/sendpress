@@ -8,14 +8,14 @@ if ( !defined('SENDPRESS_VERSION') ) {
 if( !class_exists('SendPress_View_Overview') ){
 class SendPress_View_Overview extends SendPress_View{
 
-	function tracking( $get, $sp ){
+	function tracking(){
     $this->security_check();
-		SendPress_Option::set('allow_tracking', $get['allow_tracking']);
+		SendPress_Option::set('allow_tracking', SPNL()->validate->_string('allow_tracking'));
 		SendPress_Admin::redirect('Overview');
 	}
 
 	
-	function html($sp){
+	function html(){
    	SendPress_Tracking::event('Overview Tab');
 	
 global $wp_version;

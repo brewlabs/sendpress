@@ -10,7 +10,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Emails_Systememail extends SendPress_View_Emails{
 
-	function html($sp){
+	function html(){
 		 SendPress_Tracking::event('Emails Tab');
 	//Create an instance of our package class...
 	$testListTable = new SendPress_System_Email_Table();

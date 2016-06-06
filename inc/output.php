@@ -22,12 +22,12 @@ Host:                     <?php echo $host . "\n"; ?>
 <?php endif; ?>
 
 Registered Post Stati:    <?php echo implode( ', ', get_post_stati() ) . "\n\n"; ?>
-<?php if ( isset( $_GET['system_info'] ) ) {
+<?php if (  SPNL()->validate->_isset('system_info' ) ) {
 	echo '// Browser of Current Viewer //';
 	echo "\r\n\r\n";
 } ?>
 <?php echo $browser ; ?>
-<?php if ( isset( $_GET['system_info'] ) ) {
+<?php if (  SPNL()->validate->_isset('system_info' ) ) {
 	echo "\r\n";
 	echo '// End Browser of Current Viewer //';
 	echo "\r\n\r\n";

@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Module_Pro extends SendPress_Module{
 	
-	function html($sp){
+	function html(){
 
 		$key_active = false;
 		if( get_transient( 'sendpress_key_state' ) === 'valid' ){

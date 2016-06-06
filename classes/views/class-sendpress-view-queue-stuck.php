@@ -39,7 +39,7 @@ class SendPress_View_Queue_Stuck extends SendPress_View_Queue {
 		add_screen_option( 'per_page', $args );
 	}
 	
-	function empty_queue( $get, $sp ){
+	function empty_queue(  ){
 		$this->security_check();
 		SendPress_Data::delete_stuck_queue_emails();
 		SendPress_Admin::redirect('Queue_Stuck');
