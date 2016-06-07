@@ -81,9 +81,9 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 	function view_buttons(){
 		$this->security_check();
 
-		$postid = ISSET(SPNL()->validate->_int('id')) ? SPNL()->validate->_int('id') : 0;
-		$showCreate = (isset(SPNL()->validate->_int('create')) && SPNL()->validate->_int('create') == 1) ? true : false;
-		$showDelete = (SPNL()->validate->_int('delete')) && SPNL()->validate->_int('delete') == 1) ? true : false;
+		$postid = SPNL()->validate->_int('id');
+		$showCreate = SPNL()->validate->_int('create') == 1 ? true : false;
+		$showDelete = SPNL()->validate->_int('delete') == 1 ? true : false;
 		
 		if($showDelete || $showCreate|| $postid > 0){
 			$btnText = $showDelete ? "Confirm" : "Save";
@@ -98,9 +98,9 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 	function html() {
 
-		$postid = ISSET(SPNL()->validate->_int('id')) ? SPNL()->validate->_int('id') : 0;
-		$showCreate = (isset(SPNL()->validate->_int('create')) && SPNL()->validate->_int('create') == 1) ? true : false;
-		$showDelete = (isset(SPNL()->validate->_int('delete')) && SPNL()->validate->_int('delete') == 1) ? true : false;
+		$postid = SPNL()->validate->_int('id');
+		$showCreate = SPNL()->validate->_int('create') == 1 ? true : false;
+		$showDelete = SPNL()->validate->_int('delete') == 1 ? true : false;
 
 		$settings = SendPress_Data::get_post_meta_object($postid);
 		$settings['_settings_id'] = $postid;
@@ -187,7 +187,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 	function create_form(){
 		
-		$copy_from = (isset(SPNL()->validate->_int('id'))) ? SPNL()->validate->_int('id') : 0;
+		$copy_from =  SPNL()->validate->_int('id');
 		$save_type = ($copy_from > 0) ? "copy" : "create";
 
 		?>
