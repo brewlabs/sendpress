@@ -14,13 +14,7 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 		return __('Gmail','sendpress');
 	}
 
-	function save(){
-		$options =  array();
-	 	$options['gmailuser'] = (array_key_exists('gmailuser',$_POST)) ? $_POST['gmailuser'] : "";
-        $options['gmailpass'] = (array_key_exists('gmailpass',$_POST)) ? $_POST['gmailpass'] : "";
-        SendPress_Option::set( $options );
-	}
-
+	
 	function settings(){ ?>
 	<h1>Gmail sending has been disabled. Please update to continue sending.</h1>
 	<br>

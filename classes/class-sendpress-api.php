@@ -607,7 +607,15 @@ class SendPress_API {
 		}
 		return $count;
 	}
+	
+	public function elastic_bounce( $email , $status , $cat){
 
+			if(($status == 'abusereport' || $status == 'unsubscribed' || $status == 'error') && $cat != 'blacklisted') {
+				$count = $this->bounce($email);
+				return array('status' => 'proccessed','count'=> 1,'email'=> $email);
+			}
+			return array('status' => 'wrong event type','count'=> 0,'email'=> $email);
+	}
 
 	
 
@@ -643,14 +651,7 @@ class SendPress_API {
 		*/
 	}
 
-	public function elastic_bounce( $email , $status , $cat){
-
-			if(($status == 'abusereport' || $status == 'unsubscribed' || $status == 'error') && $cat != 'blacklisted') {
-				$count = $this->bounce($email);
-				return array('status' => 'proccessed','count'=> 1,'email'=> $email);
-			}
-			return array('status' => 'wrong event type','count'=> 0,'email'=> $email);
-	}
+	
 
 
 				

@@ -292,7 +292,6 @@ class SendPress_Lists_Table extends WP_List_Table {
      * @see $this->prepare_items()
      **************************************************************************/
     function process_bulk_action() {
-        //print_r($_POST['list']);
         //Detect when a bulk action is being triggered...
         if( 'delete'===$this->current_action() ) {
             wp_die('Items deleted (or they would be if we had items to delete)!');

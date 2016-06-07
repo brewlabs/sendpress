@@ -10,13 +10,13 @@ class SendPress_View_Subscribers_Add extends SendPress_View_Subscribers {
 	
 	function create_subscriber(){
 		$this->security_check();
-		$email = $_POST['email'];
-        $fname = $_POST['firstname'];
-        $lname = $_POST['lastname'];
-        $phonenumber = $_POST['phonenumber'];
-        $salutation = $_POST['salutation'];
-        $listID = $_POST['listID'];
-        $status = $_POST['status'];
+		$email = SPNL()->validate->_email('email');
+        $fname = SPNL()->validate->_string('firstname');
+        $lname = SPNL()->validate->_string('lastname');
+        $phonenumber = SPNL()->validate->_string('phonenumber');
+        $salutation = SPNL()->validate->_string('salutation');
+        $listID = SPNL()->validate->_int('listID');
+        $status = SPNL()->validate->_string('status');
 
         if( is_email($email) ){
 
@@ -33,8 +33,8 @@ class SendPress_View_Subscribers_Add extends SendPress_View_Subscribers {
 
     function create_subscribers(){
         $this->security_check();
-        $csvadd = "email,firstname,lastname\n" . trim( $_POST['csv-add'] );
-        $listID = SPNL()->validate->int( $_POST['listID'] );
+        $csvadd = "email,firstname,lastname\n" . trim( SPNL()->validate->_string('csv-add') );
+        $listID = SPNL()->validate->_int('listID');
         if($listID > 0 ){
         $newsubscribers = SendPress_Data::subscriber_csv_post_to_array( $csvadd );
 

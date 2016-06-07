@@ -117,14 +117,12 @@ class SendPress_Ajax_Loader {
 		$response = array(
 			'success' => false
 		);
-
-		if ( $_POST ) {
-			$s = NEW SendPress;
-
+		$listid = SPNL()->validate->_int('id');
+		if ($listid > 0) {
 			// get the credit card details submitted by the form
-			$listid = SPNL()->validate->_int('id');
+		
 			$name   =  sanitize_text_field( SPNL()->validate->_string('name') );
-			$public = ( $_POST['public'] === '1' ) ? 1 : 0;
+			$public = (SPNL()->validate->_string('public') === '1' ) ? 1 : 0;
 
 			$list = SendPress_Data::update_list( $listid, array( 'name' => $name, 'public' => $public ) );
 
@@ -277,8 +275,8 @@ class SendPress_Ajax_Loader {
 
 	function sync_list() {
 		$this->verify_ajax_call();
-		$listid = isset( $_POST['listid'] ) ? SPNL()->validate->int( $_POST['listid'] ) : 0;
-		$offset = isset( $_POST['offset'] ) ? SPNL()->validate->int( $_POST['offset'] ) : 0;
+		$listid = SPNL()->validate->_int('listid');
+		$offset = SPNL()->validate->_int('offset');
 		$role   = get_post_meta( $listid, 'sync_role', true );
 		$load   = SendPress_Option::get( 'sync-per-call', 250 );
 		
@@ -313,7 +311,7 @@ class SendPress_Ajax_Loader {
 
 	function queue_batch() {
 		$this->verify_ajax_call();
-		$reportid = isset( $_POST['reportid'] ) ? $_POST['reportid'] : 0;
+		$reportid = SPNL()->validate->_int('reportid');
 		$lists    = get_post_meta( $reportid, '_send_lists', true );
 		$time     = get_post_meta( $reportid, '_send_time', true );
 		$list     = explode( ",", $lists );
