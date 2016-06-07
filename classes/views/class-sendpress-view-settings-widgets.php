@@ -8,40 +8,50 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
-	function save($post, $sp){
+	function save(){
 		$this->security_check();
 		// print_r($post);
 		// die();
 
-		$action = (isset($post['form_action'])) ? $post['form_action'] : 'save';
+		$action = 'save';
+		$new_action = SPNL()->validate->_string('form_action');
+		if($new_action !== false || $new_action !== null){
+			$action = $new_action;
+		}
+		//$action = (isset($post['form_action'])) ? $post['form_action'] : 'save';
+		
+		$post_subject = SPNL()->validate->_string('post_subject');
+		$copy_from = SPNL()->validate->_string('copy_from');
+		$form_type = SPNL()->validate->_string('form_type');
 		
 		switch($action){
 			case 'copy':
-				$postid = SendPress_Data::create_settings_post($post['post_subject'], "", $post['copy_from']);
+				$postid = SendPress_Data::create_settings_post($post_subject, "", $copy_from);
 				//wp_redirect( '?page=sp-settings&view=widgets&id='. $postid );
 				SendPress_Admin::redirect( 'Settings_Widgets' , array( 'id' => $postid ) );
 				break;
 			case 'create':
 
-				$postid = SendPress_Data::create_settings_post($post['post_subject'], $post['form_type']);
+				$postid = SendPress_Data::create_settings_post($post_subject, $form_type);
 				//wp_redirect( '?page=sp-settings&view=widgets&id='. $postid );
 				SendPress_Admin::redirect( 'Settings_Widgets' , array( 'id' => $postid ) );
 				break;
 			case 'delete':
-				self::delete_form_save($post, $sp);
+				self::delete_form_save();
 				//wp_redirect( '?page=sp-settings&view=widgets' );
 				SendPress_Admin::redirect( 'Settings_Widgets' );
 				break;
 			default:
-				self::save_form($post, $sp);
+				self::save_form();
 				break;
 		}
 
 	}
 
-	function save_form($post, $sp){
+	//fix this somehow...
+	function save_form(){
 		//$data = array_slice($post, 0, -2);
-		$data = $post;
+		$data = $_POST;
 
 		//fix list ids for signup
 		$listids = array();
@@ -63,16 +73,17 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		SendPress_Data::update_post_meta_object($data['_settings_id'],$data);
 	}
 
-	function delete_form_save($post, $sp){
+	function delete_form_save(){
 		$this->security_check();
-		SendPress_Data::delete_post_meta_object($post['deleteid'],$data);
+		SendPress_Data::delete_post_meta_object(SPNL()->validate->_int('deleteid'),$data);
 	}
 
 	function view_buttons(){
 		$this->security_check();
-		$postid = ISSET($_GET['id']) ? $_GET['id'] : 0;
-		$showCreate = (isset($_GET['create']) && $_GET['create'] == 1) ? true : false;
-		$showDelete = (isset($_GET['delete']) && $_GET['delete'] == 1) ? true : false;
+
+		$postid = ISSET(SPNL()->validate->_int('id')) ? SPNL()->validate->_int('id') : 0;
+		$showCreate = (isset(SPNL()->validate->_int('create')) && SPNL()->validate->_int('create') == 1) ? true : false;
+		$showDelete = (SPNL()->validate->_int('delete')) && SPNL()->validate->_int('delete') == 1) ? true : false;
 		
 		if($showDelete || $showCreate|| $postid > 0){
 			$btnText = $showDelete ? "Confirm" : "Save";
@@ -87,9 +98,9 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 	function html() {
 
-		$postid = ISSET($_GET['id']) ? $_GET['id'] : 0;
-		$showCreate = (isset($_GET['create']) && $_GET['create'] == 1) ? true : false;
-		$showDelete = (isset($_GET['delete']) && $_GET['delete'] == 1) ? true : false;
+		$postid = ISSET(SPNL()->validate->_int('id')) ? SPNL()->validate->_int('id') : 0;
+		$showCreate = (isset(SPNL()->validate->_int('create')) && SPNL()->validate->_int('create') == 1) ? true : false;
+		$showDelete = (isset(SPNL()->validate->_int('delete')) && SPNL()->validate->_int('delete') == 1) ? true : false;
 
 		$settings = SendPress_Data::get_post_meta_object($postid);
 		$settings['_settings_id'] = $postid;
@@ -170,14 +181,13 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		<h2><?php _e('Confirm Delete','sendpress'); ?></h2>
 		<div>Click confirm to delete the form. THIS CANNOT BE UNDONE!</div>
 		<input type="hidden" name="form_action" id="form_action" value="delete" />
-		<input type="hidden" name="deleteid" id="deleteid" value="<?php echo $_GET['id']; ?>" />
+		<input type="hidden" name="deleteid" id="deleteid" value="<?php echo SPNL()->validate->_int('id'); ?>" />
 		<?php
 	}
 
 	function create_form(){
 		
-		$copy_from = (isset($_GET['id'])) ? $_GET['id'] : 0;
-
+		$copy_from = (isset(SPNL()->validate->_int('id'))) ? SPNL()->validate->_int('id') : 0;
 		$save_type = ($copy_from > 0) ? "copy" : "create";
 
 		?>
