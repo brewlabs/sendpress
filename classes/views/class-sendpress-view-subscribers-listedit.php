@@ -10,27 +10,22 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
 
 	function save(){
 		$this->security_check();
-		$listid = SPNL()->validate->int( $_POST['listID'] );
+		$listid = SPNL()->validate->_int( 'listID' );
 		if($listid > 0 ){
-        $name = sanitize_text_field($_POST['name']);
+        $name = sanitize_text_field(SPNL()->validate->_string('name'));
         $public = 0;
-        if(isset($_POST['public']) && $_POST['sync_role'] == 'none'){
-            $public = SPNL()->validate->int( $_POST['public'] );
+        if( SPNL()->validate->_isset('public') &&  SPNL()->validate->_string('sync_role') == 'none'){
+            $public = SPNL()->validate->_int( 'public');
         }
       
         SendPress_Data::update_list($listid, array( 'name'=>$name, 'public'=>$public ) );
-        $roles_list = array();
-        $test_list = 0;
-        if(isset($_POST['test_list'])){
-            $public = $_POST['test_list'];
-        }
-      
-        update_post_meta($listid, '_test_list', $_POST['test_list']);
-		update_post_meta($listid, 'sync_role', $_POST['sync_role']);
-		update_post_meta($listid, 'meta-key', $_POST['meta-key']);
-		update_post_meta($listid, 'meta-compare', $_POST['meta-compare']);
-		update_post_meta($listid, 'meta-value', $_POST['meta-value']);
-		update_post_meta($listid, 'opt-in-id', $_POST['opt-in-id']);
+        
+        update_post_meta($listid, '_test_list', SPNL()->validate->_string('test_list'));
+		update_post_meta($listid, 'sync_role', SPNL()->validate->_string('sync_role'));
+		update_post_meta($listid, 'meta-key', SPNL()->validate->_string('meta-key'));
+		update_post_meta($listid, 'meta-compare', SPNL()->validate->_string('meta-compare'));
+		update_post_meta($listid, 'meta-value',SPNL()->validate->_string('meta-value'));
+		update_post_meta($listid, 'opt-in-id', SPNL()->validate->_int('opt-in-id'));
 		}
       	SendPress_Admin::redirect('Subscribers');
 	}

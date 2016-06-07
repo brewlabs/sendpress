@@ -33,7 +33,7 @@ class SendPress_Tour {
 		$track = SendPress_Option::get( 'allow_tracking' );
 		$tour = false ; //SendPress_Option::get( 'intro_tour' );
 
-		if ( ($track == false || $track== '') && !isset( $_GET['allow_tracking'] ) ) {
+		if ( ($track == false || $track== '') && !SPNL()->validate->_isset('allow_tracking')  ) {
 			wp_enqueue_style( 'wp-pointer' );
 			wp_enqueue_script( 'jquery-ui' );
 			wp_enqueue_script( 'wp-pointer' );

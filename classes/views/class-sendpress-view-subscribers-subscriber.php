@@ -61,7 +61,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
     	$this->security_check();
     	if(SPNL()->validate->_string('delete-this-user') == 'yes'){
     		SendPress_Data::delete_subscriber(  SPNL()->validate->_int('subscriberID') );
-    		$lid = SPNL()->validate->int('listID');
+    		$lid = SPNL()->validate->_int('listID');
     		if($lid > 0){
     			SendPress_Admin::redirect( 'Subscribers_Subscribers',array('listID'=>$lid) );
     		}else {
@@ -78,7 +78,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 				'phonenumber' => SPNL()->validate->_string('phonenumber'),
 				'salutation' => SPNL()->validate->_string('salutation')
 				);
-			SendPress_Data::update_subscriber($_POST['subscriberID'], $subscriber_info);
+			SendPress_Data::update_subscriber(SPNL()->validate->_int('subscriberID'), $subscriber_info);
 
 	    	$args = array( 'post_type' => 'sendpress_list','post_status' => array('publish','draft'),'posts_per_page' => 500, 'order'=> 'ASC', 'orderby' => 'title' );
 			$postslist = get_posts( $args );
