@@ -36,9 +36,9 @@ class SendPress_View_Subscribers_Subscribers extends SendPress_View_Subscribers 
 	function html() {
 	
 		$list ='';
-		$listid = SPNL()->validate->_int( 'listID' );
+		$list_id_clean = SPNL()->validate->_int( 'listID' );
+		$listid = $list_id_clean;
 		if( $listid > 0  ){
-			$list_id_clean =  $listid;	
 			$listinfo = get_post( $list_id_clean );
 			$list = '&listID='.$list_id_clean;
 			$listname = 'for '. $listinfo->post_title;
