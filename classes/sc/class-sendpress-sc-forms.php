@@ -251,15 +251,12 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		$widget_options = SendPress_Option::get('widget_options');
 		$list_ids = (strlen($_listids) > 0) ? explode(",",$_listids) : array();
 
-		
 
-		if(!$_settings_id && empty($list_ids)){
+		if(!isset($_settings_id) && empty($list_ids)){
 			$list_ids = $default_list_ids;
 		}
 		$post_notifications_code = '';
 		if( !is_wp_error($list_ids) || !is_wp_error($postnotification) || !is_wp_error($pnlistid)   ){
-
-			
 			$post_notifications_code = apply_filters( 'sendpress-post-notifications-submit-code', "", $list_ids, $postnotification, $pnlistid );
 			
 		}
@@ -271,7 +268,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					if( $widget_options['load_ajax'] ){
 						echo '<input type="hidden" name="action" value="signup-user" />';
 					}
-					if(empty($_listids) && strlen($post_notifications_code) == 0 && $_settings_id){
+					if(empty($_listids) && strlen($post_notifications_code) == 0 && isset($_settings_id)){
 						echo $no_list_error;
 					}
 					if($_thankyou_page != false && $_thankyou_page > 0){
