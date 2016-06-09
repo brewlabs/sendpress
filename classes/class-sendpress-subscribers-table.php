@@ -324,7 +324,7 @@ class SendPress_Subscribers_Table extends WP_List_Table {
         where t1.subscriberID = t2.subscriberID and t1.listID = 2*/
 
 
-        $list_id = $sp_validate->_int('list_id');
+        $list_id = $sp_validate->_int('listID');
         /* -- Preparing your query -- */
         if($list_id > 0){
             $query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3";
@@ -360,7 +360,7 @@ class SendPress_Subscribers_Table extends WP_List_Table {
         }
 
 
-        /* -- Pagination parameters -- */
+         /* -- Pagination parameters -- */
         //Number of elements in your table?
         $totalitems = $wpdb->get_var($query_count);
          //return the total number of affected rows
@@ -407,7 +407,6 @@ class SendPress_Subscribers_Table extends WP_List_Table {
             $offset=($paged-1)*$per_page;
             $query.=' LIMIT '.(int)$offset.','.(int)$per_page;
         }
-
 
     /* -- Register the pagination -- */
         $this->set_pagination_args( array(
