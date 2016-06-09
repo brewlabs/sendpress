@@ -205,6 +205,8 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 				</form>
 			</div>
 			<?php
+		}else{
+			echo "No e-mail found, please try again.<br><br>";
 		}
 
 	}
