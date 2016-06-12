@@ -63,7 +63,13 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			
 			if($data_error ==  false){
 				$list = implode(",", $user_info['list']);
-				$custom = apply_filters('sendpress_subscribe_to_list_custom_fields', array(), $_POST);
+				
+				$post_notifications = $data->_string('post_notifications');
+				if( $post_notifications ){
+					$custom['post_notifications'] = $post_notifications;
+				}
+
+				//$custom = apply_filters('sendpress_subscribe_to_list_custom_fields', array(), $_POST);
 
 		
 				$status =  SendPress_Data::subscribe_user($list, $valid_user['email'], $valid_user['firstname'], $valid_user['lastname'], $valid_user['status'], $custom);
