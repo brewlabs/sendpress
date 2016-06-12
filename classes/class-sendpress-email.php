@@ -197,26 +197,7 @@ class SendPress_Email {
 							if( SendPress_Option::get('skip_mailto', false ) == true && strrpos( $href, "mailto" ) !== false  ) {
 								continue;
 							}
-							/*
-							$urlinDB = SendPress_Data::get_url_by_report_url( $this->id(), $href );
-							if(!isset($urlinDB[0])){
-							
-								$urlData = array(
-									'url' => trim($href),
-									'reportID' => $this->id(),
-								);
-								$urlID = SendPress_Data::insert_report_url( $urlData );
-							
-							} else {
-								$urlID  = $urlinDB[0]->urlID;
-							}
-							$link = array(
-								"id"=>$this->subscriber_id(),
-								"report"=> $this->id(),
-								"urlID"=> $urlID,
-								"view"=>"link"
-							);
-							*/
+						
 							$link = array(
 								"id"=>$this->subscriber_id(),
 								"report"=> $this->id(),

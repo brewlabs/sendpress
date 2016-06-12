@@ -1550,15 +1550,6 @@ class SendPress {
 	}
 
 
-	function getUrl( $report, $url ) {
-		global $wpdb;
-		$table  = SendPress_Data::report_url_table();
-		$result = $this->wpdbQuery( $wpdb->prepare( "SELECT * FROM $table WHERE reportID = %d AND url = %s ", $report, $url ), 'get_results' );
-
-		return $result;
-	}
-
-
 	function get_opens_unique_count( $rid ) {
 		global $wpdb;
 		$table  = SendPress_Data::subscriber_event_table();
