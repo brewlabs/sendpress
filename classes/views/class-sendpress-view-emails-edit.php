@@ -16,7 +16,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 	$post_id =	SPNL()->validate->_int('post_ID');
 		if($post_id > 0){
 		 	$post_update = array(
-		 		'ID'           => $post,
+		 		'ID'           => $post_id,
 		      	'post_content' => SPNL()->validate->_html('content_area_one_edit')
 		    );
 		 	
