@@ -362,7 +362,7 @@ class SendPress_Emails_Table extends WP_List_Table {
 			}
 
 			
-			$args['order'] = $sp_validate->_string("order")   == 'DESC' ?  'DESC' : 'ASC';
+			 $args['order'] = $sp_validate->_string("order")   == 'ASC' ?  'ASC' : 'DESC';
 			
 			$orderby = $sp_validate->orderby($sp_validate->_string("orderby"));
 			if(!empty($orderby)){
