@@ -246,7 +246,6 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		    }
 		}
 
-
 		$label = filter_var($_display_labels_inside_fields, FILTER_VALIDATE_BOOLEAN);
 		$widget_options = SendPress_Option::get('widget_options');
 		$list_ids = (strlen($_listids) > 0) ? explode(",",$_listids) : array();
