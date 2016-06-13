@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: SendPress Newsletters
-Version: 1.7.6.9
+Version: 1.7.6.11
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -19,7 +19,7 @@ global $blog_id;
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-define( 'SENDPRESS_VERSION', '1.7.6.9' );
+define( 'SENDPRESS_VERSION', '1.7.6.11' );
 define( 'SENDPRESS_URL', plugin_dir_url( __FILE__ ) );
 define( 'SENDPRESS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -1545,15 +1545,6 @@ class SendPress {
 	function wpdbQueryArray( $query ) {
 		global $wpdb;
 		$result = $wpdb->get_results( $query, ARRAY_N );
-
-		return $result;
-	}
-
-
-	function getUrl( $report, $url ) {
-		global $wpdb;
-		$table  = SendPress_Data::report_url_table();
-		$result = $this->wpdbQuery( $wpdb->prepare( "SELECT * FROM $table WHERE reportID = %d AND url = %s ", $report, $url ), 'get_results' );
 
 		return $result;
 	}

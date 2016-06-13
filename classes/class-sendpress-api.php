@@ -88,7 +88,7 @@ class SendPress_API {
 	}
 
 	
-	public function add_endpoint( $rewrite_rules ) {
+	public function add_endpoint( ) {
 		add_rewrite_endpoint( 'spnl-api', EP_ALL );
 	}
 
