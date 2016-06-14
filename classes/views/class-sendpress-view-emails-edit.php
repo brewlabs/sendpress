@@ -19,7 +19,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 		 		'ID'           => $post_id,
 		      	'post_content' => SPNL()->validate->_html('content_area_one_edit')
 		    );
-		 	
+		   
 			update_post_meta( $post_id, '_sendpress_template', SPNL()->validate->_int('template') );
 			update_post_meta( $post_id, '_sendpress_subject', sanitize_text_field(SPNL()->validate->_string('post_subject' )) );
 			if( SPNL()->validate->_isset('header_content_edit')){
@@ -33,6 +33,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 			wp_update_post( $post_update );
 		
 		}
+	
         if( SPNL()->validate->_string('submit') == 'save-next'){
             SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('emailID') ) );
         } else if (SPNL()->validate->_string('submit') == 'send-test'){
@@ -47,6 +48,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
         } else {
             SendPress_Admin::redirect('Emails_Edit', array('emailID'=>SPNL()->validate->_int('emailID') ));
         }
+        
 
 	}
 

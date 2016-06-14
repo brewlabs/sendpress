@@ -120,6 +120,7 @@
             $('.sp-insert-code').click(function(e){
                 e.preventDefault();
                 html = $(this).data('code');
+                alert('asdfsfd');
                 spadmin.current_ed.execCommand('mceInsertContent', false, html );
             });
 
@@ -218,7 +219,7 @@
                 if(find > 0 ){
                     html = '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><img src="'+imgurl+'" alt="'+imgTitle+'" border="0" style="vertical-align:top;"  hspace="0" vspace="0" class="sp-img" align="center"/></td></tr></table>';
                 }
-
+                alert(html);
                 spadmin.send_to_editor(html);
             }
 

@@ -146,7 +146,7 @@ class SendPress_Security{
 
 	function _html($field){
 		$html = $this->secure($field,'html');
-		return wp_kses($html, $this->_allowed_tags);
+		return wp_kses($html, wp_kses_allowed_html('post'));
 	}
 
 	function _bool($field){
