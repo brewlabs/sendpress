@@ -11,6 +11,7 @@ if ( ! defined( 'SENDPRESS_VERSION' ) ) {
 class SendPress_Ajax_Loader {
 
 	static $ajax_nonce = "love-me-some-sendpress-ajax-2012";
+	static $priv_ajax_nonce = "love-me-some-sendpress-ajax-2012";
 
 	static function &init() {
 		static $instance = false;
@@ -40,7 +41,7 @@ class SendPress_Ajax_Loader {
 		add_action( "wp_ajax_sendpress-synclist", array( &$this, 'sync_list' ) );
 		add_action( 'wp_ajax_sendpress-sendcron', array( &$this, 'sendcron' ) );
 
-		add_action( "wp_ajax_nopriv_sendpress_save_list", array( &$this, 'save_list' ) );
+		//add_action( "wp_ajax_nopriv_sendpress_save_list", array( &$this, 'save_list' ) );
 		add_action( "wp_ajax_nopriv_sendpress_subscribe_to_list", array( &$this, 'subscribe_to_list' ) );
 		add_action( 'wp_ajax_nopriv_sendpress-list-subscription', array( &$this, 'list_subscription' ) );
 
@@ -52,13 +53,20 @@ class SendPress_Ajax_Loader {
 
 	function verify_ajax_call() {
 		$nonce = SPNL()->validate->_string('spnonce');
+		if ( ! wp_verify_nonce( $nonce, SendPress_Ajax_Loader::$priv_ajax_nonce ) ) {
+			die ( 'Busted!' );
+		}
+	}
+
+	function public_verify_ajax_call() {
+		$nonce = SPNL()->validate->_string('spnonce');
 		if ( ! wp_verify_nonce( $nonce, SendPress_Ajax_Loader::$ajax_nonce ) ) {
 			die ( 'Busted!' );
 		}
 	}
 
 	function list_subscription() {
-		$this->verify_ajax_call();
+		$this->public_verify_ajax_call();
 		$s      = NEW SendPress;
 		$lid    = SPNL()->validate->_int('lid');
 		$sid    = SPNL()->validate->_int('sid');

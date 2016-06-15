@@ -889,6 +889,9 @@ class SendPress {
 			$method                = str_replace( "-", "_", $this->_current_action );
 			$method                = str_replace( " ", "_", $method );
 
+			if ( method_exists( $view_class, 'security_check' ) ) {
+				call_user_func( array( $view_class, 'security_check' ) );
+     		}
 
 			if ( ! empty( $_POST ) && ( isset( $_POST['_wpnonce'] ) && wp_verify_nonce( $_POST['_wpnonce'], $this->_nonce_value ) ) ) {
 
@@ -902,7 +905,7 @@ class SendPress {
 				} elseif ( method_exists( $view_class, 'save' ) ) {
 					//$view_class::save($this);
 					//$save_class = new $view_class;
-					$view_class->save( $_POST, $this );
+					$view_class->save( );
 				} else {
 
 
@@ -989,7 +992,7 @@ class SendPress {
 			wp_enqueue_script( 'spfarb' );
 			wp_enqueue_script( 'sendpress_ls' );
 
-		}
+		
 		wp_enqueue_script( 'sendpress-backbone-js' );
 
 
@@ -999,10 +1002,11 @@ class SendPress {
 				'wpcronurl'      => site_url( 'wp-cron.php' ),
 				// generate a nonce with a unique ID "myajax-post-comment-nonce"
 				// so that you can check it later when an AJAX request is sent
-				'sendpressnonce' => wp_create_nonce( SendPress_Ajax_Loader::$ajax_nonce ),
+				'sendpressnonce' => wp_create_nonce( SendPress_Ajax_Loader::$priv_ajax_nonce ),
 			)
 		);
 		do_action( 'sendpress_admin_scripts' );
+		}
 	}
 
 	static function remove_wpengine_style() {
