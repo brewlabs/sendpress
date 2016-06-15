@@ -105,7 +105,7 @@ class SendPress_View_Subscribers_Csvimport extends SendPress_View_Subscribers {
 	   	<table>
 	   	<tr>
     <td class="left_label"> <?php
-      echo $label; ?>
+      //echo $label; ?>
     </td>
     <td>
         <input type="file" name="uploadfiles[]" id="uploadfiles" size="35" class="uploadfiles" />

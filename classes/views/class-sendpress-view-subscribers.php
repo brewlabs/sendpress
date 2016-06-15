@@ -63,7 +63,7 @@ class SendPress_View_Subscribers extends SendPress_View {
 					<li <?php if(! SPNL()->validate->_isset('view') ){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Subscribers'); ?>"><i class="icon-list "></i> <?php _e('Lists','sendpress'); ?></a>
 				  	</li>
-				  	<?php do_action('sendpress-add-submenu-item',$sp);?>
+				  	<?php do_action('sendpress-add-submenu-item', SPNL() );?>
 					<li <?php if(SPNL()->validate->_string('view') === 'all'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Subscribers_All'); ?>"><i class="icon-user "></i> <?php _e('All Subscribers','sendpress'); ?></a>
 				  	</li>
