@@ -63,7 +63,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			
 			if($data_error ==  false){
 				$list = implode(",", $user_info['list']);
-				
+				$custom = '';
 				$post_notifications = SPNL()->validate->_string('post_notifications');
 				if( $post_notifications ){
 					$custom['post_notifications'] = $post_notifications;

@@ -1511,8 +1511,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 				} else {
 					$success = true;
 				}
-				foreach ($custom as $key => $value) {
-					SendPress_Data::update_subscriber_meta( $subscriberID, $key, $value, $list->ID );
+				if(isset($custom)&& is_array($custom) && !empty($custom)){
+					foreach ($custom as $key => $value) {
+						SendPress_Data::update_subscriber_meta( $subscriberID, $key, $value, $list->ID );
+					}
 				}
 
 			}

@@ -47,7 +47,7 @@ class SendPress_SC_Unsubscribe_Form extends SendPress_SC_Base {
 		}
 
 		$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
-		$data = $SPNL()->validate->_string('sp-unsubscribe');
+		$data = SPNL()->validate->_string('sp-unsubscribe');
 		if(empty($data ) ){
 			?><form method="post" action="<?php echo home_url(); ?>">
 			<input type="hidden" name="sendpress" value="post" />
