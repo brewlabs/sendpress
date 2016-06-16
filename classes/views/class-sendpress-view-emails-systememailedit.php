@@ -11,7 +11,7 @@ class SendPress_View_Emails_Systememailedit extends SendPress_View_Emails {
 	
 
 	function save_email(){
-		$this->security_check();
+		//$this->security_check();
 		$clean_post_id = SPNL()->validate->int( $_POST['post_ID']);
 		if($clean_post_id > 0 ){
 	 	$post_update = array(

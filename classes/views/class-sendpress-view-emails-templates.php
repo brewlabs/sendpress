@@ -54,7 +54,7 @@ class SendPress_View_Emails_Templates extends SendPress_View_Emails{
 		<div class="col-3 last-feature">
 			<!--<img src="<?php echo SENDPRESS_URL;?>/img/autocron.png?1">-->
 			<h3><?php _e('Upgrade to Pro','sendpress'); ?></h3>
-			<p><?php _e('Go to <a href="https://sendpress.com/purchase-pricing/">SendPress.com</a> to get a liscense for SendPress Pro. Also if you enable AutoCron you should recive a 20% discount.','sendpress'); ?></p>
+			<p><?php _e('Go to <a href="https://sendpress.com/purchase-pricing/">SendPress.com</a> to get a license for SendPress Pro. Also if you enable AutoCron you should recive a 20% discount.','sendpress'); ?></p>
 		</div>
 	</div>
 </div>

@@ -10,7 +10,7 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 
 	function save(){
 		$post = $_POST;
-		$this->security_check();
+		//$this->security_check();
 		$options = SendPress_Option::get('notification_options');
 
 		$options['email'] = $post['toemail'];

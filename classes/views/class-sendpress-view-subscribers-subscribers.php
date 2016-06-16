@@ -26,7 +26,7 @@ class SendPress_View_Subscribers_Subscribers extends SendPress_View_Subscribers 
 	
 
 	function remove_subscribers(  ){
-		$this->security_check();
+		//$this->security_check();
 		$listid = SPNL()->validate->_int( 'listID' );
 		SendPress_Data::remove_all_subscribers( $listid  );
 		SendPress_Admin::redirect('Subscribers_Subscribers', array('listID'=> $listid  ));

@@ -9,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
 
 	function save(){
-		$this->security_check();
+		//$this->security_check();
 		$name = sanitize_text_field(SPNL()->validate->_string('name'));
         $public = 0;
         if( SPNL()->validate->_isset('public') &&  SPNL()->validate->_string('sync_role') == 'none'){

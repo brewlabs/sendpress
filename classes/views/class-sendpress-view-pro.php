@@ -9,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Pro extends SendPress_View{
 
 	function module_save_api_key(){
-        $this->security_check();
+        //$this->security_check();
         $license = $_POST['api_key'];
         if( false === SendPress_Pro_Manager::try_activate_key($license) ){
             add_action('sendpress_notices', array('SendPress_Pro_Manager', 'activate_key_notice'));
@@ -17,19 +17,19 @@ class SendPress_View_Pro extends SendPress_View{
     }
 
     function module_deactivate_api_key(){
-        $this->security_check();
+        //$this->security_check();
         if( false === SendPress_Pro_Manager::try_deactivate_key() ){
             add_action('sendpress_notices', array('SendPress_Pro_Manager', 'deactivate_key_notice'));
         }
     }
 
     function remove_key(){
-        $this->security_check();
+        //$this->security_check();
         SendPress_Option::set('api_key','');
     }
 
     function module_activate_sendpress_pro(){
-        $this->security_check();
+        //$this->security_check();
         $path = $_POST['plugin_path'];
         $pro_options = SendPress_Option::get('pro_plugins');
 
@@ -46,7 +46,7 @@ class SendPress_View_Pro extends SendPress_View{
     }
 
     function wp_mail(){
-        $this->security_check();
+        //$this->security_check();
         $e = SPNL()->validate->_int('enable');
        
         if($e == 1){
@@ -57,7 +57,7 @@ class SendPress_View_Pro extends SendPress_View{
     }
 
     function module_deactivate_sendpress_pro(){
-        $this->security_check();
+        //$this->security_check();
         $path = $_POST['plugin_path'];
         $pro_options = SendPress_Option::get('pro_plugins');
         if( !preg_match('/sendpress-pro.php/i',$path) ){

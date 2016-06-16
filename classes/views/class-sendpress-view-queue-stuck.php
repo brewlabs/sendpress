@@ -40,19 +40,19 @@ class SendPress_View_Queue_Stuck extends SendPress_View_Queue {
 	}
 	
 	function empty_queue(  ){
-		$this->security_check();
+		//$this->security_check();
 		SendPress_Data::delete_stuck_queue_emails();
 		SendPress_Admin::redirect('Queue_Stuck');
 	}
 
 	function reset_queue(){
-		$this->security_check();
+		//$this->security_check();
 		SendPress_Data::requeue_emails();
 		SendPress_Admin::redirect('Queue');
 	}
 
 	function pause_queue(){
-		$this->security_check();
+		//$this->security_check();
 		$pause_sending = SendPress_Option::get('pause-sending','no');
 		//Stop Sending for now
 		if($pause_sending == 'yes'){
@@ -64,7 +64,7 @@ class SendPress_View_Queue_Stuck extends SendPress_View_Queue {
 	}
 
 	function reset_counters(){
-		$this->security_check();
+		//$this->security_check();
 		SendPress_Manager::reset_counters();
 		SendPress_Admin::redirect('Queue');
 	}

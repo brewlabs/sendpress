@@ -10,7 +10,7 @@ class SendPress_View_Emails_Send_Queue extends SendPress_View_Emails
 {
     
     function save($post, $sp) {
-        $this->security_check();
+        //$this->security_check();
     }
     
     function html() {

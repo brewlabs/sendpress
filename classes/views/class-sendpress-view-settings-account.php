@@ -11,7 +11,7 @@ if ( !defined( 'SENDPRESS_VERSION' ) ) {
 class SendPress_View_Settings_Account extends SendPress_View_Settings {
 
 	function account_setup(){
-$this->security_check();
+//$this->security_check();
 	//if(  wp_verify_nonce( $_POST['_spnonce'] , basename(__FILE__) )){
 
 		$options =  array();
@@ -77,7 +77,7 @@ $this->security_check();
 	}
 
 	function send_test_email(){
-		$this->security_check();
+		//$this->security_check();
 		$options = array();
 
 		$options['testemail'] = $_POST['testemail'];

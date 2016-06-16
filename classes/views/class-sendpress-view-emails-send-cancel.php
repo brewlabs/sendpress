@@ -9,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Send_Cancel extends SendPress_View_Emails {
 	
   function save($post, $sp){
-    $this->security_check();
+    //$this->security_check();
     $value = SPNL()->validate->_string( 'submit');
     
     if($value == 'delete'){

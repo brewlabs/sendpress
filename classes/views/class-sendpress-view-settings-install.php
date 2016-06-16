@@ -9,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Settings_Install extends SendPress_View_Settings {
 	
 	function events_repair(){
-		$this->security_check();
+		//$this->security_check();
 		SendPress_DB_Tables::repair_events_table();
 		SendPress_Admin::redirect('Settings_Install');
 	}	

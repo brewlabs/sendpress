@@ -9,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 	function save(){
-		$this->security_check();
+		//$this->security_check();
 		// print_r($post);
 		// die();
 
@@ -74,12 +74,12 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 	}
 
 	function delete_form_save(){
-		$this->security_check();
+		//$this->security_check();
 		SendPress_Data::delete_post_meta_object(SPNL()->validate->_int('deleteid'),$data);
 	}
 
 	function view_buttons(){
-		$this->security_check();
+		//$this->security_check();
 
 		$postid = SPNL()->validate->_int('id');
 		$showCreate = SPNL()->validate->_int('create') == 1 ? true : false;

@@ -18,7 +18,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Tempclone extends SendPress_View_Emails {
 
 	function save(){
-		$this->security_check();
+		//$this->security_check();
 		$t_id = SPNL()->validate->_int('templateID');
   		$postdata = get_post( );
   		$new_post = SendPress_Posts::copy($postdata, SPNL()->validate->_string('post_title'), '' , '');

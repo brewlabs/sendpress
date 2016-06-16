@@ -9,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Subscribers_Add extends SendPress_View_Subscribers {
 	
 	function create_subscriber(){
-		$this->security_check();
+		//$this->security_check();
 		$email = SPNL()->validate->_email('email');
         $fname = SPNL()->validate->_string('firstname');
         $lname = SPNL()->validate->_string('lastname');
@@ -32,7 +32,7 @@ class SendPress_View_Subscribers_Add extends SendPress_View_Subscribers {
 
 
     function create_subscribers(){
-        $this->security_check();
+        //$this->security_check();
         $csvadd = "email,firstname,lastname\n" . trim( SPNL()->validate->_string('csv-add') );
         $listID = SPNL()->validate->_int('listID');
         if($listID > 0 ){

@@ -9,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Style extends SendPress_View_Emails {
 	
 	function save(){
-        $this->security_check();
+        //$this->security_check();
 		  $saveid = SPNL()->validate->int( $_POST['post_ID']);
           $bodybg = SPNL()->validate->hex( $_POST['body_bg'] );
             $bodytext = SPNL()->validate->hex( $_POST['body_text']);

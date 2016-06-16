@@ -37,19 +37,19 @@ class SendPress_View_Queue_All extends SendPress_View_Queue {
 	}
 	
 	function empty_queue(  ){
-		$this->security_check();
+		//$this->security_check();
 		SendPress_Data::delete_queue_emails();
 		SendPress_Admin::redirect('Queue');
 	}
 
 	function reset_queue(){
-		$this->security_check();
+		//$this->security_check();
 		SendPress_Data::requeue_emails();
 		SendPress_Admin::redirect('Queue');
 	}
 
 	function reset_counters(){
-		$this->security_check();
+		//$this->security_check();
 		SendPress_Manager::reset_counters();
 		SendPress_Admin::redirect('Queue');
 	}

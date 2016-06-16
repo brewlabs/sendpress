@@ -9,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 	
 	function save($post, $sp){
-		$this->security_check();
+		//$this->security_check();
 		if(isset( $post['allow_tracking'] )){
 			SendPress_Option::set('allow_tracking', 'yes' );
 			SendPress_Option::set('feedback', 'yes' );
@@ -83,7 +83,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 	}
 
 	function reset_transients(){
-		$this->security_check();
+		//$this->security_check();
 		delete_transient('sendpress_weekly_post_notification_check');
 		delete_transient('sendpress_daily_post_notification_check');
 		delete_transient('sendpress_post_notification_check');

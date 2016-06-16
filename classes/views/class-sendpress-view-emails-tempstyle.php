@@ -9,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
 	
 	function save(){
-        $this->security_check();
+        //$this->security_check();
 		$saveid = SPNL()->validate->_int('post_ID');
      
          update_post_meta($saveid ,'_header_page_text_color', SPNL()->validate->hex('pagetxt-color-select') );

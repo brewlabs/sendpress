@@ -12,7 +12,7 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 	private $error_body = false;
 
 	function save() {
-		$this->security_check();
+		//$this->security_check();
 		SendPress_Option::set('send_optin_email', $_POST['optin']);
 
 		SendPress_Option::set('optin_subject', $_POST['subject']);

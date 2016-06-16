@@ -12,7 +12,7 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 	}
 
 	function export_all(){
-		$this->security_check();
+		//$this->security_check();
 		$items = SendPress_Data::export_subscirbers();
         header("Content-type:text/octect-stream");
         header("Content-Disposition:attachment;filename=SendPressAll.csv");
@@ -38,13 +38,13 @@ class SendPress_View_Subscribers_All extends SendPress_View_Subscribers {
 	
 
 	function remove_subscribers( ){
-		$this->security_check();
+		//$this->security_check();
 		SendPress_Data::delete_all_subscribers( );
 		SendPress_Admin::redirect('Subscribers_All' );
 	}
 
 	function delete_subscribers_bulk_all(){
-		$this->security_check();
+		//$this->security_check();
 		$dt =  SPNL()->validate->_int_array('subscriber');
 		if( is_array($dt) ) {
 			foreach ($dt as $value) {

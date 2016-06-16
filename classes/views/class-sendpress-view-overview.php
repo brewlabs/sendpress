@@ -9,7 +9,7 @@ if( !class_exists('SendPress_View_Overview') ){
 class SendPress_View_Overview extends SendPress_View{
 
 	function tracking(){
-    $this->security_check();
+    //$this->security_check();
 		SendPress_Option::set('allow_tracking', SPNL()->validate->_string('allow_tracking'));
 		SendPress_Admin::redirect('Overview');
 	}

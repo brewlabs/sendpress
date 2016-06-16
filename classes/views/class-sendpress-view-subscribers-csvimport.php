@@ -10,7 +10,7 @@ class SendPress_View_Subscribers_Csvimport extends SendPress_View_Subscribers {
 	
  
 	function save(){
-    $this->security_check();
+    //$this->security_check();
 		$uploadfiles = $_FILES['uploadfiles'];
 	if (is_array($uploadfiles)) {
   	foreach ($uploadfiles['name'] as $key => $value) {

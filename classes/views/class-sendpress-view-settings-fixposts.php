@@ -9,11 +9,11 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Settings_Fixposts extends SendPress_View_Settings {
 	
 	function view_buttons(){
-		$this->security_check();
+		//$this->security_check();
 	}
 
 	function posts_repair(){
-		$this->security_check();
+		//$this->security_check();
 		SendPress_Data::delete_extra_posts();
 		SendPress_Admin::redirect('Settings_Fixposts');
 	}

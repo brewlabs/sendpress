@@ -24,7 +24,7 @@ wp_enqueue_style( 'sendpress_codemirror_css' );
 }
 
 function save(){
-	$this->security_check();
+	//$this->security_check();
 	$t_id = SPNL()->validate->_int('templateID');
 	$p_id = SPNL()->validate->_int('post_ID');
 	$template = get_post($p_id);
