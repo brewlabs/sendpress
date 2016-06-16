@@ -21,7 +21,7 @@ if($emailID > 0){
 
 $default_styles_id = SendPress_Data::get_template_id_by_slug('user-style');
 
-if( isset($emailID) ){
+if( isset($emailID) && $emailID > 0 ){
 	if(false == get_post_meta( $default_styles_id , 'body_bg', true) ){
 		$default_styles_id = SendPress_Data::get_template_id_by_slug('default-style');
 
