@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Emails_Send_Confirm extends SendPress_View_Emails {
 	
-  function save($post, $sp){
+  function save(){
         //$this->security_check();
         $saveid = SPNL()->validate->_int('post_ID');
 

@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Settings_Styles extends SendPress_View_Settings {
 
-	function save($data,$sp){
+	function save(){
         //$this->security_check();
         $saveid = SPNL()->validate->int( $_POST['post_ID']);
 		if( $saveid > 0){

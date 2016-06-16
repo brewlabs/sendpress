@@ -9,10 +9,7 @@ if (!defined('SENDPRESS_VERSION')) {
 class SendPress_View_Emails_Send_Queue extends SendPress_View_Emails
 {
     
-    function save($post, $sp) {
-        //$this->security_check();
-    }
-    
+   
     function html() {
         global $post_ID, $post;
         $list = '';

@@ -17,11 +17,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 */
 class SendPress_View_Emails_Postnotifications extends SendPress_View_Emails {
 
-	function save($post, $sp){
-		//$this->security_check();
-		
-		
-	}
+	
 	
 	function html() {
 		

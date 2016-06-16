@@ -149,6 +149,11 @@ class SendPress_Security{
 		return wp_kses($html, wp_kses_allowed_html('post'));
 	}
 
+	function _hex($field){
+		$html = $this->secure($field,'string');
+		return $this->hex($html);
+	}
+
 	function _bool($field){
 		$data = $this->secure($field,'string');
 		if(function_exists('boolval')){

@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Settings_Dbfix extends SendPress_View_Settings {
 	
-	function save($post, $sp){
+	function save(){
 		//$this->security_check();
 		if(isset($_POST['templates'])){
 			SendPress_Data::remove_all_templates();

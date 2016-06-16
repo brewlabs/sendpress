@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Emails_Social extends SendPress_View_Emails {
 	
-	function save($post, $sp){
+	function save(){
 		//$this->security_check();
 		$icon_list = SendPress_Data::social_icons();
 		$links = array();

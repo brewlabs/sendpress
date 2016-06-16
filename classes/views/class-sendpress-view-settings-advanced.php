@@ -8,7 +8,8 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 	
-	function save($post, $sp){
+	function save(){
+		$post = $_POST;
 		//$this->security_check();
 		if(isset( $post['allow_tracking'] )){
 			SendPress_Option::set('allow_tracking', 'yes' );

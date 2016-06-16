@@ -35,9 +35,10 @@ class SendPress_View_Emails_Systememailcreate extends SendPress_View_Emails {
  		
        	update_post_meta( $my_post['ID'], '_sendpress_system',  'new');
        	update_post_meta( $my_post['ID'], '_system_email_type',  $_POST['email_type'] );
-       	update_post_meta( $my_post['ID'], '_system_default', $_POST['default'] );
+       	
 
-       	if($_POST['default']){
+       	if(isset($_POST['default'])){
+       		update_post_meta( $my_post['ID'], '_system_default', $_POST['default'] );
        		//set default system e-mail for this type
        		SendPress_Data::set_system_email_default($my_post['ID'], $_POST['email_type']);
        	}
@@ -118,6 +119,7 @@ class SendPress_View_Emails_Systememailcreate extends SendPress_View_Emails {
 			
 			<select class="form-control" name="template">
 			<?php
+			$template_id = 0;
 					$args = array(
 					'post_type' => 'sp_template' ,
 					'post_status' => array('sp-standard'),
@@ -164,10 +166,7 @@ class SendPress_View_Emails_Systememailcreate extends SendPress_View_Emails {
 				$this->panel_end(  ); ?>
 			</div>
 			</div>
-			<!--
-			<input class="checkbox" type="checkbox" id="make_default" name="make_default" value="<?php echo $options['default']; ?>" <?php checked( $options['default'], true ); ?>/> 
-			<label for="make_default">Send This E-Mail by Default</label>
-			-->			
+				
 		<br><br>
 		<?php //wp_editor($post->post_content,'textversion'); ?>
 

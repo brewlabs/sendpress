@@ -12,26 +12,26 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
         //$this->security_check();
 		$saveid = SPNL()->validate->_int('post_ID');
      
-         update_post_meta($saveid ,'_header_page_text_color', SPNL()->validate->hex('pagetxt-color-select') );
-          update_post_meta($saveid ,'_header_page_link_color', SPNL()->validate->hex('pagelink-color-select') );
+         update_post_meta($saveid ,'_header_page_text_color', SPNL()->validate->_hex('pagetxt-color-select') );
+          update_post_meta($saveid ,'_header_page_link_color', SPNL()->validate->_hex('pagelink-color-select') );
         
-        update_post_meta($saveid ,'_header_text_color', SPNL()->validate->hex('htxt-color-select') );
-        update_post_meta($saveid ,'_header_bg_color', SPNL()->validate->hex('bg-color-select') );
+        update_post_meta($saveid ,'_header_text_color', SPNL()->validate->_hex('htxt-color-select') );
+        update_post_meta($saveid ,'_header_bg_color', SPNL()->validate->_hex('bg-color-select') );
         if(SPNL()->validate->_isset('padding-heading')){
             update_post_meta($saveid ,'_header_padding', SPNL()->validate->_string('padding-heading') );
         } else {
              update_post_meta($saveid ,'_header_padding', false );
         }
          
-          update_post_meta($saveid ,'_body_color', SPNL()->validate->hex('bg-page-color-select') );
-          update_post_meta($saveid ,'_content_color', SPNL()->validate->hex('content-color-select') );
+          update_post_meta($saveid ,'_body_color', SPNL()->validate->_hex('bg-page-color-select') );
+          update_post_meta($saveid ,'_content_color', SPNL()->validate->_hex('content-color-select') );
 
-        update_post_meta($saveid ,'_content_text_color', SPNL()->validate->hex('content-text-color-select') );
-         update_post_meta($saveid ,'_content_link_color', SPNL()->validate->hex('content-link-color-select') );
-          update_post_meta($saveid ,'_footer_link_color', SPNL()->validate->hex('footer-link-color-select') );
+        update_post_meta($saveid ,'_content_text_color', SPNL()->validate->_hex('content-text-color-select') );
+         update_post_meta($saveid ,'_content_link_color', SPNL()->validate->_hex('content-link-color-select') );
+          update_post_meta($saveid ,'_footer_link_color', SPNL()->validate->_hex('footer-link-color-select') );
 
-        update_post_meta($saveid ,'_footer_text_color', SPNL()->validate->hex('footer-txt-color-select') );
-        update_post_meta($saveid ,'_footer_bg_color', SPNL()->validate->hex('footer-bg-color-select') );
+        update_post_meta($saveid ,'_footer_text_color', SPNL()->validate->_hex('footer-txt-color-select') );
+        update_post_meta($saveid ,'_footer_bg_color', SPNL()->validate->_hex('footer-bg-color-select') );
        
         if(SPNL()->validate->_isset('padding-footer')){
             update_post_meta($saveid ,'_footer_padding', SPNL()->validate->_string('padding-footer') );

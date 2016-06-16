@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Settings_Shared extends SendPress_View_Settings {
 	
-	function save($post, $sp){
+	function save(){
 		//$this->security_check();
 		$icon_list = SendPress_Data::social_icons();
 		$links = array();

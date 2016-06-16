@@ -385,7 +385,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 					foreach($lists as $list){
 						?>
 						<p>
-							<input class="checkbox" type="checkbox" <?php checked( $settings['_list_'.$list->ID], 'on' ); ?> id="_list_<?php echo $list->ID; ?>" name="_list_<?php echo $list->ID; ?>" /> 
+							<input class="checkbox" type="checkbox" <?php if(isset($settings['_list_'.$list->ID])){ checked( $settings['_list_'.$list->ID], 'on' ); } ?> id="_list_<?php echo $list->ID; ?>" name="_list_<?php echo $list->ID; ?>" /> 
 							<label for="_list_<?php echo $list->ID; ?>"><?php echo $list->post_title; ?></label>
 						</p> 
 						<?php
