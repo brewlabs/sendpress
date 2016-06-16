@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
 Tested up to: 4.5.2
-Stable tag: 1.7.6.13
+Stable tag: 1.7.6.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,8 +118,16 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.7.6.15 - 2016.6.15 =
+* Fix: html tag support in email content
+* Fix: import error and subscriber list error
+* Fix: unsubscribe shortcode bug
+* Fix: ajax security
+* Fix: moved view security to main sendpress class
+* Fix: added better support for flush_rewrite_rules()
+
 = 1.7.6.9 - 2016.6.11 =
-*Fix: Saving emails not working after sercurity updates
+* Fix: Saving emails not working after sercurity updates
 
 
 = 1.7.6.9 - 2016.6.11 =

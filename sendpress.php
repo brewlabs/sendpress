@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: SendPress Newsletters
-Version: 1.7.6.13
+Version: 1.7.6.15
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -19,7 +19,7 @@ global $blog_id;
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-define( 'SENDPRESS_VERSION', '1.7.6.13' );
+define( 'SENDPRESS_VERSION', '1.7.6.15' );
 define( 'SENDPRESS_URL', plugin_dir_url( __FILE__ ) );
 define( 'SENDPRESS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -1320,6 +1320,7 @@ class SendPress {
 			return;
 		}
 
+		update_option('sendpress_flush_rewrite_rules', true);
 		SendPress_DB_Tables::install();
 		@SPNL()->load("Subscribers_Tracker")->create_table();
 		@SPNL()->load("Subscribers_Url")->create_table();
@@ -1729,12 +1730,15 @@ class SendPress {
 		}
 		//Make sure we stop the old action from running
 		wp_clear_scheduled_hook( 'sendpress_cron_action_run' );
+		/*
 		$api = new SendPress_API();
 		$api->add_endpoint();
 		flush_rewrite_rules();
+		*/
 		SendPress::add_cron();
 		SendPress::add_caps();
 		SendPress_Option::set( 'install_date', time() );
+		update_option('sendpress_flush_rewrite_rules', true);
 	}
 
 	static function plugin_remove() {
@@ -1775,11 +1779,18 @@ class SendPress {
 		}
 	}
 
-
+	static function flush_rewrite_rules()
+	{
+	    if ( get_option('sendpress_flush_rewrite_rules') ) {
+	    	flush_rewrite_rules();
+	        delete_option('sendpress_flush_rewrite_rules');
+	    }
+	}
 
 
 }// End SP CLASS
 
+add_action('init', array( 'SendPress', 'flush_rewrite_rules' ), 99);
 add_filter( 'query_vars', array( 'SendPress', 'add_vars' ) );
 add_action( 'admin_init', array( 'SendPress', 'add_cron' ) );
 register_activation_hook( __FILE__, array( 'SendPress', 'plugin_activation' ) );
