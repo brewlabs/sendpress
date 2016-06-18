@@ -81,6 +81,7 @@ class SendPress_Security{
 			'style' => array(),
 		),
 		'strike' => array(),
+		'style' => array(),
 		'strong' => array(),
 		'ul' => array(
 			'class' => array(),
@@ -146,7 +147,8 @@ class SendPress_Security{
 
 	function _html($field){
 		$html = $this->secure($field,'html');
-		return wp_kses($html, wp_kses_allowed_html('post'));
+		$html_tags = array_merge(wp_kses_allowed_html('post'),$this->_allowed_tags);
+		return wp_kses($html, $html_tags);
 	}
 
 	function _hex($field){
