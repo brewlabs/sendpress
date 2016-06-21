@@ -1502,16 +1502,17 @@ class SendPress_Data extends SendPress_DB_Tables {
 			}
 			
 		}
-		
+		SendPress_Error::log('send list add');
 		foreach($lists as $list){
 			if( in_array($list->ID, $listids) ){
 				$current_status = SendPress_Data::get_subscriber_list_status( $list->ID, $subscriberID );
+				SendPress_Error::log($current_status);
 				if( empty($current_status) || ( isset($current_status->status) && $current_status->status < 2 ) ){
 					$success = SendPress_Data::update_subscriber_status($list->ID, $subscriberID, $status);
 				} else {
 					$success = true;
 				}
-				if(isset($custom)&& is_array($custom) && !empty($custom)){
+				if(isset($custom) && is_array($custom) && !empty($custom)){
 					foreach ($custom as $key => $value) {
 						SendPress_Data::update_subscriber_meta( $subscriberID, $key, $value, $list->ID );
 					}

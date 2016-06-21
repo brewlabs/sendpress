@@ -166,12 +166,18 @@ class SendPress_Ajax_Loader {
 			// get the credit card details submitted by the form
 			$data = SPNL()->validate;
 			$first  = $data->_string('first');
+			if($first == null){
+				$first = '';
+			}
 			$last   = $data->_string('last');
+			if($last == null){
+				$last = '';
+			}
 			$phone  = $data->_string('phonenumber');
 			$salutation = $data->_string('salutation');
 			$email  = $data->_string('email');
-			$listid = $data->_int('listid');
-
+			$listid = $data->_string('listid');
+			$custom = array();
 			$post_notifications = $data->_string('post_notifications');
 			if( $post_notifications ){
 				$custom['post_notifications'] = $post_notifications;
