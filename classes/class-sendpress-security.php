@@ -61,6 +61,7 @@ class SendPress_Security{
 			'height' => array(),
 			'src'    => array(),
 			'width'  => array(),
+			'align'  => array(),
 		),
 		'li' => array(
 			'class' => array(),
