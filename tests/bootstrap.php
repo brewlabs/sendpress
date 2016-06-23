@@ -1,22 +1,14 @@
 <?php
 
-$_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
-$_SERVER['SERVER_NAME'] = '';
-$PHP_SELF = $GLOBALS['PHP_SELF'] = $_SERVER['PHP_SELF'] = '/index.php';
+$GLOBALS['wp_tests_options'] = array(
+	'active_plugins' => array( "sendpress/sendpress.php" ),
+);
 
 $_tests_dir = getenv('WP_TESTS_DIR');
 if ( !$_tests_dir ) $_tests_dir = '/tmp/wordpress-tests-lib';
-
 require_once $_tests_dir . '/includes/functions.php';
-
 function _manually_load_plugin() {
 	require dirname( __FILE__ ) . '/../sendpress.php';
-	// Update array with plugins to include ...
-	$plugins_to_active = array(
-		‘sendpres/sendpress.php’
-	);
-
-	update_option( 'active_plugins', $plugins_to_active );
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
