@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
-Tested up to: 4.5.2
-Stable tag: 1.7.6.21
+Tested up to: 4.5.3
+Stable tag: 1.7.6.22
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,7 +118,10 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
-= 1.7.6.17 - 2016.6.17 =
+= 1.7.6.22 - 2016.6.22 =
+* Fix: Image align in email content
+
+= 1.7.6.21 - 2016.6.21 =
 * Fix: Widget not saving in some configurations
 
 = 1.7.6.17 - 2016.6.17 =
@@ -916,9 +919,12 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * added opt-in feedback option
 
 = 0.8.2 =
-* First version on WP.org
+* First version on WordPress.org
 
 == Upgrade Notice ==
+
+= 1.7.6.22 =
+fixed image align in email content
 
 = 1.7.6.21 =
 Widget not always saving new subscribers
