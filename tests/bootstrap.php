@@ -1,28 +1,30 @@
 <?php
-/**
- * Bootstrap the plugin unit testing environment. Customize 'active_plugins'
- * setting below to point to your main plugin file.
- *
- * Requires WordPress Unit Tests (http://unit-test.svn.wordpress.org/trunk/).
- *
- * @package wordpress-plugin-tests
- */
 
-// Add this plugin to WordPress for activation so it can be tested.
+$_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+$_SERVER['SERVER_NAME'] = '';
+$PHP_SELF = $GLOBALS['PHP_SELF'] = $_SERVER['PHP_SELF'] = '/index.php';
 
-$GLOBALS['wp_tests_options'] = array(
-	'active_plugins' => array( "sendpress/sendpress.php" ),
-);
+$_tests_dir = getenv('WP_TESTS_DIR');
+if ( !$_tests_dir ) $_tests_dir = '/tmp/wordpress-tests-lib';
 
-// If the wordpress-tests repo location has been customized (and specified
-// with WP_TESTS_DIR), use that location. This will most commonly be the case
-// when configured for use with Travis CI.
+require_once $_tests_dir . '/includes/functions.php';
 
-// Otherwise, we'll just assume that this plugin is installed in the WordPress
-// SVN external checkout configured in the wordpress-tests repo.
-
-if( false !== getenv( 'WP_DEVELOP_DIR' ) ) {
-	require getenv( 'WP_DEVELOP_DIR' ) . '/tests/phpunit/includes/bootstrap.php';
-} else {
-	require '../../../../tests/phpunit/includes/bootstrap.php';
+function _manually_load_plugin() {
+	require dirname( __FILE__ ) . '/../sendpress.php';
 }
+tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
+
+require $_tests_dir . '/includes/bootstrap.php';
+
+activate_plugin( 'sendpress/sendpress.php' );
+
+echo "Installing SendPress...\n";
+
+// Install SendPress
+SendPress::plugin_activation();
+
+global $current_user;
+
+$current_user = new WP_User(1);
+$current_user->set_role('administrator');
+wp_update_user( array( 'ID' => 1, 'first_name' => 'Admin', 'last_name' => 'User' ) );
