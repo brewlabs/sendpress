@@ -19,6 +19,8 @@ echo "Installing SendPress...\n";
 // Install SendPress
 SendPress::plugin_activation();
 echo "Install Complete\n";
+SPNL()->maybe_upgrade();
+
 $current_version = SendPress_Option::get( 'version', '0' );
 echo "SendPress Version: " . $current_version . " Installed\n";
 
