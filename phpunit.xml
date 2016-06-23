@@ -11,11 +11,4 @@
 			<directory prefix="test_" suffix=".php">./tests/</directory>
 		</testsuite>
 	</testsuites>
-	<filter>
-		<whitelist processUncoveredFilesFromWhitelist="true">
-			<directory suffix=".php">./inc</directory>
-			<file>sendpress.php</file>
-			<file>uninstall.php</file>
-		</whitelist>
-	</filter>
 </phpunit>
