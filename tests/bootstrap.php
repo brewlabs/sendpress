@@ -16,7 +16,12 @@ tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
 require $_tests_dir . '/includes/bootstrap.php';
 
-activate_plugin( 'sendpress/sendpress.php' );
+
+$result = activate_plugin( 'sendpress/sendpress.php' );
+if ( is_wp_error( $result ) ) {
+	// Process Error
+	print_r($result);
+}
 
 echo "Installing SendPress...\n";
 
