@@ -11,37 +11,32 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 	
 
 	function save_email(){
-		$this->security_check();
-	   //print_r($_POST['content-1']);
-//content-area-one-edit
-	//$template = get_post();
-	//$_POST['post_type'] = 'sp_newsletters';
- 	//$my_post = _wp_translate_postdata(true);
- 	//print_r($my_post);
- 	//$template['post_content'] = $my_post->content_area_one_edit;
-	$post =	SPNL()->validate->int($_POST['post_ID']);
-		if($post > 0){
+		//$this->security_check();
+
+	$post_id =	SPNL()->validate->_int('post_ID');
+		if($post_id > 0){
 		 	$post_update = array(
-		 		'ID'           => $_POST['post_ID'],
-		      	'post_content' => $_POST['content_area_one_edit']
+		 		'ID'           => $post_id,
+		      	'post_content' => SPNL()->validate->_html('content_area_one_edit')
 		    );
-		 	
-			update_post_meta( $_POST['post_ID'], '_sendpress_template', SPNL()->validate->int($_POST['template']) );
-			update_post_meta( $_POST['post_ID'], '_sendpress_subject', sanitize_text_field( $_POST['post_subject'] ) );
-			if( isset( $_POST['header_content_edit'])){
-				update_post_meta( $_POST['post_ID'], '_header_content', $_POST['header_content_edit'] );
+		   
+			update_post_meta( $post_id, '_sendpress_template', SPNL()->validate->_int('template') );
+			update_post_meta( $post_id, '_sendpress_subject', sanitize_text_field(SPNL()->validate->_string('post_subject' )) );
+			if( SPNL()->validate->_isset('header_content_edit')){
+				update_post_meta( $post_id, '_header_content', SPNL()->validate->_html('header_content_edit') );
 			} 
-			if( isset( $_POST['footer_content_edit'])){
-				update_post_meta( $_POST['post_ID'], '_footer_content', $_POST['footer_content_edit'] );
+			if( SPNL()->validate->_isset('footer_content_edit')){
+				update_post_meta( $post_id, '_footer_content', SPNL()->validate->_html('footer_content_edit') );
 			}
 
 		 	//	print_r($template);
 			wp_update_post( $post_update );
 		
 		}
-        if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
+	
+        if( SPNL()->validate->_string('submit') == 'save-next'){
             SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('emailID') ) );
-        } else if (isset($_POST['submit']) && $_POST['submit'] == 'send-test'){
+        } else if (SPNL()->validate->_string('submit') == 'send-test'){
             $email = new stdClass;
             $email->emailID  = SPNL()->validate->_int('post_ID');
             $email->subscriberID = 0;
@@ -53,6 +48,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
         } else {
             SendPress_Admin::redirect('Emails_Edit', array('emailID'=>SPNL()->validate->_int('emailID') ));
         }
+        
 
 	}
 

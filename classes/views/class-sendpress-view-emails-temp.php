@@ -16,7 +16,7 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 	}
 
 	function delete(){
-		$this->security_check();
+		//$this->security_check();
 		$p = SPNL()->validate->_int('templateID');
 		//$type = get_post_meta( $p , "_template_type", true);
 		//if($type == 'clone'){
@@ -26,7 +26,7 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 	}
 
 	function install(){
-		$this->security_check();
+		//$this->security_check();
 		SendPress_Template_Manager::install_template_content();
 		SendPress_Admin::redirect('Emails_Temp');
 	}
@@ -51,7 +51,7 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 
 	}
 	
-	function html($sp){
+	function html(){
 		SendPress_Tracking::event('Emails Tab');
 		//SendPress_Template_Manager::update_template_content();
 		//Create an instance of our package class...

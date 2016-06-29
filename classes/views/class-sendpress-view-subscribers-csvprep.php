@@ -11,8 +11,8 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
   
 
 	function save(){
-    $this->security_check();
-    $list_id_clean = SPNL()->validate->int( $_GET['listID'] );
+    //$this->security_check();
+    $list_id_clean = SPNL()->validate->_int( 'listID' );
 		$file= trim(SendPress_Data::read_file_to_str(get_post_meta($list_id_clean ,'csv_import',true)));
     $subscribers = SendPress_Data::csv_to_array($file);
    
@@ -21,7 +21,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
     $i = 0;
     foreach($subscribers[0] as $key=>$val) {
                                 /* try to automatically match columns */
-                              $map[$_POST['colmatch'.$i]] = $i;  
+                              $map[SPNL()->validate->_string('colmatch'.$i)] = $i;  
 
                                 $i++;
                             }
@@ -61,7 +61,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
 	}
 
   function dropdown($value,$id){
-    $this->security_check();
+    //$this->security_check();
     $match = array_search($value,$this->_import_fields);
 
 
@@ -90,7 +90,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
 
 
 	function html() { 
-    $list_id_clean = SPNL()->validate->int( $_GET['listID'] );
+    $list_id_clean = SPNL()->validate->_int( 'listID' );
     ?>
 	<div id="taskbar" class="lists-dashboard rounded group"> 
 	<h2><?php _e('Import CSV to ','sendpress'); ?><?php echo get_the_title( $list_id_clean ); ?></h2>

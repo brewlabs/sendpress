@@ -13,14 +13,14 @@ class SendPress_View_Subscribers_Sync extends SendPress_View_Subscribers {
 	}
 	
 	function admin_init(){
-		if(isset($_GET['finished']) ){
+		if( SPNL()->validate->_isset('finished') ){
 	        SendPress_Admin::redirect('Subscribers');
 	    }
 	}
 
 	function html() {
 
-		$list = SPNL()->validate->int($_GET['listID']);
+		$list = SPNL()->validate->_int('listID');
 		if( $list > 0 ){
 			$role_to_sync = get_post_meta( $list,'sync_role',true);
 			SendPress_Data::drop_active_subscribers_for_sync( $list );

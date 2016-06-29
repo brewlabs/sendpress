@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: SendPress Newsletters
-Version: 1.7.5.24
+Version: 1.7.6.22
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -19,7 +19,7 @@ global $blog_id;
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-define( 'SENDPRESS_VERSION', '1.7.5.24' );
+define( 'SENDPRESS_VERSION', '1.7.6.22' );
 define( 'SENDPRESS_URL', plugin_dir_url( __FILE__ ) );
 define( 'SENDPRESS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -339,8 +339,7 @@ class SendPress {
 				add_action( 'wp_enqueue_scripts', array( $this, 'add_front_end_scripts' ) );
 				add_action( 'wp_enqueue_scripts', array( $this, 'add_front_end_styles' ) );
 
-				add_action( 'wp_head', array( $this, 'handle_front_end_posts' ) );
-
+				
 				add_action( 'wp_loaded', array( 'SendPress_Cron' , 'auto_cron' ) );
 		        add_filter( 'cron_schedules', array( 'SendPress_Cron', 'cron_schedules' ) );
 		        
@@ -391,7 +390,7 @@ class SendPress {
 	function add_registration_fields() {
 
 		//Get and set any values already sent
-		$user_extra = ( isset( $_POST['user_extra'] ) ) ? $_POST['user_extra'] : '';
+		$user_extra = SPNL()->validate->_isset('user_extra') ? SPNL()->validate->_string('user_extra') : '';
 		?>
 
 		<p>
@@ -576,10 +575,9 @@ class SendPress {
 
 	function template_include( $template ) {
 		global $post;
+		if ( ( get_query_var( 'sendpress' ) ) ||  SPNL()->validate->_isset('sendpress')  ) {
 
-		if ( ( get_query_var( 'sendpress' ) ) || isset( $_POST['sendpress'] ) ) {
-
-			$action = isset( $_POST['sendpress'] ) ? $_POST['sendpress'] : get_query_var( 'sendpress' );
+			$action = SPNL()->validate->_isset('sendpress') ? SPNL()->validate->_string('sendpress'): get_query_var( 'sendpress' ) ;
 			//Look for encrypted data
 			$data = SendPress_Data::decrypt( $action );
 			$view = false;
@@ -607,7 +605,7 @@ class SendPress {
 			if ( $post->post_type == $this->_email_post_type || $post->post_type == $this->_report_post_type ) {
 
 				$inline = false;
-				if ( isset( $_GET['inline'] ) ) {
+				if ( SPNL()->validate->_isset('inline') ) {
 					$inline = true;
 				}
 
@@ -891,6 +889,9 @@ class SendPress {
 			$method                = str_replace( "-", "_", $this->_current_action );
 			$method                = str_replace( " ", "_", $method );
 
+			if ( method_exists( $view_class, 'security_check' ) ) {
+				call_user_func( array( $view_class, 'security_check' ) );
+     		}
 
 			if ( ! empty( $_POST ) && ( isset( $_POST['_wpnonce'] ) && wp_verify_nonce( $_POST['_wpnonce'], $this->_nonce_value ) ) ) {
 
@@ -904,7 +905,7 @@ class SendPress {
 				} elseif ( method_exists( $view_class, 'save' ) ) {
 					//$view_class::save($this);
 					//$save_class = new $view_class;
-					$view_class->save( $_POST, $this );
+					$view_class->save( );
 				} else {
 
 
@@ -918,7 +919,7 @@ class SendPress {
 				$method                = str_replace( "-", "_", $this->_current_action );
 				$method                = str_replace( " ", "_", $method );
 				if ( method_exists( $view_class, $method ) ) {
-					call_user_func( array( $view_class, $method ), $_GET, $this );
+					call_user_func( array( $view_class, $method ) );
 					die();
 				}
 
@@ -940,7 +941,7 @@ class SendPress {
 		}
 
 		//MAKE SURE WE ARE ON AN ADMIN PAGE
-		if ( is_admin() && isset( $_GET['page'] ) && in_array( SPNL()->validate->page(), $this->adminpages ) ) {
+		if ( is_admin() && SPNL()->validate->page() !== false ) {
 
 			wp_enqueue_style( 'thickbox' );
 			wp_register_script( 'spfarb', SENDPRESS_URL . 'js/farbtastic.js', '', SENDPRESS_VERSION );
@@ -973,7 +974,7 @@ class SendPress {
 			wp_enqueue_style( 'sendpress_bootstrap_css' );
 			wp_enqueue_style( 'sendpress_css_base' );
 			wp_enqueue_style( 'sendpress_css_admin' );
-			if ( ( isset( $_GET['page'] ) && SPNL()->validate->page() == 'sp-templates' ) || ( isset( $_GET['view'] ) && sanitize_text_field( $_GET['view'] ) == 'style-email' ) ) {
+			if ( SPNL()->validate->page() == 'sp-templates' || SPNL()->validate->_string('view') == 'style-email'  ) {
 				wp_enqueue_script( 'sendpress_js_styler' );
 			}
 
@@ -991,7 +992,7 @@ class SendPress {
 			wp_enqueue_script( 'spfarb' );
 			wp_enqueue_script( 'sendpress_ls' );
 
-		}
+		
 		wp_enqueue_script( 'sendpress-backbone-js' );
 
 
@@ -1001,10 +1002,11 @@ class SendPress {
 				'wpcronurl'      => site_url( 'wp-cron.php' ),
 				// generate a nonce with a unique ID "myajax-post-comment-nonce"
 				// so that you can check it later when an AJAX request is sent
-				'sendpressnonce' => wp_create_nonce( SendPress_Ajax_Loader::$ajax_nonce ),
+				'sendpressnonce' => wp_create_nonce( SendPress_Ajax_Loader::$priv_ajax_nonce ),
 			)
 		);
 		do_action( 'sendpress_admin_scripts' );
+		}
 	}
 
 	static function remove_wpengine_style() {
@@ -1026,12 +1028,6 @@ class SendPress {
 		}
 	}
 
-	function handle_front_end_posts() {
-		if ( ! empty( $_POST ) ) {
-			$this->_current_action = isset( $_POST['action'] ) ? sanitize_text_field( $_POST['action'] ) : '';
-			require_once( SENDPRESS_PATH . 'inc/helpers/sendpress-fe-post-actions.php' );
-		}
-	}
 
 	function add_front_end_styles() {
 		$widget_options = SendPress_Option::get( 'widget_options' );
@@ -1042,14 +1038,14 @@ class SendPress {
 
 	function change_button_text( $translation, $original ) {
 		// We don't pass "type" in our custom upload fields, yet WordPress does, so ignore our function when WordPress has triggered the upload popup.
-		if ( isset( $_REQUEST['type'] ) ) {
+		if (  SPNL()->validate->_isset('type')  ) {
 			return $translation;
 		}
 
 		if ( $original == 'Insert into Post' ) {
 			$translation = __( 'Use this Image', 'sendpress' );
-			if ( isset( $_REQUEST['title'] ) && $_REQUEST['title'] != '' ) {
-				$translation = sprintf( __( 'Use as %s', 'sendpress' ), esc_attr( $_REQUEST['title'] ) );
+			if ( SPNL()->validate->_isset('title') ) {
+				$translation = sprintf( __( 'Use as %s', 'sendpress' ), esc_attr( SPNL()->validate->_string('title') ) );
 			}
 		}
 
@@ -1057,7 +1053,6 @@ class SendPress {
 	}
 
 	function save_redirect() {
-		// echo $_POST['save-type'];
 		$act = SPNL()->validate->_string('save-action');
 		if ( !empty($act) ) {
 			switch ( $act ) {
@@ -1108,7 +1103,7 @@ class SendPress {
 							class="icon-envelope icon-white"></i> <?php echo __( 'Send', 'sendpress' ); ?></a>
 				<?php } ?>
 				<?php if ( $this->_current_view == 'send' ) { ?>
-					<a href="?page=<?php echo SPNL()->validate->page(); ?>&view=style&emailID=<?php echo $_GET['emailID']; ?>"
+					<a href="?page=<?php echo SPNL()->validate->page(); ?>&view=style&emailID=<?php echo SPNL()->validate->_int('emailID'); ?>"
 					   class="btn btn-primary btn-large "><i
 							class="icon-white icon-pencil"></i> <?php echo __( 'Edit', 'sendpress' ); ?></a><a href="#"
 					                                                                                           id="save-update"
@@ -1325,6 +1320,7 @@ class SendPress {
 			return;
 		}
 
+		update_option('sendpress_flush_rewrite_rules', true);
 		SendPress_DB_Tables::install();
 		@SPNL()->load("Subscribers_Tracker")->create_table();
 		@SPNL()->load("Subscribers_Url")->create_table();
@@ -1462,55 +1458,39 @@ class SendPress {
 
 		$update_options_sp = array();
 
-		if ( isset( $_GET['sendpress_ignore_087'] ) && '0' == $_GET['sendpress_ignore_087'] ) {
-			$update_options_sp['sendpress_ignore_087'] = 'true';
-			//SendPress_Option::set('sendpress_ignore_087', 'true');
-		}
-		//dadd_action('admin_notices', array($this,'sendpress_ignore_087'));
-
 		if ( SendPress_Option::get( 'sendmethod' ) == false ) {
 			$update_options_sp['sendmethod'] = 'SendPress_Sender_Website';
-			//SendPress_Option::set('sendmethod','SendPress_Sender_Website');
 		}
 
 		if ( SendPress_Option::get( 'send_optin_email' ) == false ) {
 			$update_options_sp['send_optin_email'] = 'yes';
-			//SendPress_Option::set('send_optin_email','yes');
 		}
 
 		if ( SendPress_Option::get( 'try-theme' ) == false ) {
 			$update_options_sp['try-theme'] = 'yes';
-			//SendPress_Option::set('try-theme','yes');
 		}
 
 		if ( SendPress_Option::get( 'confirm-page' ) == false ) {
 			$update_options_sp['confirm-page'] = 'default';
-			//SendPress_Option::set('confirm-page','default');
 		}
 
 		if ( SendPress_Option::get( 'manage-page' ) == false ) {
 			$update_options_sp['manage-page'] = 'default';
-			//SendPress_Option::set('manage-page','default');
 		}
 
 		if ( SendPress_Option::get( 'cron_send_count' ) == false ) {
 			$update_options_sp['cron_send_count'] = '100';
-			//SendPress_Option::set('cron_send_count','100');
 		}
 
 		if ( SendPress_Option::get( 'emails-per-day' ) == false ) {
 			$update_options_sp['emails-per-day'] = '1000';
-
-			//SendPress_Option::set('emails-per-day','1000');
-			//SendPress_Option::set('emails-per-hour','100');
-		}
+		}		
 		if ( SendPress_Option::get( 'emails-per-hour' ) == false ) {
 			$update_options_sp['emails-per-hour'] = '100';
 		}
 		if ( SendPress_Option::get( 'queue-per-call' ) == false ) {
 			$update_options_sp['queue-per-call'] = '1000';
-			//SendPress_Option::set('queue-per-call' , 1000 );
-
+	
 		}
 
 		if ( ! empty( $update_options_sp ) ) {
@@ -1570,15 +1550,6 @@ class SendPress {
 	function wpdbQueryArray( $query ) {
 		global $wpdb;
 		$result = $wpdb->get_results( $query, ARRAY_N );
-
-		return $result;
-	}
-
-
-	function getUrl( $report, $url ) {
-		global $wpdb;
-		$table  = SendPress_Data::report_url_table();
-		$result = $this->wpdbQuery( $wpdb->prepare( "SELECT * FROM $table WHERE reportID = %d AND url = %s ", $report, $url ), 'get_results' );
 
 		return $result;
 	}
@@ -1759,10 +1730,15 @@ class SendPress {
 		}
 		//Make sure we stop the old action from running
 		wp_clear_scheduled_hook( 'sendpress_cron_action_run' );
+		/*
+		$api = new SendPress_API();
+		$api->add_endpoint();
 		flush_rewrite_rules();
+		*/
 		SendPress::add_cron();
 		SendPress::add_caps();
 		SendPress_Option::set( 'install_date', time() );
+		update_option('sendpress_flush_rewrite_rules', true);
 	}
 
 	static function plugin_remove() {
@@ -1803,11 +1779,18 @@ class SendPress {
 		}
 	}
 
-
+	static function flush_rewrite_rules()
+	{
+	    if ( get_option('sendpress_flush_rewrite_rules') ) {
+	    	flush_rewrite_rules();
+	        delete_option('sendpress_flush_rewrite_rules');
+	    }
+	}
 
 
 }// End SP CLASS
 
+add_action('init', array( 'SendPress', 'flush_rewrite_rules' ), 99);
 add_filter( 'query_vars', array( 'SendPress', 'add_vars' ) );
 add_action( 'admin_init', array( 'SendPress', 'add_cron' ) );
 register_activation_hook( __FILE__, array( 'SendPress', 'plugin_activation' ) );

@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Module_Spam_Test extends SendPress_Module{
 	
-	function html($sp){
+	function html(){
 		$hide = false;
 		$plugin_path = 'x';
 		if( $this->is_pro_active() ){

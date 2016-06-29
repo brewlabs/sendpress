@@ -200,7 +200,7 @@ class SendPress_View {
 	}
 
 
-	function prerender( $sp = false )  {}
+	function prerender( )  {}
 
 	function security_check(){
 		if( ! SendPress_Admin::access( $this ) ){

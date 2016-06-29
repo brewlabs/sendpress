@@ -579,34 +579,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		return $wpdb->insert_id;	
 	}
-
- 	static function get_url_by_id( $id ) {
- 		global $wpdb;
-		$table = SendPress_Data::report_url_table();
-		$result = $wpdb->get_row( $wpdb->prepare("SELECT * FROM $table WHERE urlID = %d", $id) );
-		return $result;	
-	}
-
-	static function get_url_by_report_url( $id , $url_string ){
-		$table = self::report_url_table();
-		$result = self::wpdbQuery( $wpdb->prepare("SELECT * FROM $table WHERE reportID = %d AND url = %s", $id , $url_string ) , 'get_results');
-		return $result;	
-	}
-
+	
 	static function get_open_without_id($rid, $sid){
 		global $wpdb;
 		$table = SendPress_Data::subscriber_event_table();
 		$result = $wpdb->query( $wpdb->prepare("SELECT * FROM $table WHERE reportID = %d AND subscriberID = %d AND type='open' ", $rid, $sid ) );
 		return $result;
 	}
-
-
-	static function insert_report_url( $url ){
-		global $wpdb;
-		$wpdb->insert( self::report_url_table(),  $url);
-		return $wpdb->insert_id;
-	}
-
 
 	static function get_clicks_and_opens($rid){
 		global $wpdb;
@@ -693,14 +672,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $result;
 	}
 
-	static function get_report_export( $rid ){
-		global $wpdb;
-		$event_table = SendPress_Data::subscriber_event_table();
-		$sub_table = SendPress_Data::subscriber_table();
-		$url_table = SendPress_Data::report_url_table();
-		return $wpdb->get_results( $wpdb->prepare("SELECT sev.eventdate,sev.ip,sev.`devicetype`,sev.`device`, sev.type ,subs.email,rurl.url from ". $event_table ." AS sev INNER JOIN ". $sub_table ." AS subs on sev.subscriberID = subs.subscriberID LEFT JOIN ".$url_table." AS rurl on sev.urlID = rurl.urlID where sev.reportID = %d and sev.subscriberID > 0 and sev.type != 'send'", $rid));
-		
-	}
 
 
 	static function get_bounce_total($rid){
@@ -1531,17 +1502,20 @@ class SendPress_Data extends SendPress_DB_Tables {
 			}
 			
 		}
-		
+		SendPress_Error::log('send list add');
 		foreach($lists as $list){
 			if( in_array($list->ID, $listids) ){
 				$current_status = SendPress_Data::get_subscriber_list_status( $list->ID, $subscriberID );
+				SendPress_Error::log($current_status);
 				if( empty($current_status) || ( isset($current_status->status) && $current_status->status < 2 ) ){
 					$success = SendPress_Data::update_subscriber_status($list->ID, $subscriberID, $status);
 				} else {
 					$success = true;
 				}
-				foreach ($custom as $key => $value) {
-					SendPress_Data::update_subscriber_meta( $subscriberID, $key, $value, $list->ID );
+				if(isset($custom) && is_array($custom) && !empty($custom)){
+					foreach ($custom as $key => $value) {
+						SendPress_Data::update_subscriber_meta( $subscriberID, $key, $value, $list->ID );
+					}
 				}
 
 			}

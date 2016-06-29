@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Module_Mailgun extends SendPress_Module{
 	var $_pro_version = '0.7.3';
-	function html($sp){
+	function html(){
 		$hide = false;
 		$plugin_path = '';
 		if( $this->is_pro_active() ){

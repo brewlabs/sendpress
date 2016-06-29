@@ -41,10 +41,10 @@ class SendPress_View_Reports extends SendPress_View{
 	</div>
 		 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav">
-					<li <?php if(!isset($_GET['view']) ){ ?>class="active"<?php } ?> >
+					<li <?php if(!SPNL()->validate->_isset('view') ){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Reports'); ?>"><?php _e('Newsletters','sendpress'); ?></a>
 				  	</li>
-				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'tests'){ ?>class="active"<?php } ?> >
+				  	<li <?php if(SPNL()->validate->_string('view') === 'tests'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Reports_Tests'); ?>"><?php _e('Tests','sendpress'); ?></a>
 				  	</li>
 				  	
@@ -60,7 +60,7 @@ class SendPress_View_Reports extends SendPress_View{
 		
 	}	
 
-	function html($sp){
+	function html(){
 		 SendPress_Tracking::event('Reports Tab');
 		//Create an instance of our package class...
 		$sp_reports_table = new SendPress_Reports_Table();

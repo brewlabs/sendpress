@@ -16,9 +16,23 @@ class SendPress_View_Subscribers extends SendPress_View {
 		//add_action('sendpress-subscribers-sub-menu', array('SendPress_View_Subscribers','default_header'));
 	}
 
+	 function delete_list(){
+                SendPress_Data::delete_list( SPNL()->validate->_int('listID') );
+                 wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page() ) ) );
+             }
+    
+            function delete_lists_bulk(){
+                $list_delete =  SPNL()->validate->_int_array('list');
+                foreach ($list_delete as $listID) {
+                   SendPress_Data::delete_list( SPNL()->validate->int($listID));
+                }
+                 wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page() ) ) );
+            }
+
+
 	function export_list(){
-		$this->security_check();
-    	$l = SPNL()->validate->int($_GET['listID']);
+		//$this->security_check();
+    	$l = SPNL()->validate->_int('listID');
          if( $l > 0 ){
             $items = SendPress_Data::export_subscirbers( $l );
             header("Content-type:text/octect-stream");
@@ -46,15 +60,15 @@ class SendPress_View_Subscribers extends SendPress_View {
 </div>
 		 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav">
-					<li <?php if(!isset($_GET['view']) ){ ?>class="active"<?php } ?> >
+					<li <?php if(! SPNL()->validate->_isset('view') ){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Subscribers'); ?>"><i class="icon-list "></i> <?php _e('Lists','sendpress'); ?></a>
 				  	</li>
-				  	<?php do_action('sendpress-add-submenu-item',$sp);?>
-					<li <?php if(isset($_GET['view']) && $_GET['view'] === 'all'){ ?>class="active"<?php } ?> >
+				  	<?php do_action('sendpress-add-submenu-item', SPNL() );?>
+					<li <?php if(SPNL()->validate->_string('view') === 'all'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Subscribers_All'); ?>"><i class="icon-user "></i> <?php _e('All Subscribers','sendpress'); ?></a>
 				  	</li>
 				  	<?php if(SendPress_Option::get('beta')){ ?>
-				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'custom'){ ?>class="active"<?php } ?> >
+				  	<li <?php if(SPNL()->validate->_string('view') === 'custom'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Subscribers_Custom'); ?>"><i class="icon-list "></i> <?php _e('Custom Fields','sendpress'); ?></a>
 				  	</li>
 				  	<?php } ?>

@@ -9,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 
 	function status_select($status, $listid){
-		$this->security_check();
+		//$this->security_check();
         $info = SendPress_Data::get_statuses();
         echo '<select name="'.$listid.'-status">';
         echo "<option cls value='-1' >No Status</option>";
@@ -28,7 +28,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 
 
     function pn_select( $sub_id, $listid ){
-    	$this->security_check();
+    	//$this->security_check();
     	$pro_list = SendPress_Option::get('pro_notification_lists');
     	if(isset($pro_list['post_notifications']['id']) && $listid == $pro_list['post_notifications']['id'] ) {
 		$current = SendPress_Data::get_subscriber_meta($sub_id,'post_notifications',$listid);
@@ -58,11 +58,12 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 
 
     function save(){
-    	$this->security_check();
-    	if(isset($_POST['delete-this-user']) && $_POST['delete-this-user'] == 'yes'){
-    		SendPress_Data::delete_subscriber( $_POST['subscriberID'] );
-    		if($_GET['listID']){
-    			SendPress_Admin::redirect( 'Subscribers_Subscribers',array('listID'=>$_GET['listID']) );
+    	//$this->security_check();
+    	if(SPNL()->validate->_string('delete-this-user') == 'yes'){
+    		SendPress_Data::delete_subscriber(  SPNL()->validate->_int('subscriberID') );
+    		$lid = SPNL()->validate->_int('listID');
+    		if($lid > 0){
+    			SendPress_Admin::redirect( 'Subscribers_Subscribers',array('listID'=>$lid) );
     		}else {
     		SendPress_Admin::redirect( 'Subscribers_All' );
     		}
@@ -71,27 +72,29 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 			global $post;
 
 			$subscriber_info=array(
-				'email' => $_POST['email'],
-				'firstname' => $_POST['firstname'],
-				'lastname' => $_POST['lastname'],
-				'phonenumber' => $_POST['phonenumber'],
-				'salutation' => $_POST['salutation']
+				'email' => SPNL()->validate->_email('email'),
+				'firstname' => SPNL()->validate->_string('firstname'),
+				'lastname' => SPNL()->validate->_string('lastname'),
+				'phonenumber' => SPNL()->validate->_string('phonenumber'),
+				'salutation' => SPNL()->validate->_string('salutation')
 				);
-			SendPress_Data::update_subscriber($_POST['subscriberID'], $subscriber_info);
+			SendPress_Data::update_subscriber(SPNL()->validate->_int('subscriberID'), $subscriber_info);
 
 	    	$args = array( 'post_type' => 'sendpress_list','post_status' => array('publish','draft'),'posts_per_page' => 500, 'order'=> 'ASC', 'orderby' => 'title' );
 			$postslist = get_posts( $args );
 			foreach ( $postslist as $post ) :
 			  setup_postdata( $post ); 
-
-				if(isset($_POST[$post->ID."-status"]) && $_POST[$post->ID."-status"] > 0 ){
-					SendPress_Data::update_subscriber_status( $post->ID,$_POST['subscriberID'],$_POST[$post->ID."-status"]  );
+				$status = SPNL()->validate->_int($post->ID."-status");
+				$sid = SPNL()->validate->_int('subscriberID');
+				if( $status > 0 ){
+					SendPress_Data::update_subscriber_status( $post->ID,$sid,$status );
 				} else {
-					SendPress_Data::remove_subscriber_status($post->ID,$_POST['subscriberID']);
+					SendPress_Data::remove_subscriber_status($post->ID,$sid);
 				}
 				$notifications = SendPress_Data::get_post_notification_types();
+
 				if(isset($_POST[$post->ID."-pn"]) && array_key_exists($_POST[$post->ID."-pn"], $notifications) ){
-					SendPress_Data::update_subscriber_meta($_POST['subscriberID'], 'post_notifications',$_POST[$post->ID."-pn"], $post->ID );
+					SendPress_Data::update_subscriber_meta($sid, 'post_notifications',$_POST[$post->ID."-pn"], $post->ID );
 				}
 
 
@@ -99,7 +102,8 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 			wp_reset_postdata();
 
 		}
-		SendPress_Admin::redirect('Subscribers_Subscriber', array('subscriberID'=>$_POST['subscriberID'] ) );
+		$sid = SPNL()->validate->_int('subscriberID');
+		SendPress_Admin::redirect('Subscribers_Subscriber', array('subscriberID'=>$sid  ) );
     	
     }
 
@@ -115,7 +119,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 	<h2><?php _e('Edit Subscriber','sendpress'); ?></h2>
 	</div>
 <?php
-	$sub = SendPress_Data::get_subscriber($_GET['subscriberID']);
+	$sub = SendPress_Data::get_subscriber(SPNL()->validate->_int('subscriberID'));
 	
 	?><div class="boxer">
 	<div class="boxer-inner">
@@ -127,8 +131,8 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 		</div>
 		<div class="media-body">
 	
-		<input type="hidden" name="listID" value="<?php echo SPNL()->validate->int($_GET['listID']); ?>" />
-	    <input type="hidden" name="subscriberID" value="<?php echo SPNL()->validate->int($_GET['subscriberID']); ?>" />
+		<input type="hidden" name="listID" value="<?php echo SPNL()->validate->_int('listID'); ?>" />
+	    <input type="hidden" name="subscriberID" value="<?php echo SPNL()->validate->_int('subscriberID'); ?>" />
 	    <strong><?php _e('Email','sendpress'); ?></strong>: <input type="text" name="email" class="regular-text sp-text" value="<?php echo $sub->email; ?>" /><br><br>
 	    <strong><?php _e('Salutation','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="salutation" value="<?php echo $sub->salutation; ?>" /><br>
 	    <strong><?php _e('Firstname','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="firstname" value="<?php echo $sub->firstname; ?>" /><br><br>
@@ -162,7 +166,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 			
 				<tr>
 					<td><?php the_title(); ?></td>
-					<td><?php $info = SendPress_Data::get_subscriber_list_status($post->ID, $_GET['subscriberID']);
+					<td><?php $info = SendPress_Data::get_subscriber_list_status($post->ID,  SPNL()->validate->_int('subscriberID'));
 					if(isset($info) && $info !== false){
 						$cls = '';
 						if($info->statusid == 1){
@@ -183,7 +187,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 
 						echo "<span class='badge $cls'>&nbsp;</span> ";
 						$this->status_select($info->statusid,$post->ID);
-						$this->pn_select( $_GET['subscriberID'] , $post->ID);
+						$this->pn_select( SPNL()->validate->_int('subscriberID') , $post->ID);
 
 					} else {
 						echo '<span class="badge">&nbsp;</span> '; $this->status_select(0,$post->ID);
@@ -210,7 +214,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 		if(!defined("SENDPRESS_PRO_VERSION") ){
 			_e('This feature requires SendPress Pro.','sendpress');
 		} else {
-			do_action('sendpress_subscriber_events_view', $_GET['subscriberID'] );
+			do_action('sendpress_subscriber_events_view', SPNL()->validate->_int('subscriberID') );
 		}
 		?>
 	</div>

@@ -6,8 +6,9 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 global $post_ID, $post;
-if(isset($_GET['emailID'])){
-			$emailID = SPNL()->validate->_int('emailID');
+$emailID = SPNL()->validate->_int('emailID');
+if($emailID > 0){
+			
 			$post = get_post( $emailID );
 			$post_ID = $post->ID;
 } else {
@@ -20,7 +21,7 @@ if(isset($_GET['emailID'])){
 
 $default_styles_id = SendPress_Data::get_template_id_by_slug('user-style');
 
-if( isset($emailID) ){
+if( isset($emailID) && $emailID > 0 ){
 	if(false == get_post_meta( $default_styles_id , 'body_bg', true) ){
 		$default_styles_id = SendPress_Data::get_template_id_by_slug('default-style');
 

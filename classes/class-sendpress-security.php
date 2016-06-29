@@ -61,6 +61,7 @@ class SendPress_Security{
 			'height' => array(),
 			'src'    => array(),
 			'width'  => array(),
+			'align'  => array(),
 		),
 		'li' => array(
 			'class' => array(),
@@ -81,6 +82,7 @@ class SendPress_Security{
 			'style' => array(),
 		),
 		'strike' => array(),
+		'style' => array(),
 		'strong' => array(),
 		'ul' => array(
 			'class' => array(),
@@ -124,12 +126,17 @@ class SendPress_Security{
 	}
 
 
-
+	function _int_array($field){
+		return $this->secure($field,'int_array');
+	}
 	function _int($field){
 		return $this->int($this->secure($field,'int'));
 	}
 	function _string($field){
 		return $this->secure($field,'string');
+	}
+	function _url($field){
+		return $this->secure($field,'url');
 	}
 	function _email($field){
 		$e = $this->secure($field,'email');
@@ -141,7 +148,13 @@ class SendPress_Security{
 
 	function _html($field){
 		$html = $this->secure($field,'html');
-		return wp_kses($html, $this->_allowed_tags);
+		$html_tags = array_merge(wp_kses_allowed_html('post'),$this->_allowed_tags);
+		return wp_kses($html, $html_tags);
+	}
+
+	function _hex($field){
+		$html = $this->secure($field,'string');
+		return $this->hex($html);
 	}
 
 	function _bool($field){
@@ -171,8 +184,24 @@ class SendPress_Security{
 			case 'get_string':
 				$output = filter_input(INPUT_GET, $field, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 			break;
+			case 'get_url':
+				$output = filter_input(INPUT_GET, $field, FILTER_SANITIZE_URL);
+			break;
 			case 'get_int':
 				$output = $this->int( filter_input(INPUT_GET, $field, FILTER_SANITIZE_NUMBER_INT) );
+			break;
+			case 'get_int_array':
+				$args = array($field =>  
+							array(
+								'filter' => FILTER_VALIDATE_INT,
+                         		'flags'  => FILTER_REQUIRE_ARRAY,
+                         	)
+                         	);
+				$valid = filter_input_array(INPUT_GET, $args);
+				if(isset($valid[$field])){
+					$output = $valid[$field];
+				}
+
 			break;
 			case 'get_html':
 				$output = filter_input(INPUT_GET, $field, FILTER_SANITIZE_MAGIC_QUOTES);
@@ -187,13 +216,28 @@ class SendPress_Security{
 			case 'post_int':
 				$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_NUMBER_INT); 
 			break;
+			case 'post_int_array':
+				$args = array($field =>  
+							array(
+								'filter' => FILTER_VALIDATE_INT,
+                         		'flags'  => FILTER_REQUIRE_ARRAY,
+                         	)
+                         	);
+				$valid = filter_input_array(INPUT_POST, $args);
+				if(isset($valid[$field])){
+					$output = $valid[$field];
+				}
+		
+			break;
 			case 'post_email':
 				$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_EMAIL); 
 			break;
 			case 'post_html':
 				$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_MAGIC_QUOTES);
 			break;
-
+			case 'post_url':
+				$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_URL);
+			break;
 			default:
 			break;
 		}

@@ -17,9 +17,9 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 	function save(){
 		
 		$options =  array();
-	 	$options['sendpress-key'] = $_POST['sendpress-key'];
-	 	if( isset($_POST['sendpress-verifyssl']) ){
-	 		$options['verifyssl'] = $_POST['sendpress-verifyssl'];
+	 	$options['sendpress-key'] = SPNL()->validate->_string('sendpress-key');
+	 	if( SPNL()->validate->_isset('sendpress-verifyssl') ){
+	 		$options['verifyssl'] = SPNL()->validate->_string('sendpress-verifyssl');
 	 	} 
         
         SendPress_Option::set_sender('sendpress', $options );

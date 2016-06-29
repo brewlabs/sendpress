@@ -29,7 +29,7 @@ class SendPress_View_Help_Whatsnew extends SendPress_View{
 
 	}
 
-	function html($sp){
+	function html(){
 		SendPress_Option::base_set('update-info','hide');
 			?>
 			

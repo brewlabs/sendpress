@@ -11,6 +11,7 @@ if ( ! defined( 'SENDPRESS_VERSION' ) ) {
 class SendPress_Ajax_Loader {
 
 	static $ajax_nonce = "love-me-some-sendpress-ajax-2012";
+	static $priv_ajax_nonce = "love-me-some-sendpress-ajax-2012";
 
 	static function &init() {
 		static $instance = false;
@@ -40,7 +41,7 @@ class SendPress_Ajax_Loader {
 		add_action( "wp_ajax_sendpress-synclist", array( &$this, 'sync_list' ) );
 		add_action( 'wp_ajax_sendpress-sendcron', array( &$this, 'sendcron' ) );
 
-		add_action( "wp_ajax_nopriv_sendpress_save_list", array( &$this, 'save_list' ) );
+		//add_action( "wp_ajax_nopriv_sendpress_save_list", array( &$this, 'save_list' ) );
 		add_action( "wp_ajax_nopriv_sendpress_subscribe_to_list", array( &$this, 'subscribe_to_list' ) );
 		add_action( 'wp_ajax_nopriv_sendpress-list-subscription', array( &$this, 'list_subscription' ) );
 
@@ -52,13 +53,20 @@ class SendPress_Ajax_Loader {
 
 	function verify_ajax_call() {
 		$nonce = SPNL()->validate->_string('spnonce');
+		if ( ! wp_verify_nonce( $nonce, SendPress_Ajax_Loader::$priv_ajax_nonce ) ) {
+			die ( 'Busted!' );
+		}
+	}
+
+	function public_verify_ajax_call() {
+		$nonce = SPNL()->validate->_string('spnonce');
 		if ( ! wp_verify_nonce( $nonce, SendPress_Ajax_Loader::$ajax_nonce ) ) {
 			die ( 'Busted!' );
 		}
 	}
 
 	function list_subscription() {
-		$this->verify_ajax_call();
+		$this->public_verify_ajax_call();
 		$s      = NEW SendPress;
 		$lid    = SPNL()->validate->_int('lid');
 		$sid    = SPNL()->validate->_int('sid');
@@ -117,14 +125,12 @@ class SendPress_Ajax_Loader {
 		$response = array(
 			'success' => false
 		);
-
-		if ( $_POST ) {
-			$s = NEW SendPress;
-
+		$listid = SPNL()->validate->_int('id');
+		if ($listid > 0) {
 			// get the credit card details submitted by the form
-			$listid = SPNL()->validate->_int('id');
+		
 			$name   =  sanitize_text_field( SPNL()->validate->_string('name') );
-			$public = ( $_POST['public'] === '1' ) ? 1 : 0;
+			$public = (SPNL()->validate->_string('public') === '1' ) ? 1 : 0;
 
 			$list = SendPress_Data::update_list( $listid, array( 'name' => $name, 'public' => $public ) );
 
@@ -160,13 +166,24 @@ class SendPress_Ajax_Loader {
 			// get the credit card details submitted by the form
 			$data = SPNL()->validate;
 			$first  = $data->_string('first');
+			if($first == null){
+				$first = '';
+			}
 			$last   = $data->_string('last');
+			if($last == null){
+				$last = '';
+			}
 			$phone  = $data->_string('phonenumber');
 			$salutation = $data->_string('salutation');
 			$email  = $data->_string('email');
-			$listid = $data->_int('listid');
+			$listid = $data->_string('listid');
+			$custom = array();
+			$post_notifications = $data->_string('post_notifications');
+			if( $post_notifications ){
+				$custom['post_notifications'] = $post_notifications;
+			}
 
-			$custom = apply_filters( 'sendpress_subscribe_to_list_custom_fields', array(), $_POST );
+			//$custom = apply_filters( 'sendpress_subscribe_to_list_custom_fields', array(), $_POST );
 
 			$success = SendPress_Data::subscribe_user( $listid, $email, $first, $last, 2, $custom, $phone, $salutation );
 
@@ -248,9 +265,7 @@ class SendPress_Ajax_Loader {
 	function sendcron() {
 		$this->verify_ajax_call();
 		// Create the response arrayecho SendPress_Data::emails_active_in_queue();
-		// 
 		$response = SendPress_Cron::run_cron_functions(); //emails_allowed_to_send();
-		//$sp = new SendPress;
 		echo json_encode( $response );
 		exit();
 	}
@@ -279,8 +294,8 @@ class SendPress_Ajax_Loader {
 
 	function sync_list() {
 		$this->verify_ajax_call();
-		$listid = isset( $_POST['listid'] ) ? SPNL()->validate->int( $_POST['listid'] ) : 0;
-		$offset = isset( $_POST['offset'] ) ? SPNL()->validate->int( $_POST['offset'] ) : 0;
+		$listid = SPNL()->validate->_int('listid');
+		$offset = SPNL()->validate->_int('offset');
 		$role   = get_post_meta( $listid, 'sync_role', true );
 		$load   = SendPress_Option::get( 'sync-per-call', 250 );
 		
@@ -315,7 +330,7 @@ class SendPress_Ajax_Loader {
 
 	function queue_batch() {
 		$this->verify_ajax_call();
-		$reportid = isset( $_POST['reportid'] ) ? $_POST['reportid'] : 0;
+		$reportid = SPNL()->validate->_int('reportid');
 		$lists    = get_post_meta( $reportid, '_send_lists', true );
 		$time     = get_post_meta( $reportid, '_send_time', true );
 		$list     = explode( ",", $lists );

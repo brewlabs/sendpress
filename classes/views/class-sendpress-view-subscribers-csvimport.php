@@ -10,7 +10,7 @@ class SendPress_View_Subscribers_Csvimport extends SendPress_View_Subscribers {
 	
  
 	function save(){
-    $this->security_check();
+    //$this->security_check();
 		$uploadfiles = $_FILES['uploadfiles'];
 	if (is_array($uploadfiles)) {
   	foreach ($uploadfiles['name'] as $key => $value) {
@@ -30,7 +30,7 @@ class SendPress_View_Subscribers_Csvimport extends SendPress_View_Subscribers {
         $filename = $filetitle . '.' . $filetype['ext'];
         $upload_dir = wp_upload_dir();
         if( $filetype['ext'] != 'csv' ){
-          SendPress_Admin::redirect('Subscribers_Csvimport',array('listID'=> $_POST['listID']));
+          SendPress_Admin::redirect('Subscribers_Csvimport',array('listID'=> SPNL()->validate->_int( 'listID' )));
         }
 
         /**
@@ -64,9 +64,9 @@ class SendPress_View_Subscribers_Csvimport extends SendPress_View_Subscribers {
           //continue;
         }
 
-        update_post_meta($_POST['listID'],'csv_import',$filedest);
+        update_post_meta(SPNL()->validate->_int( 'listID' ),'csv_import',$filedest);
         if(SendPress_Option::get('import_error', false) == false  ){
-		      SendPress_Admin::redirect('Subscribers_Csvprep',array('listID'=> $_POST['listID']));
+		      SendPress_Admin::redirect('Subscribers_Csvprep',array('listID'=> SPNL()->validate->_int( 'listID' )));
         }
         /*
         $attachment = array(
@@ -94,18 +94,18 @@ class SendPress_View_Subscribers_Csvimport extends SendPress_View_Subscribers {
   </div>
   <?php } ?>
   <div id="taskbar" class="lists-dashboard rounded group"> 
-	<h2><?php _e('Import CSV to ','sendpress'); ?><?php echo get_the_title($_GET['listID']); ?></h2>
+	<h2><?php _e('Import CSV to ','sendpress'); ?><?php echo get_the_title(SPNL()->validate->_int( 'listID' )); ?></h2>
 	</div>
 <div class="boxer">
 	<div class="boxer-inner">
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form method="post" enctype="multipart/form-data" accept-charset="utf-8" >
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	    <input type="hidden" name="listID" value="<?php echo SPNL()->validate->int( $_GET['listID'] ); ?>" />
+	    <input type="hidden" name="listID" value="<?php echo SPNL()->validate->_int( 'listID' ); ?>" />
 	   	<table>
 	   	<tr>
     <td class="left_label"> <?php
-      echo $label; ?>
+      //echo $label; ?>
     </td>
     <td>
         <input type="file" name="uploadfiles[]" id="uploadfiles" size="35" class="uploadfiles" />

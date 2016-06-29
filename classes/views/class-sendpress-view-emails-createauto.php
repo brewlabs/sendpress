@@ -18,16 +18,12 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Createauto extends SendPress_View_Emails {
 
 	function save(){
-		$this->security_check();
+		//$this->security_check();
 		$_POST['post_type'] = SendPress_Data::email_post_type();
         // Update post 37 (37!)
 
         $my_post = _wp_translate_postdata(true);
-        /*            
-        $my_post['ID'] = $_POST['post_ID'];
-        $my_post['post_content'] = $_POST['content'];
-        $my_post['post_title'] = $_POST['post_title'];
-        */
+        
         $my_post['post_status'] = 'sp-autoresponder';
         // Update the post into the database
         wp_update_post( $my_post );

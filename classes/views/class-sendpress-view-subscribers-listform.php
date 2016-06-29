@@ -9,17 +9,17 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 
 	function save(){
-		$this->security_check();
-		if(isset($_POST['listID'])){
-			$list_id = $_POST['listID'];
-			$postpage = $_POST['post-page'];
-			$postpageid = $_POST['post-page-id'];
-			$postredirect = $_POST['post-redirect'];
+		//$this->security_check();
+		$list_id = SPNL()->validate->_int( 'listID' );
+		if( SPNL()->validate->_isset('post-page') ){
+			$postpage =  SPNL()->validate->_string('post-page');
+			$postpageid = SPNL()->validate->_int('post-page-id');
+			$postredirect = SPNL()->validate->_url('post-redirect');
 			update_post_meta($list_id,'post-page',$postpage  );
 			update_post_meta($list_id,'post-page-id',$postpageid  );
 			update_post_meta($list_id,'post-redirect',$postredirect  );
 		} else {
-			$list_id = $_GET['listID'];
+			
 		}
 		SendPress_Admin::redirect('Subscribers_Listform',array('listID'=> $list_id));
 	}
@@ -28,9 +28,10 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 	function html() {
 		
 	$list ='';
-	if(isset($_GET['listID'])){
-		$list_id = $_GET['listID'];
-		$listinfo = get_post( $_GET['listID'] );
+	$list_id =  SPNL()->validate->_int('listID');
+	if($list_id > 0){
+		
+		$listinfo = get_post( $list_id );
 	}
 
 	$backLink = apply_filters('sendpress_back_to_lists_link', 'Subscribers');
@@ -130,13 +131,13 @@ class SendPress_View_Subscribers_Listform extends SendPress_View_Subscribers {
 	
 	<div style="float: right; width: 45%;"><br>
 		<b>HTML</b><br>
-		<textarea style="width:100%; padding: 8px;" rows="21" name="post-page-text"><iframe  width="100%" scrolling="no" frameborder="0"  src="<?php echo site_url(); ?>?sendpress=form&list=<?php echo SPNL()->validate->int( $_POST['listID'] ); ?>" vspace="0" tabindex="0" style="position: static; top: 0pt; margin: 0px; border-style: none; height: 130px; left: 0pt; visibility: visible;" marginwidth="0" marginheight="0" hspace="0" allowtransparency="true" title="Subscription SendPress" ></iframe></textarea>
+		<textarea style="width:100%; padding: 8px;" rows="21" name="post-page-text"><iframe  width="100%" scrolling="no" frameborder="0"  src="<?php echo site_url(); ?>?sendpress=form&list=<?php echo SPNL()->validate->_int( 'listID' ); ?>" vspace="0" tabindex="0" style="position: static; top: 0pt; margin: 0px; border-style: none; height: 130px; left: 0pt; visibility: visible;" marginwidth="0" marginheight="0" hspace="0" allowtransparency="true" title="Subscription SendPress" ></iframe></textarea>
 	</div>	
 <div style="width: 45%; margin-right: 10%"><br>
 	<!--
 	<iframe width="100%" scrolling="no" frameborder="0" src="http://joshlmbprd.whipplehill.com/wp/?wysija-page=1&controller=subscribers&action=wysija_outter&widgetnumber=4&external_site=1&wysijap=subscriptions" name="wysija-1358371025" class="iframe-wysija" id="wysija-4" vspace="0" tabindex="0" style="position: static; top: 0pt; margin: 0px; border-style: none; height: 330px; left: 0pt; visibility: visible;" marginwidth="0" marginheight="0" hspace="0" allowtransparency="true" title="Subscription Wysija"></iframe>
 	-->
-	<iframe  width="100%" scrolling="no" frameborder="0" src="<?php echo site_url(); ?>?sendpress=form&amp;list=<?php echo SPNL()->validate->int( $_POST['listID'] ); ?>" vspace="0" tabindex="0" style="position: static; top: 0pt; margin: 0px; border-style: none; height: 130px; left: 0pt; visibility: visible;" marginwidth="0" marginheight="0" hspace="0" allowtransparency="true" title="Subscription SendPress" ></iframe>
+	<iframe  width="100%" scrolling="no" frameborder="0" src="<?php echo site_url(); ?>?sendpress=form&amp;list=<?php echo SPNL()->validate->_int( 'listID' ); ?>" vspace="0" tabindex="0" style="position: static; top: 0pt; margin: 0px; border-style: none; height: 130px; left: 0pt; visibility: visible;" marginwidth="0" marginheight="0" hspace="0" allowtransparency="true" title="Subscription SendPress" ></iframe>
 </div>
 	<br class="clear">
 </div>

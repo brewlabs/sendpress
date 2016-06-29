@@ -45,11 +45,7 @@ switch ( $this->_current_action ) {
         // Update post 37
 
         $my_post = _wp_translate_postdata(true);
-        /*            
-        $my_post['ID'] = $_POST['post_ID'];
-        $my_post['post_content'] = $_POST['content'];
-        $my_post['post_title'] = $_POST['post_title'];
-        */
+       
         $my_post['post_status'] = 'publish';
         // Update the post into the database
         wp_update_post( $my_post );
@@ -61,7 +57,7 @@ switch ( $this->_current_action ) {
         //clear the cached file.
         delete_transient( 'sendpress_email_html_'. $my_post['ID'] );
 
-        $this->save_redirect( $_POST  );
+        $this->save_redirect();
 
 
     break;

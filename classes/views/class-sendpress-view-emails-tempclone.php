@@ -18,9 +18,9 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Tempclone extends SendPress_View_Emails {
 
 	function save(){
-		$this->security_check();
+		//$this->security_check();
 		$t_id = SPNL()->validate->_int('templateID');
-  		$postdata = get_post( );
+  		$postdata = get_post( $t_id );
   		$new_post = SendPress_Posts::copy($postdata, SPNL()->validate->_string('post_title'), '' , '');
   		SendPress_Posts::copy_meta_info($new_post, $t_id  );
   		update_post_meta($new_post, '_template_type','clone');
@@ -46,16 +46,6 @@ $t_id = SPNL()->validate->_int('templateID');
 		
 		<h2><?php _e('Clone Template','sendpress'); ?> - <?php echo $postdata->post_title; ?></h2>
 		<br>
-		<!--
-		has-right-sidebar">
-		<div id="side-info-column" class="inner-sidebar">
-			
-			<div class="clear"><br>
-			<?php echo do_action('do_meta_boxes', SPNL()->_email_post_type, 'side', $post); 
-			do_meta_boxes($post_type, 'side', $post);?>
-			</div>
-		</div>
-		-->
 	
 			<?php $this->panel_start('<span class="glyphicon glyphicon-list-alt"></span> '. __('Template Name','sendpress')); ?>
 			<input type="text" class="form-control" name="post_title" size="30" tabindex="1" value="" id="post_title" autocomplete="off" />

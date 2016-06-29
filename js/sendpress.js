@@ -218,7 +218,6 @@
                 if(find > 0 ){
                     html = '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><img src="'+imgurl+'" alt="'+imgTitle+'" border="0" style="vertical-align:top;"  hspace="0" vspace="0" class="sp-img" align="center"/></td></tr></table>';
                 }
-
                 spadmin.send_to_editor(html);
             }
 

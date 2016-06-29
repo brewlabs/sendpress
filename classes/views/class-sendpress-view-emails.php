@@ -44,7 +44,7 @@ class SendPress_View_Emails extends SendPress_View{
 		 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav">
         <?php $the_view = SPNL()->validate->_string('view'); ?>
-					<li <?php if( $the_view === 'style' || $the_view === 'create' || $the_view === 'send' || $the_view === 'send-confirm'  || $the_view === 'send-queue'  ){ ?>class="active"<?php } ?> >
+					<li <?php if( $the_view == ''|| $the_view === 'style' || $the_view === 'create' || $the_view === 'send' || $the_view === 'send-confirm'  || $the_view === 'send-queue'  ){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails'); ?>"><?php _e('Newsletters','sendpress'); ?></a>
 				  	</li>
 				  	<?php  if(  false == true) {  //if(SendPress_Option::get('prerelease_templates') == 'yes') { ?>

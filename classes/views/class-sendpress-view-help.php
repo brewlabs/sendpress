@@ -219,7 +219,7 @@ class SendPress_View_Help extends SendPress_View{
 	}
 
 
-	function html($sp){
+	function html(){
 		 SendPress_Tracking::event('Help Tab');
 		global $wp_version;
 $screen = get_current_screen();

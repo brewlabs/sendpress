@@ -8,8 +8,9 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 
-	function save($post, $sp){
-		$this->security_check();
+	function save(){
+		$post = $_POST;
+		//$this->security_check();
 		$options = SendPress_Option::get('notification_options');
 
 		$options['email'] = $post['toemail'];
@@ -44,8 +45,6 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 				$options['hipchat-room'] = $post['hipchat-room'];
 			}
     	}
-
-        $options = apply_filters('sendpress_notification_settings_save',$options, $post, $sp);
 
         SendPress_Option::set('notification_options', $options );
         SendPress_Admin::redirect('Settings_Notifications');

@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
-Tested up to: 4.5.2
-Stable tag: 1.7.5.24
+Tested up to: 4.5.3
+Stable tag: 1.7.6.22
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,43 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.7.6.22 - 2016.6.22 =
+* Fix: Image align in email content
+
+= 1.7.6.21 - 2016.6.21 =
+* Fix: Widget not saving in some configurations
+
+= 1.7.6.17 - 2016.6.17 =
+* Fix: Clone templates
+* Fix: allow style tags in templates
+
+= 1.7.6.16 - 2016.6.16 =
+* Fix: Syler fix for saving
+* Fix: Hex colors converts to #000
+* Fix: Undefined var issues on multiple screens
+* Fix: Saving some pages
+
+= 1.7.6.15 - 2016.6.15 =
+* Fix: html tag support in email content
+* Fix: import error and subscriber list error
+* Fix: unsubscribe shortcode bug
+* Fix: ajax security
+* Fix: moved view security to main sendpress class
+* Fix: added better support for flush_rewrite_rules()
+
+= 1.7.6.11 - 2016.6.11 =
+* Fix: Saving emails not working after sercurity updates
+
+= 1.7.6.9 - 2016.6.9 =
+* Update: Security fixes around sql queries
+* Update: Added better error handling around sending
+* Fix: Manage page showing blank in some cases
+* Fix: Type in translation domain
+* Fix: Undefined var warnings
+* Fix: Can-spam HTML code 
+* Fix: Forms shortcode variable error
+* New: SendGrid and Elastic Email bounce postback (Requires SendPress Pro)
 
 
 = 1.7.5.24 - 2016.5.24 =
@@ -882,9 +919,24 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * added opt-in feedback option
 
 = 0.8.2 =
-* First version on WP.org
+* First version on WordPress.org
 
 == Upgrade Notice ==
+
+= 1.7.6.22 =
+fixed image align in email content
+
+= 1.7.6.21 =
+Widget not always saving new subscribers
+
+= 1.7.6.17 =
+Clone templates fixed
+
+= 1.7.6.13 =
+Emails not saving
+
+= 1.7.6.11 =
+Security fixes and other updates
 
 = 1.7.5.24 =
 Fix for AutoCron

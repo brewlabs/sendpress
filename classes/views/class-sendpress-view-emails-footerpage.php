@@ -9,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Footerpage extends SendPress_View_Emails {
 	
 	function save(){
-        $this->security_check();
+        //$this->security_check();
 		    $saveid = SPNL()->validate->_int( 'templateID' );
         if( $saveid > 0 ){
         update_post_meta( $saveid, '_footer_page', SPNL()->validate->_html('footer-content') );

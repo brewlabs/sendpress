@@ -18,7 +18,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class SendPress_View_Emails_Create extends SendPress_View_Emails {
 
 	function save(){
-		$this->security_check();
+		//$this->security_check();
 		$_POST['post_type'] = SendPress_Data::email_post_type();
         // Update post 37 (37!)
 

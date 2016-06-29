@@ -8,10 +8,6 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Settings_Forms extends SendPress_View_Settings {
 
-	function save($post, $sp){
-		$this->security_check();	
-	}
-
 	function html() {
 
 		?>testing<?php

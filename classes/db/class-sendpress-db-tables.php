@@ -208,14 +208,6 @@ class SendPress_DB_Tables {
              echo $subscriber_events_table . " OK<br>";
         }
 
-        
-        $report_url_table =  SendPress_DB_Tables::report_url_table();
-        if($wpdb->get_var("show tables like '$report_url_table'") != $report_url_table) {
-            echo $report_url_table . " Not Installed<br>";
-        } else {
-             echo $report_url_table . " OK<br>";
-        }
-
         $subscriber_status_table =  SendPress_DB_Tables::subscriber_status_table();
         if($wpdb->get_var("show tables like '$subscriber_status_table'") != $subscriber_status_table) {
             echo $subscriber_status_table . " Not Installed<br>";
@@ -252,10 +244,6 @@ class SendPress_DB_Tables {
         $tables  =  true;
        
 
-        $report_url_table =  SendPress_DB_Tables::report_url_table();
-        if($wpdb->get_var("show tables like '$report_url_table'") != $report_url_table) {
-            $tables =false;
-        } 
 
         $subscriber_status_table =  SendPress_DB_Tables::subscriber_status_table();
         if($wpdb->get_var("show tables like '$subscriber_status_table'") != $subscriber_status_table) {
@@ -441,8 +429,8 @@ registered datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
 registered_ip varchar(20) NOT NULL DEFAULT '', 
 identity_key varchar(60) NOT NULL DEFAULT '', 
 bounced int(1) NOT NULL DEFAULT '0', 
-firstname varchar(250) NOT NULL DEFAULT '', 
-lastname varchar(250) NOT NULL DEFAULT '', 
+firstname varchar(250) DEFAULT '', 
+lastname varchar(250) DEFAULT '', 
 wp_user_id bigint(20) DEFAULT NULL, 
 phonenumber varchar(12) DEFAULT NULL, 
 salutation varchar(40) DEFAULT NULL,

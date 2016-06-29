@@ -17,7 +17,6 @@ class SendPress_Public_View {
 	var $_title = 'Manage Subscription';
 	var $_data = '';
 	var $_visible = true;
-	var $_nonce_value = 'sendpress-is-awesome';
 	var $_device_type = 'unknown';
 	var $_device = '';
 

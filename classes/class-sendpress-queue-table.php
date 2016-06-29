@@ -395,7 +395,7 @@ class SendPress_Queue_Table extends WP_List_Table {
         }
          /* -- Ordering parameters -- */
         //Parameters that are going to be used to order the result
-           $orderby = $sp_validate->_string("orderby") ? $sp_validate->orderby($sp_validate->_string("orderby")) : '';
+        $orderby = $sp_validate->_string("orderby") ? $sp_validate->orderby($sp_validate->_string("orderby")) : '';
         $order = $sp_validate->_string("order")   == 'DESC' ?  'DESC' : 'ASC';
         if(!empty($orderby) & !empty($order)){ $query.=' ORDER BY '.$orderby.' '.$order; }
 

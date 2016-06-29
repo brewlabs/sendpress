@@ -21,8 +21,8 @@ class SendPress_Sender_Website extends SendPress_Sender {
 	}
 
 	function save(){
-		if(isset($_POST['hosting-provider'])){
-			SendPress_Option::set('website-hosting-provider', $_POST['hosting-provider']);
+		if(SPNL()->validate->_isset('hosting-provider')){
+			SendPress_Option::set('website-hosting-provider', SPNL()->validate->_string('hosting-provider'));
 		} else{
 			SendPress_Option::set('website-hosting-provider', false);
 		}
@@ -126,6 +126,12 @@ class SendPress_Sender_Website extends SendPress_Sender {
 		
 		$r = wp_mail($to, $subject, $html, $headers);
 		
+		if (!$r) {
+			global $phpmailer;
+			if (isset($phpmailer)) {
+				SPNL()->log->add( 'Website Sending' ,$phpmailer->ErrorInfo , 0 , 'sending' );
+			}
+		}
 		//remove_filter( 'phpmailer_init' , array( $this , 'wpmail_init' ) , 90 );
 
 		return $r;
