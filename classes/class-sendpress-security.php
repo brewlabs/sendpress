@@ -148,7 +148,7 @@ class SendPress_Security{
 
 	function _html($field){
 		$html = $this->secure($field,'html');
-		return $this->__html($html);
+		return $this->internal_html($html);
 	}
 
 	function internal_html( $html ){
