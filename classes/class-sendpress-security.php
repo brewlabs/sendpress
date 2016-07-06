@@ -156,7 +156,6 @@ class SendPress_Security{
 			}
 			$filter[$k] = $v;
 		}
-		SendPress_Error::log($filter);
 		return wp_kses($html, $filter);
 	}
 
