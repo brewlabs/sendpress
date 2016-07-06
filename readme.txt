@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
 Tested up to: 4.5.3
-Stable tag: 1.7.6.22
+Stable tag: 1.7.7.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.7.7.5 - 2016.7.5 =
+* Fix: Allow style tags in all html tags
 
 = 1.7.6.22 - 2016.6.22 =
 * Fix: Image align in email content
@@ -922,6 +925,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WordPress.org
 
 == Upgrade Notice ==
+
+= 1.7.7.5 =
+Fixed inline styles in html tags
 
 = 1.7.6.22 =
 fixed image align in email content
