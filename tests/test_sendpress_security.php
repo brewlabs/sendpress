@@ -9,7 +9,7 @@ class WP_Test_SendPress_Security extends WP_UnitTestCase {
 		$html =  "<p style='color:#000;'>red</p>";
 		$_GET['html'] = $html;
 		$d = $sec->_html('html');
-		$this->assertEquals( $html, $d);
+		$this->assertEquals( "<p style='color:#000;'>red</p>", $d);
 	}
 
 }
