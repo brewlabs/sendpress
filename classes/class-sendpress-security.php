@@ -148,6 +148,10 @@ class SendPress_Security{
 
 	function _html($field){
 		$html = $this->secure($field,'html');
+		return $this->__html($html);
+	}
+
+	function internal_html( $html ){
 		$html_tags = array_merge(wp_kses_allowed_html('post'),$this->_allowed_tags);
 		$filter = array();
 		foreach ($html_tags as $k => $v) {
