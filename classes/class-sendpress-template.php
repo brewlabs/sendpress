@@ -236,7 +236,7 @@ class SendPress_Template {
 			}
 			$social = SendPress_Data::build_social( $body_link );
 			$HtmlCode = str_replace("*|SP:SOCIAL|*",$social ,$HtmlCode);
-
+/*
 			$dom = new DomDocument();
 				$dom->strictErrorChecking = false;
 				@$dom->loadHtml($HtmlCode);
@@ -246,7 +246,7 @@ class SendPress_Template {
 				}
 				$body_html = $dom->saveHtml();
 
-			/*
+			
 			$simplecss = file_get_contents(SENDPRESS_PATH.'/templates/simple.css');
 				
 			// create instance
@@ -525,7 +525,8 @@ class SendPress_Template {
 		if(class_exists("DomDocument")){
 						//parse html to fix image
 			$dom = new DOMDocument();
-			$dom->loadHTML($HtmlCode,LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+			$dom->strictErrorChecking = false;
+			@$dom->loadHTML($HtmlCode);
 
 			/*
 			DOMElement Object

@@ -20,7 +20,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 			
 
 			$html = SPNL()->validate->_html('content_area_one_edit');
-
+			//SendPress_Error::Log($html);
 		 	$post_update = array(
 		 		'ID'           => $post_id,
 		      	'post_content' => $html
@@ -36,7 +36,11 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 			}
 
 		 	//	print_r($template);
+			remove_filter('content_save_pre', 'wp_filter_post_kses');
+			remove_filter('content_filtered_save_pre', 'wp_filter_post_kses');
 			wp_update_post( $post_update );
+			add_filter('content_save_pre', 'wp_filter_post_kses');
+			add_filter('content_filtered_save_pre', 'wp_filter_post_kses');
 		
 		}
 	
