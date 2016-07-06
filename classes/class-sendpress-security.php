@@ -149,7 +149,15 @@ class SendPress_Security{
 	function _html($field){
 		$html = $this->secure($field,'html');
 		$html_tags = array_merge(wp_kses_allowed_html('post'),$this->_allowed_tags);
-		return wp_kses($html, $html_tags);
+		$filter = array();
+		foreach ($html_tags as $k => $v) {
+			if(!isset($v['style'])){
+				$v['style'] = array();
+			}
+			$filter[$k] = $v;
+		}
+		SendPress_Error::log($filter);
+		return wp_kses($html, $filter);
 	}
 
 	function _hex($field){
