@@ -16,64 +16,10 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 		$post_id =	SPNL()->validate->_int('post_ID');
 		if($post_id > 0){
 
-			//parse html to fix image
-			$dom = new DOMDocument();
-			$dom->loadHTML(SPNL()->validate->_html('content_area_one_edit'),LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
-			/*
-			DOMElement Object
-			(
-			    [tagName] => img
-			    [schemaTypeInfo] => 
-			    [nodeName] => img
-			    [nodeValue] => 
-			    [nodeType] => 1
-			    [parentNode] => (object value omitted)
-			    [childNodes] => (object value omitted)
-			    [firstChild] => 
-			    [lastChild] => 
-			    [previousSibling] => (object value omitted)
-			    [nextSibling] => (object value omitted)
-			    [attributes] => (object value omitted)
-			    [ownerDocument] => (object value omitted)
-			    [namespaceURI] => 
-			    [prefix] => 
-			    [localName] => img
-			    [baseURI] => 
-			    [textContent] => 
-			)
-			 */
+			
 
-			foreach ($dom->getElementsByTagName('img') as $img) {
-			 	$c = explode(' ',$img->getAttribute('class'));
-			 	if( is_array($c) ){
-			 		if( in_array('alignleft',$c) ){
-				 		$img->setAttribute('align','left');
-				 	}
-				 	if( in_array('alignright',$c) ){
-				 		$img->setAttribute('align','right');
-				 	}
-				 	if( in_array('aligncenter',$c) ){
-				 		//this still needs work
-				 		/*
-				 		$newNode = '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><img src="'.$img->src.'" alt="'.$img->getAttribute('title').'" border="0" style="vertical-align:top;"  hspace="0" vspace="0" class="sp-img" align="center"/></td></tr></table>';
-
-				 		$tmpDoc = new DOMDocument();
-					    $tmpDoc->loadHTML($newNode);
-					    foreach ($tmpDoc->getElementsByTagName('body')->item(0)->childNodes as $node) {
-					        $node = $img->parentNode->ownerDocument->importNode($node);
-					        $img->parentNode->replaceChild($node, $img);
-					    }
-
-					    */
-				 		
-				 	}
-			 	}
-			 	
-
-			}
-
-			$html = $dom->saveHTML();
+			$html = SPNL()->validate->_html('content_area_one_edit');
 
 		 	$post_update = array(
 		 		'ID'           => $post_id,

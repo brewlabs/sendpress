@@ -521,6 +521,98 @@ class SendPress_Template {
 					$HtmlCode =str_replace("*|SP:UNSUBSCRIBE|*",'' ,$HtmlCode);
 					$HtmlCode =str_replace("*|SP:MANAGE|*",'' ,$HtmlCode);
 				}
+
+		if(class_exists("DomDocument")){
+						//parse html to fix image
+			$dom = new DOMDocument();
+			$dom->loadHTML($HtmlCode,LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+			/*
+			DOMElement Object
+			(
+			    [tagName] => img
+			    [schemaTypeInfo] => 
+			    [nodeName] => img
+			    [nodeValue] => 
+			    [nodeType] => 1
+			    [parentNode] => (object value omitted)
+			    [childNodes] => (object value omitted)
+			    [firstChild] => 
+			    [lastChild] => 
+			    [previousSibling] => (object value omitted)
+			    [nextSibling] => (object value omitted)
+			    [attributes] => (object value omitted)
+			    [ownerDocument] => (object value omitted)
+			    [namespaceURI] => 
+			    [prefix] => 
+			    [localName] => img
+			    [baseURI] => 
+			    [textContent] => 
+			)
+			 */
+
+			foreach ($dom->getElementsByTagName('img') as $k => $img) {
+			 	$c = explode(' ',$img->getAttribute('class'));
+			 	$styled = $img->getAttribute('style');
+			 	if( is_array($c) ){
+			 		if( in_array('alignleft',$c) ){
+				 		$img->setAttribute('align','left');
+				 		if($styled == ''){
+				 			$img->setAttribute('style','margin-right: 10px');
+				 		}
+
+				 	}
+				 	if( in_array('alignright',$c) ){
+				 		$img->setAttribute('align','right');
+				 		if($styled == ''){
+				 			$img->setAttribute('style','margin-left: 10px');
+				 		}
+				 	}
+				 	if( in_array('aligncenter',$c) ){
+				 			$table = $dom->createElement('table');
+				 			$table->setAttribute('width','100%');
+				 			$table->setAttribute('border','0');
+				 			$table->setAttribute('cellspacing','0');
+				 			$table->setAttribute('cellpadding','0');
+				 		
+
+							$domAttribute = $dom->createAttribute('id');
+							$domAttribute->value = 'spnl-ximage-'. $k;
+
+							$tr = $dom->createElement('tr');
+							$table->appendChild($tr);
+							
+							$td = $dom->createElement('td');
+							$td->setAttribute('align','center');
+							$tr->appendChild($td);
+							$img_r = $img->clonenode(true);
+							$img_r->setAttribute('align','center');
+							$td->appendChild($img_r);
+
+							$table->appendChild($domAttribute);
+						    $img->parentNode->replaceChild($table, $img);
+				 		//this still needs work
+				 		/*
+				 		$newNode = '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><img src="'.$img->src.'" alt="'.$img->getAttribute('title').'" border="0" style="vertical-align:top;"  hspace="0" vspace="0" class="sp-img" align="center"/></td></tr></table>';
+
+				 		$tmpDoc = new DOMDocument();
+					    $tmpDoc->loadHTML($newNode);
+					    foreach ($tmpDoc->getElementsByTagName('body')->item(0)->childNodes as $node) {
+					        $node = $img->parentNode->ownerDocument->importNode($node);
+					        $img->parentNode->replaceChild($node, $img);
+					    }
+
+					    */
+				 		
+				 	}
+			 	}
+			 }
+			 $HtmlCode = $dom->saveHTML();
+			}
+			 	
+
+
+
 				return $HtmlCode;
 			}
 
