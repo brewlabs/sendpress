@@ -25,7 +25,7 @@ class SendPress_Public_View_Email extends SendPress_Public_View{
 			$email_id = SPNL()->validate->int( base64_decode( $email_id_encoded ) );
 		}
 		// If there's a subscriber ID in the URL, we need to get the subscriber object from it to use for the str_replace below.
-		$s_id_encoded = SPNL()->validate->_string('eid');
+		$s_id_encoded = SPNL()->validate->_string('sid');
 		if(!empty($s_id_encoded)) {
 			$subscriber_id =  SPNL()->validate->int( base64_decode( $s_id_encoded ) );
 		} else {
