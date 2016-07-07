@@ -10,7 +10,6 @@ Author URI: https://sendpress.com/
 Text Domain: sendpress
 Domain Path: /languages/
 */
-
 if ( ! defined( 'DB_NAME' ) ) {
 	header( 'HTTP/1.0 403 Forbidden' );
 	die;
