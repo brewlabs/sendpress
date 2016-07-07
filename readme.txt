@@ -120,6 +120,7 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 
 = 1.7.7.7 - 2016.7.7 =
 * Fix: View in browser link
+* Fix: subscriber search filter
 * Update: Added unit test classes for travis-ci
 
 = 1.7.7.6.1 - 2016.7.6 =
