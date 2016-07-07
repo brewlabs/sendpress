@@ -58,7 +58,7 @@ class SendPress_Tag_Footer_Content extends SendPress_Tag_Base  {
 
 	static function copy(){
 		$return =  '<table border="0" width="100%" cellpadding="0" cellspacing="0"><tr><td align="left">';
-        $return .= '{header-content}';
+        $return .= '{footer-content}';
         $return .='</td></tr></table>';
         return $return;
 	}

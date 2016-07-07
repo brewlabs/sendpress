@@ -40,7 +40,7 @@ class SendPress_View_Emails_Header extends SendPress_View_Emails {
 		<?php SendPress_Data::nonce_field(); ?>
          <br><br>
      Default Content
-    <textarea class="form-control" rows="3"><?php echo SendPress_Tag_Header_Content::content(); ?></textarea>
+    <textarea class="form-control" readonly rows="3"><?php echo SendPress_Tag_Header_Content::content(); ?></textarea>
      </form>
 
 <?php
