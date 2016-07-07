@@ -355,8 +355,8 @@ class SendPress_Subscribers_Table extends WP_List_Table {
         $qs =  $sp_validate->_string("qs");
         if($qs) {
             $qs = '%' . $qs . '%';
-            $query .= $wpdb->prepare(' WHERE ( t1.email LIKE %s or t1.firstname LIKE %s or t1.lastname LIKE %s )', $qs,$qs,$qs);
-            $query_count .= $wpdb->prepare(' WHERE ( t1.email LIKE %s or t1.firstname LIKE %s or t1.lastname LIKE %s )', $qs,$qs,$qs);
+            $query .= $wpdb->prepare(' AND ( t1.email LIKE %s or t1.firstname LIKE %s or t1.lastname LIKE %s )', $qs,$qs,$qs);
+            $query_count .= $wpdb->prepare(' AND ( t1.email LIKE %s or t1.firstname LIKE %s or t1.lastname LIKE %s )', $qs,$qs,$qs);
         }
 
 
