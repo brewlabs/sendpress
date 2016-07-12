@@ -13,7 +13,8 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
 	function save(){
     //$this->security_check();
     $list_id_clean = SPNL()->validate->_int( 'listID' );
-		$file= trim(SendPress_Data::read_file_to_str(get_post_meta($list_id_clean ,'csv_import',true)));
+    $the_file = get_post_meta($list_id_clean ,'csv_import',true);
+		$file= trim(SendPress_Data::read_file_to_str( $the_file ));
     $subscribers = SendPress_Data::csv_to_array($file);
    
     $total = count($subscribers);
@@ -53,7 +54,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
             unset($file_chunks[$key_chunk]);
         }
 
-        unlink($file);
+        unlink($the_file);
 
         SendPress_Admin::redirect('Subscribers_Subscribers',array('listID'=> $list_id_clean));
 
