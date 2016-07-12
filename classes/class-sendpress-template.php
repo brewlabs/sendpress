@@ -560,6 +560,9 @@ class SendPress_Template {
 				 		$img->setAttribute('align','left');
 				 		if($styled == ''){
 				 			$img->setAttribute('style','margin-right: 10px');
+				 			$img->setAttribute('class', 'sp-img ' . implode(' ', $c) );
+				 			$img_r->setAttribute('width','');
+									$img_r->setAttribute('height','');
 				 		}
 
 				 	}
@@ -567,6 +570,9 @@ class SendPress_Template {
 				 		$img->setAttribute('align','right');
 				 		if($styled == ''){
 				 			$img->setAttribute('style','margin-left: 10px');
+				 			$img->setAttribute('class', 'sp-img ' . implode(' ', $c) );
+				 			$img_r->setAttribute('width','');
+									$img_r->setAttribute('height','');
 				 		}
 				 	}
 				 	if( in_array('aligncenter',$c) ){
@@ -588,10 +594,31 @@ class SendPress_Template {
 							$tr->appendChild($td);
 							$img_r = $img->clonenode(true);
 							$img_r->setAttribute('align','center');
-							$td->appendChild($img_r);
+								$img_r->setAttribute('width','');
+									$img_r->setAttribute('height','');
+
+							$img_r->setAttribute('class', 'sp-img ' .implode(' ', $c) );
+							$added_it = $img_r;
+							$px = $img->parentNode;
+							$replace = $img;
+							if($px->tagName =='a'){
+								$added_it = $px->clonenode(false);
+								$added_it->appendChild($img_r);
+								//$relace = $px;
+								//$px = $px->parentNode;
+							}
+
+
+							$td->appendChild($added_it);
 
 							$table->appendChild($domAttribute);
-						    $img->parentNode->replaceChild($table, $img);
+
+						//	insertBefore()
+							$px->parentNode->replaceChild($table, $px);
+
+//							print_r($px);
+						   // $px->insertBefore($table, $img);
+						    //  $px->removeChild($img);
 				 		//this still needs work
 				 		/*
 				 		$newNode = '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><img src="'.$img->src.'" alt="'.$img->getAttribute('title').'" border="0" style="vertical-align:top;"  hspace="0" vspace="0" class="sp-img" align="center"/></td></tr></table>';
