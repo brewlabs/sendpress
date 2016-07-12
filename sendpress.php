@@ -580,12 +580,12 @@ class SendPress {
 			//Look for encrypted data
 			$data = SendPress_Data::decrypt( $action );
 			$view = false;
+
 			if ( is_object( $data ) ) {
 				$view = isset( $data->view ) ? $data->view : false;
 			} else {
 				$view = $action;
 			}
-
 			$view_class = SendPress_Data::get_public_view_class( $view );
 			if ( class_exists( $view_class ) ) {
 				$view_class = NEW $view_class;
