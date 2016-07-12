@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
 Tested up to: 4.5.3
-Stable tag: 1.7.7.7
+Stable tag: 1.7.7.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.7.7.11 - 2016.7.11 =
+* Fix: Responsive image fix
+* Fix: Image wrapped in link fix
+* Fix: CSV Import erroring on file delete
 
 = 1.7.7.7 - 2016.7.7 =
 * Fix: View in browser link
@@ -938,6 +943,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WordPress.org
 
 == Upgrade Notice ==
+
+= 1.7.7.11 =
+Image in email bug fixes
 
 = 1.7.7.7 =
 View in browser link not showing email
