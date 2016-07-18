@@ -556,26 +556,31 @@ class SendPress_Template {
 			 	$c = explode(' ',$img->getAttribute('class'));
 			 	$styled = $img->getAttribute('style');
 			 	if( is_array($c) ){
+			 		$replace_image = false;
 			 		if( in_array('alignleft',$c) ){
+			 			$replace_image = true;
 				 		$img->setAttribute('align','left');
 				 		if($styled == ''){
 				 			$img->setAttribute('style','margin-right: 10px');
 				 			$img->setAttribute('class', 'sp-img ' . implode(' ', $c) );
-				 			$img_r->setAttribute('width','');
-									$img_r->setAttribute('height','');
+				 			$img->setAttribute('width','');
+									$img->setAttribute('height','');
 				 		}
 
 				 	}
 				 	if( in_array('alignright',$c) ){
+				 			$replace_image = true;
 				 		$img->setAttribute('align','right');
 				 		if($styled == ''){
 				 			$img->setAttribute('style','margin-left: 10px');
 				 			$img->setAttribute('class', 'sp-img ' . implode(' ', $c) );
-				 			$img_r->setAttribute('width','');
-									$img_r->setAttribute('height','');
+				 			$img->setAttribute('width','');
+									$img->setAttribute('height','');
 				 		}
 				 	}
-				 	if( in_array('aligncenter',$c) ){
+				 	//Center any image that has not been updated..
+				 	if( in_array('aligncenter',$c) ||  ( $replace_image ==false && !in_array('sp-img',$c) ) ){
+
 				 			$table = $dom->createElement('table');
 				 			$table->setAttribute('width','100%');
 				 			$table->setAttribute('border','0');
