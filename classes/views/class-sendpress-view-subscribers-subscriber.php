@@ -93,6 +93,8 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 				}
 				$notifications = SendPress_Data::get_post_notification_types();
 
+				SendPress_Error::log($_POST[$post->ID."-pn"]);
+
 				if(isset($_POST[$post->ID."-pn"]) && array_key_exists($_POST[$post->ID."-pn"], $notifications) ){
 					SendPress_Data::update_subscriber_meta($sid, 'post_notifications',$_POST[$post->ID."-pn"], $post->ID );
 				}
@@ -208,16 +210,19 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 	    		 
 </div>
 </form>
-<h3>Subscriber Actions and Events</h3>
+<!--<h3>Subscriber Actions and Events</h3>-->
 	<div class="well">
 		<?php
+		/*
 		if(!defined("SENDPRESS_PRO_VERSION") ){
 			_e('This feature requires SendPress Pro.','sendpress');
 		} else {
 			do_action('sendpress_subscriber_events_view', SPNL()->validate->_int('subscriberID') );
 		}
+		*/
 		?>
 	</div>
+	
 
 	
 
