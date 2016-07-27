@@ -93,8 +93,6 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 				}
 				$notifications = SendPress_Data::get_post_notification_types();
 
-				SendPress_Error::log($_POST[$post->ID."-pn"]);
-
 				if(isset($_POST[$post->ID."-pn"]) && array_key_exists($_POST[$post->ID."-pn"], $notifications) ){
 					SendPress_Data::update_subscriber_meta($sid, 'post_notifications',$_POST[$post->ID."-pn"], $post->ID );
 				}
