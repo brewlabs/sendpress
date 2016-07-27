@@ -218,6 +218,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 			$args = array(
 			'post_type' => 'sp_template' ,
 			'post_status' => array('sp-standard'),
+			'posts_per_page' => -1,
 			);
 
 			$the_query = new WP_Query( $args );
@@ -242,6 +243,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 		$args = array(
 			'post_type' => 'sp_template' ,
 			'post_status' => array('sp-custom'),
+			'posts_per_page' => -1,
 			);
 
 			$the_query = new WP_Query( $args );
