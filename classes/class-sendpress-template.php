@@ -551,11 +551,29 @@ class SendPress_Template {
 			    [textContent] => 
 			)
 			 */
+			$strings = array('sp-img','sp-social','sp-skip');
 
 			foreach ($dom->getElementsByTagName('img') as $k => $img) {
 			 	$c = explode(' ',$img->getAttribute('class'));
 			 	$styled = $img->getAttribute('style');
-			 	if( is_array($c) ){
+			 	$replace_w = false;
+			 	$replace_h = false;
+
+			 	$width_r = $img->setAttribute('width','');
+			 	$w_r = strpos($width_r, '%');
+			 	if($w_r === false){
+			 		$replace_w = true;
+			 	}
+
+			 	$height_r = $img->setAttribute('height','');
+			 	$h_r = strpos($height_r, '%');
+			 	if($h_r === false){
+			 		$replace_h = true;
+			 	}
+
+
+
+			 	if( is_array($c) && ( count(array_intersect($c, $strings)) == 0 ) ){
 			 		$replace_image = false;
 			 		if( in_array('alignleft',$c) ){
 			 			$replace_image = true;
@@ -563,8 +581,12 @@ class SendPress_Template {
 				 		if($styled == ''){
 				 			$img->setAttribute('style','margin-right: 10px');
 				 			$img->setAttribute('class', 'sp-img ' . implode(' ', $c) );
-				 			$img->setAttribute('width','');
-									$img->setAttribute('height','');
+				 			if( $replace_w ){
+				 				$img->setAttribute('width','');
+				 			}
+				 			if( $replace_h ){
+								$img->setAttribute('height','');
+							}
 				 		}
 
 				 	}
@@ -574,12 +596,16 @@ class SendPress_Template {
 				 		if($styled == ''){
 				 			$img->setAttribute('style','margin-left: 10px');
 				 			$img->setAttribute('class', 'sp-img ' . implode(' ', $c) );
-				 			$img->setAttribute('width','');
-									$img->setAttribute('height','');
+				 			if( $replace_w ){
+				 				$img->setAttribute('width','');
+				 			}
+				 			if( $replace_h ){
+								$img->setAttribute('height','');
+							}
 				 		}
 				 	}
 				 	//Center any image that has not been updated..
-				 	if( in_array('aligncenter',$c) ||  ( $replace_image ==false && !in_array('sp-img',$c) ) ){
+				 	if( in_array('aligncenter',$c) ||   $replace_image ==false ){
 
 				 			$table = $dom->createElement('table');
 				 			$table->setAttribute('width','100%');
@@ -599,8 +625,12 @@ class SendPress_Template {
 							$tr->appendChild($td);
 							$img_r = $img->clonenode(true);
 							$img_r->setAttribute('align','center');
-								$img_r->setAttribute('width','');
-									$img_r->setAttribute('height','');
+							if( $replace_w ){
+				 				$img_r->setAttribute('width','');
+				 			}
+				 			if( $replace_h ){
+								$img_r->setAttribute('height','');
+							}
 
 							$img_r->setAttribute('class', 'sp-img ' .implode(' ', $c) );
 							$added_it = $img_r;

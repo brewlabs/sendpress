@@ -450,7 +450,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		ksort($link);
 		foreach($link as $key => $url ){
 				if($px !== 'text'){
-					$output .= '<a href="'. $url .'" ><img src="'.  SENDPRESS_URL .'img/'. $px .'/'. $key .'.png" alt="'. $key .'" /></a> ';
+					$output .= '<a href="'. $url .'" ><img class="sp-social" src="'.  SENDPRESS_URL .'img/'. $px .'/'. $key .'.png" alt="'. $key .'" /></a> ';
 				} else {
 					if($c > 1){
 						$output .= ' | ';
