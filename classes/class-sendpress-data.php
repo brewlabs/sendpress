@@ -1850,6 +1850,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 			// If we've got a post, loop through and get it's ID.
 			if ( count( $_posts ) ) {
 				$_id = $_posts[0]->ID;
+				//$_args['ID'] = $_id;
+				//wp_update_post( $_args );
+
 			} else {
 				// If no post is present, insert one.
 				// Prepare some additional data to go with the post insertion.

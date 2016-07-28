@@ -559,13 +559,13 @@ class SendPress_Template {
 			 	$replace_w = false;
 			 	$replace_h = false;
 
-			 	$width_r = $img->setAttribute('width','');
+			 	$width_r = $img->getAttribute('width');
 			 	$w_r = strpos($width_r, '%');
 			 	if($w_r === false){
 			 		$replace_w = true;
 			 	}
 
-			 	$height_r = $img->setAttribute('height','');
+			 	$height_r = $img->getAttribute('height');
 			 	$h_r = strpos($height_r, '%');
 			 	if($h_r === false){
 			 		$replace_h = true;
@@ -635,12 +635,13 @@ class SendPress_Template {
 							$img_r->setAttribute('class', 'sp-img ' .implode(' ', $c) );
 							$added_it = $img_r;
 							$px = $img->parentNode;
+							$target_node = $img;
 							$replace = $img;
 							if($px->tagName =='a'){
 								$added_it = $px->clonenode(false);
 								$added_it->appendChild($img_r);
 								//$relace = $px;
-								//$px = $px->parentNode;
+								$target_node = $px;
 							}
 
 
@@ -649,7 +650,7 @@ class SendPress_Template {
 							$table->appendChild($domAttribute);
 
 						//	insertBefore()
-							$px->parentNode->replaceChild($table, $px);
+							$target_node->parentNode->replaceChild($table, $target_node);
 
 //							print_r($px);
 						   // $px->insertBefore($table, $img);
