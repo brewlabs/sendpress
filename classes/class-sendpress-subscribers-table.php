@@ -390,7 +390,9 @@ class SendPress_Subscribers_Table extends WP_List_Table {
         if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
         //How many pages do we have in total?
         $totalpages = ceil($totalitems/$per_page);
-
+        if( $list_id > 0 ) {
+            $query.= ' group by t1.email';
+        }
         $orderby = $sp_validate->_string("orderby") ? $sp_validate->orderby($sp_validate->_string("orderby")) : '';
         $order = $sp_validate->_string("order")   == 'DESC' ?  'DESC' : 'ASC';
        
@@ -399,9 +401,7 @@ class SendPress_Subscribers_Table extends WP_List_Table {
         }
 
         if(!empty($orderby) & !empty($order)){ $query.=' ORDER BY '.$orderby.' '.$order; }
-        if( $list_id > 0 ) {
-            $query.= ' group by t1.email';
-        }
+        
         //adjust the query to take pagination into account
         if(!empty($paged) && !empty($per_page)){
             $offset=($paged-1)*$per_page;

@@ -82,6 +82,9 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
         $this->panel_start();
         $open = 0;
         $rec = get_post_meta($report->ID, '_send_last_count', true);
+        if($rec == 0 ){
+          $rec = 1;
+        }
           if($report){
             if($stat_type == 'new'){
                 $open = SPNL()->load("Subscribers_Tracker")->get_opens_total( $report->ID  );
