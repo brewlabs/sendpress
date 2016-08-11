@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
 Tested up to: 4.5.3
-Stable tag: 1.7.7.28
+Stable tag: 1.7.8.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.7.8.11 - 2016.8.11 =
+* New: Added list names to All Subscribers page
+* Fix: Order by sorting on table views
+* Fix: PHP error on Overview page
 
 = 1.7.7.27 - 2016.7.27 =
 * Fix: Post notification error
@@ -951,6 +956,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WordPress.org
 
 == Upgrade Notice ==
+
+= 1.7.8.11 =
+Bug fixes and Show lists on All Subscribers page
 
 = 1.7.7.11 =
 Image in email bug fixes
