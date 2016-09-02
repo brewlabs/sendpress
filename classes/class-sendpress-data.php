@@ -2163,6 +2163,17 @@ class SendPress_Data extends SendPress_DB_Tables {
 		);
 	}
 
+	static function manage_custom_fields_defaults($cleansp){
+		$prefix = '_sp';
+		if($cleansp){
+			$prefix = '';
+		}
+		return array(
+			$prefix."_setting_type" => "custom_field",
+			$prefix."_custom_field_type" => "input"
+		);
+	}
+
 	static function get_default_settings_for_type($type = "", $cleansp = false){
 		$defaults = array();
 		switch($type){
@@ -2171,6 +2182,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 				break;
 			case "manage_subscriptions":
 				$defaults = SendPress_Data::manage_subscriptions_defaults($cleansp);
+				break;
+			case "custom_field":
+				$defaults = SendPress_Data::manage_custom_fields_defaults($cleansp);
 				break;
 			default:
 				$defaults = SendPress_Data::signup_defaults($cleansp);
@@ -2188,7 +2202,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 			'post_status'   => 'draft',
 			'post_type' 	=> 'sp_settings'
 		);
-
 		// Insert the post into the database
 		$postid = wp_insert_post( $my_post );
 
@@ -2203,6 +2216,43 @@ class SendPress_Data extends SendPress_DB_Tables {
 		}
 
 		return $postid;
+	}
+
+	static function create_custom_field_post($values){
+		// Create post object
+		  $my_post = array(
+		     'post_title' => $values['name'],
+		     'post_content' => '',
+		     'post_status' => 'publish',
+		     'post_type'=> 'custom_field',
+		     'post_name'=> 'input'
+		  );
+		//error_log($my_post);
+		// Insert the post into the database
+  		$new_id = wp_insert_post( $my_post );
+  		update_post_meta($new_id,'public',$values['public']);
+		
+		return $new_id;	
+	}
+
+	static function get_custom_fields(){
+		$query = new WP_Query(
+			array(
+				'posts_per_page'=>-1,
+				'post_type' => 'sp_newsletters',
+				//'post_status' => array('sp-systememail'),
+				'meta_query' => array(
+				array(
+					'key'     => '_system_email_type',
+					'value'   => 'opt_in',
+					'compare' => '=',
+				),
+			),
+			)
+		);
+
+		wp_reset_postdata();
+		return $query->posts;
 	}
 
 	static function create_default_form($type = 'signup'){

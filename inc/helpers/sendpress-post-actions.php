@@ -25,6 +25,15 @@ switch ( $this->_current_action ) {
     
     break;
 
+    case 'create-custom-field':
+        $name =  sanitize_text_field($_POST['name']);
+        $public = SPNL()->validate->_int('public');
+       
+        
+         wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page() ) ) );
+    
+    break;
+
     case 'edit-list':
        
         $listid = SPNL()->validate->_int('listID');
