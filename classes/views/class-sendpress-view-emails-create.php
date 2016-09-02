@@ -120,6 +120,7 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 			'post_status' => array('sp-standard'),
 			'orderby' => 'title',
 			'order' => 'ASC',
+			'posts_per_page' => -1,
 			);
 
 			$the_query = new WP_Query( $args );
@@ -141,6 +142,7 @@ class SendPress_View_Emails_Create extends SendPress_View_Emails {
 			'post_status' => array('sp-custom'),
 			'orderby' => 'title',
 			'order' => 'ASC',
+			'posts_per_page' => -1,
 			);
 
 			$the_query = new WP_Query( $args );

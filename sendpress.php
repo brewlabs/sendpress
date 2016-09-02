@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: SendPress Newsletters
-Version: 1.7.6.22
+Version: 1.7.8.11
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -10,7 +10,6 @@ Author URI: https://sendpress.com/
 Text Domain: sendpress
 Domain Path: /languages/
 */
-
 if ( ! defined( 'DB_NAME' ) ) {
 	header( 'HTTP/1.0 403 Forbidden' );
 	die;
@@ -19,7 +18,7 @@ global $blog_id;
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-define( 'SENDPRESS_VERSION', '1.7.6.22' );
+define( 'SENDPRESS_VERSION', '1.7.8.11' );
 define( 'SENDPRESS_URL', plugin_dir_url( __FILE__ ) );
 define( 'SENDPRESS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -581,12 +580,12 @@ class SendPress {
 			//Look for encrypted data
 			$data = SendPress_Data::decrypt( $action );
 			$view = false;
+
 			if ( is_object( $data ) ) {
 				$view = isset( $data->view ) ? $data->view : false;
 			} else {
 				$view = $action;
 			}
-
 			$view_class = SendPress_Data::get_public_view_class( $view );
 			if ( class_exists( $view_class ) ) {
 				$view_class = NEW $view_class;

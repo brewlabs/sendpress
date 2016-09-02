@@ -236,7 +236,7 @@ class SendPress_Template {
 			}
 			$social = SendPress_Data::build_social( $body_link );
 			$HtmlCode = str_replace("*|SP:SOCIAL|*",$social ,$HtmlCode);
-
+/*
 			$dom = new DomDocument();
 				$dom->strictErrorChecking = false;
 				@$dom->loadHtml($HtmlCode);
@@ -246,7 +246,7 @@ class SendPress_Template {
 				}
 				$body_html = $dom->saveHtml();
 
-			/*
+			
 			$simplecss = file_get_contents(SENDPRESS_PATH.'/templates/simple.css');
 				
 			// create instance
@@ -521,6 +521,162 @@ class SendPress_Template {
 					$HtmlCode =str_replace("*|SP:UNSUBSCRIBE|*",'' ,$HtmlCode);
 					$HtmlCode =str_replace("*|SP:MANAGE|*",'' ,$HtmlCode);
 				}
+
+		if(class_exists("DomDocument")){
+						//parse html to fix image
+			$dom = new DOMDocument();
+			$dom->strictErrorChecking = false;
+			@$dom->loadHTML($HtmlCode);
+
+			/*
+			DOMElement Object
+			(
+			    [tagName] => img
+			    [schemaTypeInfo] => 
+			    [nodeName] => img
+			    [nodeValue] => 
+			    [nodeType] => 1
+			    [parentNode] => (object value omitted)
+			    [childNodes] => (object value omitted)
+			    [firstChild] => 
+			    [lastChild] => 
+			    [previousSibling] => (object value omitted)
+			    [nextSibling] => (object value omitted)
+			    [attributes] => (object value omitted)
+			    [ownerDocument] => (object value omitted)
+			    [namespaceURI] => 
+			    [prefix] => 
+			    [localName] => img
+			    [baseURI] => 
+			    [textContent] => 
+			)
+			 */
+			$strings = array('sp-img','sp-social','sp-skip');
+
+			foreach ($dom->getElementsByTagName('img') as $k => $img) {
+			 	$c = explode(' ',$img->getAttribute('class'));
+			 	$styled = $img->getAttribute('style');
+			 	$replace_w = false;
+			 	$replace_h = false;
+
+			 	$width_r = $img->getAttribute('width');
+			 	$w_r = strpos($width_r, '%');
+			 	if($w_r === false){
+			 		$replace_w = true;
+			 	}
+
+			 	$height_r = $img->getAttribute('height');
+			 	$h_r = strpos($height_r, '%');
+			 	if($h_r === false){
+			 		$replace_h = true;
+			 	}
+
+
+
+			 	if( is_array($c) && ( count(array_intersect($c, $strings)) == 0 ) ){
+			 		$replace_image = false;
+			 		if( in_array('alignleft',$c) ){
+			 			$replace_image = true;
+				 		$img->setAttribute('align','left');
+				 		if($styled == ''){
+				 			$img->setAttribute('style','margin-right: 10px');
+				 			$img->setAttribute('class', 'sp-img ' . implode(' ', $c) );
+				 			if( $replace_w ){
+				 				$img->setAttribute('width','');
+				 			}
+				 			if( $replace_h ){
+								$img->setAttribute('height','');
+							}
+				 		}
+
+				 	}
+				 	if( in_array('alignright',$c) ){
+				 			$replace_image = true;
+				 		$img->setAttribute('align','right');
+				 		if($styled == ''){
+				 			$img->setAttribute('style','margin-left: 10px');
+				 			$img->setAttribute('class', 'sp-img ' . implode(' ', $c) );
+				 			if( $replace_w ){
+				 				$img->setAttribute('width','');
+				 			}
+				 			if( $replace_h ){
+								$img->setAttribute('height','');
+							}
+				 		}
+				 	}
+				 	//Center any image that has not been updated..
+				 	if( in_array('aligncenter',$c) ||   $replace_image ==false ){
+
+				 			$table = $dom->createElement('table');
+				 			$table->setAttribute('width','100%');
+				 			$table->setAttribute('border','0');
+				 			$table->setAttribute('cellspacing','0');
+				 			$table->setAttribute('cellpadding','0');
+				 		
+
+							$domAttribute = $dom->createAttribute('id');
+							$domAttribute->value = 'spnl-ximage-'. $k;
+
+							$tr = $dom->createElement('tr');
+							$table->appendChild($tr);
+							
+							$td = $dom->createElement('td');
+							$td->setAttribute('align','center');
+							$tr->appendChild($td);
+							$img_r = $img->clonenode(true);
+							$img_r->setAttribute('align','center');
+							if( $replace_w ){
+				 				$img_r->setAttribute('width','');
+				 			}
+				 			if( $replace_h ){
+								$img_r->setAttribute('height','');
+							}
+
+							$img_r->setAttribute('class', 'sp-img ' .implode(' ', $c) );
+							$added_it = $img_r;
+							$px = $img->parentNode;
+							$target_node = $img;
+							$replace = $img;
+							if($px->tagName =='a'){
+								$added_it = $px->clonenode(false);
+								$added_it->appendChild($img_r);
+								//$relace = $px;
+								$target_node = $px;
+							}
+
+
+							$td->appendChild($added_it);
+
+							$table->appendChild($domAttribute);
+
+						//	insertBefore()
+							$target_node->parentNode->replaceChild($table, $target_node);
+
+//							print_r($px);
+						   // $px->insertBefore($table, $img);
+						    //  $px->removeChild($img);
+				 		//this still needs work
+				 		/*
+				 		$newNode = '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><img src="'.$img->src.'" alt="'.$img->getAttribute('title').'" border="0" style="vertical-align:top;"  hspace="0" vspace="0" class="sp-img" align="center"/></td></tr></table>';
+
+				 		$tmpDoc = new DOMDocument();
+					    $tmpDoc->loadHTML($newNode);
+					    foreach ($tmpDoc->getElementsByTagName('body')->item(0)->childNodes as $node) {
+					        $node = $img->parentNode->ownerDocument->importNode($node);
+					        $img->parentNode->replaceChild($node, $img);
+					    }
+
+					    */
+				 		
+				 	}
+			 	}
+			 }
+			 $HtmlCode = $dom->saveHTML();
+			}
+			 	
+
+
+
 				return $HtmlCode;
 			}
 

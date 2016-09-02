@@ -13,11 +13,17 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 	function save_email(){
 		//$this->security_check();
 
-	$post_id =	SPNL()->validate->_int('post_ID');
+		$post_id =	SPNL()->validate->_int('post_ID');
 		if($post_id > 0){
+
+
+			
+
+			$html = SPNL()->validate->_html('content_area_one_edit');
+			//SendPress_Error::Log($html);
 		 	$post_update = array(
 		 		'ID'           => $post_id,
-		      	'post_content' => SPNL()->validate->_html('content_area_one_edit')
+		      	'post_content' => $html
 		    );
 		   
 			update_post_meta( $post_id, '_sendpress_template', SPNL()->validate->_int('template') );
@@ -30,7 +36,11 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 			}
 
 		 	//	print_r($template);
+			remove_filter('content_save_pre', 'wp_filter_post_kses');
+			remove_filter('content_filtered_save_pre', 'wp_filter_post_kses');
 			wp_update_post( $post_update );
+			add_filter('content_save_pre', 'wp_filter_post_kses');
+			add_filter('content_filtered_save_pre', 'wp_filter_post_kses');
 		
 		}
 	
@@ -208,6 +218,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 			$args = array(
 			'post_type' => 'sp_template' ,
 			'post_status' => array('sp-standard'),
+			'posts_per_page' => -1,
 			);
 
 			$the_query = new WP_Query( $args );
@@ -232,6 +243,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 		$args = array(
 			'post_type' => 'sp_template' ,
 			'post_status' => array('sp-custom'),
+			'posts_per_page' => -1,
 			);
 
 			$the_query = new WP_Query( $args );

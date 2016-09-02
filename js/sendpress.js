@@ -192,7 +192,7 @@
 			$('#sp-post-preview-insert').data("code", htmtToInsert);
 			$('#sp-post-preview').html(htmtToInsert);
 		}
-       
+       /*
         spadmin.send_to_editor = window.send_to_editor;
 
         window.send_to_editor = function(html) {
@@ -220,8 +220,9 @@
                 }
                 spadmin.send_to_editor(html);
             }
-
+        
         };
+        */
 
         $('#upload_image').change(function(){
               $('#html-header').html('<img src="'+ $(this).val() +'" />');

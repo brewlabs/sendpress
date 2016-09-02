@@ -450,7 +450,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		ksort($link);
 		foreach($link as $key => $url ){
 				if($px !== 'text'){
-					$output .= '<a href="'. $url .'" ><img src="'.  SENDPRESS_URL .'img/'. $px .'/'. $key .'.png" alt="'. $key .'" /></a> ';
+					$output .= '<a href="'. $url .'" ><img class="sp-social" src="'.  SENDPRESS_URL .'img/'. $px .'/'. $key .'.png" alt="'. $key .'" /></a> ';
 				} else {
 					if($c > 1){
 						$output .= ' | ';
@@ -1054,9 +1054,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$meta_table = SendPress_Data::subscriber_meta_table();
 		$has_data = SendPress_Data::get_subscriber_meta( $subscriber_id, $meta_key, $list_id, true );
 		if(empty($has_data)){
-			return SendPress_Data::add_subscriber_meta( $subscriber_id, $meta_key, $meta_value, $list_id, $app_only );
+			return SendPress_Data::add_subscriber_meta( $subscriber_id, $meta_key, $meta_value, $list_id );
 		} else {
-			return $wpdb->update( $meta_table, array('meta_value'=>$meta_value), array('subscriberID'=>$subscriber_id,'meta_key' => $meta_key , 'meta_value' => $has_data[0]->meta_value, 'app_only' => $app_only ) );
+			return $wpdb->update( $meta_table, array('meta_value'=>$meta_value), array('subscriberID'=>$subscriber_id,'meta_key' => $meta_key , 'meta_value' => $has_data[0]->meta_value) );
 		}
 
 
@@ -1850,6 +1850,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 			// If we've got a post, loop through and get it's ID.
 			if ( count( $_posts ) ) {
 				$_id = $_posts[0]->ID;
+				//$_args['ID'] = $_id;
+				//wp_update_post( $_args );
+
 			} else {
 				// If no post is present, insert one.
 				// Prepare some additional data to go with the post insertion.

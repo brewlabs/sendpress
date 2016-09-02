@@ -81,6 +81,8 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
                 return $item->$column_name;
             case 'salutation':
                 return $item->$column_name;
+            case 'lists':
+                return $item->$column_name;
             case 'status':
                return $item->$column_name;
             case 'gravatar':
@@ -118,10 +120,11 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
     function column_title($item){
         
         //Return the title contents - $this->row_actions($actions) was in %3
-        return sprintf('%1$s <span style="color:silver">(id:%2$s)</span>%3$s',
+        return sprintf('%1$s <span style="color:silver">(id:%2$s)</span><br>%3$s %4$s',
             /*$1%s*/ $item->email,
             /*$2%s*/ $item->subscriberID,
-            /*$3%s*/ ''
+            /*$3%s*/ $item->firstname,
+                     $item->lastname
         );
     }
     
@@ -162,8 +165,9 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
             'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
             'gravatar' => '',
             'title' => __('Email','sendpress'),
-            'firstname' => __('First Name','sendpress'),
-            'lastname' => __('Last Name','sendpress'),
+           // 'firstname' => __('First Name','sendpress'),
+            //'lastname' => __('Last Name','sendpress'),
+            'lists' => __('Lists','sendpress'),
             //'phonenumber' => __('Phone Number', 'sendpress'),
             //'salutation' => __('Salutation', 'salutation'),
             //'status' => 'Status',
@@ -324,9 +328,10 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
           /*      
         select t1.* from `sp_sendpress_list_subscribers` as t1 , `sp_sendpress_subscribers` as t2
         where t1.subscriberID = t2.subscriberID and t1.listID = 2*/
-
-
-       $query = "SELECT * FROM " .  SendPress_Data::subscriber_table() . " as t1";
+       // $xq = "Select dsl.listID from ". SendPress_Data::list_subcribers_table() ." as dsl where t1.subscriberID == dsl.subscriberID";
+        $xq = "GROUP_CONCAT(wppost.post_title ORDER BY wppost.post_title SEPARATOR ', ') AS lists";
+        //" GROUP_CONCAT(dsl.listID ORDER BY dsl.listID) AS lists ";
+       $query = "SELECT t1.subscriberID, t1.email, t1.firstname,t1.lastname, t1.join_date, $xq  FROM " .  SendPress_Data::subscriber_table() . " as t1 LEFT JOIN ".SendPress_Data::list_subcribers_table() ." as dsl ON t1.subscriberID = dsl.subscriberID Left JOIN ".$wpdb->posts." as wppost ON dsl.`listID` = wppost.ID";
        $query_count = "SELECT count(*) FROM " .  SendPress_Data::subscriber_table() ." as t1";
         $qs =  $sp_validate->_string("qs");
         if($qs) {
@@ -366,7 +371,7 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
         //How many pages do we have in total?
         $totalpages = ceil($totalitems/$per_page);
 
-      
+        $query .= ' Group BY t1.subscriberID ';
         $orderby = $sp_validate->_string("orderby") ? $sp_validate->orderby($sp_validate->_string("orderby")) : '';
 
 
@@ -376,7 +381,7 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
         if(!empty($orderby) & !empty($order)){ 
             $query.=  ' ORDER BY '. $orderby .' ' . $order; 
         }
-       
+     
         //adjust the query to take pagination into account
         if(!empty($paged) && !empty($per_page)){
             $offset=($paged-1)*$per_page;

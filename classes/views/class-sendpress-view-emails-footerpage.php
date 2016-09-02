@@ -36,14 +36,14 @@ class SendPress_View_Emails_Footerpage extends SendPress_View_Emails {
      <div class="tab-pane fade in active" id="home"><?php wp_editor( get_post_meta( $postdata->ID , '_footer_page' , true) , 'footer-content'); ?></div>
      <br><br>
      <?php _e('Default Content','sendpress'); ?>
-<textarea class="form-control" rows="3">
+<textarea class="form-control" readonly rows="3">
 <?php 
 $sys = false;
 get_post_meta( $postdata->ID , '_system_template' , true);
 if(  true == get_post_meta( $postdata->ID , '_system_template' , true) ){
   $sys = true;
 }
-echo SendPress_Tag_Footer_Page::content(true); ?>
+echo SendPress_Tag_Footer_Page::content($sys); ?>
 </textarea>
      
 		<?php SendPress_Data::nonce_field(); ?>

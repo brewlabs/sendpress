@@ -17,12 +17,13 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 
 		$info = $this->data();
 		//$hash = wp_hash( $info->url , 'sendpress' );
-
+		if(isset($info->url) && $info->url != '' ){
+			$info->url = urldecode($info->url);
+		}
 
 		$dk = SendPress_Data::devicetypes( $this->_device_type );
 
 		$url = $info->url;
-		
 		try {
 
 			$db_url = SPNL()->load("Url");
@@ -41,7 +42,6 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 			$open = SPNL()->load("Subscribers_Tracker")->open( $info->report , $info->id , 2 );
 
 			//SendPress_Error::log($info->url);
-
 			switch($info->url){
 				case '{sp-browser-url}':
 					$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Browser_Url::external( $info->url, $info->report , $info->id, false ), $info->report, $info->report, $info->id, false );

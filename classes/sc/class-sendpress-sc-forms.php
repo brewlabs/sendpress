@@ -241,7 +241,8 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 	   	//find post notification list
 	   	foreach ($options as $key => $value) {
 		    if (strpos($key, '_meta_for_list_') === 0) {
-		        $pnlistid = array_pop(explode('_',$key));
+		        $exploded_id = explode('_',$key);
+		        $pnlistid = array_pop($exploded_id);
 		        $postnotification = $value;
 		    }
 		}
