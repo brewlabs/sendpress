@@ -17,6 +17,7 @@ class SendPress_View_Subscribers_Custom extends SendPress_View_Subscribers {
 
 		} else {
 			$postid = SendPress_Data::create_settings_post($name, 'custom_field');
+			add_post_meta($postid, "_sp_custom_field_key", "custom_field_" . $postid, false);
 			add_post_meta($postid, "_sp_custom_field_description", $name, false);
 		}
 		

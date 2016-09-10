@@ -48,9 +48,6 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
         
         echo '</select> ';
 
-
-
-
 		}
 
 
@@ -65,7 +62,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
     		if($lid > 0){
     			SendPress_Admin::redirect( 'Subscribers_Subscribers',array('listID'=>$lid) );
     		}else {
-    		SendPress_Admin::redirect( 'Subscribers_All' );
+    			SendPress_Admin::redirect( 'Subscribers_All' );
     		}
     	}else {
 
@@ -86,6 +83,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 			  setup_postdata( $post ); 
 				$status = SPNL()->validate->_int($post->ID."-status");
 				$sid = SPNL()->validate->_int('subscriberID');
+
 				if( $status > 0 ){
 					SendPress_Data::update_subscriber_status( $post->ID,$sid,$status );
 				} else {
@@ -97,10 +95,22 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 					SendPress_Data::update_subscriber_meta($sid, 'post_notifications',$_POST[$post->ID."-pn"], $post->ID );
 				}
 
-
+			
 			endforeach; 
 			wp_reset_postdata();
 
+			$have_custom_field = SPNL()->validate->_bool('have_custom_field');
+			$custom_field_key = SPNL()->validate->_string('custom_field_key');
+
+			error_log("checking if i have key on save");
+			error_log($custom_field_key);
+
+			// custom field save
+			if ($have_custom_field) {
+				SendPress_Data::update_subscriber_meta($sid, $custom_field_key, SPNL()->validate->_string('custom_field_value'), false);
+			} else {
+				SendPress_Data::add_subscriber_meta($sid, $custom_field_key, SPNL()->validate->_string('custom_field_value'), false, 0);
+			}
 		}
 		$sid = SPNL()->validate->_int('subscriberID');
 		SendPress_Admin::redirect('Subscribers_Subscriber', array('subscriberID'=>$sid  ) );
@@ -138,7 +148,53 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 	    <strong><?php _e('Firstname','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="firstname" value="<?php echo $sub->firstname; ?>" /><br><br>
 	    <strong><?php _e('Lastname','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="lastname" value="<?php echo $sub->lastname; ?>" /><br>
 	    <strong><?php _e('Phone Number','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="phonenumber" value="<?php echo $sub->phonenumber; ?>" /><br>
-	    <br>
+
+			<?php 
+				$args = array(
+					'post_type' => 'sp_settings',
+					'meta_query' => array(
+						array(
+							'key'     => '_sp_setting_type',
+							'value'   => 'custom_field',
+							'compare' => '=',
+						),
+					)
+				);
+				$query = new WP_Query( $args );
+
+				if ( $query->have_posts() ) {
+
+					while ( $query->have_posts() ) {
+						$query->the_post();
+						//$custom_field_label = get_the_title();
+						$saved_post_id = get_the_ID();
+						$custom_field_label = get_post_meta($saved_post_id, '_sp_custom_field_description', true);
+						$custom_field_key = get_post_meta($saved_post_id, '_sp_custom_field_key', true);
+					}
+					/* Restore original Post Data */
+					error_log("test new custom id");
+					error_log($custom_field_key);
+
+					wp_reset_postdata();
+					if (strlen($custom_field_label) > 0) {
+						$have_custom_field = true;
+						$subid = SPNL()->validate->_int('subscriberID');
+						$custom_field_value = SendPress_Data::get_subscriber_meta($subid,$custom_field_key, false);
+
+				?>
+
+	   		<strong><?php echo $custom_field_label; ?></strong>: <input type="text" class="regular-text sp-text" name="custom_field_value" value="<?php echo $custom_field_value;?>" /><br>
+	    	<br>
+            <?php 
+            		}
+				} else {
+					$custom_field_label = "";
+					$saved_post_id = 0;
+				}
+			?>
+
+<input type="hidden" name="have_custom_field" value="<?php echo $have_custom_field;?>" />
+<input type="hidden" name="custom_field_key" value="<?php echo $custom_field_key;?>" />
 <input type="checkbox" id="delete-this-user" name="delete-this-user" value="yes"/> Checking this box will remove this subscriber and all related data from the system.<br><br>
 
 	  
@@ -203,8 +259,6 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 
 		?></table>
 
-
-	
 	    		 
 </div>
 </form>
@@ -221,9 +275,6 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 		?>
 	</div>
 	
-
-	
-
 
 </div>
 </div>
