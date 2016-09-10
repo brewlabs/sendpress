@@ -167,7 +167,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 
-	function requeue_email( $emailid ) {
+	static function requeue_email( $emailid ) {
 		global $wpdb;
 
 		$table = SendPress_Data::queue_table();

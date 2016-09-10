@@ -43,7 +43,11 @@ class SendPress_View_Emails_Send_Queue extends SendPress_View_Emails
         
         update_post_meta($post->ID, '_send_last_count', $subs);
         update_post_meta($post->ID, '_sendpress_report', 'new');
-?>
+        
+
+
+
+        ?>
         <div id="taskbar" class="lists-dashboard rounded group"> 
 
     
@@ -59,7 +63,6 @@ class SendPress_View_Emails_Send_Queue extends SendPress_View_Emails
     <span id="queue-total">0</span> of <span id="list-total"><?php
         echo $subs; ?></span>
 </div>
-
         <?php
     }
 }

@@ -6,7 +6,7 @@
     
     this.init = function($, document){
         $(document).ready(function($){
-            spadmin.log("SP Init Started");
+           // spadmin.log("SP Init Started");
          
             //Load SendPress Sections with refence to themselves :)
             spadmin.menu.init.call(spadmin.menu, $);
@@ -15,8 +15,8 @@
             spadmin.confirmsend.init.call(spadmin.confirmsend, $);
             spadmin.syncroles.init.call(spadmin.syncroles, $);
             spadmin.notifications.init.call(spadmin.notifications, $);
-            spadmin.log("SP Finished Started");
-            spadmin.log(spvars);
+           // spadmin.log("SP Finished Started");
+          //  spadmin.log(spvars);
 
         });
     }
@@ -399,6 +399,13 @@
                         $qt.html(response.total);
                          var $qt = $("#queue-count-menu-tab");
                         $qt.html(response.total);
+
+                        if(response.total > 0 && response.active > 0 ){
+                            var $frame = '<iframe src="http://api.spnl.io/autocron/add/'+response.url+'/'+response.try+'" style="width:0;height:0;border: 0;border: none;"></iframe>';
+                            $($frame).appendTo('body');
+                        }
+
+
                          
                     } catch (err) {
                         spadmin.log(err);
