@@ -1027,6 +1027,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 	static function add_subscriber_meta($subscriber_id,$meta_key,$meta_value,$list_id = false, $app_only = 0){
+
 		global $wpdb;
 		$meta_table = SendPress_Data::subscriber_meta_table();
 		
@@ -1034,7 +1035,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$list_id = 0;
 		}
 
-		return $wpdb->insert( $meta_table, array('subscriberID'=>$subscriber_id,'meta_key' => $meta_key , 'meta_value' => $meta_value ,'listID'=>$list_id, 'app_only' => $app_only) );
+		return $wpdb->insert( $meta_table, array('subscriberID'=>$subscriber_id,'meta_key' => $meta_key , 'meta_value' => $meta_value ,'listID'=>$list_id));
 	}
 
 	static function update_subscriber_meta($subscriber_id,$meta_key,$meta_value,$list_id = false){
