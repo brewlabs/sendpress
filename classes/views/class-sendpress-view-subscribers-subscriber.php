@@ -102,9 +102,6 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 			$have_custom_field = SPNL()->validate->_bool('have_custom_field');
 			$custom_field_key = SPNL()->validate->_string('custom_field_key');
 
-			error_log("checking if i have key on save");
-			error_log($custom_field_key);
-
 			// custom field save
 			if ($have_custom_field) {
 				SendPress_Data::update_subscriber_meta($sid, $custom_field_key, SPNL()->validate->_string('custom_field_value'), false);
@@ -172,8 +169,6 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 						$custom_field_key = get_post_meta($saved_post_id, '_sp_custom_field_key', true);
 					}
 					/* Restore original Post Data */
-					error_log("test new custom id");
-					error_log($custom_field_key);
 
 					wp_reset_postdata();
 					if (strlen($custom_field_label) > 0) {
