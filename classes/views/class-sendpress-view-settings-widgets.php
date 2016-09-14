@@ -398,7 +398,37 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 				<?php $this->panel_end(); ?>
 			</div>
 			
-		
+				<?php   
+					global $wpdb;
+
+					$metas = $wpdb->get_results( 
+  						$wpdb->prepare("SELECT meta_value FROM $wpdb->postmeta where meta_key = %s", '_sp_custom_field_description')
+ 					);
+ 					$count = count($metas);
+
+					if ($count > 0) {
+					?>
+			<!-- custom fields -->
+			<div class="sp-50">
+				<?php $this->panel_start( __('Custom Fields','sendpress') ); ?>
+				
+
+ 					<?php 
+					foreach ($metas as $key=>$wpPostObject) {
+						$custom_field_label =  $wpPostObject->meta_value;
+				?>
+
+				<p>
+					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_custom_field'], 'on' ); ?> id="_collect_custom_field" name="_collect_custom_field" /> 
+					<label for="_collect_custom_field"><?php _e($custom_field_label, 'sendpress'); ?></label>
+				</p> 
+				<?php 
+				}
+				?>
+
+				<?php $this->panel_end(); ?>
+			</div>
+		<?php }?>
 		</div>
 		<input type="hidden" name="_setting_type" id="setting_type" value="form" />
 		<input type="hidden" name="_form_type" id="form_type" value="signup_widget" />
