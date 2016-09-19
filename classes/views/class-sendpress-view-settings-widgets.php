@@ -53,6 +53,8 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		//$data = array_slice($post, 0, -2);
 		$data = $_POST;
 
+		error_log(print_r($data, true));
+
 		//fix list ids for signup
 		$listids = array();
 		foreach($data as $key => $item){
@@ -399,12 +401,11 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 			</div>
 			
 				<?php   
-					global $wpdb;
+					global $wpdb, $custom_field_id;
 
-					$metas = $wpdb->get_results( 
-  						$wpdb->prepare("SELECT meta_value FROM $wpdb->postmeta where meta_key = %s", '_sp_custom_field_description')
- 					);
- 					$count = count($metas);
+					$custom_field_list = SendPress_Data::get_custom_fields();
+
+ 					$count = count($custom_field_list);
 
 					if ($count > 0) {
 					?>
@@ -414,8 +415,8 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 				
 
  					<?php 
-					foreach ($metas as $key=>$wpPostObject) {
-						$custom_field_label =  $wpPostObject->meta_value;
+					foreach ($custom_field_list as $key => $value) {
+						$custom_field_label = $value[custom_field_label];
 				?>
 
 				<p>
