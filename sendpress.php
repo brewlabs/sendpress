@@ -316,7 +316,6 @@ class SendPress {
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
 			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 			add_action( 'admin_notices', array( $this, 'admin_notice' ) );
-			add_action( 'sendpress_event', array( 'SendPress_Tracking', 'event' ), 1, 1 );
 			if ( defined( 'WP_ADMIN' ) && WP_ADMIN == true ) {
 				$sendpress_screen_options = new SendPress_Screen_Options();
 			}
@@ -802,7 +801,7 @@ class SendPress {
 				wp_die('Cheating I see..');
 			};
 			
-			SendPress_Tracking::init();
+			//SendPress_Tracking::init();
 			SendPress_Notifications_Manager::init();
 
 			if ( isset( $_GET['spv'] ) ) {
@@ -1443,17 +1442,7 @@ class SendPress {
 			}
 			SendPress_Option::set( 'socialicons', $link );
 		}
-		/*
-		if( version_compare( $current_version, '0.9.9.8', '<' ) && SendPress_Option::get('autocron','no') == 'yes' ){
-			$email = get_option( 'admin_email' );
-			$url = "http://api.sendpress.com/senddiscountcode/".md5($_SERVER['SERVER_NAME']."|".$email)."/".$email;
-			wp_remote_get( $url );
-		}
-
-
-		*/
-
-		
+	
 
 		$update_options_sp = array();
 
