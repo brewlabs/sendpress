@@ -2240,23 +2240,39 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 	static function get_custom_fields(){
-		$query = new WP_Query(
-			array(
-				'posts_per_page'=>-1,
-				'post_type' => 'sp_newsletters',
-				//'post_status' => array('sp-systememail'),
-				'meta_query' => array(
-				array(
-					'key'     => '_system_email_type',
-					'value'   => 'opt_in',
-					'compare' => '=',
-				),
-			),
-			)
-		);
+
+				$args = array(
+					'post_type' => 'sp_settings',
+					'meta_query' => array(
+						array(
+							'key'     => '_sp_setting_type',
+							'value'   => 'custom_field',
+							'compare' => '=',
+						),
+					)
+				);
+				$query = new WP_Query( $args );
+
+				$return = array();
+				if ( $query->have_posts() ) {
+
+					while ( $query->have_posts() ) {
+						$query->the_post();
+						$saved_post_id = get_the_ID();
+						$custom_field_label = get_post_meta($saved_post_id, '_sp_custom_field_description', true);
+						$custom_field_key = get_post_meta($saved_post_id, '_sp_custom_field_key', true);
+
+						array_push($return, array(
+							'id'      				=> $saved_post_id,
+							'custom_field_label'   	=> $custom_field_label,
+							'custom_field_key' 		=> $custom_field_key
+						));
+					}
+
+				}
 
 		wp_reset_postdata();
-		return $query->posts;
+		return $return;
 	}
 
 	static function create_default_form($type = 'signup'){
