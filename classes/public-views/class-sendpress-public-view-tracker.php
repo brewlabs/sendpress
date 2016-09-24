@@ -52,6 +52,10 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 				case '{sp-manage-subscription-url}':
 					$url = SPNL()->template_tags->do_subscriber_tags( SendPress_Tag_Manage_Subscriptions::external( $info->url, $info->report , $info->id, false ), $info->report, $info->report, $info->id, false );
 				break;
+				default:
+						$url = SPNL()->template_tags->do_subscriber_tags( $info->url, $info->report, $info->report, $info->id, false );
+				
+
 			}
 
 		} catch (Exception $e) {
@@ -71,6 +75,7 @@ class SendPress_Public_View_Tracker extends SendPress_Public_View {
 		wp_remote_post($request, $args);	
 		*/
 
+		
 
 
 		if(strrpos( $url, "mailto" ) !== false){
