@@ -27,52 +27,30 @@ class SendPress_View_Subscribers_Custom extends SendPress_View_Subscribers {
 <form id="create-custom-field" method="post">
         <input type="hidden" name="post_ID" id="post_ID" value="<?php echo $post->ID; ?>" />
         <input type="hidden" name="action" id="action" value="create-custom-field" />
+        <!-- custom fields -->
 			<?php $this->panel_start('Custom Fields');
+				global $wpdb, $custom_field_id;
+				$custom_field_list = SendPress_Data::get_custom_fields();
+				$count = count($custom_field_list);
 
-				$args = array(
-					'post_type' => 'sp_settings',
-					'meta_query' => array(
-						array(
-							'key'     => '_sp_setting_type',
-							'value'   => 'custom_field',
-							'compare' => '=',
-						),
-					)
-				);
-				$query = new WP_Query( $args );
-
-				if ( $query->have_posts() ) {
-
-					while ( $query->have_posts() ) {
-						$query->the_post();
-						//$custom_field_label = get_the_title();
-						$saved_post_id = get_the_ID();
-						$custom_field_label = get_post_meta($saved_post_id, '_sp_custom_field_description', true);
+				if ($count > 0) {
+					foreach ($custom_field_list as $key => $value) {
+						$custom_field_label = $value[custom_field_label];
 					}
-					/* Restore original Post Data */
-					wp_reset_postdata();
-				} else {
-					$custom_field_label = "";
-					$saved_post_id = 0;
-				}
-			?>
-			<p>
-				<label for="_salutation_label"><?php _e('Custom Field Label:', 'sendpress'); ?></label>
-				<input type="text" class="widefat" id="_custom_field_label" name="_custom_field_label" value="<?php echo $custom_field_label;?>" style="width:300px;" />
-			</p>
+ 				}?>
+				<p>
+					<label for="_salutation_label"><?php _e('Custom Field Label:', 'sendpress'); ?></label>
+					<input type="text" class="widefat" id="_custom_field_label" name="_custom_field_label" value="<?php echo $custom_field_label;?>" style="width:300px;" />
+				</p>
 
-				
-			
 				<div> 
 					<div id="button-area">  
 						<!--<a class="btn btn-primary btn-large" href="?page=<?php echo SPNL()->validate->page(); ?>&view=custom"><?php _e('Save','sendpress'); ?></a>-->
-						<input type="submit" value="<?php _e('Save List','sendpress'); ?>" class="btn btn-large btn-primary"/>
+						<input type="submit" value="<?php _e('Save','sendpress'); ?>" class="btn btn-large btn-primary"/>
 					</div>
 				</div>
 			
 			<?php $this->panel_end();?>
-
-			
 
 			<?php $this->panel_start('Upgrade to SendPress Pro');
 			if(defined('SENDPRESS_PRO_VERSION')){
