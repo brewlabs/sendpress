@@ -251,7 +251,6 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		$widget_options = SendPress_Option::get('widget_options');
 		$list_ids = (strlen($_listids) > 0) ? explode(",",$_listids) : array();
 
-
 		if(!isset($_settings_id) && empty($list_ids)){
 			$list_ids = $default_list_ids;
 		}
