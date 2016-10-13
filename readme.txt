@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
 Tested up to: 4.6.1
-Stable tag: 1.7.9.19
+Stable tag: 1.7.10.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.7.10.12 - 2016.10.12 =
+* Update: Autocron runs for scheduled emails
+* Fix: Confirm Template rendering
+* Fix: Email sending with send now option
+
 
 = 1.7.9.19 - 2016.9.19 =
 * Update: Autocron now activated when emails added to queue
