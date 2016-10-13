@@ -138,7 +138,7 @@ class SendPress_Cron {
              $attempted_count = SendPress_Option::get('autocron-per-call',25);
             $c =  ceil($queue / $attempted_count );
             $url = str_replace('/', ':r:',site_url());
-            wp_remote_get("https://api.spnl.io/autocron/add/". $url. "/" . $c , array('blocking'    => false) );
+            wp_remote_get("http://api.spnl.io/autocron/add/". $url. "/" . $c , array('blocking'    => false) );
             //print_r($r);
             // }
         }finally{
