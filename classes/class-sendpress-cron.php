@@ -141,8 +141,8 @@ class SendPress_Cron {
             wp_remote_get("http://api.spnl.io/autocron/add/". $url. "/" . $c , array('blocking'    => false) );
             //print_r($r);
             // }
-        }finally{
-            return true;
+        } catch (Exception $e) {
+            // echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
         //api.spnl.io/autocron/add/
     }
