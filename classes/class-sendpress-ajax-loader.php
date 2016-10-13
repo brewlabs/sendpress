@@ -266,7 +266,7 @@ class SendPress_Ajax_Loader {
 	function sendcron() {
 		$this->verify_ajax_call();
 		// Create the response arrayecho SendPress_Data::emails_active_in_queue();
-		$response = SendPress_Cron::run_cron_functions(); //emails_allowed_to_send();
+		$response = SendPress_Cron::run_cron_functions(true); //emails_allowed_to_send();
 		echo json_encode( $response );
 		exit();
 	}
