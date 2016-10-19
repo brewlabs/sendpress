@@ -124,7 +124,7 @@ class SendPress_Cron {
                 $limits = array('autocron'=> $attempted_count,'dl'=>$emails_per_day,'hl'=>$emails_per_hour,'ds'=>$emails_so_far,'hs'=>$hourly_emails);
                 $time_end = microtime(true);
                 $time = $time_end - $time_start;
-                if($internal == false){
+                if($internal == false && $limit == false && $count > 0 && $stuck < $count){
                     SendPress_Cron::_load($count);
                 }
                 return array( "error" => $error , "background"=> $bg , "weekly"=> $bg_weekly , "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits ,'time'=> number_format( $time , 3 ) );
@@ -137,8 +137,10 @@ class SendPress_Cron {
             // if($queue > 0 ){
              $attempted_count = SendPress_Option::get('autocron-per-call',25);
             $c =  ceil($queue / $attempted_count );
-            $url = str_replace('/', ':r:',site_url());
-            wp_remote_get("http://api.spnl.io/autocron/add/". $url. "/" . $c , array('blocking'    => false) );
+            if($c > 0){
+                $url = str_replace('/', ':r:',site_url());
+                wp_remote_get("http://api.spnl.io/autocron/add/". $url. "/" . $c ."/". SENDPRESS_VERSION, array('blocking'    => false) );
+            }
             //print_r($r);
             // }
         } catch (Exception $e) {
@@ -230,7 +232,9 @@ class SendPress_Cron {
                 $limits = array('autocron'=> $attempted_count,'dl'=>$emails_per_day,'hl'=>$emails_per_hour,'ds'=>$emails_so_far,'hs'=>$hourly_emails);
                 $time_end = microtime(true);
                 $time = $time_end - $time_start;
-                SendPress_Cron::_load($count);
+                if($limit == false && $count > 0 && $stuck < $count){
+                    SendPress_Cron::_load($count);
+                }
                 echo json_encode(array("error" => $error , "background"=> $bg , "weekly"=> $bg_weekly , "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits ,'time'=> number_format( $time , 3 ) ) );
                 die();
             }

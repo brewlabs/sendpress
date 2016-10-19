@@ -2248,8 +2248,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 							'key'     => '_sp_setting_type',
 							'value'   => 'custom_field',
 							'compare' => '=',
-						),
-					)
+						)
+					),
+					'post_status' => 'draft'
 				);
 				$query = new WP_Query( $args );
 

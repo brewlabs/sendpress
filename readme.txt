@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
 Tested up to: 4.6.1
-Stable tag: 1.7.10.13
+Stable tag: 1.7.10.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,10 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.7.10.14 - 2016.10.14 =
+* Fix: Autocron making multiple calls
+* Update: imporve sending speed.
 
 = 1.7.10.13 - 2016.10.13 =
 * Fix: error with ajax class.
@@ -972,6 +976,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WordPress.org
 
 == Upgrade Notice ==
+
+= 1.7.10.14 =
+Minor bug fixes
 
 = 1.7.8.11 =
 Bug fixes and Show lists on All Subscribers page
