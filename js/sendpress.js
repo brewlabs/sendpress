@@ -401,7 +401,7 @@
                         $qt.html(response.total);
 
                         if(response.total > 0 && response.active > 0 ){
-                            var $frame = '<iframe src="//api.spnl.io/autocron/add/'+response.url+'/'+response.try+'" style="width:0;height:0;border: 0;border: none;"></iframe>';
+                            var $frame = '<iframe src="//api.spnl.io/autocron/add/'+response.url+'/'+response.try+'/'+response.version+' " style="width:0;height:0;border: 0;border: none;"></iframe>';
                             $($frame).appendTo('body');
                         }
 

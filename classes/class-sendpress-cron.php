@@ -139,7 +139,7 @@ class SendPress_Cron {
             $c =  ceil($queue / $attempted_count );
             if($c > 0){
                 $url = str_replace('/', ':r:',site_url());
-                wp_remote_get("http://api.spnl.io/autocron/add/". $url. "/" . $c , array('blocking'    => false) );
+                wp_remote_get("http://api.spnl.io/autocron/add/". $url. "/" . $c ."/". SENDPRESS_VERSION, array('blocking'    => false) );
             }
             //print_r($r);
             // }

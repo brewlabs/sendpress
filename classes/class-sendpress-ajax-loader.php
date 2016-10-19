@@ -277,17 +277,25 @@ class SendPress_Ajax_Loader {
 		// Create the response array
 		// 
 		$count = SendPress_Data::emails_in_queue();
-		$active = SendPress_Data::emails_active_in_queue();
+		$active = $count;
+		 $stuck = SendPress_Data::emails_stuck_in_queue();
 		$df = SendPress_Option::get( 'autocron' );
 		if($df != 'yes'){
 			$active = 0;
 		}
+		if($count == $stuck){
+			$active = 0;
+		}
+
 		$url = str_replace('/', ':r:',site_url());
 		$response = array(
 			'total' => $count,
 			'url' => $url,
 			'try' => $count > 0 ? ceil($count/25) : 0,
-			'active' => $active
+			'active' => $active,
+			'stuck' => $stuck,
+			'auto' => $df,
+			'version' => SENDPRESS_VERSION
 		);
 		echo json_encode( $response );
 		exit();
