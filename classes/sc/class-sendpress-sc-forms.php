@@ -30,7 +30,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 	 * @param array $atts
 	 */
 	public static function output( $atts , $content = null ) {
-		
+
 		extract( shortcode_atts( self::options() , $atts ) );
 
 		if(is_numeric($formid)){
@@ -214,6 +214,12 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 	private static function signup($options){
 		//print_r($options);
 
+
+
+
+
+
+
 		global $load_signup_js, $sendpress_show_thanks, $sendpress_signup_error;
 		$sendpress_signup_exists = __("You've already signed up, Thanks!",'sendpress');
 		$load_signup_js = true;
@@ -254,11 +260,17 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		if(!isset($_settings_id) && empty($list_ids)){
 			$list_ids = $default_list_ids;
 		}
+
+
 		$post_notifications_code = '';
 		if( !is_wp_error($list_ids) || !is_wp_error($postnotification) || !is_wp_error($pnlistid)   ){
 			$post_notifications_code = apply_filters( 'sendpress-post-notifications-submit-code', "", $list_ids, $postnotification, $pnlistid );
 			
 		}
+
+
+					
+
 	    ?>
 
 	    <div class="sendpress-signup-form">
@@ -351,6 +363,69 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 						<?php endif; ?>
 						<input type="text" class="sp_email" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_email_label; ?>"<?php endif; ?> value="" name="sp_email" />
 					</p>
+
+					<?php if( filter_var($_collect_custom_field, FILTER_VALIDATE_BOOLEAN) ): ?>
+						<div>test test</div>
+									<?php   
+					
+
+
+
+
+
+        				$args_e = array(
+					'post_type' => 'sp_settings',
+					'meta_query' => array(
+						array(
+							'key'     => '_sp_setting_type',
+							'value'   => 'custom_field',
+							'compare' => '=',
+						),
+					)
+				);
+        $wp_query = new WP_Query($args_e);
+        error_log(print_r($wp_query, true));
+        error_log("test");
+        //if ( have_posts() ) : while ( have_posts() ) : the_post();
+          //error_log(get_post_meta($saved_post_id, '_sp_custom_field_description', true));
+        //endwhile;
+        //endif;
+
+
+
+
+					$custom_field_list = SendPress_Data::get_custom_fields();
+					
+ 					$count = count($custom_field_list); ?>
+ 						<div>more test test</div>
+					<?if ($count > 0) {
+					?>
+							<!-- custom fields -->
+							<div class="sp-50">
+							
+				
+
+ 								<?php 
+							foreach ($custom_field_list as $key => $value) {
+							$custom_field_label = $value[custom_field_label];
+								?>
+
+								<p name="sp_custom_field">
+		
+									<label for="sp_custom_field"><?php _e($custom_field_label, 'sendpress'); ?></label>
+
+									<input type="text" class="sp_custom_field" value="" name="sp_custom_field" />
+
+								</p> 
+							<?php 
+							}
+							?>
+
+							
+						</div>
+					<?php }?>
+					<?php endif; ?>
+
 					<p name="extra_fields" class="signup-fields-bottom">
 						<?php do_action('sendpress_signup_form_bottom'); ?>
 					</p>
