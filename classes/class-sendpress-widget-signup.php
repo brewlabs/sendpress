@@ -223,8 +223,8 @@ class SendPress_Widget_Signup extends WP_Widget {
 
 		<p>
 			<label for="<?php echo $this->get_field_id( 'label_display' ); ?>"><?php _e('Display labels inside','sendpress'); ?>?:</label>
-			<input type="radio" name="<?php echo $this->get_field_name( 'label_display' ); ?>" value="1"<?php echo $instance['label_display'] == 1 ? ' checked' : ''; ?> /> <?php __('Yes','sendpress') ?>
-			<input type="radio" name="<?php echo $this->get_field_name( 'label_display' ); ?>" value="0"<?php echo $instance['label_display'] == 0 ? ' checked' : ''; ?> /> <?php __('No','sendpress') ?>
+			<input type="radio" name="<?php echo $this->get_field_name( 'label_display' ); ?>" value="1"<?php echo $instance['label_display'] == 1 ? ' checked' : ''; ?> /> <?php _e('Yes','sendpress') ?>
+			<input type="radio" name="<?php echo $this->get_field_name( 'label_display' ); ?>" value="0"<?php echo $instance['label_display'] == 0 ? ' checked' : ''; ?> /> <?php _e('No','sendpress') ?>
 		</p>
 		<!--
 		<p>
