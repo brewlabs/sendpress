@@ -53,7 +53,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		//$data = array_slice($post, 0, -2);
 		$data = $_POST;
 
-		error_log(print_r($data, true));
+		//error_log(print_r($data, true));
 
 		//fix list ids for signup
 		$listids = array();

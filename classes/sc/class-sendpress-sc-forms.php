@@ -214,12 +214,6 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 	private static function signup($options){
 		//print_r($options);
 
-
-
-
-
-
-
 		global $load_signup_js, $sendpress_show_thanks, $sendpress_signup_error;
 		$sendpress_signup_exists = __("You've already signed up, Thanks!",'sendpress');
 		$load_signup_js = true;
@@ -267,9 +261,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 			$post_notifications_code = apply_filters( 'sendpress-post-notifications-submit-code', "", $list_ids, $postnotification, $pnlistid );
 			
 		}
-
-
-					
+			
 
 	    ?>
 
@@ -365,45 +357,17 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					</p>
 
 					<?php if( filter_var($_collect_custom_field, FILTER_VALIDATE_BOOLEAN) ): ?>
-						<div>test test</div>
 									<?php   
 					
-
-
-
-
-
-        				$args_e = array(
-					'post_type' => 'sp_settings',
-					'meta_query' => array(
-						array(
-							'key'     => '_sp_setting_type',
-							'value'   => 'custom_field',
-							'compare' => '=',
-						),
-					)
-				);
-        $wp_query = new WP_Query($args_e);
-        error_log(print_r($wp_query, true));
-        error_log("test");
-        //if ( have_posts() ) : while ( have_posts() ) : the_post();
-          //error_log(get_post_meta($saved_post_id, '_sp_custom_field_description', true));
-        //endwhile;
-        //endif;
-
-
-
-
 					$custom_field_list = SendPress_Data::get_custom_fields();
 					
  					$count = count($custom_field_list); ?>
- 						<div>more test test</div>
+ 						
 					<?if ($count > 0) {
 					?>
 							<!-- custom fields -->
 							<div class="sp-50">
 							
-				
 
  								<?php 
 							foreach ($custom_field_list as $key => $value) {
