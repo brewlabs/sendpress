@@ -188,7 +188,8 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 	}
 
 	function create_form(){
-		
+                global $post;
+
 		$copy_from =  SPNL()->validate->_int('id');
 		$save_type = ($copy_from > 0) ? "copy" : "create";
 
@@ -201,7 +202,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
     		<div class="sp-50 sp-first">
 				<?php $this->panel_start( __('Form Name','sendpress') ); ?>
         
-		        <input type="text" name="post_subject" size="30" tabindex="1" class="form-control" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
+		        <input type="text" name="post_subject" size="30" tabindex="1" class="form-control" value="<?php echo esc_attr( htmlspecialchars( get_post_meta(get_the_ID(),'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
 		        
 		        <?php $this->panel_end(  ); ?>
 			</div>
