@@ -1063,6 +1063,16 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 
+	static function delete_subscriber_meta($subscriber_id, $meta_key, $list_id){
+		global $wpdb;
+
+		$meta_table = SendPress_Data::subscriber_meta_table();
+		$has_data = SendPress_Data::get_subscriber_meta( $subscriber_id, $meta_key, $list_id, true );
+		if(empty($has_data)){
+			$wpdb->query( $wpdb->prepare("DELETE FROM $table WHERE listID = %d AND subscriberID = %d AND meta_key = %d", $list_id, $subscriberID, $meta_key) );
+		}
+	}
+
 	static function get_most_active_subscriber( $limit = 10 ){
 		global $wpdb;
 		$table  = SendPress_Data::subscriber_event_table();
@@ -1345,6 +1355,11 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function unsubscribe_from_all_lists( $sid ) {
 		global $wpdb;
 		$wpdb->update( SendPress_Data::list_subcribers_table() , array('status'=> 3) , array('subscriberID'=>$sid ));
+
+		//set post notification status to none
+		$lists = SendPress_Option::get('pro_notification_lists');
+		$pnid = $lists['post_notifications']['id'];
+		SendPress_Data::delete_subscriber_meta($sid,'post_notifications',$pnid);
 	}
 
 
