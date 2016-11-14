@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
 Tested up to: 4.6.1
-Stable tag: 1.7.10.24
+Stable tag: 1.7.11.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.7.11.14 - 2016.11.14 =
+* Fix: Unsubscribe from post notification
 
 = 1.7.10.24 - 2016.10.24 =
 * Fix: More sending update for faster sending
@@ -979,6 +982,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WordPress.org
 
 == Upgrade Notice ==
+
+= 1.7.11.14 =
+Unsubscribe from post notification fix (PRO)
 
 = 1.7.10.14 =
 Minor bug fixes
