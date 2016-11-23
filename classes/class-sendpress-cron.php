@@ -124,7 +124,7 @@ class SendPress_Cron {
                 $limits = array('autocron'=> $attempted_count,'dl'=>$emails_per_day,'hl'=>$emails_per_hour,'ds'=>$emails_so_far,'hs'=>$hourly_emails);
                 $time_end = microtime(true);
                 $time = $time_end - $time_start;
-                if($internal == false && $limit == false && $count > 0 && $stuck < $count){
+                if($internal == false && $limit == false && intval($count) > 0 && intval($stuck) < intval($count) && intval($stuck) != intval($count) ){
                     SendPress_Cron::_load($count);
                 }
                 return array( "error" => $error , "background"=> $bg , "weekly"=> $bg_weekly , "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits ,'time'=> number_format( $time , 3 ) );
@@ -232,7 +232,7 @@ class SendPress_Cron {
                 $limits = array('autocron'=> $attempted_count,'dl'=>$emails_per_day,'hl'=>$emails_per_hour,'ds'=>$emails_so_far,'hs'=>$hourly_emails);
                 $time_end = microtime(true);
                 $time = $time_end - $time_start;
-                if($limit == false && $count > 0 && $stuck < $count){
+                if($limit == false && intval($count) > 0 && intval($stuck) < intval($count) && intval($stuck) != intval($count) ){
                     SendPress_Cron::_load($count);
                 }
                 echo json_encode(array("error" => $error , "background"=> $bg , "weekly"=> $bg_weekly , "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits ,'time'=> number_format( $time , 3 ) ) );
