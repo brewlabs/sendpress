@@ -17,6 +17,7 @@ class SendPress_Security{
 	private $_adminpage = array('sp','sp-overview','sp-reports','sp-emails','sp-templates','sp-subscribers','sp-settings','sp-queue','sp-pro','sp-help');
 	private $_orderby = array('firstname','lastname','email','join_date','lastsend','subject');
 	private $_allowed_tags = array(
+
 		'a' => array(
 			'class' => array(),
 			'href'  => array(),
@@ -35,6 +36,7 @@ class SendPress_Security{
 			'title' => array(),
 		),
 		'code' => array(),
+		'center' => array(),
 		'del' => array(
 			'datetime' => array(),
 			'title' => array(),
