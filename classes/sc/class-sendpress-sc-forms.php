@@ -356,22 +356,20 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 						<input type="text" class="sp_email" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_email_label; ?>"<?php endif; ?> value="" name="sp_email" />
 					</p>
 
-					<?php if( filter_var($_collect_custom_field, FILTER_VALIDATE_BOOLEAN) ): ?>
-									<?php   
+					<?php 
+					if( filter_var($_collect_custom_field, FILTER_VALIDATE_BOOLEAN) ){
+						$custom_field_list = SendPress_Data::get_custom_fields();
 					
-					$custom_field_list = SendPress_Data::get_custom_fields();
-					
- 					$count = count($custom_field_list); ?>
- 						
-					<?if ($count > 0) {
-					?>
+	 					$count = count($custom_field_list); 
+	 						
+						if ($count > 0) {
+							?>
 							<!-- custom fields -->
 							<div class="sp-50">
-							
 
- 								<?php 
+							<?php 
 							foreach ($custom_field_list as $key => $value) {
-							$custom_field_label = $value[custom_field_label];
+								$custom_field_label = $value[custom_field_label];
 								?>
 
 								<p name="sp_custom_field">
@@ -385,11 +383,12 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 							}
 							?>
 
-							
-						</div>
-					<?php }?>
-					<?php endif; ?>
-
+								
+							</div>
+							<?php
+						}
+					}
+					?>
 					<p name="extra_fields" class="signup-fields-bottom">
 						<?php do_action('sendpress_signup_form_bottom'); ?>
 					</p>
