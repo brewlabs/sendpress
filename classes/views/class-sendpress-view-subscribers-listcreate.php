@@ -17,26 +17,26 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
         }
 
         $list_id = SendPress_Data::create_list( array('name'=> $name, 'public'=> $public ) );
-      	update_post_meta($listid, '_test_list', SPNL()->validate->_string('test_list'));
-		update_post_meta($listid, 'sync_role', SPNL()->validate->_string('sync_role'));
-		update_post_meta($listid, 'meta-key', SPNL()->validate->_string('meta-key'));
-		update_post_meta($listid, 'meta-compare', SPNL()->validate->_string('meta-compare'));
-		update_post_meta($listid, 'meta-value',SPNL()->validate->_string('meta-value'));
-		update_post_meta($listid, 'opt-in-id', SPNL()->validate->_int('opt-in-id'));
+      	update_post_meta($list_id, '_test_list', SPNL()->validate->_string('test_list'));
+		update_post_meta($list_id, 'sync_role', SPNL()->validate->_string('sync_role'));
+		update_post_meta($list_id, 'meta-key', SPNL()->validate->_string('meta-key'));
+		update_post_meta($list_id, 'meta-compare', SPNL()->validate->_string('meta-compare'));
+		update_post_meta($list_id, 'meta-value',SPNL()->validate->_string('meta-value'));
+		update_post_meta($list_id, 'opt-in-id', SPNL()->validate->_int('opt-in-id'));
 
         SendPress_Admin::redirect('Subscribers');
 	}
-	
+
 	function html() {
 		?>
-	
+
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="list-create" method="post">
-		<div id="button-area">  
+		<div id="button-area">
 		<input type="submit" value="<?php _e('Save List','sendpress'); ?>" class="btn btn-large btn-primary"/>
 	</div>
 	<h2><?php _e('Create List','sendpress'); ?></h2>
-	
+
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	    <input type="hidden" name="action" value="create-list" />
 	    <p><input type="text" name="name" value="" /></p>
@@ -45,13 +45,13 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
 
 	    <!-- Now we can render the completed list table -->
 	     <!-- Now we can render the completed list table -->
-	   	
-	   	 <?php 
 
-	 
+	   	 <?php
+
+
 	   $roles = 'none';
 	   	 		$d = 'checked';
-	   	 	
+
 
 	   	?>
 	   	<p><H4><?php _e('Select List Type','sendpress'); ?></h4>
@@ -65,8 +65,8 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
 	   	 		$d = 'checked';
 	   	 	} ?>
     		<input type="radio" name="sync_role" value="<?php echo $role_name ?>" <?php echo $d; ?> /> <?php echo translate_user_role($role_info['name']); ?><br>
-    		
-       
+
+
   		<?php endforeach; ?>
 
 		<input type="radio" name="sync_role" value="meta"  <?php echo $d; ?> /> <?php _e('User Meta Query - Advanced','sendpress'); ?> ( <?php _e('Use this to sync a list based on user meta data.','sendpress'); ?> )<br><br>
@@ -79,8 +79,8 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
 
 
 		<br><br>
-		
-		<?php 
+
+		<?php
 
 		$optin_emails = SendPress_Data::get_list_sys_emails('opt_in');
 		// echo '<pre>';
@@ -96,7 +96,7 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
 			<?php
 
 				foreach ($optin_emails as $key => $email) {
-					
+
 					?>
 					<option value="<?php echo $email->ID; ?>"><?php echo get_post_meta($email->ID, '_sendpress_subject', true);?></option>
 					<?php
@@ -105,7 +105,7 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
 		</select>
 
 </p>
-	  
+
 	   	<?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
 	<?php
