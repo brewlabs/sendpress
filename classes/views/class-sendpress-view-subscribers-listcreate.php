@@ -72,7 +72,7 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
 		<input type="radio" name="sync_role" value="meta"  <?php echo $d; ?> /> <?php _e('User Meta Query - Advanced','sendpress'); ?> ( <?php _e('Use this to sync a list based on user meta data.','sendpress'); ?> )<br><br>
    		<label>Meta Key</label>
 			<input type="text" name="meta-key" value="" />
-		<?php $this->select('meta-compare', '' , array( '=', '!=', '>', '>=', '<', '<=', 'LIKE', 'NOT LIKE', 'IN', 'NOT IN') ); ?>
+		<?php $this->select('meta-compare', '' , array( '=', '!=', '>', '>=', '<', '<=', 'LIKE', 'NOT LIKE', 'IN', 'NOT IN', 'EXISTS', 'NOT EXISTS') ); ?>
 
 		<label>Meta Value</label>
 			<input type="text" name="meta-value" value="" />
