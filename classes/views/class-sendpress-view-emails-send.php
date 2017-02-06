@@ -40,6 +40,10 @@ class SendPress_View_Emails_Send extends SendPress_View_Emails {
                 update_post_meta( $post_info_id , 'google-campaign-name', sanitize_text_field($_POST['google-campaign-name']));
             }
 
+            if( isset($_POST['custom-from-email']) ) {
+                update_post_meta( $post_info_id , 'custom-from-email', sanitize_text_field($_POST['custom-from-email']));
+            }
+
             if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
             	 SendPress_Admin::redirect('Emails_Send_Confirm', array('emailID'=>SPNL()->validate->_int('emailID') ));
             } else {
@@ -104,6 +108,10 @@ $post_type_object = get_post_type_object( $post_type );
 <input type="text" class="form-control" name="post_subject" size="30" tabindex="1" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
 <?php $this->panel_end(); ?>
 <div class="leftcol">
+
+<?php do_action('spnl_add_to_sending_before' , $this); ?>
+
+    
 <?php $this->panel_start( '<span class="glyphicon glyphicon-calendar"></span> '. __('Date & Time','sendpress')); ?>
 <input type="radio" name="send-date" value="now" checked/> <?php _e('Start Sending Now','sendpress'); ?><br>
 <input type="radio" name="send-date" value="later"/> <?php _e('Send Later','sendpress'); ?><br>

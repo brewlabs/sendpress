@@ -38,7 +38,7 @@ For the best security we recommend <a href="https://wordpress.org/plugins/postma
 	}
 
 
-	function send_email($to, $subject, $html, $text, $istest = false ,$sid , $list_id, $report_id ){
+	function send_email($to, $subject, $html, $text, $istest = false ,$sid , $list_id, $report_id, $fromname, $fromemail){
 		
 		$phpmailer = new SendPress_PHPMailer;
 		/*
@@ -71,9 +71,9 @@ For the best security we recommend <a href="https://wordpress.org/plugins/postma
                     
             }
 
-        $from_email = SendPress_Option::get('fromemail');
-		$phpmailer->From = $from_email;
-		$phpmailer->FromName = SendPress_Option::get('fromname');
+        //$from_email = SendPress_Option::get('fromemail');
+		$phpmailer->From = $fromemail;
+		$phpmailer->FromName = $fromname;//SendPress_Option::get('fromname');
 		//$phpmailer->Sender = 'bounce@sendpress.us';
 		//$phpmailer->Sender = SendPress_Option::get('fromemail');
 		$sending_method  = SendPress_Option::get('sendmethod');

@@ -353,6 +353,21 @@ class SendPress_Ajax_Loader {
 		$time     = get_post_meta( $reportid, '_send_time', true );
 		$list     = explode( ",", $lists );
 		$last     = get_post_meta( $reportid, '_send_last', true );
+
+		$fromname = SendPress_Option::get('fromname');
+		$fromemail = SendPress_Option::get('fromemail');
+
+		$cfromname = get_post_meta( $reportid, 'custom-from-name', true );
+		$cfromemail = get_post_meta( $reportid, 'custom-from-email', true );
+
+		if(strlen($cfromname) > 0){
+			$fromname = $cfromname;
+		}
+
+		if(strlen($cfromemail) > 0){
+			$fromemail = $cfromemail;
+		}
+
 		//$count_last = get_post_meta($reportid, '_send_last_count', true);
 		if ( $last == false ) {
 			$last       = 0;
@@ -364,8 +379,8 @@ class SendPress_Ajax_Loader {
 		foreach ( $x as $email ) {
 
 			$go = array(
-				'from_name'    => 'queue',
-				'from_email'   => 'queue',
+				'from_name'    => $fromname,
+				'from_email'   => $fromemail,
 				'to_email'     => $email->email,
 				'emailID'      => $reportid,
 				'subscriberID' => $email->subscriberID,

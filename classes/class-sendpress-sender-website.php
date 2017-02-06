@@ -88,7 +88,7 @@ class SendPress_Sender_Website extends SendPress_Sender {
 		return $phpmailer;
 	}
 
-	function send_email($to, $subject, $html, $text, $istest = false, $sid , $list_id, $report_id ){
+	function send_email($to, $subject, $html, $text, $istest = false, $sid , $list_id, $report_id,$fromname, $fromemail  ){
 		
 		$this->emailText = $text;
 		$this->sid = $sid;
@@ -119,7 +119,7 @@ class SendPress_Sender_Website extends SendPress_Sender {
 				'X-SP-REPORT: ' . $this->report_id . ';',
 				'X-SP-SUBSCRIBER: '. $this->sid . ';',
 				'X-SP-METHOD: website wp_mail',
-				'From: '. SendPress_Option::get('fromname') .' <'.SendPress_Option::get('fromemail').'>',
+				'From: '. $fromname .' <'.$fromemail.'>',
 				'List-Unsubscribe: <'.$link2.'>',
 				'Return-Path: '. $rpath
 			 );
