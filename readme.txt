@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
-Tested up to: 4.7
-Stable tag: 1.7.12.15
+Tested up to: 4.7.1
+Stable tag: 1.8.1.24
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,6 +118,10 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.8.1.24 - 2017.1.24 =
+* Fix: Remove phpmailer refs
+* Fix: Meta info on list
+* Fix: Video image replace fix
 
 = 1.7.12.15 - 2016.12.15 =
 * Fix: Form fix for stuff
