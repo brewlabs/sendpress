@@ -329,7 +329,7 @@ class SendPress_Autoresponder_Table extends WP_List_Table {
 				}
 			}
 			//Which page is this?
-			  $paged = $sp_validate->_int("paged");
+			  $paged = SPNL()->validate->_int("paged");
 			//Page Number
 			if(empty($paged) || !is_numeric($paged) || $paged<=0 ){ $paged=1; }
 			//How many pages do we have in total?

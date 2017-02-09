@@ -47,13 +47,9 @@ class SendPress_Videos{
         ob_start();
         ?>
         
-        <table  width="580" align="center" cellpadding="0" cellspacing="0">
-            <tr>
-                <td align="center">
-                    <a href='<?php echo $url; ?>' target='_blank'><img src='<?php echo $img; ?>'></a>
-                </td>
-            </tr>    
-        </table>
+        
+        <a href='<?php echo $url; ?>' target='_blank'><img src='<?php echo $img; ?>'></a>
+                
         
         <?php
         $output = ob_get_contents();

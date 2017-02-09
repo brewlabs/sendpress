@@ -176,7 +176,7 @@ class SendPress_Email {
 				$pTags = $dom->getElementsByTagName('p');
 				foreach ($pTags as $pElement) {
 					$px = $pElement->getAttribute('style');
-					$pElement->setAttribute('style', $px .' margin-top:0;margin-bottom:10px;');
+					$pElement->setAttribute('style', ' margin-top:0; margin-bottom:10px; ' . $px );
 				}
 				if($this->tracker()){
 				$aTags = $dom->getElementsByTagName('a');

@@ -185,7 +185,9 @@ class SendPress_Notifications_Manager {
 		}
 
 		if( $options['send-to-admins'] ){
+			
 			$admins = new WP_User_Query( array( 'role' => 'Administrator' ) );
+
 			foreach ( $admins->results as $user ) {
 				if( $user->user_email !== $options['email'] ){
 					$senders[] = $user->user_email;
@@ -230,6 +232,9 @@ class SendPress_Notifications_Manager {
 		}
 		
 		add_action( 'sendpress_notification_daily', array( 'SendPress_Notifications_Manager', 'maybe_send_notification' ) );
+
+		//testing
+		//SendPress_Notifications_Manager::send_notification('test body','test text');
 	}
 
 }

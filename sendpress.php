@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: SendPress Newsletters
-Version: 1.7.10.24
+Version: 1.8.1.24
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -18,7 +18,7 @@ global $blog_id;
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-define( 'SENDPRESS_VERSION', '1.7.10.24' );
+define( 'SENDPRESS_VERSION', '1.8.1.24' );
 define( 'SENDPRESS_URL', plugin_dir_url( __FILE__ ) );
 define( 'SENDPRESS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -844,11 +844,6 @@ class SendPress {
 			remove_filter( "mce_plugins", "cforms_plugin" );
 			remove_filter( 'mce_buttons', 'cforms_button' );
 			remove_filter( 'tinymce_before_init', 'cforms_button_script' );
-
-
-			global $wp_filter;
-
-			$wp_filter['admin_notices'] = array();
 
 
 			if ( SPNL()->validate->page() == 'sp-templates' || ( isset( $_GET['view'] ) && $_GET['view'] == 'style-email' ) ) {
