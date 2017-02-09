@@ -58,8 +58,6 @@ class SendPress_Public_View_Form extends SendPress_Public_View{
 					$custom['post_notifications'] = $post_notifications;
 				}
 				//$custom = apply_filters('sendpress_subscribe_to_list_custom_fields', array(), $_POST);
-
-		
 				$status =  SendPress_Data::subscribe_user($list, $valid_user['email'], $valid_user['firstname'], $valid_user['lastname'], $valid_user['status'], $custom);
 				if($status == false){
 					$data_error = __('Problem with subscribing user.','sendpress');

@@ -266,7 +266,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 	    ?>
 
 	    <div class="sendpress-signup-form">
-			<form id="sendpress_signup" method="POST" <?php if( !$widget_options['load_ajax'] ){ ?>class="sendpress-signup"<?php } else { ?>action="?sendpress=post"<?php } ?> >
+			<form id="sendpress_signup" method="POST" data-form-id="<?php echo $_settings_id; ?>" <?php if( !$widget_options['load_ajax'] ){ ?>class="sendpress-signup"<?php } else { ?>action="?sendpress=post"<?php } ?> >
 				<?php
 					if( $widget_options['load_ajax'] ){
 						echo '<input type="hidden" name="action" value="signup-user" />';
@@ -371,14 +371,15 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
  								<?php 
 							foreach ($custom_field_list as $key => $value) {
-							$custom_field_label = $value[custom_field_label];
+							$custom_field_label = $value['custom_field_label'];
+							$custom_field_key = $value['custom_field_key'];
 								?>
 
 								<p name="sp_custom_field">
 		
 									<label for="sp_custom_field"><?php _e($custom_field_label, 'sendpress'); ?></label>
 
-									<input type="text" class="sp_custom_field" value="" name="sp_custom_field" />
+									<input type="text" class="sp_custom_field" value="" id="<?php echo $custom_field_key; ?>" name="sp_custom_field" />
 
 								</p> 
 							<?php 

@@ -177,14 +177,23 @@ class SendPress_Ajax_Loader {
 			$salutation = $data->_string('salutation');
 			$email  = $data->_string('email');
 			$listid = $data->_string('listid');
+			$formid = $data->_int('formid');
 			$custom = array();
 			$post_notifications = $data->_string('post_notifications');
 			if( $post_notifications ){
 				$custom['post_notifications'] = $post_notifications;
 			}
 
-			//$custom = apply_filters( 'sendpress_subscribe_to_list_custom_fields', array(), $_POST );
+			$custom_field_list = SendPress_Data::get_custom_fields();
+			foreach ($custom_field_list as $key => $value) {
+				$custom_field_key = $value['custom_field_key'];
+				$customfieldvalue = $data->_string($custom_field_key);
+						if (strlen($customfieldvalue) > 0) {
+							$custom[$custom_field_key] = $customfieldvalue;
+						}
+			}
 
+			//$custom = apply_filters( 'sendpress_subscribe_to_list_custom_fields', array(), $_POST );
 			$success = SendPress_Data::subscribe_user( $listid, $email, $first, $last, 2, $custom, $phone, $salutation );
 
 			if ( false !== $success ) {
