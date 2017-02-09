@@ -420,7 +420,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 				?>
 
 				<p>
-					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_custom_field'], 'on' ); ?> id="_collect_custom_field" name="_collect_custom_field" /> 
+					<input class="checkbox custom-field" type="checkbox" <?php checked( $settings['_collect_custom_field'], 'on' ); ?> id="_collect_custom_field" name="_collect_custom_field" /> 
 					<label for="_collect_custom_field"><?php _e($custom_field_label, 'sendpress'); ?></label>
 				</p> 
 				<?php 
