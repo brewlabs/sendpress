@@ -38,7 +38,7 @@ For the best security we recommend <a href="https://wordpress.org/plugins/postma
 	}
 
 
-<<<<<<< HEAD
+
 	function send_email($to, $subject, $html, $text, $istest = false ,$sid , $list_id, $report_id, $fromname, $fromemail){
 		
 		$phpmailer = new SendPress_PHPMailer;
@@ -177,11 +177,6 @@ For the best security we recommend <a href="https://wordpress.org/plugins/postma
 	
 		
 		return $result;
-=======
-	function send_email($to, $subject, $html, $text, $istest = false ,$sid , $list_id, $report_id ){
-		SPNL()->log->add( 'Gmail Sending' ,'Sending via gmail is disabled. Failed send to: '  . $to , 0 , 'sending' );
-		return false;
->>>>>>> fe8fc92a179526d6c8225a8c979662c2e369ff50
 
 	}
 

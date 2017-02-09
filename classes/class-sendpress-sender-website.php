@@ -9,45 +9,45 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 if(!class_exists('SendPress_Sender_Website')){  
 
-class SendPress_Sender_Website extends SendPress_Sender {
+	class SendPress_Sender_Website extends SendPress_Sender {
 
-	var $emailText = '';
-	var $sid = '' ;
-	var $list_id = '';
-	var $report_id = '';
+		var $emailText = '';
+		var $sid = '' ;
+		var $list_id = '';
+		var $report_id = '';
 
-	function label(){
-		return __('Your Website','sendpress');
-	}
-
-	function save(){
-		if(SPNL()->validate->_isset('hosting-provider')){
-			SendPress_Option::set('website-hosting-provider', SPNL()->validate->_string('hosting-provider'));
-		} else{
-			SendPress_Option::set('website-hosting-provider', false);
+		function label(){
+			return __('Your Website','sendpress');
 		}
 
-	}
+		function save(){
+			if(SPNL()->validate->_isset('hosting-provider')){
+				SendPress_Option::set('website-hosting-provider', SPNL()->validate->_string('hosting-provider'));
+			} else{
+				SendPress_Option::set('website-hosting-provider', false);
+			}
 
-	function settings(){ ?>
-		This option uses your host's local mail server to send emails.<br>Use this option for plugins like Postman SMTP.
+		}
 
-		<?php 
+		function settings(){ ?>
+			This option uses your host's local mail server to send emails.<br>Use this option for plugins like Postman SMTP.
 
-			$hosting = SendPress_Option::get('website-hosting-provider');
+			<?php 
 
-
-
-		?>
-		<br><br>
-		<input type="checkbox" value="godaddy" name="hosting-provider" <?php if($hosting=="godaddy"){  echo "checked='checked'"; }  ?> /> GoDaddy Hosting<br>
-		This sets the smtp host to <b>relay-hosting.secureserver.net</b> for GoDaddy users.<br>GoDaddy limits emails to 1000 per day.
-		<!--Send a max of <input type="text" name="emails-per-day" value="" class="sptext"  > Emails per day.-->
+				$hosting = SendPress_Option::get('website-hosting-provider');
 
 
-	<?php
 
-}	
+			?>
+			<br><br>
+			<input type="checkbox" value="godaddy" name="hosting-provider" <?php if($hosting=="godaddy"){  echo "checked='checked'"; }  ?> /> GoDaddy Hosting<br>
+			This sets the smtp host to <b>relay-hosting.secureserver.net</b> for GoDaddy users.<br>GoDaddy limits emails to 1000 per day.
+			<!--Send a max of <input type="text" name="emails-per-day" value="" class="sptext"  > Emails per day.-->
+
+
+		<?php
+
+	}	
 
 	function wpmail_init( $phpmailer ){
 		/*
