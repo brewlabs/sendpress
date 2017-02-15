@@ -266,13 +266,10 @@ class SendPress_API {
 				$data = array('status' => 'proccessed');
 			break;
 			case 'tracker':
+
+				$data = isset( $wp_query->query_vars['url'] ) ? $wp_query->query_vars['url'] : null ;
 			
-				$data = $this->track_stats( array(
-					'type'      => isset( $wp_query->query_vars['type'] )      ? $wp_query->query_vars['type']      : null,
-					'id'   => isset( $wp_query->query_vars['id'] )   ? $wp_query->query_vars['id']   : null,
-					'email'      => isset( $wp_query->query_vars['email'] )      ? $wp_query->query_vars['email']      : null,
-					'url' => isset( $wp_query->query_vars['url'] ) ? $wp_query->query_vars['url'] : null
-				) );
+				
 
 				break;
 			case 'errors' :
