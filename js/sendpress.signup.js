@@ -36,6 +36,7 @@
             signup['phonenumber'] = $form.find('.sp_phonenumber').val();
             signup['salutation'] = $form.find('.sp_salutation').val();
             signup['listid'] = "";//$form.find('.sp_list').val();
+            signup['formid'] = $form.data('form-id');
 
             $form.find("input:checkbox.sp_list:checked").each(function(){
                 signup['listid'] += $(this).val() +",";
@@ -44,7 +45,7 @@
                 signup['listid'] = $form.find('.sp_list').val();
             }
 
-            $form.find('.custom-field').each(function(){
+            $form.find('.sp_custom_field').each(function(){
                 var $obj = $(this);
                 signup[$obj.attr('id')] = $obj.val();
             });

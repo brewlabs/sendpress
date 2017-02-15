@@ -266,7 +266,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 	    ?>
 
 	    <div class="sendpress-signup-form">
-			<form id="sendpress_signup" method="POST" <?php if( !$widget_options['load_ajax'] ){ ?>class="sendpress-signup"<?php } else { ?>action="?sendpress=post"<?php } ?> >
+			<form id="sendpress_signup" method="POST" data-form-id="<?php echo $_settings_id; ?>" <?php if( !$widget_options['load_ajax'] ){ ?>class="sendpress-signup"<?php } else { ?>action="?sendpress=post"<?php } ?> >
 				<?php
 					if( $widget_options['load_ajax'] ){
 						echo '<input type="hidden" name="action" value="signup-user" />';
@@ -356,39 +356,41 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 						<input type="text" class="sp_email" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_email_label; ?>"<?php endif; ?> value="" name="sp_email" />
 					</p>
 
-					<?php 
-					if( filter_var($_collect_custom_field, FILTER_VALIDATE_BOOLEAN) ){
-						$custom_field_list = SendPress_Data::get_custom_fields();
+					<?php if( filter_var($_collect_custom_field, FILTER_VALIDATE_BOOLEAN) ): ?>
+									<?php   
 					
-	 					$count = count($custom_field_list); 
-	 						
-						if ($count > 0) {
-							?>
+					$custom_field_list = SendPress_Data::get_custom_fields();
+					
+ 					$count = count($custom_field_list); ?>
+ 						
+					<?if ($count > 0) {
+					?>
 							<!-- custom fields -->
 							<div class="sp-50">
+							
 
-							<?php 
+ 								<?php 
 							foreach ($custom_field_list as $key => $value) {
-								$custom_field_label = $value[custom_field_label];
+							$custom_field_label = $value['custom_field_label'];
+							$custom_field_key = $value['custom_field_key'];
 								?>
 
 								<p name="sp_custom_field">
 		
 									<label for="sp_custom_field"><?php _e($custom_field_label, 'sendpress'); ?></label>
 
-									<input type="text" class="sp_custom_field" value="" name="sp_custom_field" />
+									<input type="text" class="sp_custom_field" value="" id="<?php echo $custom_field_key; ?>" name="sp_custom_field" />
 
 								</p> 
 							<?php 
 							}
 							?>
 
-								
-							</div>
-							<?php
-						}
-					}
-					?>
+							
+						</div>
+					<?php }?>
+					<?php endif; ?>
+
 					<p name="extra_fields" class="signup-fields-bottom">
 						<?php do_action('sendpress_signup_form_bottom'); ?>
 					</p>
