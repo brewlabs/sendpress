@@ -35,7 +35,7 @@ class SendPress_View_Subscribers_Custom extends SendPress_View_Subscribers {
 
 				if ($count > 0) {
 					foreach ($custom_field_list as $key => $value) {
-						$custom_field_label = $value[custom_field_label];
+						$custom_field_label = $value['custom_field_label'];
 					}
  				}?>
 				<p>
