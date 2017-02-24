@@ -241,7 +241,7 @@ class SendPress_Subscribers_Table extends WP_List_Table {
     function process_bulk_action() {
         
         //Detect when a bulk action is being triggered...
-        if( 'delete'===$this->current_action() ) {
+        if( 'delete' === $this->current_action() ) {
             wp_die('Items deleted (or they would be if we had items to delete)!');
         }
         

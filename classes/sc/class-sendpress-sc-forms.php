@@ -363,7 +363,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					
  					$count = count($custom_field_list); ?>
  						
-					<?if ($count > 0) {
+					<?php if ($count > 0) {
 					?>
 							<!-- custom fields -->
 							<div class="sp-50">
