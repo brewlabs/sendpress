@@ -193,7 +193,6 @@ class SendPress_Ajax_Loader {
 						}
 			}
 
-			//$custom = apply_filters( 'sendpress_subscribe_to_list_custom_fields', array(), $_POST );
 			$success = SendPress_Data::subscribe_user( $listid, $email, $first, $last, 2, $custom, $phone, $salutation );
 
 			if ( false !== $success ) {

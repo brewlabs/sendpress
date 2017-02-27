@@ -25,7 +25,7 @@ class SendPress_View {
 	static $_primary = array();
 
 
-	function SendPress_View( $title='' ) {
+	function __construct( $title='' ) {
 		$this->title( $title );
 		if ( $this->init() === false ) {
 			$this->set_visible( false );
