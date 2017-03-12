@@ -416,7 +416,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
  					<?php 
 					foreach ($custom_field_list as $key => $value) {
-						$custom_field_label = $value[custom_field_label];
+						$custom_field_label = $value['custom_field_label'];
 				?>
 
 				<p>
