@@ -71,8 +71,11 @@ class SendPress_View_Emails extends SendPress_View{
 				  	
             
             <?php if(SendPress_Option::get('beta')){ ?>
-         
-              <li <?php if( in_array($the_view, array('autoresponder','autoedit')) ) { ?>class="active"<?php } ?> >
+              <li <?php if( in_array($the_view, array('scheduledsending','createschedule')) ) { ?>class="active"<?php } ?> >
+                <a href="<?php echo SendPress_Admin::link('Emails_Scheduledsending'); ?>"><?php _e('Scheduled Sending','sendpress'); ?></a>
+              </li>
+
+              <li <?php if( in_array($the_view, array('autoresponder','autoedit','createauto','createschedule')) ) { ?>class="active"<?php } ?> >
                 <a href="<?php echo SendPress_Admin::link('Emails_Autoresponder'); ?>"><?php _e('Automation','sendpress'); ?></a>
               </li>
            

@@ -1544,7 +1544,30 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return array('success'=> $success,'already'=> $already_subscribed);
 	}
 
+	/********* SCHEDULED SENDING ********/
+	static function update_schedule_sending($postid, $emailid, $when_to_send, $title, $active){
+		if($postid > 0){
+			//new schedule, lets insert
+			$q = "INSERT INTO $table (email,wp_user_id,identity_key,join_date,firstname,lastname) VALUES (%s,%d,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE wp_user_id=%d,firstname=%s,lastname=%s";
+			$q = $wpdb->prepare($q,$email,$values['wp_user_id'],$key,date('Y-m-d H:i:s'),$values['firstname'],$values['lastname'],$values['wp_user_id'],$values['firstname'],$values['lastname'],$values['phonenumber'],$values['salutation']);
+		
+		}else{
+			//update the schedule
+			
+		}
+		
+		$result = $wpdb->query($q);
+		
+	}
 
+	static function get_list_of_schedules(){
+		global $wpdb;
+		$table = @SPNL()->load("Schedules")->table_name;
+		$result = $wpdb->get_results( $wpdb->prepare("SELECT * FROM $table",$value));
+		return $result;	
+	}
+
+	/****** END SCHEDULED SENDING *******/
 
 	static function read_file_to_str($file){
 		return file_get_contents($file);
@@ -2551,6 +2574,14 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		return $ret;
 
+	}
+
+	static function ordinal($number) {
+	    $ends = array('th','st','nd','rd','th','th','th','th','th','th');
+	    if ((($number % 100) >= 11) && (($number%100) <= 13))
+	        return $number. 'th';
+	    else
+	        return $number. $ends[$number % 10];
 	}
 
 }
