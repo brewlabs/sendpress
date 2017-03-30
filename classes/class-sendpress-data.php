@@ -1545,10 +1545,17 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 	/********* SCHEDULED SENDING ********/
+
 	static function update_schedule_sending($postid, $emailid, $when_to_send, $title, $active){
 		if($postid > 0){
 			//new schedule, lets insert
+			/*
 			$q = "INSERT INTO $table (email,wp_user_id,identity_key,join_date,firstname,lastname) VALUES (%s,%d,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE wp_user_id=%d,firstname=%s,lastname=%s";
+			$q = $wpdb->prepare($q,$email,$values['wp_user_id'],$key,date('Y-m-d H:i:s'),$values['firstname'],$values['lastname'],$values['wp_user_id'],$values['firstname'],$values['lastname'],$values['phonenumber'],$values['salutation']);
+			*/
+
+
+			$q = "INSERT INTO $table (email_id,when_to_send,active,title) VALUES (%d,%s,%d,%s) ON DUPLICATE KEY UPDATE wp_user_id=%d,firstname=%s,lastname=%s";
 			$q = $wpdb->prepare($q,$email,$values['wp_user_id'],$key,date('Y-m-d H:i:s'),$values['firstname'],$values['lastname'],$values['wp_user_id'],$values['firstname'],$values['lastname'],$values['phonenumber'],$values['salutation']);
 		
 		}else{
