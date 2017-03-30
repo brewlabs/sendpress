@@ -3,7 +3,7 @@ language: php
 sudo: true
 
 php:
-- 7.0
+- 7.1
 - hhvm
 
 env:
@@ -31,6 +31,18 @@ before_install:
 before_script:
 - bash bin-wp/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
+script:
+- if [[ $TRAVIS_PHP_VERSION != 'hhvm' && ( $TRAVIS_PHP_VERSION != '5.5'|| $WP_VERSION != 'latest'
+  || $WP_MULTISITE != '0' ) ]]; then phpenv config-rm xdebug.ini; fi
+- if [[ $TRAVIS_PHP_VERSION = '5.5' && $WP_VERSION = 'latest' && $WP_MULTISITE = '0'
+  ]]; then phpunit --coverage-clover=coverage.clover; else phpunit; fi
+
+after_script:
+- if [[ $TRAVIS_PHP_VERSION = '5.5' && $WP_VERSION = 'latest' && $WP_MULTISITE = '0'
+  ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+- if [[ $TRAVIS_PHP_VERSION = '5.5' && $WP_VERSION = 'latest' && $WP_MULTISITE = '0'
+  ]]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover;
+  fi
 
 notifications: 
   hipchat: 
