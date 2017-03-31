@@ -82,6 +82,7 @@ if($emailID > 0){
 <?php
 $info = SendPress_Option::get('current_send_'.$post->ID );
 $subject = SendPress_Option::get('current_send_subject_'.$post->ID ,true);
+
 ?>
 <div id="styler-menu">
     <div style="float:right;" class="btn-group">
@@ -105,7 +106,7 @@ $subject = SendPress_Option::get('current_send_subject_'.$post->ID ,true);
 <?php $this->panel_start( '<span class="glyphicon glyphicon-calendar"></span> '. __('Date & Time','sendpress')); ?>
 <?php if($info['send_at'] == '0000-00-00 00:00:00') {
     echo "Your email will start sending right away!";
-} else {
+}else {
     echo "Your email will start sending on " .date('Y/m/d',strtotime($info['send_at'])) . " at " .date('h:i A',strtotime($info['send_at']))  ;
 }?>
 <?php 

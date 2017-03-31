@@ -84,6 +84,7 @@ static function send_mail(){
 
 
 
+
 	static function send_mail_cron(){
 		//@ini_set('max_execution_time',0);
 		global $wpdb;

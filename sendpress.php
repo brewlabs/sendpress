@@ -1319,7 +1319,7 @@ class SendPress {
 		@SPNL()->load("Subscribers_Url")->create_table();
 		@SPNL()->load("Url")->create_table();
 		@SPNL()->load("Autoresponder")->create_table();
-
+		@SPNL()->load("Schedules")->create_table();
 
 		SendPress_Option::base_set( 'update-info', 'show' );
 		//On version change update default template
