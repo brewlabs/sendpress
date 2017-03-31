@@ -136,7 +136,7 @@ class SendPress_Email_Templates_Table extends WP_List_Table {
 		//Build row actions
 		
 		$actions = array(
-			'edit'      => sprintf('<a href="?page=%s&view=%s&emailID=%s">%s</a>',SPNL()->validate->page(),'style',$item->ID, __('Edit','sendpress') ),
+			'edit'      => sprintf('<a href="?page=%s&view=%s&templateID=%s">%s</a>',SPNL()->validate->page(),'tempedit',$item->ID, __('Edit','sendpress') ),
 			'delete'    => sprintf('<a href="?page=%s&action=%s&emailID=%s">%s</a>',SPNL()->validate->page(),'delete-email',$item->ID,__('Delete','sendpress') ),
 		);
 		
