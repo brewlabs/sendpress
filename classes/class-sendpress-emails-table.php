@@ -94,8 +94,14 @@ class SendPress_Emails_Table extends WP_List_Table {
 				 return date_i18n(get_option('date_format') , strtotime( $item->post_date ) );
 			
 			case 'actions':
+                                $open_info = array(
+                                        "id"=>$item->ID,
+                                        "view"=>"email"
+                                );
+                                $code = SendPress_Data::encrypt( $open_info );
+                                $url = SendPress_Manager::public_url($code);
 				$a = '<div class="inline-buttons">';
-				$a .= '<a class="btn btn-default view-btn" title="'.  get_post_meta($item->ID, "_sendpress_subject", true) . '" href="'. get_permalink( $item->ID  ). '"><span class="glyphicon  glyphicon-eye-open"></span> '.__('View','sendpress') .'</a> ';
+				$a .= '<a class="btn btn-default view-btn" title="'.  get_post_meta($item->ID, "_sendpress_subject", true) . '" href="'.$url.'"><span class="glyphicon  glyphicon-eye-open"></span> '.__('View','sendpress') .'</a> ';
 				
 				$editwindow = 'style';
 				if(get_post_meta($item->ID  , '_sendpress_system', true) == 'new'){
