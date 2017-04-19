@@ -213,7 +213,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
 	private static function signup($options){
 		//print_r($options);
-
+		$_collect_custom_field = false;
 		global $load_signup_js, $sendpress_show_thanks, $sendpress_signup_error;
 		$sendpress_signup_exists = __("You've already signed up, Thanks!",'sendpress');
 		$load_signup_js = true;
@@ -310,7 +310,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					}
 
 					echo $post_notifications_code;
-
+					
 					?>
 
 					<?php if( filter_var($_collect_salutation, FILTER_VALIDATE_BOOLEAN) ): ?>
@@ -363,7 +363,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					
  					$count = count($custom_field_list); ?>
  						
-					<?if ($count > 0) {
+					<?php if ($count > 0) {
 					?>
 							<!-- custom fields -->
 							<div class="sp-50">

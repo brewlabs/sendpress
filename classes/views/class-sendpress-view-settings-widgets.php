@@ -19,11 +19,11 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 			$action = $new_action;
 		}
 		//$action = (isset($post['form_action'])) ? $post['form_action'] : 'save';
-		
+
 		$post_subject = SPNL()->validate->_string('post_subject');
 		$copy_from = SPNL()->validate->_string('copy_from');
 		$form_type = SPNL()->validate->_string('form_type');
-		
+
 		switch($action){
 			case 'copy':
 				$postid = SendPress_Data::create_settings_post($post_subject, "", $copy_from);
@@ -64,9 +64,9 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 					if($id > 0){
 						$listids[] = $id;
 					}
-					
+
 				}
-				
+
 			}
 		}
 
@@ -86,7 +86,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		$postid = SPNL()->validate->_int('id');
 		$showCreate = SPNL()->validate->_int('create') == 1 ? true : false;
 		$showDelete = SPNL()->validate->_int('delete') == 1 ? true : false;
-		
+
 		if($showDelete || $showCreate|| $postid > 0){
 			$btnText = $showDelete ? "Confirm" : "Save";
 			$btnClass = $showDelete ? "danger" : "primary";
@@ -95,7 +95,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 			<button class="btn btn-<?php echo $btnClass; ?>" id="save-menu-post"><?php _e($btnText,'sendpress'); ?></button>
 			<?php
 		}
-		
+
 	}
 
 	function html() {
@@ -143,7 +143,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 				self::display_forms();
 				break;
 		}
-	
+
 		if(strlen($settings['_form_type']) > 0){
 			wp_nonce_field($this->_nonce_value);
 			echo '</form>';
@@ -160,11 +160,11 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		$testListTable->prepare_items();
 
 		?>
-		
+
 		<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 		<form id="forms-filter" method="get">
-			<div id="taskbar" class="lists-dashboard rounded group"> 
-				<div id="button-area">  
+			<div id="taskbar" class="lists-dashboard rounded group">
+				<div id="button-area">
 					<a class="btn btn-primary btn-large" href="?page=<?php echo SPNL()->validate->page(); ?>&view=widgets&create=1"><?php _e('Create Form','sendpress'); ?></a>
 				</div>
 				<h2><?php _e('Forms','sendpress'); ?></h2>
@@ -188,21 +188,21 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 	}
 
 	function create_form(){
-		
+
 		$copy_from =  SPNL()->validate->_int('id');
 		$save_type = ($copy_from > 0) ? "copy" : "create";
 
 		?>
-		
+
 		<h2><?php ucfirst($save_type); ?> <?php _e('Form','sendpress'); ?></h2>
 		<br>
-		
+
     	<div class="sp-row">
     		<div class="sp-50 sp-first">
 				<?php $this->panel_start( __('Form Name','sendpress') ); ?>
-        
+
 		        <input type="text" name="post_subject" size="30" tabindex="1" class="form-control" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
-		        
+
 		        <?php $this->panel_end(  ); ?>
 			</div>
 			<?php if($save_type === 'create'){
@@ -219,20 +219,20 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 								echo '<option value="'.$key .'">' . $value . '</option>';
 							}
 						?>
-					
+
 					</select>
 					<?php $this->panel_end(); ?>
 				</div>
 				<?php
 			} ?>
-			
+
 		</div>
-		
+
 
 		<input type="hidden" name="_setting_type" id="setting_type" value="form" />
 		<!--<input type="hidden" name="_form_type" id="form_type" value="signup_widget" />-->
 		<input type="hidden" name="form_action" id="form_action" value="<?php echo $save_type; ?>" />
-		 
+
 		<?php
 		if($copy_from > 0){
 			?>
@@ -322,26 +322,26 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 				<?php $this->panel_end(); ?>
 
 				<?php $this->panel_start( __('Signup Settings','sendpress') ); ?>
-				
+
 				<p>
-					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_salutation'], 'on' ); ?> id="_collect_salutation" name="_collect_salutation" /> 
+					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_salutation'], 'on' ); ?> id="_collect_salutation" name="_collect_salutation" />
 					<label for="_collect_salutation"><?php _e('Collect Salutation', 'sendpress'); ?></label>
-				</p> 
+				</p>
 
 				<p>
-					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_firstname'], 'on' ); ?> id="_collect_firstname" name="_collect_firstname" /> 
+					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_firstname'], 'on' ); ?> id="_collect_firstname" name="_collect_firstname" />
 					<label for="_collect_firstname"><?php _e('Collect First Name', 'sendpress'); ?></label>
-				</p> 
+				</p>
 
 				<p>
-					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_lastname'], 'on' ); ?> id="_collect_lastname" name="_collect_lastname" /> 
+					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_lastname'], 'on' ); ?> id="_collect_lastname" name="_collect_lastname" />
 					<label for="_collect_lastname"><?php _e('Collect Last Name', 'sendpress'); ?></label>
-				</p> 
+				</p>
 
 				<p>
-					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_phonenumber'], 'on' ); ?> id="_collect_phonenumber" name="_collect_phonenumber" /> 
+					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_phonenumber'], 'on' ); ?> id="_collect_phonenumber" name="_collect_phonenumber" />
 					<label for="_collect_phonenumber"><?php _e('Collect Phone Number', 'sendpress'); ?></label>
-				</p> 
+				</p>
 
 				<p>
 					<label for="_display_labels_inside_fields"><?php _e('Display labels inside','sendpress'); ?>?:</label>
@@ -351,13 +351,13 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 				<p>
 					<label for="_thankyou_page"><?php _e('Thank You Page (AJAX OFF ONLY):', 'sendpress'); ?></label>
-					<select name="_thankyou_page" id="_thankyou_page"> 
+					<select name="_thankyou_page" id="_thankyou_page">
 						 <option value="0">
-						 	<?php $cpageid = $settings['_thankyou_page']; 
+						 	<?php $cpageid = $settings['_thankyou_page'];
 						 	?>
-						<?php echo esc_attr( __( 'Default' ) ); ?></option> 
-						 <?php 
-						  $pages = get_pages(); 
+						<?php echo esc_attr( __( 'Default' ) ); ?></option>
+						 <?php
+						  $pages = get_pages();
 						  foreach ( $pages as $page ) {
 						  	$s ='';
 						  	if($cpageid == $page->ID){ $s =  "selected"; }
@@ -372,13 +372,13 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 				</p>
 
 				<p>
-					<input class="checkbox" type="checkbox" <?php checked( $settings['_lists_checked'], 'on' ); ?> id="_lists_checked" name="_lists_checked" /> 
+					<input class="checkbox" type="checkbox" <?php checked( $settings['_lists_checked'], 'on' ); ?> id="_lists_checked" name="_lists_checked" />
 					<label for="_lists_checked"><?php _e('Select Lists by Default', 'sendpress'); ?></label>
-				</p> 
-				
-				
+				</p>
+
+
 				<p><b><?php _e('Check off the lists you would like','sendpress'); ?><br><?php _e('users to subscribe to','sendpress'); ?>.</b></p>
-				<?php 
+				<?php
 				if( count($lists) === 0 ){
 					?><p><?php
 					_e('No public lists available','sendpress');
@@ -387,9 +387,9 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 					foreach($lists as $list){
 						?>
 						<p>
-							<input class="checkbox" type="checkbox" <?php if(isset($settings['_list_'.$list->ID])){ checked( $settings['_list_'.$list->ID], 'on' ); } ?> id="_list_<?php echo $list->ID; ?>" name="_list_<?php echo $list->ID; ?>" /> 
+							<input class="checkbox" type="checkbox" <?php if(isset($settings['_list_'.$list->ID])){ checked( $settings['_list_'.$list->ID], 'on' ); } ?> id="_list_<?php echo $list->ID; ?>" name="_list_<?php echo $list->ID; ?>" />
 							<label for="_list_<?php echo $list->ID; ?>"><?php echo $list->post_title; ?></label>
-						</p> 
+						</p>
 						<?php
 					}
 				}
@@ -399,8 +399,8 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 				<?php $this->panel_end(); ?>
 			</div>
-			
-				<?php   
+
+				<?php
 					global $wpdb, $custom_field_id;
 
 					$custom_field_list = SendPress_Data::get_custom_fields();
@@ -412,21 +412,21 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 			<!-- custom fields -->
 			<div class="sp-50">
 				<?php $this->panel_start( __('Custom Fields','sendpress') ); ?>
-				
 
- 					<?php 
+
+ 					<?php
 					foreach ($custom_field_list as $key => $value) {
-						$custom_field_label = $value[custom_field_label];
+						$custom_field_label = $value['custom_field_label'];
 				?>
 
-				<p>
-					<input class="checkbox custom-field" type="checkbox" <?php checked( $settings['_collect_custom_field'], 'on' ); ?> id="_collect_custom_field" name="_collect_custom_field" /> 
-					<label for="_collect_custom_field"><?php _e($custom_field_label, 'sendpress'); ?></label>
-				</p> 
-				<?php 
+
+				<?php
 				}
 				?>
-
+				<p>
+					<input class="checkbox custom-field" type="checkbox" <?php checked( $settings['_collect_custom_field'], 'on' ); ?> id="_collect_custom_field" name="_collect_custom_field" />
+					<label for="_collect_custom_field">Collect custom field(s)</label>
+				</p>
 				<?php $this->panel_end(); ?>
 			</div>
 		<?php }?>
@@ -459,7 +459,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 					<pre><tt>[sp-form formid=<?php echo $settings['_settings_id']; ?>]</tt></pre>
 				<?php $this->panel_end(); ?>
 			</div>
-			
+
 		</div>
 		<input type="hidden" name="_setting_type" id="setting_type" value="form" />
 		<input type="hidden" name="_form_type" id="form_type" value="manage_subscriptions" />
