@@ -184,6 +184,13 @@ class SendPress {
 			return;
 		}
 
+		if ( strpos( $className, '_REST' ) != false ) {
+
+			include SENDPRESS_PATH . "classes/api/v1/class-" . $cls . ".php";
+
+			return;
+		}
+
 		if ( strpos( $className, 'Public_View' ) != false ) {
 			if ( defined( 'SENDPRESS_PRO_PATH' ) ) {
 				$pro_file = SENDPRESS_PRO_PATH . "classes/public-views/class-" . $cls . ".php";
