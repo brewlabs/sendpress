@@ -15,8 +15,7 @@ class SendPress_Api_Loader {
 	      return;
 	    }
 
-	    $this->rest_api_includes();
-
+	   
 	    // Init REST API routes.
 	    add_action( 'rest_api_init', array( $this, 'register_rest_routes' ), 10 );
 	  }
