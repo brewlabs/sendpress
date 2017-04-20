@@ -23,7 +23,7 @@ class SendPress_Api_Loader {
 
 	  public function register_rest_routes() {
         // Register settings to the REST API.
-        $this->register_wp_admin_settings();
+        //$this->register_wp_admin_settings();
 
         $controllers = array(
             // v1 controllers.
