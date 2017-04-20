@@ -276,12 +276,14 @@ class SendPress {
 			self::$instance                          = new SendPress;
 			self::$instance->template_tags           = new SendPress_Template_Tags();
 			self::$instance->api                     = new SendPress_API();
+			self::$instance->rest_api                = new SendPress_Api_Loader();
 			self::$instance->validate                = new SendPress_Security();
 			self::$instance->log                     = new SendPress_Logging();
 			self::$instance->db                      = new stdClass();
 			self::$instance->db->subscribers_tracker = new SendPress_DB_Subscribers_Tracker();
 			self::$instance->db->url                 = new SendPress_DB_Url();
 			self::$instance->db->subscribers_url     = new SendPress_DB_Subscribers_Url();
+
 		}
 
 		return self::$instance;
@@ -320,6 +322,7 @@ class SendPress {
 			SendPress_Ajax_Loader::init();
 		} else {
 			SendPress_Pro_Manager::init();
+
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
 			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 			add_action( 'admin_notices', array( $this, 'admin_notice' ) );
