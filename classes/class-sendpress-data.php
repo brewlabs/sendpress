@@ -537,6 +537,7 @@ class SendPress_Data extends SendPress_DB_Tables {
     	return isset($f[0]) ? $f[0] : '';
     }
 
+    
 
 
  	/**
