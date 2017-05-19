@@ -174,9 +174,11 @@ class SendPress_Email {
 				@$dom->loadHtml($body_html);
 				
 				$pTags = $dom->getElementsByTagName('p');
+				$body_font = 'font-family:'. urldecode(get_post_meta( $post->ID , '_body_font', true )).';';
+				$body_size = 'font-size:'. get_post_meta( $post_template , '_body_font_size', true ).'px;';
 				foreach ($pTags as $pElement) {
 					$px = $pElement->getAttribute('style');
-					$pElement->setAttribute('style', ' margin-top:0; margin-bottom:10px; ' . $px );
+					$pElement->setAttribute('style', ' margin-top:0; margin-bottom:10px; '. $body_font . $body_size . $px );
 				}
 				if($this->tracker()){
 				$aTags = $dom->getElementsByTagName('a');

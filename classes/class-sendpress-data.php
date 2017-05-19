@@ -2591,4 +2591,26 @@ class SendPress_Data extends SendPress_DB_Tables {
 	        return $number. $ends[$number % 10];
 	}
 
+	static function web_safe_fonts(){
+		return array(
+			'Georgia'=>'Georgia,serif',
+			'Palatino'=>'"Palatino Linotype", "Book Antiqua", Palatino, serif,serif"',
+			'Times New Roman'=>'"Times New Roman", Times, serif',
+			'Arial'=>'Arial,sans-serif',
+			'Helvetica'=>'Helvetica,sans-serif',
+			'Arial Black'=>'"Arial Black", Gadget, sans-serif',
+			'Comic Sans MS'=>'"Comic Sans MS", cursive,sans-serif',
+			'Impact'=>'Impact, Charcoal,,sans-serif',
+			'Lucida Sans Unicode'=>'"Lucida Sans Unicode", "Lucida Grande",sans-serif',
+			'Tahoma'=>'Tahoma, Geneva,sans-serif',
+			'Trebuchet MS'=>'"Trebuchet MS", Helvetica,sans-serif',
+			'Verdana'=>'Verdana, Geneva,sans-serif',
+			'Courier New'=>'"Courier New", Courier, monospace',
+			'Lucida Console'=>'"Lucida Console", Monaco, monospace'
+		);
+	}
+
 }
+
+
+
