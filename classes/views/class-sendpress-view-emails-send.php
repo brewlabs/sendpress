@@ -15,8 +15,7 @@ class SendPress_View_Emails_Send extends SendPress_View_Emails {
                 $send_at = $_POST['date-pickit'] . " " . $_POST['send-later-time'];
             } else {
                 $send_at = '0000-00-00 00:00:00';
-            } 
-
+            }   
             if(isset($_POST['test-add'])){
     		$csvadd ="email,firstname,lastname\n" . sanitize_text_field( trim($_POST['test-add']) ) ;
 
@@ -39,6 +38,10 @@ class SendPress_View_Emails_Send extends SendPress_View_Emails {
 
             if( isset($_POST['google-campaign-name']) ) {
                 update_post_meta( $post_info_id , 'google-campaign-name', sanitize_text_field($_POST['google-campaign-name']));
+            }
+
+            if( isset($_POST['custom-from-email']) ) {
+                update_post_meta( $post_info_id , 'custom-from-email', sanitize_text_field($_POST['custom-from-email']));
             }
 
             if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
@@ -102,6 +105,19 @@ $post_type_object = get_post_type_object( $post_type );
 <div class="boxer-inner">
 
 <?php $this->panel_start('<span class="glyphicon glyphicon-inbox"></span> '. __('Subject','sendpress')); ?>
+<input type="text" class="form-control" name="post_subject" size="30" tabindex="1" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
+<?php $this->panel_end(); ?>
+<div class="leftcol">
+
+<?php do_action('spnl_add_to_sending_before' , $this); ?>
+
+    
+<?php $this->panel_start( '<span class="glyphicon glyphicon-calendar"></span> '. __('Date & Time','sendpress')); ?>
+<input type="radio" name="send-date" value="now" checked/> <?php _e('Start Sending Now','sendpress'); ?><br>
+<input type="radio" name="send-date" value="later"/> <?php _e('Send Later','sendpress'); ?><br>
+<div class="date-holder" style="display:none">
+	<br>
+<input type="text" name="date-pickit" id="date-pickit" class=" fifty float-left" value="<?php echo date_i18n('Y/m/d'); ?>"/>&nbsp;at
 <script type="text/javascript">
 jQuery(document).ready(function($) {
 $(".date-holder").hide();
@@ -109,34 +125,16 @@ $(".date-holder").hide();
 $('input[type=radio][name=send-date]').change(function() {
         if (this.value == 'now') {
             $(".date-holder").hide();
-            $(".date-schedule-holder").hide();
         }
         else if (this.value == 'later') {
            $(".date-holder").show();
-           $(".date-schedule-holder").hide();
-        }else if(this.value == 'schedule'){
-            $(".date-holder").hide();
-            $(".date-schedule-holder").show();
-
         }
     });
-    $('#date-pickit').datepicker({
-        dateFormat : 'yy/mm/dd'
-    });
-
+$('#date-pickit').datepicker({
+dateFormat : 'yy/mm/dd'
+});
 });
 </script>
-
-<input type="text" class="form-control" name="post_subject" size="30" tabindex="1" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
-<?php $this->panel_end(); ?>
-<div class="leftcol">
-<?php $this->panel_start( '<span class="glyphicon glyphicon-calendar"></span> '. __('Date & Time','sendpress')); ?>
-<input type="radio" name="send-date" value="now" checked/> <?php _e('Start Sending Now','sendpress'); ?><br>
-<input type="radio" name="send-date" value="later"/> <?php _e('Send Later','sendpress'); ?><br>
-<div class="date-holder" style="display:none">
-	<br>
-<input type="text" name="date-pickit" id="date-pickit" class=" fifty float-left" value="<?php echo date_i18n('Y/m/d'); ?>"/>&nbsp;at
-
 <select name="send-later-time" id="datepicker-time" class="fifty">
 <option value="00:00:00">12:00 am</option>
 <option value="01:00:00">1:00 am</option>
@@ -165,9 +163,6 @@ $('input[type=radio][name=send-date]').change(function() {
 </select>
 </div>
 <?php 
-
-do_action('spnl_scheduled_sending' , $this);
-
 $this->panel_end();
 
 do_action('spnl_add_to_sending' , $this);

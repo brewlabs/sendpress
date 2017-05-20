@@ -39,7 +39,7 @@ class SendPress_View {
 		
 		?>
 		<div class="sp-footer">
-			<a href="<?php echo SendPress_Admin::link('Help_Whatsnew'); ?>">What's New</a> | <a href="http://docs.sendpress.com/" target="_blank">Knowledge Base</a> | <a href="http://sendpress.uservoice.com/" target="_blank">Feedback</a> | SendPress Version: <?php echo SENDPRESS_VERSION; ?> | System <span id="sendpress-system-icon" class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+			<a href="<?php echo SendPress_Admin::link('Help_Whatsnew'); ?>"><?php _e("What's New","sendpress"); ?></a> | <a href="http://docs.sendpress.com/" target="_blank"><?php _e("Knowledge Base","sendpress"); ?></a> | <a href="http://sendpress.uservoice.com/" target="_blank"><?php _e("Feedback","sendpress"); ?></a> | <?php _e("SendPress Version","sendpress"); ?>: <?php echo SENDPRESS_VERSION; ?> | <?php _e("System","sendpress"); ?> <span id="sendpress-system-icon" class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
 		</div>
 		<?php
 			$url = home_url( '/' );
@@ -74,7 +74,7 @@ class SendPress_View {
 
 	function view_buttons(){
 		?>
-		<button class="btn btn-default" id="save-menu-cancel">Cancel</button><button class="btn btn-primary" id="save-menu-post">Save</button>
+		<button class="btn btn-default" id="save-menu-cancel"><?php _e("Cancel","sendpress"); ?></button><button class="btn btn-primary" id="save-menu-post"><?php _e("Save","sendpress"); ?></button>
 		<?php
 	}
 

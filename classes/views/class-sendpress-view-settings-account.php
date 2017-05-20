@@ -194,7 +194,9 @@ $new =array();
 foreach ( $senders as $key => $sender ) {
 	array_push($new, array($key,$sender->label() ));
 }
-echo '<strong>Delivery Method: </strong>';
+echo '<strong>';
+ _e('Delivery Method','sendpress'); 
+ echo ': </strong>';
  $this->select('sendpress-sender',$method, $new ); 
 			?><br><br>
 			<?php if( count($senders) < 3 ){
@@ -334,12 +336,12 @@ if($autocron == 'yes') {
 		<?php
 	}else{
 		?>
-		<p>AutoCron has no information at this time, please check back later.</p>
+		<p><?php _e("AutoCron has no information at this time, please check back later","sendpress"); ?>.</p>
 		<?php
 	}
 
 } else { ?>
-	<p>AutoCron is not enabled.</p>
+	<p><?php _e("AutoCron is not enabled","sendpress"); ?>.</p>
 <?php } ?>
 
 <br class="clear">
@@ -347,18 +349,19 @@ if($autocron == 'yes') {
 <div style="width: 45%; margin-right: 10%">
 	<?php $tl =  SendPress_Option::get('autocron','no'); ?>
 	<h2><?php _e('SendPress Pro Auto Cron','sendpress'); ?></h2>
-	<p>At least once every hour we visit your site, just like a "cron" job.<br>There's no setup involved. Easy and hassle free.</p>
+	<p><?php _e("At least once every hour we visit your site, just like a cron job"); ?>
+		<br><?php _e("There's no setup involved. Easy and hassle free","sendpress"); ?>.</p>
 
-	<button id="sp-enable-cron" <?php if($tl == 'yes'){ echo "style='display:none;'";} ?> class="btn  btn-success">Enable Pro Auto Cron</button><button id="sp-disable-cron" <?php if($tl == 'no'){ echo "style='display:none;'";} ?> class="btn  btn-danger">Disable Pro Auto Cron</button>
+	<button id="sp-enable-cron" <?php if($tl == 'yes'){ echo "style='display:none;'";} ?> class="btn  btn-success"><?php _e("Enable Pro Auto Cron","sendpress"); ?></button><button id="sp-disable-cron" <?php if($tl == 'no'){ echo "style='display:none;'";} ?> class="btn  btn-danger"><?php _e("Disable Pro Auto Cron","sendpress"); ?></button>
 	<br><br>
-	<p class="well">
-		AutoCron will check your site every minute until all your emails are sent or you hit the defined sending limit to the right.
+		<p class="well">
+		<?php _e("AutoCron will check your site every minute until all your emails are sent or you hit the defined sending limit to the right","sendpress"); ?>.
 		<br><br>
-		AutoCron sends 25 emails per execution so on average you can send about 1500 emails an hour.
+		<?php _e("AutoCron sends 25 emails per execution so on average you can send about 1500 emails an hour","sendpress"); ?>.
 		<br><br>
-		Please be aware that AutoCron and email sending in general can be harder on a server then normal web traffic. Make sure you have a hosting account that can handle your sending volume and we strongly recommend using a third part delivery system like <a href="https://www.wpemaildelivery.com">WP Email Delivery</a>.
-	</p>
-	<small>Pro Auto Cron does collect some data about your website and usage of SendPress. It will not track any user details, so your security and privacy are safe with us.</small>
+		<?php _e("Please be aware that AutoCron and email sending in general can be harder on a server then normal web traffic. Make sure you have a hosting account that can handle your sending volume and we strongly recommend using a third part delivery system like <a href='https://www.wpemaildelivery.com'>WP Email Delivery</a>","sendpress"); ?>.
+		</p>
+		<small><?php _e("Pro Auto Cron does collect some data about your website and usage of SendPress. It will not track any user details, so your security and privacy are safe with us.","sendpress"); ?></small>
 
 
 

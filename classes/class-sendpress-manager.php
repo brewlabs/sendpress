@@ -385,6 +385,10 @@ class SendPress_Manager {
 	   	$message->purge( true );
 	   	$message->subscriber_id( $email->subscriberID );
 	   	$message->list_id( $email->listID );
+
+	   	$fromname = $email->from_name;
+	   	$fromemail = $email->from_email;
+
 	   	$body = $message->html();
 	   	$subject = $message->subject();
 	   	$to = $email->to_email;
@@ -394,11 +398,11 @@ class SendPress_Manager {
 	   		return false;
 	   	}
 
-	   	return SendPress_Manager::send($to , $subject, $body, $text, true, $email->subscriberID ,$email->listID, $email->emailID );
+	   	return SendPress_Manager::send($to , $subject, $body, $text, true, $email->subscriberID ,$email->listID, $email->emailID, $fromname, $fromemail );
 	   
 	}
 
-	static function send($to , $subject, $body, $text, $test = false, $sid=0 ,$list_id = 0, $report_id = 0 ){
+	static function send($to , $subject, $body, $text, $test = false, $sid=0 ,$list_id = 0, $report_id = 0, $fromname, $fromemail ){
 
 		//SendPress_Error::log('Send me an email!');
 		
@@ -414,7 +418,7 @@ class SendPress_Manager {
    				SPNL()->log->add(  'Email Skiped' , 'Email to '.$to.' did not have any Text.', 0 , 'sending' );
    				return false;
 	   		}
-	   		return $sender->send_email( $to, $subject, $body, $text, $test, $sid , $list_id, $report_id );
+	   		return $sender->send_email( $to, $subject, $body, $text, $test, $sid , $list_id, $report_id, $fromname, $fromemail);
    		}
    		return false;
    		/*

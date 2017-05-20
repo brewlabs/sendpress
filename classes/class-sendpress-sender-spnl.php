@@ -48,11 +48,12 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 
 	}
 
-	function send_email($to, $subject, $html, $text, $istest = false ,$sid , $list_id, $report_id ){
+	function send_email($to, $subject, $html, $text, $istest = false ,$sid , $list_id, $report_id, $fromname, $fromemail  ){
 		
 		//$user = SendPress_Option::get( 'mandrilluser' );
 		//$pass = SendPress_Option::get( 'mandrillpass' );
-		$from_email = SendPress_Option::get('fromemail');
+		//$from_email = SendPress_Option::get('fromemail');
+		
 		//$hdr = new SendPress_SendGrid_SMTP_API();
 		$m = SendPress_Option::get_sender( 'sendpress' );
 		//$hdr->addFilterSetting('dkim', 'domain', SendPress_Manager::get_domain_from_email($from_email) );
@@ -85,8 +86,8 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 			    'subject'   => $subject,
 			    'html'      => $html,
 			    'text'      => $text,
-			    'from_email'  => $from_email,
-			    'from_name'=>SendPress_Option::get('fromname'),
+			    'from_email'  => $fromemail,
+			    'from_name'=>$fromname,
 			    //'x-smtpapi'=>$hdr->asJSON(),
 			    'headers'=> $info,
 			    'inline_css' =>true,

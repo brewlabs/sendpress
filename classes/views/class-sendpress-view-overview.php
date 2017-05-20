@@ -52,12 +52,13 @@ list( $display_version ) = explode( '-', $wp_version );
     if($autocron == 'yes') {
       $api_info = json_decode( SendPress_Cron::get_info() );
       if(isset($api_info->lastcheck)){
-        echo $api_info->lastcheck . " UTC";
+        echo $api_info->lastcheck. " "; 
+        _e("UTC","sendpress");
       } else {
-        echo "No Data";
+        _e( "No Data","sendpress");
       }
     } else {
-      echo "Not Enabled";
+      _e( "Not Enabled","sendpress");
     }
     ?></p>
   </div>
@@ -207,9 +208,9 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
   <div class="panel-body">
   	<table class="table table-striped table-condensed">
     <tr>
-    <th>Date</th>
-    <th>List</th>
-    <th><div style="text-align:right;">Email</div></th>
+    <th><?php _e("Date","sendpress"); ?></th>
+    <th><?php _e("List","sendpress"); ?></th>
+    <th><div style="text-align:right;"><?php _e("Email","sendpress"); ?></div></th>
     </tr>
   	<?php 
   		$recent = SendPress_Data::get_recent_subscribers();
