@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 3.7
 Tested up to: 4.7.2
-Stable tag: 1.8.3.30
+Stable tag: 1.8.5.24
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,12 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.8.5.24 - 2017.5.24 =
+* Fix: Sending Test emails
+* Fix: Sending speed
+* Fix: Language issues
+* Pro: Added support to pick font on templates
 
 = 1.8.3.30 - 2017.3.30 =
 * Fix: Saving custom fields
