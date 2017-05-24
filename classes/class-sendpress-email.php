@@ -179,11 +179,11 @@ class SendPress_Email {
 				$body_size = "";
 
 				if(defined('SENDPRESS_PRO_LOADED') && SENDPRESS_PRO_LOADED){
-					$font_value = urldecode(get_post_meta( $post->ID , '_body_font', true ));
+					$font_value = get_post_meta( $post_template , '_body_font', true );
 					$size_value = get_post_meta( $post_template , '_body_font_size', true );
 
 					if(strlen($font_value) > 0){
-						$body_font = 'font-family:'. $font_value .';';
+						$body_font = 'font-family:'. urldecode($font_value) .';';
 					}
 
 					if(strlen($size_value) > 0){
