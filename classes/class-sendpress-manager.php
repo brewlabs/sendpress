@@ -402,7 +402,7 @@ class SendPress_Manager {
 	   
 	}
 
-	static function send($to , $subject, $body, $text, $test = false, $sid=0 ,$list_id = 0, $report_id = 0, $fromname, $fromemail ){
+	static function send($to , $subject, $body, $text, $test = false, $sid=0 ,$list_id = 0, $report_id = 0, $fromname='', $fromemail=''){
 
 		//SendPress_Error::log('Send me an email!');
 		
@@ -411,6 +411,14 @@ class SendPress_Manager {
    		$method = SendPress_Option::get( 'sendmethod' );
 
 		//SendPress_Error::log(array($to, $subject,$method));
+
+   		if(empty($fromname) || $fromname == ''){
+   			$fromname = SendPress_Option::get('fromname');
+   		}
+   		if(empty($fromemail) || $fromemail==''){
+   				$fromemail = SendPress_Option::get('fromemail');
+		}
+
 
    		$sender = $sendpress_sender_factory->get_sender($method);
    		if( $sender != false ){
