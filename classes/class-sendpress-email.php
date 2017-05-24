@@ -174,8 +174,23 @@ class SendPress_Email {
 				@$dom->loadHtml($body_html);
 				
 				$pTags = $dom->getElementsByTagName('p');
-				$body_font = 'font-family:'. urldecode(get_post_meta( $post->ID , '_body_font', true )).';';
-				$body_size = 'font-size:'. get_post_meta( $post_template , '_body_font_size', true ).'px;';
+
+				$body_font = "";
+				$body_size = "";
+
+				if(defined('SENDPRESS_PRO_LOADED') && SENDPRESS_PRO_LOADED){
+					$font_value = urldecode(get_post_meta( $post->ID , '_body_font', true ));
+					$size_value = get_post_meta( $post_template , '_body_font_size', true );
+
+					if(strlen($font_value) > 0){
+						$body_font = 'font-family:'. $font_value .';';
+					}
+
+					if(strlen($size_value) > 0){
+						$body_size = 'font-size:'.$size_value .'px;';
+					}
+				}
+				
 				foreach ($pTags as $pElement) {
 					$px = $pElement->getAttribute('style');
 					$pElement->setAttribute('style', ' margin-top:0; margin-bottom:10px; '. $body_font . $body_size . $px );
