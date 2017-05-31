@@ -23,8 +23,8 @@ class SendPress_View_Help extends SendPress_View{
 
 	function help_editemail(){
 ?>
-		<b>SendPress Editor Button</b>
-		<p>Look for this button <img src="<?php echo SENDPRESS_URL; ?>/js/icon.png" /> to open the popup for adding posts to an email and personilizing emails.</p>
+		<b><?php _e('SendPress Editor Button','sendpress'); ?></b>
+		<p><?php _e('Look for this button','sendpress'); ?> <img src="<?php echo SENDPRESS_URL; ?>/js/icon.png" /> <?php _e('to open the popup for adding posts to an email and personilizing emails.','sendpress'); ?></p>
 
 		
 
@@ -32,7 +32,7 @@ class SendPress_View_Help extends SendPress_View{
 	}
 
 	function help_shortcodes(){ ?>
-	<p class="lead">Click a title to view info about a shortcode.</p>
+	<p class="lead"><?php _e('Click a title to view info about a shortcode.','sendpress'); ?></p>
 	<?php
 		SendPress_Shortcode_Loader::docs();
 	}
@@ -41,11 +41,11 @@ class SendPress_View_Help extends SendPress_View{
 	
 		
 ?>
-	<b>Basic Support</b>
-	<p>You can get support for the FREE version of SendPress on the <a href="http://wordpress.org/support/plugin/sendpress" target="_blank">WordPress.org forums</a>.<br>Also check our <a href="http://sendpress.com/support" target="_blank">Knowledge Base</a> for help at <a href="http://docs.sendpress.com/" target="_blank">http://docs.sendpress.com/</a></p>
+	<b><?php _e('Basic Support','sendpress'); ?></b>
+	<p><?php _e('You can get support for the FREE version of SendPress on the','sendpress'); ?> <a href="http://wordpress.org/support/plugin/sendpress" target="_blank"><?php _e('WordPress.org forums','sendpress'); ?></a>.<br><?php _e('Also check our','sendpress'); ?> <a href="http://sendpress.com/support" target="_blank"><?php _e('Knowledge Base','sendpress'); ?></a> <?php _e('for help at','sendpress'); ?> <a href="http://docs.sendpress.com/" target="_blank">http://docs.sendpress.com/</a></p>
 	<br>
-	<b>Premium Support</b>
-	<p>Premium support is available if you have purchased SendPress Pro from SendPress.com. Premium support can be accessed via our support site: <a href="http://sendpress.com/your-account" target="_blank">http://sendpress.com/your-account</a> and requires a SendPress.com account.</p>
+	<b><?php _e('Premium Support','sendpress'); ?></b>
+	<p><?php _e('Premium support is available if you have purchased SendPress Pro from SendPress.com. Premium support can be accessed via our support site:','sendpress'); ?> <a href="http://sendpress.com/your-account" target="_blank">http://sendpress.com/your-account</a> <?php _e('and requires a SendPress.com account','sendpress'); ?>.</p>
 	
 <?php
 	}
@@ -149,7 +149,7 @@ class SendPress_View_Help extends SendPress_View{
 	  	_e('open','sendpress');
 	  }  */?><br><br>
 
-	  	<b>Support Info:</b>
+	  	<b><?php _e('Support Info','sendpress'); ?>:</b>
 	  	<textarea readonly="readonly" class="sendpress-sysinfo"  name="sendpress-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'sendpress' ); ?>"><?php echo esc_html( $this->display() ); ?></textarea>
 
 
