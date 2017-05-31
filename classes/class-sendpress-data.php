@@ -2599,7 +2599,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 			'Arial'=>'Arial,sans-serif',
 			'Helvetica'=>'Helvetica,sans-serif',
 			'Arial Black'=>'"Arial Black", Gadget, sans-serif',
-			'Comic Sans MS'=>'"Comic Sans MS", cursive,sans-serif',
+			//'Comic Sans MS'=>'"Comic Sans MS", cursive,sans-serif', //at Doug's request
 			'Impact'=>'Impact, Charcoal,,sans-serif',
 			'Lucida Sans Unicode'=>'"Lucida Sans Unicode", "Lucida Grande",sans-serif',
 			'Tahoma'=>'Tahoma, Geneva,sans-serif',

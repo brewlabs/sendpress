@@ -120,9 +120,6 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
            
             <?php _e('Link','sendpress'); ?><br><input type="text" value="<?php echo $linktextpage; ?>" id="pagelink-color-select" name="pagelink-color-select" class="my-color-field" data-default-color="#2469a0" data-template-style="color" data-template-target=".page-text-color a" />
             
-            <?php do_action('sendpress_view_template_page_settings', $postdata->ID); ?>
-            
-
             <br><br>
             <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Footerpage', array('templateID' =>SPNL()->validate->_int('templateID') )); ?>" class="btn"><?php _e('Edit Page Footer HTML','sendpress'); ?></a>
             
@@ -211,6 +208,8 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
     <hr>
     <?php _e('Link','sendpress'); ?><br><input type="text" value="<?php echo $contentlink; ?>" id="content-link-color-select" name="content-link-color-select" class="my-color-field" data-default-color="#2469a0" data-template-style="color" data-template-target=".sp-style-c-bg a" />
   
+    <?php do_action('sendpress_view_template_page_settings', $postdata->ID); ?>
+    <br><br>
     <!--
     <hr>
     Link<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="color" data-template-target=".sp-style-c-bg a" />
