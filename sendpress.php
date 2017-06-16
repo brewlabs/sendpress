@@ -34,14 +34,14 @@ if ( ! defined( 'SENDPRESS_FILE' ) ) {
 define( 'SENDPRESS_LOG_ERROR', true );
 
 if ( ! defined( 'SENDPRESS_STORE_URL' ) ) {
-	define( 'SENDPRESS_STORE_URL', 'https://sendpress.com' );
+	define( 'SENDPRESS_STORE_URL', 'https://store.sendpress.com' );
 }
 if ( ! defined( 'SENDPRESS_PRO_NAME' ) ) {
 	define( 'SENDPRESS_PRO_NAME', 'SendPress Pro' );
 }
 
 global $pro_names;
-$pro_names = array( 'Pro1', 'Pro3', 'Pro20' );
+$pro_names = array( 256, 806, 807,30800 ); //pro1, pro3, pro20, Sp Pro
 
 /*
 *

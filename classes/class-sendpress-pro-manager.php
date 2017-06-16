@@ -128,16 +128,20 @@ class SendPress_Pro_Manager {
 		}
 	}
 
-	static function activate_key($key,$name){
+	static function activate_key($key,$id){
+
+		//error_log("testing........")
 
 		$api_params = array( 
             'edd_action'=> 'activate_license', 
             'license'   => $key, 
-            'item_name' => urlencode( $name ) // the name of our product in EDD
+            'item_id' => $id // the name of our product in EDD
         );
 
         // Call the custom API.
         $response = wp_remote_post( SENDPRESS_STORE_URL , array( 'body'=>$api_params ,'timeout' => 15, 'sslverify' => false ) );
+
+        //error_log($response);
 
         // make sure the response came back okay
         if ( is_wp_error( $response ) )
@@ -146,10 +150,12 @@ class SendPress_Pro_Manager {
         // decode the license data
         $license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
+        //error_log($license_data);
+
         if($license_data){
         	if( $license_data->license !== 'invalid' ){
         		SendPress_Option::set('api_key',$key);
-        		SendPress_Option::set('api_product', $name);
+        		SendPress_Option::set('api_product', $id);
         		SendPress_Pro_Manager::set_pro_state(array('state'=>$license_data->license, 'transient_time'=>SENDPRESS_TRANSIENT_LENGTH));
         		
             	return true;
@@ -161,11 +167,13 @@ class SendPress_Pro_Manager {
 
 	static function try_activate_key($key){
 
+		//error_log("try to activate key");
+
 		//$key = SendPress_Option::get('api_key');
 		global $pro_names;
 		$valid = false;
-		foreach($pro_names as $name){
-			if(SendPress_Pro_Manager::activate_key($key,$name)){
+		foreach($pro_names as $id){
+			if(SendPress_Pro_Manager::activate_key($key,$id)){
 				$valid = true;
 				break;
 			}
@@ -175,13 +183,13 @@ class SendPress_Pro_Manager {
 
 	}
 
-	static function deactivate_key($key, $name){
+	static function deactivate_key($key, $id){
 
         // data to send in our API request
         $api_params = array( 
             'edd_action'=> 'deactivate_license', 
             'license'   => $key, 
-            'item_name' => urlencode( $name ) // the name of our product in EDD
+            'item_id' => $id // the name of our product in EDD
         );
         // Call the custom API.
         $response = wp_remote_post( SENDPRESS_STORE_URL , array( 'body'=>$api_params ,'timeout' => 15, 'sslverify' => false ) );
@@ -202,10 +210,11 @@ class SendPress_Pro_Manager {
 
 	static function try_deactivate_key(){
 		$key = SendPress_Option::get('api_key');
-		SendPress_Pro_Manager::deactivate_key($key,$name);
+		$id = SendPress_Option::get('api_product');
+		SendPress_Pro_Manager::deactivate_key($key,$id);
 	}
 
-	static function check_key($key,$name){
+	static function check_key($key,$id){
 
 		if(empty($key)){
 			return false;
@@ -217,7 +226,7 @@ class SendPress_Pro_Manager {
         $api_params = array( 
             'edd_action'=> 'check_license', 
             'license'   => $key, 
-            'item_name' => urlencode( $name ) // the name of our product in EDD
+            'item_name' => $id // the name of our product in EDD
         );
         
         // Call the custom API.
