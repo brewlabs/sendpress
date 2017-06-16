@@ -150,17 +150,6 @@ class SendPress_Template_Tags {
 		$this->subscriber_id = $subscriber_id;
 		$this->email_id = $email_id;
 		$this->template_id = $t_id;
-		$email = get_post( $t_id );
-		if($email){
-			if($email->post_type == 'sp_template'){
-				if($email->post_status == 'sp-standard'){
-					$this->email_type = 'internal';
-				}
-				if( $email->post_status == 'sp-custom' ){
-					$this->email_type = 'external';
-				}
-			}
-		}
 
 		$new_content = preg_replace_callback( "/{([A-z0-9\-\_]+)}/s", array( $this, 'do_email_tag' ), $content );
 
@@ -186,10 +175,11 @@ class SendPress_Template_Tags {
 		if ( ! $this->email_tag_exists( $tag ) ) {
 			return $m[0];
 		}
-
+		/*
 		if( $this->email_type == 'internal' && isset( $this->email_tags[$tag]['internal'] ) ) {
 			return call_user_func( $this->email_tags[$tag]['internal'],$this->template_id, $this->email_id, $this->subscriber_id, $tag );
 		}
+		*/
 
 		return call_user_func( $this->email_tags[$tag]['func'], $this->template_id,$this->email_id, $this->subscriber_id, $tag );
 	}
@@ -251,17 +241,6 @@ class SendPress_Template_Tags {
 		$this->email_id = $email_id;
 		$this->template_id = $t_id;
 		$this->custom_content = $custom_content;
-		$email = get_post( $t_id );
-		if($email){
-			if($email->post_type == 'sp_template'){
-				if($email->post_status == 'sp-standard'){
-					$this->email_type = 'internal';
-				}
-				if( $email->post_status == 'sp-custom' ){
-					$this->email_type = 'external';
-				}
-			}
-		}
 		
 		$new_content = preg_replace_callback( "/{([A-z0-9\-\_]+)}/s", array( $this, 'do_content_tag' ), $content );
 
@@ -288,11 +267,6 @@ class SendPress_Template_Tags {
 		// Return tag if tag not set
 		if ( ! $this->content_tag_exists( $tag ) ) {
 			return $m[0];
-		}
-		
-
-		if( $this->email_type == 'internal' && isset( $this->content_tags[$tag]['internal'] ) ) {
-			return call_user_func( $this->content_tags[$tag]['internal'], $this->template_id,$this->email_id, $this->subscriber_id, $this->example,$this->custom_content, $tag );
 		}
 
 		return call_user_func( $this->content_tags[$tag]['func'], $this->template_id,$this->email_id, $this->subscriber_id,  $this->example,$this->custom_content, $tag );
@@ -356,18 +330,7 @@ class SendPress_Template_Tags {
 		$this->subscriber_id = $subscriber_id;
 		$this->email_id = $email_id;
 		$this->template_id = $t_id;
-		$email = get_post( $t_id );
-		if($email){
-			if($email->post_type == 'sp_template'){
-				if($email->post_status == 'sp-standard'){
-					$this->email_type = 'internal';
-				}
-				if( $email->post_status == 'sp-custom' ){
-					$this->email_type = 'external';
-				}
-			}
-		}
-
+		
 		$new_content = preg_replace_callback( "/{([A-z0-9\-\_]+)}/s", array( $this, 'do_subscriber_tag' ), $content );
 
 		
@@ -391,10 +354,6 @@ class SendPress_Template_Tags {
 		// Return tag if tag not set
 		if ( ! $this->subscriber_tag_exists( $tag ) ) {
 			return $m[0];
-		}
-
-		if( $this->email_type == 'internal' && isset( $this->subscriber_tags[$tag]['internal'] ) ) {
-			return call_user_func( $this->subscriber_tags[$tag]['internal'],$this->template_id, $this->email_id, $this->subscriber_id, $tag );
 		}
 
 		return call_user_func( $this->subscriber_tags[$tag]['func'], $this->template_id,$this->email_id, $this->subscriber_id, $tag );
