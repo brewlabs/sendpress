@@ -24,6 +24,16 @@ class SendPress_Email_Render_Engine {
 		return self::render_example( get_post( $post_id ) );
 	}
 
+	static function render_customizer_base(){
+		$path = SENDPRESS_PATH . 'templates/v1-0/master.html';
+
+				$html = file_get_contents($path);
+				$return = spnl_do_content_tags( $html, 0,0, 0, true );
+				$return = spnl_do_email_tags( $return, 0,0, 0, true );
+				$return = spnl_do_subscriber_tags( $return, 0,0, 0, true );
+				return $return;
+	}
+
 	static function render_template_example( $post ){
 		$html = self::render_html_base_by_post( $post );
 		$return = spnl_do_content_tags( $html, $post->ID, $post->ID, 0, true );

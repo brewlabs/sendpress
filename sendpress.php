@@ -118,6 +118,8 @@ class SendPress {
 	public $db;
 	public $api;
 	public $validate;
+	public $customizer;
+	public $loader;
 	private static $instance;
 
 
@@ -140,6 +142,7 @@ class SendPress {
 		add_action( 'plugins_loaded', array( $this, 'load_plugin_language' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'wp_enqueue_script' ) );
 		add_action( 'init', array( 'SendPress_Shortcode_Loader', 'init' ) );
+
 		do_action( 'sendpress_loaded' );
 	}
 
@@ -276,9 +279,46 @@ class SendPress {
 			self::$instance->db->subscribers_tracker = new SendPress_DB_Subscribers_Tracker();
 			self::$instance->db->url                 = new SendPress_DB_Url();
 			self::$instance->db->subscribers_url     = new SendPress_DB_Subscribers_Url();
+			self::$instance->loader  = new SendPress_Loader();
+			self::$instance->customizer  = new SendPress_Email_Customizer( 'SendPress Newsletters', SENDPRESS_VERSION );
+			self::$instance->runloader();
+
 		}
 
 		return self::$instance;
+	}
+
+		/**
+	 * Create the wp-admin menu link
+	 */
+	public function add_menu_link() {
+		$link = $this->get_customizer_link();
+		add_submenu_page( 'themes.php', 'Email Templates', 'Email Templates', apply_filters( 'mailtpl/roles', 'edit_theme_options'), $link , null );
+	}
+
+	/**
+	 * Simple function to generate link for customizer
+	 * @return string
+	 */
+	public function get_customizer_link( $email  = 0 , $return = false) {
+		if($return == false){
+			$return = admin_url();
+		}
+
+		$link = add_query_arg(
+			array(
+				'url'             => urlencode( site_url( '/?sendpress_display=true&spemail='.$email ) ),
+				'return'          => urlencode( $return ),
+				'sendpress_display' => 'true',
+				'spemail' => $email
+			),
+			'customize.php'
+		);
+		return $link;
+	}
+
+	public function runloader(){
+		
 	}
 
 	static function update_templates() {
@@ -357,6 +397,7 @@ class SendPress {
 			sendpress_register_sender( 'SendPress_Sender_SPNL' );
 		}
 		
+
 	
 
 		do_action( 'sendpress_init' );
@@ -382,7 +423,20 @@ class SendPress {
 		$this->add_custom_post();
 
 
-	
+		if( defined( 'DOING_AJAX' ) || ( isset( $_GET['sendpress_display'] ) && 'true' == $_GET['sendpress_display'] ) ) {
+			$this->loader->add_action( 'customize_register', $this->customizer, 'register_customize_sections' );
+			$this->loader->add_action( 'customize_section_active', $this->customizer, 'remove_other_sections', 10, 2 );
+			$this->loader->add_action( 'customize_panel_active', $this->customizer, 'remove_other_panels', 10, 2 );
+			$this->loader->add_action( 'template_include', $this->customizer, 'capture_customizer_page' );
+		}
+
+		if( isset( $_GET['sendpress_display'] ) ) {
+			$this->loader->add_action( 'customize_controls_enqueue_scripts', $this->customizer, 'enqueue_scripts' );
+			$this->loader->add_action( 'customize_preview_init', $this->customizer, 'enqueue_template_scripts', 99 );
+			//$this->loader->add_action( 'init', $this->customizer, 'remove_all_actions', 99 );
+			$this->customizer->remove_all_actions();
+		}
+		$this->loader->run();
 
 	}
 
@@ -1189,6 +1243,8 @@ class SendPress {
 		if ( defined( 'SENDPRESS_PRO_VERSION' ) ) {
 			$plugin_name .= " " . __( 'Pro', 'sendpress' );
 		}
+
+		$this->add_menu_link();
 
 		add_menu_page( $plugin_name, $plugin_name, $role, 'sp-overview', array(
 			&$this,
