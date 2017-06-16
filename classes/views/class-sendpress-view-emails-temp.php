@@ -78,7 +78,7 @@ class SendPress_View_Emails_Temp extends SendPress_View_Emails{
 
 	<?php
 
-	echo '<a class="btn btn-primary" href="'.	SPNL()->get_customizer_link() .'">Customizer</a>';
+	//echo '<a class="btn btn-primary" href="'.	SPNL()->get_customizer_link() .'">Customizer</a>';
 	}
 
 }
