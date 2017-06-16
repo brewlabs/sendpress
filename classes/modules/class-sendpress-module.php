@@ -143,7 +143,7 @@ class SendPress_Module {
 		}else{
 			if( !file_exists(WP_PLUGIN_DIR.'/'.$path) ){
 				$button['class'] = 'module-deactivate-plugin btn-primary btn-buy btn';
-				$button['href'] = 'http://sendpress.com';
+				$button['href'] = 'http://www.sendpress.com/pricing/';
 				$button['target'] = '_blank';
 				$button['text'] = 'Buy Now';
 				//$button['id'] = '';

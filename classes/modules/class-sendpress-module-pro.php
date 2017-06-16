@@ -63,7 +63,7 @@ class SendPress_Module_Pro extends SendPress_Module{
 			case 'not-installed':
 				$button = array(
 					'class' => 'btn-primary btn-buy btn', 
-					'href' => 'http://sendpress.com', 
+					'href' => 'http://www.sendpress.com/pricing/', 
 					'target' => '_blank', 
 					'text' => __('Buy Now','sendpress')
 				);
