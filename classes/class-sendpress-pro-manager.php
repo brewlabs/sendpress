@@ -130,7 +130,7 @@ class SendPress_Pro_Manager {
 
 	static function activate_key($key,$id){
 
-		//error_log("testing........")
+		//error_log("testing........");
 
 		$api_params = array( 
             'edd_action'=> 'activate_license', 
@@ -138,10 +138,12 @@ class SendPress_Pro_Manager {
             'item_id' => $id // the name of our product in EDD
         );
 
+		//SendPress_Error::log(SENDPRESS_STORE_URL);
+
         // Call the custom API.
         $response = wp_remote_post( SENDPRESS_STORE_URL , array( 'body'=>$api_params ,'timeout' => 15, 'sslverify' => false ) );
 
-        //error_log($response);
+        //SendPress_Error::log($response);
 
         // make sure the response came back okay
         if ( is_wp_error( $response ) )
@@ -150,7 +152,7 @@ class SendPress_Pro_Manager {
         // decode the license data
         $license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
-        //error_log($license_data);
+        //SendPress_Error::log($license_data);
 
         if($license_data){
         	if( $license_data->license !== 'invalid' ){

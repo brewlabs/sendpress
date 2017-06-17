@@ -380,8 +380,6 @@
             $('.save-api-key').click(function(e){
                 e.preventDefault();
 
-
-
                 $(this).parents('#post').submit();
             });
         
