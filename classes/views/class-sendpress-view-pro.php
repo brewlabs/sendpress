@@ -11,7 +11,7 @@ class SendPress_View_Pro extends SendPress_View{
 	function module_save_api_key(){
         //$this->security_check();
         
-        error_log('save page api key');
+        //error_log('save page api key');
 
         $license = $_POST['api_key'];
         if( false === SendPress_Pro_Manager::try_activate_key($license) ){
