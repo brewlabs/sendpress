@@ -50,6 +50,12 @@
                 signup[$obj.attr('id')] = $obj.val();
             });
 
+            //adding this back in for post notifications
+            $form.find('.custom-field').each(function(){
+                var $obj = $(this);
+                signup[$obj.attr('id')] = $obj.val();
+            });
+
             signup['action'] = 'sendpress_subscribe_to_list';
 
             if( signup.email.length === 0 ){
@@ -64,6 +70,9 @@
 
             if(submit_ok){
                 $submit.attr("disabled", "disabled");
+
+
+
                 jQuery.post(sendpress.ajaxurl, signup, function(response){
                 
                     try {
