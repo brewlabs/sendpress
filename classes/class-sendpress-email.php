@@ -186,7 +186,7 @@ class SendPress_Email {
 						$body_font = 'font-family:'. urldecode($font_value) .';';
 					}
 
-					if(strlen($size_value) > 0){
+					if($size_value > 0){
 						$body_size = 'font-size:'.$size_value .'px;';
 					}
 				}
