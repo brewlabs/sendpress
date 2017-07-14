@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 1.8.7.10.1
+Stable tag: 1.8.7.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.8.7.14 - 2017.7.14 =
+* Fix: Bug with content not showing in email or template edit screen
 
 = 1.8.7.10.1 - 2017.7.10 =
 * Fix: Bug with sign-up form
