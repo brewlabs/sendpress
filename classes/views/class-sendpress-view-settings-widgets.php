@@ -24,6 +24,10 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		$copy_from = SPNL()->validate->_string('copy_from');
 		$form_type = SPNL()->validate->_string('form_type');
 
+		if(strlen($post_subject) === 0){
+			$post_subject = "SendPress Form";
+		}
+
 		switch($action){
 			case 'copy':
 				$postid = SendPress_Data::create_settings_post($post_subject, "", $copy_from);
