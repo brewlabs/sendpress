@@ -314,7 +314,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					?>
 
 					<?php if( filter_var($_collect_salutation, FILTER_VALIDATE_BOOLEAN) ): ?>
-						<p name="sp_salutation">
+						<p>
 							<?php if( !$_display_labels_inside_fields ): ?>
 								<label for="sp_salutation"><?php echo $_salutation_label; ?>:</label>
 							<?php endif; ?>
@@ -323,7 +323,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					<?php endif; ?>
 
 					<?php if( filter_var($_collect_firstname, FILTER_VALIDATE_BOOLEAN)  ): ?>
-						<p name="sp_firstname">
+						<p>
 							<?php if( !$_display_labels_inside_fields ): ?>
 								<label for="sp_firstname"><?php echo $_firstname_label; ?>:</label>
 							<?php endif; ?>
@@ -332,7 +332,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					<?php endif; ?>
 
 					<?php if( filter_var($_collect_lastname, FILTER_VALIDATE_BOOLEAN) ): ?>
-						<p name="sp_lastname">
+						<p>
 							<?php if( !$_display_labels_inside_fields ): ?>
 								<label for="sp_lastname"><?php echo $_lastname_label; ?>:</label>
 							<?php endif; ?>
@@ -341,7 +341,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					<?php endif; ?>
 
 					<?php if( filter_var($_collect_phonenumber, FILTER_VALIDATE_BOOLEAN) ): ?>
-						<p name="sp_phonenumber">
+						<p>
 							<?php if( !$_display_labels_inside_fields ): ?>
 								<label for="sp_phonenumber"><?php echo $_phonenumber_label; ?>:</label>
 							<?php endif; ?>
@@ -349,7 +349,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 						</p>
 					<?php endif; ?>
 
-					<p name="sp_email">
+					<p>
 						<?php if( !$_display_labels_inside_fields ): ?>
 							<label for="sp_email"><?php echo $_email_label; ?>:</label>
 						<?php endif; ?>
@@ -375,7 +375,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 							$custom_field_key = $value['custom_field_key'];
 								?>
 
-								<p name="sp_custom_field">
+								<p>
 		
 									<label for="sp_custom_field"><?php _e($custom_field_label, 'sendpress'); ?></label>
 
@@ -391,7 +391,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					<?php }?>
 					<?php endif; ?>
 
-					<p name="extra_fields" class="signup-fields-bottom">
+					<p class="signup-fields-bottom">
 						<?php do_action('sendpress_signup_form_bottom'); ?>
 					</p>
 
