@@ -1583,7 +1583,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function import_csv_array($data, $map, $list){
 
 		global $wpdb;
-		$query ="INSERT IGNORE INTO ". SendPress_Data::subscriber_table(). "(email,firstname,lastname,join_date,registered_ip,identity_key) VALUES ";
+		$query ="INSERT IGNORE INTO ". SendPress_Data::subscriber_table(). "(email,firstname,lastname,join_date,registered_ip,phonenumber,salutation,identity_key) VALUES ";
 		$total = count($data);
 		$emails_added = array();
 		$x = 0;
@@ -1610,6 +1610,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 					}
 
 
+
 					$values .=  "'".date('Y-m-d H:i:s') ."',";
 
 					if(array_key_exists('ip',$map)){
@@ -1618,8 +1619,20 @@ class SendPress_Data extends SendPress_DB_Tables {
 						$values .= "'',";
 					}
 
+					if(array_key_exists('phonenumber',$map)){
+						$values.="'".esc_sql(trim($line[$map['phonenumber']]),$wpdb->dbh)."',";
+					} else {
+						$values .= "'',";
+					}
+
+					if(array_key_exists('salutation',$map)){
+						$values.="'".esc_sql(trim($line[$map['salutation']]),$wpdb->dbh)."',";
+					} else {
+						$values .= "'',";
+					}
+
 					$values .= "'".SendPress_Data::random_code()."'";
-					
+
 					$query .= " ($values) ";
 
 				}
