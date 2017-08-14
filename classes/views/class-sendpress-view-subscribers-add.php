@@ -41,8 +41,10 @@ class SendPress_View_Subscribers_Add extends SendPress_View_Subscribers {
         foreach( $newsubscribers as $subscriberx){
             if( is_email( trim( $subscriberx['email'] ) ) ){
           
-            $result = SendPress_Data::add_subscriber( array('firstname'=> trim($subscriberx['firstname']) ,'email'=> trim($subscriberx['email']),'lastname'=> trim($subscriberx['lastname']) ) );
-            SendPress_Data::update_subscriber_status($listID, $result, 2, false);
+            $result = SendPress_Data::add_subscriber( array('firstname'=> trim($subscriberx['firstname']) ,'email'=> trim($subscriberx['email']),'lastname'=> trim($subscriberx['lastname']), 'phonenumber' => trim($subscriberx['phonenumber']), 'salutation' => trim($subscriberx['salutation']) ) );
+
+
+            	SendPress_Data::update_subscriber_status($listID, $result, 2, false);
             }
         }
     	

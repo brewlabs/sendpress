@@ -7,7 +7,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
-	private $_import_fields = array('email','firstname','lastname','ip');
+	private $_import_fields = array('email','firstname','lastname','ip', 'status', 'phonenumber','salutation');
   
 
 	function save(){
@@ -117,7 +117,9 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
                               'firstname'=>__('First name','sendpress'),
                               'lastname'=>__('Last name','sendpress'),
                               'ip'=>__('IP address','sendpress'),
-                              'status'=>__('Status','sendpress')
+                              'status'=>__('Status','sendpress'),
+                              'phonenumber' => __('Phone Number', 'sendpress'),
+                              'salutation' => __('Salutation', 'sendpress')
                               );
 
                             $i=0;
@@ -144,8 +146,9 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
     $loop = 4;
     $placeholder = true;
   } else {
-    $loop = 5;
+    $loop = $total;
   }
+
   for ($i=0; $i < $loop; $i++) { 
     $line = '<tr>';
     $line .="<td>$i</td>";
