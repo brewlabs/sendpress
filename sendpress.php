@@ -759,15 +759,7 @@ class SendPress {
 	}
 
 
-	static function add_caps() {
-		global $wp_roles;
 
-		if ( ! isset( $wp_roles ) ) {
-			$wp_roles = new WP_Roles();
-		}
-		$role = $wp_roles->get_role( 'administrator' ); // gets the author role
-		$role->add_cap( 'manage_sendpress' ); // would allow the author to edit others' posts for current theme only
-	}
 
 	/* Display a notice that can be dismissed */
 
@@ -1775,8 +1767,6 @@ class SendPress {
 		$api->add_endpoint();
 		flush_rewrite_rules();
 		*/
-		SendPress::add_cron();
-		SendPress::add_caps();
 		SendPress_Option::set( 'install_date', time() );
 		update_option('sendpress_flush_rewrite_rules', true);
 	}
