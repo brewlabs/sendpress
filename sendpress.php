@@ -1767,6 +1767,8 @@ class SendPress {
 		$api->add_endpoint();
 		flush_rewrite_rules();
 		*/
+		
+
 		SendPress_Option::set( 'install_date', time() );
 		update_option('sendpress_flush_rewrite_rules', true);
 	}

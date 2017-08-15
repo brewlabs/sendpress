@@ -39,13 +39,15 @@ SP Version:               <?php echo SENDPRESS_VERSION . "\n"; ?>
 
 PHP Version:              <?php echo PHP_VERSION . "\n"; ?>
 <?php
-if ( $wpdb->use_mysqli ) {
-	$mysql_ver = @mysqli_get_server_info( $wpdb->dbh );
-} else {
-	$mysql_ver = @mysql_get_server_info();
-}
+	$host= spnl_get_host();
+// Can we determine the site's host?
+	if( $host ) {
+		$return ='';
+		$return .= 'Host:                     ' . $host . "\n";
+		echo $return;
+	}
 ?>
-MySQL Version:            <?php echo $mysql_ver . "\n"; ?>
+MySQL Version:            <?php echo $wpdb->db_version() . "\n"; ?>
 Web Server Info:          <?php echo $_SERVER['SERVER_SOFTWARE'] . "\n"; ?>
 
 WordPress Memory Limit:   <?php echo ( self::let_to_num( WP_MEMORY_LIMIT )/( 1024 ) )."MB"; ?><?php echo "\n"; ?>
@@ -121,3 +123,37 @@ if ( has_action( 'ssi_extra_info' ) ) {
 	echo "\n";
 	do_action( 'ssi_extra_info' );
 }
+
+
+function spnl_get_host() { 
+    $host = false; 
+ 
+    if( defined( 'WPE_APIKEY' ) ) { 
+        $host = 'WP Engine'; 
+    } elseif( defined( 'PAGELYBIN' ) ) { 
+        $host = 'Pagely'; 
+    } elseif( DB_HOST == 'localhost:/tmp/mysql5.sock' ) { 
+        $host = 'ICDSoft'; 
+    } elseif( DB_HOST == 'mysqlv5' ) { 
+        $host = 'NetworkSolutions'; 
+    } elseif( strpos( DB_HOST, 'ipagemysql.com' ) !== false ) { 
+        $host = 'iPage'; 
+    } elseif( strpos( DB_HOST, 'ipowermysql.com' ) !== false ) { 
+        $host = 'IPower'; 
+    } elseif( strpos( DB_HOST, '.gridserver.com' ) !== false ) { 
+        $host = 'MediaTemple Grid'; 
+    } elseif( strpos( DB_HOST, '.pair.com' ) !== false ) { 
+        $host = 'pair Networks'; 
+    } elseif( strpos( DB_HOST, '.stabletransit.com' ) !== false ) { 
+        $host = 'Rackspace Cloud'; 
+    } elseif( strpos( DB_HOST, '.sysfix.eu' ) !== false ) { 
+        $host = 'SysFix.eu Power Hosting'; 
+    } elseif( strpos( $_SERVER['SERVER_NAME'], 'Flywheel' ) !== false ) { 
+        $host = 'Flywheel'; 
+    } else { 
+        // Adding a general fallback for data gathering 
+        $host = 'DBH: ' . DB_HOST . ', SRV: ' . $_SERVER['SERVER_NAME']; 
+    } 
+ 
+    return $host; 
+} 
