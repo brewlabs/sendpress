@@ -57,7 +57,6 @@ class SendPress_View {
 				});
 			});
 		</script>
-
 		<!-- src/templates/metabox.templ.php  -->
  
 <!-- Template -->
