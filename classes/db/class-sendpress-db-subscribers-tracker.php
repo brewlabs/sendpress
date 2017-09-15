@@ -153,6 +153,15 @@ class SendPress_DB_Subscribers_Tracker extends SendPress_DB {
 		return $wpdb->get_results( $q );
 	}
 
+	public function total_send_list( $email_id ){
+		global $wpdb;
+		$subs_table = SendPress_DB_Tables::subscriber_table();
+		$url_table = SPNL()->load("Subscribers_Url")->table_name;
+		$q = $wpdb->prepare(" SELECT su.email, st.opened_count as opens, st.opened_at,st.status , SUM(ut.click_count) as clicks FROM $this->table_name as st LEFT JOIN $url_table as ut on ut.subscriber_id = st.subscriber_id and ut.email_id = st.email_id LEFT JOIN $subs_table as su on su.subscriberID = st.subscriber_id WHERE st.email_id = %d GROUP BY st.subscriber_id order by su.email  ", $email_id );
+
+		return $wpdb->get_results( $q );
+	}
+
 	public function unsubscribe_list( $email_id ){
 		global $wpdb;
 		$subs_table = SendPress_DB_Tables::subscriber_table();
