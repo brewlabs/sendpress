@@ -30,7 +30,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function email_post_type(){
 		return 'sp_newsletters';
 	}
-	
+
 	static function template_post_type(){
 		return 'sptemplates';
 	}
@@ -43,7 +43,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return gmdate('Y-m-d H:i:s');
 	}
 
-	/********************* BASE static functionS **************************/	
+	/********************* BASE static functionS **************************/
 
 	static function wpdbQuery($query, $type) {
 		global $wpdb;
@@ -78,7 +78,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		}
 		return $ret;
 	}
-	
+
 	/********************* BASE static functionS **************************/
 
 	/********************* QUEUE static functionS **************************/
@@ -93,16 +93,16 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function get_single_email_from_queue( $override = false ){
 		global $wpdb;
 		$date = date_i18n('Y-m-d H:i:s', current_time( 'timestamp' ) );
-	
-		//SELECT id FROM wp_sendpress_queue WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 and ( date_sent = '0000-00-00 00:00:00' or date_sent < '2015-03-04 20:24:04' ) 
+
+		//SELECT id FROM wp_sendpress_queue WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 and ( date_sent = '0000-00-00 00:00:00' or date_sent < '2015-03-04 20:24:04' )
 		$list = $wpdb->get_results($wpdb->prepare("SELECT id FROM ". SendPress_Data::queue_table() ." WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 and ( date_sent = '0000-00-00 00:00:00' or date_sent < %s ) LIMIT 50 ", $date));
 		if(!empty($list)){
 
 			$ele = array_rand($list);
-		
+
 
 			$info = $wpdb->get_row( $wpdb->prepare("SELECT * FROM ". SendPress_Data::queue_table() ." WHERE id = %d ", $list[$ele]->id ) );
-			
+
 			if( $info->success > 0 || $info->inprocess > 0 || $info->max_attempts <= $info->attempts ){
 				return null;
 			}
@@ -116,18 +116,18 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function get_single_email_from_queue_by_id( $id ){
 		global $wpdb;
 		//$date = date_i18n('Y-m-d H:i:s', current_time( 'timestamp' ) );
-	
-		//SELECT id FROM wp_sendpress_queue WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 and ( date_sent = '0000-00-00 00:00:00' or date_sent < '2015-03-04 20:24:04' ) 
-		
+
+		//SELECT id FROM wp_sendpress_queue WHERE success = 0 AND max_attempts != attempts AND inprocess = 0 and ( date_sent = '0000-00-00 00:00:00' or date_sent < '2015-03-04 20:24:04' )
+
 
 			$info = $wpdb->get_row( $wpdb->prepare("SELECT * FROM ". SendPress_Data::queue_table() ." WHERE id = %d ", $id ) );
-			
+
 			if( $info->success > 0 || $info->inprocess > 0 || $info->max_attempts <= $info->attempts ){
 				return null;
 			}
 
 			return $info;
-		
+
 
 	}
 
@@ -182,7 +182,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if($id == false){
 			$query = "SELECT COUNT(*) FROM $table where success = 0";
 			 $query.=" AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s', current_time( 'timestamp' ) )."') ";
-       
+
        		$list_id = SPNL()->validate->_int('listid');
 	        if( $list_id > 0 ){
 	           $wpdb->prepare(" AND listID = %d", $list_id );
@@ -195,7 +195,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		} else {
 			$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where emailID = %d and success = 0", $id );
-		}	
+		}
 		return $wpdb->get_var( $query );
 	}
 
@@ -205,7 +205,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if($id == false){
 			$query = "SELECT COUNT(*) FROM $table where success = 0";
 			 $query.=" AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s')."') ";
-       
+
 	        $list_id = SPNL()->validate->_int('listid');
 	        if( $list_id > 0 ){
 	           $wpdb->prepare(" AND listID = %d", $list_id );
@@ -220,7 +220,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		} else {
 			$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where emailID = %d and success = 0", $id );
-		}	
+		}
 		return $wpdb->get_var( $query );
 	}
 
@@ -230,7 +230,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if($id == false){
 			$query = "SELECT COUNT(*) FROM $table where success = 0";
 			$query.=" AND ( date_sent = '0000-00-00 00:00:00' or date_sent < '".date_i18n('Y-m-d H:i:s')."') ";
-       
+
 	       	 $list_id = SPNL()->validate->_int('listid');
 	        if( $list_id > 0 ){
 	           $wpdb->prepare(" AND listID = %d", $list_id );
@@ -245,7 +245,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		} else {
 			$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where emailID = %d and success = 0", $id );
-		}	
+		}
 		return $wpdb->get_var( $query );
 	}
 
@@ -274,20 +274,20 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$listdata[] = array('id'=>$list->listID,'title'=>get_the_title($list->listID));
 		}
 
-	
+
 		return $listdata;
 	}
 
 	static function clean_queue_table(){
 		global $wpdb;
 
-		
+
 		$hour_ago = strtotime('-1 hour');
 		$hour = date('Y-m-d H:i:s', $hour_ago);
 		$days_to_save = SendPress_Option::get('queue-history',7);
 		$x_days_past = strtotime('-'.$days_to_save.' day');
 		$day = date('Y-m-d H:i:s', $x_days_past);
-		
+
 		$table = self::queue_table();
 		$query = $wpdb->prepare("DELETE FROM $table where last_attempt < %s and success = %d", $day, 1 );
 		$wpdb->query( $query );
@@ -308,17 +308,17 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if($type == "day"){
 			$hour_ago = strtotime('-1 day');
 			$time = date('Y-m-d H:i:s', $hour_ago);
-			
+
 		}
 		$table = self::queue_table();
 		if($type == "All"){
 
 			$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where success = %d", 1 );
-			
+
 			return $wpdb->get_var( $query );
 
 		}
-		
+
 		$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where last_attempt > %s and success = %d", $time, 1 );
 		return $wpdb->get_var( $query );
 	}
@@ -330,10 +330,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if($id == false){
 			return 0;
 		}
-		
+
 		$table = self::queue_table();
 		$query = $wpdb->prepare("SELECT COUNT(*) FROM $table where emailID = %d AND success >= %d", $id, 1 );
-			
+
 		return $wpdb->get_var( $query );
 	}
 
@@ -376,7 +376,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		}
 		return $data;
 
-		
+
 	}
 
 
@@ -445,7 +445,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$c = 1;
 		if($color !== ''){
 			$color = 'style="color: '.$color.';"';
-		} 
+		}
 		if( is_array( $link ) && !empty($link) ) {
 		ksort($link);
 		foreach($link as $key => $url ){
@@ -525,7 +525,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	/********************* POST NOTIFICATION static functionS ***************/
 
-	/********************* REPORTS static functionS **************************/	
+	/********************* REPORTS static functionS **************************/
 
    	//TO BE REMOVED
     static function update_report_sent_count( $id ) {
@@ -541,7 +541,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
  	/**
      * Get url's in the database by the report and url string
-     * 
+     *
      * @param mixed $id         the report id.
      * @param mixed $url_string the url string.
      *
@@ -549,12 +549,12 @@ class SendPress_Data extends SendPress_DB_Tables {
      *
      * @return mixed Value.
      */
-    
+
  	static function get_url_by_hash( $hash ) {
  		global $wpdb;
 		$table = SendPress_Data::url_table();
 		$result = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table WHERE hash = %s" , $hash ) );
-		return $result;	
+		return $result;
 	}
 
 	static function insert_url( $url , $hash ) {
@@ -565,21 +565,21 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$url = esc_url( $url );
 		}
 
-		$wpdb->insert( 
-			$table, 
-			array( 
-				'hash' => $hash, 
+		$wpdb->insert(
+			$table,
+			array(
+				'hash' => $hash,
 				'url' => $url
-			), 
-			array( 
-				'%s', 
-				'%s' 
-			) 
+			),
+			array(
+				'%s',
+				'%s'
+			)
 		);
 
-		return $wpdb->insert_id;	
+		return $wpdb->insert_id;
 	}
-	
+
 	static function get_open_without_id($rid, $sid){
 		global $wpdb;
 		$table = SendPress_Data::subscriber_event_table();
@@ -607,7 +607,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$result = $wpdb->get_results($wpdb->prepare("SELECT COUNT(eventID) as count,date(eventdate) as day FROM $table WHERE reportID = %d AND type = 'open' GROUP BY date(eventdate) ORDER BY eventID DESC ;", $rid));
 		return $result;
 	}
-	
+
 	static function get_opens($rid){
 		global $wpdb;
 		$table = SendPress_Data::subscriber_event_table();
@@ -712,7 +712,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 			'device'=> $device,
 			'type'=>'click'
 		);
-		
+
 		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $urlData);
 	}
 
@@ -776,22 +776,22 @@ class SendPress_Data extends SendPress_DB_Tables {
 		//$this->upgrade_lists_new_id( $newlist->listID, $new_id);
 		//	$table = $this->lists_table();
 
-		
+
 		//$result = $this->wpdbQuery("INSERT INTO $table (name, created, public) VALUES( '" .$values['name'] . "', '" . date('Y-m-d H:i:s') . "','" .$values['public'] . "')", 'query');
 
-		return $new_id;	
+		return $new_id;
 	}
-	
+
 	static function update_list($listID, $values){
 		global $wpdb;
 
 		//$table = $this->lists_table();
 
 		//$result = $wpdb->update($table,$values, array('listID'=> $listID) );
-		
+
 		$my_post = array(
 		    'post_title' => $values['name'],
-		    'ID'=> $listID,     
+		    'ID'=> $listID,
 		);
 
 		// Insert the post into the database
@@ -809,7 +809,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	    	'orderby'         => 'post_title',
 	    	'order'           => 'DESC'
 	    )));
-	   
+
 		//set the post type after filter so our function name always makes sense ;)
 	    $args['post_type'] = 'sendpress_list';
 
@@ -832,34 +832,34 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	static function delete_all_subscribers(){
 		global $wpdb;
-			$wpdb->query( 
+			$wpdb->query(
 					"DELETE FROM " .  SendPress_Data::subscriber_table() ." "
 				);
 			$wpdb->query(
 					"DELETE FROM " .  SendPress_Data::list_subcribers_table() ." "
 				);
-			$wpdb->query( 
-				"DELETE FROM " .  SendPress_Data::subscriber_event_table() ." " 
+			$wpdb->query(
+				"DELETE FROM " .  SendPress_Data::subscriber_event_table() ." "
 				);
 	}
 
 	static function delete_subscriber($subscriberID = false){
 		if($subscriberID != false){
 			global $wpdb;
-			$wpdb->query( 
+			$wpdb->query(
 				$wpdb->prepare(
 					"DELETE FROM " .  SendPress_Data::subscriber_table() ." WHERE subscriberID = %d",
-					$subscriberID ) 
+					$subscriberID )
 				);
-			$wpdb->query( 
+			$wpdb->query(
 				$wpdb->prepare(
 					"DELETE FROM " .  SendPress_Data::list_subcribers_table() ." WHERE subscriberID = %d",
-					$subscriberID ) 
+					$subscriberID )
 				);
-			$wpdb->query( 
+			$wpdb->query(
 				$wpdb->prepare(
 					"DELETE FROM " .  SendPress_Data::subscriber_event_table() ." WHERE subscriberID = %d",
-					$subscriberID ) 
+					$subscriberID )
 				);
 		}
 
@@ -872,7 +872,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		$query_get = "SELECT subscriberID FROM ". SendPress_Data::subscriber_table(). " WHERE email in ('".implode("','", $emails )."')";
 		$data = $wpdb->get_results($query_get);
-	
+
 		$query_update_status ="INSERT IGNORE INTO ". SendPress_Data::list_subcribers_table(). "(subscriberID,listID,status,updated ) VALUES ";
 		$total = count($data);
 		$x = 0;
@@ -888,7 +888,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$wpdb->query($query_update_status);
 			/*
 			$clean_list_query =  "DELETE FROM "	.SendPress_Data::list_subcribers_table(). " WHERE listID = ".$listid." AND subscriberID not in ('".implode("','", $good_ids)."')";
-			$wpdb->query($clean_list_query);	
+			$wpdb->query($clean_list_query);
 			*/
 		}
 	}
@@ -899,14 +899,14 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$listid = SPNL()->validate->int( $listid );
 			global $wpdb;
 			$clean_list_query =  "DELETE FROM "	. SendPress_Data::list_subcribers_table() . " WHERE listID = ".$listid." AND status = 2";
-			$wpdb->query($clean_list_query);	
+			$wpdb->query($clean_list_query);
 
 		}
 
 	}
 
 
-	
+
 	static function update_subscriber($subscriberID, $values){
 		$table = SendPress_Data::subscriber_table();
 		global $wpdb;
@@ -927,7 +927,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$table = SendPress_Data::subscriber_table();
 		global $wpdb;
 		$key = SendPress_Data::random_code();
-		
+
 		//Check by WordPress user ID
 		$current = $wpdb->get_var( $wpdb->prepare("SELECT subscriberID FROM $table WHERE wp_user_id = %d", $wp_user_id) );
 		if( $current !== null ){
@@ -979,13 +979,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 		$query .= $wpdb->prepare(" AND t1.meta_key = %s", $meta_key );
-		
+
 		if($meta_value != false){
-			$query .=  $wpdb->prepare(" AND t1.meta_value = %s", $meta_value); 
+			$query .=  $wpdb->prepare(" AND t1.meta_value = %s", $meta_value);
 		}
 
 		if($list_id != false){
-			$query .=  $wpdb->prepare(" AND t3.subscriberID = t1.subscriberID AND t3.listID = %d AND t3.status = 2 ", $list_id); 
+			$query .=  $wpdb->prepare(" AND t3.subscriberID = t1.subscriberID AND t3.listID = %d AND t3.status = 2 ", $list_id);
 		}
 
 		return $wpdb->get_results($query);
@@ -1021,7 +1021,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		}
 
-		
+
 
 		return $wpdb->get_results($query);
 
@@ -1030,7 +1030,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		global $wpdb;
 		$meta_table = SendPress_Data::subscriber_meta_table();
-		
+
 		if($list_id == false){
 			$list_id = 0;
 		}
@@ -1080,13 +1080,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $wpdb->get_results( $query );
 	}
 
-	
+
 	static function export_subscirbers($listID = false){
 		global $wpdb;
 		if($listID){
         	$query = "SELECT t1.*, t3.status FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
 
-        
+
          	$query .= $wpdb->prepare(" WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.listID =  %d)", $listID );
         } else {
             $query = "SELECT * FROM " .  SendPress_Data::subscriber_table();
@@ -1102,7 +1102,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if($listID){
         	$query = "SELECT t1.*, t3.status FROM " .  self::subscriber_table() ." as t1,". self::list_subcribers_table()." as t2,". self::subscriber_status_table()." as t3 " ;
 
-        
+
             $query .= $wpdb->prepare(" WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.listID =  %d AND t2.subscriberID = %d )", $listID, $subscriberID );
         } else {
             $query = $wpdb->prepare("SELECT * FROM " .  self::subscriber_table() ." WHERE subscriberID = %d ", $subscriberID);
@@ -1117,8 +1117,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$query = "SELECT t1.subscriberID,t1.email, t3.status, t2.listid, count(*) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
 
         $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.status = 2) AND (t2.listID in  ( ". $lists ."  )) GROUP BY t1.subscriberID  ";
-        
-     
+
+
         return $wpdb->get_results( $query );
 	}
 
@@ -1131,8 +1131,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$query = "SELECT t1.subscriberID,t1.email, t3.status, t2.listid, count(*) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
 
 	        $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.status = 2) AND (t2.listID in  ( ". $lists ."  )) AND t1.subscriberID > ".$id." GROUP BY t1.subscriberID LIMIT " . $get;
-	        
-	     
+
+
 	        return $wpdb->get_results( $query );
     	} else {
     		return $list_ids;
@@ -1146,7 +1146,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$query = "SELECT  t1.subscriberID FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 " ;
 
         $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND ( t3.statusid = t2.status ) AND (t2.status = 2) AND (t2.listID in  ( ". $lists ."  )) GROUP BY t1.subscriberID  ";
-        
+
         $x =$wpdb->get_results( $query );
 
         return count($x);
@@ -1158,18 +1158,18 @@ class SendPress_Data extends SendPress_DB_Tables {
 		global $wpdb;
 		$table = self::list_subcribers_table();
 		$result = self::wpdbQuery( $wpdb->prepare("SELECT id FROM $table WHERE listID = %d AND subscriberID = %d ", $listID, $subscriberID ) , 'get_var');
-		
+
 		if($result == false){
 			$result = self::wpdbQuery("INSERT INTO $table (listID, subscriberID, status, updated) VALUES( '" . $listID . "', '" . $subscriberID . "','".$status."','".date('Y-m-d H:i:s')."')", 'query');
 		}
-		return $result;	
+		return $result;
 	}
-	
+
 	static function update_subscriber_status( $listID, $subscriberID ,$status, $event = true){
 		$table = SendPress_Data::list_subcribers_table();
 
 		$check = SendPress_Data::get_subscriber_list_status($listID, $subscriberID);
-		
+
 		if( $check == false ){
 			SendPress_Data::set_subscriber_status($listID,$subscriberID,$status);
 		} else {
@@ -1180,7 +1180,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if($event == true){
 		//add event for notification tracking
 		SendPress_Data::add_subscribe_event($subscriberID, $listID, $status);
-		} 
+		}
 		return SendPress_Data::get_subscriber_list_status($listID, $subscriberID);
 	}
 
@@ -1196,7 +1196,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function get_subscriber_list_status( $listID,$subscriberID ) {
 		$table = SendPress_Data::list_subcribers_table();
 		$result = SendPress_Data::wpdbQuery("SELECT t3.status,t2.updated,t3.statusid FROM ". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3 WHERE t2.subscriberID = $subscriberID AND t2.listID = $listID AND t2.status = t3.statusid ", 'get_row');
-		return $result;	
+		return $result;
 	}
 
 	static function is_subsriber_on_list($lid,$sid){
@@ -1213,7 +1213,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		global $wpdb;
 		$table = SendPress_Data::list_subcribers_table();
 		$id = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $table WHERE subscriberID = %d AND status <= 2 ", $sid) );
-		
+
 		if($id > 0 ){
 			return true;
 		}
@@ -1279,7 +1279,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 			'device'=> $device,
 			'type'=>$type
 		);
-		
+
 		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $event_data);
 	}
 
@@ -1299,7 +1299,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 	static function delete_extra_settings_post(){
-		
+
 	}
 
 
@@ -1328,11 +1328,11 @@ class SendPress_Data extends SendPress_DB_Tables {
 			'listID'=>$lid,
 			'type'=>$event_type
 		);
-		
+
 		$wpdb->insert( SendPress_Data::subscriber_event_table(),  $event_data);
-		
+
 		*/
-	
+
 		//if instant, check if we need a notification and send one
 		//SendPress_Notifications_Manager::send_instant_notification($event_data);
 	}
@@ -1348,7 +1348,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		update_post_meta($rid, '_unsubscribe_count', $stat );
 
 		SPNL()->load("Subscribers_Tracker")->unsub( $rid , $sid );
-		
+
 		$wpdb->update( SendPress_Data::list_subcribers_table() , array('status'=> 3) , array('listID'=> $lid,'subscriberID'=>$sid ));
 	}
 
@@ -1387,7 +1387,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		}
 
 		$result = SendPress_Data::get_subscriber_by_email($email);
-		
+
 		if(	$result ){ return $result; }
 		global $wpdb;
 		$result = $wpdb->insert($table,$values);
@@ -1442,13 +1442,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 		global $wpdb;
 		$table = SendPress_Data::list_subcribers_table();
 		$result = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table WHERE subscriberID = %d", $value));
-		return $result;	
+		return $result;
 	}
 	static function get_list_ids_for_subscriber( $value ) {
 		global $wpdb;
 		$table = SendPress_Data::list_subcribers_table();
 		$result = $wpdb->get_results($wpdb->prepare("SELECT listID FROM $table WHERE subscriberID = %d" , $value));
-		return $result;	
+		return $result;
 	}
 
 	static function delete_list( $listID ) {
@@ -1465,7 +1465,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		global $wpdb;
 		$table = SendPress_Data::list_subcribers_table();
 		$result = $wpdb->get_results( $wpdb->prepare("SELECT listID FROM $table WHERE subscriberID = %d AND status = 2 ",$value  ));
-		return $result;	
+		return $result;
 	}
 
 
@@ -1473,14 +1473,14 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		$success = false;
 		$subscriberID = SendPress_Data::add_subscriber(array('firstname' => $first,'lastname' => $last,'email' => $email, 'phonenumber' => $phonenumber, 'salutation' => $salutation));
-		
+
 		//SendPress_Error::log($subscriberID);
 
 		if( false === $subscriberID ){
 			return false;
 		}
 
-		$args = array( 
+		$args = array(
 			'post_type' => 'sendpress_list',
 			'numberposts'  => -1,
 	    	'offset'          => 0,
@@ -1491,17 +1491,17 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$lists = get_posts( $args );
 
 		$listids = explode(',', $listid);
-		
+
 
 		$already_subscribed = false;
 		if( $status == 2 && SendPress_Option::is_double_optin() ) {
 			$inlists = SendPress_Data::get_active_list_ids_for_subscriber( $subscriberID );
-			
+
 			//SendPress_Error::log($inlists);
 
 			if( $inlists ){
 				$already_subscribed = true;
-			} else { 
+			} else {
 				$status = 1;
 				SendPress_Manager::send_optin( $subscriberID, $listids, $lists);
 			}
@@ -1516,7 +1516,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 				);
 				SendPress_Notifications_Manager::send_instant_notification($event_data);
 			}
-			
+
 		}
 		SendPress_Error::log('send list add');
 		foreach($lists as $list){
@@ -1557,21 +1557,21 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 			$q = "INSERT INTO $table (email_id,when_to_send,active,title) VALUES (%d,%s,%d,%s) ON DUPLICATE KEY UPDATE wp_user_id=%d,firstname=%s,lastname=%s";
 			$q = $wpdb->prepare($q,$email,$values['wp_user_id'],$key,date('Y-m-d H:i:s'),$values['firstname'],$values['lastname'],$values['wp_user_id'],$values['firstname'],$values['lastname'],$values['phonenumber'],$values['salutation']);
-		
+
 		}else{
 			//update the schedule
-			
+
 		}
-		
+
 		$result = $wpdb->query($q);
-		
+
 	}
 
 	static function get_list_of_schedules(){
 		global $wpdb;
 		$table = @SPNL()->load("Schedules")->table_name;
 		$result = $wpdb->get_results( $wpdb->prepare("SELECT * FROM $table",$value));
-		return $result;	
+		return $result;
 	}
 
 	/****** END SCHEDULED SENDING *******/
@@ -1579,7 +1579,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function read_file_to_str($file){
 		return file_get_contents($file);
 	}
-	
+
 	static function import_csv_array($data, $map, $list){
 
 		global $wpdb;
@@ -1592,7 +1592,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 			if( array_key_exists('email',$map)  ){
 				$email = $line[$map['email']];
-				
+
 				if(is_email($email)){
 
 					$values.="'".esc_sql($email,$wpdb->dbh)."',";
@@ -1602,7 +1602,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 					} else {
 						$values .= "'',";
 					}
-					
+
 					if(array_key_exists('lastname',$map)){
 						$values.="'".esc_sql(trim($line[$map['lastname']]),$wpdb->dbh)."',";
 					} else {
@@ -1641,14 +1641,14 @@ class SendPress_Data extends SendPress_DB_Tables {
 			}
 			$x++;
 			if($total > $x && $values != ""){ $query .=",";}
-			
+
 			unset($data[$key_line]);
 		}
 		$query .=";";
 		$wpdb->query($query);
-		
+
 		$query_get = "SELECT subscriberID FROM ". SendPress_Data::subscriber_table(). " WHERE email in ('".implode("','", $emails_added)."')";
-		
+
 		$data = $wpdb->get_results($query_get);
 
 		$txt = '';
@@ -1658,13 +1658,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$txt .= '0';
 
 		$current_status = "SELECT * FROM ". SendPress_Data::list_subcribers_table(). " WHERE subscriberID in (". $txt .") AND listID = " . $list ;
-		
-		
+
+
 		$my_data_x = $wpdb->get_results($current_status, OBJECT_K);
 
-	
+
 		$query_update_status ="INSERT IGNORE INTO ". SendPress_Data::list_subcribers_table(). "(subscriberID,listID,status,updated ) VALUES ";
-		
+
 		$total = count($data);
 		$x = 0;
 		if($total > 0){
@@ -1672,14 +1672,14 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$x++;
 			if( !isset( $my_data_x[ $value->subscriberID ]) ){
 				$query_update_status .= "( ".$value->subscriberID . "," . $list . ",2,'" .date('Y-m-d H:i:s') . "') ";
-			
+
 				if($total > $x ){ $query_update_status .=",";}
 			}
 		}
 		$query_update_status .=";";
 		$wpdb->query($query_update_status);
 		}
-		
+
 	}
 
 	static function csv_to_array($csv_file_content , $rows_to_read = 0 , $delimiter = ',' , $enclosure = '' ){
@@ -1692,7 +1692,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
             if(function_exists('str_getcsv')){
 				$data[] = str_getcsv($csv_line, $delimiter,$enclosure);
-                
+
             }else{
                $data[]= SendPress_Data::break_csv_apart($csv_line, $delimiter,$enclosure);
             }
@@ -1707,34 +1707,34 @@ class SendPress_Data extends SendPress_DB_Tables {
 	/*
 	*
 	*	Creates an array from a posted textarea
-	*	
+	*
 	*	expects 3 fields or less: @sendpress.me, fname, lname
 	*
 	*/
-	static function subscriber_csv_post_to_array($csv, $delimiter = ',', $enclosure = '"', $escape = '\\', $terminator = "\n") { 
-	    $r = array(); 
-	    $rows = explode($terminator,trim($csv)); 
-	    $names = array_shift($rows); 
+	static function subscriber_csv_post_to_array($csv, $delimiter = ',', $enclosure = '"', $escape = '\\', $terminator = "\n") {
+	    $r = array();
+	    $rows = explode($terminator,trim($csv));
+	    $names = array_shift($rows);
 	    $names = explode(',', $names);
 		$nc = count($names);
- 
-	    foreach ($rows as $row) { 
-	        if (trim($row)) { 
+
+	    foreach ($rows as $row) {
+	        if (trim($row)) {
 	        	$needle = substr_count($row, ',');
 	        	if($needle == false){
 	        		$row .=',,';
-	        	} 
+	        	}
 	        	if($needle == 1){
 	        		$row .=',';
-	        	} 
+	        	}
 
 	            $values = explode(',' , $row);
-	            if (!$values) $values = array_fill(0,$nc,null); 
-	            $r[] = array_combine($names,$values); 
-	        } 
-	    } 
-	    return $r; 
-	} 
+	            if (!$values) $values = array_fill(0,$nc,null);
+	            $r[] = array_combine($names,$values);
+	        }
+	    }
+	    return $r;
+	}
 
     static function break_csv_apart($csv_line , $delimiter , $enclose , $preserve=false){
         $response = array();
@@ -1779,7 +1779,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		$query = "SELECT COUNT(t1.subscriberID) FROM " .  SendPress_Data::subscriber_table() ." as t1,". SendPress_Data::list_subcribers_table()." as t2,". SendPress_Data::subscriber_status_table()." as t3";
 
-        
+
             $query .= " WHERE (t1.subscriberID = t2.subscriberID) AND (t2.status = t3.statusid ) AND (t2.status = %d) ";
             if($listID  !== false){
             	$query .= "AND (t2.listID =  %d)";
@@ -1803,16 +1803,16 @@ class SendPress_Data extends SendPress_DB_Tables {
  	static function bd_nice_number($n) {
         // first strip any formatting;
         $n = (0+str_replace(",","",$n));
-        
+
         // is this a number?
         if(!is_numeric($n)) return false;
-        
+
         // now filter it;
         if($n>1000000000000) return round(($n/1000000000000),1).' trillion';
         else if($n>1000000000) return round(($n/1000000000),1).' billion';
         else if($n>1000000) return round(($n/1000000),1).' million';
         else if($n>99999) return round(($n/1000),0).'K';
-        
+
         return number_format($n);
     }
 
@@ -1825,8 +1825,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	/**
 	* Takes a key and looks up or creates a template post for storing data.
-	* 
-	* 
+	*
+	*
 	* @param mixed $_token Description.
 	*
 	* @access public
@@ -1844,8 +1844,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 			 $querystr = "
-			    SELECT $wpdb->posts.* 
-			    FROM $wpdb->posts 
+			    SELECT $wpdb->posts.*
+			    FROM $wpdb->posts
 			    WHERE $wpdb->posts.post_name = 'sp-template-$slug'
 			    ORDER BY $wpdb->posts.post_date DESC
 			 ";
@@ -1865,7 +1865,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 				$_title = ucwords( $_title );
 				$_post_data = array( 'post_title' => $_title );
 				$_post_data = array( 'post_name' => $_args['name'] );
-				
+
 				//$_post_data = array( 'post_name' => );
 				$_post_data = array_merge( $_post_data, $_args );
 
@@ -1873,12 +1873,12 @@ class SendPress_Data extends SendPress_DB_Tables {
 			} // End IF Statement
 		}
 		return $_id;
-	} 
+	}
 
 /**
 	* Takes a key and looks up or creates a template post for storing data.
-	* 
-	* 
+	*
+	*
 	* @param mixed $_token Description.
 	*
 	* @access public
@@ -1896,8 +1896,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 			 $querystr = "
-			    SELECT $wpdb->posts.* 
-			    FROM $wpdb->posts 
+			    SELECT $wpdb->posts.*
+			    FROM $wpdb->posts
 			    WHERE $wpdb->posts.post_name = %s
 			    ORDER BY $wpdb->posts.post_date DESC
 			 ";
@@ -1915,15 +1915,15 @@ class SendPress_Data extends SendPress_DB_Tables {
 			} else {
 				// If no post is present, insert one.
 				// Prepare some additional data to go with the post insertion.
-				
+
 				//$_post_data = array( 'post_name' => );
 				//$_post_data = array_merge( $_post_data, $_args );
 
 				$_id = wp_insert_post( $_args );
 
-				
+
                 update_post_meta( $_id, '_guid',  $templateinfo['guid'] );
-                
+
                 if( $slug == 'antwort' ){
                     update_post_meta( $_id, '_footer_page', SendPress_Tag_Footer_Page::content() );
                 }
@@ -1932,19 +1932,19 @@ class SendPress_Data extends SendPress_DB_Tables {
                     $fcp = SendPress_Tag_Footer_Page::content( true );
                     update_post_meta( $_id, '_footer_page', $fcp   );
                 }
-                
+
                 update_post_meta( $_id, '_header_content', SendPress_Tag_Header_Content::content() );
                 update_post_meta( $_id, '_header_padding', 'pad-header' );
 
 			} // End IF Statement
 		}
 		return $_id;
-	} 
+	}
 
 	/**
 	* Takes a key and looks up or creates a template post for storing data.
-	* 
-	* 
+	*
+	*
 	* @param mixed $_token Description.
 	*
 	* @access public
@@ -1962,8 +1962,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 			 $querystr = "
-			    SELECT $wpdb->posts.* 
-			    FROM $wpdb->posts 
+			    SELECT $wpdb->posts.*
+			    FROM $wpdb->posts
 			    WHERE $wpdb->posts.post_name = 'sp-template-$slug'
 			    ORDER BY $wpdb->posts.post_date DESC
 			 ";
@@ -1983,7 +1983,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 				$_title = ucwords( $_title );
 				$_post_data = array( 'post_title' => $_title );
 				$_post_data = array( 'post_name' => $_args['name'] );
-				
+
 				//$_post_data = array( 'post_name' => );
 				$_post_data = array_merge( $_post_data, $_args );
 
@@ -1991,12 +1991,12 @@ class SendPress_Data extends SendPress_DB_Tables {
 			} // End IF Statement
 		}
 		return $_id;
-	} 
+	}
 
 	/**
 	* Takes a key and looks up or creates a template post for storing data.
-	* 
-	* 
+	*
+	*
 	* @param mixed $_token Description.
 	*
 	* @access public
@@ -2013,8 +2013,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 			// look in the database for a "silent" post that meets our criteria.
 			//$_posts = get_posts( $_args );
 			 $querystr = "
-			    SELECT $wpdb->posts.* 
-			    FROM $wpdb->posts 
+			    SELECT $wpdb->posts.*
+			    FROM $wpdb->posts
 			    WHERE $wpdb->posts.post_name = 'sp-template-$slug'
 			    ORDER BY $wpdb->posts.post_date DESC
 			 ";
@@ -2031,7 +2031,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 				$_title = ucwords( $_title );
 				$_post_data = array( 'post_title' => $_title );
 				$_post_data = array( 'post_name' => $_args['name'] );
-				
+
 				//$_post_data = array( 'post_name' => );
 				$_post_data = array_merge( $_post_data, $_args );
 
@@ -2039,7 +2039,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 			} // End IF Statement
 		}
 		return get_post( $_id );
-	} 
+	}
 
 
 	/********************* END TEMPLATE POST static functionS **************************/
@@ -2053,7 +2053,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	 * @return bool|string Field class name OR false on failure
 	 */
 	static function get_public_view_class( $view = false){
-		
+
 		if($view !== false){
 			$view = str_replace('-',' ',$view);
 			$view  = ucwords( $view );
@@ -2063,7 +2063,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 			if ( class_exists( $class ) )
 				return $class;
 		}
-		
+
 		return "SendPress_Public_View";
 	}
 
@@ -2144,7 +2144,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	static function decrypt($message) {
 
-		
+
 		$json = json_decode( SendPress_Data::urlsafeB64Decode(trim($message)) );
 
 		//SendPress_Error::log(print_r($json,true));
@@ -2293,44 +2293,47 @@ class SendPress_Data extends SendPress_DB_Tables {
 		// Insert the post into the database
   		$new_id = wp_insert_post( $my_post );
   		update_post_meta($new_id,'public',$values['public']);
-		
-		return $new_id;	
+
+		return $new_id;
 	}
 
 	static function get_custom_fields(){
+		$return = array();
 
-				$args = array(
-					'post_type' => 'sp_settings',
-					'meta_query' => array(
-						array(
-							'key'     => '_sp_setting_type',
-							'value'   => 'custom_field',
-							'compare' => '=',
-						)
-					),
-					'post_status' => 'draft'
-				);
-				$query = new WP_Query( $args );
+		if(SENDPRESS_PRO_LOADED){
+			$args = array(
+				'post_type' => 'sp_settings',
+				'meta_query' => array(
+					array(
+						'key'     => '_sp_setting_type',
+						'value'   => 'custom_field',
+						'compare' => '=',
+					)
+				),
+				'post_status' => 'draft'
+			);
+			$query = new WP_Query( $args );
 
-				$return = array();
-				if ( $query->have_posts() ) {
 
-					while ( $query->have_posts() ) {
-						$query->the_post();
-						$saved_post_id = get_the_ID();
-						$custom_field_label = get_post_meta($saved_post_id, '_sp_custom_field_description', true);
-						$custom_field_key = get_post_meta($saved_post_id, '_sp_custom_field_key', true);
+			if ( $query->have_posts() ) {
 
-						array_push($return, array(
-							'id'      				=> $saved_post_id,
-							'custom_field_label'   	=> $custom_field_label,
-							'custom_field_key' 		=> $custom_field_key
-						));
-					}
+				while ( $query->have_posts() ) {
+					$query->the_post();
+					$saved_post_id = get_the_ID();
+					$custom_field_label = get_post_meta($saved_post_id, '_sp_custom_field_description', true);
+					$custom_field_key = get_post_meta($saved_post_id, '_sp_custom_field_key', true);
 
+					array_push($return, array(
+						'id'      				=> $saved_post_id,
+						'custom_field_label'   	=> $custom_field_label,
+						'custom_field_key' 		=> $custom_field_key
+					));
 				}
 
-		wp_reset_postdata();
+			}
+			wp_reset_postdata();
+		}
+
 		return $return;
 	}
 
@@ -2351,7 +2354,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 			));
 
 			*/
-		
+
 			if( count($query) === 0 ){
 				$hasPost = false;
 				$xposts = get_posts(array(
@@ -2368,7 +2371,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 					}
 					//Default Signup Settings
 				}
-			} 
+			}
 		}
 
 		if(!$hasPost){
@@ -2387,7 +2390,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if (empty($post_meta_keys)) return;
 
 		$obj = array();
-		
+
 		foreach ($post_meta_keys as $meta_key) {
 			$meta_values = get_post_custom_values($meta_key, $postid);
 			foreach ($meta_values as $meta_value) {
@@ -2424,12 +2427,12 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function delete_post_meta_object($postid, $data){
 
 		$post_meta_keys = get_post_custom_keys($postid);
-		
+
 		foreach($post_meta_keys as $key => $value){
 			delete_post_meta($postid, $value);
 		}
 
-		wp_delete_post( $postid, true ); 
+		wp_delete_post( $postid, true );
 
 	}
 
@@ -2449,7 +2452,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 						// 	'compare' => '='
 						// ),
 
-					
+
 				)
 			));
 
@@ -2467,7 +2470,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	static function get_widget_form_types(){
 		return array("signup_widget" => "Signup","manage_subscriptions" => "Manage Subscriptions");
-		
+
 	}
 
 	static function get_system_email_types(){
@@ -2479,29 +2482,29 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 
 		return $defaults;
-		
+
 	}
 
 	static function set_system_email_default($id, $type){
 
-		
-		
+
+
 	}
 
 	/********************* END Widget Settings functionS **************************/
 
 	/*************************** Templating functions *****************************/
-	
+
 	public static function post_text_only(){
 		return '<table width="100%" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row"><tr><td class="col" valign="top" style="width:100%"><div><a href="{sp-post-link}">{sp-post-title}</a></div><div>{sp-author-template}</div><div>{sp-post-excerpt}</div><div><a href="{sp-post-link}">{sp-post-readmore}</a></div><br></td></tr></table>';
 	}
 
 	public static function post_img_left(){
-		return '<table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td width="100%"><!--[if mso]><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td width="30%" valign="top"><![endif]--><table width="30%" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row"><tr><td class="col" valign="top" style="width:100%"><img style="margin-bottom:10px;" class="image_fix" width="100%" src="{sp-post-image}"/></td></tr></table><!--[if mso]></td><td width="70%" valign="top"><![endif]--><table width="60%" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row"><tr><td class="col" valign="top" style="width:100%"><div><a href="{sp-post-link}">{sp-post-title}</a></div><div>{sp-author-template}</div><div>{sp-post-excerpt}</div><div><a href="{sp-post-link}">{sp-post-readmore}</a></div><br></td></tr></table><!--[if mso]></td></tr></table><![endif]--></td></tr></table><br>';
+		return '<table border=0 cellpadding=0 cellspacing=0 width=100%><tr><td width=100%><!--[if mso]><table border=0 cellpadding=0 cellspacing=0 width=100%><tr><td width=30% valign=top><![endif]--><table border=0 cellpadding=0 cellspacing=0 width={sp-post-img-col-width} align=left class=force-row><tr><td class=col style=width:100% valign=top><img class=image_fix src={sp-post-image} style=margin-bottom:10px width=100%></table><!--[if mso]><td width=70% valign=top><![endif]--><table border=0 cellpadding=0 cellspacing=0 width={sp-post-text-col-width} align=right class=force-row><tr><td class=col style=width:100% valign=top><div><a href={sp-post-link}>{sp-post-title}</a></div><div>{sp-author-template}</div><div>{sp-post-excerpt}</div><div class=post-readmore><a href={sp-post-link}><span>{sp-post-readmore}</span></a></div><br></table><!--[if mso]><![endif]--></table><br>';
 	}
 
 	public static function post_img_right(){
-		return '<table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td width="100%"><!--[if mso]><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td width="30%" valign="top"><![endif]--><table width="30%" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row"><tr><td class="col" valign="top" style="width:100%"><img style="margin-bottom:10px;" class="image_fix" width="100%" src="{sp-post-image}"/></td></tr></table><!--[if mso]></td><td width="70%" valign="top"><![endif]--><table width="60%" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row"><tr><td class="col" valign="top" style="width:100%"><div><a href="{sp-post-link}">{sp-post-title}</a></div><div>{sp-author-template}</div><div>{sp-post-excerpt}</div><div><a href="{sp-post-link}">{sp-post-readmore}</a></div><br></td></tr></table><!--[if mso]></td></tr></table><![endif]--></td></tr></table><br>';
+		return '<table border=0 cellpadding=0 cellspacing=0 width=100%><tr><td width=100%><!--[if mso]><table border=0 cellpadding=0 cellspacing=0 width=100%><tr><td width=30% valign=top><![endif]--><table border=0 cellpadding=0 cellspacing=0 width={sp-post-img-col-width} align=right class=force-row><tr><td class=col style=width:100% valign=top><img class=image_fix src={sp-post-image} style=margin-bottom:10px width=100%></table><!--[if mso]><td width=70% valign=top><![endif]--><table border=0 cellpadding=0 cellspacing=0 width={sp-post-text-col-width} align=left class=force-row><tr><td class=col style=width:100% valign=top><div><a href={sp-post-link}>{sp-post-title}</a></div><div>{sp-author-template}</div><div>{sp-post-excerpt}</div><div class=post-readmore><a href={sp-post-link}><span>{sp-post-readmore}</span></a></div><br></table><!--[if mso]><![endif]--></table><br>';
 	}
 
 	public static function two_column(){
@@ -2582,7 +2585,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 	static function get_list_sys_emails($type){
-		
+
 		switch($type){
 			case 'opt_in':
 				$ret = SendPress_Data::get_optin_sys_emails();
@@ -2624,6 +2627,3 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 }
-
-
-

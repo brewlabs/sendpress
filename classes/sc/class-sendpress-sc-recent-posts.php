@@ -7,7 +7,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 /**
  * Unsubscribe Form Shortcode
  *
- * 
+ *
  * @author 		SendPress
  * @category 	Shortcodes
  * @version     0.9.9.4
@@ -68,31 +68,31 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 		if(strlen($readmoretext) === 0){
 			$readmoretext = 'Read More';
 		}
-		
+
 		if($alternate === 1 || $alternate === '1' || $alternate === 'true' || $alternate === true){
 			$swap = true;
 		}
-		
+
 		if(strlen($imgalign) === 0){
 			$imgalign = 'left';
 		}
-		
+
 		if(strlen($imgcolwidth) === 0){
 			$imgcolwidth = '30%';
 		}
-		
+
 		if(strlen($textcolwidth) === 0){
 			$textcolwidth = '65%';
 		}
-		
+
 		if(strlen($styletitle) === 0){
 			$styletitle = '';
 		}
-		
+
 		if(strlen($stylereadmore) === 0){
 			$stylereadmore = '';
 		}
-		
+
 		if(strlen($featuredimg) === 0){
 			$featuredimg = 'thumbnail';
 		}
@@ -137,8 +137,8 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 		$return_string = '';
 	   	if($content){
 	      	$return_string = $content;
-	  	}		
-		
+	  	}
+
 	   	$query = new WP_Query($args);
 		if($query->have_posts()){
 
@@ -172,7 +172,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 
 				if(has_post_thumbnail() && $displayimages){
 					//reset the template because we have an image
-					$template = (strtolower($imgalign) === 'left') ? SendPress_SC_Recent_Posts::post_img_left() : SendPress_SC_Recent_Posts::post_img_right();
+					$template = (strtolower($imgalign) === 'left') ? SendPress_Data::post_img_left() : SendPress_Data::post_img_right();
 					$img = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), $featuredimg);
 					$template = str_replace('{sp-post-image}',$img[0],$template);
 				} else {
@@ -217,7 +217,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 	          				break;
 	          		}
 
-	          	}	          	
+	          	}
 	          	$template = '';
 	          	$idx++;
 	          	$current_column++;
@@ -255,7 +255,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 
 	public static function post_img_left(){
 		return '
-		
+
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr>
 		<td width="100%">
@@ -267,7 +267,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 				</td>
 			</tr>
 		</table>
-		
+
 		<table width="{sp-post-text-col-width}" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row">
 			<tr>
 				<td class="col" valign="top">
@@ -291,7 +291,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr>
 	<td width="100%">
-		
+
 		<table width="{sp-post-text-col-width}" border="0" cellpadding="0" cellspacing="0" align="left" class="force-row">
 			<tr>
 				<td class="col" valign="top">
@@ -303,7 +303,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 				</td>
 			</tr>
 		</table>
-		
+
 		<table width="{sp-post-img-col-width}" border="0" cellpadding="0" cellspacing="0" align="right" class="force-row">
 			<tr>
 				<td class="col" valign="top"><img style="margin-bottom:10px;" class="image_fix" width="100%" src="{sp-post-image}"/></td>
