@@ -48,6 +48,12 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 			SendPress_Option::set('wped_sending', false );
 		}
 
+		if(isset( $post['excerpt_more'] )){
+			SendPress_Option::set('excerpt_more',  $post['excerpt_more'] );
+		} else {
+			SendPress_Option::set('excerpt_more', false );
+		}
+
 
 		if(isset( $post['prerelease_templates'] )){
 			SendPress_Option::set('prerelease_templates', 'yes' );
@@ -170,6 +176,14 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 				<?php $ctype = SendPress_Option::get('show_logs'); ?>
 				<input type="checkbox" name="show_logs" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> <?php _e('Show SPNL Logs','sendpress'); ?>.
 				<br><br>
+				<?php $ctype = SendPress_Option::get('excerpt_more'); 
+				if($ctype == false){
+					$ctype ='';
+				}?>
+				<?php _e('Read More override','sendpress'); ?>.<br>
+				<input type="test" name="excerpt_more" value="<?php echo $ctype; ?>" /> 
+				<br><br>
+
 				<?php $ctype = SendPress_Option::get('wped_sending'); ?>
 				<!--<input type="checkbox" name="wped_sending" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> <?php _e('Enable WP Email Delivery Early Access','sendpress'); ?>. -->
 				

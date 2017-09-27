@@ -75,6 +75,14 @@ class SendPress_Ajax_Loader {
 		die();
 	}
 
+	function more_excerpt( $value ){
+		$t = SendPress_Option::get( 'excerpt_more', false );
+		if($t != false){
+			return $t;
+		}
+		return $value;
+	}
+
 
 	function find_post() {
 		$this->verify_ajax_call();
@@ -89,6 +97,8 @@ class SendPress_Ajax_Loader {
 		$d->data        = array();
 		// The Loop
 		global $post;
+		add_filter( 'excerpt_more', array( $this , 'more_excerpt') );
+		
 		while ( $the_query->have_posts() ) : $the_query->the_post();
 
 			$t = get_the_title();
@@ -107,7 +117,7 @@ class SendPress_Ajax_Loader {
 				);
 
 		endwhile;
-
+		remove_filter( 'excerpt_more', array( $this , 'more_excerpt') );
 		// Reset Post Data
 		wp_reset_postdata();
 
