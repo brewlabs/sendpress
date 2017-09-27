@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 4.4
-Tested up to: 4.8
-Stable tag: 1.8.8.14
+Tested up to: 4.8.2
+Stable tag: 1.8.9.27
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,11 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.8.9.27 - 2017.9.27 =
+* Fix: Pro update
+* Fix: Bug fixes
+* New: Ability to change readmore from import
 
 = 1.8.8.14 - 2017.8.14 =
 * Fix: Error on some sites when it is Multisite

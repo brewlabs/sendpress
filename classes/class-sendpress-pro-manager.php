@@ -228,7 +228,7 @@ class SendPress_Pro_Manager {
         $api_params = array( 
             'edd_action'=> 'check_license', 
             'license'   => $key, 
-            'item_name' => $id // the name of our product in EDD
+            'item_id' => $id // the name of our product in EDD
         );
         
         // Call the custom API.
@@ -314,7 +314,7 @@ class SendPress_Pro_Manager {
 		$api_params = array( 
 			'edd_action' 	=> 'get_version', 
 			'license' 		=> $license, 
-			'name' 			=> urlencode( $product ),
+			'item_id' 			=>  $product,
 			'slug' 			=> 'sendpress-pro',
 			'author'		=> 'SendPress'
 		);
@@ -341,7 +341,7 @@ class SendPress_Pro_Manager {
 				$api_params = array( 
 		            'edd_action'=> 'get_version', 
 		            'license'   => $license, 
-		            'name' => urlencode( $product ) // the name of our product in EDD
+		            'item_id' => $product  // the name of our product in EDD
 		        );
 		        
 		        $response = wp_remote_get( add_query_arg( $api_params, SENDPRESS_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
