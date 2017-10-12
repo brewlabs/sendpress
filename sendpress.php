@@ -188,6 +188,13 @@ class SendPress {
 			return;
 		}
 
+		if ( strpos( $className, '_REST' ) != false ) {
+
+			include SENDPRESS_PATH . "classes/api/v1/class-" . $cls . ".php";
+
+			return;
+		}
+
 		if ( strpos( $className, 'Public_View' ) != false ) {
 			if ( defined( 'SENDPRESS_PRO_PATH' ) ) {
 				$pro_file = SENDPRESS_PRO_PATH . "classes/public-views/class-" . $cls . ".php";
@@ -273,6 +280,7 @@ class SendPress {
 			self::$instance                          = new SendPress;
 			self::$instance->template_tags           = new SendPress_Template_Tags();
 			self::$instance->api                     = new SendPress_API();
+			self::$instance->rest_api                = new SendPress_Api_Loader();
 			self::$instance->validate                = new SendPress_Security();
 			self::$instance->log                     = new SendPress_Logging();
 			self::$instance->db                      = new stdClass();
@@ -280,8 +288,6 @@ class SendPress {
 			self::$instance->db->url                 = new SendPress_DB_Url();
 			self::$instance->db->subscribers_url     = new SendPress_DB_Subscribers_Url();
 			self::$instance->loader  = new SendPress_Loader();
-			self::$instance->customizer  = new SendPress_Email_Customizer( 'SendPress Newsletters', SENDPRESS_VERSION );
-			self::$instance->runloader();
 
 		}
 
@@ -317,9 +323,7 @@ class SendPress {
 		return $link;
 	}
 
-	public function runloader(){
-		
-	}
+
 
 	static function update_templates() {
 		sendpress_register_template(
@@ -354,6 +358,7 @@ class SendPress {
 			SendPress_Ajax_Loader::init();
 		} else {
 			SendPress_Pro_Manager::init();
+
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
 			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 			add_action( 'admin_notices', array( $this, 'admin_notice' ) );
@@ -1242,42 +1247,65 @@ class SendPress {
 			&$this,
 			'render_view'
 		), 'dashicons-email' );
-		add_submenu_page( 'sp-overview', __( 'Overview', 'sendpress' ), __( 'Overview', 'sendpress' ), $role, 'sp-overview', array(
-			&$this,
-			'render_view'
-		) );
-		$main = add_submenu_page( 'sp-overview', __( 'Emails', 'sendpress' ), __( 'Emails', 'sendpress' ), $role, 'sp-emails', array(
-			&$this,
-			'render_view'
-		) );
 
-		add_submenu_page( 'sp-overview', __( 'Reports', 'sendpress' ), __( 'Reports', 'sendpress' ), $role, 'sp-reports', array(
-			&$this,
-			'render_view'
-		) );
-		add_submenu_page( 'sp-overview', __( 'Subscribers', 'sendpress' ), __( 'Subscribers', 'sendpress' ), $role, 'sp-subscribers', array(
-			&$this,
-			'render_view'
-		) );
-		add_submenu_page( 'sp-overview', __( 'Queue', 'sendpress' ), __( 'Queue', 'sendpress' ) . " " . $queue, $role, 'sp-queue', array(
-			&$this,
-			'render_view'
-		) );
-		add_submenu_page( 'sp-overview', __( 'Settings', 'sendpress' ), __( 'Settings', 'sendpress' ), $role, 'sp-settings', array(
-			&$this,
-			'render_view'
-		) );
+		
 
+			add_submenu_page( 'sp-overview', __( 'Overview', 'sendpress' ), __( 'Overview', 'sendpress' ), $role, 'sp-overview', array(
+				&$this,
+				'render_view'
+			) );
+		
 
-		add_submenu_page( 'sp-overview', __( 'Help', 'sendpress' ), __( 'Help', 'sendpress' ), $role, 'sp-help', array(
-			&$this,
-			'render_view'
-		) );
+		if( apply_filters( 'spnl_emails', true ) ) {
+			
+			add_submenu_page( 'sp-overview', __( 'Emails', 'sendpress' ), __( 'Emails', 'sendpress' ), $role, 'sp-emails', array(
+				&$this,
+				'render_view'
+			) );
 
-		add_submenu_page( 'sp-overview', __( 'Pro', 'sendpress' ), __( 'Pro', 'sendpress' ), $role, 'sp-pro', array(
-			&$this,
-			'render_view'
-		) );
+		}
+
+		if( apply_filters( 'spnl_reports', true ) ) {
+			add_submenu_page( 'sp-overview', __( 'Reports', 'sendpress' ), __( 'Reports', 'sendpress' ), $role, 'sp-reports', array(
+				&$this,
+				'render_view'
+			) );
+		}
+
+		if( apply_filters( 'spnl_subscribers', true ) ) {
+			add_submenu_page( 'sp-overview', __( 'Subscribers', 'sendpress' ), __( 'Subscribers', 'sendpress' ), $role, 'sp-subscribers', array(
+				&$this,
+				'render_view'
+			) );
+		}
+
+		if( apply_filters( 'spnl_queue', true ) ) {
+			add_submenu_page( 'sp-overview', __( 'Queue', 'sendpress' ), __( 'Queue', 'sendpress' ) . " " . $queue, $role, 'sp-queue', array(
+				&$this,
+				'render_view'
+			) );
+		}
+
+		if( apply_filters( 'spnl_settings', true ) ) {
+			add_submenu_page( 'sp-overview', __( 'Settings', 'sendpress' ), __( 'Settings', 'sendpress' ), $role, 'sp-settings', array(
+				&$this,
+				'render_view'
+			) );
+		}
+
+		if( apply_filters( 'spnl_help', true ) ) {
+			add_submenu_page( 'sp-overview', __( 'Help', 'sendpress' ), __( 'Help', 'sendpress' ), $role, 'sp-help', array(
+				&$this,
+				'render_view'
+			) );
+		}
+
+		if( apply_filters( 'spnl_pro', true ) ) {
+			add_submenu_page( 'sp-overview', __( 'Pro', 'sendpress' ), __( 'Pro', 'sendpress' ), $role, 'sp-pro', array(
+				&$this,
+				'render_view'
+			) );
+		}
 
 
 	}
@@ -1292,14 +1320,34 @@ class SendPress {
 
 		//add tabs
 		$view_class->add_tab( __( 'Overview', 'sendpress' ), 'sp-overview', ( $this->_page === 'sp-overview' ) );
-		$view_class->add_tab( __( 'Emails', 'sendpress' ), 'sp-emails', ( $this->_page === 'sp-emails' ) );
-		$view_class->add_tab( __( 'Reports', 'sendpress' ), 'sp-reports', ( $this->_page === 'sp-reports' ) );
-		$view_class->add_tab( __( 'Subscribers', 'sendpress' ), 'sp-subscribers', ( $this->_page === 'sp-subscribers' ) );
-		$view_class->add_tab( __( 'Queue', 'sendpress' ) . ' <small>(' . $queue . ')</small>', 'sp-queue', ( $this->_page === 'sp-queue' ) );
-		$view_class->add_tab( __( 'Settings', 'sendpress' ), 'sp-settings', ( $this->_page === 'sp-settings' ) );
 
-		$view_class->add_tab( __( 'Help', 'sendpress' ), 'sp-help', ( $this->_page === 'sp-help' ) );
-		$view_class->add_tab( __( 'Pro', 'sendpress' ), 'sp-pro', ( $this->_page === 'sp-pro' ) );
+		if( apply_filters( 'spnl_emails', true ) ) {
+			$view_class->add_tab( __( 'Emails', 'sendpress' ), 'sp-emails', ( $this->_page === 'sp-emails' ) );
+		}
+
+		if( apply_filters( 'spnl_reports', true ) ) {
+			$view_class->add_tab( __( 'Reports', 'sendpress' ), 'sp-reports', ( $this->_page === 'sp-reports' ) );
+		}
+
+		if( apply_filters( 'spnl_subscribers', true ) ) {
+			$view_class->add_tab( __( 'Subscribers', 'sendpress' ), 'sp-subscribers', ( $this->_page === 'sp-subscribers' ) );
+		}
+
+		if( apply_filters( 'spnl_queue', true ) ) {
+			$view_class->add_tab( __( 'Queue', 'sendpress' ) . ' <small>(' . $queue . ')</small>', 'sp-queue', ( $this->_page === 'sp-queue' ) );
+		}
+
+		if( apply_filters( 'spnl_settings', true ) ) {
+			$view_class->add_tab( __( 'Settings', 'sendpress' ), 'sp-settings', ( $this->_page === 'sp-settings' ) );
+		}
+
+		if( apply_filters( 'spnl_help', true ) ) {
+			$view_class->add_tab( __( 'Help', 'sendpress' ), 'sp-help', ( $this->_page === 'sp-help' ) );
+		}
+
+		if( apply_filters( 'spnl_pro', true ) ) {
+			$view_class->add_tab( __( 'Pro', 'sendpress' ), 'sp-pro', ( $this->_page === 'sp-pro' ) );
+		}
 
 		$view_class->prerender( $this );
 		$view_class->render( $this );
@@ -1369,6 +1417,7 @@ class SendPress {
 		@SPNL()->load("Url")->create_table();
 		@SPNL()->load("Autoresponder")->create_table();
 		@SPNL()->load("Schedules")->create_table();
+		@SPNL()->load("Remote_Connection")->create_table();
 
 		SendPress_Option::base_set( 'update-info', 'show' );
 		//On version change update default template
@@ -1829,6 +1878,7 @@ register_activation_hook( __FILE__, array( 'SendPress', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'SendPress', 'plugin_deactivation' ) );
 add_action( 'wpmu_new_blog', array( 'SendPress', 'on_activate_blog' ) );
 add_action( 'activate_blog', array( 'SendPress', 'on_activate_blog' ) );
+
 
 //add_filter('spnl_delivery_sending','__return_false');
 // Initialize!

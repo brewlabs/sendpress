@@ -97,6 +97,14 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 		$method = SendPress_Option::get( 'sendmethod' );
 		$fe = __('From Email','sendpress');
 		$fn = __('From Name','sendpress');
+
+		$t = SPNL()->load("Remote_Connection");
+		$data = $t->get_default();
+		print_r($data);
+		if($data == null){
+		  $t->create();
+		}
+
 		?>
 <!--
 <div style="float:right;" >
