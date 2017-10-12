@@ -85,7 +85,7 @@ class SendPress_Tag_Footer_Page extends SendPress_Tag_Base  {
         if( $padding == 'pad-page'  ){
         	 $pd = ' padding-left: 30px; padding-right: 30px; ';
     	}
-    	$return .='<table border="0" width="100%" height="100%" class="sp-body-bg" cellpadding="0" cellspacing="0">';
+    	$return .='<table border="0" width="100%" class="sp-body-bg" cellpadding="0" cellspacing="0">';
     	$return .='<tr>';
       	$return .='<td align="center" valign="top">';
 		$return .='<!-- 600px container Header - SendPress_Tag_Footer_Page-->';
