@@ -208,6 +208,12 @@ class SendPress_Manager {
 		if( SendPress_Manager::limit_reached()  ){
 			return array('attempted'=> $attempts,'sent'=>$count);
 		}
+		$tracker_disable =  SendPress_Option::get( 'tracker_off', false);
+		
+		if( $tracker_disable == true ){
+			$user_tracker = false;
+		}
+		$user_tracker = false;
 		SendPress_Email_Cache::build_cache();
 		$email = SendPress_Data::get_single_email_from_queue( true );
 		if( is_object($email) ){
@@ -219,7 +225,7 @@ class SendPress_Manager {
 			}
 			$attempts++;
 			SendPress_Data::queue_email_process( $email->id );
-			$result = SendPress_Manager::send_email_from_queue( $email );
+			$result = SendPress_Manager::send_email_from_queue( $email, $user_tracker );
 			
 			if ($result) {
 				if($result === true){
@@ -353,16 +359,18 @@ class SendPress_Manager {
 	*
 	* @return boolean true if mail sent successfully, false if an error
 	*/
-    static function send_email_from_queue( $email ) {
+    static function send_email_from_queue( $email , $tracker = true ) {
 
 	   	$message = new SendPress_Email();
 	   	$message->id( $email->emailID );
 	   	$message->subscriber_id( $email->subscriberID );
+	   	$message->tracker( $tracker );
 	   	$message->list_id( $email->listID );
 	   	$body = $message->html();
 	   	$subject = $message->subject();
 	   	$to = $email->to_email;
 	   	$text = $message->text();
+
 	   	if(empty($text) || $text == '' || empty($body) || $body== '' || $body == " "){
 	   		SPNL()->log->add(  'Email Skiped' , 'Email id #'.$email->emailID . ' to '.$to.' did not have any content. Was the email or template deleted?', 0 , 'sending' );
 	   		return false;

@@ -914,6 +914,10 @@ class SendPress {
 				SendPress_Option::set( 'beta', absint( $_GET['beta'] ) );
 			}
 
+			if ( isset( $_GET['trackeroff'] ) ) {
+				SendPress_Option::set( 'tracker_off',  $_GET['trackeroff'] );
+			}
+
 			remove_editor_styles();
 			add_filter( 'mce_css', array( $this, 'plugin_mce_css' ) );
 			//Stop Facebook Plugin from posting emails to Facebook.

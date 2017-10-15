@@ -54,10 +54,16 @@ static function send_mail(){
 	static function send_the_queue($email){
 			if( $email != null ) {
 
+				$tracker_disable =  SendPress_Option::get( 'tracker_off', false);
+				$user_tracker = true;
+				if( $tracker_disable == "true" ){
+					$user_tracker = false;
+				}
+			
 				global $wpdb;
 						if( is_email( trim($email->to_email) ) && ( isset($email->is_confirm) || SendPress_Data::is_subscriber_active_or_unconfirmed($email->subscriberID ) )  ){
 							SendPress_Data::queue_email_process( $email->id );
-							$result = SendPress_Manager::send_email_from_queue( $email );
+							$result = SendPress_Manager::send_email_from_queue( $email , $user_tracker);
 						
 							if ($result) {
 								if($result == true){
@@ -90,7 +96,12 @@ static function send_mail(){
 		global $wpdb;
 		$count = SendPress_Option::get('emails-per-hour');
 		$count = SendPress_Option::get('wpcron-per-call',25);
-
+		$user_tracker = true;
+		$tracker_disable =  SendPress_Option::get( 'tracker_off', false);
+		
+		if( $tracker_disable =="true" ){
+			$user_tracker = false;
+		}
 		$email_count = 0;
 		$attempts = 0;
 
@@ -108,7 +119,7 @@ static function send_mail(){
 					$attempts++;
 				
 					SendPress_Data::queue_email_process( $email->id );
-					$result = SendPress_Manager::send_email_from_queue( $email );
+					$result = SendPress_Manager::send_email_from_queue( $email , $user_tracker );
 					$email_count++;
 					if ($result) {
 						if($result === true){

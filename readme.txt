@@ -118,6 +118,10 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.8.10.12 - 2017.10.12 =
+* Fix: Email rendering on iOS and Apple Mail
+* New: Added filter for showing main nav
+
 = 1.8.9.27 - 2017.9.27 =
 * Fix: Pro update
 * Fix: Bug fixes
@@ -1046,6 +1050,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WordPress.org
 
 == Upgrade Notice ==
+
+= 1.8.10.12 =
+Bug fixes amd menu filters
 
 = 1.8.2.15 =
 Custom field added and bugs fixed
