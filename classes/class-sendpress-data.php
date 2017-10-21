@@ -885,8 +885,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 				$query_update_status .= "( ".$value->subscriberID . "," . $listid . ",2,'" .date('Y-m-d H:i:s') . "') ";
 				if($total > $x ){ $query_update_status .=",";}
 			}
-			$query_update_status .=";";
+			$query_update_status .=" ON DUPLICATE KEY UPDATE status = IF (status = 8, 2, status) ;";
 			$wpdb->query($query_update_status);
+
 			/*
 			$clean_list_query =  "DELETE FROM "	.SendPress_Data::list_subcribers_table(). " WHERE listID = ".$listid." AND subscriberID not in ('".implode("','", $good_ids)."')";
 			$wpdb->query($clean_list_query);
@@ -906,6 +907,17 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 
+	static function update_subscribers_for_sync( $listid  = false ) {
+		if( $listid != false ){
+			$listid = SPNL()->validate->int( $listid );
+			global $wpdb;
+			$clean_list_query =  "UPDATE "	. SendPress_Data::list_subcribers_table() . " set status = 8 WHERE listID = ".$listid." AND status = 2";
+			$wpdb->query($clean_list_query);
+
+		}
+
+	}
+
 
 
 	static function update_subscriber($subscriberID, $values){
@@ -918,9 +930,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 		global $wpdb;
 		$key = SendPress_Data::random_code();
 		//$id = SendPress_Data::get_subscriber_by_email($email);
-		$q = "INSERT INTO $table (email,wp_user_id,identity_key,join_date,firstname,lastname) VALUES (%s,%d,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE wp_user_id=%d,firstname=%s,lastname=%s";
+		$q = "INSERT INTO $table (email,wp_user_id,identity_key,join_date,firstname,lastname) VALUES (%s,%d,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE wp_user_id=%d,firstname=%s,lastname=%s ";
 		$q = $wpdb->prepare($q,$email,$values['wp_user_id'],$key,date('Y-m-d H:i:s'),$values['firstname'],$values['lastname'],$values['wp_user_id'],$values['firstname'],$values['lastname'],$values['phonenumber'],$values['salutation']);
 		$result = $wpdb->query($q);
+		
 		//$result = $wpdb->update($table, $values, array('email'=> $email) );
 	}
 
@@ -940,7 +953,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 				$wpdb->update($table , array('firstname' => $values['firstname'] , 'lastname'=>$values['lastname'], 'wp_user_id'=> $wp_user_id ), array( 'subscriberID' => $current_email ) );
 			} else {
 				//Add New
-				$q = "INSERT INTO $table (email,wp_user_id,identity_key,join_date,firstname,lastname) VALUES (%s,%d,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE wp_user_id=%d,firstname=%s,lastname=%s";
+				$q = "INSERT INTO $table (email,wp_user_id,identity_key,join_date,firstname,lastname) VALUES (%s,%d,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE wp_user_id=%d,firstname=%s,lastname=%s ";
 				$q = $wpdb->prepare($q,$values['email'],$wp_user_id,$key,date('Y-m-d H:i:s'),$values['firstname'],$values['lastname'],$wp_user_id,$values['firstname'],$values['lastname']);
 				$result = $wpdb->query($q);
 			}

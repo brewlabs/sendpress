@@ -100,7 +100,7 @@ class SendPress_Logging {
 
 		$args = array(
 			'post_type'      => $this->log_post_type,
-			'posts_per_page' => '100',
+			'posts_per_page' => '10',
 			'date_query'     => array(
 				array(
 					'column' => 'post_date_gmt',

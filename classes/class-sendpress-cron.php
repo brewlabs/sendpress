@@ -63,7 +63,7 @@ class SendPress_Cron {
                         SendPress_Queue::send_mail();
                         $count = SendPress_Data::emails_in_queue();
                     } else {
-                        
+                        SPNL()->log->prune_logs();
                         //* If cache is empty, pull transient
                         if ( ! $cron_bg_run ) {
                             $cron_bg_run = get_transient( 'spnl-background-daily' );
@@ -81,7 +81,7 @@ class SendPress_Cron {
                             //* If transient has expired, do a fresh update check
                             if ( ! $cron_bg_run_weekly ) {
                                 
-                                SPNL()->log->prune_logs();
+                                
                                 SendPress_Data::clean_queue_table();
                                 SendPress_DB_Tables::repair_tables();
                                 
