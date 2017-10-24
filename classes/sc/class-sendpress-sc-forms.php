@@ -310,6 +310,31 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					}
 
 					echo $post_notifications_code;
+
+					$salutation_required = false;
+					$fn_required = false;
+					$ln_required = false;
+					$phone_required = false;
+
+					if(filter_var($_salutation_required, FILTER_VALIDATE_BOOLEAN) ){ 
+						$_salutation_label = '*'.$_salutation_label;
+						$salutation_required = true;
+					}
+
+					if(filter_var($_firstname_required, FILTER_VALIDATE_BOOLEAN) ){ 
+						$_firstname_label = '*'.$_firstname_label;
+						$fn_required = true;
+					}
+
+					if(filter_var($_lastname_required, FILTER_VALIDATE_BOOLEAN) ){ 
+						$_lastname_label = '*'.$_lastname_label;
+						$ln_required = true;
+					}
+
+					if(filter_var($_phonenumber_required, FILTER_VALIDATE_BOOLEAN) ){ 
+						$_phonenumber_label = '*'.$_phonenumber_label;
+						$phone_required = true;
+					}
 					
 					?>
 
@@ -318,7 +343,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 							<?php if( !$_display_labels_inside_fields ): ?>
 								<label for="sp_salutation"><?php echo $_salutation_label; ?>:</label>
 							<?php endif; ?>
-							<input type="text" class="sp_salutation" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_salutation_label; ?>"<?php endif; ?> value="" name="sp_salutation" />
+							<input type="text" class="sp_salutation <?php if($salutation_required){ echo 'required'; } ?>" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_salutation_label; ?>"<?php endif; ?> value="" name="sp_salutation" />
 						</p>
 					<?php endif; ?>
 
@@ -327,7 +352,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 							<?php if( !$_display_labels_inside_fields ): ?>
 								<label for="sp_firstname"><?php echo $_firstname_label; ?>:</label>
 							<?php endif; ?>
-							<input type="text" class="sp_firstname" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_firstname_label; ?>"<?php endif; ?> value=""  name="sp_firstname" />
+							<input type="text" class="sp_firstname <?php if($fn_required){ echo 'required'; } ?>" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_firstname_label; ?>"<?php endif; ?> value=""  name="sp_firstname" />
 						</p>
 					<?php endif; ?>
 
@@ -336,14 +361,14 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 							<?php if( !$_display_labels_inside_fields ): ?>
 								<label for="sp_lastname"><?php echo $_lastname_label; ?>:</label>
 							<?php endif; ?>
-							<input type="text" class="sp_lastname" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_lastname_label; ?>"<?php endif; ?> value="" name="sp_lastname" />
+							<input type="text" class="sp_lastname <?php if($ln_required){ echo 'required'; } ?>" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_lastname_label; ?>"<?php endif; ?> value="" name="sp_lastname" />
 						</p>
 					<?php endif; ?>
 
 					<?php if( filter_var($_collect_phonenumber, FILTER_VALIDATE_BOOLEAN) ): ?>
 						<p>
 							<?php if( !$_display_labels_inside_fields ): ?>
-								<label for="sp_phonenumber"><?php echo $_phonenumber_label; ?>:</label>
+								<label for="sp_phonenumber <?php if($phone_required){ echo 'required'; } ?>"><?php echo $_phonenumber_label; ?>:</label>
 							<?php endif; ?>
 							<input type="text" class="sp_phonenumber" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_phonenumber_label; ?>"<?php endif; ?> value="" name="sp_phonenumber" />
 						</p>
@@ -351,9 +376,9 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
 					<p>
 						<?php if( !$_display_labels_inside_fields ): ?>
-							<label for="sp_email"><?php echo $_email_label; ?>:</label>
+							<label for="sp_email">*<?php echo $_email_label; ?>:</label>
 						<?php endif; ?>
-						<input type="text" class="sp_email" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_email_label; ?>"<?php endif; ?> value="" name="sp_email" />
+						<input type="text" class="sp_email required" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_email_label; ?>"<?php endif; ?> value="" name="sp_email" />
 					</p>
 
 					<?php if( filter_var($_collect_custom_field, FILTER_VALIDATE_BOOLEAN) ): ?>
@@ -371,8 +396,8 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
  								<?php 
 							foreach ($custom_field_list as $key => $value) {
-							$custom_field_label = $value['custom_field_label'];
-							$custom_field_key = $value['custom_field_key'];
+								$custom_field_label = $value['custom_field_label'];
+								$custom_field_key = $value['custom_field_key'];
 								?>
 
 								<p>

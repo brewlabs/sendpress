@@ -8,7 +8,6 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
 	private $_import_fields = array('email','firstname','lastname','ip', 'status', 'phonenumber','salutation');
-  
 
 	function save(){
     //$this->security_check();
@@ -16,17 +15,17 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
     $the_file = get_post_meta($list_id_clean ,'csv_import',true);
 		$file= trim(SendPress_Data::read_file_to_str( $the_file ));
     $subscribers = SendPress_Data::csv_to_array($file);
-   
+
     $total = count($subscribers);
     $map = array();
     $i = 0;
     foreach($subscribers[0] as $key=>$val) {
                                 /* try to automatically match columns */
-                              $map[SPNL()->validate->_string('colmatch'.$i)] = $i;  
+                              $map[SPNL()->validate->_string('colmatch'.$i)] = $i;
 
                                 $i++;
                             }
-                        
+
     $file_chunks = array_chunk($subscribers, 200);
     $subscribers = null;
     global $wpdb;
@@ -63,6 +62,9 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
 
   function dropdown($value,$id){
     //$this->security_check();
+
+    //print_r($this->_import_fields);
+
     $match = array_search($value,$this->_import_fields);
 
 
@@ -75,13 +77,13 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
           $selected = " selected='selected'";
         }
         $return .="<option $selected value='$field'>$field</option>";
-      }  
+      }
       if($found == false){
          $return .= "<option selected='selected' >No Match</option>";
       } else {
          $return .= "<option value='nomatch'>No Match</option>";
       }
-      
+
        $return .= "</select>";
       return $return;
 
@@ -90,10 +92,37 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
   }
 
 
-	function html() { 
+	function html() {
     $list_id_clean = SPNL()->validate->_int( 'listID' );
+
+    $custom_field_list = SendPress_Data::get_custom_fields();
+
+    $columns=array("noimport"=>__("Don't Import",'sendpress'),
+                    'email'=>__('Email','sendpress'),
+                    'firstname'=>__('First name','sendpress'),
+                    'lastname'=>__('Last name','sendpress'),
+                    'ip'=>__('IP address','sendpress'),
+                    'status'=>__('Status','sendpress'),
+                    'phonenumber' => __('Phone Number', 'sendpress'),
+                    'salutation' => __('Salutation', 'sendpress')
+                    );
+
+    foreach ($custom_field_list as $key => $value) {
+        //print_r($value);
+
+        $temp = $value['custom_field_key'] . "-" . str_replace(" ", "_", strtolower($value['custom_field_label']));
+
+        $this->_import_fields[] = $temp;
+
+        $columns[$temp] = $value['custom_field_label'];
+
+
+    }
+
+    print_r($columns);
+
     ?>
-	<div id="taskbar" class="lists-dashboard rounded group"> 
+	<div id="taskbar" class="lists-dashboard rounded group">
 	<h2><?php _e('Import CSV to ','sendpress'); ?><?php echo get_the_title( $list_id_clean ); ?></h2>
 	</div>
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
@@ -112,16 +141,8 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
                         <tr class="thead">
                             <th><?php _e('Import Fields:','sendpress');?></th>
                             <?php
-                            $columns=array("noimport"=>__("Don't Import",'sendpress'),
-                              'email'=>__('Email','sendpress'),
-                              'firstname'=>__('First name','sendpress'),
-                              'lastname'=>__('Last name','sendpress'),
-                              'ip'=>__('IP address','sendpress'),
-                              'status'=>__('Status','sendpress'),
-                              'phonenumber' => __('Phone Number', 'sendpress'),
-                              'salutation' => __('Salutation', 'sendpress')
-                              );
 
+                            //moved column array up to the top of the function so I could add custom fields
                             $i=0;
 
                             $emailcolumnmatched=false;
@@ -131,7 +152,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
                                 $selected="";
                                 $value=str_replace(array(" ","-","_"),"",strtolower($val));
                                 echo "<th>" . $this->dropdown($value, $i) . "</th>";
-                                
+
 
                                 $i++;
                             }
@@ -139,8 +160,8 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
                         </tr>
                     </thead>
 <?php
-  
-  
+
+
    $placeholder = false;
   if($total > 5){
     $loop = 4;
@@ -149,14 +170,14 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
     $loop = $total;
   }
 
-  for ($i=0; $i < $loop; $i++) { 
+  for ($i=0; $i < $loop; $i++) {
     $line = '<tr>';
     $line .="<td>$i</td>";
     $cols = 0;
     foreach ($subscribers[$i] as $key => $value) {
       $cols ++;
       $line .= "<td>$value</td>";
-      
+
     }
     $line .="</tr>";
     echo $line;
@@ -180,7 +201,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
     $line .="<td>$total</td>";
     foreach ($last as $key => $value) {
       $line .= "<td>$value</td>";
-      
+
     }
      $line .="</tr>";
     echo $line;
@@ -190,12 +211,12 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
 ?>
  	</table>
  <button type="submit" class="btn btn-primary"><?php _e('Start Import','sendpress'); ?></button>
-    
+
 <?php SendPress_Data::nonce_field(); ?>
 	   </form>
 
 <?php
-	
+
 	}
 
 }

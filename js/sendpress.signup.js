@@ -68,6 +68,16 @@
                 submit_ok = false;
             }
 
+            $.each($form.find('.required'), function(index, value){
+                if($(value).val().length === 0 && submit_ok){
+                    $error.show();
+                    $error.html('<div class="item">'+sendpress.required+'</div>');
+                    submit_ok = false;
+                }
+            });
+
+
+
             if(submit_ok){
                 $submit.attr("disabled", "disabled");
 
@@ -102,6 +112,8 @@
                     }
                 });
 
+            }else{
+                $ajaxInd.hide();
             }
 
             return false;

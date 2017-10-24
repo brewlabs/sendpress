@@ -330,21 +330,45 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 				<p>
 					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_salutation'], 'on' ); ?> id="_collect_salutation" name="_collect_salutation" />
 					<label for="_collect_salutation"><?php _e('Collect Salutation', 'sendpress'); ?></label>
+
+					<br>
+
+					<input style="margin-left:30px;" class="checkbox" type="checkbox" <?php checked( $settings['_salutation_required'], 'on' ); ?> id="_salutation_required" name="_salutation_required" />
+					<label for="_salutation_required"><?php _e('Salutation Required', 'sendpress'); ?></label>
+
 				</p>
 
 				<p>
 					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_firstname'], 'on' ); ?> id="_collect_firstname" name="_collect_firstname" />
 					<label for="_collect_firstname"><?php _e('Collect First Name', 'sendpress'); ?></label>
+
+					<br>
+
+					<input style="margin-left:30px;" class="checkbox" type="checkbox" <?php checked( $settings['_firstname_required'], 'on' ); ?> id="_firstname_required" name="_firstname_required" />
+					<label for="_firstname_required"><?php _e('First Name Required', 'sendpress'); ?></label>
+
 				</p>
 
 				<p>
 					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_lastname'], 'on' ); ?> id="_collect_lastname" name="_collect_lastname" />
 					<label for="_collect_lastname"><?php _e('Collect Last Name', 'sendpress'); ?></label>
+
+					<br>
+
+					<input style="margin-left:30px;" class="checkbox" type="checkbox" <?php checked( $settings['_lastname_required'], 'on' ); ?> id="_lastname_required" name="_lastname_required" />
+					<label for="_lastname_required"><?php _e('Last Name Required', 'sendpress'); ?></label>
+
 				</p>
 
 				<p>
 					<input class="checkbox" type="checkbox" <?php checked( $settings['_collect_phonenumber'], 'on' ); ?> id="_collect_phonenumber" name="_collect_phonenumber" />
 					<label for="_collect_phonenumber"><?php _e('Collect Phone Number', 'sendpress'); ?></label>
+
+					<br>
+
+					<input style="margin-left:30px;" class="checkbox" type="checkbox" <?php checked( $settings['_phonenumber_required'], 'on' ); ?> id="_phonenumber_required" name="_phonenumber_required" />
+					<label for="_phonenumber_required"><?php _e('Phone Number Required', 'sendpress'); ?></label>
+
 				</p>
 
 				<p>
@@ -421,16 +445,23 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
  					<?php
 					foreach ($custom_field_list as $key => $value) {
 						$custom_field_label = $value['custom_field_label'];
-				?>
 
+						?>
+						<p>
+							<input class="checkbox custom-field" type="checkbox" <?php checked( $settings['_collect_custom_field'], 'on' ); ?> id="_collect_custom_field" name="_collect_custom_field" />
+							<label for="_collect_custom_field">Collect <?php echo $custom_field_label; ?></label>
 
-				<?php
+							<br>
+
+							<input style="margin-left:30px;" class="checkbox" type="checkbox" <?php checked( $settings['_phonenumber_required'], 'on' ); ?> id="_phonenumber_required" name="_phonenumber_required" />
+							<label for="_phonenumber_required"><?php _e('Phone Number Required', 'sendpress'); ?></label>
+
+						</p>
+
+						<?php
 				}
 				?>
-				<p>
-					<input class="checkbox custom-field" type="checkbox" <?php checked( $settings['_collect_custom_field'], 'on' ); ?> id="_collect_custom_field" name="_collect_custom_field" />
-					<label for="_collect_custom_field">Collect custom field(s)</label>
-				</p>
+
 				<?php $this->panel_end(); ?>
 			</div>
 		<?php }?>
