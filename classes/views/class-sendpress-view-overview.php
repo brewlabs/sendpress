@@ -102,7 +102,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
           <div id="myStat" class="chartid" data-dimension="150" data-text="<?php echo floor($p); ?>%" data-info="Total Opens" data-width="15" data-fontsize="30" data-percent="<?php echo floor($p); ?>" data-fgcolor="#61a9dc" data-bgcolor="#eee" data-fill="#ddd" data-total="<?php echo  $rec; ?>" data-part="<?php echo  $open; ?>" data-icon="long-arrow-up" data-icon-size="28" data-icon-color="#fff"></div>
          </div>
          <div style="text-align:center;">
-         <h5>Total</h5>
+         <h5><?php _e('Total', 'sendpress'); ?></h5>
          <?php echo $open; ?>
         </div>
         </div>
@@ -125,7 +125,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
           <div id="myStat" class="chartid" data-dimension="150" data-text="<?php echo floor($px); ?>%" data-info="Unique Opens" data-width="15" data-fontsize="30" data-percent="35" data-fgcolor="#85d002" data-bgcolor="#eee" data-fill="#ddd" data-total="<?php echo  $rec; ?>" data-part="<?php echo  $ou; ?>" data-icon="long-arrow-up" data-icon-size="28" data-icon-color="#fff"></div>
         </div>
           <div style="text-align:center;">
-          <h5>Unique</h5>
+          <h5><?php _e('Unique', 'sendpress'); ?></h5>
           <?php echo $ou; ?>
           </div>
        </div>

@@ -35,7 +35,7 @@ class SendPress_API {
 	 * @access private
 	 * @since 1.5
 	 */
-	public $log_requests = true;
+	public $log_requests = false;
 
 	/**
 	 * Is this a valid request?

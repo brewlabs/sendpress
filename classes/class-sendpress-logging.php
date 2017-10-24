@@ -52,6 +52,7 @@ class SendPress_Logging {
 
 		$logs_to_prune = $this->get_logs_to_prune();
 
+		
 		if ( isset( $logs_to_prune ) && ! empty( $logs_to_prune ) ){
 			$this->prune_old_logs( $logs_to_prune );
 		}
@@ -100,7 +101,7 @@ class SendPress_Logging {
 
 		$args = array(
 			'post_type'      => $this->log_post_type,
-			'posts_per_page' => '100',
+			'posts_per_page' => '10',
 			'date_query'     => array(
 				array(
 					'column' => 'post_date_gmt',

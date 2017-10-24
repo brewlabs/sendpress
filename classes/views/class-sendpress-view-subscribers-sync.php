@@ -23,8 +23,8 @@ class SendPress_View_Subscribers_Sync extends SendPress_View_Subscribers {
 		$list = SPNL()->validate->_int('listID');
 		if( $list > 0 ){
 			$role_to_sync = get_post_meta( $list,'sync_role',true);
-			SendPress_Data::drop_active_subscribers_for_sync( $list );
-
+			//SendPress_Data::drop_active_subscribers_for_sync( $list );
+				SendPress_Data::update_subscribers_for_sync( $list );
 			if( $role_to_sync == 'meta' ){
 				$meta_key = get_post_meta( $list,'meta-key',true);
 				$meta_value = get_post_meta( $list,'meta-value',true);

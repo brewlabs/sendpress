@@ -63,7 +63,7 @@ class SendPress_Cron {
                         SendPress_Queue::send_mail();
                         $count = SendPress_Data::emails_in_queue();
                     } else {
-                        
+                        SPNL()->log->prune_logs();
                         //* If cache is empty, pull transient
                         if ( ! $cron_bg_run ) {
                             $cron_bg_run = get_transient( 'spnl-background-daily' );
@@ -81,7 +81,7 @@ class SendPress_Cron {
                             //* If transient has expired, do a fresh update check
                             if ( ! $cron_bg_run_weekly ) {
                                 
-                                SPNL()->log->prune_logs();
+                                
                                 SendPress_Data::clean_queue_table();
                                 SendPress_DB_Tables::repair_tables();
                                 
@@ -124,10 +124,10 @@ class SendPress_Cron {
                 $limits = array('autocron'=> $attempted_count,'dl'=>$emails_per_day,'hl'=>$emails_per_hour,'ds'=>$emails_so_far,'hs'=>$hourly_emails);
                 $time_end = microtime(true);
                 $time = $time_end - $time_start;
-                if($internal == false && $limit == false && intval($count) > 0 && intval($stuck) < intval($count) && intval($stuck) != intval($count) ){
+                if($internal == false && $limit == false && intval($count - $stuck) > 0 && intval($stuck) < intval($count) && intval($stuck) != intval($count) ){
                     SendPress_Cron::_load($count);
                 }
-                return array( "error" => $error , "background"=> $bg , "weekly"=> $bg_weekly , "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits ,'time'=> number_format( $time , 3 ) );
+                return array( "error" => $error , "background"=> $bg , "weekly"=> $bg_weekly , "queue"=>($count - $stuck),"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits ,'time'=> number_format( $time , 3 ) );
                
             
     }
@@ -156,86 +156,8 @@ class SendPress_Cron {
             // make sure a secret string is provided in the ur
             if ( SPNL()->validate->_string('action') == 'sendpress' ) {
 
-                 //* Use cache
-                static $cron_bg_run = null;
-                static $cron_bg_run_weekly = null;
-
-
-                $time_start = microtime(true);
-                $count = SendPress_Data::emails_in_queue();
-                $bg = 0;
-                $bg_weekly = 0;
-                $error = '';
-                try{
-                    if($count > 0){
-                        SendPress_Queue::send_mail();
-                        $count = SendPress_Data::emails_in_queue();
-                    } else {
-                        
-                        //* If cache is empty, pull transient
-                        if ( ! $cron_bg_run ) {
-                            $cron_bg_run = get_transient( 'spnl-background-daily' );
-                        }
-
-                        //* If transient has expired, do a fresh update check
-                        if ( ! $cron_bg_run ) {
-
-                          
-                             //* If cache is empty, pull transient
-                            if ( ! $cron_bg_run_weekly ) {
-                                $cron_bg_run_weekly = get_transient( 'spnl-background-weekly' );
-                            }
-
-                            //* If transient has expired, do a fresh update check
-                            if ( ! $cron_bg_run_weekly ) {
-                                
-                                SPNL()->log->prune_logs();
-                                SendPress_Data::clean_queue_table();
-                                SendPress_DB_Tables::repair_tables();
-                                
-                                $cron_bg_run_weekly = array('runtime' => date("F j, Y, g:i a") );
-                                set_transient( 'spnl-background-weekly', $cron_bg_run_weekly, ( (60 * 60) * 24 ) * 7 );
-
-                                $bg_weekly = 1;
-                            }
-
-                          
-                            //SendPress_Logging::prune_logs();
-                            $bg = 1;
-                            $cron_bg_run = array('runtime' => date("F j, Y, g:i a") );
-
-                            set_transient( 'spnl-background-daily', $cron_bg_run, (60 * 60) * 24 );
-                        }
-                    }
-                }
-                catch( Exception $e ){
-                    $error = $e->getMessage();
-                    SPNL()->log->add(  'Autocron' , $error , 0 , 'error' );
-                }
-
-               
-
-                
-                $attempted_count = SendPress_Option::get('autocron-per-call',25);
-                $pro = 0;
-
-                if(defined('SENDPRESS_PRO_VERSION')){
-                    $pro = SENDPRESS_PRO_VERSION;
-                }
-                
-                $stuck = SendPress_Data::emails_stuck_in_queue();
-                $limit = SendPress_Manager::limit_reached();
-                $emails_per_day = SendPress_Option::get('emails-per-day');
-                $emails_per_hour =  SendPress_Option::get('emails-per-hour');
-                $hourly_emails = SendPress_Data::emails_sent_in_queue("hour");
-                $emails_so_far = SendPress_Data::emails_sent_in_queue("day");
-                $limits = array('autocron'=> $attempted_count,'dl'=>$emails_per_day,'hl'=>$emails_per_hour,'ds'=>$emails_so_far,'hs'=>$hourly_emails);
-                $time_end = microtime(true);
-                $time = $time_end - $time_start;
-                if($limit == false && intval($count) > 0 && intval($stuck) < intval($count) && intval($stuck) != intval($count) ){
-                    SendPress_Cron::_load($count);
-                }
-                echo json_encode(array("error" => $error , "background"=> $bg , "weekly"=> $bg_weekly , "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits ,'time'=> number_format( $time , 3 ) ) );
+                 
+                echo json_encode( SendPress_Cron::run_cron_functions() );
                 die();
             }
 

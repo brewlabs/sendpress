@@ -333,14 +333,14 @@ class SendPress_Reports_Table extends WP_List_Table {
        
         $columns = array(
             'cb' => '<input type="checkbox" />', //Render a checkbox instead of text
-            'title' => 'Subject',
-            'created' => 'Date Sent',
-            'count' => 'Info',
+            'title' => __('Subject','sendpress'),
+            'created' => __('Date Sent','sendpress'),
+            'count' => __('Info','sendpress'),
 
-            'sentto' => 'Lists',
-            'opens' => 'Opens ',
-            'clicks'=> 'Clicks',
-            'unsubscribe'=> 'Unsubscribes',
+            'sentto' => __('Lists','sendpress'),
+            'opens' => __('Opens','sendpress'),
+            'clicks'=> __('Clicks','sendpress'),
+            'unsubscribe'=> __('Unsubscribes','sendpress'),
             //'bounces' => 'Bounces'
             //'count_subscribers' => 'Subscribers'
 
