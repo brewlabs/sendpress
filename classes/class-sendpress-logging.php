@@ -52,6 +52,7 @@ class SendPress_Logging {
 
 		$logs_to_prune = $this->get_logs_to_prune();
 
+		
 		if ( isset( $logs_to_prune ) && ! empty( $logs_to_prune ) ){
 			$this->prune_old_logs( $logs_to_prune );
 		}
