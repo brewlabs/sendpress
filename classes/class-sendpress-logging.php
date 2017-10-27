@@ -111,7 +111,7 @@ class SendPress_Logging {
 		);
 
 		$old_logs = get_posts( apply_filters( 'spnl_logging_prune_query_args', $args ) );
-
+		
 		return $old_logs;
 
 	} // get_logs_to_prune

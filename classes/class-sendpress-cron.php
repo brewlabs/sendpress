@@ -54,14 +54,14 @@ class SendPress_Cron {
 
 
                 $time_start = microtime(true);
-                $count = SendPress_Data::emails_in_queue();
+                $count = SendPress_Data::emails_active_in_queue();
                 $bg = 0;
                 $bg_weekly = 0;
                 $error = '';
                 try{
                     if($count > 0){
                         SendPress_Queue::send_mail();
-                        $count = SendPress_Data::emails_in_queue();
+                        $count = SendPress_Data::emails_active_in_queue();
                     } else {
                         SPNL()->log->prune_logs();
                         //* If cache is empty, pull transient
@@ -127,7 +127,7 @@ class SendPress_Cron {
                 if($internal == false && $limit == false && intval($count - $stuck) > 0 && intval($stuck) < intval($count) && intval($stuck) != intval($count) ){
                     SendPress_Cron::_load($count);
                 }
-                return array( "error" => $error , "background"=> $bg , "weekly"=> $bg_weekly , "queue"=>($count - $stuck),"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits ,'time'=> number_format( $time , 3 ) );
+                return array( "error" => $error , "background"=> $bg , "weekly"=> $bg_weekly , "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits ,'time'=> number_format( $time , 3 ) );
                
             
     }
