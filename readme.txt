@@ -26,7 +26,7 @@ SendPress Newsletters is an easy to use WordPress newsletter plugin that has all
 * **Customizable Newsletter Templates** with easy to use theme styler
 * Stat tracking for each email: clicks, opens and unsubscribes. 
 * Send with your web host or Gmail for free
-* Verified compatible with: [Postman SMTP Mailer/Email Log](https://wordpress.org/plugins/postman-smtp/)
+* Verified compatible with: [Postman SMTP Mailer/Email Log](https://wordpress.org/plugins/post-smtp/)
 * **Scheduled Sending** of newsletters
 
 = Auto Cron =

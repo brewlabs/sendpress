@@ -38,12 +38,12 @@ class SendPress_View_Queue extends SendPress_View {
       <span class="icon-bar"></span>
 
     </button>
-    <a class="navbar-brand" href="#">Queues</a>
+    <a class="navbar-brand" href="#"><?php _e('Queues','sendpress'); ?></a>
 </div>
 		 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav">
 					<li <?php if(!SPNL()->validate->_isset('view') ){ ?>class="active"<?php } ?> >
-				    	<a href="<?php echo SendPress_Admin::link('Queue'); ?>"><span class="glyphicon glyphicon-open"></span>  <?php echo _x('Active','Active queues','sendpress'); ?> (<?php echo SendPress_Data::emails_active_in_queue(); ?>)</a>
+				    	<a href="<?php echo SendPress_Admin::link('Queue'); ?>"><span class="glyphicon glyphicon-open"></span>  <?php _e('Active','sendpress'); ?> (<?php echo SendPress_Data::emails_active_in_queue(); ?>)</a>
 				  	</li>
 				  	<li <?php if( SPNL()->validate->_string('view') === 'stuck'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Queue_Stuck'); ?>"><span class="glyphicon glyphicon-exclamation-sign"></span>  <?php _e('Stuck','sendpress'); ?> (<?php echo  SendPress_Data::emails_maxed_in_queue(); ?>)</a>
