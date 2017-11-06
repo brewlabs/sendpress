@@ -1,40 +1,45 @@
 # Copyright (C) 2017 SendPress Newsletters
 # This file is distributed under the same license as the SendPress Newsletters package.
+# Translators:
+# Michael Kotsarinis <mk73628@gmail.com>, 2015
+# Wasilis <m.wasilis@yahoo.de>, 2013
 msgid ""
 msgstr ""
-"Project-Id-Version: SendPress Newsletters 1.8.11.2\n"
+"Project-Id-Version: SendPress\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sendpress\n"
 "POT-Creation-Date: 2017-11-06 00:13:46+00:00\n"
+"PO-Revision-Date: 2017-11-06 00:15+0000\n"
+"Last-Translator: Josh Lyford <josh@brewlabs.us>\n"
+"Language-Team: Greek (http://www.transifex.com/wp-translations/sendpress/language/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: classes/class-sendpress-ajax-loader.php:212
 msgid "User was not subscribed to the list."
-msgstr ""
+msgstr "Ο χρήστης δεν είχε εγγραφεί στη λίστα."
 
 #: classes/class-sendpress-api.php:202
 msgid "You must specify both a token and API key!"
-msgstr ""
+msgstr "Πρέπει να ορίσετε και token και κλειδί API!"
 
 #: classes/class-sendpress-api.php:210
 msgid "Your request could not be authenticated!"
-msgstr ""
+msgstr "Δεν ήταν δυνατή η πιστοποίηση του αιτήματός σας!"
 
 #: classes/class-sendpress-api.php:218
 msgid "Invalid API key!"
-msgstr ""
+msgstr "Μη έγκυρο κλειδί API!"
 
 #: classes/class-sendpress-api.php:345
 msgid "Invalid query!"
-msgstr ""
+msgstr "Μη έγκυρη αναζήτηση!"
 
 #: classes/class-sendpress-autoresponder-table.php:104
 msgid "Content"
-msgstr ""
+msgstr "Περιεχόμενο"
 
 #: classes/class-sendpress-autoresponder-table.php:138
 #: classes/class-sendpress-email-local-table.php:158
@@ -51,7 +56,7 @@ msgstr ""
 #: classes/class-sendpress-system-email-table.php:135
 #: classes/views/class-sendpress-view-emails-send.php:93 sendpress.php:1158
 msgid "Edit"
-msgstr ""
+msgstr "Επεξεργασία"
 
 #: classes/class-sendpress-autoresponder-table.php:139
 #: classes/class-sendpress-autoresponder-table.php:248
@@ -67,7 +72,7 @@ msgstr ""
 #: classes/class-sendpress-subscribers-all-table.php:231
 #: classes/class-sendpress-system-email-table.php:136
 msgid "Delete"
-msgstr ""
+msgstr "Διαγραφή"
 
 #: classes/class-sendpress-autoresponder-table.php:187
 #: classes/class-sendpress-emails-table.php:188
@@ -90,65 +95,65 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-activation.php:176
 #: inc/forms/email-style.2.0.php:206
 msgid "Subject"
-msgstr ""
+msgstr "Θέμα"
 
 #: classes/class-sendpress-autoresponder-table.php:188
 #: classes/class-sendpress-email-templates-table.php:189
 #: classes/class-sendpress-emails-table.php:189
 #: classes/class-sendpress-system-email-table.php:185
 msgid "Created"
-msgstr ""
+msgstr "Δημιουργήθηκε"
 
 #: classes/class-sendpress-autoresponder-table.php:189
 #: classes/class-sendpress-emails-table.php:190
 #: classes/class-sendpress-lists-table.php:228
 msgid "Last Send"
-msgstr ""
+msgstr "Τελευταία αποστολή"
 
 #: classes/class-sendpress-cron.php:171
 msgid "Once every minutes"
-msgstr ""
+msgstr "Κάθε λεπτό"
 
 #: classes/class-sendpress-cron.php:175
 msgid "Once every two minutes"
-msgstr ""
+msgstr "Κάθε δύο λεπτά"
 
 #: classes/class-sendpress-cron.php:179
 msgid "Once every five minutes"
-msgstr ""
+msgstr "Κάθε πέντε λεπτά"
 
 #: classes/class-sendpress-cron.php:183
 msgid "Once every ten minutes"
-msgstr ""
+msgstr "Κάθε 10 λεπτά"
 
 #: classes/class-sendpress-cron.php:187
 msgid "Once every fifteen minutes"
-msgstr ""
+msgstr "Κάθε δεκαπέντε λεπτά"
 
 #: classes/class-sendpress-cron.php:191
 msgid "Once every thirty minutes"
-msgstr ""
+msgstr "Κάθε τριάντα λεπτά"
 
 #: classes/class-sendpress-cron.php:195
 msgid "Once every two hours"
-msgstr ""
+msgstr "Κάθε δύο ώρες"
 
 #: classes/class-sendpress-cron.php:199
 msgid "Once a week"
-msgstr ""
+msgstr "Κάθε εβδομάδα"
 
 #: classes/class-sendpress-cron.php:203
 msgid "Once every 28 days"
-msgstr ""
+msgstr "Κάθε 28 ημέρες"
 
 #: classes/class-sendpress-cron.php:207
 msgid "Once Monthly"
-msgstr ""
+msgstr "Μια φορά το Μήνα"
 
 #: classes/class-sendpress-email-customizer.php:68
 #: classes/class-sendpress-posts.php:239
 msgid "SendPress Templates"
-msgstr ""
+msgstr "Πρότυπα του "
 
 #: classes/class-sendpress-email-customizer.php:69
 msgid ""
@@ -168,7 +173,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings.php:31 sendpress.php:1295
 #: sendpress.php:1346
 msgid "Settings"
-msgstr ""
+msgstr "Ρυθμίσεις"
 
 #: classes/class-sendpress-email-customizer.php:79
 #: classes/views/class-sendpress-view-emails-createauto.php:105
@@ -176,7 +181,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-systememailcreate.php:118
 #: classes/views/class-sendpress-view-emails-systememailedit.php:181
 msgid "Template"
-msgstr ""
+msgstr "Πρότυπο"
 
 #: classes/class-sendpress-email-customizer.php:83
 msgid "Email Header"
@@ -190,7 +195,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-edit.php:145
 #: classes/views/class-sendpress-view-emails-systememailedit.php:111
 msgid "Footer"
-msgstr ""
+msgstr "Υποσέλιδο"
 
 #: classes/class-sendpress-email-customizer.php:95
 msgid "Send test email"
@@ -209,7 +214,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-account.php:98
 #: classes/views/class-sendpress-view-settings-account.php:127
 msgid "From Email"
-msgstr ""
+msgstr "Από e-mail"
 
 #: classes/class-sendpress-email-customizer.php:256
 msgid "Choose one"
@@ -322,7 +327,7 @@ msgstr ""
 #: classes/class-sendpress-template.php:261
 #: classes/class-sendpress-template.php:477 inc/forms/email-style.2.0.php:281
 msgid "Not interested anymore?"
-msgstr ""
+msgstr "Δεν σας ενδιαφέρει πια;"
 
 #: classes/class-sendpress-email.php:260 classes/class-sendpress-email.php:282
 #: classes/class-sendpress-template.php:262
@@ -330,24 +335,24 @@ msgstr ""
 #: classes/sc/class-sendpress-sc-unsubscribe-form.php:24
 #: inc/forms/email-style.2.0.php:282
 msgid "Unsubscribe"
-msgstr ""
+msgstr "Διαγραφή"
 
 #: classes/class-sendpress-email.php:261
 #: classes/class-sendpress-template.php:263
 #: classes/class-sendpress-template.php:479 inc/forms/email-style.2.0.php:283
 msgid "Instantly"
-msgstr ""
+msgstr "Στη στιγμή"
 
 #: classes/class-sendpress-email.php:283
 #: classes/class-sendpress-template.php:264
 #: classes/class-sendpress-template.php:480 inc/forms/email-style.2.0.php:371
 msgid "Manage Subscription"
-msgstr ""
+msgstr "Διαχείριση εγγραφής"
 
 #: classes/class-sendpress-emails-table.php:98
 #: classes/class-sendpress-lists-table.php:101
 msgid "View"
-msgstr ""
+msgstr "Προβολή"
 
 #: classes/class-sendpress-emails-table.php:107
 #: classes/views/class-sendpress-view-emails-edit.php:124
@@ -356,44 +361,44 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-access.php:179
 #: sendpress.php:1145 sendpress.php:1153 sendpress.php:1161
 msgid "Send"
-msgstr ""
+msgstr "Αποστολή"
 
 #: classes/class-sendpress-lists-table.php:82
 #: classes/class-sendpress-lists-table.php:96
 #: classes/class-sendpress-lists-table.php:105
 msgid "Sync"
-msgstr ""
+msgstr "Συγχρονισμός"
 
 #: classes/class-sendpress-lists-table.php:108
 msgid "Import"
-msgstr ""
+msgstr "Εισαγωγή"
 
 #: classes/class-sendpress-lists-table.php:111
 msgid "Add"
-msgstr ""
+msgstr "Προσθήκη"
 
 #: classes/class-sendpress-lists-table.php:112
 msgid "Export"
-msgstr ""
+msgstr "Εξαγωγή"
 
 #: classes/class-sendpress-lists-table.php:114
 #: classes/views/class-sendpress-view-settings-widgets.php:201
 msgid "Form"
-msgstr ""
+msgstr "Φόρμα"
 
 #: classes/class-sendpress-lists-table.php:161
 msgid "Test List"
-msgstr ""
+msgstr "Δοκιμή λίστας"
 
 #: classes/class-sendpress-lists-table.php:226
 #: classes/class-sendpress-settings-forms-table.php:165
 msgid "Name"
-msgstr ""
+msgstr "Όνομα"
 
 #: classes/class-sendpress-lists-table.php:227
 msgctxt "Count subscribers"
 msgid "Active"
-msgstr ""
+msgstr "Ενεργό"
 
 #: classes/class-sendpress-lists-table.php:230
 #: classes/views/class-sendpress-view-overview.php:39
@@ -403,7 +408,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-subscribers.php:59 sendpress.php:1281
 #: sendpress.php:1338
 msgid "Subscribers"
-msgstr ""
+msgstr "Συνδρομητές"
 
 #: classes/class-sendpress-logging.php:156
 msgid "SPNL Logs"
@@ -411,133 +416,135 @@ msgstr ""
 
 #: classes/class-sendpress-manager.php:191
 msgid "This is text only alternative body."
-msgstr ""
+msgstr "Αυτό είναι το εναλλακτικό σώμα μηνύματος μόνο με κείμενο."
 
 #: classes/class-sendpress-manager.php:192
 msgid "A Test Email from SendPress."
-msgstr ""
+msgstr "Ένα δοκιμαστικό e-mail από το SendPress."
 
 #: classes/class-sendpress-manager.php:193
 msgid "SendPress test email :)."
-msgstr ""
+msgstr "Δοκιμαστικό e-mail του SendPress :)."
 
 #: classes/class-sendpress-manager.php:548
 #: classes/class-sendpress-sender-gmail.php:170
 msgid "The result was: "
-msgstr ""
+msgstr "Το αποτέλεσμα ήταν:"
 
 #: classes/class-sendpress-manager.php:549
 #: classes/class-sendpress-sender-gmail.php:171
 msgid "The mailer error info: "
-msgstr ""
+msgstr "Οι πληροφορίες σφάλματος του προγράμματος ηλ. ταχυδρομείου:"
 
 #: classes/class-sendpress-manager.php:551
 #: classes/class-sendpress-sender-gmail.php:173
 msgid "The SMTP debugging output is shown below:\n"
-msgstr ""
+msgstr "Οι πληροφορίες αποσφαλμάτωσης του SMTP φαίνονται παρακάτω:\n"
 
 #: classes/class-sendpress-posts.php:174
 msgctxt "sendpress"
 msgid "Standard"
-msgstr ""
+msgstr "Κανονικό"
 
 #: classes/class-sendpress-posts.php:179
 msgid "Standard <span class=\"count\">(%s)</span>"
 msgid_plural "Standard <span class=\"count\">(%s)</span>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Κανονικό <span class=\"count\">(%s)</span>"
+msgstr[1] "Κανονικά <span class=\"count\">(%s)</span>"
 
 #: classes/class-sendpress-posts.php:184
 msgctxt "sendpress"
 msgid "Custom Template"
-msgstr ""
+msgstr "Προσαρμοσμένο Πρότυπο"
 
 #: classes/class-sendpress-posts.php:189
 msgid "Custom Templates <span class=\"count\">(%s)</span>"
 msgid_plural "Custom Templates <span class=\"count\">(%s)</span>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Προσαρμοσμένο Πρότυπο <span class=\"count\">(%s)</span>"
+msgstr[1] "Προσαρμοσμένα πρότυπα <span class=\"count\">(%s)</span>"
 
 #: classes/class-sendpress-posts.php:193
 msgctxt "sendpress"
 msgid "Form"
-msgstr ""
+msgstr "Φόρμα"
 
 #: classes/class-sendpress-posts.php:198
 msgid "Form Setting <span class=\"count\">(%s)</span>"
 msgid_plural "Forms Settings <span class=\"count\">(%s)</span>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ρυθμίσεις Φόρμας "
+msgstr[1] "Ρυθμίσεις Φορμών <span class=\"count\">(%s)</span>"
 
 #: classes/class-sendpress-posts.php:202
 msgctxt "sendpress"
 msgid "Autoresponder"
-msgstr ""
+msgstr "Αυτόματη Απάντηση"
 
 #: classes/class-sendpress-posts.php:207
 msgid "Autoresponder Setting <span class=\"count\">(%s)</span>"
 msgid_plural "Autoresponder Settings <span class=\"count\">(%s)</span>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ρυθμίσεις Αυτόματης Απάντησης <span class=\"count\">(%s)</span>"
+msgstr[1] "Ρυθμίσεις Αυτόματων Απαντήσεων <span class=\"count\">(%s)</span>"
 
 #: classes/class-sendpress-posts.php:211
 msgctxt "sendpress"
 msgid "System Email"
-msgstr ""
+msgstr "Email συστήματος"
 
 #: classes/class-sendpress-posts.php:216
 msgid "System Email Setting <span class=\"count\">(%s)</span>"
 msgid_plural "System Email Settings <span class=\"count\">(%s)</span>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ρύθμιση Email συστήματος <span class=\"count\">(%s)</span>"
+msgstr[1] "Ρυθμίσεις Email συστήματος <span class=\"count\">(%s)</span>"
 
 #: classes/class-sendpress-posts.php:222
 msgid "SendPress Internal Container"
-msgstr ""
+msgstr "Εσωτερικός Περιέκτης SendPress"
 
 #: classes/class-sendpress-posts.php:254
 msgid "SendPress Settings"
-msgstr ""
+msgstr "Ρυθμίσεις του "
 
 #: classes/class-sendpress-posts.php:275
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:60
 #: classes/views/class-sendpress-view-subscribers-listedit.php:71
 msgid "SendPress List"
-msgstr ""
+msgstr "Λίστα του SendPress"
 
 #: classes/class-sendpress-posts.php:294
 msgid "SendPress Jobs"
-msgstr ""
+msgstr "Εργασίες του "
 
 #: classes/class-sendpress-posts.php:318
 msgid "Sendpress Pages"
-msgstr ""
+msgstr "Σελίδες του Sendpress"
 
 #: classes/class-sendpress-posts.php:319
 msgid "SendPress Page"
-msgstr ""
+msgstr "Σελίδα του SendPress"
 
 #: classes/class-sendpress-pro-manager.php:273
 msgid "Alert"
-msgstr ""
+msgstr "Προειδοποίηση"
 
 #: classes/class-sendpress-pro-manager.php:275
 msgid ""
 "Your API key is either invalid or in use on another site. Need help? Visit "
-"login to <a href=\"http://sendpress.com/your-account/\">SendPress Support</a>"
-msgstr ""
+"login to <a href=\"http://sendpress.com/your-account/\">SendPress "
+"Support</a>"
+msgstr "Το κλειδί σας API είναι άκυρο ή χρησιμοποιείται σε άλλο ιστότοπο. Χρειάζεστε βοήθεια;  Πηγαίνετε στη σύνδεση με την <a href=\"http://sendpress.com/your-account/\">Υποστήριξη SendPress</a>"
 
 #: classes/class-sendpress-pro-manager.php:281
 msgid ""
 "There was a problem deactivating your API key.  Try again in a few minutes "
-"or visit <a href=\"http://sendpress.com/your-account/\">SendPress Support</a>"
-msgstr ""
+"or visit <a href=\"http://sendpress.com/your-account/\">SendPress "
+"Support</a>"
+msgstr "Υπήρξε ένα πρόβλημα με την απενεργοποίηση του κλειδιού API σας.  Δοκιμάστε ξανά σε λίγα λεπτά ή επισκεφθείτε την <a href=\"http://sendpress.com/your-account/\">Υποστήριξη SendPress</a>"
 
 #: classes/class-sendpress-pro-manager.php:287
 msgid ""
 "There was a problem activating your API key.  Try again in a few minutes or "
 "visit <a href=\"http://sendpress.com/your-account/\">SendPress Support</a>"
-msgstr ""
+msgstr "Υπήρξε ένα πρόβλημα με την ενεργοποίηση του κλειδιού API σας.  Δοκιμάστε ξανά σε λίγα λεπτά ή επισκεφθείτε την <a href=\"http://sendpress.com/your-account/\">Υποστήριξη SendPress</a>"
 
 #: classes/class-sendpress-queue-all-table.php:214
 #: classes/class-sendpress-queue-table.php:204
@@ -551,7 +558,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:101
 #: classes/views/class-sendpress-view-subscribers-subscriber.php:143
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: classes/class-sendpress-queue-all-table.php:215
 #: classes/class-sendpress-queue-table.php:205
@@ -559,18 +566,18 @@ msgstr ""
 #: classes/sc/class-sendpress-sc-forms.php:149
 #: classes/views/class-sendpress-view-overview.php:212
 msgid "List"
-msgstr ""
+msgstr "Λίστα"
 
 #: classes/class-sendpress-queue-all-table.php:220
 msgid "Sent"
-msgstr ""
+msgstr "Απεσταλμένα"
 
 #: classes/class-sendpress-queue-all-table.php:285
 #: classes/class-sendpress-queue-errors-table.php:279
 #: classes/class-sendpress-queue-stuck-table.php:275
 #: classes/class-sendpress-queue-table.php:275
 msgid "All Lists"
-msgstr ""
+msgstr "Όλες οι λίστες"
 
 #: classes/class-sendpress-queue-all-table.php:330
 #: classes/class-sendpress-queue-stuck-table.php:320
@@ -578,34 +585,34 @@ msgstr ""
 #: classes/class-sendpress-subscribers-all-table.php:299
 #: classes/class-sendpress-subscribers-table.php:293
 msgid "Filter"
-msgstr ""
+msgstr "Φιλτράρισμα"
 
 #: classes/class-sendpress-queue-table.php:208
 msgid "Max&nbsp;Attempts"
-msgstr ""
+msgstr "Μέγιστες&nbsp;Προσπάθειες"
 
 #: classes/class-sendpress-queue-table.php:209
 msgid "Attempted"
-msgstr ""
+msgstr "Προσπάθειες"
 
 #: classes/class-sendpress-queue-table.php:210
 msgid "Last&nbsp;Attempt"
-msgstr ""
+msgstr "Τελευταία&nbsp;Προσπάθεια"
 
 #: classes/class-sendpress-queue-table.php:211
 #: classes/class-sendpress-subscribers-all-table.php:175
 msgid "Actions"
-msgstr ""
+msgstr "Ενέργειες"
 
 #: classes/class-sendpress-reports-table.php:337
 #: classes/class-sendpress-reports-tests-table.php:333
 msgid "Date Sent"
-msgstr ""
+msgstr "Ημερομηνία αποστολής"
 
 #: classes/class-sendpress-reports-table.php:338
 #: classes/class-sendpress-reports-tests-table.php:334
 msgid "Info"
-msgstr ""
+msgstr "Πληροφορίες"
 
 #: classes/class-sendpress-reports-table.php:340
 #: classes/class-sendpress-reports-tests-table.php:336
@@ -615,45 +622,45 @@ msgstr ""
 #: classes/views/class-sendpress-view-subscribers.php:64
 #: classes/views/class-sendpress-view-subscribers.php:112
 msgid "Lists"
-msgstr ""
+msgstr "Λίστες"
 
 #: classes/class-sendpress-reports-table.php:341
 #: classes/views/class-sendpress-view-overview.php:81
 msgid "Opens"
-msgstr ""
+msgstr "Ανοίγματα"
 
 #: classes/class-sendpress-reports-table.php:342
 #: classes/class-sendpress-reports-tests-table.php:338
 #: classes/views/class-sendpress-view-overview.php:139
 msgid "Clicks"
-msgstr ""
+msgstr "Κλικ"
 
 #: classes/class-sendpress-reports-table.php:343
 #: classes/class-sendpress-reports-tests-table.php:339
 msgid "Unsubscribes"
-msgstr ""
+msgstr "Διαγραφές"
 
 #: classes/class-sendpress-reports-tests-table.php:337
 msgid "Opens "
-msgstr ""
+msgstr "Ανοίγματα"
 
 #: classes/class-sendpress-sender-gmail.php:14
 msgid "Gmail"
-msgstr ""
+msgstr "Gmail"
 
 #: classes/class-sendpress-sender-gmail.php:30
 msgid ""
-"Gmail is limited to 500 emails a day. We recommend that you open a dedicated "
-"Gmail account for this purpose"
-msgstr ""
+"Gmail is limited to 500 emails a day. We recommend that you open a dedicated"
+" Gmail account for this purpose"
+msgstr "Το Gmail περιορίζεται σε 500 μηνύματα την ημέρα. Σας συνιστούμε να ανοίξετε ένα λογαριασμό Gmail αποκλειστικά για το σκοπό αυτό"
 
 #: classes/class-sendpress-sender-gmail.php:31
 msgid "Username"
-msgstr ""
+msgstr "Όνομα Χρήστη"
 
 #: classes/class-sendpress-sender-gmail.php:33
 msgid "Password"
-msgstr ""
+msgstr "Κωδικός"
 
 #: classes/class-sendpress-sender-spnl.php:14
 msgid "WP Email Delivery ( API Sending )"
@@ -673,137 +680,137 @@ msgstr ""
 
 #: classes/class-sendpress-sender-website.php:20
 msgid "Your Website"
-msgstr ""
+msgstr "Η ιστοσελίδα σας"
 
 #: classes/class-sendpress-sender.php:14
 msgid "Sender Missing Label"
-msgstr ""
+msgstr "Ετικέτα Απουσίας Αποστολέα"
 
 #: classes/class-sendpress-settings-forms-table.php:92
 msgid "Clone"
-msgstr ""
+msgstr "Κλωνοποίηση"
 
 #: classes/class-sendpress-settings-forms-table.php:166
 #: classes/class-sendpress-system-email-table.php:186
 msgid "Type"
-msgstr ""
+msgstr "Τύπος"
 
 #: classes/class-sendpress-settings-forms-table.php:167
 #: classes/views/class-sendpress-view-settings-widgets.php:323
 #: classes/views/class-sendpress-view-settings-widgets.php:492
 msgid "Shortcode"
-msgstr ""
+msgstr "Shortcode"
 
 #: classes/class-sendpress-shortcode-loader.php:72
 msgid "Basic"
-msgstr ""
+msgstr "Βασικό"
 
 #: classes/class-sendpress-shortcode-loader.php:84
 msgid "All Options with Defaults"
-msgstr ""
+msgstr "Όλες οι επιλογές με τις προεπιλεγμένες τιμές"
 
 #: classes/class-sendpress-shortcode-loader.php:89
 msgid "Your Content Here."
-msgstr ""
+msgstr "Το περιεχόμενό σας μπαίνει εδώ."
 
 #: classes/class-sendpress-shortcode-loader.php:93
 msgid "Wrapping Content"
-msgstr ""
+msgstr "Πλαισίωση περιεχομένου"
 
 #: classes/class-sendpress-shortcode-manage.php:31
 #: classes/sc/class-sendpress-sc-forms.php:147
 msgid "Subscribed"
-msgstr ""
+msgstr "Εγγεγραμμένοι"
 
 #: classes/class-sendpress-shortcode-manage.php:32
 #: classes/sc/class-sendpress-sc-forms.php:148
 msgid "Unsubscribed"
-msgstr ""
+msgstr "Διαγραμμένοι"
 
 #: classes/class-sendpress-shortcode-manage.php:34
 msgid "Updated"
-msgstr ""
+msgstr "Ενημερώθηκαν"
 
 #: classes/class-sendpress-shortcode-manage.php:35
 msgid "Other Info"
-msgstr ""
+msgstr "Λοιπές πληροφορίες"
 
 #: classes/class-sendpress-shortcode-manage.php:68
 #: classes/sc/class-sendpress-sc-forms.php:182
 msgid "Never Subscribed"
-msgstr ""
+msgstr "Δεν εγγράφηκαν ποτέ"
 
 #: classes/class-sendpress-shortcode-manage.php:89
 #: classes/sc/class-sendpress-sc-forms.php:204
 msgid "Save My Settings"
-msgstr ""
+msgstr "Αποθήκευση των ρυθμίσεων μου"
 
 #: classes/class-sendpress-subscribers-all-table.php:174
 msgid "Date Joined"
-msgstr ""
+msgstr "Ημερομηνία εγγραφής"
 
 #: classes/class-sendpress-subscribers-all-table.php:297
 #: classes/class-sendpress-subscribers-table.php:291
 msgid "Apply"
-msgstr ""
+msgstr "Εκτέλεση"
 
 #: classes/class-sendpress-template-tags.php:573
 msgid "Inserts Social Links."
-msgstr ""
+msgstr "Εισάγει συνδέσμους κοινωνικών δικτύων."
 
 #: classes/class-sendpress-template-tags.php:581
 msgid "Inserts view in browser html link."
-msgstr ""
+msgstr "Εισάγει σύνδεσμο για θέαση στον περιηγητή."
 
 #: classes/class-sendpress-template-tags.php:589
 msgid "Inserts Site Name."
-msgstr ""
+msgstr "Εισάγει το όνομα του ιστότοπου."
 
 #: classes/class-sendpress-template-tags.php:596
 msgid "Inserts the CANSPAM text."
-msgstr ""
+msgstr "Εισάγει το κείμενο CANSPAM."
 
 #: classes/class-sendpress-template-tags.php:604
 msgid "Inserts an unsubscribe html link."
-msgstr ""
+msgstr "Εισάγει σύνδεσμο για διαγραφή."
 
 #: classes/class-sendpress-template-tags.php:616
 #: classes/class-sendpress-template-tags.php:622
 msgid "Inserts the subscriber id."
-msgstr ""
+msgstr "Εισάγει το id του συνδρομητή."
 
 #: classes/class-sendpress-template-tags.php:632
 msgid "Body Color"
-msgstr ""
+msgstr "Χρώμα κυρίως τμήματος"
 
 #: classes/class-sendpress-template-tags.php:639
 #: classes/class-sendpress-template-tags.php:646
 msgid "Content Color"
-msgstr ""
+msgstr "Χρώμα περιεχομένου"
 
 #: classes/class-sendpress-template-tags.php:653
 msgid "Content Area"
-msgstr ""
+msgstr "Περιοχή περιεχομένου"
 
 #: classes/class-sendpress-template-tags.php:660
 msgid "Header Content"
-msgstr ""
+msgstr "Περιεχόμενο Κεφαλίδας"
 
 #: classes/class-sendpress-template-tags.php:667
 msgid "Header Page"
-msgstr ""
+msgstr "Κεφαλίδα Σελίδας"
 
 #: classes/class-sendpress-template-tags.php:674
 msgid "Footer Page"
-msgstr ""
+msgstr "Σελίδα Υποσέλιδου"
 
 #: classes/class-sendpress-template-tags.php:681
 msgid "Footer Content"
-msgstr ""
+msgstr "Περιεχόμενο υποσέλιδου"
 
 #: classes/class-sendpress-template-tags.php:688
 msgid "Email Title"
-msgstr ""
+msgstr "Τίτλος e-mail"
 
 #: classes/class-sendpress-template.php:259
 #: classes/class-sendpress-template.php:475
@@ -812,7 +819,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-styles.php:122
 #: inc/forms/email-style.2.0.php:279
 msgid "Is this email not displaying correctly?"
-msgstr ""
+msgstr "Αυτό το email δεν εμφανίζεται σωστά;"
 
 #: classes/class-sendpress-template.php:260
 #: classes/class-sendpress-template.php:476
@@ -821,21 +828,21 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-styles.php:123
 #: inc/forms/email-style.2.0.php:280
 msgid "View it in your browser"
-msgstr ""
+msgstr "Δείτε το στο πρόγραμμα περιήγησής σας"
 
 #: classes/class-sendpress-tour.php:70
 msgid "Welcome to SendPress"
-msgstr ""
+msgstr "Καλώς ήρθατε στο SendPress"
 
 #: classes/class-sendpress-tour.php:71
 msgid ""
 "You've just installed SendPress! Click &ldquo;Start Tour&rdquo; to view a "
 "quick introduction of this plugins core functionality."
-msgstr ""
+msgstr "Έχετε εγκαταστήσει το SendPress! Κάντε κλικ στο κουμπί &ldquo;Εκκίνηση Περιήγησης&rdquo;&quot; για να δείτε μια γρήγορη εισαγωγή της βασικής λειτουργικότητας αυτού του πρόσθετου."
 
 #: classes/class-sendpress-tour.php:76
 msgid "Start Tour"
-msgstr ""
+msgstr "Ξεκινήστε την περιήγηση"
 
 #: classes/class-sendpress-tour.php:90
 #: classes/views/class-sendpress-view-emails-edit.php:450
@@ -844,30 +851,30 @@ msgstr ""
 #: classes/views/class-sendpress-view-queue.php:243
 #: classes/views/class-sendpress-view-settings-account.php:483
 msgid "Close"
-msgstr ""
+msgstr "Κλείσιμο"
 
 #: classes/class-sendpress-tour.php:112
 msgid "Help Make SendPress Better"
-msgstr ""
+msgstr "Βοηθήστε να γίνει το SendPress καλύτερο"
 
 #: classes/class-sendpress-tour.php:113
 msgid ""
-"You've just installed SendPres. Please helps us improve it by allowing us to "
-"gather anonymous usage stats so we know which configurations, plugins and "
+"You've just installed SendPres. Please helps us improve it by allowing us to"
+" gather anonymous usage stats so we know which configurations, plugins and "
 "themes to test with."
-msgstr ""
+msgstr "Έχετε μόλις εγκαταστήσει το SendPres. Παρακαλούμε βοηθήστε μας να βελτιωθεί, επιτρέποντάς μας να συλλέξουμε ανώνυμα στατιστικά στοιχεία χρήσης έτσι ώστε να γνωρίζουμε με ποιες διαμορφώσεις, πρόσθετα και θέματα να το δοκιμάσουμε."
 
 #: classes/class-sendpress-tour.php:118
 msgid "Allow tracking"
-msgstr ""
+msgstr "Να επιτραπει η παρακολούθηση"
 
 #: classes/class-sendpress-tour.php:124
 msgid "Do not allow tracking"
-msgstr ""
+msgstr "Να μην επιτραπεί η παρακολούθηση"
 
 #: classes/class-sendpress-tracking.php:142
 msgid "You do not have sufficient permissions to access this page."
-msgstr ""
+msgstr "Δεν έχετε δικαιώματα πρόσβασης σε αυτή τη σελίδα."
 
 #: classes/class-sendpress-tracking.php:149
 #: classes/views/class-sendpress-view-emails-edit.php:121
@@ -875,149 +882,149 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-systememailedit.php:94
 #: sendpress.php:1135 sendpress.php:1142 sendpress.php:1150
 msgid "Update"
-msgstr ""
+msgstr "Ενημέρωση"
 
 #: classes/class-sendpress-widget-forms.php:24
 msgid "Displays a form so your users can interact with SendPress."
-msgstr ""
+msgstr "Εμφανίζει μια φόρμα έτσι ώστε οι χρήστες σας να αλληλεπιδρούν με το SendPress."
 
 #: classes/class-sendpress-widget-forms.php:32
 msgid "SendPress Forms"
-msgstr ""
+msgstr "Φόρμες του SendPress"
 
 #: classes/class-sendpress-widget-forms.php:89
 #: classes/class-sendpress-widget-signup.php:204
 msgid "Title:"
-msgstr ""
+msgstr "Τίτλος:"
 
 #: classes/class-sendpress-widget-forms.php:101
 msgid "Form to Display:"
-msgstr ""
+msgstr "Φόρμα προς εμφάνιση:"
 
 #: classes/class-sendpress-widget-signup.php:24
 msgid ""
 "Displays a signup form so your users can sign up for your public e-mail "
 "lists."
-msgstr ""
+msgstr "Εμφανίζει μια φόρμα εγγραφής, ώστε οι χρήστες σας να μπορούν να εγγραφούν στις δημόσιες λίστες e-mail σας."
 
 #: classes/class-sendpress-widget-signup.php:33
 msgid "SendPress Signup"
-msgstr ""
+msgstr "Εγγραφή SendPress"
 
 #: classes/class-sendpress-widget-signup.php:76
 msgid "NO LIST HAS BEEN SELECTED IN SENDPRESS WIDGET SETTINGS"
-msgstr ""
+msgstr "ΔΕΝ ΕΧΕΙ ΕΠΙΛΕΓΕΙ ΛΙΣΤΑ ΣΤΙΣ ΡΥΘΜΙΣΕΙΣ ΜΙΚΡΟΕΦΑΡΜΟΓΩΝ ΤΟΥ SENDPRESS"
 
 #: classes/class-sendpress-widget-signup.php:171
 #: classes/views/class-sendpress-view-emails-edit.php:365
 #: classes/views/class-sendpress-view-emails-systememailedit.php:329
 msgid "First Name"
-msgstr ""
+msgstr "Όνομα"
 
 #: classes/class-sendpress-widget-signup.php:172
 #: classes/views/class-sendpress-view-emails-edit.php:370
 #: classes/views/class-sendpress-view-emails-systememailedit.php:334
 msgid "Last Name"
-msgstr ""
+msgstr "Επώνυμο"
 
 #: classes/class-sendpress-widget-signup.php:173
 msgid "E-Mail"
-msgstr ""
+msgstr "E-Mail"
 
 #: classes/class-sendpress-widget-signup.php:174
 msgid "List Selection"
-msgstr ""
+msgstr "Επιλογή Λίστας"
 
 #: classes/class-sendpress-widget-signup.php:177
 #: classes/views/class-sendpress-view-help.php:261
 #: classes/views/class-sendpress-view-subscribers-add.php:91
 #: classes/views/class-sendpress-view-subscribers-add.php:109
 msgid "Submit"
-msgstr ""
+msgstr "Υποβολή"
 
 #: classes/class-sendpress-widget-signup.php:178
 msgid "Check your inbox now to confirm your subscription."
-msgstr ""
+msgstr "Ελέγξτε τα εισερχόμενά σας τώρα για να επιβεβαιώσετε την εγγραφή σας."
 
 #: classes/class-sendpress-widget-signup.php:209
 #: classes/views/class-sendpress-view-settings-widgets.php:276
 #: classes/views/class-sendpress-view-settings-widgets.php:485
 msgid "Description:"
-msgstr ""
+msgstr "Περιγραφή:"
 
 #: classes/class-sendpress-widget-signup.php:216
 #: classes/views/class-sendpress-view-settings-widgets.php:343
 msgid "Collect First Name"
-msgstr ""
+msgstr "Συλλογή Όνοματος"
 
 #: classes/class-sendpress-widget-signup.php:221
 #: classes/views/class-sendpress-view-settings-widgets.php:354
 msgid "Collect Last Name"
-msgstr ""
+msgstr "Συλλογή Επώνυμου"
 
 #: classes/class-sendpress-widget-signup.php:225
 #: classes/views/class-sendpress-view-settings-widgets.php:375
 msgid "Display labels inside"
-msgstr ""
+msgstr "Εμφάνιση ετικετών μέσα"
 
 #: classes/class-sendpress-widget-signup.php:226
 #: classes/views/class-sendpress-view-settings-widgets.php:376
 msgid "Yes"
-msgstr ""
+msgstr "Ναι"
 
 #: classes/class-sendpress-widget-signup.php:227
 #: classes/views/class-sendpress-view-settings-activation.php:68
 #: classes/views/class-sendpress-view-settings-widgets.php:377
 msgid "No"
-msgstr ""
+msgstr "Όχι"
 
 #: classes/class-sendpress-widget-signup.php:232
 msgid "Check all lists by default"
-msgstr ""
+msgstr "Επιλογή όλων των λιστών ως προεπιλογή"
 
 #: classes/class-sendpress-widget-signup.php:237
 #: classes/views/class-sendpress-view-settings-widgets.php:286
 msgid "First Name Label:"
-msgstr ""
+msgstr "Ετικέτα Ονόματος:"
 
 #: classes/class-sendpress-widget-signup.php:242
 #: classes/views/class-sendpress-view-settings-widgets.php:291
 msgid "Last Name Label:"
-msgstr ""
+msgstr "Ετικέτα Επωνύμου:"
 
 #: classes/class-sendpress-widget-signup.php:247
 #: classes/views/class-sendpress-view-settings-widgets.php:301
 msgid "E-Mail Label:"
-msgstr ""
+msgstr "Ετικέτα e-mail:"
 
 #: classes/class-sendpress-widget-signup.php:252
 #: classes/views/class-sendpress-view-settings-widgets.php:306
 msgid "Button Text:"
-msgstr ""
+msgstr "Κείμενο κουμπιού:"
 
 #: classes/class-sendpress-widget-signup.php:256
 #: classes/views/class-sendpress-view-settings-widgets.php:311
 msgid "Lists Label: multiple lists only"
-msgstr ""
+msgstr "Ετικέτα Λιστών: μόνο για πολλαπλές λίστες"
 
 #: classes/class-sendpress-widget-signup.php:259
 msgid "Check off the lists you would like<br>users to subscribe to"
-msgstr ""
+msgstr "Επιλέξτε τις λίστες που θα θέλατε<br>να εγγράφονται οι χρήστες σας"
 
 #: classes/class-sendpress-widget-signup.php:263
 #: classes/views/class-sendpress-view-settings-widgets.php:412
 msgid "No public lists available"
-msgstr ""
+msgstr "Δεν υπάρχουν διαθέσιμες δημόσιες λίστες"
 
 #: classes/class-sendpress-widget-signup.php:282
 #: classes/views/class-sendpress-view-settings-widgets.php:316
 msgid "Thank you message:"
-msgstr ""
+msgstr "Ευχαριστήριο μήνυμα:"
 
 #: classes/class-sendpress-widget-signup.php:287
 #: classes/views/class-sendpress-view-settings-widgets.php:381
 msgid "Thank You Page (AJAX OFF ONLY):"
-msgstr ""
+msgstr "Σελίδα Ευχαριστώ (MONO ME AJAX ΑΝΕΝΕΡΓΟ):"
 
 #: classes/class-sendpress-widget-signup.php:292
 #: classes/views/class-sendpress-view-settings-advanced.php:219
@@ -1027,156 +1034,156 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-advanced.php:228
 #: classes/views/class-sendpress-view-settings-widgets.php:386
 msgid "Default"
-msgstr ""
+msgstr "Προεπιλογή"
 
 #: classes/modules/class-sendpress-module-empty.php:13
 msgid "More Coming Soon!"
-msgstr ""
+msgstr "Περισσότερα θα ακολουθήσουν σύντομα!"
 
 #: classes/modules/class-sendpress-module-empty.php:16
 msgid "Cool stuff is on the horizon, check back soon!"
-msgstr ""
+msgstr "Έρχεται φοβερό υλικό, επιστρέψτε σύντομα!"
 
 #: classes/modules/class-sendpress-module-empty.php:24
 msgid "Request a Feature"
-msgstr ""
+msgstr "Ζητήστε ένα χαρακτηριστικό"
 
 #: classes/modules/class-sendpress-module-pro.php:27
 msgid "SendPress API Key"
-msgstr ""
+msgstr "Κλειδί API του SendPress"
 
 #: classes/modules/class-sendpress-module-pro.php:38
 msgid "Register Key"
-msgstr ""
+msgstr "Καταχώρηση Κλειδιού"
 
 #: classes/modules/class-sendpress-module-pro.php:40
 msgid "Deactivate Key"
-msgstr ""
+msgstr "Απενεργοποίηση Κλειδιού"
 
 #: classes/modules/class-sendpress-module-pro.php:43
 msgid ""
-"Enter your API key to enable premium support and automatic updates. Get your "
-"API key by logging into <a href=\"%s\">SendPress.com</a>."
-msgstr ""
+"Enter your API key to enable premium support and automatic updates. Get your"
+" API key by logging into <a href=\"%s\">SendPress.com</a>."
+msgstr "Εισάγετε το κλειδί σας API για να ενεργοποιήσετε την premium υποστήριξη και τις αυτόματες ενημερώσεις. Πάρτε το κλειδί σας API με σύνδεση στο <a href=\"%s\">SendPress.com</a>."
 
 #: classes/modules/class-sendpress-module-pro.php:60
 msgid "Install Pro"
-msgstr ""
+msgstr "Εγκατάσταση της Pro"
 
 #: classes/modules/class-sendpress-module-pro.php:68
 msgid "Buy Now"
-msgstr ""
+msgstr "Αγοράστε τώρα"
 
 #: classes/modules/class-sendpress-module-pro.php:76
 #: classes/modules/class-sendpress-module.php:94
 #: classes/modules/class-sendpress-module.php:118
 #: classes/modules/class-sendpress-module.php:140
 msgid "Deactivate"
-msgstr ""
+msgstr "Απενεργοποίηση"
 
 #: classes/modules/class-sendpress-module-pro.php:84
 #: classes/modules/class-sendpress-module.php:72
 #: classes/modules/class-sendpress-module.php:80
 #: classes/views/class-sendpress-view-settings-account.php:241
 msgid "Activate"
-msgstr ""
+msgstr "Ενεργοποίηση"
 
 #: classes/modules/class-sendpress-module-reports.php:18
 #: classes/views/class-sendpress-view-overview.php:283
 msgid "Advanced Reports"
-msgstr ""
+msgstr "Αναφορές για προχωρημένους"
 
 #: classes/modules/class-sendpress-module-reports.php:21
 msgid ""
-"Add more details to your reports. See who clicked what and when. What device "
-"they used and where they were."
-msgstr ""
+"Add more details to your reports. See who clicked what and when. What device"
+" they used and where they were."
+msgstr "Προσθέστε περισσότερες λεπτομέρειες στις αναφορές σας. Δείτε ποιος έκανε κλικ σε τι και πότε. Τι συσκευή χρησιμοποίησαν και που ήταν."
 
 #: classes/modules/class-sendpress-module-spam-test.php:18
 msgid "Spam Testing"
-msgstr ""
+msgstr "Δοκιμή για spam"
 
 #: classes/public-views/class-sendpress-public-view-confirm.php:60
 msgid "Thank you for signing up!"
-msgstr ""
+msgstr "Σας ευχαριστούμε για την εγγραφή σας!"
 
 #: classes/public-views/class-sendpress-public-view-confirm.php:61
 msgid "You're all set, and should start receiving emails soon."
-msgstr ""
+msgstr "Είστε έτοιμοι, και θα πρέπει να αρχίσετε να λαμβάνετε emails σύντομα."
 
 #: classes/public-views/class-sendpress-public-view-form.php:38
 #: classes/public-views/class-sendpress-public-view-post.php:48
 msgid "Invalid Email"
-msgstr ""
+msgstr "Μη έγκυρο email"
 
 #: classes/public-views/class-sendpress-public-view-form.php:63
 #: classes/public-views/class-sendpress-public-view-post.php:77
 msgid "Problem with subscribing user."
-msgstr ""
+msgstr "Πρόβλημα με εγγραφή χρήστη."
 
 #: classes/public-views/class-sendpress-public-view-form.php:65
 msgid "Thanks for subscribing."
-msgstr ""
+msgstr "Ευχαριστούμε που εγγραφήκατε."
 
 #: classes/public-views/class-sendpress-public-view-post.php:178
 msgid "You must provide a list ID for the post page to work"
-msgstr ""
+msgstr "Πρέπει να δώσετε το ID μιας λίστας για να δουλέψει η σελίδα μηνύματος"
 
 #: classes/public-views/class-sendpress-public-view-post.php:200
 msgid "Thank You for subscribing"
-msgstr ""
+msgstr "Σας ευχαριστούμε για την εγγραφή σας"
 
 #: classes/public-views/class-sendpress-public-view-post.php:203
 msgid "Sorry, We had a Problem adding your email"
-msgstr ""
+msgstr "Συγγνώμη, είχαμε ένα πρόβλημα με την πορσθήκη του email σας"
 
 #: classes/sc/class-sendpress-sc-forms.php:18
 #: classes/views/class-sendpress-view-settings-widgets.php:174
 #: classes/views/class-sendpress-view-settings.php:48
 msgid "Forms"
-msgstr ""
+msgstr "Φόρμες"
 
 #: classes/sc/class-sendpress-sc-forms.php:118
 msgid "Signup Date"
-msgstr ""
+msgstr "Ημερομηνία Εγγραφής"
 
 #: classes/sc/class-sendpress-sc-forms.php:124
 msgid "Saved"
-msgstr ""
+msgstr "Αποθηκεύτηκε"
 
 #: classes/sc/class-sendpress-sc-forms.php:125
 msgid "Your subscriptions have been updated. Thanks."
-msgstr ""
+msgstr "Οι συνδρομές σας έχουν ενημερωθεί. Ευχαριστώ."
 
 #: classes/sc/class-sendpress-sc-forms.php:130
 msgid "You are subscribed to the following lists:"
-msgstr ""
+msgstr "Έχετε εγγραφεί στις ακόλουθες λίστες:"
 
 #: classes/sc/class-sendpress-sc-forms.php:218
 #: classes/sc/class-sendpress-sc-signup.php:51
 msgid "You've already signed up, Thanks!"
-msgstr ""
+msgstr "Έχετε ήδη εγγραφεί, Ευχαριστούμε!"
 
 #: classes/sc/class-sendpress-sc-forms.php:437
 msgid "This shortcode loads a form based on a form id."
-msgstr ""
+msgstr "Αυτό το shortcode φορτώνει μια φόρμα με βάση το id"
 
 #: classes/sc/class-sendpress-sc-recent-posts-by-user.php:22
 msgid "Get Recent Posts By User"
-msgstr ""
+msgstr "Λήψη Πρόσφατων Άρθρων κατά Χρήστη"
 
 #: classes/sc/class-sendpress-sc-recent-posts-by-user.php:35
 #: classes/sc/class-sendpress-sc-recent-posts.php:49
 msgid "You can provide a Title. This is added before the post loop begins."
-msgstr ""
+msgstr "Μπορείτε να δώσετε ένα Τίτλο. Αυτός προστίθεται πριν ξεκινήσουν τα άρθρα."
 
 #: classes/sc/class-sendpress-sc-recent-posts-by-user.php:57
 msgid "This shortcode creates a listing of Posts in emails or on pages."
-msgstr ""
+msgstr "Αυτό το shortcode δημιουργεί μια λίστα Άρθρων σε email ή σε σελίδες."
 
 #: classes/sc/class-sendpress-sc-recent-posts.php:18
 msgid "Get Recent Posts"
-msgstr ""
+msgstr "Λήψη Πρόσφατων Άρθρων"
 
 #: classes/sc/class-sendpress-sc-recent-posts.php:320
 msgid ""
@@ -1187,52 +1194,52 @@ msgid ""
 "(defaults to left)<br><b>alternate</b> - when writing posts, alternate the "
 "thumbnail images. (defaults to false)<br><b>readmoretext</b> - the text for "
 "the readmore link (defaults to Read More)<br><b>columns</b> - the number of "
-"columns your posts should display in.  Max number of columns is 3."
-"<br><b>datespan</b> - number of days of posts to render.  Can be set to "
+"columns your posts should display in.  Max number of columns is "
+"3.<br><b>datespan</b> - number of days of posts to render.  Can be set to "
 "\"daily\", \"weekly\", or a number of days (datespan=3 for the last three "
-"days for exmaple) (defaults to daily.)<br><b>displayimages</b> - Set to true "
-"by default, set to false if you want no images to display."
-"<br><b>display_author</b> - Set to false by default, set to true the author "
-"link will display."
+"days for exmaple) (defaults to daily.)<br><b>displayimages</b> - Set to true"
+" by default, set to false if you want no images to "
+"display.<br><b>display_author</b> - Set to false by default, set to true the"
+" author link will display."
 msgstr ""
 
 #: classes/sc/class-sendpress-sc-signup.php:18
 msgid "Signup"
-msgstr ""
+msgstr "Εγγραφή"
 
 #: classes/sc/class-sendpress-sc-signup.php:170
 msgid ""
 "This shortcode creates a sign up form for users on your site.  This "
 "shortcode is not required for users to signup, you can also use our signup "
 "widget."
-msgstr ""
+msgstr "Αυτό το shortcode δημιουργεί μια φόρμα εγγραφής χρηστών στον ιστότοπό σας. Δεν είναι απαραίτητο για να εγγραφούν οι χρήστες, μπορείτε να χρησιμοποιήσετε επίσης τη μικροεφαρμογή μας."
 
 #: classes/sc/class-sendpress-sc-unsubscribe-form.php:18
 msgid "Unsubscribe Form"
-msgstr ""
+msgstr "Φόρμα Διαγραφής"
 
 #: classes/sc/class-sendpress-sc-unsubscribe-form.php:29
 msgid ""
 "You can provide an alternate message to your users after they unsubscribe."
-msgstr ""
+msgstr "Μπορείτε να δώσετε ένα εναλλακτικό μήνυμα στους χρήστες σας αφού διαγραφούν."
 
 #: classes/sc/class-sendpress-sc-unsubscribe-form.php:33
 msgid "You have been unsubscribed from all lists."
-msgstr ""
+msgstr "Έχετε διαγραφεί από όλες τις λίστες."
 
 #: classes/sc/class-sendpress-sc-unsubscribe-form.php:66
 msgid ""
 "This shortcode creates a form that allows a user to enter an email address "
 "and unsubscribe. The default message after unsubscribe is: "
-msgstr ""
+msgstr "Αυτό το shortcode δημιουργεί μια φόρμα που επιτρέπει σε ένα χρήστη να δώσει μια διεύθυνση email και να διαγραφεί. Το προεπιλεγμένο μήνυμα μετά τη διαγραφή είναι:"
 
 #: classes/tag/class-sendpress-tag-footer-page.php:62
 msgid "unsubscribe from this list"
-msgstr ""
+msgstr "διαγραφή από αυτή τη λίστα"
 
 #: classes/tag/class-sendpress-tag-unsubscribe-link-html.php:25
 msgid "Unsubscribe from this list."
-msgstr ""
+msgstr "Διαγραφή από αυτή τη λίστα."
 
 #: classes/views/class-sendpress-view-emails-autoedit.php:75
 #: classes/views/class-sendpress-view-emails-autoedit.php:79
@@ -1256,7 +1263,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-styles.php:100
 #: classes/views/class-sendpress-view.php:76 sendpress.php:1170
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #: classes/views/class-sendpress-view-emails-autoedit.php:85
 #: classes/views/class-sendpress-view-emails-footer.php:34
@@ -1276,19 +1283,19 @@ msgstr ""
 #: classes/views/class-sendpress-view-subscribers-subscriber.php:123
 #: classes/views/class-sendpress-view.php:76
 msgid "Save"
-msgstr ""
+msgstr "Αποθήκευση"
 
 #: classes/views/class-sendpress-view-emails-autoedit.php:91
 msgid "Autoresponder Settings"
-msgstr ""
+msgstr "Ρυθμίσεις Αυτόματης Απάντησης"
 
 #: classes/views/class-sendpress-view-emails-autoedit.php:99
 msgid "When someone subscribes to the list"
-msgstr ""
+msgstr "Όταν κάποιος εγγράφεται στη λίστα"
 
 #: classes/views/class-sendpress-view-emails-autoedit.php:100
 msgid "When a new WordPress user is added to your site"
-msgstr ""
+msgstr "Όταν ένας νέος χρήστης του WordPress προστίθεται στον ιστότοπό σας"
 
 #: classes/views/class-sendpress-view-emails-autoedit.php:101
 msgid "When a subscriber clicks a link"
@@ -1300,127 +1307,127 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-tempclone.php:40
 #: sendpress.php:1138 sendpress.php:1165
 msgid "Save & Next"
-msgstr ""
+msgstr "Αποθήκευση &amp; Επόμενο"
 
 #: classes/views/class-sendpress-view-emails-create.php:75
 #: classes/views/class-sendpress-view-emails.php:300
 msgid "Create Email"
-msgstr ""
+msgstr "Δημιουργία Email"
 
 #: classes/views/class-sendpress-view-emails-create.php:109
 msgid "1.0 Template"
-msgstr ""
+msgstr "Πρότυπο 1.0"
 
 #: classes/views/class-sendpress-view-emails-create.php:111
 msgid "Use New System"
-msgstr ""
+msgstr "Χρήση Νέου Συστήματος"
 
 #: classes/views/class-sendpress-view-emails-create.php:115
 msgid "Select your template"
-msgstr ""
+msgstr "Επιλέξτε το πρότυπό σας"
 
 #: classes/views/class-sendpress-view-emails-create.php:167
 #: classes/views/class-sendpress-view-emails-createauto.php:134
 msgid "Original Template"
-msgstr ""
+msgstr "Αρχικό Πρότυπο"
 
 #: classes/views/class-sendpress-view-emails-create.php:169
 msgid "Use Old Email System"
-msgstr ""
+msgstr "Χρήση παλιού συστήματος email"
 
 #: classes/views/class-sendpress-view-emails-create.php:170
 msgid ""
 "Currently emails cannot be upgraded directly to the new Template system."
-msgstr ""
+msgstr "Προς το παρόν τα email δεν μπορούν να αναβαθμιστούν απευθείας στο νέο σύστημα Προτύπων."
 
 #: classes/views/class-sendpress-view-emails-createauto.php:71
 msgid "Create Autoresponder"
-msgstr ""
+msgstr "Δημιουργία Αυτόματης Απάντησης"
 
 #: classes/views/class-sendpress-view-emails-edit.php:131
 msgid "Edit Email Content"
-msgstr ""
+msgstr "Επεξεργασία Περιεχομένου Email"
 
 #: classes/views/class-sendpress-view-emails-edit.php:141
 #: classes/views/class-sendpress-view-emails-systememailedit.php:107
 msgid "Main Content"
-msgstr ""
+msgstr "Κύριο περιεχόμενο"
 
 #: classes/views/class-sendpress-view-emails-edit.php:144
 #: classes/views/class-sendpress-view-emails-systememailedit.php:110
 msgid "Header"
-msgstr ""
+msgstr "Κεφαλίδα"
 
 #: classes/views/class-sendpress-view-emails-edit.php:272
 #: classes/views/class-sendpress-view-emails-style.php:151
 #: classes/views/class-sendpress-view-emails-systememailedit.php:236
 msgid "Test This Email"
-msgstr ""
+msgstr "Δοκιμή αυτού του email"
 
 #: classes/views/class-sendpress-view-emails-edit.php:274
 #: classes/views/class-sendpress-view-emails-style.php:153
 #: classes/views/class-sendpress-view-emails-systememailedit.php:238
 msgid "Send Test"
-msgstr ""
+msgstr "Αποστολή Δοκιμαστικού"
 
 #: classes/views/class-sendpress-view-emails-edit.php:284
 #: classes/views/class-sendpress-view-emails-systememailedit.php:248
 #: classes/views/class-sendpress-view-emails.php:105
 msgid "Single Post"
-msgstr ""
+msgstr "Μονό άρθρο"
 
 #: classes/views/class-sendpress-view-emails-edit.php:285
 #: classes/views/class-sendpress-view-emails-systememailedit.php:249
 #: classes/views/class-sendpress-view-emails.php:106
 msgid "Personalize"
-msgstr ""
+msgstr "Προσωποποίηση"
 
 #: classes/views/class-sendpress-view-emails-edit.php:299
 #: classes/views/class-sendpress-view-emails-systememailedit.php:263
 #: classes/views/class-sendpress-view-emails.php:120
 msgid "Search Posts"
-msgstr ""
+msgstr "Αναζήτηση άρθρων"
 
 #: classes/views/class-sendpress-view-emails-edit.php:301
 #: classes/views/class-sendpress-view-emails-systememailedit.php:265
 #: classes/views/class-sendpress-view-emails.php:122
 msgid "No Post Selected"
-msgstr ""
+msgstr "Δεν επιλέχθηκε άρθρο"
 
 #: classes/views/class-sendpress-view-emails-edit.php:304
 #: classes/views/class-sendpress-view-emails-systememailedit.php:268
 msgid "Header HTML"
-msgstr ""
+msgstr "HTML Κεφαλίδας"
 
 #: classes/views/class-sendpress-view-emails-edit.php:330
 #: classes/views/class-sendpress-view-emails-systememailedit.php:294
 msgid "Header Link"
-msgstr ""
+msgstr "Σύνδεσμος Κεφαλίδας"
 
 #: classes/views/class-sendpress-view-emails-edit.php:333
 #: classes/views/class-sendpress-view-emails-systememailedit.php:297
 msgid "Link Header to Post"
-msgstr ""
+msgstr "Σύνδεση Κεφαλίδας με Άρθρο"
 
 #: classes/views/class-sendpress-view-emails-edit.php:337
 #: classes/views/class-sendpress-view-emails-systememailedit.php:301
 msgid "Don't Link Header to Post"
-msgstr ""
+msgstr "Να μη συνδεθεί η Κεφαλίδα με το Άρθρο"
 
 #: classes/views/class-sendpress-view-emails-edit.php:340
 #: classes/views/class-sendpress-view-emails-systememailedit.php:304
 msgid "Post Content"
-msgstr ""
+msgstr "Περιεχόμενο Άρθρου"
 
 #: classes/views/class-sendpress-view-emails-edit.php:343
 #: classes/views/class-sendpress-view-emails-systememailedit.php:307
 msgid "Excerpt"
-msgstr ""
+msgstr "Απόσπασμα"
 
 #: classes/views/class-sendpress-view-emails-edit.php:347
 #: classes/views/class-sendpress-view-emails-systememailedit.php:311
 msgid "Full Post"
-msgstr ""
+msgstr "Πλήρες Άρθρο"
 
 #: classes/views/class-sendpress-view-emails-edit.php:350
 #: classes/views/class-sendpress-view-emails-edit.php:367
@@ -1443,12 +1450,12 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-systememailedit.php:394
 #: classes/views/class-sendpress-view-emails-systememailedit.php:399
 msgid "Insert"
-msgstr ""
+msgstr "Εισαγωγή"
 
 #: classes/views/class-sendpress-view-emails-edit.php:353
 #: classes/views/class-sendpress-view-emails-systememailedit.php:317
 msgid "Subscriber specific content"
-msgstr ""
+msgstr "Περιεχόμενο εξειδικευμένο για το συνδρομητή"
 
 #: classes/views/class-sendpress-view-emails-edit.php:358
 #: classes/views/class-sendpress-view-emails-edit.php:387
@@ -1457,7 +1464,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-systememailedit.php:351
 #: classes/views/class-sendpress-view-emails-systememailedit.php:380
 msgid "Description"
-msgstr ""
+msgstr "Περιγραφή"
 
 #: classes/views/class-sendpress-view-emails-edit.php:359
 #: classes/views/class-sendpress-view-emails-edit.php:388
@@ -1466,79 +1473,79 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-systememailedit.php:352
 #: classes/views/class-sendpress-view-emails-systememailedit.php:381
 msgid "Code"
-msgstr ""
+msgstr "Κώδικας"
 
 #: classes/views/class-sendpress-view-emails-edit.php:382
 #: classes/views/class-sendpress-view-emails-systememailedit.php:346
 msgid "Site specific content"
-msgstr ""
+msgstr "Περιεχόμενο εξειδικευμένο για τον ιστότοπο"
 
 #: classes/views/class-sendpress-view-emails-edit.php:394
 #: classes/views/class-sendpress-view-emails-systememailedit.php:358
 msgid "Website URL"
-msgstr ""
+msgstr "URL ιστοσελίδας"
 
 #: classes/views/class-sendpress-view-emails-edit.php:399
 #: classes/views/class-sendpress-view-emails-systememailedit.php:363
 msgid "Website Title"
-msgstr ""
+msgstr "Τίτλος Ιστοσελίδας"
 
 #: classes/views/class-sendpress-view-emails-edit.php:404
 #: classes/views/class-sendpress-view-emails-systememailedit.php:368
 msgid "Website Description"
-msgstr ""
+msgstr "Περιγραφή Ιστοσελίδας"
 
 #: classes/views/class-sendpress-view-emails-edit.php:411
 #: classes/views/class-sendpress-view-emails-systememailedit.php:375
 msgid "Date and Time"
-msgstr ""
+msgstr "Ημερομηνία και Ώρα"
 
 #: classes/views/class-sendpress-view-emails-edit.php:423
 #: classes/views/class-sendpress-view-emails-systememailedit.php:387
 msgid "Current Date"
-msgstr ""
+msgstr "Τρέχουσα Ημερομηνία"
 
 #: classes/views/class-sendpress-view-emails-edit.php:423
 #: classes/views/class-sendpress-view-emails-systememailedit.php:387
 msgid "Format based on WordPress settings"
-msgstr ""
+msgstr "Μορφοποίηση με βάση τις ρυθμίσεις του WordPress"
 
 #: classes/views/class-sendpress-view-emails-edit.php:428
 #: classes/views/class-sendpress-view-emails-systememailedit.php:392
 msgid "Current Time"
-msgstr ""
+msgstr "Τρέχουσα Ώρα"
 
 #: classes/views/class-sendpress-view-emails-edit.php:433
 #: classes/views/class-sendpress-view-emails-systememailedit.php:397
 msgid "Custom Date"
-msgstr ""
+msgstr "Προσαρμοσμένη Ημερομηνία"
 
 #: classes/views/class-sendpress-view-emails-footer.php:34
 #: classes/views/class-sendpress-view-emails-header.php:35
 #: classes/views/class-sendpress-view-emails-headerpage.php:34
 msgid "Back to Template"
-msgstr ""
+msgstr "Πίσω στο Πρότυπο"
 
 #: classes/views/class-sendpress-view-emails-footer.php:36
 msgid "Template Footer"
-msgstr ""
+msgstr "Υποσέλιδο Προτύπου"
 
 #: classes/views/class-sendpress-view-emails-footer.php:41
 #: classes/views/class-sendpress-view-emails-footerpage.php:38
 msgid "Default Content"
-msgstr ""
+msgstr "Προεπιλεγμένο Περιεχόμενο"
 
 #: classes/views/class-sendpress-view-emails-footerpage.php:35
 msgid "Template Page Footer"
-msgstr ""
+msgstr "Υποσέλιδο Σελίδας Προτύπου"
 
 #: classes/views/class-sendpress-view-emails-header.php:37
 msgid "Template Header"
-msgstr ""
+msgstr "Κεφαλίδα Προτύπου"
 
 #: classes/views/class-sendpress-view-emails-headerpage.php:36
 msgid "Template Page Header"
-msgstr ""
+msgstr "Κεφαλίδα σελίδας προτύπου"
 
 #: classes/views/class-sendpress-view-emails-postnotifications.php:29
 msgid "Introducing Post Notifcations"
@@ -1571,7 +1578,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-postnotifications.php:47
 #: classes/views/class-sendpress-view-emails-templates.php:56
 msgid "Upgrade to Pro"
-msgstr ""
+msgstr "Αναβάθμιση σε Pro"
 
 #: classes/views/class-sendpress-view-emails-postnotifications.php:48
 #: classes/views/class-sendpress-view-emails-templates.php:57
@@ -1587,97 +1594,97 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-emails-send-cancel.php:41
 msgid "Cancel Scheduled Email"
-msgstr ""
+msgstr "Ακύρωση προγραμματισμένου email"
 
 #: classes/views/class-sendpress-view-emails-send-cancel.php:47
 #: classes/views/class-sendpress-view-overview.php:211
 msgid "Date"
-msgstr ""
+msgstr "Ημερομηνία"
 
 #: classes/views/class-sendpress-view-emails-send-cancel.php:50
 msgid "Delete Scheduled Email"
-msgstr ""
+msgstr "Διαγραφή προγραμματισμένου email"
 
 #: classes/views/class-sendpress-view-emails-send-confirm.php:89
 #: classes/views/class-sendpress-view-emails-send-confirm.php:95
 msgid "Confirm Send"
-msgstr ""
+msgstr "Επιβεβαίωση αποστολής"
 
 #: classes/views/class-sendpress-view-emails-send-confirm.php:93
 msgid "Cancel Send"
-msgstr ""
+msgstr "Ακύρωση αποστολής"
 
 #: classes/views/class-sendpress-view-emails-send-confirm.php:106
 #: classes/views/class-sendpress-view-emails-send.php:115
 msgid "Date & Time"
-msgstr ""
+msgstr "Ημερομηνία & Ώρα"
 
 #: classes/views/class-sendpress-view-emails-send-confirm.php:129
 msgid "No Lists Selected"
-msgstr ""
+msgstr "Δεν επιλεχθηκαν λιστες"
 
 #: classes/views/class-sendpress-view-emails-send-confirm.php:137
 #: classes/views/class-sendpress-view-emails-send.php:191
 msgid "Mark as Test"
-msgstr ""
+msgstr "Επισήμανση ως Δοκιμαστικό"
 
 #: classes/views/class-sendpress-view-emails-send-confirm.php:143
 #: classes/views/class-sendpress-view-emails-send.php:194
 msgid "This puts the report into the Test tab on the Reports screen"
-msgstr ""
+msgstr "Αυτό βάζει την αναφορά στην καρτέλα Δοκιμή στην οθόνη Αναφορές"
 
 #: classes/views/class-sendpress-view-emails-send-confirm.php:170
 #: classes/views/class-sendpress-view-emails-send.php:230
 msgid "Displaying a 404? Please try saving your permalinks"
-msgstr ""
+msgstr "Εμφανίζεται 404; Παρακαλούμε προσπαθήστε να αποθηκεύσετε τους μόνιμους συνδέσμους σας"
 
 #: classes/views/class-sendpress-view-emails-send-confirm.php:170
 #: classes/views/class-sendpress-view-emails-send.php:230
 msgid "here"
-msgstr ""
+msgstr "εδώ"
 
 #: classes/views/class-sendpress-view-emails-send-queue.php:57
 msgid "Adding Subscribers to Queue"
-msgstr ""
+msgstr "Προσθήκη συνδρομητών στην Ουρά"
 
 #: classes/views/class-sendpress-view-emails-send.php:82
 msgid ""
-"<strong>Notice!</strong> You must select a list below before an email can be "
-"sent."
-msgstr ""
+"<strong>Notice!</strong> You must select a list below before an email can be"
+" sent."
+msgstr "<strong>Προσοχή!</strong> Πρέπει να επιλέξετε μια λίστα παρακάτω πριν μπορέσετε να στείλετε email."
 
 #: classes/views/class-sendpress-view-emails-send.php:102
 msgid "Send Email"
-msgstr ""
+msgstr "Αποστολή Email"
 
 #: classes/views/class-sendpress-view-emails-send.php:116
 msgid "Start Sending Now"
-msgstr ""
+msgstr "Έναρξη αποστολής τώρα"
 
 #: classes/views/class-sendpress-view-emails-send.php:117
 msgid "Send Later"
-msgstr ""
+msgstr "Αποστολή αργότερα"
 
 #: classes/views/class-sendpress-view-emails-send.php:193
 msgid "Test"
-msgstr ""
+msgstr "Δοκιμή"
 
 #: classes/views/class-sendpress-view-emails-social.php:45
 #: classes/views/class-sendpress-view-settings-shared.php:44
 msgid ""
 "Social Icons appear in emails in Alphabetical order. If you enter a url in "
 "the box below then that icon will show in your emails."
-msgstr ""
+msgstr "Τα εικονίδια κοινωνικών δικτύων εμφανίζονται στα email με αλφαβητική σειρά. Αν εισάγετε ένα url στο πεδίο κάτω από αυτό τότε το εικονίδιο θα εμφανίζεται στα μηνύματά σας."
 
 #: classes/views/class-sendpress-view-emails-social.php:50
 #: classes/views/class-sendpress-view-settings-shared.php:49
 msgid "Large"
-msgstr ""
+msgstr "Μεγάλο"
 
 #: classes/views/class-sendpress-view-emails-social.php:54
 #: classes/views/class-sendpress-view-settings-shared.php:53
 msgid "Small"
-msgstr ""
+msgstr "Μικρό"
 
 #: classes/views/class-sendpress-view-emails-social.php:58
 #: classes/views/class-sendpress-view-emails-tempstyle.php:114
@@ -1686,15 +1693,15 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-tempstyle.php:244
 #: classes/views/class-sendpress-view-settings-shared.php:57
 msgid "Text"
-msgstr ""
+msgstr "Κείμενο"
 
 #: classes/views/class-sendpress-view-emails-systememail.php:30
 msgid "Create System E-mail"
-msgstr ""
+msgstr "Δημιουργία email συστήματος"
 
 #: classes/views/class-sendpress-view-emails-systememailcreate.php:148
 msgid "Email Type"
-msgstr ""
+msgstr "Τύπος email"
 
 #: classes/views/class-sendpress-view-emails-temp.php:39
 #: classes/views/class-sendpress-view-emails-tempedit.php:43
@@ -1705,146 +1712,146 @@ msgstr ""
 #: classes/views/class-sendpress-view-queue-stuck.php:35
 #: classes/views/class-sendpress-view-queue.php:72
 msgid "Emails per page"
-msgstr ""
+msgstr "Email ανά σελίδα"
 
 #: classes/views/class-sendpress-view-emails-temp.php:67
 #: classes/views/class-sendpress-view-emails.php:59
 msgid "Templates"
-msgstr ""
+msgstr "Πρότυπα"
 
 #: classes/views/class-sendpress-view-emails-temp.php:68 sendpress.php:1302
 #: sendpress.php:1350
 msgid "Help"
-msgstr ""
+msgstr "Βοήθεια"
 
 #: classes/views/class-sendpress-view-emails-temp.php:68
 msgid "Getting Started with Templates"
-msgstr ""
+msgstr "Ξεκινώντας με τα Πρότυπα"
 
 #: classes/views/class-sendpress-view-emails-tempclone.php:47
 msgid "Clone Template"
-msgstr ""
+msgstr "Κλωνοποίηση Προτύπου"
 
 #: classes/views/class-sendpress-view-emails-tempclone.php:50
 msgid "Template Name"
-msgstr ""
+msgstr "Όνομα Προτύπου"
 
 #: classes/views/class-sendpress-view-emails-tempdelete.php:33
 msgid "You are about to delete template"
-msgstr ""
+msgstr "Πρόκειται να διαγράψετε το πρότυπο"
 
 #: classes/views/class-sendpress-view-emails-tempdelete.php:35
 msgid "Delete Template"
-msgstr ""
+msgstr "Διαγραφή προτύπου"
 
 #: classes/views/class-sendpress-view-emails-templates.php:39
 msgid "Introducing Custom HTML Templates"
-msgstr ""
+msgstr "Παρουσίαση προσαρμοσμένων HTML προτύπων"
 
 #: classes/views/class-sendpress-view-emails-templates.php:41
 msgid "Custom Templates Requires SendPress Pro v1.0+"
-msgstr ""
+msgstr "Τα προσαρμοσμένα πρότυπα χρειάζονται το SendPress Pro v1.0+"
 
 #: classes/views/class-sendpress-view-emails-templates.php:46
 msgid "Send Any Template"
-msgstr ""
+msgstr "Αποστολή οποιουδήποτε προτύπου"
 
 #: classes/views/class-sendpress-view-emails-templates.php:47
 msgid "SendPress allows you to send any HTML email template you wish."
-msgstr ""
+msgstr "Το SendPress σας επιτρέπει να στέλνετε οποιοδήποτε HTML πρότυπο email επιθυμείτε."
 
 #: classes/views/class-sendpress-view-emails-templates.php:51
 msgid "Template Tags"
-msgstr ""
+msgstr "Ετικέτες προτύπου"
 
 #: classes/views/class-sendpress-view-emails-templates.php:52
 msgid ""
 "Quickly insert email content, subscriber information and social icons with "
 "our new tag system."
-msgstr ""
+msgstr "Εισάγετε γρήγορα περιεχόμενο email, πληροφορίες συνδρομητή και κοινωνικά εικονίδια με το νέο μας σύστημα ετικετών."
 
 #: classes/views/class-sendpress-view-emails-tempstyle.php:71
 msgid "Sorry the Styler does not support screens smaller then 768px."
-msgstr ""
+msgstr "Συγγνώμη ο Στυλίστας δεν υποστηρίζει οθόνες μικρότερες από 768px."
 
 #: classes/views/class-sendpress-view-emails-tempstyle.php:92
 msgid "Page"
-msgstr ""
+msgstr "Σελίδα"
 
 #: classes/views/class-sendpress-view-emails-tempstyle.php:98
 msgid "Edit Page Header HTML"
-msgstr ""
+msgstr "Επεξεργασία HTML κεφαλίδας σελίδας"
 
 #: classes/views/class-sendpress-view-emails-tempstyle.php:106
 #: classes/views/class-sendpress-view-emails-tempstyle.php:146
 #: classes/views/class-sendpress-view-emails-tempstyle.php:186
 #: classes/views/class-sendpress-view-emails-tempstyle.php:237
 msgid "Background"
-msgstr ""
+msgstr "Φόντο"
 
 #: classes/views/class-sendpress-view-emails-tempstyle.php:121
 #: classes/views/class-sendpress-view-emails-tempstyle.php:209
 #: classes/views/class-sendpress-view-emails-tempstyle.php:251
 msgid "Link"
-msgstr ""
+msgstr "Σύνδεσμος"
 
 #: classes/views/class-sendpress-view-emails-tempstyle.php:124
 msgid "Edit Page Footer HTML"
-msgstr ""
+msgstr "Επεξεργασία HTML υποσέλιδου σελίδας"
 
 #: classes/views/class-sendpress-view-emails-tempstyle.php:133
 msgid "Content Header"
-msgstr ""
+msgstr "Κεφαλίδα περιεχομένου"
 
 #: classes/views/class-sendpress-view-emails-tempstyle.php:139
 msgid "Edit Header HTML"
-msgstr ""
+msgstr "Επεξεργασία HTML κεφαλίδας"
 
 #: classes/views/class-sendpress-view-emails-tempstyle.php:161
 #: classes/views/class-sendpress-view-emails-tempstyle.php:260
 msgid "Include Padding"
-msgstr ""
+msgstr "Να συμπεριλαμβάνεται το padding"
 
 #: classes/views/class-sendpress-view-emails-tempstyle.php:224
 msgid "Content Footer"
-msgstr ""
+msgstr "Υποσέλιδο περιεχομένου"
 
 #: classes/views/class-sendpress-view-emails.php:36
 #: classes/views/class-sendpress-view-reports.php:34
 #: classes/views/class-sendpress-view-settings.php:25
 #: classes/views/class-sendpress-view-subscribers.php:53
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Εναλλαγή πλοήγησης"
 
 #: classes/views/class-sendpress-view-emails.php:42
 #: classes/views/class-sendpress-view-settings-access.php:129
 #: classes/views/class-sendpress-view-settings-advanced.php:228
 #: sendpress.php:1266 sendpress.php:1330
 msgid "Emails"
-msgstr ""
+msgstr "Emails"
 
 #: classes/views/class-sendpress-view-emails.php:48
 #: classes/views/class-sendpress-view-reports.php:45
 msgid "Newsletters"
-msgstr ""
+msgstr "Ενημερωτικά Δελτία"
 
 #: classes/views/class-sendpress-view-emails.php:53
 msgid "Autoresponders"
-msgstr ""
+msgstr "Αυτόματες Απάντησεις"
 
 #: classes/views/class-sendpress-view-emails.php:62
 msgid "Custom Templates"
-msgstr ""
+msgstr "Προσαρμοσμένα Πρότυπα"
 
 #: classes/views/class-sendpress-view-emails.php:66
 #: classes/views/class-sendpress-view-settings-shared.php:40
 msgid "Social Icons"
-msgstr ""
+msgstr "Εικονίδια Κοινωνικών Δικτύων"
 
 #: classes/views/class-sendpress-view-emails.php:69
 #: classes/views/class-sendpress-view-overview.php:285
 msgid "Post Notifications"
-msgstr ""
+msgstr "Ειδοποιήσεις Άρθρων"
 
 #: classes/views/class-sendpress-view-emails.php:75
 msgid "Scheduled Sending"
@@ -1856,7 +1863,7 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-emails.php:85
 msgid "System Email"
-msgstr ""
+msgstr "Email συστήματος"
 
 #: classes/views/class-sendpress-view-help.php:26
 msgid "SendPress Editor Button"
@@ -1917,7 +1924,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-help.php:111
 #: classes/views/class-sendpress-view-help.php:112
 msgid " MByte"
-msgstr ""
+msgstr " MByte"
 
 #: classes/views/class-sendpress-view-help.php:152
 msgid "Support Info"
@@ -1927,23 +1934,23 @@ msgstr ""
 msgid ""
 "To copy the system info, click below then press Ctrl + C (PC) or Cmd + C "
 "(Mac)."
-msgstr ""
+msgstr "Για να αντιγράψετε τις πληροφορίες συστήματος, κάντε κλικ παρακάτω και μετά πατήστε Ctrl + C (PC) ή Cmd + C (Mac)."
 
 #: classes/views/class-sendpress-view-help.php:279
 msgid "Configure"
-msgstr ""
+msgstr "Διαμόρφωση"
 
 #: classes/views/class-sendpress-view-overview.php:42
 msgid "Emails Actively Sending"
-msgstr ""
+msgstr "Email σε ενεργή αποστολή"
 
 #: classes/views/class-sendpress-view-overview.php:45
 msgid "Emails Stuck in Queue"
-msgstr ""
+msgstr "Email κολλημένα στην Ουρά"
 
 #: classes/views/class-sendpress-view-overview.php:48
 msgid "Autocron last check"
-msgstr ""
+msgstr "Τελευταίος έλεγχος Autocron"
 
 #: classes/views/class-sendpress-view-overview.php:56
 msgid "UTC"
@@ -1959,186 +1966,186 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-overview.php:70
 msgid "This email had"
-msgstr ""
+msgstr "Αυτό το email είχε"
 
 #: classes/views/class-sendpress-view-overview.php:70
 msgid "Recipients"
-msgstr ""
+msgstr "Αποδέκτες"
 
 #: classes/views/class-sendpress-view-overview.php:105
 #: classes/views/class-sendpress-view-overview.php:161
 #: classes/views/class-sendpress-view-reports-tests.php:48
 #: classes/views/class-sendpress-view-reports.php:83
 msgid "Total"
-msgstr ""
+msgstr "Σύνολο"
 
 #: classes/views/class-sendpress-view-overview.php:128
 #: classes/views/class-sendpress-view-overview.php:182
 #: classes/views/class-sendpress-view-reports-tests.php:46
 #: classes/views/class-sendpress-view-reports.php:81
 msgid "Unique"
-msgstr ""
+msgstr "Μοναδικά"
 
 #: classes/views/class-sendpress-view-overview.php:206
 msgid "Recent Subscribers"
-msgstr ""
+msgstr "Πρόσφατοι συνδρομητές"
 
 #: classes/views/class-sendpress-view-overview.php:253
 msgid "Most Active Subscribers"
-msgstr ""
+msgstr "Πιο ενεργοί συνδρομητές"
 
 #: classes/views/class-sendpress-view-overview.php:279
 msgid "Go Pro!"
-msgstr ""
+msgstr "Πηγαίνετε στην Pro!"
 
 #: classes/views/class-sendpress-view-overview.php:284
 msgid "Check Spam Scores"
-msgstr ""
+msgstr "Έλεγχος βαθμολογίας ανεπιθύμητων"
 
 #: classes/views/class-sendpress-view-queue-all.php:78
 msgid "Queue history for the last "
-msgstr ""
+msgstr "Ιστορικό ουράς για τις τελευταίες"
 
 #: classes/views/class-sendpress-view-queue-all.php:78
 #: classes/views/class-sendpress-view-settings-advanced.php:226
 msgid "Days"
-msgstr ""
+msgstr "Ημέρες"
 
 #: classes/views/class-sendpress-view-queue-all.php:79
 #: classes/views/class-sendpress-view-queue-stuck.php:130
 #: classes/views/class-sendpress-view-queue.php:185
 msgid "You can adjust these settings here"
-msgstr ""
+msgstr "Μπορείτε να αλλάξετε αυτές τις ρυθμίσεις εδώ"
 
 #: classes/views/class-sendpress-view-queue-all.php:79
 #: classes/views/class-sendpress-view-settings.php:49
 msgid "Advanced"
-msgstr ""
+msgstr "Προχωρημένα"
 
 #: classes/views/class-sendpress-view-queue-errors.php:63
 msgid "Error history for the last 2 Weeks"
-msgstr ""
+msgstr "Ιστορικό σφαλμάτων για τις τελευταίες 2 εβδομάδες"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:101
 #: classes/views/class-sendpress-view-queue.php:156
 msgid "Pause Sending"
-msgstr ""
+msgstr "Παύση αποστολής"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:104
 #: classes/views/class-sendpress-view-queue.php:159
 msgid "Resume Sending"
-msgstr ""
+msgstr "Επανεκκίνηση αποστολής"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:111
 #: classes/views/class-sendpress-view-queue.php:165
 msgid "Send Emails Now"
-msgstr ""
+msgstr "Αποστολή των Emails τώρα"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:118
 #: classes/views/class-sendpress-view-queue.php:171
 msgid "Unlimited"
-msgstr ""
+msgstr "Απεριόριστα"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:128
 #: classes/views/class-sendpress-view-queue-stuck.php:129
 #: classes/views/class-sendpress-view-queue.php:183
 #: classes/views/class-sendpress-view-queue.php:184
 msgid "of a possible"
-msgstr ""
+msgstr "από τα επιτρεπόμενα"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:128
 #: classes/views/class-sendpress-view-queue.php:183
 msgid "emails sent in the last 24 hours"
-msgstr ""
+msgstr "email που στάλθηκαν το τελευταίο 24ωρο"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:129
 #: classes/views/class-sendpress-view-queue.php:184
 msgid "emails sent in the last hour"
-msgstr ""
+msgstr "email που στάλθηκαν την τελευταία ώρα"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:130
 #: classes/views/class-sendpress-view-queue-stuck.php:204
 #: classes/views/class-sendpress-view-queue.php:185
 #: classes/views/class-sendpress-view-queue.php:240
 msgid "Sending Account"
-msgstr ""
+msgstr "Λογαριασμός Αποστολής"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:136
 msgid "The cron will run again around"
-msgstr ""
+msgstr "Η cron θα εκτελεστεί ξανά περίπου στις"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:151
 #: classes/views/class-sendpress-view-queue.php:199
 msgid "Re-queue All Emails"
-msgstr ""
+msgstr "Ξανά όλα τα email στην Ουρά"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:156
 msgid "Delete All Stuck Emails"
-msgstr ""
+msgstr "Διαγραφή όλων των κολλημένων email"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:164
 msgid "Really? Delete All Emails stuck in the Queue."
-msgstr ""
+msgstr "Αλήθεια; Διαγραφή όλων των email στην ουρά."
 
 #: classes/views/class-sendpress-view-queue-stuck.php:167
 msgid ""
 "This will remove all stuck emails from the queue without attempting to send "
 "them"
-msgstr ""
+msgstr "Αυτό θα αφαιρέσει όλα τα κολλημένα μηνύματα από την ουρά χωρίς να επιχειρήσει να τα στείλει"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:170
 #: classes/views/class-sendpress-view-queue.php:219
 #: classes/views/class-sendpress-view-subscribers-all.php:117
 #: classes/views/class-sendpress-view-subscribers-subscribers.php:96
 msgid "No! I was Joking"
-msgstr ""
+msgstr "Όχι! Αστειευόμουν"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:170
 #: classes/views/class-sendpress-view-queue.php:219
 msgid "Yes! Delete All Emails"
-msgstr ""
+msgstr "Ναι! Διαγραφή όλων των email"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:180
 #: classes/views/class-sendpress-view-queue.php:229
 msgid "Sending Emails"
-msgstr ""
+msgstr "Αποστολή email"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:188
 #: classes/views/class-sendpress-view-queue.php:237
 msgid "of"
-msgstr ""
+msgstr "από"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:188
 msgid "emails"
-msgstr ""
+msgstr "email"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:189
 msgid "You are currently sending 1 email approximately every"
-msgstr ""
+msgstr "Προς το παρόν στέλνετε 1 email περίπου κάθε"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:202
 msgid "seconds"
-msgstr ""
+msgstr "δευτερόλεπτα"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:203
 #: classes/views/class-sendpress-view-queue.php:239
 msgid "You are also limited to"
-msgstr ""
+msgstr "Έχετε επίσης περιορισμό σε"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:203
 #: classes/views/class-sendpress-view-queue.php:239
 msgid "emails per hour"
-msgstr ""
+msgstr "email την ώρα"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:204
 #: classes/views/class-sendpress-view-queue.php:240
 msgid "To change these settings go to"
-msgstr ""
+msgstr "Για να αλλάξετε αυτές τις ρυθμίσεις πηγαίνετε σε"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:207
 #: classes/views/class-sendpress-view-queue.php:243
 msgid "If you close this window sending will stop. "
-msgstr ""
+msgstr "Αν κλείσετε αυτό το παράθυρο η αποστολή θα σταματήσει."
 
 #: classes/views/class-sendpress-view-queue.php:41
 msgid "Queues"
@@ -2150,28 +2157,28 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-queue.php:49
 msgid "Stuck"
-msgstr ""
+msgstr "Κολλημένα"
 
 #: classes/views/class-sendpress-view-queue.php:52
 msgid "Send History"
-msgstr ""
+msgstr "Ιστορικό Αποστολής"
 
 #: classes/views/class-sendpress-view-queue.php:55
 msgid "Send Errors"
-msgstr ""
+msgstr "Σφάλματα αποστολής"
 
 #: classes/views/class-sendpress-view-queue.php:205
 msgid "Delete All Emails in the Queue"
-msgstr ""
+msgstr "Διαγραφή όλων των email στην ουρά"
 
 #: classes/views/class-sendpress-view-queue.php:213
 msgid "Really? Delete All Emails in the Queue."
-msgstr ""
+msgstr "Αλήθεια; Διαγραφή όλων των email στην ουρά."
 
 #: classes/views/class-sendpress-view-queue.php:216
 msgid ""
 "This will remove all emails from the queue without attempting to send them"
-msgstr ""
+msgstr "Αυτό θα αφαιρέσει όλα τα μηνύματα από την ουρά χωρίς να επιχειρήσει να τα στείλει"
 
 #: classes/views/class-sendpress-view-queue.php:237
 msgid "emails left to send"
@@ -2180,96 +2187,96 @@ msgstr ""
 #: classes/views/class-sendpress-view-reports-tests.php:20
 #: classes/views/class-sendpress-view-reports.php:20
 msgid "Reports per page"
-msgstr ""
+msgstr "Αναφορές ανά σελίδα"
 
 #: classes/views/class-sendpress-view-reports-tests.php:46
 #: classes/views/class-sendpress-view-reports.php:81
 msgid ""
 "The total number of different recipients that have clicked on a link or "
 "opened an email."
-msgstr ""
+msgstr "Ο συνολικός αριθμός διαφορετικών αποδεκτών που έχουν κάνει κλικ σε ένα σύνδεσμο ή άνοιξαν ένα email."
 
 #: classes/views/class-sendpress-view-reports-tests.php:48
 #: classes/views/class-sendpress-view-reports.php:83
 msgid ""
 "The total number of clicks or opens that have happened. Regardless of who "
 "clicked or opened the email."
-msgstr ""
+msgstr "Ο συνολικός αριθμός κλικ ή ανοιγμάτων που έχουν γίνει. Ανεξάρτητα από το ποιος άνοιξε ή έκανε κλικ στο email."
 
 #: classes/views/class-sendpress-view-reports.php:40
 #: classes/views/class-sendpress-view-settings-access.php:130
 #: sendpress.php:1274 sendpress.php:1334
 msgid "Reports"
-msgstr ""
+msgstr "Αναφορές"
 
 #: classes/views/class-sendpress-view-reports.php:48
 msgid "Tests"
-msgstr ""
+msgstr "Δοκιμές"
 
 #: classes/views/class-sendpress-view-reports.php:79
 msgid "Information"
-msgstr ""
+msgstr "Πληροφορίες"
 
 #: classes/views/class-sendpress-view-settings-access.php:128
 msgid "Role"
-msgstr ""
+msgstr "Ρόλος"
 
 #: classes/views/class-sendpress-view-settings-access.php:133
 #: sendpress.php:1288 sendpress.php:1342
 msgid "Queue"
-msgstr ""
+msgstr "Ουρά"
 
 #: classes/views/class-sendpress-view-settings-access.php:134
 msgid "Add-ons"
-msgstr ""
+msgstr "Πρόσθετα"
 
 #: classes/views/class-sendpress-view-settings-access.php:174
 msgid "Create/Edit/Delete"
-msgstr ""
+msgstr "Δημιουργία/Επεξεργασία/Διαγραφή"
 
 #: classes/views/class-sendpress-view-settings-access.php:184
 #: classes/views/class-sendpress-view-settings-access.php:189
 #: classes/views/class-sendpress-view-settings-access.php:206
 #: classes/views/class-sendpress-view-settings-access.php:212
 msgid "Full Access"
-msgstr ""
+msgstr "Πλήρης πρόσβαση"
 
 #: classes/views/class-sendpress-view-settings-access.php:194
 msgid "Full Access (<small>No Permissions Access</small>)"
-msgstr ""
+msgstr "Πλήρης πρόσβαση (<small>Οχι Δικαιώματα πρόσβασης)</small>"
 
 #: classes/views/class-sendpress-view-settings-account.php:99
 #: classes/views/class-sendpress-view-settings-account.php:123
 msgid "From Name"
-msgstr ""
+msgstr "Από Όνομα"
 
 #: classes/views/class-sendpress-view-settings-account.php:121
 msgid "Sending Email"
-msgstr ""
+msgstr "Αποστολή e-mail"
 
 #: classes/views/class-sendpress-view-settings-account.php:134
 msgid "Test Email"
-msgstr ""
+msgstr "Δοκιμαστικό email"
 
 #: classes/views/class-sendpress-view-settings-account.php:137
 msgid "Where to send Test Email"
-msgstr ""
+msgstr "Που θα αποσταλεί το δοκιμαστικό e-mail"
 
 #: classes/views/class-sendpress-view-settings-account.php:142
 msgid "Send Test!"
-msgstr ""
+msgstr "Αποστολή Δοκιμαστικού!"
 
 #: classes/views/class-sendpress-view-settings-account.php:145
 msgid "Debug Info"
-msgstr ""
+msgstr "Πληροφορία εντοπισμού σφαλμάτων"
 
 #: classes/views/class-sendpress-view-settings-account.php:155
 msgid "Click to View Last Error"
-msgstr ""
+msgstr "Κλικ για προβολή τελευταίου σφάλματος"
 
 #: classes/views/class-sendpress-view-settings-account.php:186
 msgid "Sending Account Setup"
-msgstr ""
+msgstr "Ρύθμιση λογαριασμού αποστολής"
 
 #: classes/views/class-sendpress-view-settings-account.php:198
 msgid "Delivery Method"
@@ -2277,53 +2284,53 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings-account.php:209
 msgid "Send Emails via"
-msgstr ""
+msgstr "Αποστολή email μέσω"
 
 #: classes/views/class-sendpress-view-settings-account.php:254
 msgid "Currently Active"
-msgstr ""
+msgstr "Ενεργό τώρα"
 
 #: classes/views/class-sendpress-view-settings-account.php:262
 msgid "Advanced Sending Options"
-msgstr ""
+msgstr "Προχωρημένες επιλογές αποστολής"
 
 #: classes/views/class-sendpress-view-settings-account.php:267
 msgid "Email Sending Limits"
-msgstr ""
+msgstr "Όρια αποστολής email "
 
 #: classes/views/class-sendpress-view-settings-account.php:280
 msgid "You have sent <strong>%d</strong> emails so far today."
-msgstr ""
+msgstr "Έχετε στείλει <strong>%d</strong> email μέχρι στιγμής σήμερα."
 
 #: classes/views/class-sendpress-view-settings-account.php:281
 msgid "Emails Per Day"
-msgstr ""
+msgstr "Email ανά ημέρα"
 
 #: classes/views/class-sendpress-view-settings-account.php:282
 msgid "Emails Per Hour"
-msgstr ""
+msgstr "Email ανά ώρα"
 
 #: classes/views/class-sendpress-view-settings-account.php:284
 msgid "Email Encoding"
-msgstr ""
+msgstr "Κωδικοποίηση email"
 
 #: classes/views/class-sendpress-view-settings-account.php:302
 msgid ""
-"Squares or weird characters displaying in your emails select the charset for "
-"your language"
-msgstr ""
+"Squares or weird characters displaying in your emails select the charset for"
+" your language"
+msgstr "Αν εμφανίζονται τετράγωνα ή περίεργοι χαρακτήρες στα email επιλέξτε το σύνολο χαρακτήρων για τη γλώσσα σας"
 
 #: classes/views/class-sendpress-view-settings-account.php:304
 msgid "Encoding"
-msgstr ""
+msgstr "Κωδικοποίηση"
 
 #: classes/views/class-sendpress-view-settings-account.php:318
 msgid "Older versions of SendPress used"
-msgstr ""
+msgstr "Παλαιότερες εκδόσεις του SendPress σε χρήση"
 
 #: classes/views/class-sendpress-view-settings-account.php:320
 msgid "AutoCron Information"
-msgstr ""
+msgstr "Πληροφορίες AutoCron"
 
 #: classes/views/class-sendpress-view-settings-account.php:339
 msgid "AutoCron has no information at this time, please check back later"
@@ -2335,7 +2342,7 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings-account.php:351
 msgid "SendPress Pro Auto Cron"
-msgstr ""
+msgstr "SendPress Pro Auto Cron"
 
 #: classes/views/class-sendpress-view-settings-account.php:352
 msgid "At least once every hour we visit your site, just like a cron job"
@@ -2355,14 +2362,14 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings-account.php:358
 msgid ""
-"AutoCron will check your site every minute until all your emails are sent or "
-"you hit the defined sending limit to the right"
+"AutoCron will check your site every minute until all your emails are sent or"
+" you hit the defined sending limit to the right"
 msgstr ""
 
 #: classes/views/class-sendpress-view-settings-account.php:360
 msgid ""
-"AutoCron sends 25 emails per execution so on average you can send about 1500 "
-"emails an hour"
+"AutoCron sends 25 emails per execution so on average you can send about 1500"
+" emails an hour"
 msgstr ""
 
 #: classes/views/class-sendpress-view-settings-account.php:362
@@ -2383,64 +2390,64 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings-account.php:428
 msgid "SMTP Debug Info"
-msgstr ""
+msgstr "Πληροφορίες αποσφαλμάτωσης SMTP"
 
 #: classes/views/class-sendpress-view-settings-account.php:446
 msgid "Port 25 seems to be blocked."
-msgstr ""
+msgstr "Η θύρα 25 φαίνεται να είναι αποκλεισμένη."
 
 #: classes/views/class-sendpress-view-settings-account.php:452
 msgid "Port 465 seems to be blocked. Gmail may have trouble"
-msgstr ""
+msgstr "Η θύρα 465 φαίνεται να είναι αποκλεισμένη. Το Gmail μπορεί να έχει πρόβλημα"
 
 #: classes/views/class-sendpress-view-settings-account.php:458
 msgid "Port 587 seems to be blocked."
-msgstr ""
+msgstr "Η θύρα 587 φαίνεται να είναι αποκλεισμένη."
 
 #: classes/views/class-sendpress-view-settings-account.php:475
 msgid "No Debug info saved."
-msgstr ""
+msgstr "Δεν εχουν αποθηκευτεί πληροφορίες εντοπισμού σφαλμάτων. "
 
 #: classes/views/class-sendpress-view-settings-activation.php:62
 msgid "Public Page Settings"
-msgstr ""
+msgstr "Ρυθμίσεις δημόσιων σελίδων"
 
 #: classes/views/class-sendpress-view-settings-activation.php:68
 msgid "Use theme styles"
-msgstr ""
+msgstr "Χρήση στυλ θέματος"
 
 #: classes/views/class-sendpress-view-settings-activation.php:69
 msgid "This will attempt to use the WordPress theme functions"
-msgstr ""
+msgstr "Αυτό θα επιχειρήσει να χρησιμοποιήσει τις συναρτήσεις θέματος του WordPress"
 
 #: classes/views/class-sendpress-view-settings-activation.php:69
 msgid "and"
-msgstr ""
+msgstr "και"
 
 #: classes/views/class-sendpress-view-settings-activation.php:69
 msgid "to build the SendPress default public pages"
-msgstr ""
+msgstr "για να δομηθούν οι προεπιλεγμένες δημόσιες σελίδες του SendPress"
 
 #: classes/views/class-sendpress-view-settings-activation.php:72
 msgid "Manage Page"
-msgstr ""
+msgstr "Διαχείριση σελίδας"
 
 #: classes/views/class-sendpress-view-settings-activation.php:74
 msgid ""
 "This is the page subscribers are directed to to manage their subscriptions "
 "to your lists"
-msgstr ""
+msgstr "Αυτή είναι η σελίδα που κατευθύνονται οι συνδρομητές για να διαχειριστουν τις συνδρομές στις λίστες σας."
 
 #: classes/views/class-sendpress-view-settings-activation.php:77
 #: classes/views/class-sendpress-view-settings-activation.php:133
 msgid "Use Default SendPress Page"
-msgstr ""
+msgstr "Χρήση της προεπιλεγμένης σελίδας του SendPress"
 
 #: classes/views/class-sendpress-view-settings-activation.php:78
 #: classes/views/class-sendpress-view-settings-activation.php:105
 #: classes/views/class-sendpress-view-settings-activation.php:134
 msgid "Redirect to"
-msgstr ""
+msgstr "Ανακατεύθυνση σε"
 
 #: classes/views/class-sendpress-view-settings-activation.php:82
 #: classes/views/class-sendpress-view-settings-activation.php:109
@@ -2448,13 +2455,13 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-activation.php:285
 #: classes/views/class-sendpress-view-subscribers-listform.php:102
 msgid "Select page"
-msgstr ""
+msgstr "Επιλογή σελίδας"
 
 #: classes/views/class-sendpress-view-settings-activation.php:97
 #: classes/views/class-sendpress-view-settings-activation.php:124
 #: classes/views/class-sendpress-view-settings-activation.php:150
 msgid "View Page"
-msgstr ""
+msgstr "Προβολή σελίδας"
 
 #: classes/views/class-sendpress-view-settings-activation.php:99
 msgid "Unsubscribe Page"
@@ -2471,125 +2478,126 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings-activation.php:129
 msgid "Confirmation Page"
-msgstr ""
+msgstr "Σελίδα επιβεβαίωσης"
 
 #: classes/views/class-sendpress-view-settings-activation.php:131
 msgid ""
 "Select the page a new subcriber will be redirected to after they click the "
 "confirmation link in the Double Opt-in Email"
-msgstr ""
+msgstr "Επιλέξτε τη σελίδα που θα ανακατευθύνεται ένας νέος συνδρομητής αφού κάνει κλικ το σύνδεσμο στο email επιβεβαίωσης."
 
 #: classes/views/class-sendpress-view-settings-activation.php:153
 #: classes/views/class-sendpress-view-settings-activation.php:157
 msgid "Post Page"
-msgstr ""
+msgstr "Σελίδα Δημοσίευσης"
 
 #: classes/views/class-sendpress-view-settings-activation.php:155
 msgid ""
 "This is the page shown by default if you are using a custom form to post "
 "subscriber data. This can also be set per list on each lists form page"
-msgstr ""
+msgstr "Αυτή είναι η σελίδα που εμφανίζεται από προεπιλογή αν χρησιμοποιείτε προσαρμοσμένη φόρμα για να δημοσιεύσετε δεδομένα συνδρομητών. Αυτό επίσης μπορέι να οριστεί και ανά λίστα στη σελίδα φόρμας της κάθε λίστας."
 
 #: classes/views/class-sendpress-view-settings-activation.php:170
 msgid "Double Opt-in Email"
-msgstr ""
+msgstr "Email Διπλής Επιβεβαίωσης"
 
 #: classes/views/class-sendpress-view-settings-activation.php:178
 msgid "Body"
-msgstr ""
+msgstr "Σώμα"
 
 #: classes/views/class-sendpress-view-settings-activation.php:190
 msgid "Send Double Opt-in Email"
-msgstr ""
+msgstr "Αποστολή email Διπλής Επιβεβαίωσης"
 
 #: classes/views/class-sendpress-view-settings-activation.php:191
 msgid "Keep the spammers, robots and other riff-raff off your list"
-msgstr ""
+msgstr "Κρατήστε τους σπάμερ, τα ρομπότ και άλλους κακόβουλους μακριά από τη λίστα σας."
 
 #: classes/views/class-sendpress-view-settings-activation.php:191
 msgid "Read more about why to use double opt-in on our support site"
-msgstr ""
+msgstr "Διαβάστε περισσότερα σχετικά με τη χρήση της διπλής επιβεβαίωσης στον ιστότοπο υποστήριξής μας"
 
 #: classes/views/class-sendpress-view-settings-activation.php:197
 msgid "Quick Tags"
-msgstr ""
+msgstr "Γρήγορες Ετικέτες"
 
 #: classes/views/class-sendpress-view-settings-activation.php:197
 msgid "work in both subject and body"
-msgstr ""
+msgstr "δουλεύει και στο θέμα και στο σώμα"
 
 #: classes/views/class-sendpress-view-settings-activation.php:199
 msgid "This is required to be in the body of the email"
-msgstr ""
+msgstr "Αυτό απαιτείται να βρίσκεται στο σώμα του μηνύματος"
 
 #: classes/views/class-sendpress-view-settings-activation.php:201
 msgid "Add Website title to the email"
-msgstr ""
+msgstr "Προσθήκη του τίτλου ιστοτόπου στο μήνυμα"
 
 #: classes/views/class-sendpress-view-settings-activation.php:203
 msgid "Add the email the user signed up with"
-msgstr ""
+msgstr "Προσθήκη του email με το οποίο εγγράφηκε ο χρήστης"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:126
 msgid "Database Repair"
-msgstr ""
+msgstr "Επισκευή βάσης δεδομένων"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:127
 msgid ""
 "Reset our new template system back to default and fix some postmeta issues"
-msgstr ""
+msgstr "Επαναφορά του νέου μας συστήματος προτύπων στις προεπιλογές και επιδιόρθωση κάποιων προβλημάτων στα μεταδεδομένα"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:128
 msgid "Data Fix Options"
-msgstr ""
+msgstr "Επιλογές επιδιόρθωσης δεδομένων"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:132
 msgid "Javascript"
-msgstr ""
+msgstr "Javascript"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:132
 msgid "CSS"
-msgstr ""
+msgstr "CSS"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:140
 msgid "Disable front end CSS"
-msgstr ""
+msgstr "Απενεργοποίηση του CSS εμφάνισης"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:142
 msgid "Disable signup form ajax"
-msgstr ""
+msgstr "Απενεργοποίηση ajax στη φόρμα εγγραφής"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:145
 msgid "Load Javascript in Footer"
-msgstr ""
+msgstr "Φόρτωση Javascript στο υποσέλιδο"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:152
 msgid "Use Shortcodes in Widgets"
-msgstr ""
+msgstr "Χρήση Shortcode στις μικροεφαρμογές"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:155
 msgid "Want to use Shortcodes in your Widgets, but all you get is"
-msgstr ""
+msgstr "Θέλετε να χρησιμοποιήσετε Shortcode στις μικροεφαρμογές αλλά το μόνο που βλέπετε είναι"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:155
-msgid "Turn on this option and we'll make sure your shortcodes work in widgets"
-msgstr ""
+msgid ""
+"Turn on this option and we'll make sure your shortcodes work in widgets"
+msgstr "Ενεργοποιήστε αυτή την επιλογή και θα φροντίσουμε τα shortcode σας να δουλεύουν στις μικροεφαρμογές"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:164
 msgid "Optional Settings"
-msgstr ""
+msgstr "Προαιρετικές ρυθμίσεις"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:168
 msgid "Use old permalink with"
-msgstr ""
+msgstr "Χρήση παλιών μόνιμων συνδέσμων με"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:171
 msgid "Do not track mailto links in email"
-msgstr ""
+msgstr "Να μην ακολουθούνται οι σύνδεσμοι mailto στο email"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:174
 msgid "Override email template settings"
-msgstr ""
+msgstr "Παράκαμψη ρυθμίσεων προτύπου για το μήνυμα"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:177
 msgid "Show SPNL Logs"
@@ -2605,236 +2613,236 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings-advanced.php:194
 msgid "Table Info"
-msgstr ""
+msgstr "Πληροφορίες Πινάκων"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:196
 msgid "Install Missing Tables"
-msgstr ""
+msgstr "Εγκατάσταση πινάκων που λείπουν"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:198
 msgid "Templates Check"
-msgstr ""
+msgstr "Έλεγχος προτύπων"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:204
 msgid "Tracking"
-msgstr ""
+msgstr "Παρακολούθηση"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:208
 msgid "Allow tracking of this WordPress installs anonymous data"
-msgstr ""
+msgstr "Να επιτρέπεται η παρακολούθηση αυτής της εγκατάστασης WordPress με ανώνυμα δεδομένα"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:210
 msgid ""
 "To maintain a plugin as big as SendPress, we need to know what we're "
 "dealing: what kinds of other plugins our users are using, what themes, etc. "
-"Please allow us to track that data from your install. It will add your email "
-"to our support system to assist in AutoCron problems."
-msgstr ""
+"Please allow us to track that data from your install. It will add your email"
+" to our support system to assist in AutoCron problems."
+msgstr "Για να συντηρείται ένα πρόσθετο τόσο μεγάλο όσο το SendPress, πρέπει να γνωρίζουμε με τι έχουμε να κάνουμε: τι είδους άλλα πρόσθετα χρησιμοποιούν οι χρήστες μας, τι θέματα κλπ. Παρακαλούμε αφήστε μας να συλλέγουμε αυτά τα δεδομένα από την εγκατάστασή σας. Θα προσθέσουμε το email σας στο σύστημα υποστήριξής μας για βοήθεια σε προβλήματα του AutoCron."
 
 #: classes/views/class-sendpress-view-settings-advanced.php:214
 msgid "System Limits"
-msgstr ""
+msgstr "Όρια συστήματος"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:217
 msgid ""
 "Please take care when changing these settings. We have attempted to set "
 "these to work on almost all servers. If you have a faster server you may be "
-"able to increase the limits below or if you are having troubles you may need "
-"to decrease the settings"
-msgstr ""
+"able to increase the limits below or if you are having troubles you may need"
+" to decrease the settings"
+msgstr "Παρακαλούμε προσέξτε όταν αλλάζετε αυτές τις ρυθμίσεις. Έχουμε προσπαθήσει να τις ορίσουμε ώστε να δουλεύουν σχεδόν σε όλους τους διακομιστές. Αν έχετε ταχύτερο διακομιστή πιθανώς μπορείτε να αυξήσετε τα παρακάτω όρια ή αν έχετε προβλήματα μπορεί να χρειαστεί να μειώσετε τις ρυθμίσεις"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:219
 msgid "Users to Sync per ajax call"
-msgstr ""
+msgstr "Χρήστες για συγχρονισμό ανά κλήση ajax"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:221
 msgid "Emails sent per AutoCron execution"
-msgstr ""
+msgstr "Email προς αποστολή ανά εκτέλεση της AutoCron"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:222
 msgid "If AutoCron errors it will shut itself off"
-msgstr ""
+msgstr "Αν η AutoCron έχει σφάλμα θα τερματίσει τον εαυτό της"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:224
 msgid "WordPress cron emails sent per execution"
-msgstr ""
+msgstr "Email που στέλνονται ανά εκτέλεση της cron του WordPress"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:226
 msgid "Queue History"
-msgstr ""
+msgstr "Ιστορικό ουράς"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:228
 msgid "Add Emails to Queue"
-msgstr ""
+msgstr "Προσθήκη email στην ουρά"
 
 #: classes/views/class-sendpress-view-settings-dbfix.php:33
 msgid "1.0 Template Reset"
-msgstr ""
+msgstr "Επαναφορά Προτύπου 1.0"
 
 #: classes/views/class-sendpress-view-settings-dbfix.php:34
 msgid "This will remove all templates in the new template system"
-msgstr ""
+msgstr "Αυτό θα αφαιρέσει όλα τα πρότυπα στο νέο σύστημα προτύπων"
 
 #: classes/views/class-sendpress-view-settings-dbfix.php:39
 msgid "Reset Settings"
-msgstr ""
+msgstr "Επαναφορά Ρυθμίσεων"
 
 #: classes/views/class-sendpress-view-settings-dbfix.php:40
 msgid "This will reset all form settings and remove extra metadata"
-msgstr ""
+msgstr "Αυτό θα επαναφέρει όλες τις ρυθμίσεις στις φόρμες και θα αφαιρέσει επιπλέον μεταδεδομένα"
 
 #: classes/views/class-sendpress-view-settings-fixposts.php:23
 msgid "We see"
-msgstr ""
+msgstr "Βλέπουμε"
 
 #: classes/views/class-sendpress-view-settings-fixposts.php:23
 msgid "bad posts."
-msgstr ""
+msgstr "προβληματικά άρθρα."
 
 #: classes/views/class-sendpress-view-settings-fixposts.php:25
 msgid "Attempt to Delete These"
-msgstr ""
+msgstr "Προσπάθεια για διαγραφή τους"
 
 #: classes/views/class-sendpress-view-settings-install.php:18
 msgid "Attempting to install or repair missing data"
-msgstr ""
+msgstr "Προσπάθεια εγκατάστασης ή επισκευής δεδομένων που λείπουν"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:62
 msgid "E-mail Notifications"
-msgstr ""
+msgstr "Ειδοποιήσεις email"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:67
 msgid "Send E-mail Notifications"
-msgstr ""
+msgstr "Αποστολή ειδοποιήσεων με email"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:70
 msgid "To E-mail"
-msgstr ""
+msgstr "Στο e-mail"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:76
 msgid "Send Notifications to all WordPress Administrators"
-msgstr ""
+msgstr "Αποστολή ειδοποιήσεων σε όλους τους διαχειριστές του WordPress"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:78
 msgid ""
 "Select the notifications you'd like to receive and how often you'd like to "
 "receive them"
-msgstr ""
+msgstr "Επιλέξτε τις ειδοποιήσεις που θέλετε να λαμβάνετε και πόσο συχνά θέλετε να τις λαμβάνετε"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:79
 msgid "User Subscribed"
-msgstr ""
+msgstr "Εγγραφή χρήστη"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:81
 #: classes/views/class-sendpress-view-settings-notifications.php:91
 msgid "Instant"
-msgstr ""
+msgstr "Αμέσως"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:83
 #: classes/views/class-sendpress-view-settings-notifications.php:93
 msgid "Daily"
-msgstr ""
+msgstr "Καθημερινά"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:85
 #: classes/views/class-sendpress-view-settings-notifications.php:95
 msgid "Weekly"
-msgstr ""
+msgstr "Εβδομαδιαία"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:87
 #: classes/views/class-sendpress-view-settings-notifications.php:97
 msgid "Monthly"
-msgstr ""
+msgstr "Μηνιαία"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:89
 msgid "User Unsbscribed"
-msgstr ""
+msgstr "Διαγραφή χρήστη"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:103
 msgid "HipChat Notification"
-msgstr ""
+msgstr "Ειδοποίηση HipChat"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:107
 msgid "Enable HipChat Notification"
-msgstr ""
+msgstr "Ενεργοποίηση ειδοποιήσεων HipChat"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:109
 msgid "API Key"
-msgstr ""
+msgstr "Κλειδί API"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:109
 msgid "Where is my API key"
-msgstr ""
+msgstr "Που είναι το κλειδί API μου;"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:120
 msgid "Select the rooms to send notifications to:"
-msgstr ""
+msgstr "Επιέξτε τα δωμάτια στα οποία θα στέλνετε ειδοποιήσεις:"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:135
 msgid "Room Name"
-msgstr ""
+msgstr "Όνομα Δωματίου"
 
 #: classes/views/class-sendpress-view-settings-styles.php:127
 msgid "Link to browser version"
-msgstr ""
+msgstr "Σύνδεσμος στην έκδοση για περιηγητή ιστού."
 
 #: classes/views/class-sendpress-view-settings-styles.php:128
 msgid "Use default"
-msgstr ""
+msgstr "Χρήση προεπιλογών"
 
 #: classes/views/class-sendpress-view-settings-styles.php:128
 msgid "Use custom"
-msgstr ""
+msgstr "Χρήση προσαρμοσμένων"
 
 #: classes/views/class-sendpress-view-settings-styles.php:128
 msgid "None"
-msgstr ""
+msgstr "Κανένα"
 
 #: classes/views/class-sendpress-view-settings-styles.php:138
 msgid "CAN-SPAM"
-msgstr ""
+msgstr "CAN-SPAM"
 
 #: classes/views/class-sendpress-view-settings-styles.php:138
 msgid "required in the US."
-msgstr ""
+msgstr "απαιτείται στις ΗΠΑ."
 
 #: classes/views/class-sendpress-view-settings-styles.php:138
 msgid "This area displays in Email Footer"
-msgstr ""
+msgstr "Αυτή η περιοχή εμφανίζεται στο υποσέλιδο του email"
 
 #: classes/views/class-sendpress-view-settings-styles.php:140
 msgid ""
 "Your message must include your valid physical postal address. This can be "
-"your current street address, a post office box youve registered with the U."
-"S. Postal Service, or a private mailbox youve registered with a commercial "
-"mail receiving agency established under Postal Service regulations."
-msgstr ""
+"your current street address, a post office box youve registered with the "
+"U.S. Postal Service, or a private mailbox youve registered with a commercial"
+" mail receiving agency established under Postal Service regulations."
+msgstr "Το μήνυμά σας πρέπει να περιλαμβάνει την έγκυρη φυσική ταχυδρομική σας διεύθυνση. Μπορεί να είναι η τρέχουσα διεύθυνση σας, μια ταχυδρομική θυρίδα που έχει καταχωρηθεί στην Ταχυδρομική Υπηρεσία των ΗΠΑ, ή ένα ιδιωτικό γραμματοκιβώτιο που έχει καταχωρηθεί με έναν εμπορικό οργανισμό λήψης ταχυδρομείου οργανισμού που έχει ιδρυθεί σύμφωνα με τους κανονισμούς της ταχυδρομικής Υπηρεσίας."
 
 #: classes/views/class-sendpress-view-settings-styles.php:141
 msgid ""
-"This is dictated under the <a href=\"http://business.ftc.gov/documents/bus61-"
-"can-spam-act-compliance-guide-business\" target=\"_blank\">Federal CAN-SPAM "
-"Act of 2003</a>."
-msgstr ""
+"This is dictated under the <a href=\"http://business.ftc.gov/documents/bus61"
+"-can-spam-act-compliance-guide-business\" target=\"_blank\">Federal CAN-SPAM"
+" Act of 2003</a>."
+msgstr "Αυτό υπαγορεύεται από τον <a href=\"http://business.ftc.gov/documents/bus61-can-spam-act-compliance-guide-business\" target=\"_blank\">Ομοσπονδιακό Νόμο CAN-SPAM του 2003</a> ."
 
 #: classes/views/class-sendpress-view-settings-widgets.php:172
 msgid "Create Form"
-msgstr ""
+msgstr "Δημιουργία φόρμας"
 
 #: classes/views/class-sendpress-view-settings-widgets.php:187
 msgid "Confirm Delete"
-msgstr ""
+msgstr "Επιβεβαίωση διαγραφής"
 
 #: classes/views/class-sendpress-view-settings-widgets.php:206
 msgid "Form Name"
-msgstr ""
+msgstr "Όνομα φόρμας"
 
 #: classes/views/class-sendpress-view-settings-widgets.php:218
 msgid "Form Type"
-msgstr ""
+msgstr "Τύπος φόρμας"
 
 #: classes/views/class-sendpress-view-settings-widgets.php:273
 msgid "Signup Ui"
-msgstr ""
+msgstr "Ui εγγραφής"
 
 #: classes/views/class-sendpress-view-settings-widgets.php:281
 msgid "Salutation Label:"
@@ -2848,11 +2856,11 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-widgets.php:493
 msgid ""
 "Use the shortcode below to insert this signup form into your posts and pages"
-msgstr ""
+msgstr "Χρησιμοποιήστε τον ακόλουθο shortcode για να εισάγετε αυτή τη φόρμα εγγραφής στα άρθρα και τις σελίδες σας"
 
 #: classes/views/class-sendpress-view-settings-widgets.php:328
 msgid "Signup Settings"
-msgstr ""
+msgstr "Ρυθμίσεις Εγγραφής"
 
 #: classes/views/class-sendpress-view-settings-widgets.php:332
 msgid "Collect Salutation"
@@ -2881,58 +2889,58 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings-widgets.php:404
 msgid "Select Lists by Default"
-msgstr ""
+msgstr "Προεπιλεγμένες Λίστες"
 
 #: classes/views/class-sendpress-view-settings-widgets.php:408
 msgid "Check off the lists you would like"
-msgstr ""
+msgstr "Τσεκάρετε τις λίστες που θα θέλατε"
 
 #: classes/views/class-sendpress-view-settings-widgets.php:408
 msgid "users to subscribe to"
-msgstr ""
+msgstr "να εγγράφονται οι χρήστες"
 
 #: classes/views/class-sendpress-view-settings-widgets.php:442
 #: classes/views/class-sendpress-view-subscribers.php:71
 msgid "Custom Fields"
-msgstr ""
+msgstr "Ειδικά πεδία"
 
 #: classes/views/class-sendpress-view-settings-widgets.php:482
 msgid "Manage Subscription Options"
-msgstr ""
+msgstr "Διαχείριση επιλογών συνδρομής"
 
 #: classes/views/class-sendpress-view-settings.php:36
 msgid "Basic Setup"
-msgstr ""
+msgstr "Βασική ρύθμιση"
 
 #: classes/views/class-sendpress-view-settings.php:40
 msgid "Shared Content"
-msgstr ""
+msgstr "Διαμοιρασμένο περιεχόμενο"
 
 #: classes/views/class-sendpress-view-settings.php:43
 msgid "Sending"
-msgstr ""
+msgstr "Αποστολή"
 
 #: classes/views/class-sendpress-view-settings.php:44
 msgid "Confirmation"
-msgstr ""
+msgstr "Επιβεβαίωση"
 
 #: classes/views/class-sendpress-view-settings.php:46
 msgid "Permissions"
-msgstr ""
+msgstr "Δικαιώματα"
 
 #: classes/views/class-sendpress-view-settings.php:47
 msgid "Notifications"
-msgstr ""
+msgstr "Ειδοποιήσεις"
 
 #: classes/views/class-sendpress-view-settings.php:51
 msgid "Styles"
-msgstr ""
+msgstr "Στυλ"
 
 #: classes/views/class-sendpress-view-subscribers-add.php:60
 #: classes/views/class-sendpress-view-subscribers-all.php:77
 #: classes/views/class-sendpress-view-subscribers-subscribers.php:55
 msgid "Add Subscriber"
-msgstr ""
+msgstr "Προσθήκη Συνδρομητή"
 
 #: classes/views/class-sendpress-view-subscribers-add.php:70
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:107
@@ -2943,106 +2951,106 @@ msgstr ""
 #: classes/views/class-sendpress-view-subscribers-add.php:71
 #: classes/views/class-sendpress-view-subscribers-subscriber.php:145
 msgid "Firstname"
-msgstr ""
+msgstr "Όνομα"
 
 #: classes/views/class-sendpress-view-subscribers-add.php:72
 #: classes/views/class-sendpress-view-subscribers-subscriber.php:146
 msgid "Lastname"
-msgstr ""
+msgstr "Επώνυμο"
 
 #: classes/views/class-sendpress-view-subscribers-add.php:73
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:106
 #: classes/views/class-sendpress-view-subscribers-subscriber.php:147
 msgid "Phone Number"
-msgstr ""
+msgstr "Αριθμός τηλεφώνου"
 
 #: classes/views/class-sendpress-view-subscribers-add.php:74
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:105
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #: classes/views/class-sendpress-view-subscribers-add.php:98
 msgid "Add Subscribers"
-msgstr ""
+msgstr "Προσθήκη συνδρομητων"
 
 #: classes/views/class-sendpress-view-subscribers-add.php:114
 msgid ""
-"Emails shoud be written in separate lines. A line could also include a name, "
-"which is separated from the email by a comma"
-msgstr ""
+"Emails shoud be written in separate lines. A line could also include a name,"
+" which is separated from the email by a comma"
+msgstr "Τα email θα πρέπει να είναι γραμμένα σε διαφορετικές γραμμές. Μια γραμμή θα μπορούσε να περιλαμβάνει, επίσης, ένα όνομα, το οποίο διαχωρίζεται από το email με κόμμα"
 
 #: classes/views/class-sendpress-view-subscribers-add.php:115
 msgid "Correct formats"
-msgstr ""
+msgstr "Διόρθωση μορφοποιήσεων"
 
 #: classes/views/class-sendpress-view-subscribers-all.php:32
 #: classes/views/class-sendpress-view-subscribers-subscribers.php:20
 msgid "Subscribers per page"
-msgstr ""
+msgstr "Συνδρομητές ανά σελίδα"
 
 #: classes/views/class-sendpress-view-subscribers-all.php:100
 msgid "Remove All Subscribers"
-msgstr ""
+msgstr "Αφαίρεση όλων των συνδρομητών"
 
 #: classes/views/class-sendpress-view-subscribers-all.php:101
 msgid "Export All Subscribers"
-msgstr ""
+msgstr "Εξαγωγή όλων των συνδρομητών"
 
 #: classes/views/class-sendpress-view-subscribers-all.php:111
 #: classes/views/class-sendpress-view-subscribers-subscribers.php:90
 msgid "Really? Remove All Subscribers from this list."
-msgstr ""
+msgstr "Πραγματικά; Αφαίρεση όλων των συνδρομητών από αυτή τη λίστα."
 
 #: classes/views/class-sendpress-view-subscribers-all.php:114
 #: classes/views/class-sendpress-view-subscribers-subscribers.php:93
 msgid "This will remove all subscribers from the list"
-msgstr ""
+msgstr "Αυτό θα αφαιρέσει όλους τους συνδρομητές από τη λίστα"
 
 #: classes/views/class-sendpress-view-subscribers-all.php:117
 #: classes/views/class-sendpress-view-subscribers-subscribers.php:96
 msgid "Yes! Remove All Subscribers"
-msgstr ""
+msgstr "Ναι! Αφαίρεση όλων των συνδρομητών"
 
 #: classes/views/class-sendpress-view-subscribers-csvimport.php:93
 msgid "We had a problem saving your upload"
-msgstr ""
+msgstr "Είχαμε ένα πρόβλημα με την αποθήκευση όσων ανεβάσατε"
 
 #: classes/views/class-sendpress-view-subscribers-csvimport.php:97
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:126
 msgid "Import CSV to "
-msgstr ""
+msgstr "Εισαγωγή CSV σε"
 
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:100
 msgid "Don't Import"
-msgstr ""
+msgstr "Να μην εισαχθούν"
 
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:102
 msgid "First name"
-msgstr ""
+msgstr "Όνομα"
 
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:103
 msgid "Last name"
-msgstr ""
+msgstr "Επώνυμο"
 
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:104
 msgid "IP address"
-msgstr ""
+msgstr "Διεύθυνση IP"
 
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:138
 msgid "We found"
-msgstr ""
+msgstr "Βρήκαμε"
 
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:138
 msgid "lines in your csv"
-msgstr ""
+msgstr "γραμμές στο csv αρχείο σας"
 
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:142
 msgid "Import Fields:"
-msgstr ""
+msgstr "Εισαγωγή πεδίων:"
 
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:213
 msgid "Start Import"
-msgstr ""
+msgstr "Εκκίνηση εισαγωγής"
 
 #: classes/views/class-sendpress-view-subscribers-custom.php:44
 msgid "Custom Field Label:"
@@ -3050,13 +3058,13 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-subscribers-custom.php:61
 msgid "You have SendPress Pro Version"
-msgstr ""
+msgstr "Έχετε την έκδοση Pro του SendPress"
 
 #: classes/views/class-sendpress-view-subscribers-custom.php:61
 msgid ""
 "this version does not support custom fields. You will need to update to the "
 "latest version"
-msgstr ""
+msgstr "αυτή η έκδοση δεν υποστηρίζει προσαρμοσμένα πεδία. Θα χρειαστεί να αναβαθμίσετε στην τελευταία έκδοση"
 
 #: classes/views/class-sendpress-view-subscribers-custom.php:65
 msgid "Multiple custom fields are coming in a future release for "
@@ -3064,101 +3072,101 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-subscribers-custom.php:65
 msgid "SendPress Pro"
-msgstr ""
+msgstr "SendPress Pro"
 
 #: classes/views/class-sendpress-view-subscribers-custom.php:65
 msgid "Please upgrade or install Pro to start using this feature"
-msgstr ""
+msgstr "Παρακαλούμε αναβαθμίστε ή εγκαταστήστε την Pro για να αρχίσετε τη χρήση αυτού του χαρακτηριστικού"
 
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:36
 #: classes/views/class-sendpress-view-subscribers-listedit.php:45
 msgid "Save List"
-msgstr ""
+msgstr "Αποθήκευση λίστας"
 
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:38
 #: classes/views/class-sendpress-view-subscribers.php:110
 msgid "Create List"
-msgstr ""
+msgstr "Δημιουργία λίστας"
 
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:43
 #: classes/views/class-sendpress-view-subscribers-listedit.php:55
 msgid "Allow user to sign up to this list"
-msgstr ""
+msgstr "Επιτρέπει στο χρήστη να εγγραφεί σε αυτή τη λίστα"
 
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:43
 msgid "synced lists will be made private"
-msgstr ""
+msgstr "συγχρονισμένες λίστες θα γίνουν ιδιωτικές"
 
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:44
 #: classes/views/class-sendpress-view-subscribers-listedit.php:56
 msgid ""
-"Mark list as test. Adds <span class=\"label label-info\">Test List</span> to "
-"list title every where."
-msgstr ""
+"Mark list as test. Adds <span class=\"label label-info\">Test List</span> to"
+" list title every where."
+msgstr "Σημειώστε τη λίστα ως δοκιμαστική. Προσθέτει το <span class=\"label label-info\">Δοκιμαστική Λίστα</span> στον τίτλο της λίστας παντού."
 
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:57
 #: classes/views/class-sendpress-view-subscribers-listedit.php:58
 msgid "Select List Type"
-msgstr ""
+msgstr "Επιλογή τύπου λίστας"
 
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:58
 #: classes/views/class-sendpress-view-subscribers-listedit.php:59
 msgid ""
-"Pick SendPress list if you want to use SendPress to manage your subscribers. "
-"Pick a WordPress Role if you want to send emails to your users. <br>Synced "
+"Pick SendPress list if you want to use SendPress to manage your subscribers."
+" Pick a WordPress Role if you want to send emails to your users. <br>Synced "
 "lists can only have users that have a login to your WordPress site."
-msgstr ""
+msgstr "Επιλέξτε τη λίστα του SendPress αν θέλετε να χρησιμοποιήσετε το SendPress για να διαχειριστείτε τους συνδρομητές σας. Επιλέξτε έναν από τους Ρόλους του WordPress αν θέλετε να στείλετε email στους χρήστες σας. <br>Οι συγχρονισμένες λίστες μπορούν να έχουν μόνο χρήστες που έχουν σύνδεση στον ιστότοπό σας."
 
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:60
 #: classes/views/class-sendpress-view-subscribers-listedit.php:71
 msgid "Use this to have subscribers sign up, import csv, etc."
-msgstr ""
+msgstr "Χρησιμοποιήστε αυτό για να εγγράψετε συνδρομητές, να εισάγετε csv κλπ"
 
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:72
 #: classes/views/class-sendpress-view-subscribers-listedit.php:90
 msgid "User Meta Query - Advanced"
-msgstr ""
+msgstr "Μετα Αναζήτηση Χρήστη - Προχωρημένη"
 
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:72
 #: classes/views/class-sendpress-view-subscribers-listedit.php:90
 msgid "Use this to sync a list based on user meta data."
-msgstr ""
+msgstr "Χρησιμοποιήστε αυτό για να συγχρονίσετε μια λίστα με βάση τα μεταδεδομένα χρήστη."
 
 #: classes/views/class-sendpress-view-subscribers-listedit.php:47
 msgid "Edit List"
-msgstr ""
+msgstr "Επεξεργασία λίστας"
 
 #: classes/views/class-sendpress-view-subscribers-listform.php:41
 msgid "Back to Lists"
-msgstr ""
+msgstr "Πίσω στις Λίστες"
 
 #: classes/views/class-sendpress-view-subscribers-listform.php:43
 msgid "Form Settings for List "
-msgstr ""
+msgstr "Ρυθμίσεις Φόρμας για Λίστα"
 
 #: classes/views/class-sendpress-view-subscribers-subscriber.php:126
 msgid "Edit Subscriber"
-msgstr ""
+msgstr "Επεξεργασία Συνδρομητή"
 
 #: classes/views/class-sendpress-view-subscribers-subscribers.php:81
 msgid "Remove All Subscribers from List"
-msgstr ""
+msgstr "Αφαίρεση όλων των συνδρομητών από τη λίστα"
 
 #: classes/views/class-sendpress-view-subscribers-sync.php:67
 msgid "Syncing "
-msgstr ""
+msgstr "Συγχρονισμός"
 
 #: classes/views/class-sendpress-view-subscribers-sync.php:67
 msgid " Role to List"
-msgstr ""
+msgstr "Ρόλος σε Λίστα"
 
 #: classes/views/class-sendpress-view-subscribers.php:68
 msgid "All Subscribers"
-msgstr ""
+msgstr "Όλοι οι Συνδρομητές"
 
 #: classes/views/class-sendpress-view-subscribers.php:87
 msgid "Lists per page"
-msgstr ""
+msgstr "Λίστες ανά σελίδα"
 
 #: classes/views/class-sendpress-view.php:42
 msgid "What's New"
@@ -3178,50 +3186,50 @@ msgstr ""
 
 #: inc/forms/email-style.2.0.php:213
 msgid "Body Styles"
-msgstr ""
+msgstr "Στυλ σώματος"
 
 #: inc/forms/email-style.2.0.php:225
 msgid "Header Styles"
-msgstr ""
+msgstr "Στυλ κεφαλίδας"
 
 #: inc/forms/email-style.2.0.php:236
 msgid "Content Styles"
-msgstr ""
+msgstr "Στυλ περιεχομένου"
 
 #: sendpress.php:457
 msgid "Join our mailing List."
-msgstr ""
+msgstr "Εγγραφείτε στη λίστα μηνυμάτων μας."
 
 #: sendpress.php:544 sendpress.php:555
 msgid "Warning!"
-msgstr ""
+msgstr "Προσοχή!"
 
 #: sendpress.php:546
 msgid ""
-"  Before sending any emails please setup your <a href=\"%1s\">information</"
-"a>."
-msgstr ""
+"  Before sending any emails please setup your <a "
+"href=\"%1s\">information</a>."
+msgstr "Πριν στείλετε κάποιο email παρακαλούμε συμπληρώστε τις <a href=\"%1s\">πληροφορίες</a> σας."
 
 #: sendpress.php:557
 msgid ""
-"  Sending has been paused. You can resume sending on the <a href=\"%1s"
-"\">Queue</a> page."
-msgstr ""
+"  Sending has been paused. You can resume sending on the <a "
+"href=\"%1s\">Queue</a> page."
+msgstr "Η αποστολή έχει σταματήσει. Μπορείτε να την ξεκινήσετε πάλι από τη σελίδα <a href=\"%1s\">Ουρά</a>."
 
 #: sendpress.php:628
 msgid "Once Every Minute"
-msgstr ""
+msgstr "Κάθε λεπτό"
 
 #: sendpress.php:775
 msgid ""
 "<b>SendPress</b>: We have upgraded your lists to a new format. Please check "
 "your <a href=\"%1$s\">widget settings</a> to re-enable your list(s). | <a "
 "href=\"%2$s\">Hide Notice</a>"
-msgstr ""
+msgstr "<b>SendPress:</b> Αναβαθμίσαμε τις λίστες σας σε μια νέα μορφή. Παρακαλούμε ελέγξτε τις <a href=\"%1$s\">widget ρυθμίσεις</a> για να ενεργοποιήσετε ξανά την λίστα(ες) σας. | <a href=\"%2$s\">Απόκρυψη ανακοίνωσης</a>"
 
 #: sendpress.php:1073 sendpress.php:1074
 msgid "Please enter your e-mail address"
-msgstr ""
+msgstr "Παρακαλώ εισάγετε την e-mail διεύθυνση σας"
 
 #: sendpress.php:1075
 msgid ""
@@ -3231,42 +3239,42 @@ msgstr ""
 
 #: sendpress.php:1096
 msgid "Use this Image"
-msgstr ""
+msgstr "Χρησιμοποιήστε αυτή την εικόνα"
 
 #: sendpress.php:1098
 msgid "Use as %s"
-msgstr ""
+msgstr "Χρήση ως% s"
 
 #. #-#-#-#-#  sendpress.pot (SendPress Newsletters 1.8.11.2)  #-#-#-#-#
 #. Author of the plugin/theme
 #: sendpress.php:1244
 msgid "SendPress"
-msgstr ""
+msgstr "SendPress"
 
 #: sendpress.php:1246 sendpress.php:1309 sendpress.php:1354
 msgid "Pro"
-msgstr ""
+msgstr "Pro"
 
 #: sendpress.php:1258 sendpress.php:1327
 msgid "Overview"
-msgstr ""
+msgstr "Επισκόπηση"
 
 #: sendpress.php:1810
 msgid "SendPress requires WordPress version %s or later."
-msgstr ""
+msgstr "Το SendPress απαιτεί  την WordPress% s ή νεότερη έκδοση."
 
 #. Plugin Name of the plugin/theme
 msgid "SendPress Newsletters"
-msgstr ""
+msgstr "Ενημερωτικά Δελτία του SendPress"
 
 #. Plugin URI of the plugin/theme
 msgid "https://sendpress.com"
-msgstr ""
+msgstr "https://sendpress.com"
 
 #. Description of the plugin/theme
 msgid "Easy to manage Newsletters for WordPress."
-msgstr ""
+msgstr "Εύκολα στη διαχείριση ενημερωτικά δελτία για το WordPress"
 
 #. Author URI of the plugin/theme
 msgid "https://sendpress.com/"
-msgstr ""
+msgstr "https://sendpress.com/"
