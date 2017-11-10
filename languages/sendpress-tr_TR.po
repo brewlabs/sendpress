@@ -1,40 +1,46 @@
 # Copyright (C) 2017 SendPress Newsletters
 # This file is distributed under the same license as the SendPress Newsletters package.
+# Translators:
+# Kaan <kaankck@gmail.com>, 2013
+# Latif Karadavut <wapplics@gmail.com>, 2017
+# Serkan Algur <info@wpadami.com>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: SendPress Newsletters 1.8.11.2\n"
+"Project-Id-Version: SendPress\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sendpress\n"
 "POT-Creation-Date: 2017-11-06 00:13:46+00:00\n"
+"PO-Revision-Date: 2017-11-06 00:15+0000\n"
+"Last-Translator: Josh Lyford <josh@brewlabs.us>\n"
+"Language-Team: Turkish (Turkey) (http://www.transifex.com/wp-translations/sendpress/language/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: tr_TR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: classes/class-sendpress-ajax-loader.php:212
 msgid "User was not subscribed to the list."
-msgstr ""
+msgstr "Kullanıcı listeye abone değildi."
 
 #: classes/class-sendpress-api.php:202
 msgid "You must specify both a token and API key!"
-msgstr ""
+msgstr "Hem bir belirteç \"token\" ve API anahtarı belirtmelisiniz!"
 
 #: classes/class-sendpress-api.php:210
 msgid "Your request could not be authenticated!"
-msgstr ""
+msgstr "İsteğiniz doğrulanamadı!"
 
 #: classes/class-sendpress-api.php:218
 msgid "Invalid API key!"
-msgstr ""
+msgstr "Geçersiz API anahtarı!"
 
 #: classes/class-sendpress-api.php:345
 msgid "Invalid query!"
-msgstr ""
+msgstr "Geçersiz sorgu!"
 
 #: classes/class-sendpress-autoresponder-table.php:104
 msgid "Content"
-msgstr ""
+msgstr "İçerik"
 
 #: classes/class-sendpress-autoresponder-table.php:138
 #: classes/class-sendpress-email-local-table.php:158
@@ -51,7 +57,7 @@ msgstr ""
 #: classes/class-sendpress-system-email-table.php:135
 #: classes/views/class-sendpress-view-emails-send.php:93 sendpress.php:1158
 msgid "Edit"
-msgstr ""
+msgstr "Yapılandır"
 
 #: classes/class-sendpress-autoresponder-table.php:139
 #: classes/class-sendpress-autoresponder-table.php:248
@@ -67,7 +73,7 @@ msgstr ""
 #: classes/class-sendpress-subscribers-all-table.php:231
 #: classes/class-sendpress-system-email-table.php:136
 msgid "Delete"
-msgstr ""
+msgstr "Sil"
 
 #: classes/class-sendpress-autoresponder-table.php:187
 #: classes/class-sendpress-emails-table.php:188
@@ -90,65 +96,65 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-activation.php:176
 #: inc/forms/email-style.2.0.php:206
 msgid "Subject"
-msgstr ""
+msgstr "Konu"
 
 #: classes/class-sendpress-autoresponder-table.php:188
 #: classes/class-sendpress-email-templates-table.php:189
 #: classes/class-sendpress-emails-table.php:189
 #: classes/class-sendpress-system-email-table.php:185
 msgid "Created"
-msgstr ""
+msgstr "Oluşturulmuş"
 
 #: classes/class-sendpress-autoresponder-table.php:189
 #: classes/class-sendpress-emails-table.php:190
 #: classes/class-sendpress-lists-table.php:228
 msgid "Last Send"
-msgstr ""
+msgstr "Son Gönderilen"
 
 #: classes/class-sendpress-cron.php:171
 msgid "Once every minutes"
-msgstr ""
+msgstr "Dakikada bir"
 
 #: classes/class-sendpress-cron.php:175
 msgid "Once every two minutes"
-msgstr ""
+msgstr "İki dakikada bir"
 
 #: classes/class-sendpress-cron.php:179
 msgid "Once every five minutes"
-msgstr ""
+msgstr "Beş dakikada bir"
 
 #: classes/class-sendpress-cron.php:183
 msgid "Once every ten minutes"
-msgstr ""
+msgstr "On dakikada bir"
 
 #: classes/class-sendpress-cron.php:187
 msgid "Once every fifteen minutes"
-msgstr ""
+msgstr "Onbeş dakikada bir"
 
 #: classes/class-sendpress-cron.php:191
 msgid "Once every thirty minutes"
-msgstr ""
+msgstr "Otuz dakikada bir"
 
 #: classes/class-sendpress-cron.php:195
 msgid "Once every two hours"
-msgstr ""
+msgstr "İki saatte bir"
 
 #: classes/class-sendpress-cron.php:199
 msgid "Once a week"
-msgstr ""
+msgstr "Haftada bir"
 
 #: classes/class-sendpress-cron.php:203
 msgid "Once every 28 days"
-msgstr ""
+msgstr "28 günde bir"
 
 #: classes/class-sendpress-cron.php:207
 msgid "Once Monthly"
-msgstr ""
+msgstr "Aylık"
 
 #: classes/class-sendpress-email-customizer.php:68
 #: classes/class-sendpress-posts.php:239
 msgid "SendPress Templates"
-msgstr ""
+msgstr "SendPress Şablonları"
 
 #: classes/class-sendpress-email-customizer.php:69
 msgid ""
@@ -168,7 +174,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings.php:31 sendpress.php:1295
 #: sendpress.php:1346
 msgid "Settings"
-msgstr ""
+msgstr "Ayarlar"
 
 #: classes/class-sendpress-email-customizer.php:79
 #: classes/views/class-sendpress-view-emails-createauto.php:105
@@ -176,7 +182,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-systememailcreate.php:118
 #: classes/views/class-sendpress-view-emails-systememailedit.php:181
 msgid "Template"
-msgstr ""
+msgstr "Şablon"
 
 #: classes/class-sendpress-email-customizer.php:83
 msgid "Email Header"
@@ -190,7 +196,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-edit.php:145
 #: classes/views/class-sendpress-view-emails-systememailedit.php:111
 msgid "Footer"
-msgstr ""
+msgstr "Dip"
 
 #: classes/class-sendpress-email-customizer.php:95
 msgid "Send test email"
@@ -209,7 +215,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-account.php:98
 #: classes/views/class-sendpress-view-settings-account.php:127
 msgid "From Email"
-msgstr ""
+msgstr "Gönderen e-Posta Adı"
 
 #: classes/class-sendpress-email-customizer.php:256
 msgid "Choose one"
@@ -322,7 +328,7 @@ msgstr ""
 #: classes/class-sendpress-template.php:261
 #: classes/class-sendpress-template.php:477 inc/forms/email-style.2.0.php:281
 msgid "Not interested anymore?"
-msgstr ""
+msgstr "Artık İlgilenmiyormusunuz ?"
 
 #: classes/class-sendpress-email.php:260 classes/class-sendpress-email.php:282
 #: classes/class-sendpress-template.php:262
@@ -330,24 +336,24 @@ msgstr ""
 #: classes/sc/class-sendpress-sc-unsubscribe-form.php:24
 #: inc/forms/email-style.2.0.php:282
 msgid "Unsubscribe"
-msgstr ""
+msgstr "Abonelikten Çık"
 
 #: classes/class-sendpress-email.php:261
 #: classes/class-sendpress-template.php:263
 #: classes/class-sendpress-template.php:479 inc/forms/email-style.2.0.php:283
 msgid "Instantly"
-msgstr ""
+msgstr "Anında"
 
 #: classes/class-sendpress-email.php:283
 #: classes/class-sendpress-template.php:264
 #: classes/class-sendpress-template.php:480 inc/forms/email-style.2.0.php:371
 msgid "Manage Subscription"
-msgstr ""
+msgstr "Aboneliği yönetin"
 
 #: classes/class-sendpress-emails-table.php:98
 #: classes/class-sendpress-lists-table.php:101
 msgid "View"
-msgstr ""
+msgstr "Gör"
 
 #: classes/class-sendpress-emails-table.php:107
 #: classes/views/class-sendpress-view-emails-edit.php:124
@@ -356,44 +362,44 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-access.php:179
 #: sendpress.php:1145 sendpress.php:1153 sendpress.php:1161
 msgid "Send"
-msgstr ""
+msgstr "Gönder"
 
 #: classes/class-sendpress-lists-table.php:82
 #: classes/class-sendpress-lists-table.php:96
 #: classes/class-sendpress-lists-table.php:105
 msgid "Sync"
-msgstr ""
+msgstr "Senk."
 
 #: classes/class-sendpress-lists-table.php:108
 msgid "Import"
-msgstr ""
+msgstr "İçe Aktar"
 
 #: classes/class-sendpress-lists-table.php:111
 msgid "Add"
-msgstr ""
+msgstr "Ekle"
 
 #: classes/class-sendpress-lists-table.php:112
 msgid "Export"
-msgstr ""
+msgstr "Dışa Aktarma"
 
 #: classes/class-sendpress-lists-table.php:114
 #: classes/views/class-sendpress-view-settings-widgets.php:201
 msgid "Form"
-msgstr ""
+msgstr "Form"
 
 #: classes/class-sendpress-lists-table.php:161
 msgid "Test List"
-msgstr ""
+msgstr "Test Listesi"
 
 #: classes/class-sendpress-lists-table.php:226
 #: classes/class-sendpress-settings-forms-table.php:165
 msgid "Name"
-msgstr ""
+msgstr "Adı"
 
 #: classes/class-sendpress-lists-table.php:227
 msgctxt "Count subscribers"
 msgid "Active"
-msgstr ""
+msgstr "Aktif"
 
 #: classes/class-sendpress-lists-table.php:230
 #: classes/views/class-sendpress-view-overview.php:39
@@ -403,134 +409,131 @@ msgstr ""
 #: classes/views/class-sendpress-view-subscribers.php:59 sendpress.php:1281
 #: sendpress.php:1338
 msgid "Subscribers"
-msgstr ""
+msgstr "Aboneler"
 
 #: classes/class-sendpress-logging.php:156
 msgid "SPNL Logs"
-msgstr ""
+msgstr "SPNL Günlüğü"
 
 #: classes/class-sendpress-manager.php:191
 msgid "This is text only alternative body."
-msgstr ""
+msgstr "Bu metin gövdeye tek alternatiftir."
 
 #: classes/class-sendpress-manager.php:192
 msgid "A Test Email from SendPress."
-msgstr ""
+msgstr "SendPress 'den Test Maili"
 
 #: classes/class-sendpress-manager.php:193
 msgid "SendPress test email :)."
-msgstr ""
+msgstr "SendPress test email :)."
 
 #: classes/class-sendpress-manager.php:548
 #: classes/class-sendpress-sender-gmail.php:170
 msgid "The result was: "
-msgstr ""
+msgstr "Sonuç olarak:"
 
 #: classes/class-sendpress-manager.php:549
 #: classes/class-sendpress-sender-gmail.php:171
 msgid "The mailer error info: "
-msgstr ""
+msgstr "Mailler hata bilgisi:"
 
 #: classes/class-sendpress-manager.php:551
 #: classes/class-sendpress-sender-gmail.php:173
 msgid "The SMTP debugging output is shown below:\n"
-msgstr ""
+msgstr "SMTP hata ayıklama sonucu aşağıda gösterilmiştir: \n"
 
 #: classes/class-sendpress-posts.php:174
 msgctxt "sendpress"
 msgid "Standard"
-msgstr ""
+msgstr "Standart"
 
 #: classes/class-sendpress-posts.php:179
 msgid "Standard <span class=\"count\">(%s)</span>"
 msgid_plural "Standard <span class=\"count\">(%s)</span>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Standart <span class=\"count\">(%s)</span>"
 
 #: classes/class-sendpress-posts.php:184
 msgctxt "sendpress"
 msgid "Custom Template"
-msgstr ""
+msgstr "Özel şablon"
 
 #: classes/class-sendpress-posts.php:189
 msgid "Custom Templates <span class=\"count\">(%s)</span>"
 msgid_plural "Custom Templates <span class=\"count\">(%s)</span>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Özel şablon <span class=\"count\">(%s)</span>"
 
 #: classes/class-sendpress-posts.php:193
 msgctxt "sendpress"
 msgid "Form"
-msgstr ""
+msgstr "Form"
 
 #: classes/class-sendpress-posts.php:198
 msgid "Form Setting <span class=\"count\">(%s)</span>"
 msgid_plural "Forms Settings <span class=\"count\">(%s)</span>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Form ayarları <span class=\"count\">(%s)</span>"
 
 #: classes/class-sendpress-posts.php:202
 msgctxt "sendpress"
 msgid "Autoresponder"
-msgstr ""
+msgstr "Oto gönderici"
 
 #: classes/class-sendpress-posts.php:207
 msgid "Autoresponder Setting <span class=\"count\">(%s)</span>"
 msgid_plural "Autoresponder Settings <span class=\"count\">(%s)</span>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Oto gönderici seçenekleri <span class=\"count\">(%s)</span>"
 
 #: classes/class-sendpress-posts.php:211
 msgctxt "sendpress"
 msgid "System Email"
-msgstr ""
+msgstr "Sistem E-Postası"
 
 #: classes/class-sendpress-posts.php:216
 msgid "System Email Setting <span class=\"count\">(%s)</span>"
 msgid_plural "System Email Settings <span class=\"count\">(%s)</span>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sistem E-Postası seçenekleri <span class=\"count\">(%s)</span>"
 
 #: classes/class-sendpress-posts.php:222
 msgid "SendPress Internal Container"
-msgstr ""
+msgstr "SendPress İç Konteynırı"
 
 #: classes/class-sendpress-posts.php:254
 msgid "SendPress Settings"
-msgstr ""
+msgstr "SendPress Ayarları"
 
 #: classes/class-sendpress-posts.php:275
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:60
 #: classes/views/class-sendpress-view-subscribers-listedit.php:71
 msgid "SendPress List"
-msgstr ""
+msgstr "SendPress Listesi"
 
 #: classes/class-sendpress-posts.php:294
 msgid "SendPress Jobs"
-msgstr ""
+msgstr "SendPress Görevleri"
 
 #: classes/class-sendpress-posts.php:318
 msgid "Sendpress Pages"
-msgstr ""
+msgstr "Sendpress Sayfaları"
 
 #: classes/class-sendpress-posts.php:319
 msgid "SendPress Page"
-msgstr ""
+msgstr "SendPress Sayfası"
 
 #: classes/class-sendpress-pro-manager.php:273
 msgid "Alert"
-msgstr ""
+msgstr "Uyarı"
 
 #: classes/class-sendpress-pro-manager.php:275
 msgid ""
 "Your API key is either invalid or in use on another site. Need help? Visit "
-"login to <a href=\"http://sendpress.com/your-account/\">SendPress Support</a>"
+"login to <a href=\"http://sendpress.com/your-account/\">SendPress "
+"Support</a>"
 msgstr ""
 
 #: classes/class-sendpress-pro-manager.php:281
 msgid ""
 "There was a problem deactivating your API key.  Try again in a few minutes "
-"or visit <a href=\"http://sendpress.com/your-account/\">SendPress Support</a>"
+"or visit <a href=\"http://sendpress.com/your-account/\">SendPress "
+"Support</a>"
 msgstr ""
 
 #: classes/class-sendpress-pro-manager.php:287
@@ -551,7 +554,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:101
 #: classes/views/class-sendpress-view-subscribers-subscriber.php:143
 msgid "Email"
-msgstr ""
+msgstr "E-Posta"
 
 #: classes/class-sendpress-queue-all-table.php:215
 #: classes/class-sendpress-queue-table.php:205
@@ -559,18 +562,18 @@ msgstr ""
 #: classes/sc/class-sendpress-sc-forms.php:149
 #: classes/views/class-sendpress-view-overview.php:212
 msgid "List"
-msgstr ""
+msgstr "Liste"
 
 #: classes/class-sendpress-queue-all-table.php:220
 msgid "Sent"
-msgstr ""
+msgstr "Gönder"
 
 #: classes/class-sendpress-queue-all-table.php:285
 #: classes/class-sendpress-queue-errors-table.php:279
 #: classes/class-sendpress-queue-stuck-table.php:275
 #: classes/class-sendpress-queue-table.php:275
 msgid "All Lists"
-msgstr ""
+msgstr "Tüm Listeler"
 
 #: classes/class-sendpress-queue-all-table.php:330
 #: classes/class-sendpress-queue-stuck-table.php:320
@@ -578,34 +581,34 @@ msgstr ""
 #: classes/class-sendpress-subscribers-all-table.php:299
 #: classes/class-sendpress-subscribers-table.php:293
 msgid "Filter"
-msgstr ""
+msgstr "Süzgeç"
 
 #: classes/class-sendpress-queue-table.php:208
 msgid "Max&nbsp;Attempts"
-msgstr ""
+msgstr "Maks&nbsp;Deneme"
 
 #: classes/class-sendpress-queue-table.php:209
 msgid "Attempted"
-msgstr ""
+msgstr "Denendi"
 
 #: classes/class-sendpress-queue-table.php:210
 msgid "Last&nbsp;Attempt"
-msgstr ""
+msgstr "Son&nbsp;Deneme"
 
 #: classes/class-sendpress-queue-table.php:211
 #: classes/class-sendpress-subscribers-all-table.php:175
 msgid "Actions"
-msgstr ""
+msgstr "Eylemler"
 
 #: classes/class-sendpress-reports-table.php:337
 #: classes/class-sendpress-reports-tests-table.php:333
 msgid "Date Sent"
-msgstr ""
+msgstr "Gönderilme tarihi"
 
 #: classes/class-sendpress-reports-table.php:338
 #: classes/class-sendpress-reports-tests-table.php:334
 msgid "Info"
-msgstr ""
+msgstr "Bilgi"
 
 #: classes/class-sendpress-reports-table.php:340
 #: classes/class-sendpress-reports-tests-table.php:336
@@ -615,7 +618,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-subscribers.php:64
 #: classes/views/class-sendpress-view-subscribers.php:112
 msgid "Lists"
-msgstr ""
+msgstr "Listeler"
 
 #: classes/class-sendpress-reports-table.php:341
 #: classes/views/class-sendpress-view-overview.php:81
@@ -626,34 +629,34 @@ msgstr ""
 #: classes/class-sendpress-reports-tests-table.php:338
 #: classes/views/class-sendpress-view-overview.php:139
 msgid "Clicks"
-msgstr ""
+msgstr "Tıklamalar"
 
 #: classes/class-sendpress-reports-table.php:343
 #: classes/class-sendpress-reports-tests-table.php:339
 msgid "Unsubscribes"
-msgstr ""
+msgstr "Ayrılanlar"
 
 #: classes/class-sendpress-reports-tests-table.php:337
 msgid "Opens "
-msgstr ""
+msgstr "Açılmalar"
 
 #: classes/class-sendpress-sender-gmail.php:14
 msgid "Gmail"
-msgstr ""
+msgstr "Gmail"
 
 #: classes/class-sendpress-sender-gmail.php:30
 msgid ""
-"Gmail is limited to 500 emails a day. We recommend that you open a dedicated "
-"Gmail account for this purpose"
-msgstr ""
+"Gmail is limited to 500 emails a day. We recommend that you open a dedicated"
+" Gmail account for this purpose"
+msgstr "Gmail günlük 500 e-posta ile limitlidir. Başka bir Gmail hesabı ile bu işlemi gerçekleştirmenizi tavsiye ederiz!"
 
 #: classes/class-sendpress-sender-gmail.php:31
 msgid "Username"
-msgstr ""
+msgstr "Kullanıcı Adı"
 
 #: classes/class-sendpress-sender-gmail.php:33
 msgid "Password"
-msgstr ""
+msgstr "Parola"
 
 #: classes/class-sendpress-sender-spnl.php:14
 msgid "WP Email Delivery ( API Sending )"
@@ -665,7 +668,7 @@ msgstr ""
 
 #: classes/class-sendpress-sender-spnl.php:34
 msgid "License Key"
-msgstr ""
+msgstr "Lisans Anahtarı"
 
 #: classes/class-sendpress-sender-spnl.php:37
 msgid "Disable SSL Sending"
@@ -673,7 +676,7 @@ msgstr ""
 
 #: classes/class-sendpress-sender-website.php:20
 msgid "Your Website"
-msgstr ""
+msgstr "Websiteniz"
 
 #: classes/class-sendpress-sender.php:14
 msgid "Sender Missing Label"
@@ -681,75 +684,75 @@ msgstr ""
 
 #: classes/class-sendpress-settings-forms-table.php:92
 msgid "Clone"
-msgstr ""
+msgstr "Klonla"
 
 #: classes/class-sendpress-settings-forms-table.php:166
 #: classes/class-sendpress-system-email-table.php:186
 msgid "Type"
-msgstr ""
+msgstr "Tip"
 
 #: classes/class-sendpress-settings-forms-table.php:167
 #: classes/views/class-sendpress-view-settings-widgets.php:323
 #: classes/views/class-sendpress-view-settings-widgets.php:492
 msgid "Shortcode"
-msgstr ""
+msgstr "Kısakod"
 
 #: classes/class-sendpress-shortcode-loader.php:72
 msgid "Basic"
-msgstr ""
+msgstr "Basit"
 
 #: classes/class-sendpress-shortcode-loader.php:84
 msgid "All Options with Defaults"
-msgstr ""
+msgstr "Bütün seçenekler varsayılanlarla"
 
 #: classes/class-sendpress-shortcode-loader.php:89
 msgid "Your Content Here."
-msgstr ""
+msgstr "İçeriğinz buraya gelecek"
 
 #: classes/class-sendpress-shortcode-loader.php:93
 msgid "Wrapping Content"
-msgstr ""
+msgstr "Sarıcı İçerik"
 
 #: classes/class-sendpress-shortcode-manage.php:31
 #: classes/sc/class-sendpress-sc-forms.php:147
 msgid "Subscribed"
-msgstr ""
+msgstr "Abone"
 
 #: classes/class-sendpress-shortcode-manage.php:32
 #: classes/sc/class-sendpress-sc-forms.php:148
 msgid "Unsubscribed"
-msgstr ""
+msgstr "Abonelikten Çık"
 
 #: classes/class-sendpress-shortcode-manage.php:34
 msgid "Updated"
-msgstr ""
+msgstr "Güncellendi"
 
 #: classes/class-sendpress-shortcode-manage.php:35
 msgid "Other Info"
-msgstr ""
+msgstr "Diğer bilgiler"
 
 #: classes/class-sendpress-shortcode-manage.php:68
 #: classes/sc/class-sendpress-sc-forms.php:182
 msgid "Never Subscribed"
-msgstr ""
+msgstr "Hiç Abone Olunmadı"
 
 #: classes/class-sendpress-shortcode-manage.php:89
 #: classes/sc/class-sendpress-sc-forms.php:204
 msgid "Save My Settings"
-msgstr ""
+msgstr "Ayarları Kaydet"
 
 #: classes/class-sendpress-subscribers-all-table.php:174
 msgid "Date Joined"
-msgstr ""
+msgstr "Katılma tarihi"
 
 #: classes/class-sendpress-subscribers-all-table.php:297
 #: classes/class-sendpress-subscribers-table.php:291
 msgid "Apply"
-msgstr ""
+msgstr "Uygula"
 
 #: classes/class-sendpress-template-tags.php:573
 msgid "Inserts Social Links."
-msgstr ""
+msgstr "Sosyal Linkleri ekleyin"
 
 #: classes/class-sendpress-template-tags.php:581
 msgid "Inserts view in browser html link."
@@ -795,15 +798,15 @@ msgstr ""
 
 #: classes/class-sendpress-template-tags.php:674
 msgid "Footer Page"
-msgstr ""
+msgstr "Dipnot Sayfası"
 
 #: classes/class-sendpress-template-tags.php:681
 msgid "Footer Content"
-msgstr ""
+msgstr "Dipnot İçeriği"
 
 #: classes/class-sendpress-template-tags.php:688
 msgid "Email Title"
-msgstr ""
+msgstr "E-Posta başlığı"
 
 #: classes/class-sendpress-template.php:259
 #: classes/class-sendpress-template.php:475
@@ -812,7 +815,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-styles.php:122
 #: inc/forms/email-style.2.0.php:279
 msgid "Is this email not displaying correctly?"
-msgstr ""
+msgstr "Bu eMail düzgün görüntüleniyormu?"
 
 #: classes/class-sendpress-template.php:260
 #: classes/class-sendpress-template.php:476
@@ -821,21 +824,21 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-styles.php:123
 #: inc/forms/email-style.2.0.php:280
 msgid "View it in your browser"
-msgstr ""
+msgstr "Kendi tarayıcınızda görüntüleyin"
 
 #: classes/class-sendpress-tour.php:70
 msgid "Welcome to SendPress"
-msgstr ""
+msgstr "SendPress 'e Hoşgeldiniz"
 
 #: classes/class-sendpress-tour.php:71
 msgid ""
 "You've just installed SendPress! Click &ldquo;Start Tour&rdquo; to view a "
 "quick introduction of this plugins core functionality."
-msgstr ""
+msgstr "SendPress 'i yüklediniz! SendPress hakkında kısa bir bilgi almak istiyorsanız &quot;Turu Başlat&quot; 'a Tıklayınız."
 
 #: classes/class-sendpress-tour.php:76
 msgid "Start Tour"
-msgstr ""
+msgstr "Tura Başla"
 
 #: classes/class-sendpress-tour.php:90
 #: classes/views/class-sendpress-view-emails-edit.php:450
@@ -844,30 +847,30 @@ msgstr ""
 #: classes/views/class-sendpress-view-queue.php:243
 #: classes/views/class-sendpress-view-settings-account.php:483
 msgid "Close"
-msgstr ""
+msgstr "Kapat"
 
 #: classes/class-sendpress-tour.php:112
 msgid "Help Make SendPress Better"
-msgstr ""
+msgstr "SendPress 'i iyileştirmeye yardım et"
 
 #: classes/class-sendpress-tour.php:113
 msgid ""
-"You've just installed SendPres. Please helps us improve it by allowing us to "
-"gather anonymous usage stats so we know which configurations, plugins and "
+"You've just installed SendPres. Please helps us improve it by allowing us to"
+" gather anonymous usage stats so we know which configurations, plugins and "
 "themes to test with."
-msgstr ""
+msgstr "Tebrikler SendPress 'i Yüklediniz. Lütfen bize anonim kullanıcı istatistik bilgilerini toplamakda yardımcı olun. Böylelikle hangi ayarlar, eklentiler ve temalar ile kullanılabilirğimizi test edelim."
 
 #: classes/class-sendpress-tour.php:118
 msgid "Allow tracking"
-msgstr ""
+msgstr "İzlemeye İzinver"
 
 #: classes/class-sendpress-tour.php:124
 msgid "Do not allow tracking"
-msgstr ""
+msgstr "İzlemeye izin verme"
 
 #: classes/class-sendpress-tracking.php:142
 msgid "You do not have sufficient permissions to access this page."
-msgstr ""
+msgstr "Bu sayfaya erişmek için yeterli izniniz yok."
 
 #: classes/class-sendpress-tracking.php:149
 #: classes/views/class-sendpress-view-emails-edit.php:121
@@ -875,7 +878,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-systememailedit.php:94
 #: sendpress.php:1135 sendpress.php:1142 sendpress.php:1150
 msgid "Update"
-msgstr ""
+msgstr "Güncelle"
 
 #: classes/class-sendpress-widget-forms.php:24
 msgid "Displays a form so your users can interact with SendPress."
@@ -888,7 +891,7 @@ msgstr ""
 #: classes/class-sendpress-widget-forms.php:89
 #: classes/class-sendpress-widget-signup.php:204
 msgid "Title:"
-msgstr ""
+msgstr "Başlık:"
 
 #: classes/class-sendpress-widget-forms.php:101
 msgid "Form to Display:"
@@ -898,11 +901,11 @@ msgstr ""
 msgid ""
 "Displays a signup form so your users can sign up for your public e-mail "
 "lists."
-msgstr ""
+msgstr "Kullanıcılarınızın genel e-posta listelerine kayıt olabilmesi için, Kayıt formu ekler."
 
 #: classes/class-sendpress-widget-signup.php:33
 msgid "SendPress Signup"
-msgstr ""
+msgstr "SendPress Kayıt"
 
 #: classes/class-sendpress-widget-signup.php:76
 msgid "NO LIST HAS BEEN SELECTED IN SENDPRESS WIDGET SETTINGS"
@@ -912,17 +915,17 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-edit.php:365
 #: classes/views/class-sendpress-view-emails-systememailedit.php:329
 msgid "First Name"
-msgstr ""
+msgstr "Ad"
 
 #: classes/class-sendpress-widget-signup.php:172
 #: classes/views/class-sendpress-view-emails-edit.php:370
 #: classes/views/class-sendpress-view-emails-systememailedit.php:334
 msgid "Last Name"
-msgstr ""
+msgstr "Soyad"
 
 #: classes/class-sendpress-widget-signup.php:173
 msgid "E-Mail"
-msgstr ""
+msgstr "E-Posta"
 
 #: classes/class-sendpress-widget-signup.php:174
 msgid "List Selection"
@@ -933,27 +936,27 @@ msgstr ""
 #: classes/views/class-sendpress-view-subscribers-add.php:91
 #: classes/views/class-sendpress-view-subscribers-add.php:109
 msgid "Submit"
-msgstr ""
+msgstr "Gönder"
 
 #: classes/class-sendpress-widget-signup.php:178
 msgid "Check your inbox now to confirm your subscription."
-msgstr ""
+msgstr "Aboneliğinizi aktifleştirmek için lütfen e-posta 'nızı kontrol ediniz."
 
 #: classes/class-sendpress-widget-signup.php:209
 #: classes/views/class-sendpress-view-settings-widgets.php:276
 #: classes/views/class-sendpress-view-settings-widgets.php:485
 msgid "Description:"
-msgstr ""
+msgstr "Açıklama:"
 
 #: classes/class-sendpress-widget-signup.php:216
 #: classes/views/class-sendpress-view-settings-widgets.php:343
 msgid "Collect First Name"
-msgstr ""
+msgstr "İsimleri Alın"
 
 #: classes/class-sendpress-widget-signup.php:221
 #: classes/views/class-sendpress-view-settings-widgets.php:354
 msgid "Collect Last Name"
-msgstr ""
+msgstr "Soyadları Alın"
 
 #: classes/class-sendpress-widget-signup.php:225
 #: classes/views/class-sendpress-view-settings-widgets.php:375
@@ -963,13 +966,13 @@ msgstr ""
 #: classes/class-sendpress-widget-signup.php:226
 #: classes/views/class-sendpress-view-settings-widgets.php:376
 msgid "Yes"
-msgstr ""
+msgstr "Evet"
 
 #: classes/class-sendpress-widget-signup.php:227
 #: classes/views/class-sendpress-view-settings-activation.php:68
 #: classes/views/class-sendpress-view-settings-widgets.php:377
 msgid "No"
-msgstr ""
+msgstr "Hayır"
 
 #: classes/class-sendpress-widget-signup.php:232
 msgid "Check all lists by default"
@@ -978,22 +981,22 @@ msgstr ""
 #: classes/class-sendpress-widget-signup.php:237
 #: classes/views/class-sendpress-view-settings-widgets.php:286
 msgid "First Name Label:"
-msgstr ""
+msgstr "Ad Etiketi:"
 
 #: classes/class-sendpress-widget-signup.php:242
 #: classes/views/class-sendpress-view-settings-widgets.php:291
 msgid "Last Name Label:"
-msgstr ""
+msgstr "Soyad Etiketi:"
 
 #: classes/class-sendpress-widget-signup.php:247
 #: classes/views/class-sendpress-view-settings-widgets.php:301
 msgid "E-Mail Label:"
-msgstr ""
+msgstr "E-Posta Etiketi:"
 
 #: classes/class-sendpress-widget-signup.php:252
 #: classes/views/class-sendpress-view-settings-widgets.php:306
 msgid "Button Text:"
-msgstr ""
+msgstr "Düğme Yazısı:"
 
 #: classes/class-sendpress-widget-signup.php:256
 #: classes/views/class-sendpress-view-settings-widgets.php:311
@@ -1012,7 +1015,7 @@ msgstr ""
 #: classes/class-sendpress-widget-signup.php:282
 #: classes/views/class-sendpress-view-settings-widgets.php:316
 msgid "Thank you message:"
-msgstr ""
+msgstr "Teşekkürler Mesajı:"
 
 #: classes/class-sendpress-widget-signup.php:287
 #: classes/views/class-sendpress-view-settings-widgets.php:381
@@ -1027,7 +1030,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-advanced.php:228
 #: classes/views/class-sendpress-view-settings-widgets.php:386
 msgid "Default"
-msgstr ""
+msgstr "Varsayılan"
 
 #: classes/modules/class-sendpress-module-empty.php:13
 msgid "More Coming Soon!"
@@ -1055,8 +1058,8 @@ msgstr ""
 
 #: classes/modules/class-sendpress-module-pro.php:43
 msgid ""
-"Enter your API key to enable premium support and automatic updates. Get your "
-"API key by logging into <a href=\"%s\">SendPress.com</a>."
+"Enter your API key to enable premium support and automatic updates. Get your"
+" API key by logging into <a href=\"%s\">SendPress.com</a>."
 msgstr ""
 
 #: classes/modules/class-sendpress-module-pro.php:60
@@ -1065,21 +1068,21 @@ msgstr ""
 
 #: classes/modules/class-sendpress-module-pro.php:68
 msgid "Buy Now"
-msgstr ""
+msgstr "Şimdi Al"
 
 #: classes/modules/class-sendpress-module-pro.php:76
 #: classes/modules/class-sendpress-module.php:94
 #: classes/modules/class-sendpress-module.php:118
 #: classes/modules/class-sendpress-module.php:140
 msgid "Deactivate"
-msgstr ""
+msgstr "Etkisizleştir"
 
 #: classes/modules/class-sendpress-module-pro.php:84
 #: classes/modules/class-sendpress-module.php:72
 #: classes/modules/class-sendpress-module.php:80
 #: classes/views/class-sendpress-view-settings-account.php:241
 msgid "Activate"
-msgstr ""
+msgstr "Etkinleştir"
 
 #: classes/modules/class-sendpress-module-reports.php:18
 #: classes/views/class-sendpress-view-overview.php:283
@@ -1088,8 +1091,8 @@ msgstr ""
 
 #: classes/modules/class-sendpress-module-reports.php:21
 msgid ""
-"Add more details to your reports. See who clicked what and when. What device "
-"they used and where they were."
+"Add more details to your reports. See who clicked what and when. What device"
+" they used and where they were."
 msgstr ""
 
 #: classes/modules/class-sendpress-module-spam-test.php:18
@@ -1098,11 +1101,11 @@ msgstr ""
 
 #: classes/public-views/class-sendpress-public-view-confirm.php:60
 msgid "Thank you for signing up!"
-msgstr ""
+msgstr "Kayıt olduğunuz için teşekkür ederiz!"
 
 #: classes/public-views/class-sendpress-public-view-confirm.php:61
 msgid "You're all set, and should start receiving emails soon."
-msgstr ""
+msgstr "Tamamen hazırsınız, kısa sürede e-posta almaya başlıycaksınız."
 
 #: classes/public-views/class-sendpress-public-view-form.php:38
 #: classes/public-views/class-sendpress-public-view-post.php:48
@@ -1134,23 +1137,23 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-widgets.php:174
 #: classes/views/class-sendpress-view-settings.php:48
 msgid "Forms"
-msgstr ""
+msgstr "Formlar"
 
 #: classes/sc/class-sendpress-sc-forms.php:118
 msgid "Signup Date"
-msgstr ""
+msgstr "Kayıt Tarihi"
 
 #: classes/sc/class-sendpress-sc-forms.php:124
 msgid "Saved"
-msgstr ""
+msgstr "Kaydedildi"
 
 #: classes/sc/class-sendpress-sc-forms.php:125
 msgid "Your subscriptions have been updated. Thanks."
-msgstr ""
+msgstr "Aboneliğiniz güncellendi. Teşekkürler."
 
 #: classes/sc/class-sendpress-sc-forms.php:130
 msgid "You are subscribed to the following lists:"
-msgstr ""
+msgstr "Aşağıdaki listelere abone oldunuz:"
 
 #: classes/sc/class-sendpress-sc-forms.php:218
 #: classes/sc/class-sendpress-sc-signup.php:51
@@ -1187,18 +1190,18 @@ msgid ""
 "(defaults to left)<br><b>alternate</b> - when writing posts, alternate the "
 "thumbnail images. (defaults to false)<br><b>readmoretext</b> - the text for "
 "the readmore link (defaults to Read More)<br><b>columns</b> - the number of "
-"columns your posts should display in.  Max number of columns is 3."
-"<br><b>datespan</b> - number of days of posts to render.  Can be set to "
+"columns your posts should display in.  Max number of columns is "
+"3.<br><b>datespan</b> - number of days of posts to render.  Can be set to "
 "\"daily\", \"weekly\", or a number of days (datespan=3 for the last three "
-"days for exmaple) (defaults to daily.)<br><b>displayimages</b> - Set to true "
-"by default, set to false if you want no images to display."
-"<br><b>display_author</b> - Set to false by default, set to true the author "
-"link will display."
+"days for exmaple) (defaults to daily.)<br><b>displayimages</b> - Set to true"
+" by default, set to false if you want no images to "
+"display.<br><b>display_author</b> - Set to false by default, set to true the"
+" author link will display."
 msgstr ""
 
 #: classes/sc/class-sendpress-sc-signup.php:18
 msgid "Signup"
-msgstr ""
+msgstr "Üye ol"
 
 #: classes/sc/class-sendpress-sc-signup.php:170
 msgid ""
@@ -1256,7 +1259,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-styles.php:100
 #: classes/views/class-sendpress-view.php:76 sendpress.php:1170
 msgid "Cancel"
-msgstr ""
+msgstr "Iptal"
 
 #: classes/views/class-sendpress-view-emails-autoedit.php:85
 #: classes/views/class-sendpress-view-emails-footer.php:34
@@ -1276,7 +1279,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-subscribers-subscriber.php:123
 #: classes/views/class-sendpress-view.php:76
 msgid "Save"
-msgstr ""
+msgstr "Kayıt"
 
 #: classes/views/class-sendpress-view-emails-autoedit.php:91
 msgid "Autoresponder Settings"
@@ -1300,12 +1303,12 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-tempclone.php:40
 #: sendpress.php:1138 sendpress.php:1165
 msgid "Save & Next"
-msgstr ""
+msgstr "Kaydet & Sonraki"
 
 #: classes/views/class-sendpress-view-emails-create.php:75
 #: classes/views/class-sendpress-view-emails.php:300
 msgid "Create Email"
-msgstr ""
+msgstr "E-Posta Yarat"
 
 #: classes/views/class-sendpress-view-emails-create.php:109
 msgid "1.0 Template"
@@ -1344,12 +1347,12 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-edit.php:141
 #: classes/views/class-sendpress-view-emails-systememailedit.php:107
 msgid "Main Content"
-msgstr ""
+msgstr "Ana içerik"
 
 #: classes/views/class-sendpress-view-emails-edit.php:144
 #: classes/views/class-sendpress-view-emails-systememailedit.php:110
 msgid "Header"
-msgstr ""
+msgstr "Başlık"
 
 #: classes/views/class-sendpress-view-emails-edit.php:272
 #: classes/views/class-sendpress-view-emails-style.php:151
@@ -1367,7 +1370,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-systememailedit.php:248
 #: classes/views/class-sendpress-view-emails.php:105
 msgid "Single Post"
-msgstr ""
+msgstr "Tekil Yazı"
 
 #: classes/views/class-sendpress-view-emails-edit.php:285
 #: classes/views/class-sendpress-view-emails-systememailedit.php:249
@@ -1379,7 +1382,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-systememailedit.php:263
 #: classes/views/class-sendpress-view-emails.php:120
 msgid "Search Posts"
-msgstr ""
+msgstr "Yazılarda Ara"
 
 #: classes/views/class-sendpress-view-emails-edit.php:301
 #: classes/views/class-sendpress-view-emails-systememailedit.php:265
@@ -1415,7 +1418,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-edit.php:343
 #: classes/views/class-sendpress-view-emails-systememailedit.php:307
 msgid "Excerpt"
-msgstr ""
+msgstr "Özet"
 
 #: classes/views/class-sendpress-view-emails-edit.php:347
 #: classes/views/class-sendpress-view-emails-systememailedit.php:311
@@ -1443,7 +1446,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-systememailedit.php:394
 #: classes/views/class-sendpress-view-emails-systememailedit.php:399
 msgid "Insert"
-msgstr ""
+msgstr "Gir"
 
 #: classes/views/class-sendpress-view-emails-edit.php:353
 #: classes/views/class-sendpress-view-emails-systememailedit.php:317
@@ -1457,7 +1460,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-systememailedit.php:351
 #: classes/views/class-sendpress-view-emails-systememailedit.php:380
 msgid "Description"
-msgstr ""
+msgstr "Açıklama"
 
 #: classes/views/class-sendpress-view-emails-edit.php:359
 #: classes/views/class-sendpress-view-emails-edit.php:388
@@ -1466,7 +1469,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-systememailedit.php:352
 #: classes/views/class-sendpress-view-emails-systememailedit.php:381
 msgid "Code"
-msgstr ""
+msgstr "Kod"
 
 #: classes/views/class-sendpress-view-emails-edit.php:382
 #: classes/views/class-sendpress-view-emails-systememailedit.php:346
@@ -1506,7 +1509,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-edit.php:428
 #: classes/views/class-sendpress-view-emails-systememailedit.php:392
 msgid "Current Time"
-msgstr ""
+msgstr "Şuanki saat"
 
 #: classes/views/class-sendpress-view-emails-edit.php:433
 #: classes/views/class-sendpress-view-emails-systememailedit.php:397
@@ -1571,7 +1574,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-postnotifications.php:47
 #: classes/views/class-sendpress-view-emails-templates.php:56
 msgid "Upgrade to Pro"
-msgstr ""
+msgstr "Pro sürümüne yükselt"
 
 #: classes/views/class-sendpress-view-emails-postnotifications.php:48
 #: classes/views/class-sendpress-view-emails-templates.php:57
@@ -1592,7 +1595,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-send-cancel.php:47
 #: classes/views/class-sendpress-view-overview.php:211
 msgid "Date"
-msgstr ""
+msgstr "Terih"
 
 #: classes/views/class-sendpress-view-emails-send-cancel.php:50
 msgid "Delete Scheduled Email"
@@ -1601,11 +1604,11 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-send-confirm.php:89
 #: classes/views/class-sendpress-view-emails-send-confirm.php:95
 msgid "Confirm Send"
-msgstr ""
+msgstr "Onayla & Gönder"
 
 #: classes/views/class-sendpress-view-emails-send-confirm.php:93
 msgid "Cancel Send"
-msgstr ""
+msgstr "Iptal & Gönder"
 
 #: classes/views/class-sendpress-view-emails-send-confirm.php:106
 #: classes/views/class-sendpress-view-emails-send.php:115
@@ -1614,7 +1617,7 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-emails-send-confirm.php:129
 msgid "No Lists Selected"
-msgstr ""
+msgstr "Hiç Bir Liste Seçilmedi"
 
 #: classes/views/class-sendpress-view-emails-send-confirm.php:137
 #: classes/views/class-sendpress-view-emails-send.php:191
@@ -1634,7 +1637,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-send-confirm.php:170
 #: classes/views/class-sendpress-view-emails-send.php:230
 msgid "here"
-msgstr ""
+msgstr "bulabilirsiniz"
 
 #: classes/views/class-sendpress-view-emails-send-queue.php:57
 msgid "Adding Subscribers to Queue"
@@ -1642,13 +1645,13 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-emails-send.php:82
 msgid ""
-"<strong>Notice!</strong> You must select a list below before an email can be "
-"sent."
+"<strong>Notice!</strong> You must select a list below before an email can be"
+" sent."
 msgstr ""
 
 #: classes/views/class-sendpress-view-emails-send.php:102
 msgid "Send Email"
-msgstr ""
+msgstr "E-Posta Gönder"
 
 #: classes/views/class-sendpress-view-emails-send.php:116
 msgid "Start Sending Now"
@@ -1660,7 +1663,7 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-emails-send.php:193
 msgid "Test"
-msgstr ""
+msgstr "Test"
 
 #: classes/views/class-sendpress-view-emails-social.php:45
 #: classes/views/class-sendpress-view-settings-shared.php:44
@@ -1672,12 +1675,12 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-social.php:50
 #: classes/views/class-sendpress-view-settings-shared.php:49
 msgid "Large"
-msgstr ""
+msgstr "Büyük"
 
 #: classes/views/class-sendpress-view-emails-social.php:54
 #: classes/views/class-sendpress-view-settings-shared.php:53
 msgid "Small"
-msgstr ""
+msgstr "Küçük"
 
 #: classes/views/class-sendpress-view-emails-social.php:58
 #: classes/views/class-sendpress-view-emails-tempstyle.php:114
@@ -1686,7 +1689,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-tempstyle.php:244
 #: classes/views/class-sendpress-view-settings-shared.php:57
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #: classes/views/class-sendpress-view-emails-systememail.php:30
 msgid "Create System E-mail"
@@ -1710,12 +1713,12 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-temp.php:67
 #: classes/views/class-sendpress-view-emails.php:59
 msgid "Templates"
-msgstr ""
+msgstr "Temalar"
 
 #: classes/views/class-sendpress-view-emails-temp.php:68 sendpress.php:1302
 #: sendpress.php:1350
 msgid "Help"
-msgstr ""
+msgstr "Yardım"
 
 #: classes/views/class-sendpress-view-emails-temp.php:68
 msgid "Getting Started with Templates"
@@ -1769,7 +1772,7 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-emails-tempstyle.php:92
 msgid "Page"
-msgstr ""
+msgstr "Sayfa"
 
 #: classes/views/class-sendpress-view-emails-tempstyle.php:98
 msgid "Edit Page Header HTML"
@@ -1780,13 +1783,13 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails-tempstyle.php:186
 #: classes/views/class-sendpress-view-emails-tempstyle.php:237
 msgid "Background"
-msgstr ""
+msgstr "Arkaplan"
 
 #: classes/views/class-sendpress-view-emails-tempstyle.php:121
 #: classes/views/class-sendpress-view-emails-tempstyle.php:209
 #: classes/views/class-sendpress-view-emails-tempstyle.php:251
 msgid "Link"
-msgstr ""
+msgstr "Bağlantı"
 
 #: classes/views/class-sendpress-view-emails-tempstyle.php:124
 msgid "Edit Page Footer HTML"
@@ -1814,14 +1817,14 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings.php:25
 #: classes/views/class-sendpress-view-subscribers.php:53
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Navigasyona Geçiş Yap"
 
 #: classes/views/class-sendpress-view-emails.php:42
 #: classes/views/class-sendpress-view-settings-access.php:129
 #: classes/views/class-sendpress-view-settings-advanced.php:228
 #: sendpress.php:1266 sendpress.php:1330
 msgid "Emails"
-msgstr ""
+msgstr "Emailler"
 
 #: classes/views/class-sendpress-view-emails.php:48
 #: classes/views/class-sendpress-view-reports.php:45
@@ -1839,7 +1842,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-emails.php:66
 #: classes/views/class-sendpress-view-settings-shared.php:40
 msgid "Social Icons"
-msgstr ""
+msgstr "Sosyal simgeler"
 
 #: classes/views/class-sendpress-view-emails.php:69
 #: classes/views/class-sendpress-view-overview.php:285
@@ -1856,7 +1859,7 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-emails.php:85
 msgid "System Email"
-msgstr ""
+msgstr "Sistem E-Postası"
 
 #: classes/views/class-sendpress-view-help.php:26
 msgid "SendPress Editor Button"
@@ -1917,7 +1920,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-help.php:111
 #: classes/views/class-sendpress-view-help.php:112
 msgid " MByte"
-msgstr ""
+msgstr "MByte"
 
 #: classes/views/class-sendpress-view-help.php:152
 msgid "Support Info"
@@ -1931,7 +1934,7 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-help.php:279
 msgid "Configure"
-msgstr ""
+msgstr "Yapılandırma"
 
 #: classes/views/class-sendpress-view-overview.php:42
 msgid "Emails Actively Sending"
@@ -1970,7 +1973,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-reports-tests.php:48
 #: classes/views/class-sendpress-view-reports.php:83
 msgid "Total"
-msgstr ""
+msgstr "Toplam"
 
 #: classes/views/class-sendpress-view-overview.php:128
 #: classes/views/class-sendpress-view-overview.php:182
@@ -2002,7 +2005,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-queue-all.php:78
 #: classes/views/class-sendpress-view-settings-advanced.php:226
 msgid "Days"
-msgstr ""
+msgstr "Gün"
 
 #: classes/views/class-sendpress-view-queue-all.php:79
 #: classes/views/class-sendpress-view-queue-stuck.php:130
@@ -2013,7 +2016,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-queue-all.php:79
 #: classes/views/class-sendpress-view-settings.php:49
 msgid "Advanced"
-msgstr ""
+msgstr "Gelişmiş"
 
 #: classes/views/class-sendpress-view-queue-errors.php:63
 msgid "Error history for the last 2 Weeks"
@@ -2032,12 +2035,12 @@ msgstr ""
 #: classes/views/class-sendpress-view-queue-stuck.php:111
 #: classes/views/class-sendpress-view-queue.php:165
 msgid "Send Emails Now"
-msgstr ""
+msgstr "Şimdi e-posta gönderin"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:118
 #: classes/views/class-sendpress-view-queue.php:171
 msgid "Unlimited"
-msgstr ""
+msgstr "Sınırsız"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:128
 #: classes/views/class-sendpress-view-queue-stuck.php:129
@@ -2061,7 +2064,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-queue.php:185
 #: classes/views/class-sendpress-view-queue.php:240
 msgid "Sending Account"
-msgstr ""
+msgstr "Gönderen Hesabı"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:136
 msgid "The cron will run again around"
@@ -2091,22 +2094,22 @@ msgstr ""
 #: classes/views/class-sendpress-view-subscribers-all.php:117
 #: classes/views/class-sendpress-view-subscribers-subscribers.php:96
 msgid "No! I was Joking"
-msgstr ""
+msgstr "Hayır! Sadece Şaka Yapıyorum"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:170
 #: classes/views/class-sendpress-view-queue.php:219
 msgid "Yes! Delete All Emails"
-msgstr ""
+msgstr "Evet! Tüm e-postaları Sil"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:180
 #: classes/views/class-sendpress-view-queue.php:229
 msgid "Sending Emails"
-msgstr ""
+msgstr "E-postalar gönderiliyor"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:188
 #: classes/views/class-sendpress-view-queue.php:237
 msgid "of"
-msgstr ""
+msgstr "na"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:188
 msgid "emails"
@@ -2118,7 +2121,7 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-queue-stuck.php:202
 msgid "seconds"
-msgstr ""
+msgstr "saniye"
 
 #: classes/views/class-sendpress-view-queue-stuck.php:203
 #: classes/views/class-sendpress-view-queue.php:239
@@ -2138,7 +2141,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-queue-stuck.php:207
 #: classes/views/class-sendpress-view-queue.php:243
 msgid "If you close this window sending will stop. "
-msgstr ""
+msgstr "Bu pencereyi kapatırsanız gönderim durdurulur."
 
 #: classes/views/class-sendpress-view-queue.php:41
 msgid "Queues"
@@ -2162,16 +2165,16 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-queue.php:205
 msgid "Delete All Emails in the Queue"
-msgstr ""
+msgstr "Dizideki tüm e-posta ları silin"
 
 #: classes/views/class-sendpress-view-queue.php:213
 msgid "Really? Delete All Emails in the Queue."
-msgstr ""
+msgstr "Gerçekten ? Dizideki tüm e-posta ları silmek istiyormusunuz ?"
 
 #: classes/views/class-sendpress-view-queue.php:216
 msgid ""
 "This will remove all emails from the queue without attempting to send them"
-msgstr ""
+msgstr "Bu; dizideki tüm e-postaları göndermeden silecektir."
 
 #: classes/views/class-sendpress-view-queue.php:237
 msgid "emails left to send"
@@ -2200,11 +2203,11 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-access.php:130
 #: sendpress.php:1274 sendpress.php:1334
 msgid "Reports"
-msgstr ""
+msgstr "Raporlar"
 
 #: classes/views/class-sendpress-view-reports.php:48
 msgid "Tests"
-msgstr ""
+msgstr "Testler"
 
 #: classes/views/class-sendpress-view-reports.php:79
 msgid "Information"
@@ -2212,36 +2215,36 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings-access.php:128
 msgid "Role"
-msgstr ""
+msgstr "Rol"
 
 #: classes/views/class-sendpress-view-settings-access.php:133
 #: sendpress.php:1288 sendpress.php:1342
 msgid "Queue"
-msgstr ""
+msgstr "Durum"
 
 #: classes/views/class-sendpress-view-settings-access.php:134
 msgid "Add-ons"
-msgstr ""
+msgstr "Eklentiler"
 
 #: classes/views/class-sendpress-view-settings-access.php:174
 msgid "Create/Edit/Delete"
-msgstr ""
+msgstr "Oluştur / Düzenle / Sil"
 
 #: classes/views/class-sendpress-view-settings-access.php:184
 #: classes/views/class-sendpress-view-settings-access.php:189
 #: classes/views/class-sendpress-view-settings-access.php:206
 #: classes/views/class-sendpress-view-settings-access.php:212
 msgid "Full Access"
-msgstr ""
+msgstr "Tam Erişim"
 
 #: classes/views/class-sendpress-view-settings-access.php:194
 msgid "Full Access (<small>No Permissions Access</small>)"
-msgstr ""
+msgstr "Tam Erişim <small>(Erişim izni Yok)</small>"
 
 #: classes/views/class-sendpress-view-settings-account.php:99
 #: classes/views/class-sendpress-view-settings-account.php:123
 msgid "From Name"
-msgstr ""
+msgstr "Gönderen Adı"
 
 #: classes/views/class-sendpress-view-settings-account.php:121
 msgid "Sending Email"
@@ -2257,11 +2260,11 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings-account.php:142
 msgid "Send Test!"
-msgstr ""
+msgstr "Testi gönder!"
 
 #: classes/views/class-sendpress-view-settings-account.php:145
 msgid "Debug Info"
-msgstr ""
+msgstr "Hata ayıklama bilgisi"
 
 #: classes/views/class-sendpress-view-settings-account.php:155
 msgid "Click to View Last Error"
@@ -2309,13 +2312,13 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings-account.php:302
 msgid ""
-"Squares or weird characters displaying in your emails select the charset for "
-"your language"
+"Squares or weird characters displaying in your emails select the charset for"
+" your language"
 msgstr ""
 
 #: classes/views/class-sendpress-view-settings-account.php:304
 msgid "Encoding"
-msgstr ""
+msgstr "Kodlama"
 
 #: classes/views/class-sendpress-view-settings-account.php:318
 msgid "Older versions of SendPress used"
@@ -2355,14 +2358,14 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings-account.php:358
 msgid ""
-"AutoCron will check your site every minute until all your emails are sent or "
-"you hit the defined sending limit to the right"
+"AutoCron will check your site every minute until all your emails are sent or"
+" you hit the defined sending limit to the right"
 msgstr ""
 
 #: classes/views/class-sendpress-view-settings-account.php:360
 msgid ""
-"AutoCron sends 25 emails per execution so on average you can send about 1500 "
-"emails an hour"
+"AutoCron sends 25 emails per execution so on average you can send about 1500"
+" emails an hour"
 msgstr ""
 
 #: classes/views/class-sendpress-view-settings-account.php:362
@@ -2383,23 +2386,23 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings-account.php:428
 msgid "SMTP Debug Info"
-msgstr ""
+msgstr "SMTP hata ayıklama Bilgisi"
 
 #: classes/views/class-sendpress-view-settings-account.php:446
 msgid "Port 25 seems to be blocked."
-msgstr ""
+msgstr "Port 25 bloke gibi görünüyor."
 
 #: classes/views/class-sendpress-view-settings-account.php:452
 msgid "Port 465 seems to be blocked. Gmail may have trouble"
-msgstr ""
+msgstr "Port 465 bloke gibi görünüyor. Sorun Gmail 'den olabilir"
 
 #: classes/views/class-sendpress-view-settings-account.php:458
 msgid "Port 587 seems to be blocked."
-msgstr ""
+msgstr "Port 587 bloke gibi görünüyor."
 
 #: classes/views/class-sendpress-view-settings-account.php:475
 msgid "No Debug info saved."
-msgstr ""
+msgstr "Hiçbir hata bilgisi kaydedilmedi."
 
 #: classes/views/class-sendpress-view-settings-activation.php:62
 msgid "Public Page Settings"
@@ -2415,7 +2418,7 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings-activation.php:69
 msgid "and"
-msgstr ""
+msgstr "ve"
 
 #: classes/views/class-sendpress-view-settings-activation.php:69
 msgid "to build the SendPress default public pages"
@@ -2448,13 +2451,13 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-activation.php:285
 #: classes/views/class-sendpress-view-subscribers-listform.php:102
 msgid "Select page"
-msgstr ""
+msgstr "Sayfa seçin"
 
 #: classes/views/class-sendpress-view-settings-activation.php:97
 #: classes/views/class-sendpress-view-settings-activation.php:124
 #: classes/views/class-sendpress-view-settings-activation.php:150
 msgid "View Page"
-msgstr ""
+msgstr "Sayfayı Görüntüle"
 
 #: classes/views/class-sendpress-view-settings-activation.php:99
 msgid "Unsubscribe Page"
@@ -2496,7 +2499,7 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings-activation.php:178
 msgid "Body"
-msgstr ""
+msgstr "Vücut"
 
 #: classes/views/class-sendpress-view-settings-activation.php:190
 msgid "Send Double Opt-in Email"
@@ -2553,15 +2556,15 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings-advanced.php:140
 msgid "Disable front end CSS"
-msgstr ""
+msgstr "Ön panel CSS devre dışı"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:142
 msgid "Disable signup form ajax"
-msgstr ""
+msgstr "ajax kayıt formu devre dışı"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:145
 msgid "Load Javascript in Footer"
-msgstr ""
+msgstr "Javascript 'i Footer 'a Yükle"
 
 #: classes/views/class-sendpress-view-settings-advanced.php:152
 msgid "Use Shortcodes in Widgets"
@@ -2572,7 +2575,8 @@ msgid "Want to use Shortcodes in your Widgets, but all you get is"
 msgstr ""
 
 #: classes/views/class-sendpress-view-settings-advanced.php:155
-msgid "Turn on this option and we'll make sure your shortcodes work in widgets"
+msgid ""
+"Turn on this option and we'll make sure your shortcodes work in widgets"
 msgstr ""
 
 #: classes/views/class-sendpress-view-settings-advanced.php:164
@@ -2627,8 +2631,8 @@ msgstr ""
 msgid ""
 "To maintain a plugin as big as SendPress, we need to know what we're "
 "dealing: what kinds of other plugins our users are using, what themes, etc. "
-"Please allow us to track that data from your install. It will add your email "
-"to our support system to assist in AutoCron problems."
+"Please allow us to track that data from your install. It will add your email"
+" to our support system to assist in AutoCron problems."
 msgstr ""
 
 #: classes/views/class-sendpress-view-settings-advanced.php:214
@@ -2639,8 +2643,8 @@ msgstr ""
 msgid ""
 "Please take care when changing these settings. We have attempted to set "
 "these to work on almost all servers. If you have a faster server you may be "
-"able to increase the limits below or if you are having troubles you may need "
-"to decrease the settings"
+"able to increase the limits below or if you are having troubles you may need"
+" to decrease the settings"
 msgstr ""
 
 #: classes/views/class-sendpress-view-settings-advanced.php:219
@@ -2733,17 +2737,17 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-notifications.php:83
 #: classes/views/class-sendpress-view-settings-notifications.php:93
 msgid "Daily"
-msgstr ""
+msgstr "Günlük"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:85
 #: classes/views/class-sendpress-view-settings-notifications.php:95
 msgid "Weekly"
-msgstr ""
+msgstr "Haftalık"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:87
 #: classes/views/class-sendpress-view-settings-notifications.php:97
 msgid "Monthly"
-msgstr ""
+msgstr "Aylık"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:89
 msgid "User Unsbscribed"
@@ -2759,7 +2763,7 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings-notifications.php:109
 msgid "API Key"
-msgstr ""
+msgstr "API Anahtarı"
 
 #: classes/views/class-sendpress-view-settings-notifications.php:109
 msgid "Where is my API key"
@@ -2787,15 +2791,15 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings-styles.php:128
 msgid "None"
-msgstr ""
+msgstr "None"
 
 #: classes/views/class-sendpress-view-settings-styles.php:138
 msgid "CAN-SPAM"
-msgstr ""
+msgstr "CAN-SPAM"
 
 #: classes/views/class-sendpress-view-settings-styles.php:138
 msgid "required in the US."
-msgstr ""
+msgstr "US. de gerekiyor."
 
 #: classes/views/class-sendpress-view-settings-styles.php:138
 msgid "This area displays in Email Footer"
@@ -2804,17 +2808,17 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-styles.php:140
 msgid ""
 "Your message must include your valid physical postal address. This can be "
-"your current street address, a post office box youve registered with the U."
-"S. Postal Service, or a private mailbox youve registered with a commercial "
-"mail receiving agency established under Postal Service regulations."
-msgstr ""
+"your current street address, a post office box youve registered with the "
+"U.S. Postal Service, or a private mailbox youve registered with a commercial"
+" mail receiving agency established under Postal Service regulations."
+msgstr "Mesajınızda gerçek posta adresinizin bulunması gerekiyor. Bu geçerli sokak adresiniz olabilir,  veya U.S. 'de kayıt yaptırdığınız Postane. Kullanabileceğiniz kurumlara ait posta adresleri olabilir."
 
 #: classes/views/class-sendpress-view-settings-styles.php:141
 msgid ""
-"This is dictated under the <a href=\"http://business.ftc.gov/documents/bus61-"
-"can-spam-act-compliance-guide-business\" target=\"_blank\">Federal CAN-SPAM "
-"Act of 2003</a>."
-msgstr ""
+"This is dictated under the <a href=\"http://business.ftc.gov/documents/bus61"
+"-can-spam-act-compliance-guide-business\" target=\"_blank\">Federal CAN-SPAM"
+" Act of 2003</a>."
+msgstr "<a href=\"http://business.ftc.gov/documents/bus61-can-spam-act-compliance-guide-business\" target=\"_blank\">2003 Federal CAN-SPAM Act</a> ile dikte edilmiştir ."
 
 #: classes/views/class-sendpress-view-settings-widgets.php:172
 msgid "Create Form"
@@ -2894,7 +2898,7 @@ msgstr ""
 #: classes/views/class-sendpress-view-settings-widgets.php:442
 #: classes/views/class-sendpress-view-subscribers.php:71
 msgid "Custom Fields"
-msgstr ""
+msgstr "Özel Alanlar"
 
 #: classes/views/class-sendpress-view-settings-widgets.php:482
 msgid "Manage Subscription Options"
@@ -2902,7 +2906,7 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings.php:36
 msgid "Basic Setup"
-msgstr ""
+msgstr "Temel Kurulum"
 
 #: classes/views/class-sendpress-view-settings.php:40
 msgid "Shared Content"
@@ -2918,7 +2922,7 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings.php:46
 msgid "Permissions"
-msgstr ""
+msgstr "İzinler"
 
 #: classes/views/class-sendpress-view-settings.php:47
 msgid "Notifications"
@@ -2926,13 +2930,13 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-settings.php:51
 msgid "Styles"
-msgstr ""
+msgstr "Stiller"
 
 #: classes/views/class-sendpress-view-subscribers-add.php:60
 #: classes/views/class-sendpress-view-subscribers-all.php:77
 #: classes/views/class-sendpress-view-subscribers-subscribers.php:55
 msgid "Add Subscriber"
-msgstr ""
+msgstr "Abone ekle"
 
 #: classes/views/class-sendpress-view-subscribers-add.php:70
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:107
@@ -2943,37 +2947,37 @@ msgstr ""
 #: classes/views/class-sendpress-view-subscribers-add.php:71
 #: classes/views/class-sendpress-view-subscribers-subscriber.php:145
 msgid "Firstname"
-msgstr ""
+msgstr "Ad"
 
 #: classes/views/class-sendpress-view-subscribers-add.php:72
 #: classes/views/class-sendpress-view-subscribers-subscriber.php:146
 msgid "Lastname"
-msgstr ""
+msgstr "Soyad"
 
 #: classes/views/class-sendpress-view-subscribers-add.php:73
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:106
 #: classes/views/class-sendpress-view-subscribers-subscriber.php:147
 msgid "Phone Number"
-msgstr ""
+msgstr "Telefon Numarası"
 
 #: classes/views/class-sendpress-view-subscribers-add.php:74
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:105
 msgid "Status"
-msgstr ""
+msgstr "Durum"
 
 #: classes/views/class-sendpress-view-subscribers-add.php:98
 msgid "Add Subscribers"
-msgstr ""
+msgstr "Abone ekle"
 
 #: classes/views/class-sendpress-view-subscribers-add.php:114
 msgid ""
-"Emails shoud be written in separate lines. A line could also include a name, "
-"which is separated from the email by a comma"
-msgstr ""
+"Emails shoud be written in separate lines. A line could also include a name,"
+" which is separated from the email by a comma"
+msgstr "e-Postalar alt alta girilmelidir. Satırlarda isimlerede yer verebilirsiniz, e-Posta dan sonra virgül ile ayırarak ekliyebilirsiniz. abc@x123.com, Ali KEMAL gibi"
 
 #: classes/views/class-sendpress-view-subscribers-add.php:115
 msgid "Correct formats"
-msgstr ""
+msgstr "Doğru biçim"
 
 #: classes/views/class-sendpress-view-subscribers-all.php:32
 #: classes/views/class-sendpress-view-subscribers-subscribers.php:20
@@ -3018,15 +3022,15 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:102
 msgid "First name"
-msgstr ""
+msgstr "İsim"
 
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:103
 msgid "Last name"
-msgstr ""
+msgstr "Soyadınız"
 
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:104
 msgid "IP address"
-msgstr ""
+msgstr "IP adresi"
 
 #: classes/views/class-sendpress-view-subscribers-csvprep.php:138
 msgid "We found"
@@ -3078,12 +3082,12 @@ msgstr ""
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:38
 #: classes/views/class-sendpress-view-subscribers.php:110
 msgid "Create List"
-msgstr ""
+msgstr "Liste Oluştur"
 
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:43
 #: classes/views/class-sendpress-view-subscribers-listedit.php:55
 msgid "Allow user to sign up to this list"
-msgstr ""
+msgstr "Kullanıcının bu listeye kayıt olabilmesi için izin ver."
 
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:43
 msgid "synced lists will be made private"
@@ -3092,8 +3096,8 @@ msgstr ""
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:44
 #: classes/views/class-sendpress-view-subscribers-listedit.php:56
 msgid ""
-"Mark list as test. Adds <span class=\"label label-info\">Test List</span> to "
-"list title every where."
+"Mark list as test. Adds <span class=\"label label-info\">Test List</span> to"
+" list title every where."
 msgstr ""
 
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:57
@@ -3104,8 +3108,8 @@ msgstr ""
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:58
 #: classes/views/class-sendpress-view-subscribers-listedit.php:59
 msgid ""
-"Pick SendPress list if you want to use SendPress to manage your subscribers. "
-"Pick a WordPress Role if you want to send emails to your users. <br>Synced "
+"Pick SendPress list if you want to use SendPress to manage your subscribers."
+" Pick a WordPress Role if you want to send emails to your users. <br>Synced "
 "lists can only have users that have a login to your WordPress site."
 msgstr ""
 
@@ -3126,7 +3130,7 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-subscribers-listedit.php:47
 msgid "Edit List"
-msgstr ""
+msgstr "Listeyi Düzenle"
 
 #: classes/views/class-sendpress-view-subscribers-listform.php:41
 msgid "Back to Lists"
@@ -3138,7 +3142,7 @@ msgstr ""
 
 #: classes/views/class-sendpress-view-subscribers-subscriber.php:126
 msgid "Edit Subscriber"
-msgstr ""
+msgstr "Abone Düzenle"
 
 #: classes/views/class-sendpress-view-subscribers-subscribers.php:81
 msgid "Remove All Subscribers from List"
@@ -3194,34 +3198,34 @@ msgstr ""
 
 #: sendpress.php:544 sendpress.php:555
 msgid "Warning!"
-msgstr ""
+msgstr "Uyarı!"
 
 #: sendpress.php:546
 msgid ""
-"  Before sending any emails please setup your <a href=\"%1s\">information</"
-"a>."
+"  Before sending any emails please setup your <a "
+"href=\"%1s\">information</a>."
 msgstr ""
 
 #: sendpress.php:557
 msgid ""
-"  Sending has been paused. You can resume sending on the <a href=\"%1s"
-"\">Queue</a> page."
+"  Sending has been paused. You can resume sending on the <a "
+"href=\"%1s\">Queue</a> page."
 msgstr ""
 
 #: sendpress.php:628
 msgid "Once Every Minute"
-msgstr ""
+msgstr "Her dakika bir kez"
 
 #: sendpress.php:775
 msgid ""
 "<b>SendPress</b>: We have upgraded your lists to a new format. Please check "
 "your <a href=\"%1$s\">widget settings</a> to re-enable your list(s). | <a "
 "href=\"%2$s\">Hide Notice</a>"
-msgstr ""
+msgstr "<b>SendPress</b>: Liste (ler) inizin formatlarını güncelledik. Listelerinizi yeniden aktifleştirmek için. Lütfen <a href=\"%1$s\">Widget ayarlarını</a> kontrol edin. | <a href=\"%2$s\">Bildirimi Sakla</a>"
 
 #: sendpress.php:1073 sendpress.php:1074
 msgid "Please enter your e-mail address"
-msgstr ""
+msgstr "E-posta adresinizi girin"
 
 #: sendpress.php:1075
 msgid ""
@@ -3231,29 +3235,29 @@ msgstr ""
 
 #: sendpress.php:1096
 msgid "Use this Image"
-msgstr ""
+msgstr "Bu resmi kullan"
 
 #: sendpress.php:1098
 msgid "Use as %s"
-msgstr ""
+msgstr "%s olarak kullan"
 
 #. #-#-#-#-#  sendpress.pot (SendPress Newsletters 1.8.11.2)  #-#-#-#-#
 #. Author of the plugin/theme
 #: sendpress.php:1244
 msgid "SendPress"
-msgstr ""
+msgstr "SendPress"
 
 #: sendpress.php:1246 sendpress.php:1309 sendpress.php:1354
 msgid "Pro"
-msgstr ""
+msgstr "Pro"
 
 #: sendpress.php:1258 sendpress.php:1327
 msgid "Overview"
-msgstr ""
+msgstr "Genel Bakış"
 
 #: sendpress.php:1810
 msgid "SendPress requires WordPress version %s or later."
-msgstr ""
+msgstr "SendPress WordPress sürüm% s veya sonraki sürümünü gerektirir."
 
 #. Plugin Name of the plugin/theme
 msgid "SendPress Newsletters"

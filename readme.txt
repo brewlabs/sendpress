@@ -3,8 +3,13 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 4.4
+<<<<<<< .merge_file_GS4mK4
 Tested up to: 4.8.2
 Stable tag: 1.8.10.20.1
+=======
+Tested up to: 4.8.3
+Stable tag: 1.8.11.5
+>>>>>>> .merge_file_gHb72P
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,7 +31,11 @@ SendPress Newsletters is an easy to use WordPress newsletter plugin that has all
 * **Customizable Newsletter Templates** with easy to use theme styler
 * Stat tracking for each email: clicks, opens and unsubscribes. 
 * Send with your web host or Gmail for free
+<<<<<<< .merge_file_GS4mK4
 * Verified compatible with: [Postman SMTP Mailer/Email Log](https://wordpress.org/plugins/postman-smtp/)
+=======
+* Verified compatible with: [Postman SMTP Mailer/Email Log](https://wordpress.org/plugins/post-smtp/)
+>>>>>>> .merge_file_gHb72P
 * **Scheduled Sending** of newsletters
 
 = Auto Cron =
@@ -1059,6 +1068,18 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 
 == Upgrade Notice ==
 
+<<<<<<< .merge_file_GS4mK4
+=======
+= 1.8.11.5 =
+* New translations from Transifex
+
+= 1.8.11.2 =
+Minor bug fixes and translation updates
+
+= 1.8.10.26 =
+Cron fixes and other minor updates
+
+>>>>>>> .merge_file_gHb72P
 = 1.8.10.20 =
 Update list sync and other minor bugs
 

@@ -20,7 +20,7 @@ class SendPress_Sender_Gmail extends SendPress_Sender {
 	<br>
 	With Google's recent changes to SMTP security, direct sending of email no longer works without allowing "less secure apps". Your can read more about that here: <a href="https://support.google.com/accounts/answer/6010255?hl=en">https://support.google.com/accounts/answer/6010255?hl=en</a>
 <br><br>
-For the best security we recommend <a href="https://wordpress.org/plugins/postman-smtp/">Postman SMTP</a>. Just configure <strong>Postman SMTP</strong> and set <strong>SendPress</strong> to send via your <strong>Website</strong>. <strong>Postman SMTP</strong> uses Googles new security setup to securely connect and send emails.
+For the best security we recommend <a href="https://wordpress.org/plugins/post-smtp/">Postman SMTP</a>. Just configure <strong>Postman SMTP</strong> and set <strong>SendPress</strong> to send via your <strong>Website</strong>. <strong>Postman SMTP</strong> uses Googles new security setup to securely connect and send emails.
 	<br><br>
 	<!--
 	You can still use the old sending option for now but we do not recommend enabling less secure apps in Google.

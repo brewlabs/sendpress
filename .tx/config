@@ -6,3 +6,4 @@ file_filter = languages/sendpress-<lang>.po
 source_file = languages/sendpress.pot
 source_lang = en_US
 type = PO
+

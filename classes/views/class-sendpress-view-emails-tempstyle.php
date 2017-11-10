@@ -263,12 +263,15 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
 </div>
 </div>
 <br><BR><BR>
+
 <?php wp_nonce_field($this->_nonce_value); ?>
 </form>
 
 <?php
 echo spnl_get_emails_tags_list();
 ?>
+<hr>
+<a class="btn btn-primary btn-large" target="_blank" href="http://docs.sendpress.com/article/58-setting-up-a-newsletter-template">Template Documentation Site</a>
 
 <?php
 

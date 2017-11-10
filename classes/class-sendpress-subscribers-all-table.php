@@ -329,7 +329,7 @@ class SendPress_Subscribers_All_Table extends WP_List_Table {
         select t1.* from `sp_sendpress_list_subscribers` as t1 , `sp_sendpress_subscribers` as t2
         where t1.subscriberID = t2.subscriberID and t1.listID = 2*/
        // $xq = "Select dsl.listID from ". SendPress_Data::list_subcribers_table() ." as dsl where t1.subscriberID == dsl.subscriberID";
-        $xq = "GROUP_CONCAT(wppost.post_title ORDER BY wppost.post_title SEPARATOR ', ') AS lists";
+        $xq = "GROUP_CONCAT(wppost.post_title SEPARATOR ', ') AS lists";
         //" GROUP_CONCAT(dsl.listID ORDER BY dsl.listID) AS lists ";
        $query = "SELECT t1.subscriberID, t1.email, t1.firstname,t1.lastname, t1.join_date, $xq  FROM " .  SendPress_Data::subscriber_table() . " as t1 LEFT JOIN ".SendPress_Data::list_subcribers_table() ." as dsl ON t1.subscriberID = dsl.subscriberID Left JOIN ".$wpdb->posts." as wppost ON dsl.`listID` = wppost.ID";
        $query_count = "SELECT count(*) FROM " .  SendPress_Data::subscriber_table() ." as t1";
