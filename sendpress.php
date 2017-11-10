@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: SendPress Newsletters
-Version: 1.8.10.20.1
+Version: 1.8.10.20.5
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -19,7 +19,7 @@ global $blog_id;
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-define( 'SENDPRESS_VERSION', '1.8.10.20.1' );
+define( 'SENDPRESS_VERSION', '1.8.10.20.5' );
 define( 'SENDPRESS_URL', plugin_dir_url( __FILE__ ) );
 define( 'SENDPRESS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -1423,6 +1423,7 @@ class SendPress {
 		@SPNL()->load("Autoresponder")->create_table();
 		@SPNL()->load("Schedules")->create_table();
 		@SPNL()->load("Remote_Connection")->create_table();
+		@SPNL()->load("Customfields")->create_table();
 
 		SendPress_Option::base_set( 'update-info', 'show' );
 		//On version change update default template
@@ -1539,6 +1540,10 @@ class SendPress {
 				$link['LinkedIn'] = $ld;
 			}
 			SendPress_Option::set( 'socialicons', $link );
+		}
+
+		if ( version_compare( $current_version, '1.8.10.20', '<' ) ) {
+			SendPress_Data::upgrade_custom_fields();
 		}
 	
 
