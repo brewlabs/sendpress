@@ -10,6 +10,10 @@ Stable tag: 1.8.10.20.1
 Tested up to: 4.8.3
 Stable tag: 1.8.11.5
 >>>>>>> .merge_file_gHb72P
+=======
+Tested up to: 4.9
+Stable tag: 1.8.11.25
+>>>>>>> f0d4492201bf468470ebd5bb3e7a8cd96b168c57
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

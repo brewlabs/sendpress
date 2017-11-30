@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: SendPress Newsletters
-Version: 1.8.11.5
+Version: 1.8.11.25
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -19,8 +19,12 @@ global $blog_id;
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
+<<<<<<< HEAD
 
 define( 'SENDPRESS_VERSION', '1.8.11.5' );
+=======
+define( 'SENDPRESS_VERSION', '1.8.11.25' );
+>>>>>>> f0d4492201bf468470ebd5bb3e7a8cd96b168c57
 define( 'SENDPRESS_URL', plugin_dir_url( __FILE__ ) );
 define( 'SENDPRESS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
