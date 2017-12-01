@@ -111,7 +111,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 			?>
 			<link rel="stylesheet" type="text/css" href="<?php echo SENDPRESS_URL; ?>/css/manage-front-end.css">
 			<div class="sendpress-content">
-				<h4>Manage Subscriptions</h4>
+				<h4><?php _e('Manage Subscriptions','sendpress'); ?></h4>
 				<div class="subscriber-info">
 					<b><?php _e('Email','sendpress');?></b>
 					<?php echo $sub->email;?><br>
@@ -147,8 +147,8 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 						<th  ><?php _e('Subscribed','sendpress'); ?></th>
 						<th  ><?php _e('Unsubscribed','sendpress'); ?></th>
 						<th  ><?php _e('List','sendpress'); ?></th>
-						<th class="hidden-phone">Updated</th>
-						<th class="hidden-phone">Other Info</th>
+						<th class="hidden-phone"><?php _e('Updated','sendpress'); ?></th>
+						<th class="hidden-phone"><?php _e('Other Info','sendpress'); ?></th>
 					</tr>
 				<?php
 
@@ -206,7 +206,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 			</div>
 			<?php
 		}else{
-			echo "No e-mail found, please try again.<br><br>";
+			_e("No e-mail found, please try again.<br><br>","sendpress");
 		}
 
 	}
