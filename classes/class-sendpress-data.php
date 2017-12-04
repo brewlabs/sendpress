@@ -2652,8 +2652,12 @@ class SendPress_Data extends SendPress_DB_Tables {
 					"slug"=>SendPress_Data::slugify($value['custom_field_label'])
 				);
 
+			SendPress_Error::log($data);
+
 			SPNL()->load('Customfields')->add($data);
 		}
+
+
 	}
 
 	static public function slugify($text)

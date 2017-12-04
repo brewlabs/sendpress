@@ -24,8 +24,8 @@ class SendPress_DB_Customfields extends SendPress_DB {
 	public function get_columns() {
 		return array(
 			'id'   => '%d',
-			'label'       => '%d',
-			'slug' => '%d'
+			'label'       => '%s',
+			'slug' => '%s'
 		);
 	}
 

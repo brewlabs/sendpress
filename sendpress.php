@@ -1543,7 +1543,7 @@ class SendPress {
 		}
 
 		if ( version_compare( $current_version, '1.8.10.20', '<' ) ) {
-			SendPress_Data::upgrade_custom_fields();
+			// JMH SendPress_Data::upgrade_custom_fields();
 		}
 	
 
