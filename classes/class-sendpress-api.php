@@ -156,6 +156,7 @@ class SendPress_API {
 				case 'bounce':
 				case 'cron':
 				case 'sendgrid':
+				case 'sparkpost':
 					$this->is_valid_request = true;
 					$wp_query->set( 'key', 'public' );
 				break;
@@ -257,6 +258,12 @@ class SendPress_API {
 				$count = $this->process_sendgrid($events);
 				$data = array('status' => 'proccessed','count'=> $count);
 				break;
+			case 'sparkpost':
+				$data = file_get_contents("php://input");
+				$events = json_decode($data, true);
+				$count = $this->process_sparkpost($events);
+				$data = array('status' => 'proccessed','count'=> $count);
+				break;
 			case 'system-check':
 				$data = array( 'status' => 'active' );
 				break;
@@ -335,6 +342,7 @@ class SendPress_API {
 			'bounce',
 			'cron',
 			'sendgrid',
+			'sparkpost',
 			'elastic'
 		) );
 
@@ -597,8 +605,21 @@ class SendPress_API {
 	public function process_sendgrid($events){
 		$count = 0;
 		foreach ($events as $event) {
+			
+
 			if($event['event'] == 'bounce' || $event['event'] == 'spamreport' ||$event['event'] == 'unsubscribe'){
 				$this->bounce($event['email']);
+				$count++;
+			}
+		}
+		return $count;
+	}
+
+	public function process_sparkpost($events){
+		$count = 0;
+		foreach ($events as $event) {
+			if($event['msys']['message_event']['type'] == 'bounce' || $event['msys']['message_event']['type'] == 'spam_complaint'){
+				$this->bounce($event['msys']['message_event']['rcpt_to']);
 				$count++;
 			}
 		}
