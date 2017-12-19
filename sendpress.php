@@ -1423,6 +1423,7 @@ class SendPress {
 		@SPNL()->load("Autoresponder")->create_table();
 		@SPNL()->load("Schedules")->create_table();
 		@SPNL()->load("Remote_Connection")->create_table();
+		@SPNL()->load("Customfields")->create_table();
 
 		SendPress_Option::base_set( 'update-info', 'show' );
 		//On version change update default template
@@ -1539,6 +1540,10 @@ class SendPress {
 				$link['LinkedIn'] = $ld;
 			}
 			SendPress_Option::set( 'socialicons', $link );
+		}
+
+		if ( version_compare( $current_version, '1.8.10.20', '<' ) ) {
+			// JMH SendPress_Data::upgrade_custom_fields();
 		}
 	
 
