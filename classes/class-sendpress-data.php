@@ -1420,7 +1420,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 					SendPress_Data::update_subscriber_status($list->listID, $id, 4 , false);
 					//( $sid, $rid, $uid, $ip , $device_type, $device, $type='confirm' )
 					//( $sid, $rid, $lid=null, $uid=null, $ip=null, $device_type=null, $device=null, $type='confirm' )
-					SendPress_Data::add_subscriber_event( $id,$report_id,$list->listID,null ,null, null, null, 'bounce');
+					//SendPress_Data::add_subscriber_event( $id,$report_id,$list->listID,null ,null, null, null, 'bounce');
 				}
 			}
 
