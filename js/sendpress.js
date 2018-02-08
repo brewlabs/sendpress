@@ -6,7 +6,7 @@
     
     this.init = function($, document){
         $(document).ready(function($){
-           // spadmin.log("SP Init Started");
+           //spadmin.log("SP Init Started");
          
             //Load SendPress Sections with refence to themselves :)
             spadmin.menu.init.call(spadmin.menu, $);
@@ -15,7 +15,9 @@
             spadmin.confirmsend.init.call(spadmin.confirmsend, $);
             spadmin.syncroles.init.call(spadmin.syncroles, $);
             spadmin.notifications.init.call(spadmin.notifications, $);
-           // spadmin.log("SP Finished Started");
+
+            spadmin.customfields.init.call(spadmin.customfields, $);
+            //spadmin.log("SP Finished Started");
           //  spadmin.log(spvars);
 
         });
@@ -455,7 +457,8 @@
                 function(data){
                     spadmin.confirmsend.batchit(data);
                 }); 
-        }, batchit: function(response){
+        }, 
+        batchit: function(response){
             response = $.parseJSON(response);
             if( response != undefined && parseInt(response.lastid) > 0){
                 spadmin.confirmsend.count = spadmin.confirmsend.count + parseInt(response.count);
@@ -471,12 +474,10 @@
                // spadmin.confirmsend.closesend();
             }
             
-        },
-
-
+        }
     }
 
-     this.syncroles = {
+    this.syncroles = {
 
         count: 0,
         total: 0,
@@ -519,9 +520,6 @@
 
 
     }
-
-
-
 
     this.queue = {
         count: 0,
@@ -590,6 +588,43 @@
                 }else{
                     $('.notifications-radio').prop('disabled',true);
                 }
+            });
+        }
+    }
+
+    this.customfields = {
+        init:function($){
+
+            $('#add-custom-field').on('click',function(e){
+                var $form = $(this).closest('#create-custom-field'),
+                    data = $form.find('#fieldJson').attr('value');
+
+                
+
+            });
+
+            $('#save-custom-fields').on('click',function(e){
+                var $form = $(this).closest('#create-custom-field'),
+                    data = $form.find('#fieldJson').attr('value'),
+                    inputs = $form.find('input.custom-field');
+
+                console.log(inputs);
+
+                for (var i = inputs.length - 1; i >= 0; i--) {
+                    var $i = $(inputs[i]);
+
+                    var id = $i.data('field-id');
+
+                    console.log(id);
+                    
+                    if(id !== undefined){
+
+
+                    }
+                }
+
+                
+
             });
         }
     }

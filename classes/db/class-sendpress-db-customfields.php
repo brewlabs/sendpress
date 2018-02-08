@@ -42,6 +42,11 @@ class SendPress_DB_Customfields extends SendPress_DB {
 		);
 	}
 
+	public function get_all() {
+		global $wpdb;
+		return $wpdb->get_results( "SELECT * FROM $this->table_name;", ARRAY_A );
+	}
+
 	public function add( $data ){
 		return $this->replace( $data , 'customfields' );
 	}

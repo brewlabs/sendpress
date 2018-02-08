@@ -2660,6 +2660,13 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 
+	static function custom_field_template(){
+
+		$label = __('Label ', 'sendpress'); 
+
+		return '<p><label for="_salutation_label">'.$label.'</label><input type="text" class="widefat" id="_custom_field_label_{{lastId}}" name="_custom_field_label_{{lastId}}" value="" style="width:300px;" /><input type="hidden" name="saved_post_id_{{lastId}} value="{{lastId}}"/></p>';
+	}
+
 	static public function slugify($text)
 	{
 	  // replace non letter or digits by -
