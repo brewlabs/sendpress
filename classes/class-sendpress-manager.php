@@ -394,8 +394,16 @@ class SendPress_Manager {
 	   	$message->subscriber_id( $email->subscriberID );
 	   	$message->list_id( $email->listID );
 
-	   	$fromname = $email->from_name;
-	   	$fromemail = $email->from_email;
+	   	$fromname = '';
+	   	if(isset($email->from_name)){
+	   		$fromname = $email->from_name;
+	   	}
+	   	
+	   	$fromemail = '';
+	   	if(isset($email->from_email)){
+	   		$fromemail = $$email->from_email;
+	   	}
+
 
 	   	$body = $message->html();
 	   	$subject = $message->subject();
