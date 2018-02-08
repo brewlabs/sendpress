@@ -925,6 +925,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		global $wpdb;
 		$result = $wpdb->update($table,$values, array('subscriberID'=> $subscriberID) );
 	}
+	
 	static function update_subscriber_by_email($email, $values){
 		$table = SendPress_Data::subscriber_table();
 		global $wpdb;
