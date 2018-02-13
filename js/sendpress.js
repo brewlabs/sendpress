@@ -597,33 +597,50 @@
 
             $('#add-custom-field').on('click',function(e){
                 var $form = $(this).closest('#create-custom-field'),
-                    data = $form.find('#fieldJson').attr('value');
+                    html = $form.data('newfield'),
+                    $container = $form.find('#new-custom-fields');
 
-                
+                $container.append(html);
 
             });
 
             $('#save-custom-fields').on('click',function(e){
                 var $form = $(this).closest('#create-custom-field'),
-                    data = $form.find('#fieldJson').attr('value'),
-                    inputs = $form.find('input.custom-field');
+                    $data = $form.find('#fieldJson'),
+                    inputs = $form.find('input.custom-field'),
+                    jsonData = "[";
 
-                console.log(inputs);
+                //console.log(inputs);
 
-                for (var i = inputs.length - 1; i >= 0; i--) {
+                for (var i = 0; i < inputs.length; i++) {
                     var $i = $(inputs[i]);
 
                     var id = $i.data('field-id');
+                    var label = $i.val();
 
-                    console.log(id);
-                    
-                    if(id !== undefined){
-
-
+                    if(id === ""){
+                        id = 0;
                     }
+
+                    // console.log(id);
+                    // console.log(label);
+
+                    if(label !== ""){
+                        if(i > 0){
+                            jsonData += ",";
+                        }
+                        jsonData += '{"id":"'+ id + '","label":"' + label + '"}';
+                    }
+
                 }
 
-                
+                jsonData += ']';
+
+                //console.debug(jsonData);
+
+                $data.val(jsonData);
+
+                $form.submit();
 
             });
         }
