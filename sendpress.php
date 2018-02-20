@@ -131,13 +131,16 @@ class SendPress {
 	function __construct() {
 		//add_action( 'admin_init' , array( 'SendPress' , 'wp' ) );
 		add_action( 'init', array( $this, 'init' ) );
-		//add_action( 'widgets_init', array( $this , 'load_widgets' ) );
+		add_action( 'widgets_init', array( $this , 'load_widgets' ) );
+
+		/*
 		add_action( 'widgets_init',
 			create_function( '', 'return register_widget("SendPress_Widget_Forms");' )
 		);
 		add_action( 'widgets_init',
 			create_function( '', 'return register_widget("SendPress_Widget_Signup");' )
 		);
+		*/
 
 		add_action( 'plugins_loaded', array( $this, 'load_plugin_language' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'wp_enqueue_script' ) );
