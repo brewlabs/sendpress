@@ -6,7 +6,7 @@
     
     this.init = function($, document){
         $(document).ready(function($){
-           // spadmin.log("SP Init Started");
+           //spadmin.log("SP Init Started");
          
             //Load SendPress Sections with refence to themselves :)
             spadmin.menu.init.call(spadmin.menu, $);
@@ -15,7 +15,9 @@
             spadmin.confirmsend.init.call(spadmin.confirmsend, $);
             spadmin.syncroles.init.call(spadmin.syncroles, $);
             spadmin.notifications.init.call(spadmin.notifications, $);
-           // spadmin.log("SP Finished Started");
+
+            spadmin.customfields.init.call(spadmin.customfields, $);
+            //spadmin.log("SP Finished Started");
           //  spadmin.log(spvars);
 
         });
@@ -455,7 +457,8 @@
                 function(data){
                     spadmin.confirmsend.batchit(data);
                 }); 
-        }, batchit: function(response){
+        }, 
+        batchit: function(response){
             response = $.parseJSON(response);
             if( response != undefined && parseInt(response.lastid) > 0){
                 spadmin.confirmsend.count = spadmin.confirmsend.count + parseInt(response.count);
@@ -471,12 +474,10 @@
                // spadmin.confirmsend.closesend();
             }
             
-        },
-
-
+        }
     }
 
-     this.syncroles = {
+    this.syncroles = {
 
         count: 0,
         total: 0,
@@ -519,9 +520,6 @@
 
 
     }
-
-
-
 
     this.queue = {
         count: 0,
@@ -590,6 +588,60 @@
                 }else{
                     $('.notifications-radio').prop('disabled',true);
                 }
+            });
+        }
+    }
+
+    this.customfields = {
+        init:function($){
+
+            $('#add-custom-field').on('click',function(e){
+                var $form = $(this).closest('#create-custom-field'),
+                    html = $form.data('newfield'),
+                    $container = $form.find('#new-custom-fields');
+
+                $container.append(html);
+
+            });
+
+            $('#save-custom-fields').on('click',function(e){
+                var $form = $(this).closest('#create-custom-field'),
+                    $data = $form.find('#fieldJson'),
+                    inputs = $form.find('input.custom-field'),
+                    jsonData = "[";
+
+                //console.log(inputs);
+
+                for (var i = 0; i < inputs.length; i++) {
+                    var $i = $(inputs[i]);
+
+                    var id = $i.data('field-id');
+                    var label = $i.val();
+
+                    if(id === ""){
+                        id = 0;
+                    }
+
+                    // console.log(id);
+                    // console.log(label);
+
+                    if(label !== ""){
+                        if(i > 0){
+                            jsonData += ",";
+                        }
+                        jsonData += '{"id":"'+ id + '","label":"' + label + '"}';
+                    }
+
+                }
+
+                jsonData += ']';
+
+                //console.debug(jsonData);
+
+                $data.val(jsonData);
+
+                $form.submit();
+
             });
         }
     }

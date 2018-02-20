@@ -25,6 +25,7 @@ class SendPress_View_Subscribers_Custom extends SendPress_View_Subscribers {
 	}
 
 	function html() {?>
+
 <form id="create-custom-field" method="post">
         <input type="hidden" name="post_ID" id="post_ID" value="<?php echo $post->ID; ?>" />
         <input type="hidden" name="action" id="action" value="create-custom-field" />

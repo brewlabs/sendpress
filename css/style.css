@@ -1293,4 +1293,8 @@ fieldset[disabled] .btn-pro.active {
 }
 
 
+.custom-field-label{
+    padding-right:3px;
+}
+
 

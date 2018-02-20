@@ -2653,12 +2653,19 @@ class SendPress_Data extends SendPress_DB_Tables {
 					"slug"=>SendPress_Data::slugify($value['custom_field_label'])
 				);
 
-			SendPress_Error::log($data);
+			//SendPress_Error::log($data);
 
 			SPNL()->load('Customfields')->add($data);
 		}
 
 
+	}
+
+	static function custom_field_template(){
+
+		$label = __('Label ', 'sendpress'); 
+
+		return '<p><label class="custom-field-label" for="_salutation_label">'.$label.':</label><input type="text" class="widefat custom-field" data-field-id="" id="custom_field_label" name="custom_field_label" value="" style="width:300px;" /></p>';
 	}
 
 	static public function slugify($text)
