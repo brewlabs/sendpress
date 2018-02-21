@@ -1036,8 +1036,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		}
 
-
-
 		return $wpdb->get_results($query);
 
 	}
@@ -2312,9 +2310,26 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $new_id;
 	}
 
+	static function get_custom_fields_new(){
+		$return = array();
+
+		$fields = SPNL()->load('Customfields')->get_all();
+
+		foreach ($fields as $key => $field) {
+			array_push($return, array(
+				'id'      				=> $field['id'],
+				'custom_field_label'   	=> $field['label'],
+				'custom_field_key' 		=> $field['slug']
+			));
+		}
+
+		return $return;
+	}
+
 	static function get_custom_fields(){
 		$return = array();
 
+		
 		if(SENDPRESS_PRO_LOADED){
 			$args = array(
 				'post_type' => 'sp_settings',
@@ -2642,22 +2657,30 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 	static function upgrade_custom_fields(){
+		global $wpdb;
 		$custom_field_list = SendPress_Data::get_custom_fields();
-
-		SendPress_Error::log('testing');
+		$old_slugs = "";
+		$meta_table = SendPress_Data::subscriber_meta_table();
 
 		foreach ($custom_field_list as $key => $value) {
 
 			$data = array(
 					"label"=>$value['custom_field_label'], 
-					"slug"=>SendPress_Data::slugify($value['custom_field_label'])
+					"slug"=>SendPress_Data::slugify($value['custom_field_label']),
+					"old_slug"=>$value['custom_field_key']
 				);
 
-			//SendPress_Error::log($data);
+			$id = SPNL()->load('Customfields')->add($data);
+
+			//update slug with ID
+			$data['id'] = $id;
+			$data['slug'] = SendPress_Data::slugify($value['custom_field_label'],$id);
 
 			SPNL()->load('Customfields')->add($data);
-		}
 
+			//finally, update
+			$wpdb->update( $meta_table, array('meta_key'=>$data['slug']), array('meta_key' => $value['custom_field_key'] ) );
+		}
 
 	}
 
@@ -2668,7 +2691,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return '<p><label class="custom-field-label" for="_salutation_label">'.$label.':</label><input type="text" class="widefat custom-field" data-field-id="" id="custom_field_label" name="custom_field_label" value="" style="width:300px;" /></p>';
 	}
 
-	static public function slugify($text)
+	static public function slugify($text, $id=999)
 	{
 	  // replace non letter or digits by -
 	  $text = preg_replace('~[^\pL\d]+~u', '-', $text);
@@ -2692,7 +2715,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 	    return 'n-a';
 	  }
 
-	  return $text;
+	  return $text .'-'.$id;
 	}
 
 }

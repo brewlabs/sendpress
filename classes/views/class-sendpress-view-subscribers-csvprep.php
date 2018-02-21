@@ -94,7 +94,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
 
 	function html() {
     $list_id_clean = SPNL()->validate->_int( 'listID' );
-
+    //JMH Needs updating once custom fields are done
     $custom_field_list = SendPress_Data::get_custom_fields();
 
     $columns=array("noimport"=>__("Don't Import",'sendpress'),

@@ -194,7 +194,7 @@ class SendPress_Ajax_Loader {
 				$custom['post_notifications'] = $post_notifications;
 			}
 
-			$custom_field_list = SendPress_Data::get_custom_fields();
+			$custom_field_list = SendPress_Data::get_custom_fields_new();
 			foreach ($custom_field_list as $key => $value) {
 				$custom_field_key = $value['custom_field_key'];
 				$customfieldvalue = $data->_string($custom_field_key);

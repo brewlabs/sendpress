@@ -219,6 +219,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		$load_signup_js = true;
 		$no_list_error = '-- NO LIST HAS BEEN SET! --';
 		$_listids = '';
+
 		extract($options);
 
 	   	$lists = SendPress_Data::get_lists(
@@ -381,40 +382,38 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 						<input type="text" class="sp_email required" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_email_label; ?>"<?php endif; ?> value="" name="sp_email" />
 					</p>
 
-					<?php if( filter_var($_collect_custom_field, FILTER_VALIDATE_BOOLEAN) ): ?>
-									<?php   
-					
-					$custom_field_list = SendPress_Data::get_custom_fields();
-					
- 					$count = count($custom_field_list); ?>
- 						
-					<?php if ($count > 0) {
-					?>
-							<!-- custom fields -->
-							<div class="sp-50">
+
+					<?php
+					//new custom field section
+					$custom_field_list = SendPress_Data::get_custom_fields_new();
+
+					foreach ($custom_field_list as $key => $value) {
+						
+
+						if(filter_var($options['_collect_custom_field_'.$value['id']], FILTER_VALIDATE_BOOLEAN) ){
 							
+							$label = $value['custom_field_label'];
+							$required = false;
 
- 								<?php 
-							foreach ($custom_field_list as $key => $value) {
-								$custom_field_label = $value['custom_field_label'];
-								$custom_field_key = $value['custom_field_key'];
-								?>
-
-								<p>
-		
-									<label for="sp_custom_field"><?php _e($custom_field_label, 'sendpress'); ?></label>
-
-									<input type="text" class="sp_custom_field" value="" id="<?php echo $custom_field_key; ?>" name="sp_custom_field" />
-
-								</p> 
-							<?php 
+							if(filter_var(($options['_custom_field_'.$value['id'].'_required'] === 'on'), FILTER_VALIDATE_BOOLEAN) ){ 
+								$label = '*'.$label;
+								$required = true;
 							}
-							?>
 
-							
-						</div>
-					<?php }?>
-					<?php endif; ?>
+							?>
+							<p>
+								<?php if( !$_display_labels_inside_fields ): ?>
+									<label for="<?php echo $value['custom_field_key']; ?>"><?php echo $label; ?>:</label>
+								<?php endif; ?>
+								<input id="<?php echo $value['custom_field_key']; ?>"  type="text" class="sp_custom_field <?php if($required){ echo 'required'; } ?>" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $label; ?>"<?php endif; ?> value="" name="<?php echo $value['custom_field_key']; ?>" />
+							</p>
+							<?php
+
+						}
+					}
+
+					?>
+
 
 					<p class="signup-fields-bottom">
 						<?php do_action('sendpress_signup_form_bottom'); ?>

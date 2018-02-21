@@ -431,7 +431,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 				<?php
 					global $wpdb, $custom_field_id;
 
-					$custom_field_list = SendPress_Data::get_custom_fields();
+					$custom_field_list = SendPress_Data::get_custom_fields_new();
 
  					$count = count($custom_field_list);
 
@@ -448,13 +448,13 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 						?>
 						<p>
-							<input class="checkbox custom-field" type="checkbox" <?php checked( $settings['_collect_custom_field'], 'on' ); ?> id="_collect_custom_field" name="_collect_custom_field" />
-							<label for="_collect_custom_field">Collect <?php echo $custom_field_label; ?></label>
+							<input class="checkbox custom-field" type="checkbox" <?php checked( $settings['_collect_custom_field_'.$value['id']], 'on' ); ?> id="_collect_custom_field_<?php echo $value['id']; ?>" name="_collect_custom_field_<?php echo $value['id']; ?>" />
+							<label for="_collect_custom_field_<?php echo $value['id']; ?>"><?php _e('Collect field')?> - <?php echo $custom_field_label; ?></label>
 
 							<br>
 
-							<input style="margin-left:30px;" class="checkbox" type="checkbox" <?php checked( $settings['_phonenumber_required'], 'on' ); ?> id="_phonenumber_required" name="_phonenumber_required" />
-							<label for="_phonenumber_required"><?php _e('Phone Number Required', 'sendpress'); ?></label>
+							<input style="margin-left:30px;" class="checkbox" type="checkbox" <?php checked( $settings['_custom_field_'.$value['id'].'_required'], 'on' ); ?> id="<?php echo '_custom_field_'.$value['id'].'_required'; ?>" name="<?php echo '_custom_field_'.$value['id'].'_required'; ?>" />
+							<label for="<?php echo '_custom_field_'.$value['id'].'_required'; ?>"><?php echo $custom_field_label; ?> <?php _e('Required', 'sendpress'); ?></label>
 
 						</p>
 

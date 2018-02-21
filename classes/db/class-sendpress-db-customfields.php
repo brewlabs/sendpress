@@ -24,8 +24,9 @@ class SendPress_DB_Customfields extends SendPress_DB {
 	public function get_columns() {
 		return array(
 			'id'   => '%d',
-			'label'       => '%s',
-			'slug' => '%s'
+			'label'  => '%s',
+			'slug' => '%s',
+			'old_slug' => '%s'
 		);
 	}
 
@@ -38,7 +39,8 @@ class SendPress_DB_Customfields extends SendPress_DB {
 	public function get_column_defaults() {
 		return array(
 			'label' => "",
-			'slug'  => ""
+			'slug'  => "",
+			'old_slug' => ""
 		);
 	}
 
@@ -76,6 +78,7 @@ $sql = " CREATE TABLE {$this->table_name} (
 id bigint(20) unsigned NOT NULL AUTO_INCREMENT, 
 label varchar(255) DEFAULT NULL, 
 slug varchar(255) DEFAULT NULL, 
+old_slug varchar(255) DEFAULT NULL, 
 PRIMARY KEY  (id)
 ) $collate;\n";
 

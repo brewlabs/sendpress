@@ -99,15 +99,30 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 			endforeach; 
 			wp_reset_postdata();
 
-			$have_custom_field = SPNL()->validate->_bool('have_custom_field');
-			$custom_field_key = SPNL()->validate->_string('custom_field_key');
 
-			// custom field save
-			if ($have_custom_field) {
-				SendPress_Data::update_subscriber_meta($sid, $custom_field_key, SPNL()->validate->_string('custom_field_value'), false);
-			} else {
-				SendPress_Data::add_subscriber_meta($sid, $custom_field_key, SPNL()->validate->_string('custom_field_value'), false, 0);
+			//custom field save
+			$custom_field_list = SendPress_Data::get_custom_fields_new();
+
+			foreach ($custom_field_list as $key => $value) {
+				$val = SPNL()->validate->_string($value['custom_field_key']);
+
+				if(strlen($val) > 0){
+					SendPress_Data::update_subscriber_meta($sid, $value['custom_field_key'], $val, false);
+				}
+
+
 			}
+
+
+			// $have_custom_field = SPNL()->validate->_bool('have_custom_field');
+			// $custom_field_key = SPNL()->validate->_string('custom_field_key');
+
+			// // custom field save
+			// if ($have_custom_field) {
+			// 	SendPress_Data::update_subscriber_meta($sid, $custom_field_key, SPNL()->validate->_string('custom_field_value'), false);
+			// } else {
+			// 	SendPress_Data::add_subscriber_meta($sid, $custom_field_key, SPNL()->validate->_string('custom_field_value'), false, 0);
+			// }
 		}
 		$sid = SPNL()->validate->_int('subscriberID');
 		SendPress_Admin::redirect('Subscribers_Subscriber', array('subscriberID'=>$sid  ) );
@@ -146,51 +161,30 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 	    <strong><?php _e('Lastname','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="lastname" value="<?php echo $sub->lastname; ?>" /><br>
 	    <strong><?php _e('Phone Number','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="phonenumber" value="<?php echo $sub->phonenumber; ?>" /><br>
 
-			<?php 
-				$args = array(
-					'post_type' => 'sp_settings',
-					'meta_query' => array(
-						array(
-							'key'     => '_sp_setting_type',
-							'value'   => 'custom_field',
-							'compare' => '=',
-						),
-					)
-				);
-				$query = new WP_Query( $args );
+	    <?php
+		    $custom_field_list = SendPress_Data::get_custom_fields_new();
+		    $subid = SPNL()->validate->_int('subscriberID');
 
-				if ( $query->have_posts() ) {
+		 //    echo '<pre>';
+			// echo print_r($custom_field_list);
+			// echo '</pre>';
 
-					while ( $query->have_posts() ) {
-						$query->the_post();
-						//$custom_field_label = get_the_title();
-						$saved_post_id = get_the_ID();
-						$custom_field_label = get_post_meta($saved_post_id, '_sp_custom_field_description', true);
-						$custom_field_key = get_post_meta($saved_post_id, '_sp_custom_field_key', true);
-					}
-					/* Restore original Post Data */
+			foreach ($custom_field_list as $key => $value) {
 
-					wp_reset_postdata();
-					if (strlen($custom_field_label) > 0) {
-						$have_custom_field = true;
-						$subid = SPNL()->validate->_int('subscriberID');
-						$custom_field_value = SendPress_Data::get_subscriber_meta($subid,$custom_field_key, false);
+				$sub_value = SendPress_Data::get_subscriber_meta($subid,$value['custom_field_key']);
 
-				?>
+				//if(!empty($sub_value)){
+					?>
+					<strong><?php echo $value['custom_field_label']; ?></strong>: <input type="text" class="regular-text sp-text" id="<?php echo $value['custom_field_key']; ?>" name="<?php echo $value['custom_field_key']; ?>" value="<?php echo $sub_value;?>" /><br>
+					<?php
+				//}
 
-	   		<strong><?php echo $custom_field_label; ?></strong>: <input type="text" class="regular-text sp-text" name="custom_field_value" value="<?php echo $custom_field_value;?>" /><br>
-	    	<br>
-            <?php 
-            		}
-				} else {
-					$custom_field_label = "";
-					$saved_post_id = 0;
-				}
-			?>
+				
+			}
 
-<input type="hidden" name="have_custom_field" value="<?php echo $have_custom_field;?>" />
-<input type="hidden" name="custom_field_key" value="<?php echo $custom_field_key;?>" />
-<input type="checkbox" id="delete-this-user" name="delete-this-user" value="yes"/> Checking this box will remove this subscriber and all related data from the system.<br><br>
+		?>
+
+		<input type="checkbox" id="delete-this-user" name="delete-this-user" value="yes"/> Checking this box will remove this subscriber and all related data from the system.<br><br>
 
 	  
 	   <?php wp_nonce_field($this->_nonce_value); ?>
