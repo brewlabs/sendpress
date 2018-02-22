@@ -6,7 +6,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 	die;
 }
 
-class SendPress_View_Subscribers_Custom extends SendPress_View_Subscribers {
+class SendPress_View_Subscribers_Customfields extends SendPress_View_Subscribers {
 
 	function save(){
 		$data = SPNL()->validate->_string('fieldJson');

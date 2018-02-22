@@ -68,7 +68,7 @@ class SendPress_View_Subscribers extends SendPress_View {
 				    	<a href="<?php echo SendPress_Admin::link('Subscribers_All'); ?>"><i class="icon-user "></i> <?php _e('All Subscribers','sendpress'); ?></a>
 				  	</li>
 				  	<li <?php if(SPNL()->validate->_string('view') === 'custom'){ ?>class="active"<?php } ?> >
-				    	<a href="<?php echo SendPress_Admin::link('Subscribers_Custom'); ?>"><i class="icon-list "></i> <?php _e('Custom Fields','sendpress'); ?></a>
+				    	<a href="<?php echo SendPress_Admin::link('Subscribers_Customfields'); ?>"><i class="icon-list "></i> <?php _e('Custom Fields','sendpress'); ?></a>
 				  	</li>
 				</ul>
 			</div>

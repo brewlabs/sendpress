@@ -2330,7 +2330,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$return = array();
 
 		
-		if(SENDPRESS_PRO_LOADED){
+		if(defined('SENDPRESS_PRO_LOADED')){
 			$args = array(
 				'post_type' => 'sp_settings',
 				'meta_query' => array(
