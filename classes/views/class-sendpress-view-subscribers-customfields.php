@@ -87,11 +87,11 @@ class SendPress_View_Subscribers_Customfields extends SendPress_View_Subscribers
 
 		if(defined('SENDPRESS_PRO_VERSION')){
 			?>
-			<p><?php _e('You have SendPress Pro Version','sendpress'); ?> <?php echo SENDPRESS_PRO_VERSION; ?> <?php _e('this version does not support custom fields. You will need to update to the latest version','sendpress'); ?>.</p>
+			<p><?php _e('You have SendPress Pro Version','sendpress'); ?> <?php echo SENDPRESS_PRO_VERSION; ?> <?php _e('this version does not support our new custom fields. You will need to update to the latest version','sendpress'); ?>.</p>
 			<?php
 		} else {
 			?>
-			<p><?php _e('Multiple custom fields are avalible if you upgrade to ','sendpress'); ?> <a href="https://sendpress.com" target="_blank"><?php _e('SendPress Pro','sendpress'); ?></a>. <?php _e('Please upgrade or install Pro to start using this feature','sendpress'); ?>.</p>
+			<p><?php _e('Multiple custom fields are avalible if you upgrade to ','sendpress'); ?> <a href="https://www.sendpress.com" target="_blank"><?php _e('SendPress Pro','sendpress'); ?></a>. <?php _e('Please upgrade or install Pro to start using this feature','sendpress'); ?>.</p>
 			<?php
 		}
 
