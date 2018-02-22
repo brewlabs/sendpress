@@ -118,6 +118,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.9.2.22 - 2018.2.22 =
+* rebuilt custom fields from the ground up
+
 = 1.8.12.18 - 2017.12.18 =
 * Add support for Sparkpost bounce handling
 
