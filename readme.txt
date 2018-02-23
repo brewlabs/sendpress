@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 4.4
 Tested up to: 4.9.1
-Stable tag: 1.8.12.18
+Stable tag: 1.9.2.22
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,6 +120,7 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 
 = 1.9.2.22 - 2018.2.22 =
 * rebuilt custom fields from the ground up
+* fix for php 7.2
 
 = 1.8.12.18 - 2017.12.18 =
 * Add support for Sparkpost bounce handling
