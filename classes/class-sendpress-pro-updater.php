@@ -145,8 +145,6 @@ class SendPress_Pro_Updater {
 		if( empty( $data['license'] ) )
 			return;
 
-		echo $data['license']. "<hr>";
-		echo $data['item_name']. "<hr>";
 		$api_params = array(
 			'edd_action' 	=> 'get_version',
 			'license' 		=> $data['license'],
@@ -156,8 +154,7 @@ class SendPress_Pro_Updater {
 			'url'           => home_url()
 		);
 		$request = wp_remote_post( $this->api_url, array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params ) );
-		echo (print_r($request,true));
-		echo "<br><hr><br>";
+		
 		if ( ! is_wp_error( $request ) ):
 			$request = json_decode( wp_remote_retrieve_body( $request ) );
 			if( $request && isset( $request->sections ) )
