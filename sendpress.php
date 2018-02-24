@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: SendPress Newsletters
-Version: 1.9.2.22
+Version: 1.9.2.23
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -19,7 +19,7 @@ global $blog_id;
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-define( 'SENDPRESS_VERSION', '1.9.2.22' );
+define( 'SENDPRESS_VERSION', '1.9.2.23' );
 define( 'SENDPRESS_URL', plugin_dir_url( __FILE__ ) );
 define( 'SENDPRESS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -50,6 +50,15 @@ $pro_names = array( 256, 806, 807,30800 ); //pro1, pro3, pro20, Sp Pro
 */
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+}
+
+/*
+*
+*	Supporting Classes they build out the WordPress table views.
+*
+*/
+if ( ! class_exists( 'SendPress_Pro_Updater' ) ) {
+	require_once( SENDPRESS_PATH . 'classes/class-sendpress-pro-updater.php' );
 }
 
 // AutoLoad Classes

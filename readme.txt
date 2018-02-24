@@ -118,6 +118,10 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.9.2.23 - 2018.2.23 =
+* fix for the pro updater
+
+
 = 1.9.2.22 - 2018.2.22 =
 * rebuilt custom fields from the ground up
 * fix for php 7.2
