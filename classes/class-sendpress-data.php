@@ -1595,6 +1595,25 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	static function import_csv_array($data, $map, $list){
 
+
+		// echo '<pre>';
+		// print_r($data);
+		// echo '</pre>';
+
+		// echo '<pre>';
+		// print_r($map);
+		// echo '</pre>';
+
+		// echo '<pre>';
+		// print_r($list);
+		// echo '</pre>';
+
+		// die();
+
+		$custom_field_list = SendPress_Data::get_custom_fields_new();
+
+		$custom_link_array = array();
+
 		global $wpdb;
 		$query ="INSERT IGNORE INTO ". SendPress_Data::subscriber_table(). "(email,firstname,lastname,join_date,registered_ip,phonenumber,salutation,identity_key) VALUES ";
 		$total = count($data);
@@ -1622,8 +1641,6 @@ class SendPress_Data extends SendPress_DB_Tables {
 						$values .= "'',";
 					}
 
-
-
 					$values .=  "'".date('Y-m-d H:i:s') ."',";
 
 					if(array_key_exists('ip',$map)){
@@ -1648,6 +1665,21 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 					$query .= " ($values) ";
 
+					//add custom fields to array for updating
+					$d = array();
+					foreach ($custom_field_list as $key => $value) {
+						
+						if(array_key_exists($value['custom_field_key'],$map)){
+							$d[$value['custom_field_key']] = $line[$map[$value['custom_field_key']]];
+						}else{
+							$d[$value['custom_field_key']] = '';
+						}
+
+
+					}
+
+					$custom_link_array[$email] = $d;
+
 				}
 
 
@@ -1655,9 +1687,15 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$x++;
 			if($total > $x && $values != ""){ $query .=",";}
 
+			
+
 			unset($data[$key_line]);
 		}
 		$query .=";";
+
+		//echo $query;
+
+
 		$wpdb->query($query);
 
 		$query_get = "SELECT subscriberID FROM ". SendPress_Data::subscriber_table(). " WHERE email in ('".implode("','", $emails_added)."')";
@@ -1681,17 +1719,95 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$total = count($data);
 		$x = 0;
 		if($total > 0){
-		foreach ($data as $value) {
-			$x++;
-			if( !isset( $my_data_x[ $value->subscriberID ]) ){
-				$query_update_status .= "( ".$value->subscriberID . "," . $list . ",2,'" .date('Y-m-d H:i:s') . "') ";
+			foreach ($data as $value) {
+				$x++;
+				if( !isset( $my_data_x[ $value->subscriberID ]) ){
+					$query_update_status .= "( ".$value->subscriberID . "," . $list . ",2,'" .date('Y-m-d H:i:s') . "') ";
 
-				if($total > $x ){ $query_update_status .=",";}
+					if($total > $x ){ $query_update_status .=",";}
+				}
+			}
+			$query_update_status .=";";
+			$wpdb->query($query_update_status);
+		}
+
+		//update custom fields
+
+		// echo '<pre>';
+		// print_r($custom_link_array);
+		// echo '</pre>';
+
+		// echo '<pre>';
+		// print_r($map);
+		// echo '</pre>';
+
+		$query_get = "SELECT subscriberID,email FROM ". SendPress_Data::subscriber_table(). " WHERE email in ('".implode("','", $emails_added)."')";
+		$imported = $wpdb->get_results($query_get);
+
+		$slugs = "";
+		$s_count = 0;
+		foreach ($custom_field_list as $key => $value) {
+			if($s_count > 0){
+				$slugs .= ',';
+			}
+			$slugs .= $value['custom_field_key'];
+		}
+
+
+		$meta_insert ="INSERT IGNORE INTO ". SendPress_Data::subscriber_meta_table(). "(subscriberID,listID,meta_key,meta_value) VALUES ";
+		
+		
+		$x = 0;
+		foreach ($imported as $value) {
+			$sub_id = $value->subscriberID;
+			$email = $value->email;
+
+			foreach ($custom_link_array as $key => $value) {
+				
+				
+
+				if($key === $email){
+					
+					// echo '<pre>';
+					// print_r($value);
+					// echo '</pre>';
+
+					foreach ($value as $meta_key => $meta_value) {
+						if($x > 0 && $values != ""){ $meta_insert .=",";}
+
+						$values ="";
+
+						//subid
+						$values.="'".esc_sql($sub_id,$wpdb->dbh)."',";
+
+						//list_id
+						$values.="'".esc_sql($list,$wpdb->dbh)."',";
+
+						$values.="'".esc_sql($meta_key,$wpdb->dbh)."',";
+
+						$values.="'".esc_sql($meta_value,$wpdb->dbh)."'";
+
+						$meta_insert .= " ($values) ";
+
+						$x++;
+
+					}
+
+					
+				}
+
+				
 			}
 		}
-		$query_update_status .=";";
-		$wpdb->query($query_update_status);
-		}
+
+		$meta_insert .=";";
+
+		//echo $meta_insert;
+
+		
+
+
+		$wpdb->query($meta_insert);
 
 	}
 

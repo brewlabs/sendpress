@@ -95,7 +95,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
 	function html() {
     $list_id_clean = SPNL()->validate->_int( 'listID' );
     //JMH Needs updating once custom fields are done
-    $custom_field_list = SendPress_Data::get_custom_fields();
+    $custom_field_list = SendPress_Data::get_custom_fields_new();
 
     $columns=array("noimport"=>__("Don't Import",'sendpress'),
                     'email'=>__('Email','sendpress'),
@@ -110,16 +110,12 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
     foreach ($custom_field_list as $key => $value) {
         //print_r($value);
 
-        $temp = $value['custom_field_key'] . "-" . str_replace(" ", "_", strtolower($value['custom_field_label']));
-
-        $this->_import_fields[] = $temp;
+        $this->_import_fields[] = $value['custom_field_key'];
 
         $columns[$temp] = $value['custom_field_label'];
 
 
     }
-
-    print_r($columns);
 
     ?>
 	<div id="taskbar" class="lists-dashboard rounded group">
