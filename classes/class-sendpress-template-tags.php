@@ -16,6 +16,8 @@ class SendPress_Template_Tags {
 	private $template_id;
 	private $email_type;
 	private $custom_content;
+
+	
 	/**
 	 * Add an email tag
 	 *
@@ -129,6 +131,10 @@ class SendPress_Template_Tags {
 	public function get_email_tags() {
 		return $this->email_tags;
 	}
+
+	
+
+
 
 	/**
 	 * Search content for email tags and filter email tags through their hooks
@@ -549,6 +555,14 @@ add_action( 'init', 'spnl_load_template_tags', -999 );
 
 
 
+function spnl_load_custom_field_tags() {
+	$fields = SPNL()->load('Customfields')->get_all();
+	foreach ($fields as $key => $field) {
+		 spnl_add_subscriber_tag($field['slug'], $field['label'], array('SendPress_Tag_Custom_Field','external'), false, false );
+	}
+
+}
+
 
 /**
  * Add default SendPress email template tags
@@ -714,7 +728,7 @@ function spnl_setup_template_tags() {
 	foreach ( $content_tags as $content_tag ) {
 		spnl_add_content_tag( $content_tag['tag'], $content_tag['description'], $content_tag['function'], $content_tag['internal'] , $content_tag['copy']);
 	}
-
+	spnl_load_custom_field_tags();
 }
 add_action( 'spnl_add_template_tags', 'spnl_setup_template_tags' );
 
