@@ -35,11 +35,38 @@ class SendPress_View_Subscribers extends SendPress_View {
     	$l = SPNL()->validate->_int('listID');
          if( $l > 0 ){
             $items = SendPress_Data::export_subscirbers( $l );
+
+            $customfields = SendPress_Data::export_customfields();
+            $cf_headers = "";
+            $cf = SPNL()->load('Customfields')->get_all();
+            $default_cf_output = '';
+
+            foreach ($cf as $key => $f) {
+            	$cf_headers .= ','.$f['slug'];
+            	$default_cf_output .= ',';
+            }
+
             header("Content-type:text/octect-stream");
             header("Content-Disposition:attachment;filename=sendpress.csv");
-            print "email,firstname,lastname,status \n";
+            print "email,firstname,lastname,status".$cf_headers." \n";
             foreach($items as $user) {
-                print  $user->email . ",". $user->firstname.",". $user->lastname.",". $user->status."\n" ;
+            	//build string for custom fields
+            	$cf_output = $default_cf_output;
+
+            	if(array_key_exists($user->subscriberID, $customfields)){
+            		$a = $customfields[$user->subscriberID];
+            		$cf_output = "";
+
+            		foreach ($cf as $key => $field) {
+            			if(array_key_exists($field['slug'], $a)){
+            				$cf_output .= ','.$a[$field['slug']];
+            			}else{
+            				$cf_output .= ',';
+            			}
+            		}
+            	}
+
+                print  $user->email . ",". $user->firstname.",". $user->lastname.",". $user->status.$cf_output."\n" ;
             }
         }
         exit;

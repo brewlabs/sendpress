@@ -1108,6 +1108,41 @@ class SendPress_Data extends SendPress_DB_Tables {
         return $wpdb->get_results( $query );
 	}
 
+	static function export_customfields(){
+
+		//get custom fields
+		$fields = SPNL()->load('Customfields')->get_all();
+
+		$cf_list = "";
+		foreach ($fields as $key => $field) {
+			if(strlen($cf_list) > 0){
+				$cf_list .= '|';
+			}
+			$cf_list .= $field['slug'];
+		}
+		
+		global $wpdb;
+		$query = "SELECT * FROM " .  SendPress_Data::subscriber_meta_table() . " as t1 ";
+		$query .= $wpdb->prepare(" WHERE t1.meta_key REGEXP %s ", $cf_list );
+
+		$results = $wpdb->get_results( $query );
+
+		//format results by subscriber
+		$data = array();
+		foreach ($results as $key => $value) {
+			if(!array_key_exists($value->subscriberID, $data)){
+				$data[$value->subscriberID] = array();
+			}
+
+			//add to array of subscriber meta keys/values
+			$data[$value->subscriberID][$value->meta_key] = $value->meta_value;
+
+		}
+
+		return $data;
+
+	}
+
 
 
 	static function get_subscriber($subscriberID, $listID = false){
