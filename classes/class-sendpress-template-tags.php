@@ -558,7 +558,7 @@ add_action( 'init', 'spnl_load_template_tags', -999 );
 function spnl_load_custom_field_tags() {
 	$fields = SPNL()->load('Customfields')->get_all();
 	foreach ($fields as $key => $field) {
-		 spnl_add_subscriber_tag($field['slug'], $field['label'], array('SendPress_Tag_Custom_Field','external'), false, false );
+		 spnl_add_subscriber_tag('spcf-'.$field['slug'], $field['label'], array('SendPress_Tag_Custom_Field','external'), false, false );
 	}
 
 }
