@@ -65,8 +65,7 @@ class SendPress_View_Subscribers_Customfields extends SendPress_View_Subscribers
 			?>
 
 			<p>
-				<label class="custom-field-label" for="_salutation_label"><?php _e('Label ', 'sendpress'); ?>:</label><input type="text" class="widefat custom-field" data-field-id="<?php echo $field['id']; ?>" id="custom_field_label" name="custom_field_label" value="<?php echo $field['label'];?>" style="width:300px;" />
-				<!--<input type="hidden" name="saved_post_id_<?php echo($field['id']);?>" value="<?php echo($field['id']);?>" />-->
+				<label class="custom-field-label" for="_salutation_label"><?php _e('Label ', 'sendpress'); ?>:</label><input type="text" class="widefat custom-field" data-field-id="<?php echo $field['id']; ?>" id="custom_field_label" name="custom_field_label" value="<?php echo $field['label'];?>" style="width:300px;" /> - Use <code>{spcf-<?php echo $field['slug']; ?>}</code> to output data.
 			</p>
 
 			<?php
