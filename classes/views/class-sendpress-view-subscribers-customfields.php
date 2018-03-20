@@ -72,6 +72,15 @@ class SendPress_View_Subscribers_Customfields extends SendPress_View_Subscribers
 			
 		}
 
+		if(count($fields) === 0){
+			?>
+				<div id="new-custom-fields">
+					<p>
+						<label class="custom-field-label" for="_salutation_label"><?php _e('Label ', 'sendpress'); ?>:</label><input type="text" class="widefat custom-field" data-field-id="" id="custom_field_label" name="custom_field_label" value="" style="width:300px;" />
+					</p>
+				</div>
+			<?php
+		}
 		?>
 		<input type="hidden" name="fieldJson" id="fieldJson" value="<?php echo htmlspecialchars(json_encode($json)); ?>" />
 		<a class="btn btn-primary btn-large pull-right" id="save-custom-fields" href="#"><?php _e('Submit','sendpress'); ?></a>
