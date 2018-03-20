@@ -334,11 +334,16 @@ class SendPress_Template {
 			//echo __('Sorry we could not find your email.','sendpress');
 			return;
 		}
+		//sp-custom
 		//$selected_template = $this->get_template( $post_id );
 		//$template_list = $this->info();
+		$custom = false;
 		$post_template  = get_post_meta( $post->ID , '_sendpress_template', true );
 		if( $post_template != '' && is_numeric($post_template) &&  $post_template  > 0 ){
 			$HtmlCode  = SendPress_Email_Render_Engine::render_template( $post_template , $post_id , $custom_html ); 
+			if ( get_post_status($post_template) == 'sp-custom'){
+				$custom = true;
+			};
 		} else {
 			$old = get_post_meta( $post->ID , '_sendpress_system', true );
 			if($old == 'old'){
@@ -522,7 +527,7 @@ class SendPress_Template {
 					$HtmlCode =str_replace("*|SP:MANAGE|*",'' ,$HtmlCode);
 				}
 
-		if(class_exists("DomDocument")){
+		if(class_exists("DomDocument") && $custom != true){
 						//parse html to fix image
 			$dom = new DOMDocument();
 			$dom->strictErrorChecking = false;

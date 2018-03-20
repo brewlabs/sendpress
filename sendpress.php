@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: SendPress Newsletters
-Version: 1.9.3.5
+Version: 1.9.3.19
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -19,7 +19,7 @@ global $blog_id;
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-define( 'SENDPRESS_VERSION', '1.9.3.5' );
+define( 'SENDPRESS_VERSION', '1.9.3.19' );
 define( 'SENDPRESS_URL', plugin_dir_url( __FILE__ ) );
 define( 'SENDPRESS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -299,6 +299,7 @@ class SendPress {
 			self::$instance->db->subscribers_tracker = new SendPress_DB_Subscribers_Tracker();
 			self::$instance->db->url                 = new SendPress_DB_Url();
 			self::$instance->db->subscribers_url     = new SendPress_DB_Subscribers_Url();
+			self::$instance->db->suppression     	 = new SendPress_DB_Suppression();
 			self::$instance->loader  = new SendPress_Loader();
 
 		}
@@ -1436,6 +1437,7 @@ class SendPress {
 		@SPNL()->load("Schedules")->create_table();
 		@SPNL()->load("Remote_Connection")->create_table();
 		@SPNL()->load("Customfields")->create_table();
+		//@SPNL()->load("Suppression")->create_table();
 
 		SendPress_Option::base_set( 'update-info', 'show' );
 		//On version change update default template
