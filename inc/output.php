@@ -33,7 +33,7 @@ Registered Post Stati:    <?php echo implode( ', ', get_post_stati() ) . "\n\n";
 	echo "\r\n\r\n";
 } ?>
 
-
+Send Setup: <?php echo SendPress_Option::get( 'sendmethod' ) . "\n"; ?>
 SP Version:               <?php echo SENDPRESS_VERSION . "\n"; ?>
 <?php if(defined('SENDPRESS_PRO_VERSION')){ ?>SP Pro Version: 	  <?php echo SENDPRESS_PRO_VERSION . "\n"; ?><?php	} ?>
 

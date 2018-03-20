@@ -99,7 +99,7 @@ class SendPress_View_Help extends SendPress_View{
 		echo "<b>WordPress Version</b>: ". $wp_version."<br>";
 		echo "<b>SendPress Version</b>: ".SENDPRESS_VERSION ."<br>";
 		if(defined('SENDPRESS_PRO_VERSION')){
-			echo "<b>SendPress Pro Version</b>: ".SENDPRESS_VERSION ."<br>";
+			echo "<b>SendPress Pro Version</b>: ".SENDPRESS_PRO_VERSION ."<br>";
 		}
 		echo '<b>PHP Version</b>: ' . phpversion(). '<br>';
 		
