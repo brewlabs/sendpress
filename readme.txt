@@ -118,6 +118,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.9.3.21 - 2018.3.21 =
+* Fix encoding on email sending
+
 = 1.9.3.19 - 2018.3.19 =
 * Sending update for responsive images
 
