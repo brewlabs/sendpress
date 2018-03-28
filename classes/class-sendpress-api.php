@@ -651,25 +651,31 @@ class SendPress_API {
 		$bemail = '';		
 
 		$t = json_decode($events['Message'], true);
-		
-		if(isset($t['notificationType'])){
-			if($t['notificationType'] == 'Bounce'){
-					if(isset($t["bounce"])){
-						$b = $t["bounce"];
-						$f = $b["bouncedRecipients"];
-						$this->bounce( $f[0]['emailAddress'] );
-					}
-				}
-			if($t['notificationType'] == 'Complaint'){
-					if(isset($t["complaint"])){
-						$b = $t["complaint"];
-						$f = $b["complainedRecipients"];
-						$this->bounce( $f[0]['emailAddress'] );
-					}
-				}
-				//Complaint
-			}
 
+		if( isset( $events['SubscribeURL'] ) ) {
+			wp_remote_get( $events['SubscribeURL'] );
+		} else {
+		
+		
+			if(isset($t['notificationType'])){
+				if($t['notificationType'] == 'Bounce'){
+						if(isset($t["bounce"])){
+							$b = $t["bounce"];
+							$f = $b["bouncedRecipients"];
+							$this->bounce( $f[0]['emailAddress'] );
+						}
+					}
+				if($t['notificationType'] == 'Complaint'){
+						if(isset($t["complaint"])){
+							$b = $t["complaint"];
+							$f = $b["complainedRecipients"];
+							$this->bounce( $f[0]['emailAddress'] );
+						}
+					}
+					//Complaint
+				}
+
+		}
 		
 		return 1;
 
