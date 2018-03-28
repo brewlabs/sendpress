@@ -157,6 +157,7 @@ class SendPress_API {
 				case 'cron':
 				case 'sendgrid':
 				case 'sparkpost':
+				case 'ses':
 					$this->is_valid_request = true;
 					$wp_query->set( 'key', 'public' );
 				break;
@@ -258,6 +259,12 @@ class SendPress_API {
 				$count = $this->process_sendgrid($events);
 				$data = array('status' => 'proccessed','count'=> $count);
 				break;
+			case 'ses':
+				$data = file_get_contents("php://input");
+				$events = json_decode($data, true);
+				$count = $this->process_ses($events);
+				$data = array('status' => 'proccessed','count'=> $count);
+				break;
 			case 'sparkpost':
 				$data = file_get_contents("php://input");
 				$events = json_decode($data, true);
@@ -343,7 +350,8 @@ class SendPress_API {
 			'cron',
 			'sendgrid',
 			'sparkpost',
-			'elastic'
+			'elastic',
+			'ses'
 		) );
 
 		$query = isset( $wp_query->query_vars['spnl-api'] ) ? $wp_query->query_vars['spnl-api'] : null;
@@ -626,6 +634,7 @@ class SendPress_API {
 		return $count;
 	}
 	
+
 	public function elastic_bounce( $email , $status , $cat){
 
 			if(($status == 'abusereport' || $status == 'unsubscribed' || $status == 'error') && $cat != 'blacklisted') {
@@ -635,6 +644,36 @@ class SendPress_API {
 			return array('status' => 'wrong event type','count'=> 0,'email'=> $email);
 	}
 
+	public function process_ses($events){
+		
+		//$d = file_get_contents('php://input');
+
+		$bemail = '';		
+
+		$t = json_decode($events['Message'], true);
+		
+		if(isset($t['notificationType'])){
+			if($t['notificationType'] == 'Bounce'){
+					if(isset($t["bounce"])){
+						$b = $t["bounce"];
+						$f = $b["bouncedRecipients"];
+						$this->bounce( $f[0]['emailAddress'] );
+					}
+				}
+			if($t['notificationType'] == 'Complaint'){
+					if(isset($t["complaint"])){
+						$b = $t["complaint"];
+						$f = $b["complainedRecipients"];
+						$this->bounce( $f[0]['emailAddress'] );
+					}
+				}
+				//Complaint
+			}
+
+		
+		return 1;
+
+	}
 	
 
 	public function track_stats($tracker_data){
