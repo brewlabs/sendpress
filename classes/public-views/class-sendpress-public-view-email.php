@@ -14,6 +14,9 @@ class SendPress_Public_View_Email extends SendPress_Public_View{
 
 
 	function html(){
+		
+		add_filter( 'do_rocket_lazyload', '__return_false' );
+
 		$email_id = get_query_var( 'spemail' );
 		global $post;
 
