@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 4.4
-Tested up to: 4.9.4
-Stable tag: 1.9.3.29.1
+Tested up to: 4.9.5
+Stable tag: 1.9.5.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.9.5.10 - 2018.5.10 =
+* Update forms for GDPR
 
 = 1.9.3.29 - 2018.3.29.1 =
 * Attempt to fix issue with wprocket loading
@@ -1096,6 +1099,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WordPress.org
 
 == Upgrade Notice ==
+
+= 1.9.5.10 =
+* Update forms for GDPR
 
 = 1.9.3.5 =
 * Better support for custom fields
