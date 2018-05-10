@@ -76,7 +76,19 @@
                 }
             });
 
+            $form.find("input:checkbox#signup_approval").each(function(){
+                var $obj = $(this);
 
+                if($obj.is(':checked')){
+                    signup['signup_approval'] = "yes";
+                }else{
+                    $error.show();
+                    $error.html('<div class="item">'+sendpress.required+'</div>');
+                    submit_ok = false;
+                }
+
+                
+            });
 
             if(submit_ok){
                 $submit.attr("disabled", "disabled");

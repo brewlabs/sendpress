@@ -203,6 +203,11 @@ class SendPress_Ajax_Loader {
 						}
 			}
 
+			$signup_approval = $data->_string('signup_approval');
+			if( $signup_approval ){
+				$custom['signup_approval'] = $signup_approval;
+			}
+
 			$success = SendPress_Data::subscribe_user( $listid, $email, $first, $last, 2, $custom, $phone, $salutation );
 
 			if ( false !== $success ) {

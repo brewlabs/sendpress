@@ -414,6 +414,14 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
 					?>
 
+					<?php if( filter_var($_privacy, FILTER_VALIDATE_BOOLEAN) ): ?>
+					<?php 
+						if(strlen($_approval_label) === 0){
+							$_approval_label = __('I would like to subscribe to your newsletter.', 'sendpress');
+						}
+					?>
+					<input type="checkbox" name="signup_approval" id="signup_approval" value="" /> <?php echo $_approval_label; ?><br>
+					<?php endif; ?>
 
 					<p class="signup-fields-bottom">
 						<?php do_action('sendpress_signup_form_bottom'); ?>

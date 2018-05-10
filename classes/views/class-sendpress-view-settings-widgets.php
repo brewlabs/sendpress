@@ -425,6 +425,18 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 				do_action('sendpress_post_notification_widget_form_new',$lists, $settings, $this, "_");
 				?>
 
+				<hr/>
+
+				<p>
+					<input class="checkbox" type="checkbox" <?php checked( $settings['_privacy'], 'on' ); ?> id="_privacy" name="_privacy" />
+					<label for="_privacy"><?php _e('Require approval to subscribe (GDPR)', 'sendpress'); ?></label>
+				</p>
+
+				<p>
+					<label for="_approval_label"><?php _e('Approval Label:', 'sendpress'); ?></label>
+					<input type="text" class="widefat" id="_approval_label" name="_approval_label" placeholder="<?php _e('I would like to subscribe to your newsletter.', 'sendpress') ?>" value="<?php echo $settings['_approval_label']; ?>" style="width:100%;" />
+				</p>
+
 				<?php $this->panel_end(); ?>
 			</div>
 
