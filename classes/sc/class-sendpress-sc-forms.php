@@ -114,6 +114,8 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					<?php
 				} ?>
 
+				<p><?php echo $_form_description;?></p>
+
 				<?php
 
 				$sub = SendPress_Data::get_subscriber($s);
@@ -126,7 +128,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
 				?>
 
-				<h5>Basic Information:</h5>
+				<h5 style="margin-top:10px;">Basic Information:</h5>
 				<div class="subscriber-info">
 					<b><?php _e('Email','sendpress');?></b>
 					<?php echo $sub->email;?><br>
