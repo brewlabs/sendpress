@@ -118,6 +118,10 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.9.6.19.1 - 2018.6.10 =
+* add paging to list page and search
+* allow edits on manage subscription page
+
 = 1.9.6.19 - 2018.6.10 =
 * Fix undefined vars
 
