@@ -66,12 +66,12 @@ class SendPress_Sender_SPNL extends SendPress_Sender {
 				"X-SP-DOMAIN"=> home_url()
 			);
 
-			$url = 'https://gateway.wped.co/send/';
+			$url = 'https://api.pressified.com/send';
 			//$url = 'http://spnl.dev/';
 			$verify_ssl = true;
 			if( isset( $m['verifyssl'] ) && $m['verifyssl'] == 'donotverify' ){
 				$verify_ssl = false;
-				$url = 'http://api.wped.co/send';
+				$url = 'http://api.pressified.com/send';
 			}
 
 			if(defined('SPNL_TESTING')){
