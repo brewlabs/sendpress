@@ -259,7 +259,44 @@ class SendPress_Lists_Table extends WP_List_Table {
         return $sortable_columns;
     }
     
-    
+
+    function email_count(){
+        echo '<select name="page_count">';
+        $counts = array(10,25,50,100);
+        foreach ($counts as $list) {
+            $cls = '';
+            if(SPNL()->validate->_int('page_count') == $list){
+                $cls = " selected='selected' ";
+            }
+
+           echo "<option $cls value='".$list."'>".$list." Rows</option>";
+        }
+        echo '</select> ';
+    }
+     function email_finder(){
+        echo "<input type='text' value='' name='qs' />";
+    }
+
+    function extra_tablenav( $which ) {
+        global $cat;
+?>
+        <div class="alignleft actions">
+<?php
+        if ( 'top' == $which && !is_singular() ) {
+
+          // $this->status_select();
+            $this->email_count();
+            submit_button( __( 'Apply' ), 'button', false, false, array( 'id' => 'post-query-submit' ) );
+           $this->email_finder();
+           submit_button( __( 'Search' ), 'button', false, false, array( 'id' => 'post-query-submit' ) );
+        }
+
+        
+?>
+        </div>
+<?php
+    }
+
     /** ************************************************************************
      * Optional. If you need to include bulk actions in your list table, this is
      * the place to define them. Bulk actions are an associative array in the format
@@ -361,7 +398,7 @@ class SendPress_Lists_Table extends WP_List_Table {
                 }
             }
 
-           
+           $per_page = $sp_validate->_int("page_count") > 0 ? $sp_validate->_int("page_count"): $per_page ;
 
             //Which page is this?
            $paged = $sp_validate->_int("paged");
@@ -390,7 +427,7 @@ class SendPress_Lists_Table extends WP_List_Table {
             'paged'=> $paged,
             );
             
-            $s = $sp_validate->_string("s");
+            $s = $sp_validate->_string("qs");
             if ( !empty( $s ) ){
                 $args['s'] = $s;
             }
