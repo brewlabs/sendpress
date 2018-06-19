@@ -99,25 +99,12 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		extract($options);
 
 		if(is_numeric($s)){
-			$sub = SendPress_Data::get_subscriber($s);
-
-			if($sub == false){
-				$sub = NEW stdClass();
-				$sub->email = 'example@sendpress.com';
-				$sub->join_date = date("F j, Y, g:i a");
-			}
-
-			// print_r($sub);
+			
 			?>
 			<link rel="stylesheet" type="text/css" href="<?php echo SENDPRESS_URL; ?>/css/manage-front-end.css">
 			<div class="sendpress-content">
 				<h4><?php _e('Manage Subscriptions','sendpress'); ?></h4>
-				<div class="subscriber-info">
-					<b><?php _e('Email','sendpress');?></b>
-					<?php echo $sub->email;?><br>
-					<b><?php _e('Signup Date','sendpress');?></b>
-					<?php echo $sub->join_date;?>
-				</div>
+
 				<?php if(self::handle_unsubscribes()){
 					?>
 					<div class="alert alert-block alert-info">
@@ -126,8 +113,29 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					</div>
 					<?php
 				} ?>
+
+				<?php
+
+				$sub = SendPress_Data::get_subscriber($s);
+
+				if($sub == false){
+					$sub = NEW stdClass();
+					$sub->email = 'example@sendpress.com';
+					$sub->join_date = date("F j, Y, g:i a");
+				}
+
+				?>
+
+				<h5>Basic Information:</h5>
+				<div class="subscriber-info">
+					<b><?php _e('Email','sendpress');?></b>
+					<?php echo $sub->email;?><br>
+					<b><?php _e('Signup Date','sendpress');?></b>
+					<?php echo $sub->join_date;?>
+				</div>
 				
-				<p><?php _e('You are subscribed to the following lists:','sendpress'); ?></p>
+
+
 				<?php
 					$info->action = "update";
 					$key = SendPress_Data::encrypt( $info );
@@ -138,8 +146,22 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 						$query_var = "?sendpress=".$key;
 					}
 				?>
+
 				<form action="<?php echo $query_var; ?>" method="post">
 				<?php wp_nonce_field( SendPress_Data::nonce() ); ?>
+
+				<input type="text" class="sp_salutation" placeholder="<?php _e('Salutation','sendpress'); ?>" value="<?php echo $sub->salutation; ?>" name="sp_salutation" />
+
+				<input type="text" class="sp_firstname" placeholder="<?php _e('Firstname','sendpress'); ?>" value="<?php echo $sub->firstname; ?>"  name="sp_firstname" />
+
+				<input type="text" class="sp_lastname" placeholder="<?php _e('Lastname','sendpress'); ?>" value="<?php echo $sub->lastname; ?>" name="sp_lastname" />
+
+				<input type="text" class="sp_phonenumber" placeholder="<?php _e('Phone number','sendpress'); ?>" value="<?php echo $sub->phonenumber; ?>" name="sp_phonenumber" />
+				
+				<h5>Subscriptions:</h5>
+				
+				<p><?php _e('You are subscribed to the following lists:','sendpress'); ?></p>
+				
 				<input type="hidden" name="subscriberid" id="subscriberid" value="<?php echo $s; ?>" />
 
 				<table cellpadding="0" cellspacing="0" class="table table-condensed table-striped table-bordered">
@@ -486,6 +508,16 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					
 				endwhile;
 			}
+
+			//save basic info
+			$sub_data = array(
+				'firstname' => $_POST['sp_firstname'],
+				'lastname'  => $_POST['sp_lastname'],
+				'salutation'  => $_POST['sp_salutation'],
+				'phonenumber'  => $_POST['sp_phonenumber']
+			);
+
+			SendPress_Data::update_subscriber( $_POST['subscriberid'], $sub_data );
 
 			//do_action('sendpress_public_view_manage_save', $_POST);
 		}
