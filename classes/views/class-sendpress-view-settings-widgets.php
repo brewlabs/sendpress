@@ -257,6 +257,29 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 			false
 		);
 
+		
+		if(!array_key_exists('_salutation_required', $settings)){
+			$settings['_salutation_required'] = false;
+		}
+		if(!array_key_exists('_phonenumber_required', $settings)){
+			$settings['_phonenumber_required'] = false;
+		}
+		if(!array_key_exists('_firstname_required', $settings)){
+			$settings['_firstname_required'] = false;
+		}
+		if(!array_key_exists('_lastname_required', $settings)){
+			$settings['_lastname_required'] = false;
+		}
+
+		if(!array_key_exists('_privacy', $settings)){
+			$settings['_privacy'] = false;
+		}
+
+		if(!array_key_exists('_approval_label', $settings)){
+			$settings['_approval_label'] = "";
+		}
+					
+
 	    $listids = array();
 
 		foreach($lists as $list){
@@ -438,7 +461,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 				</p>
 
 				<?php $this->panel_end(); ?>
-			</div>
+			
 
 				<?php
 					global $wpdb, $custom_field_id;
@@ -450,13 +473,21 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 					if ($count > 0) {
 					?>
 			<!-- custom fields -->
-			<div class="sp-50">
+			
 				<?php $this->panel_start( __('Custom Fields','sendpress') ); ?>
 
 
  					<?php
 					foreach ($custom_field_list as $key => $value) {
 						$custom_field_label = $value['custom_field_label'];
+
+						if(!array_key_exists('_collect_custom_field_'.$value['id'], $settings)){
+							$settings['_collect_custom_field_'.$value['id']] = false;
+						}
+
+						if(!array_key_exists('_custom_field_'.$value['id'].'_required', $settings)){
+							$settings['_custom_field_'.$value['id'].'_required'] = false;
+						}
 
 						?>
 						<p>

@@ -317,29 +317,31 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					$ln_required = false;
 					$phone_required = false;
 
-					if(filter_var($_salutation_required, FILTER_VALIDATE_BOOLEAN) ){ 
+
+
+					if(!empty($_salutation_required) && filter_var($_salutation_required, FILTER_VALIDATE_BOOLEAN) ){ 
 						$_salutation_label = '*'.$_salutation_label;
 						$salutation_required = true;
 					}
 
-					if(filter_var($_firstname_required, FILTER_VALIDATE_BOOLEAN) ){ 
+					if(!empty($_firstname_required) && filter_var($_firstname_required, FILTER_VALIDATE_BOOLEAN) ){ 
 						$_firstname_label = '*'.$_firstname_label;
 						$fn_required = true;
 					}
 
-					if(filter_var($_lastname_required, FILTER_VALIDATE_BOOLEAN) ){ 
+					if(!empty($_lastname_required) && filter_var($_lastname_required, FILTER_VALIDATE_BOOLEAN) ){ 
 						$_lastname_label = '*'.$_lastname_label;
 						$ln_required = true;
 					}
 
-					if(filter_var($_phonenumber_required, FILTER_VALIDATE_BOOLEAN) ){ 
+					if(!empty($_phonenumber_required) && filter_var($_phonenumber_required, FILTER_VALIDATE_BOOLEAN) ){ 
 						$_phonenumber_label = '*'.$_phonenumber_label;
 						$phone_required = true;
 					}
 					
 					?>
 
-					<?php if( filter_var($_collect_salutation, FILTER_VALIDATE_BOOLEAN) ): ?>
+					<?php if(!empty($_collect_salutation) && filter_var($_collect_salutation, FILTER_VALIDATE_BOOLEAN) ): ?>
 						<p>
 							<?php if( !$_display_labels_inside_fields ): ?>
 								<label for="sp_salutation"><?php echo $_salutation_label; ?>:</label>
@@ -348,7 +350,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 						</p>
 					<?php endif; ?>
 
-					<?php if( filter_var($_collect_firstname, FILTER_VALIDATE_BOOLEAN)  ): ?>
+					<?php if(!empty($_collect_firstname) && filter_var($_collect_firstname, FILTER_VALIDATE_BOOLEAN)  ): ?>
 						<p>
 							<?php if( !$_display_labels_inside_fields ): ?>
 								<label for="sp_firstname"><?php echo $_firstname_label; ?>:</label>
@@ -357,7 +359,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 						</p>
 					<?php endif; ?>
 
-					<?php if( filter_var($_collect_lastname, FILTER_VALIDATE_BOOLEAN) ): ?>
+					<?php if(!empty($_collect_lastname) && filter_var($_collect_lastname, FILTER_VALIDATE_BOOLEAN) ): ?>
 						<p>
 							<?php if( !$_display_labels_inside_fields ): ?>
 								<label for="sp_lastname"><?php echo $_lastname_label; ?>:</label>
@@ -366,7 +368,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 						</p>
 					<?php endif; ?>
 
-					<?php if( filter_var($_collect_phonenumber, FILTER_VALIDATE_BOOLEAN) ): ?>
+					<?php if(!empty($_collect_phonenumber) && filter_var($_collect_phonenumber, FILTER_VALIDATE_BOOLEAN) ): ?>
 						<p>
 							<?php if( !$_display_labels_inside_fields ): ?>
 								<label for="sp_phonenumber <?php if($phone_required){ echo 'required'; } ?>"><?php echo $_phonenumber_label; ?>:</label>
@@ -389,32 +391,34 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
 					foreach ($custom_field_list as $key => $value) {
 						
-
-						if(filter_var($options['_collect_custom_field_'.$value['id']], FILTER_VALIDATE_BOOLEAN) ){
+						if(array_key_exists('_collect_custom_field_'.$value['id'], $options)){
+							if(filter_var($options['_collect_custom_field_'.$value['id']], FILTER_VALIDATE_BOOLEAN) ){
 							
-							$label = $value['custom_field_label'];
-							$required = false;
+								$label = $value['custom_field_label'];
+								$required = false;
 
-							if(filter_var(($options['_custom_field_'.$value['id'].'_required'] === 'on'), FILTER_VALIDATE_BOOLEAN) ){ 
-								$label = '*'.$label;
-								$required = true;
+								if(filter_var(($options['_custom_field_'.$value['id'].'_required'] === 'on'), FILTER_VALIDATE_BOOLEAN) ){ 
+									$label = '*'.$label;
+									$required = true;
+								}
+
+								?>
+								<p>
+									<?php if( !$_display_labels_inside_fields ): ?>
+										<label for="<?php echo $value['custom_field_key']; ?>"><?php echo $label; ?>:</label>
+									<?php endif; ?>
+									<input id="<?php echo $value['custom_field_key']; ?>"  type="text" class="sp_custom_field <?php if($required){ echo 'required'; } ?>" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $label; ?>"<?php endif; ?> value="" name="<?php echo $value['custom_field_key']; ?>" />
+								</p>
+								<?php
+
 							}
-
-							?>
-							<p>
-								<?php if( !$_display_labels_inside_fields ): ?>
-									<label for="<?php echo $value['custom_field_key']; ?>"><?php echo $label; ?>:</label>
-								<?php endif; ?>
-								<input id="<?php echo $value['custom_field_key']; ?>"  type="text" class="sp_custom_field <?php if($required){ echo 'required'; } ?>" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $label; ?>"<?php endif; ?> value="" name="<?php echo $value['custom_field_key']; ?>" />
-							</p>
-							<?php
-
 						}
+						
 					}
 
 					?>
 
-					<?php if( filter_var($_privacy, FILTER_VALIDATE_BOOLEAN) ): ?>
+					<?php if(!empty($_privacy) && filter_var($_privacy, FILTER_VALIDATE_BOOLEAN) ): ?>
 					<?php 
 						if(strlen($_approval_label) === 0){
 							$_approval_label = __('I would like to subscribe to your newsletter.', 'sendpress');
