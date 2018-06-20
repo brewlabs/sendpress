@@ -166,16 +166,8 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 				
 				<input type="hidden" name="subscriberid" id="subscriberid" value="<?php echo $s; ?>" />
 
-				<table cellpadding="0" cellspacing="0" class="table table-condensed table-striped table-bordered">
-					<tr>
-						<th  ><?php _e('Subscribed','sendpress'); ?></th>
-						<th  ><?php _e('Unsubscribed','sendpress'); ?></th>
-						<th  ><?php _e('List','sendpress'); ?></th>
-						<th class="hidden-phone"><?php _e('Updated','sendpress'); ?></th>
-						<th class="hidden-phone"><?php _e('Other Info','sendpress'); ?></th>
-					</tr>
-				<?php
 
+				<?php 
 				$lists = SendPress_Data::get_lists(
 					apply_filters( 'sendpress_modify_manage_lists', 
 						array('meta_query' => array(
@@ -189,39 +181,58 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					false
 				);
 
-				foreach($lists as $list){
-					$subscriber = SendPress_Data::get_subscriber_list_status($list->ID, $s);
+				if(count($lists) > 0){
 					?>
-				  	<tr>
-				  	<?php
+					<table cellpadding="0" cellspacing="0" class="table table-condensed table-striped table-bordered">
+						<tr>
+							<th  ><?php _e('Subscribed','sendpress'); ?></th>
+							<th  ><?php _e('Unsubscribed','sendpress'); ?></th>
+							<th  ><?php _e('List','sendpress'); ?></th>
+							<th class="hidden-phone"><?php _e('Updated','sendpress'); ?></th>
+							<th class="hidden-phone"><?php _e('Other Info','sendpress'); ?></th>
+						</tr>
+					<?php
 
-				  		$checked = (isset($subscriber->statusid) && $subscriber->statusid == 2) ? 'checked' : '';
-						echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="2"></td>';
-						$checked = (isset($subscriber->statusid) && $subscriber->statusid == 3) ? 'checked' : '';
-						echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="3"></td>';
-				  	?>
-				  	<td><?php echo $list->post_title; ?></td>
-				  	<td class="hidden-phone"><span id="list_<?php echo $list->ID;?>"><?php 
-				  	if(isset($subscriber->updated)) { echo $subscriber->updated; } else {
-						 	_e('Never Subscribed','sendpress');
-						 }
-						 ?></span>
-					</td>
-					<td class="hidden-phone">
-						<?php 
-							if( is_object($subscriber) ){
-								if($subscriber->statusid != 3 && $subscriber->statusid != 2){
-									echo $subscriber->status;
-								} 
-							}
+					foreach($lists as $list){
+						$subscriber = SendPress_Data::get_subscriber_list_status($list->ID, $s);
 						?>
-					</td>
-				  	<tr>	
-				    <?php
-				}
-					?>
+					  	<tr>
+					  	<?php
 
-				</table>
+					  		$checked = (isset($subscriber->statusid) && $subscriber->statusid == 2) ? 'checked' : '';
+							echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="2"></td>';
+							$checked = (isset($subscriber->statusid) && $subscriber->statusid == 3) ? 'checked' : '';
+							echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="3"></td>';
+					  	?>
+					  	<td><?php echo $list->post_title; ?></td>
+					  	<td class="hidden-phone"><span id="list_<?php echo $list->ID;?>"><?php 
+					  	if(isset($subscriber->updated)) { echo $subscriber->updated; } else {
+							 	_e('Never Subscribed','sendpress');
+							 }
+							 ?></span>
+						</td>
+						<td class="hidden-phone">
+							<?php 
+								if( is_object($subscriber) ){
+									if($subscriber->statusid != 3 && $subscriber->statusid != 2){
+										echo $subscriber->status;
+									} 
+								}
+							?>
+						</td>
+					  	<tr>	
+					    <?php
+					}
+						?>
+
+					</table>
+
+					<?php
+
+				}
+				?>
+
+				
 				<br>
 				<?php do_action( 'sendpress_manage_notifications', $info );?>
 
