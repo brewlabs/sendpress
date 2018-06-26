@@ -50,6 +50,7 @@ class SendPress_View_Subscribers_Bulk extends SendPress_View_Subscribers {
  <input type="hidden" name="listID" value="<?php echo SPNL()->validate->_int( 'listID' ); ?>" />
   <input type="hidden" name="view" value="<?php echo esc_html(SPNL()->validate->_string('view')); ?>" />
 	<?php wp_nonce_field($this->_nonce_value); ?>
+	<p><small>Warning. This function has no rollback ability.</small></p>
 <input class="button-primary" type="submit" name="save" id="save" value="Update Status"  />
 </form>
 <!--
