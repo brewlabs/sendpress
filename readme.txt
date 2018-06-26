@@ -1115,6 +1115,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 
 == Upgrade Notice ==
 
+= 1.9.6.26 =
+* Bug fixes and bulk status change for subscribers
+
 = 1.9.5.10 =
 * Update forms for GDPR
 
