@@ -918,6 +918,19 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 
+	static function update_subscriber_list_status_bulk( $listid  = false , $status_start = false, $status_end = false) {
+		if( $listid != false ){
+			$listid = SPNL()->validate->int( $listid );
+			global $wpdb;
+			$clean_list_query =  "UPDATE "	. SendPress_Data::list_subcribers_table() . " set status = %d WHERE listID = %d AND status = %d ";
+
+			$q = $wpdb->prepare($clean_list_query, $status_start, $listid,  $status_end);
+			$wpdb->query($q);
+
+		}
+
+	}
+
 
 
 	static function update_subscriber($subscriberID, $values){

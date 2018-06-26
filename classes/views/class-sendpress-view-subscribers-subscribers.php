@@ -78,7 +78,8 @@ class SendPress_View_Subscribers_Subscribers extends SendPress_View_Subscribers 
 		<?php } ?>
 
 		<br>
-		<a class="btn btn-danger " data-toggle="modal" href="#sendpress-empty-list" ><i class="icon-warning-sign "></i> <?php _e('Remove All Subscribers from List','sendpress'); ?></a>
+		<!--<a class="btn btn-danger " data-toggle="modal" href="#sendpress-empty-list" ><i class="icon-warning-sign "></i> <?php _e('Remove All Subscribers from List','sendpress'); ?></a>-->
+		<a class="btn btn-primary " data-toggle="modal" href="<?php echo SendPress_Admin::link('Subscribers_Bulk' , array('listID' => $list_id_clean) ); ?>" ><i class="icon-warning-sign "></i> <?php _e('Bulk Change Status','sendpress'); ?></a>
 		<?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
 <div class="modal  fade" id="sendpress-empty-list" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -94,6 +95,7 @@ class SendPress_View_Subscribers_Subscribers extends SendPress_View_Subscribers 
 			</div>
 			<div class="modal-footer">
 			<a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('No! I was Joking','sendpress');?></a><a href="<?php echo SendPress_Admin::link('Subscribers_Subscribers') . $list ; ?>&action=remove-subscribers" id="confirm-delete" class="btn btn-danger" ><?php _e('Yes! Remove All Subscribers','sendpress');?></a>
+
 			</div>
 		</div>
 	</div>
