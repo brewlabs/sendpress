@@ -17,6 +17,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
     $subscribers = SendPress_Data::csv_to_array($file);
 
     $total = count($subscribers);
+  
     $map = array();
     $i = 0;
     foreach($subscribers[0] as $key=>$val) {
@@ -27,19 +28,28 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
                             }
 
     $file_chunks = array_chunk($subscribers, 200);
+  
+    $count_check = 0;
     $subscribers = null;
     global $wpdb;
     $chunks_count = 0;
     $wpdb->query('set session wait_timeout=600');
     foreach($file_chunks as $key_chunk => $csv_chunk){
-          $result = SendPress_Data::import_csv_array( $csv_chunk, $map ,$list_id_clean );
 
-          if($result !== false) $chunks_count++;
+          $count_check = $count_check + count($csv_chunk);
+          
+          
+          $result = SendPress_Data::import_csv_array( $csv_chunk, $map , $list_id_clean );
+          //sleep(1);
+          if($result !== false) {
+            $chunks_count++;
+          }
           else{
                 // there was an error we try 3
                 $try=0;
                 while($result === false && $try < 3){
                     $result = SendPress_Data::import_csv_array( $csv_chunk , $map, $list_id_clean );
+                    //sleep(1);
                     if($result !== false){
                          break;
                     }
@@ -51,14 +61,13 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
                 }
             }
             unset($file_chunks[$key_chunk]);
+            
         }
-
         unlink($the_file);
-
+       
         SendPress_Admin::redirect('Subscribers_Subscribers',array('listID'=> $list_id_clean));
-
-
 	}
+
 
   function dropdown($value,$id){
     //$this->security_check();
@@ -112,7 +121,7 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
 
         $this->_import_fields[] = $value['custom_field_key'];
 
-        $columns[$temp] = $value['custom_field_label'];
+        //$columns[$temp] = $value['custom_field_label'];
 
 
     }

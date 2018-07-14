@@ -1643,7 +1643,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	static function import_csv_array($data, $map, $list){
 
-
+		try{
 		// echo '<pre>';
 		// print_r($data);
 		// echo '</pre>';
@@ -1661,12 +1661,16 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$custom_field_list = SendPress_Data::get_custom_fields_new();
 
 		$custom_link_array = array();
-
+		$base_count = 0;
 		global $wpdb;
+		//$wpdb->show_errors();
+
 		$query ="INSERT IGNORE INTO ". SendPress_Data::subscriber_table(). "(email,firstname,lastname,join_date,registered_ip,phonenumber,salutation,identity_key) VALUES ";
+
 		$total = count($data);
 		$emails_added = array();
 		$x = 0;
+		
 		foreach($data as $key_line => $line){
 			$values ="";
 
@@ -1674,17 +1678,19 @@ class SendPress_Data extends SendPress_DB_Tables {
 				$email = $line[$map['email']];
 
 				if(is_email($email)){
-
-					$values.="'".esc_sql($email,$wpdb->dbh)."',";
-					$emails_added[] = $email;
-					if(array_key_exists('firstname',$map)){
-						$values.="'".esc_sql(trim($line[$map['firstname']]),$wpdb->dbh)."',";
+					$values .= $wpdb->prepare(" %s ," , $email);
+					//$values.="'".esc_sql($email,$wpdb->dbh)."',";
+					$emails_added[] = esc_sql($email);
+					if(array_key_exists('firstname',$map)&& false){
+						$values .= $wpdb->prepare(" %s ," , trim($line[$map['firstname']]));
+						//$values.="'".esc_sql(trim($line[$map['firstname']]),$wpdb->dbh)."',";
 					} else {
 						$values .= "'',";
 					}
 
-					if(array_key_exists('lastname',$map)){
-						$values.="'".esc_sql(trim($line[$map['lastname']]),$wpdb->dbh)."',";
+					if(array_key_exists('lastname',$map) && false){
+						$values .= $wpdb->prepare(" %s ," , trim($line[$map['lastname']]));
+						//$values.="'".esc_sql(trim($line[$map['lastname']]),$wpdb->dbh)."',";
 					} else {
 						$values .= "'',";
 					}
@@ -1692,25 +1698,26 @@ class SendPress_Data extends SendPress_DB_Tables {
 					$values .=  "'".date('Y-m-d H:i:s') ."',";
 
 					if(array_key_exists('ip',$map)){
-						$values.="'".esc_sql(trim($line[$map['ip']]),$wpdb->dbh)."',";
+						$values .= $wpdb->prepare(" %s ," , trim($line[$map['ip']]));
 					} else {
 						$values .= "'',";
 					}
 
 					if(array_key_exists('phonenumber',$map)){
-						$values.="'".esc_sql(trim($line[$map['phonenumber']]),$wpdb->dbh)."',";
+						$values .= $wpdb->prepare(" %s ," , trim($line[$map['phonenumber']]));
 					} else {
 						$values .= "'',";
 					}
 
 					if(array_key_exists('salutation',$map)){
-						$values.="'".esc_sql(trim($line[$map['salutation']]),$wpdb->dbh)."',";
+						$values .= $wpdb->prepare(" %s ," , trim($line[$map['salutation']]));
+						//$values.="'".esc_sql(trim($line[$map['salutation']]),$wpdb->dbh)."',";
 					} else {
 						$values .= "'',";
 					}
 
 					$values .= "'".SendPress_Data::random_code()."'";
-
+					$values = preg_replace( "/\r|\n|\t|\x0B/", "", $values );
 					$query .= " ($values) ";
 
 					//add custom fields to array for updating
@@ -1737,21 +1744,34 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 			
 
-			unset($data[$key_line]);
+			//unset($data[$key_line]);
 		}
 		$query .=";";
+		
 
-		//echo $query;
+		$d = $wpdb->query($query);
+		if($d === false){
+			/**
+			error_log("=== ===");
+			$wpdb->print_error();
+			$str   = $wpdb->last_result;
+			error_log( print_r($str, true));
+			$str   = $wpdb->last_query;
+			error_log( $str);
+			error_log("=== === ===");
+			error_log($query);
+			error_log("===");
+			**/
+			return false;
+		}
+		
+		$query_get = 'SELECT subscriberID FROM '. SendPress_Data::subscriber_table(). ' WHERE email in (\''.implode('\',\'', $emails_added).'\')';
 
-
-		$wpdb->query($query);
-
-		$query_get = "SELECT subscriberID FROM ". SendPress_Data::subscriber_table(). " WHERE email in ('".implode("','", $emails_added)."')";
-
-		$data = $wpdb->get_results($query_get);
+		
+		$sub_table_info = $wpdb->get_results($query_get);
 
 		$txt = '';
-		foreach ($data as $value) {
+		foreach ($sub_table_info as $value) {
 			$txt .= $value->subscriberID . ',';
 		}
 		$txt .= '0';
@@ -1764,19 +1784,22 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		$query_update_status ="INSERT IGNORE INTO ". SendPress_Data::list_subcribers_table(). "(subscriberID,listID,status,updated ) VALUES ";
 
-		$total = count($data);
+		$total = count($sub_table_info);
 		$x = 0;
+		$y = 0;
 		if($total > 0){
-			foreach ($data as $value) {
+			foreach ($sub_table_info as $value) {
 				$x++;
 				if( !isset( $my_data_x[ $value->subscriberID ]) ){
 					$query_update_status .= "( ".$value->subscriberID . "," . $list . ",2,'" .date('Y-m-d H:i:s') . "') ";
-
+					$y++;
 					if($total > $x ){ $query_update_status .=",";}
 				}
 			}
 			$query_update_status .=";";
-			$wpdb->query($query_update_status);
+			if($y > 0){
+				$wpdb->query($query_update_status);
+			}
 		}
 
 		//update custom fields
@@ -1789,7 +1812,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 		// print_r($map);
 		// echo '</pre>';
 
-		$query_get = "SELECT subscriberID,email FROM ". SendPress_Data::subscriber_table(). " WHERE email in ('".implode("','", $emails_added)."')";
+		$query_get = 'SELECT subscriberID,email FROM '. SendPress_Data::subscriber_table(). ' WHERE email in (\''.implode('\',\'', $emails_added).'\')';
+
 		$imported = $wpdb->get_results($query_get);
 
 		$slugs = "";
@@ -1802,9 +1826,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 		}
 
 
-		$meta_insert ="INSERT IGNORE INTO ". SendPress_Data::subscriber_meta_table(). "(subscriberID,listID,meta_key,meta_value) VALUES ";
-		
-		
+			
+		$meta_insert = "";
 		$x = 0;
 		foreach ($imported as $value) {
 			$sub_id = $value->subscriberID;
@@ -1848,14 +1871,22 @@ class SendPress_Data extends SendPress_DB_Tables {
 			}
 		}
 
-		$meta_insert .=";";
+		if($meta_insert != ""){
+
+			$meta_insert_x ="INSERT IGNORE INTO ". SendPress_Data::subscriber_meta_table(). "(subscriberID,listID,meta_key,meta_value) VALUES ";
+			$meta_insert_x .= $meta_insert;
+			$meta_insert_x .=";";
+			$wpdb->query($meta_insert_x);
+		}
 
 		//echo $meta_insert;
 
 		
-
-
-		$wpdb->query($meta_insert);
+		} catch (Exception $e){
+			//error_log($e);
+			return false;
+		}
+		return true;
 
 	}
 
