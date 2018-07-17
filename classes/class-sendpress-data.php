@@ -449,8 +449,18 @@ class SendPress_Data extends SendPress_DB_Tables {
 		if( is_array( $link ) && !empty($link) ) {
 		ksort($link);
 		foreach($link as $key => $url ){
+				if (strpos($key, '-image') !== false) {
+					continue;
+				}
+
+
 				if($px !== 'text'){
-					$output .= '<a href="'. $url .'" ><img class="sp-social" src="'.  SENDPRESS_URL .'img/'. $px .'/'. $key .'.png" alt="'. $key .'" /></a> ';
+					$image_url = SENDPRESS_URL .'img/'. $px .'/'. $key .'.png';
+					if( isset($link[$key . '-image'] )) {
+						$image_url = $link[$key . '-image'];
+					} 
+
+					$output .= '<a href="'. $url .'" ><img class="sp-social" width="'.$px.'" src="'. $image_url .'" alt="'. $key .'" /></a> ';
 				} else {
 					if($c > 1){
 						$output .= ' | ';
