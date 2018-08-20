@@ -140,7 +140,8 @@ class SendPress_Data extends SendPress_DB_Tables {
 	static function remove_from_queue($id){
 		global $wpdb;
 		$table = self::queue_table();
-		$wpdb->query( $wpdb->prepare("DELETE FROM $table WHERE emailID = %d", $id ) );
+		$wpdb->query( $wpdb->prepare("UPDATE $table SET success = 86 WHERE emailID = %d", $id ) );
+		//$wpdb->query( $wpdb->prepare("DELETE FROM $table WHERE emailID = %d", $id ) );
 	}
 
 	static function delete_queue_emails(){
