@@ -60,12 +60,12 @@ class SendPress_View_Subscribers_Customfields extends SendPress_View_Subscribers
 			// print_r($field);
 			// echo '</pre>';
 
-			$json[] = array('id' => $field['id'], 'label' => $field['label']);
+			$json[] = array('id' => $field['id'], 'label' => $field['label'], 'allow_edit' => $field['allow_edit']);
 		
 			?>
 
 			<p>
-				<label class="custom-field-label" for="_salutation_label"><?php _e('Label ', 'sendpress'); ?>:</label><input type="text" class="widefat custom-field" data-field-id="<?php echo $field['id']; ?>" id="custom_field_label" name="custom_field_label" value="<?php echo $field['label'];?>" style="width:300px;" /> - Use <code>{spcf-<?php echo $field['slug']; ?>}</code> to output data.
+				<label class="custom-field-label" for="_salutation_label"><?php _e('Label ', 'sendpress'); ?>:</label><input type="text" class="widefat custom-field" data-field-id="<?php echo $field['id']; ?>" id="custom_field_label" name="custom_field_label" value="<?php echo $field['label'];?>" style="width:300px;" /> - Use <code>{spcf-<?php echo $field['slug']; ?>}</code> to output data. <input type="checkbox" data-field-id="<?php echo $field['id']; ?>" id="custom_field_allow_edit" <?php checked( $field['allow_edit'], 'on' ); ?>> Allow users to edit their data
 			</p>
 
 			<?php

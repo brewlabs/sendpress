@@ -11,7 +11,7 @@ class SendPress_DB_Customfields extends SendPress_DB {
 	public function __construct() {
 		global $wpdb;
 		$this->table_name  = $wpdb->prefix . $this->prefix . 'customfields';
-		$this->version     = '1.3';
+		$this->version     = '1.4';
 		$this->primary_key = 'id';
 	}
 
@@ -26,7 +26,8 @@ class SendPress_DB_Customfields extends SendPress_DB {
 			'id'   => '%d',
 			'label'  => '%s',
 			'slug' => '%s',
-			'old_slug' => '%s'
+			'old_slug' => '%s',
+			'allow_edit' => '%d'
 		);
 	}
 
@@ -40,7 +41,8 @@ class SendPress_DB_Customfields extends SendPress_DB {
 		return array(
 			'label' => "",
 			'slug'  => "",
-			'old_slug' => ""
+			'old_slug' => "",
+			'allow_edit' => 1
 		);
 	}
 
@@ -79,6 +81,7 @@ id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 label varchar(255) DEFAULT NULL, 
 slug varchar(255) DEFAULT NULL, 
 old_slug varchar(255) DEFAULT NULL, 
+allow_edit tinyint(1) DEFAULT 1,
 PRIMARY KEY  (id)
 ) $collate;\n";
 
