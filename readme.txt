@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 4.4
-Tested up to: 4.9.7
-Stable tag: 1.9.7.17
+Tested up to: 4.9.8
+Stable tag: 1.9.8.19
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,7 +118,10 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
-= 1.9.7.17 - 2018.7.17 =
+= 1.9.8.19 - 2018.8.19 =
+* Update cancel email settings
+
+= 1.9.7.18 - 2018.7.18 =
 * Add Basic support for Custom Social Media icons
 
 = 1.9.7.13 - 2018.7.13 =

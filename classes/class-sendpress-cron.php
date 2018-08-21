@@ -114,7 +114,7 @@ class SendPress_Cron {
                 if(defined('SENDPRESS_PRO_VERSION')){
                     $pro = SENDPRESS_PRO_VERSION;
                 }
-                
+                $method = str_replace("sendpress_sender_","", strtolower(SendPress_Option::get( 'sendmethod' )));
                 $stuck = SendPress_Data::emails_stuck_in_queue();
                 $limit = SendPress_Manager::limit_reached();
                 $emails_per_day = SendPress_Option::get('emails-per-day');
@@ -127,7 +127,7 @@ class SendPress_Cron {
                 if($internal == false && $limit == false && intval($count - $stuck) > 0 && intval($stuck) < intval($count) && intval($stuck) != intval($count) ){
                     SendPress_Cron::_load($count);
                 }
-                return array( "error" => $error , "background"=> $bg , "weekly"=> $bg_weekly , "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits ,'time'=> number_format( $time , 3 ) );
+                return array( "error" => $error,"method"=>$method , "background"=> $bg , "weekly"=> $bg_weekly , "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits ,'time'=> number_format( $time , 3 ) );
                
             
     }
