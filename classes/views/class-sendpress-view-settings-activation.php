@@ -176,7 +176,7 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 		<b><?php _e('Subject','sendpress'); ?></b><br>
 		<input type="text" name="subject" class="regular-text sp-text" style="width: 100%;" value="<?php echo  stripcslashes($dpost->post_title); ?>"/>
 		<br><br><b><?php _e('Body','sendpress'); ?></b><br>
-		<?php if(strpos($dpost->post_content,'*|SP:CONFIRMLINK|*'  )  == false){ echo "<div class='alert alert-error'>Missing <b>*|SP:CONFIRMLINK|*</b> in body content.</div>";} ?>
+		
 		<textarea style="width:100%; padding: 8px;" rows="21" name="body"><?php 
 		remove_filter( 'the_content', 'wpautop' );
 		global $post;
@@ -196,7 +196,7 @@ class SendPress_View_Settings_Activation extends SendPress_View_Settings {
 			<br>
 			<b><?php _e('Quick Tags','sendpress'); ?></b>: <?php _e('work in both subject and body','sendpress'); ?>.
 			<div class='well'>
-				<b>*|SP:CONFIRMLINK|*</b> <?php _e('This is required to be in the body of the email','sendpress'); ?>.
+				<p><b>{sp-confirm-url} or *|SP:CONFIRMLINK|*</b> <?php _e('This is required to be in the body of the email','sendpress'); ?>.</p>
 				<hr>
 				*|SITE:TITLE|* - <?php _e('Add Website title to the email','sendpress'); ?>.
 				<hr>

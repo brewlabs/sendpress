@@ -619,6 +619,22 @@ function spnl_setup_template_tags() {
 			'function'    => array('SendPress_Tag_Unsubscribe_Link_Html','external'),
 			'internal'    => array('SendPress_Tag_Unsubscribe_Link_Html','internal'),
 			'copy'    => array('SendPress_Tag_Unsubscribe_Link_Html','copy'),
+		),
+
+		array(
+			'tag'         => 'sp-confirm-link-html',
+			'description' => __( 'Inserts an unsubscribe html link.', 'sendpress' ),
+			'function'    => array('SendPress_Tag_Confirm_Subscription','external'),
+			'internal'    => array('SendPress_Tag_Confirm_Subscription','internal'),
+			'copy'    => array('SendPress_Tag_Confirm_Subscription','copy'),
+		),
+
+		array(
+			'tag'         => 'sp-confirm-url',
+			'description' => __( 'Inserts an unsubscribe html link.', 'sendpress' ),
+			'function'    => array('SendPress_Tag_Confirm_Url','external'),
+			'internal'    => array('SendPress_Tag_Confirm_Url','internal'),
+			'copy'    => array('SendPress_Tag_Confirm_Url','copy'),
 		)
 		
 
