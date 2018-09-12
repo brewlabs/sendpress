@@ -2894,7 +2894,21 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		$label = __('Label ', 'sendpress'); 
 
-		return '<p><label class="custom-field-label" for="_salutation_label">'.$label.':</label><input type="text" class="widefat custom-field" data-field-id="" id="custom_field_label" name="custom_field_label" value="" style="width:300px;" /></p>';
+		$temp_id = SendPress_Data::GUID();
+
+		return '<p><label class="custom-field-label" for="_salutation_label">'.$label.':</label><input type="text" class="widefat custom-field" data-field-id="temp-'.$temp_id.'" id="custom_field_label" name="custom_field_label" value="" style="width:300px;" /></p><div style="padding-left:60px; margin-bottom:20px;"><input class="allow_edits" type="checkbox" data-field-id="temp-'.$temp_id.'" id="custom_field_allow_edit" checked> Allow users to edit their data</div>';
+
+		
+	}
+
+	static function GUID()
+	{
+	    if (function_exists('com_create_guid') === true)
+	    {
+	        return trim(com_create_guid(), '{}');
+	    }
+
+	    return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
 	}
 
 	static public function slugify($text, $id=999)

@@ -26,7 +26,7 @@ class SendPress_View_Subscribers_Customfields extends SendPress_View_Subscribers
 
 		foreach ($json as $key => $d) {
 			
-			$d['slug'] = SendPress_Data::slugify($d['label'], $d['id']);
+			//$d['slug'] = SendPress_Data::slugify($d['label'], $d['id']);
 			$id = SPNL()->load('Customfields')->add($d);
 
 			if(intval($d['id']) === 0){
@@ -60,7 +60,7 @@ class SendPress_View_Subscribers_Customfields extends SendPress_View_Subscribers
 			// print_r($field);
 			// echo '</pre>';
 
-			$json[] = array('id' => $field['id'], 'label' => $field['label'], 'allow_edit' => $field['allow_edit']);
+			$json[] = array('id' => $field['id'], 'label' => $field['label'], 'slug'=>$field['slug'], 'allow_edit' => $field['allow_edit']);
 		
 			?>
 

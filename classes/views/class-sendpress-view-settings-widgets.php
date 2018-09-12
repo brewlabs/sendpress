@@ -539,28 +539,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 			</div>
 
 		</div>
-		<div class="sp-row">
-			<?php $this->panel_start( __('Custom Fields','sendpress') ); ?>
-			<?php 
-				$fields = SPNL()->load('Customfields')->get_all();
-
-				foreach ($fields as $key => $field) {
-					?>
-					<div style="margin-top: 5px;">
-						<input type="checkbox" data-field-id="<?php echo $field['id']; ?>" id="custom_field_allow_edit" <?php checked( $field['allow_edit'], 'on' ); ?>> Allow users to edit the field <code><?php echo $field['label'] ?></code>
-					</div>
-
-					<?php
-				}
-
-			?>
-
-
-
-			
-			<?php $this->panel_end(); ?>
-
-		</div>
+		
 		<input type="hidden" name="_setting_type" id="setting_type" value="form" />
 		<input type="hidden" name="_form_type" id="form_type" value="manage_subscriptions" />
 		<input type="hidden" name="_settings_id" id="sp_settings_id" value="<?php echo $settings['_settings_id']; ?>" />

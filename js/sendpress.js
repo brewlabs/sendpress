@@ -608,6 +608,7 @@
                 var $form = $(this).closest('#create-custom-field'),
                     $data = $form.find('#fieldJson'),
                     inputs = $form.find('input.custom-field'),
+                    allow_edits = $form.find('input.allow_edits'),
                     jsonData = "[";
 
                 //console.log(inputs);
@@ -615,7 +616,28 @@
                 for (var i = 0; i < inputs.length; i++) {
                     var $i = $(inputs[i]);
 
-                    var id = $i.data('field-id');
+                    var id = $i.data('field-id').toString();
+
+                    allow_edit_check = id;
+
+                    if(id.startsWith("temp")){
+                        id = 0;
+                    }
+
+                    var slug = $i.data('field-slug');
+                    var allow_edit = 1;
+
+                    if(allow_edits.length > 0){
+                        for (var t = allow_edits.length - 1; t >= 0; t--) {
+                            $a = $(allow_edits[t]);
+                            
+                            if(allow_edit_check == $a.data('field-id')){
+                                allow_edit = ($a.is(':checked')) ? 1 : 0;
+                            }
+                        }
+                    }
+                    
+
                     var label = $i.val();
 
                     if(id === ""){
@@ -629,7 +651,7 @@
                         if(i > 0){
                             jsonData += ",";
                         }
-                        jsonData += '{"id":"'+ id + '","label":"' + label + '"}';
+                        jsonData += '{"id":"'+ id + '","label":"' + label + '","slug":"' + slug + '", "allow_edit":"'+allow_edit+'"}';
                     }
 
                 }
