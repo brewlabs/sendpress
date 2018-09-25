@@ -444,7 +444,7 @@ UNIQUE KEY wp_user_id (wp_user_id)
 $subscriber_list_subscribers = SendPress_DB_Tables::list_subcribers_table();
 $command .= " CREATE TABLE $subscriber_list_subscribers (
 id int(11) unsigned NOT NULL AUTO_INCREMENT, 
-listID int(11) DEFAULT NULL, 
+listID bigint(20) DEFAULT NULL, 
 subscriberID int(11) DEFAULT NULL, 
 status int(1) DEFAULT NULL, 
 updated datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
@@ -476,7 +476,7 @@ KEY meta_key (meta_key)
 $command .=" CREATE TABLE $subscriber_queue (
 id int(11) NOT NULL AUTO_INCREMENT, 
 subscriberID int(11) DEFAULT NULL, 
-listID int(11) DEFAULT NULL, 
+listID bigint(20) DEFAULT NULL, 
 from_name varchar(64) DEFAULT NULL, 
 from_email varchar(128) NOT NULL, 
 to_email varchar(128) NOT NULL, 
