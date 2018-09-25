@@ -968,10 +968,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 		$key = SendPress_Data::random_code();
 
 		//Check by WordPress user ID
-		$current = $wpdb->get_var( $wpdb->prepare("SELECT subscriberID FROM $table WHERE wp_user_id = %d", $wp_user_id) );
-		if( $current !== null ){
-			$wpdb->update($table , $values, array( 'subscriberID' => $current ) );
-		} else {
+		//$current = $wpdb->get_var( $wpdb->prepare("SELECT subscriberID FROM $table WHERE wp_user_id = %d", $wp_user_id) );
+		//if( $current !== null ){
+		//	$wpdb->update($table , $values, array( 'subscriberID' => $current ) );
+		//} else {
 			//Check by Email
 			$current_email = $wpdb->get_var( $wpdb->prepare("SELECT subscriberID FROM $table WHERE email = %s", $values['email']) );
 			if( $current_email !== null ){
@@ -982,7 +982,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 				$q = $wpdb->prepare($q,$values['email'],$wp_user_id,$key,date('Y-m-d H:i:s'),$values['firstname'],$values['lastname'],$wp_user_id,$values['firstname'],$values['lastname']);
 				$result = $wpdb->query($q);
 			}
-		}
+		//}
 		//$result = $wpdb->update($table, $values, array('email'=> $email) );
 	}
 
