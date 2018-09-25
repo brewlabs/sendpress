@@ -21,7 +21,7 @@ class SendPress_Tag_Unsubscribe extends SendPress_Tag_Base{
 	}
 
 	static function copy(){
-		$return = '{sp-unsubscribe}';
+		$return = '{sp-unsubscribe-url}';
         return $return;
 	}
 
