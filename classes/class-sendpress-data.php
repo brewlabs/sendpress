@@ -1692,14 +1692,14 @@ class SendPress_Data extends SendPress_DB_Tables {
 					$values .= $wpdb->prepare(" %s ," , $email);
 					//$values.="'".esc_sql($email,$wpdb->dbh)."',";
 					$emails_added[] = esc_sql($email);
-					if(array_key_exists('firstname',$map)&& false){
+					if(array_key_exists('firstname',$map)){
 						$values .= $wpdb->prepare(" %s ," , trim($line[$map['firstname']]));
 						//$values.="'".esc_sql(trim($line[$map['firstname']]),$wpdb->dbh)."',";
 					} else {
 						$values .= "'',";
 					}
 
-					if(array_key_exists('lastname',$map) && false){
+					if(array_key_exists('lastname',$map)){
 						$values .= $wpdb->prepare(" %s ," , trim($line[$map['lastname']]));
 						//$values.="'".esc_sql(trim($line[$map['lastname']]),$wpdb->dbh)."',";
 					} else {
