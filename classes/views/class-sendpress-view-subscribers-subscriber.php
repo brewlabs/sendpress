@@ -99,7 +99,6 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 			endforeach; 
 			wp_reset_postdata();
 
-
 			//custom field save
 			$custom_field_list = SendPress_Data::get_custom_fields_new();
 
@@ -109,8 +108,6 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 				if(strlen($val) > 0){
 					SendPress_Data::update_subscriber_meta($sid, $value['custom_field_key'], $val, false);
 				}
-
-
 			}
 
 

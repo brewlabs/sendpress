@@ -151,14 +151,66 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
 				<form action="<?php echo $query_var; ?>" method="post">
 				<?php wp_nonce_field( SendPress_Data::nonce() ); ?>
-
+				<div>
+				<label><?php _e('Salutation','sendpress'); ?>:</label>
 				<input type="text" class="sp_salutation" placeholder="<?php _e('Salutation','sendpress'); ?>" value="<?php echo $sub->salutation; ?>" name="sp_salutation" />
+				<br class="clearfix"/>
 
+				<label><?php _e('Firstname','sendpress'); ?>:</label>
 				<input type="text" class="sp_firstname" placeholder="<?php _e('Firstname','sendpress'); ?>" value="<?php echo $sub->firstname; ?>"  name="sp_firstname" />
+				<br class="clearfix"/>
 
+				<label><?php _e('Lastname','sendpress'); ?>:</label>
 				<input type="text" class="sp_lastname" placeholder="<?php _e('Lastname','sendpress'); ?>" value="<?php echo $sub->lastname; ?>" name="sp_lastname" />
+				<br class="clearfix"/>
 
+				<label><?php _e('Phone number','sendpress'); ?>:</label>
 				<input type="text" class="sp_phonenumber" placeholder="<?php _e('Phone number','sendpress'); ?>" value="<?php echo $sub->phonenumber; ?>" name="sp_phonenumber" />
+				
+				</div>
+				<div>
+				<?php 
+				$fields = SPNL()->load('Customfields')->get_all();
+
+				//$custom_field_list = SendPress_Data::get_custom_fields_new();
+
+				// echo '</pre>';
+				// print_r($fields);
+				// echo '</pre><br><br>';
+
+				// echo '</pre>';
+				// print_r($custom_field_list);
+				// echo '</pre><br><br>';
+
+				// echo '</pre>';
+				// print_r($sub);
+				// echo '</pre>';
+
+
+				foreach ($fields as $key => $field) {
+					// echo '</pre>';
+					// print_r($field);
+					// echo '</pre>';
+
+					if($field['allow_edit'] == 1){
+						//echo 'field to edit';
+
+						$sub_value = SendPress_Data::get_subscriber_meta($sub->subscriberID,$field['slug']);
+
+
+						?>
+						<label><?php echo $field['label']; ?>:</label>
+						<input type="text" class="<?php echo $field['slug'] ?>" placeholder="<?php echo $field['label'];?>" value="<?php echo $sub_value; ?>" name="<?php echo $field['slug'] ?>" />
+						
+						<?php
+					}
+				}
+
+				?>
+				</div>
+
+
+
 				
 				<h5>Subscriptions:</h5>
 				
@@ -531,6 +583,24 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 			);
 
 			SendPress_Data::update_subscriber( $_POST['subscriberid'], $sub_data );
+
+			//custom field save
+			$fields = SPNL()->load('Customfields')->get_all();
+
+			foreach ($fields as $key => $value) {
+				if($value['allow_edit'] == 1){
+
+					$val = SPNL()->validate->_string($value['slug']);
+
+					if(strlen($val) > 0){
+						SendPress_Data::update_subscriber_meta($_POST['subscriberid'], $value['slug'], $val, false);
+					}
+					
+				}
+				
+			}
+
+			
 
 			//do_action('sendpress_public_view_manage_save', $_POST);
 		}
