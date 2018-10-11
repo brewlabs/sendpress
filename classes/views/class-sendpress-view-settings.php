@@ -52,7 +52,16 @@ class SendPress_View_Settings extends SendPress_View {
 		 </li>
 		 
 		<?php do_action('sendpress_view_settings_menu', SPNL()->_current_view); ?>
+		
+		<?php 
 
+		if( defined('SENDPRESS_PRO_VERSION') ){	
+
+		?>
+		<li <?php if(SPNL()->_current_view == 'pro-extras'){ ?>class="active wp-ui-primary"<?php } ?> >
+		    <a href="<?php echo SendPress_Admin::link('Settings_Pro_Extras'); ?>"><i class="icon-pencil "></i> <?php _e('Pro Extras','sendpress'); ?></a>
+		 </li>
+		<?php } ?>
 		</ul>
 
 	</div>

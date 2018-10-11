@@ -1676,7 +1676,12 @@ class SendPress_Data extends SendPress_DB_Tables {
 		global $wpdb;
 		//$wpdb->show_errors();
 
-		$query ="INSERT IGNORE INTO ". SendPress_Data::subscriber_table(). "(email,firstname,lastname,join_date,registered_ip,phonenumber,salutation,identity_key) VALUES ";
+		if(SendPress_Option::get('import_update')){
+
+			$query ="INSERT IGNORE INTO ". SendPress_Data::subscriber_table(). "(email,firstname,lastname,join_date,registered_ip,phonenumber,salutation,identity_key) VALUES ";
+		} else {
+			$query ="INSERT INTO ". SendPress_Data::subscriber_table(). "(email,firstname,lastname,join_date,registered_ip,phonenumber,salutation,identity_key) VALUES ";
+		}
 
 		$total = count($data);
 		$emails_added = array();
@@ -1757,7 +1762,12 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 			//unset($data[$key_line]);
 		}
-		$query .=";";
+
+		if(SendPress_Option::get('import_update')){
+			$query .=" ON DUPLICATE KEY UPDATE firstname=VALUES(firstname), lastname=VALUES(lastname), salutation=VALUES(salutation), phonenumber=VALUES(phonenumber);";
+		} else {
+			$query .=";";
+		}
 		
 
 		$d = $wpdb->query($query);
