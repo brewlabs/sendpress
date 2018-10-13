@@ -39,6 +39,7 @@ class SendPress_View_Settings_Pro_Extras extends SendPress_View_Settings {
 				<?php $this->panel_start( __('Import Settings','sendpress') ); ?>
 				<?php $ctype = SendPress_Option::get('import_update'); ?>
 				<input type="checkbox" name="import_update" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> &nbsp;<?php _e('Update firstname, lastname, phone and salutation on csv import','sendpress'); ?>
+					<p>	<?php _e('Please make sure you have your database backed up before running import','sendpress'); ?></p>
 				<?php $this->panel_end(); ?>
 
 
