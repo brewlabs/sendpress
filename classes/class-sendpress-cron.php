@@ -121,13 +121,14 @@ class SendPress_Cron {
                 $emails_per_hour =  SendPress_Option::get('emails-per-hour');
                 $hourly_emails = SendPress_Data::emails_sent_in_queue("hour");
                 $emails_so_far = SendPress_Data::emails_sent_in_queue("day");
+                $pause_sending = SendPress_Option::get('pause-sending','no');
                 $limits = array('autocron'=> $attempted_count,'dl'=>$emails_per_day,'hl'=>$emails_per_hour,'ds'=>$emails_so_far,'hs'=>$hourly_emails);
                 $time_end = microtime(true);
                 $time = $time_end - $time_start;
                 if($internal == false && $limit == false && intval($count - $stuck) > 0 && intval($stuck) < intval($count) && intval($stuck) != intval($count) ){
                     SendPress_Cron::_load($count);
                 }
-                return array( "error" => $error,"method"=>$method , "background"=> $bg , "weekly"=> $bg_weekly , "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits ,'time'=> number_format( $time , 3 ) );
+                return array( "error" => $error,"method"=>$method , "background"=> $bg , "weekly"=> $bg_weekly ,"paused"=>$pause_sending, "queue"=>$count,"stuck"=>$stuck,"version"=>SENDPRESS_VERSION,"pro"=> $pro ,"limit" => $limit, 'info'=>$limits ,'time'=> number_format( $time , 3 ) );
                
             
     }
