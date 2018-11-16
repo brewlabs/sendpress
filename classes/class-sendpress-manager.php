@@ -22,7 +22,7 @@ class SendPress_Manager {
 		$email_count_day = SendPress_Data::emails_sent_in_queue("day");
 		// Check our daily send limit
 		if($emails_per_day != false && $emails_per_day != 0 ){
-			if( intval($email_count_day) >= intval($emails_per_day)  ){
+			if( intval($email_count_day) > intval($emails_per_day)  ){
 				//We hit the daily limit
 				return true;
 			}
@@ -35,7 +35,7 @@ class SendPress_Manager {
 		$email_count_hour = SendPress_Data::emails_sent_in_queue("hour");
 		// Check our hourly send limit
 		if($emails_per_hour != false && $emails_per_hour != 0 ){
-			if( intval($email_count_hour) >= intval($emails_per_hour)  ){
+			if( intval($email_count_hour) > intval($emails_per_hour)  ){
 				//We hit the hourly limit
 				return true;
 			}
