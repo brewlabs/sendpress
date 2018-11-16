@@ -20,12 +20,36 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 		
 		} else {
 
+		// echo '<pre>';
+		// print_r($_POST);
+		// echo '</pre>';
 
-		$post_options = array('list','email','firstname','lastname','return','status');
+		//get options
+		$options = SendPress_Data::get_post_meta_object($_POST['formid']);  
+
+		//build post_options array
+		$post_options = array();
+
+		$basic_form_options = array('_collect_firstname','_collect_lastname','_collect_phonenumber','_collect_salutation');
+		//$basic_required = array('_firstname_required', '_lastname_required', '_phonenumber_required', '_salutation_required');
+		$basic_fields = array('firstname','lastname','phonenumber', 'salutation');
+
+		$post_options_old = array('list','email','firstname','lastname','return','status');
+		$post_options = array('list','status','email');
+
+		foreach ($basic_form_options as $key => $value) {
+
+			if(isset($options[$value]) && $options[$value] == 'on'){
+
+				array_push($post_options,$basic_fields[$key]);
+			}
+		}
+
 		$user_info = array();
 		foreach ($post_options as $opt) {
 			$user_info[$opt] = isset($_POST['sp_' . $opt]) ?  $_POST['sp_' . $opt]: false ;
 		}
+
 
 		$valid_user = array();
 		//foreach()
@@ -45,23 +69,53 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			if( $user_info['email'] !== false && is_email( $user_info['email'] )){
 				$valid_user['email'] = $user_info['email'];
 			} else {
-				$data_error = __('Invalid Email','sendpress');
+				$data_error .= __('Invalid Email','sendpress');
 			}
 
 			if( $user_info['firstname'] !== false ){
-				$valid_user['firstname'] =  sanitize_text_field( $user_info['firstname'] );
+				//is firstname a required field
+				if($options['_firstname_required'] == 'on' && strlen($user_info['firstname']) == 0){
+					$data_error .= "<br>". __('First name is required','sendpress');
+				}else{
+					$valid_user['firstname'] =  sanitize_text_field( $user_info['firstname'] );
+				}
 			} else {
 				$valid_user['firstname'] = '';
 			}
 			
 			if( $user_info['lastname'] !== false ){
-				$valid_user['lastname'] =  sanitize_text_field( $user_info['lastname'] );
+				if($options['_lastname_required'] == 'on' && strlen($user_info['lastname']) == 0){
+					$data_error .= "<br>". __('Last name is required','sendpress');
+				}else{
+					$valid_user['lastname'] =  sanitize_text_field( $user_info['lastname'] );
+				}
 			} else {
 				$valid_user['lastname'] = '';
 			}
+
+			if( $user_info['salutation'] !== false ){
+				if($options['_salutation_required'] == 'on' && strlen($user_info['salutation']) == 0){
+					$data_error .= "<br>". __('Salutation is required','sendpress');
+				}else{
+					$valid_user['salutation'] =  sanitize_text_field( $user_info['salutation'] );
+				}
+			} else {
+				$valid_user['salutation'] = '';
+			}
+
+			if( $user_info['phonenumber'] !== false ){
+				if($options['_phonenumber_required'] == 'on' && strlen($user_info['phonenumber']) == 0){
+					$data_error .= "<br>". __('Phone number is required','sendpress');
+				}else{
+					$valid_user['phonenumber'] =  sanitize_text_field( $user_info['phonenumber'] );
+				}
+			} else {
+				$valid_user['phonenumber'] = '';
+			}
+
 			$status = false;
 			
-			if($data_error ==  false){
+			if($data_error == false){
 				$list = implode(",", $user_info['list']);
 				$custom = '';
 				$post_notifications = SPNL()->validate->_string('post_notifications');
@@ -72,7 +126,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 				//$custom = apply_filters('sendpress_subscribe_to_list_custom_fields', array(), $_POST);
 
 		
-				$status =  SendPress_Data::subscribe_user($list, $valid_user['email'], $valid_user['firstname'], $valid_user['lastname'], $valid_user['status'], $custom);
+				$status =  SendPress_Data::subscribe_user($list, $valid_user['email'], $valid_user['firstname'], $valid_user['lastname'], $valid_user['status'], $custom, $valid_user['phonenumber'],$valid_user['salutation']);
 				if($status == false){
 					$data_error = __('Problem with subscribing user.','sendpress');
 				}
@@ -161,15 +215,6 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			}
 
 
-
-
-
-				
-
-
-
-
-
 		} else {
 			SendPress_Public_View::page_start();
 			?>
@@ -201,6 +246,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 
 					<?php } else { ?>
 						<h1><?php _e('Sorry, We had a Problem adding your email','sendpress'); ?>.</h1>
+						<p><?php _e($error); ?></p>
 
 
 					<?php } ?>

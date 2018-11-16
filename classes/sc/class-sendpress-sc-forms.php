@@ -307,6 +307,11 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		$no_list_error = '-- NO LIST HAS BEEN SET! --';
 		$_listids = '';
 
+		// echo '<pre>';
+		// print_r($options);
+		// echo '</pre>';
+
+
 		extract($options);
 
 	   	$lists = SendPress_Data::get_lists(
@@ -365,6 +370,8 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					if($_thankyou_page != false && $_thankyou_page > 0){
 						echo '<input type="hidden" name="redirect" value="'.$_thankyou_page.'" />';
 					}
+
+					echo '<input type="hidden" name="formid" value="'.$_settings_id.'" />';
 
 				?>
 				<div id="exists" style="display:none;"><?php echo $sendpress_signup_exists; ?></div>

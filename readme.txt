@@ -118,6 +118,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.9.11.16 - 2018.11.16 =
+* Update for signup form using POST so it respects required fields
+
 = 1.9.11.15 - 2018.11.15 =
 * Update for sending hitting limit
 
