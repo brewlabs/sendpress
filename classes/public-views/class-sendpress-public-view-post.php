@@ -27,6 +27,12 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 		//get options
 		$options = SendPress_Data::get_post_meta_object($_POST['formid']);  
 
+		echo '<pre>';
+		print_r($options);
+		echo '</pre>';
+
+
+
 		//build post_options array
 		$post_options = array();
 
@@ -113,6 +119,16 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 				$valid_user['phonenumber'] = '';
 			}
 
+			//validate required custom fields
+			$custom_field_list = SendPress_Data::get_custom_fields_new();
+			foreach ($custom_field_list as $key => $value) {
+				$id = $value['id'];
+				$label = $value['custom_field_label'];
+				if($options['_custom_field_'.$id.'_required'] == 'on'){
+					$data_error .= "<br>". __($label . ' is required','sendpress');
+				}
+			}
+
 			$status = false;
 			
 			if($data_error == false){
@@ -126,9 +142,23 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 				//$custom = apply_filters('sendpress_subscribe_to_list_custom_fields', array(), $_POST);
 
 		
-				$status =  SendPress_Data::subscribe_user($list, $valid_user['email'], $valid_user['firstname'], $valid_user['lastname'], $valid_user['status'], $custom, $valid_user['phonenumber'],$valid_user['salutation']);
+				$status = SendPress_Data::subscribe_user($list, $valid_user['email'], $valid_user['firstname'], $valid_user['lastname'], $valid_user['status'], $custom, $valid_user['phonenumber'],$valid_user['salutation']);
+
+				
 				if($status == false){
 					$data_error = __('Problem with subscribing user.','sendpress');
+				}else{
+					//update custom fields
+					$sid = SendPress_Data::get_subscriber_by_email($valid_user['email']);
+					$custom_field_list = SendPress_Data::get_custom_fields_new();
+
+					foreach ($custom_field_list as $key => $value) {
+						$val = SPNL()->validate->_string($value['custom_field_key']);
+
+						if(strlen($val) > 0){
+							SendPress_Data::update_subscriber_meta($sid, $value['custom_field_key'], $val, false);
+						}
+					}
 				}
 			} 
 
