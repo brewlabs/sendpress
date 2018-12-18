@@ -47,7 +47,11 @@ class SendPress_View_Reports extends SendPress_View{
 				  	<li <?php if(SPNL()->validate->_string('view') === 'tests'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Reports_Tests'); ?>"><?php _e('Tests','sendpress'); ?></a>
 				  	</li>
-				  	
+                    <!--
+                    <li <?php if(SPNL()->validate->_string('view') === 'campaign'){ ?>class="active"<?php } ?> >
+                        <a href="<?php echo SendPress_Admin::link('Reports_Campaign'); ?>"><?php _e('Campaigns','sendpress'); ?></a>
+                    </li>
+				  	-->
 				</ul>
 
 				
