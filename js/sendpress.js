@@ -131,6 +131,12 @@
                 }
             });
 
+            $('input:radio[name=optionsReadMore]').change(function(){
+                if(spadmin.active_post !== undefined){
+                    spadmin.update_post_html();
+                }
+            });
+
              $('input:radio[name=headerOptions]').change(function(){
                 if(spadmin.active_post !== undefined){
                     spadmin.update_post_html();
@@ -177,6 +183,7 @@
 			var t = $('input:radio[name=optionsRadios]:checked').val();
 			var htype = $('input:radio[name=headerOptions]:checked').val();
             var link = $('input:radio[name=headerlinkOptions]:checked').val();
+            var rm = $('input:radio[name=optionsReadMore]:checked').val();
 
 			var text =  spadmin.active_post.excerpt;
 			if(t == 'full'){
@@ -189,8 +196,13 @@
               header = "<"+htype+"><a href=\""+spadmin.active_post.url+"\">"+spadmin.active_post.title+"</a></"+htype+">";
             }
 
+            var readmore = '';
+            if(rm == 'yes'){
+                readmore = "<a href=\""+spadmin.active_post.url+"\">Read More</a>";
+            }
 
-			var htmtToInsert = header + "<p>"+text+"</p>";
+
+			var htmtToInsert = header + "<p>"+text+"<br><br>"+readmore+"</p>";
 			$('#sp-post-preview-insert').data("code", htmtToInsert);
 			$('#sp-post-preview').html(htmtToInsert);
 		}

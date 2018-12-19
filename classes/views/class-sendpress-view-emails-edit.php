@@ -347,6 +347,20 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 		  <?php _e('Full Post','sendpress'); ?>
 		</label>
 	</p>
+
+	<?php if(defined('SENDPRESS_PRO_VERSION')):?>
+	<p><?php _e('Include Read More Link','sendpress'); ?>:&nbsp;
+	  	<label class="radio">
+		  <input type="radio" name="optionsReadMore" id="optionsReadMore1" value="yes">
+		  <?php _e('Yes','sendpress'); ?>
+		</label>
+		<label class="radio">
+		  <input type="radio" name="optionsReadMore" id="optionsReadMore2" value="no" checked>
+		  <?php _e('No','sendpress'); ?>
+		</label>
+	</p>
+	<?php endif; ?>
+
   	<button class="btn btn-mini btn-success sp-insert-code" id="sp-post-preview-insert" data-code=""><?php _e('Insert','sendpress'); ?></button>
   </div>
  	<div class="tab-pane " id="merge">
