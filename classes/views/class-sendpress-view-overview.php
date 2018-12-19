@@ -144,7 +144,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
           if($report){
               
             if($stat_type == 'new'){
-                $click = SPNL()->load("Subscribers_Url")->clicks_email_id( $report->ID  );
+                $click = SPNL()->load("Subscribers_Url")->clicks_total_email_id( $report->ID  );
             } else {
                 $click= SendPress_Data::get_clicks($report->ID);
             }
@@ -167,7 +167,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
           $ou = 0;
 
           if($stat_type == 'new'){
-                $ou = SPNL()->load("Subscribers_Url")->clicks_total_email_id( $report->ID  );
+                $ou = SPNL()->load("Subscribers_Url")->clicks_email_id( $report->ID  );
             } else {
                 $ou = SendPress_Data::get_clicks_unique_total($report->ID);
             }

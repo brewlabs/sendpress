@@ -592,6 +592,31 @@ class SendPress_Data extends SendPress_DB_Tables {
 		return $wpdb->insert_id;
 	}
 
+
+
+	static function get_campaign_list(){
+        global $wpdb;
+        $r = $wpdb->get_results(  $wpdb->prepare( "
+        SELECT pm.meta_value AS name, count(*) AS count  FROM {$wpdb->postmeta} pm
+        LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+        WHERE pm.meta_key = '%s'
+        AND pm.meta_value != '' 
+        AND p.post_type = '%s'
+        GROUP BY pm.meta_value
+        ORDER BY pm.meta_value          
+        ", 'google-campaign-name', 'sp_report')
+        );
+        return $r;
+    }
+
+
+
+
+
+
+
+
+
 	static function get_open_without_id($rid, $sid){
 		global $wpdb;
 		$table = SendPress_Data::subscriber_event_table();
