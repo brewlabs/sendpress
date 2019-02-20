@@ -50,25 +50,32 @@ class SendPress_Email_Render_Engine {
 
 				$body_font = "";
 				$body_size = "";
+				$body_line = "";
 
 				if(defined('SENDPRESS_PRO_LOADED') && SENDPRESS_PRO_LOADED){
 					$font_value = get_post_meta( $post->ID , '_body_font', true );
 					$size_value = get_post_meta( $post->ID , '_body_font_size', true );
+                    $line_value = get_post_meta( $post->ID , '_body_line_height', true );
 
 					if(strlen($font_value) > 0){
 						$body_font = 'font-family:'. urldecode($font_value) .';';
 					}
 
-					SendPress_Error::log("size: ".strlen($size_value));
+					//SendPress_Error::log("size: ".strlen($size_value));
 
 					if($size_value > 0){
 						$body_size = 'font-size:'.$size_value .'px;';
 					}
+
+                    if($line_value > 0){
+                        $body_line = 'line-height:'.$line_value .'px;';
+                    }
+
 				}
 				
 				foreach ($pTags as $pElement) {
 					$px = $pElement->getAttribute('style');
-					$pElement->setAttribute('style', ' margin-top:0; margin-bottom:10px; '. $body_font . $body_size . $px );
+					$pElement->setAttribute('style', ' margin-top:0; margin-bottom:10px; '. $body_font . $body_size . $body_line . $px );
 				}
 				$return =  $dom->saveHtml();
 			}

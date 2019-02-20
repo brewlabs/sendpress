@@ -46,6 +46,8 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
         }
 
         update_post_meta($saveid ,'_body_font_size', SPNL()->validate->_int('_body_font_size') );
+
+        update_post_meta($saveid ,'_body_line_height', SPNL()->validate->_int('_body_line_height') );
      
 
 
