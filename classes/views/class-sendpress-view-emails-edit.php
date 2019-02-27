@@ -25,7 +25,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 		 		'ID'           => $post_id,
 		      	'post_content' => $html
 		    );
-		   
+
 			update_post_meta( $post_id, '_sendpress_template', SPNL()->validate->_int('template') );
 			update_post_meta( $post_id, '_sendpress_subject', sanitize_text_field(SPNL()->validate->_string('post_subject' )) );
 			if( SPNL()->validate->_isset('header_content_edit')){
@@ -156,7 +156,10 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 
 <div class="tab-content" style="display:block;">
   <div class="tab-pane in active" id="content-area-one-tab">
-  <?php wp_editor( $post->post_content, 'content_area_one_edit', array(
+
+  <?php
+  remove_filter( 'the_content', 'wpautop' );
+  wp_editor( apply_filters('the_content', $post->post_content), 'content_area_one_edit', array(
 	'dfw' => true,
 	'drag_drop_upload' => true,
 	'tabfocus_elements' => 'insert-media-button-1,save-post',
@@ -201,6 +204,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 		</div>
 		<?php
 	}
+    add_filter( 'the_content', 'wpautop' );
 	?>
    <!--
   <div class="tab-pane fade" id="messages"><?php wp_editor($post->post_content,'content-3'); ?></div>
