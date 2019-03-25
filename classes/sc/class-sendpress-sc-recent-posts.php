@@ -36,7 +36,8 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 			 'columns' => 1,
 			 'datespan' => '',
 			 'displayimages' => true,
-			 'display_author' => false
+			 'display_author' => false,
+             'post_type' => 'post'
 			);
 	}
 
@@ -106,6 +107,15 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 		if(strlen($tag) > 0){
 			$args['tag'] = $tag;
 		}
+
+        if(defined('SENDPRESS_PRO_VERSION')) {
+            $pt = $post_type;
+            if(strpos($post_type, ',') !== false ){
+                $pt = explode(',', $post_type);
+            }
+
+            $args['post_type'] = $pt;
+        }
 
 		if( strlen($datespan) > 0 ){
 			$after = get_date_from_gmt(date('Y-m-d H:i:s',strtotime('-1 day')));
@@ -317,7 +327,7 @@ class SendPress_SC_Recent_Posts extends SendPress_SC_Base {
 	}
 
 	public static function docs(){
-		return __('This shortcode creates a listing of Posts in emails or on pages.  Use the following options to customize the output: <br><br><b>posts</b> - number of posts to display. (defaults to 1)<br><b>uid</b> - the user id of the author you would like to see.<br><b>imgalign</b> - Align images left or right. (defaults to left)<br><b>alternate</b> - when writing posts, alternate the thumbnail images. (defaults to false)<br><b>readmoretext</b> - the text for the readmore link (defaults to Read More)<br><b>columns</b> - the number of columns your posts should display in.  Max number of columns is 3.<br><b>datespan</b> - number of days of posts to render.  Can be set to "daily", "weekly", or a number of days (datespan=3 for the last three days for exmaple) (defaults to daily.)<br><b>displayimages</b> - Set to true by default, set to false if you want no images to display.<br><b>display_author</b> - Set to false by default, set to true the author link will display.', 'sendpress');
+		return __('This shortcode creates a listing of Posts in emails or on pages.  Check out our <a href="https://docs.sendpress.com/article/50-sp-recent-posts" target="_blank">documentation</a> for specific setup details.', 'sendpress');
 	}
 
 
