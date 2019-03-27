@@ -817,7 +817,7 @@ class SendPress {
 		if ( isset( $_REQUEST['post_id'] ) ) {
 			$p = get_post( $_REQUEST['post_id'] );
 			if ( $p !== null && $p->post_type == 'sp_newsletters' ) {
-				add_filter( 'disable_captions', create_function( '$a', 'return true;' ) );
+				add_filter( 'disable_captions', '__return_true' );
 			}
 		}
 
