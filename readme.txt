@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 4.4
-Tested up to: 4.9.8
-Stable tag: 1.9.11.26
+Tested up to: 5.1.1
+Stable tag: 1.10.3.28
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,14 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+
+= 1.10.3.27 - 2019.3.27 =
+* fix for link tracking image
+* fix some of php 7.2 issues
+* fix wpoffload issue
+* fix help docs
+* fix reports data
+* fix custom field issue
 
 = 1.9.11.26 - 2018.11.26 =
 * fix for confirm url short code
@@ -1141,6 +1149,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WordPress.org
 
 == Upgrade Notice ==
+
+= 1.10.3.27 =
+Multiple bug fixes and prep for php 7.2
 
 = 1.9.6.26 =
 * Bug fixes and bulk status change for subscribers
