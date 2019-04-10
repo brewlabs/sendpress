@@ -44,6 +44,13 @@ class SendPress_Option extends SendPress_Base {
 	static function get_encrypted( $name , $default = false ) {
 		$options = get_option( self::$key );
 		if ( is_array( $options ) && isset( $options[$name] ) ) {
+            if(isset($options[$name."_xd"])){
+                return $options[$name."_xd"];
+            } else {
+                $d = self::_decrypt( $options[$name] );
+                SendPress_Option::set_encrypted($name, $d);
+            }
+
 			return  self::_decrypt( $options[$name] ) ;
 		}
 		return $default;
@@ -206,7 +213,7 @@ class SendPress_Option extends SendPress_Base {
 		$options = get_option( self::$key );
 
 		
-		$options[$option] = self::_encrypt( $value );
+		$options[$option."_xd"] =  $value;
 
 		return update_option(self::$key , $options);
 	}	
@@ -215,7 +222,8 @@ class SendPress_Option extends SendPress_Base {
 	static function set_sender($sender, $settings_array ){
 		$optkey = 'sendpress_sender_settings';
 		$options = get_option( $optkey );
-		$options[$sender] = self::_encrypt( serialize( $settings_array) , SENDPRESS_SENDER_KEY);
+        $options[$sender."_temp"] = serialize( $settings_array);
+		//$options[$sender] = self::_encrypt( serialize( $settings_array) , SENDPRESS_SENDER_KEY);
 
 		return update_option( $optkey , $options);
 	}	
@@ -223,6 +231,13 @@ class SendPress_Option extends SendPress_Base {
 	static function get_sender( $sender ){
 		$optkey = 'sendpress_sender_settings';
 		$options = get_option( $optkey );
+		if(isset($options[$sender."_temp"])){
+		    return unserialize($options[$sender."_temp"]);
+        } else {
+		    $d = unserialize( self::_decrypt( $options[$sender] , SENDPRESS_SENDER_KEY));
+            SendPress_Option::set_sender($sender, $d);
+        }
+
 		return unserialize( self::_decrypt( $options[$sender] , SENDPRESS_SENDER_KEY));
 	}	
 

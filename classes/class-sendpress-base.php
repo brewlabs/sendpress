@@ -8,18 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 class SendPress_Base {
 
-	 /**
-     * Encrypt text data
-     **/
-    static  function _encrypt( $text, $key = 'E0fRGYRjiMlAZsubeDYzPfpJHuUjRWigHuSRRFkm1wKPCrjeKM' ) {
-        if  ( function_exists( 'mcrypt_encrypt' ) ) {
-            return base64_encode( @mcrypt_encrypt( MCRYPT_RIJNDAEL_256, $key, $text, MCRYPT_MODE_ECB ) );
-        } else {
-            return $text;
-        }
-    }
-
-    /**
+	/**
      * Decrypt Text Data
      **/
    static  function _decrypt( $text, $key = 'E0fRGYRjiMlAZsubeDYzPfpJHuUjRWigHuSRRFkm1wKPCrjeKM' ) {
