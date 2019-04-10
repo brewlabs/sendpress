@@ -159,7 +159,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 
   <?php
   remove_filter( 'the_content', 'wpautop' );
-  wp_editor( apply_filters('the_content', $post->post_content), 'content_area_one_edit', array(
+  wp_editor( $post->post_content, 'content_area_one_edit', array(
 	'dfw' => true,
 	'drag_drop_upload' => true,
 	'tabfocus_elements' => 'insert-media-button-1,save-post',
