@@ -3236,7 +3236,7 @@ msgstr "Per cortesia inserisci il tuo indirizzo e-mail"
 msgid ""
 "Please enter all the required fields. <br> Required fields are marked with "
 "an (*)"
-msgstr ""
+msgstr "Si prega di inserire tutti i campi richiesti. <br> I campi obbligatori sono contrassegnati con un (*)"
 
 #: sendpress.php:1096
 msgid "Use this Image"
