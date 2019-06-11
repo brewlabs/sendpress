@@ -1718,7 +1718,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 			if( array_key_exists('email',$map)  ){
 				$email = $line[$map['email']];
 
-				if(is_email($email)){
+				if(is_email($email) && !in_array(esc_sql($email), $emails_added)){
 					$values .= $wpdb->prepare(" %s ," , $email);
 					//$values.="'".esc_sql($email,$wpdb->dbh)."',";
 					$emails_added[] = esc_sql($email);
