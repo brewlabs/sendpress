@@ -1702,11 +1702,10 @@ class SendPress_Data extends SendPress_DB_Tables {
 		//$wpdb->show_errors();
 
 		if(SendPress_Option::get('import_update')){
-
-			$query ="INSERT IGNORE INTO ". SendPress_Data::subscriber_table(). "(email,firstname,lastname,join_date,registered_ip,phonenumber,salutation,identity_key) VALUES ";
-		} else {
-			$query ="INSERT INTO ". SendPress_Data::subscriber_table(). "(email,firstname,lastname,join_date,registered_ip,phonenumber,salutation,identity_key) VALUES ";
-		}
+            $query ="INSERT INTO ". SendPress_Data::subscriber_table(). "(email,firstname,lastname,join_date,registered_ip,phonenumber,salutation,identity_key) VALUES ";
+        } else {
+            $query ="INSERT IGNORE INTO ". SendPress_Data::subscriber_table(). "(email,firstname,lastname,join_date,registered_ip,phonenumber,salutation,identity_key) VALUES ";
+      	}
 
 		$total = count($data);
 		$emails_added = array();
