@@ -225,7 +225,7 @@ class SendPress_Manager {
 			}
 			$attempts++;
 			SendPress_Data::queue_email_process( $email->id );
-			$result = SendPress_Manager::send_email_from_queue( $email, $user_tracker );
+			$result = SendPress_Manager::send_email_from_queue( $email );
 			
 			if ($result) {
 				if($result === true){
@@ -359,12 +359,26 @@ class SendPress_Manager {
 	*
 	* @return boolean true if mail sent successfully, false if an error
 	*/
-    static function send_email_from_queue( $email , $tracker = true ) {
+    static function send_email_from_queue( $email ) {
+
+        $link_tracker =  SendPress_Option::get( 'tracker_off', false);
+        $user_tracker = true;
+        if( $link_tracker == "true" ||  $link_tracker ==  true){
+            $user_tracker = false;
+        }
+
+        $open_tracker =  SendPress_Option::get( 'open_tracker_off', false);
+        $user_open_tracker = true;
+        if( $open_tracker == "true" || $open_tracker == true){
+            $user_open_tracker = false;
+        }
 
 	   	$message = new SendPress_Email();
 	   	$message->id( $email->emailID );
 	   	$message->subscriber_id( $email->subscriberID );
-	   	$message->tracker( $tracker );
+	   	$message->tracker( $user_tracker );
+	   	$message->link_tracker($user_tracker);
+	   	$message->open_tracker($user_open_tracker);
 	   	$message->list_id( $email->listID );
 	   	$body = $message->html();
 	   	$subject = $message->subject();
@@ -388,12 +402,26 @@ class SendPress_Manager {
 	*/
     static function send_test_email( $email ) {
     	SendPress_Email_Cache::build_cache_for_email($email->emailID);
+
+        $link_tracker =  SendPress_Option::get( 'tracker_off', false);
+        $user_tracker = true;
+        if( $link_tracker == "true" ||  $link_tracker ==  true){
+            $user_tracker = false;
+        }
+
+        $open_tracker =  SendPress_Option::get( 'open_tracker_off', false);
+        $user_open_tracker = true;
+        if( $open_tracker == "true" || $open_tracker == true){
+            $user_open_tracker = false;
+        }
+
 	   	$message = new SendPress_Email();
 	   	$message->id( $email->emailID );
 	   	$message->purge( true );
 	   	$message->subscriber_id( $email->subscriberID );
 	   	$message->list_id( $email->listID );
-
+        $message->link_tracker($user_tracker);
+        $message->open_tracker($user_open_tracker);
 	   	$fromname = '';
 	   	if(isset($email->from_name)){
 	   		$fromname = $email->from_name;

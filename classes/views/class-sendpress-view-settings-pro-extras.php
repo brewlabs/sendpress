@@ -16,6 +16,18 @@ class SendPress_View_Settings_Pro_Extras extends SendPress_View_Settings {
 			SendPress_Option::set('import_update', false );
 		}
 
+        if(isset( $post['track_links'] )){
+            SendPress_Option::set('tracker_off', true );
+        } else {
+            SendPress_Option::set('tracker_off', false );
+        }
+
+        if(isset( $post['track_opens'] )){
+            SendPress_Option::set('open_tracker_off', true );
+        } else {
+            SendPress_Option::set('open_tracker_off', false );
+        }
+
         SendPress_Admin::redirect('Settings_Pro_Extras');
 	}
 
@@ -42,7 +54,15 @@ class SendPress_View_Settings_Pro_Extras extends SendPress_View_Settings {
 					<p>	<?php _e('Please make sure you have your database backed up before running import','sendpress'); ?></p>
 				<?php $this->panel_end(); ?>
 
+                <?php $this->panel_start( __('Stat Tracking Settings','sendpress') ); ?>
+                <?php $ctype = SendPress_Option::get('tracker_off'); ?>
+                <input type="checkbox" name="track_links" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> &nbsp;<?php _e('Do not track link clicks in emails','sendpress'); ?>
+                <p>	<?php _e('This will disable the link tracker for all emails sent from now on.','sendpress'); ?></p>
+                <?php $ctype = SendPress_Option::get('open_tracker_off'); ?>
+                <input type="checkbox" name="track_opens" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> &nbsp;<?php _e('Do not track email opens','sendpress'); ?>
+                <p>	<?php _e('This will disable the open tracker for all emails sent from now on.','sendpress'); ?></p>
 
+                <?php $this->panel_end(); ?>
 
 
 			</div>	

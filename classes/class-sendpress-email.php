@@ -35,6 +35,8 @@ class SendPress_Email {
 	private $_purge = false;
 	private $_html = false;
 	private $_tracker = true;
+	private $_link_tracker = true;
+	private $_open_tracker = true;
 
 	
 	function __construct(){
@@ -52,6 +54,18 @@ class SendPress_Email {
 			return $this->_tracker;
 		$this->_tracker = $tracker;
 	}
+
+    function open_tracker($tracker = NULL){
+        if ( ! isset( $tracker ) )
+            return $this->_open_tracker;
+        $this->_open_tracker = $tracker;
+    }
+
+    function link_tracker($tracker = NULL){
+        if ( ! isset( $tracker ) )
+            return $this->_link_tracker;
+        $this->_link_tracker = $tracker;
+    }
 
 	function subscriber_id($subscriber_id = NULL){
 		if ( ! isset( $subscriber_id ) ){
@@ -195,7 +209,7 @@ class SendPress_Email {
 					$px = $pElement->getAttribute('style');
 					$pElement->setAttribute('style', ' margin-top:0; margin-bottom:10px; '. $body_font . $body_size . $px );
 				}
-				if($this->tracker()){
+				if($this->link_tracker()){
 				$aTags = $dom->getElementsByTagName('a');
 				foreach ($aTags as $aElement) {
 					$href = $aElement->getAttribute('href');
@@ -332,8 +346,8 @@ class SendPress_Email {
 
 
 
-
-            if($this->tracker()) {
+            $tracker = "";
+            if($this->open_tracker()) {
                 $tracker = "<img src='" . $link . "' width='1' height='1'  alt='' border='0' style='height:1px !important; width:1px !important; border-width:0 !important; margin-top:0 !important; margin-bottom:0 !important; margin-right:0 !important; margin-left:0 !important; padding-top:0 !important; padding-bottom:0 !important; padding-right:0 !important; padding-left:0 !important;'/>";
             }
 			$body_html = str_replace("</body>",$tracker."</body>" , $body_html );
