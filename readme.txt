@@ -118,6 +118,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
+= 1.10.9.23 - 2019.9.23 =
+* remove debug log
+
 = 1.10.8.14 - 2019.8.14 =
 * update settings for tracking in Pro
 

@@ -27,9 +27,9 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 		//get options
 		$options = SendPress_Data::get_post_meta_object($_POST['formid']);  
 
-		echo '<pre>';
-		print_r($options);
-		echo '</pre>';
+		//echo '<pre>';
+		//print_r($options);
+		//echo '</pre>';
 
 
 
