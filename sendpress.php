@@ -440,7 +440,7 @@ class SendPress {
 		
 		$this->add_custom_post();
 
-
+        /*
 		if( defined( 'DOING_AJAX' ) || ( isset( $_GET['sendpress_display'] ) && 'true' == $_GET['sendpress_display'] ) ) {
 			$this->loader->add_action( 'customize_register', $this->customizer, 'register_customize_sections' );
 			$this->loader->add_action( 'customize_section_active', $this->customizer, 'remove_other_sections', 10, 2 );
@@ -454,6 +454,7 @@ class SendPress {
 			//$this->loader->add_action( 'init', $this->customizer, 'remove_all_actions', 99 );
 			$this->customizer->remove_all_actions();
 		}
+        */
 		$this->loader->run();
 
 	}

@@ -224,7 +224,13 @@ class SendPress_Email {
 					//ADD TO DB?
 					
 					if(strrpos( $href, "*|" ) === false  && strrpos($href, "#") !== 0 ) {
-							
+
+					    $path = parse_url($href, PHP_URL_PATH);
+                            $ext = pathinfo($path, PATHINFO_EXTENSION);
+                            if($ext == "pdf"){
+                                continue;
+                            }
+
 							if( SendPress_Option::get('skip_mailto', false ) == true && strrpos( $href, "mailto" ) !== false  ) {
 								continue;
 							}

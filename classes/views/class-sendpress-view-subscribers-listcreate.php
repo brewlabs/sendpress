@@ -23,6 +23,7 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
 		update_post_meta($list_id, 'meta-compare', SPNL()->validate->_string('meta-compare'));
 		update_post_meta($list_id, 'meta-value',SPNL()->validate->_string('meta-value'));
 		update_post_meta($list_id, 'opt-in-id', SPNL()->validate->_int('opt-in-id'));
+        update_post_meta($list_id, 'meta-custom-email',SPNL()->validate->_string('meta-custom-email'));
 
         SendPress_Admin::redirect('Subscribers');
 	}
@@ -79,6 +80,9 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
 
 
 		<br><br>
+            <label>User Meta Field to get email from</label>
+            <input type="text" name="meta-custom-email" value="" />
+            <br><br>
 
 		<?php
 

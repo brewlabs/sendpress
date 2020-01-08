@@ -25,6 +25,7 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
 		update_post_meta($listid, 'meta-key', SPNL()->validate->_string('meta-key'));
 		update_post_meta($listid, 'meta-compare', SPNL()->validate->_string('meta-compare'));
 		update_post_meta($listid, 'meta-value',SPNL()->validate->_string('meta-value'));
+		update_post_meta($listid, 'meta-custom-email',SPNL()->validate->_string('meta-custom-email'));
 		update_post_meta($listid, 'opt-in-id', SPNL()->validate->_int('opt-in-id'));
 		}
       	SendPress_Admin::redirect('Subscribers');
@@ -96,12 +97,17 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
 		<input type="text" name="meta-value" value="<?php echo get_post_meta($listinfo->ID, 'meta-value', true); ?>" />
 
 		<br><br>
-		
+        <label>User Meta Field to get email from</label>
+        <input type="text" name="meta-custom-email" value="<?php echo get_post_meta($listinfo->ID, 'meta-custom-email', true); ?>" />
+        <br><br>
 		<?php 
 
 		$optin_emails = SendPress_Data::get_list_sys_emails('opt_in');
 		$current_opt_in_id = get_post_meta($listinfo->ID, 'opt-in-id', true);
 		?>
+
+
+
 		<label>Double Opt In E-mail</label>
 		<select name="opt-in-id">
 			<option value="0">Default</option>
