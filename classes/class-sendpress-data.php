@@ -1487,6 +1487,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 		if(	$result ){ return $result; }
 		global $wpdb;
+
 		$result = $wpdb->insert($table,$values);
 		//$result = $this->wpdbQuery("SELECT @lastid2 := LAST_INSERT_ID()",'query');
 		return $wpdb->insert_id;
