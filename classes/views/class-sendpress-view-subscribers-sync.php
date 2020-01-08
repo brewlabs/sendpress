@@ -19,7 +19,7 @@ class SendPress_View_Subscribers_Sync extends SendPress_View_Subscribers {
 	}
 
 	function html() {
-
+        $role_to_sync = '';
 		$list = SPNL()->validate->_int('listID');
 		if( $list > 0 ){
 			$role_to_sync = get_post_meta( $list,'sync_role',true);
@@ -64,7 +64,7 @@ class SendPress_View_Subscribers_Sync extends SendPress_View_Subscribers {
 </div>
 <input type="hidden" id="post_ID" name="post_ID" value="<?php echo $list; ?>" />
 <div class='well' id="sync-wordpress-roles">
-<h2><strong><?php _e('Syncing ','sendpress'); ?> <?php echo ucwords($role); ?> <?php _e(' Role to List','sendpress'); ?>  <?php echo get_the_title($list); ?> </strong></h2>
+<h2><strong><?php _e('Syncing ','sendpress'); ?> <?php echo ucwords($role_to_sync); ?> <?php _e(' Role to List','sendpress'); ?>  <?php echo get_the_title($list); ?> </strong></h2>
 <br>
 
 <div class="progress progress-striped active">

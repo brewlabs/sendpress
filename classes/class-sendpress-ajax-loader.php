@@ -336,6 +336,7 @@ class SendPress_Ajax_Loader {
 	function sync_list() {
 		$this->verify_ajax_call();
 		$listid = SPNL()->validate->_int('listid');
+        $user_email_meta_key     = get_post_meta( $listid, 'meta-custom-email', true );
 		$offset = SPNL()->validate->_int('offset');
 		$role   = get_post_meta( $listid, 'sync_role', true );
 		$load   = SendPress_Option::get( 'sync-per-call', 250 );
@@ -356,11 +357,19 @@ class SendPress_Ajax_Loader {
 
 		$email_list = array();
 		foreach ( $blogusers as $user ) {
-			SendPress_Data::update_subscriber_by_wp_user( $user->ID, array( 'email'     => $user->user_email,
+		    $email = $user->user_email;
+            if (!empty($user_email_meta_key)) {
+                $alt_email = get_user_meta($user->ID,$user_email_meta_key,true);
+                if(!empty($user_email_meta_key) && is_email($alt_email)){
+                    $email = $alt_email;
+                }
+            }
+
+			SendPress_Data::update_subscriber_by_wp_user( $user->ID, array( 'email'     =>  $email,
 			                                                                'firstname' => $user->first_name,
 			                                                                'lastname'  => $user->last_name
 			) );
-			$email_list[] = $user->user_email;
+			$email_list[] = $email;
 		}
 		SendPress_Data::sync_emails_to_list( $listid, $email_list );
 
