@@ -179,10 +179,23 @@ class SendPress_Ajax_Loader {
 			if($first == null){
 				$first = '';
 			}
-			$last   = $data->_string('last');
+
+//			$first  = $data->_string('sp_firstname');
+//			if($first == null) {
+//				$first = '';
+//			}
+
+
+			$last = $data->_string('last');
 			if($last == null){
 				$last = '';
 			}
+
+//			$last  = $data->_string('sp_lastname');
+//			if($last == null) {
+//				$last = '';
+//			}
+
 			$phone  = $data->_string('phonenumber');
 			$salutation = $data->_string('salutation');
 			$email  = $data->_string('email');

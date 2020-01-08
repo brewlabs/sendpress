@@ -20,18 +20,8 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 		
 		} else {
 
-		// echo '<pre>';
-		// print_r($_POST);
-		// echo '</pre>';
-
 		//get options
-		$options = SendPress_Data::get_post_meta_object($_POST['formid']);  
-
-		//echo '<pre>';
-		//print_r($options);
-		//echo '</pre>';
-
-
+		$options = SendPress_Data::get_post_meta_object($_POST['formid']);
 
 		//build post_options array
 		$post_options = array();
@@ -41,7 +31,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 		$basic_fields = array('firstname','lastname','phonenumber', 'salutation');
 
 		$post_options_old = array('list','email','firstname','lastname','return','status');
-		$post_options = array('list','status','email');
+		$post_options = array('list','status','email','firstname','lastname');
 
 		foreach ($basic_form_options as $key => $value) {
 
@@ -55,7 +45,6 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 		foreach ($post_options as $opt) {
 			$user_info[$opt] = isset($_POST['sp_' . $opt]) ?  $_POST['sp_' . $opt]: false ;
 		}
-
 
 		$valid_user = array();
 		//foreach()
@@ -118,6 +107,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			} else {
 				$valid_user['phonenumber'] = '';
 			}
+
 
 			//validate required custom fields
 			$custom_field_list = SendPress_Data::get_custom_fields_new();
