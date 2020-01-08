@@ -28,6 +28,12 @@ class SendPress_View_Settings_Pro_Extras extends SendPress_View_Settings {
             SendPress_Option::set('open_tracker_off', false );
         }
 
+        if(isset( $post['open_pdf'] )){
+            SendPress_Option::set('open_tracker_pdf_disable', true );
+        } else {
+            SendPress_Option::set('open_tracker_pdf_disable', false );
+        }
+
         SendPress_Admin::redirect('Settings_Pro_Extras');
 	}
 
@@ -61,6 +67,9 @@ class SendPress_View_Settings_Pro_Extras extends SendPress_View_Settings {
                 <?php $ctype = SendPress_Option::get('open_tracker_off'); ?>
                 <input type="checkbox" name="track_opens" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> &nbsp;<?php _e('Do not track email opens','sendpress'); ?>
                 <p>	<?php _e('This will disable the open tracker for all emails sent from now on.','sendpress'); ?></p>
+                <?php $ctype = SendPress_Option::get('open_tracker_pdf_disable'); ?>
+                <input type="checkbox" name="open_pdf" value="true" <?php if($ctype){echo "checked='checked'"; } ?> /> &nbsp;<?php _e('Do not track pdf file opens','sendpress'); ?>
+                <p>	<?php _e('This will disable pdf link tracker for all emails sent from now on.','sendpress'); ?></p>
 
                 <?php $this->panel_end(); ?>
 

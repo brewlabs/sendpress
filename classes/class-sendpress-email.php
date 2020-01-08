@@ -211,6 +211,7 @@ class SendPress_Email {
 				}
 				if($this->link_tracker()){
 				$aTags = $dom->getElementsByTagName('a');
+                  $disable_pdf =  SendPress_Option::get('open_tracker_pdf_disable');
 				foreach ($aTags as $aElement) {
 					$href = $aElement->getAttribute('href');
 					/*
@@ -224,12 +225,13 @@ class SendPress_Email {
 					//ADD TO DB?
 					
 					if(strrpos( $href, "*|" ) === false  && strrpos($href, "#") !== 0 ) {
-
-					    $path = parse_url($href, PHP_URL_PATH);
+                        if($disable_pdf ) {
+                            $path = parse_url($href, PHP_URL_PATH);
                             $ext = pathinfo($path, PATHINFO_EXTENSION);
-                            if($ext == "pdf"){
+                            if ($ext == "pdf") {
                                 continue;
                             }
+                        }
 
 							if( SendPress_Option::get('skip_mailto', false ) == true && strrpos( $href, "mailto" ) !== false  ) {
 								continue;

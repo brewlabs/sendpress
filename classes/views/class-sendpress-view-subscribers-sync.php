@@ -19,6 +19,7 @@ class SendPress_View_Subscribers_Sync extends SendPress_View_Subscribers {
 	}
 
 	function html() {
+        $blogusers = 0;
         $role_to_sync = '';
 		$list = SPNL()->validate->_int('listID');
 		if( $list > 0 ){
