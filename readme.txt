@@ -120,8 +120,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 
 = 1.20.1.7 - 2020.1.7 =
 * update sync to use custom field on user
-* update link tracking to allow not tracking of pdf
-*
+* update link tracking to allow not tracking of pdf ( PRO )
+* html form submit not getting first and last name
+* fix error with customizer
 
 = 1.10.9.23 - 2019.9.23 =
 * remove debug log
