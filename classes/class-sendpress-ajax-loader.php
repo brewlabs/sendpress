@@ -354,7 +354,7 @@ class SendPress_Ajax_Loader {
 		$role   = get_post_meta( $listid, 'sync_role', true );
 		$load   = SendPress_Option::get( 'sync-per-call', 250 );
 		
-		$custom = apply_filters('spnl-role-sync-get-user-args', false , $listid , $offset_for_this_run , $number_to_sync_at_once , $role );
+		$custom = apply_filters('spnl-role-sync-get-user-args', false , $listid , $offset , $load , $role );
 		if($custom !== false){
 			$blogusers = get_users( $custom );
 		} else {

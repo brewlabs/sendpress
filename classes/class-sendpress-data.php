@@ -1002,10 +1002,15 @@ class SendPress_Data extends SendPress_DB_Tables {
 			if( $current_email !== null ){
 				$wpdb->update($table , array('firstname' => $values['firstname'] , 'lastname'=>$values['lastname'], 'wp_user_id'=> $wp_user_id ), array( 'subscriberID' => $current_email ) );
 			} else {
-				//Add New
-				$q = "INSERT INTO $table (email,wp_user_id,identity_key,join_date,firstname,lastname) VALUES (%s,%d,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE wp_user_id=%d,firstname=%s,lastname=%s ";
-				$q = $wpdb->prepare($q,$values['email'],$wp_user_id,$key,date('Y-m-d H:i:s'),$values['firstname'],$values['lastname'],$wp_user_id,$values['firstname'],$values['lastname']);
-				$result = $wpdb->query($q);
+                $current_sid = $wpdb->get_var( $wpdb->prepare("SELECT subscriberID FROM $table WHERE wp_user_id = %d", $wp_user_id) );
+                if( $current_sid !== null ){
+                    $wpdb->update($table , array('firstname' => $values['firstname'] , 'lastname'=>$values['lastname'], 'email'=> $values['email'] ), array( 'subscriberID' => $current_sid ) );
+                } else {
+                    //Add New
+                    $q = "INSERT INTO $table (email,wp_user_id,identity_key,join_date,firstname,lastname) VALUES (%s,%d,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE wp_user_id=%d,firstname=%s,lastname=%s ";
+                    $q = $wpdb->prepare($q, $values['email'], $wp_user_id, $key, date('Y-m-d H:i:s'), $values['firstname'], $values['lastname'], $wp_user_id, $values['firstname'], $values['lastname']);
+                    $result = $wpdb->query($q);
+                }
 			}
 		//}
 		//$result = $wpdb->update($table, $values, array('email'=> $email) );
