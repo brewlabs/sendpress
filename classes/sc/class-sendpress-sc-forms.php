@@ -525,6 +525,14 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 						<?php do_action('sendpress_signup_form_bottom'); ?>
 					</p>
 
+                    <?php if($_honeypot) : ?>
+                        <p style="display:none !important;">
+
+                            <label for="sp_dev_website">:</label>
+                            <input type="text" class="sp_dev_website" placeholder="Website" value="" name="sp_dev_website" />
+                        </p>
+                    <?php endif; ?>
+
 					<p class="submit">
 						<input value="<?php echo $_button_label; ?>" class="sendpress-submit" type="submit"  id="submit" name="submit"><img class="ajaxloader" style="display:none;" src="<?php echo SENDPRESS_URL; ?>/img/ajax-loader.gif" />
 					</p>

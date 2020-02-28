@@ -2468,7 +2468,9 @@ class SendPress_Data extends SendPress_DB_Tables {
 			$prefix."_list_label" => "List Selection",
 			$prefix."_lists_checked" => "Select Lists by default",
 			$prefix."_thankyou_message" => "Check your inbox now to confirm your subscription.",
-			$prefix."_thankyou_page" => ""
+			$prefix."_thankyou_page" => "",
+			$prefix."_honeypot" => false,
+			$prefix."_privacy" => false
 		);
 	}
 

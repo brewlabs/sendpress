@@ -460,6 +460,16 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 					<input type="text" class="widefat" id="_approval_label" name="_approval_label" placeholder="<?php _e('I would like to subscribe to your newsletter.', 'sendpress') ?>" value="<?php echo $settings['_approval_label']; ?>" style="width:100%;" />
 				</p>
 
+                <hr/>
+
+                <p style="font-weight: bold;">Anti-spam honeypot</p>
+                <p><?php _e('Anti-spam honeypot is a method used to protect your site from malicious bots submitting forms.', 'sendpress'); ?></p>
+
+                <p>
+                    <input class="checkbox" type="checkbox" <?php checked( $settings['_honeypot'], 'on' ); ?> id="_honeypot" name="_honeypot" />
+                    <label for="_honeypot"><?php _e('Enable anti-spam honeypot', 'sendpress'); ?></label>
+                </p>
+
 				<?php $this->panel_end(); ?>
 			
 

@@ -173,8 +173,15 @@ class SendPress_Ajax_Loader {
 		);
 
 		if ( $_POST ) {
-			// get the credit card details submitted by the form
 			$data = SPNL()->validate;
+
+			//check for honeypot value
+			$honeypot = $data->_string('dev_website');
+			if($honeypot !== null){
+				echo json_encode( $response );
+				die();
+			}
+
 			$first  = $data->_string('first');
 			if($first == null){
 				$first = '';
