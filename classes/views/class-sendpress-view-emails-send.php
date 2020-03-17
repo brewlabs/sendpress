@@ -45,6 +45,7 @@ class SendPress_View_Emails_Send extends SendPress_View_Emails {
             }
 
             if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
+               // die('made it');
             	 SendPress_Admin::redirect('Emails_Send_Confirm', array('emailID'=>SPNL()->validate->_int('emailID') ));
             } else {
             	SendPress_Admin::redirect('Emails_Style', array('emailID'=>SPNL()->validate->_int('emailID') ));
@@ -60,7 +61,7 @@ class SendPress_View_Emails_Send extends SendPress_View_Emails {
 	}
 
 	function html() {
-
+SendPress_Error::log('hi');
 global $current_user;
 global $post_ID, $post;
 

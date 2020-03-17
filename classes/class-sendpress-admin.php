@@ -54,7 +54,13 @@ if ( ! class_exists( 'SendPress_Admin' ) ) {
 				//echo esc_url( $url );
 				echo "<script>window.location.replace('" . esc_url_raw( $url ) . "');</script>";
 			} else {
-				wp_redirect( esc_url_raw( $url ) );
+			    //SendPress_Error::log($url);
+                //header( "Location: $url", true, 301 );
+                if ( wp_redirect( esc_url_raw( $url )  ) ) {
+                    exit;
+                } else {
+                    header( "Location: $url", true, 301 );
+                }
 			}
 			exit;
 		}
