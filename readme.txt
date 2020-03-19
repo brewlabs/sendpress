@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 4.4
 Tested up to: 5.4
-Stable tag: 1.20.3.17
+Stable tag: 1.20.3.19
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,7 +118,7 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
 
- 1.20.3.17 - 2020.2.17 =
+ 1.20.3.19 - 2020.3.19 =
 * fix issue with admin area redirect
 
 = 1.20.2.20 - 2020.2.20 =
