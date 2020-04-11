@@ -371,8 +371,7 @@ class SendPress {
 			SendPress_Ajax_Loader::init();
 		} else {
 			SendPress_Pro_Manager::init();
-            SendPress_Error::log('render_init');
-			add_action( 'admin_init', array( $this, 'admin_init' ) );
+            add_action( 'admin_init', array( $this, 'admin_init' ) );
 			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 			add_action( 'admin_notices', array( $this, 'admin_notice' ) );
 			if ( defined( 'WP_ADMIN' ) && WP_ADMIN == true ) {
@@ -399,8 +398,6 @@ class SendPress {
 				
 				add_action( 'wp_loaded', array( 'SendPress_Cron' , 'auto_cron' ) );
 		        add_filter( 'cron_schedules', array( 'SendPress_Cron', 'cron_schedules' ) );
-            SendPress_Error::log('render_init2');
-
 		}
 		
 		if( !defined('SPNL_DISABLE_SENDING_WP_MAIL') && apply_filters('spnl_wpmail_sending', true ) ){
@@ -857,8 +854,7 @@ class SendPress {
 
 		//MAKE SURE WE ARE ON AN ADMIN PAGE
 		if ( SPNL()->validate->page() !== false ) {
-            SendPress_Error::log('page');
-			$this->_page = SPNL()->validate->page();
+            $this->_page = SPNL()->validate->page();
 			$this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
 
 			//echo $this->_page;
@@ -941,12 +937,9 @@ class SendPress {
 
 			$tiny                = new SendPress_TinyMCE();
 
-            SendPress_Error::log($view_class);
-			
-			//Securiry check for view
+            //Securiry check for view
 			$view_class = NEW $view_class;
 			$view_class->admin_init();
-            SendPress_Error::log($view_class);
 			add_action( 'sendpress_admin_scripts', array( $view_class, 'admin_scripts_load' ) );
 			$this->_current_action = isset( $_GET['action'] ) ? sanitize_text_field( $_GET['action'] ) : '';
 			$this->_current_action = isset( $_GET['action2'] ) ? sanitize_text_field( $_GET['action2'] ) : $this->_current_action;
@@ -1246,7 +1239,6 @@ class SendPress {
 
 	function admin_menu() {
 
-        SendPress_Error::log('menu');
 		if ( current_user_can( 'sendpress_view' ) ) {
 			$role = "sendpress_view";
 		} else {
@@ -1277,10 +1269,7 @@ class SendPress {
 				'render_view'
 			) );
 
-        SendPress_Error::log('emails');
 		if( apply_filters( 'spnl_emails', true ) ) {
-            SendPress_Error::log('test');
-            SendPress_Error::log($role);
 			add_submenu_page( 'sp-overview', __( 'Emails', 'sendpress' ), __( 'Emails', 'sendpress' ), $role, 'sp-emails', array(
 				&$this,
 				'render_view'
@@ -1334,14 +1323,12 @@ class SendPress {
 	}
 
 	function render_view() {
-        SendPress_Error::log('renderx4');
-		$view_class = $this->get_view_class( $this->_page, $this->_current_view );
+        $view_class = $this->get_view_class( $this->_page, $this->_current_view );
 		//echo "About to render: $view_class, $this->_page";
 		$view_class = NEW $view_class;
 		$queue      = '<span id="queue-count-menu-tab">-</span>';
 		//$queue = //SendPress_Data::emails_in_queue();
-        SendPress_Error::log('render');
-		//add tabs
+      	//add tabs
 		$view_class->add_tab( __( 'Overview', 'sendpress' ), 'sp-overview', ( $this->_page === 'sp-overview' ) );
 
 		if( apply_filters( 'spnl_emails', true ) ) {
@@ -1371,8 +1358,7 @@ class SendPress {
 		if( apply_filters( 'spnl_pro', true ) ) {
 			$view_class->add_tab( __( 'Pro', 'sendpress' ), 'sp-pro', ( $this->_page === 'sp-pro' ) );
 		}
-        SendPress_Error::log('render');
-        SendPress_Error::log($view_class);
+
 		$view_class->prerender( $this );
 		$view_class->render( $this );
 	}

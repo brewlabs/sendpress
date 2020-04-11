@@ -10,7 +10,7 @@ class SendPress_Error {
 
 	static function log($args) {
 		//Only Log data if not in production
-		if( defined('WP_DEBUG') && WP_DEBUG === true || defined("SENDPRESS_LOG_ERROR") ){
+		if( defined('WP_DEBUG') && WP_DEBUG === true && defined("SENDPRESS_LOG_ERROR") ){
 			if ( isset($args) ) {
 				if ( !is_array($args) && !is_object($args) ) {
 					error_log(self::getFunc());
