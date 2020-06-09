@@ -1572,6 +1572,64 @@ class SendPress_Data extends SendPress_DB_Tables {
 	}
 
 
+	static function subscribe_user_to_lists($userarray , $list_ids, $status=2,$custom=array()){
+        $defaults = array(
+            'firstname'           => '',
+            'lastname'          => '',
+            'email' => '',
+            'phonenumber'            => '',
+            'salutation'          => ''
+        );
+        $userarray = wp_parse_args( $userarray, $defaults );
+        $success = false;
+        $subscriberID = SendPress_Data::add_subscriber($userarray);
+        if( false === $subscriberID ){
+            return false;
+        }
+
+        $args = array(
+            'post_type' => 'sendpress_list',
+            'numberposts'  => -1,
+            'offset'          => 0,
+            'orderby'         => 'post_title',
+            'order'           => 'DESC'
+        );
+
+        $lists = get_posts( $args );
+
+        $listids = explode(',', $list_ids);
+
+        $already_subscribed = false;
+
+        foreach($lists as $list){
+            if( in_array($list->ID, $listids) ){
+                $current_status = SendPress_Data::get_subscriber_list_status( $list->ID, $subscriberID );
+                SendPress_Error::log($current_status);
+                if( empty($current_status) || ( isset($current_status->status) && $current_status->status < 2 ) ){
+                    $success = SendPress_Data::update_subscriber_status($list->ID, $subscriberID, $status);
+                } else {
+                    $success = true;
+                }
+                if(isset($custom) && is_array($custom) && !empty($custom)){
+                    foreach ($custom as $key => $value) {
+                        SendPress_Data::update_subscriber_meta( $subscriberID, $key, $value, $list->ID );
+                    }
+                }
+
+            }
+        }
+
+        if($success == false){
+            return false;
+        }
+
+        return array('success'=> $success,'already'=> $already_subscribed);
+    }
+
+
+
+
+
 	static function subscribe_user($listid, $email, $first, $last, $status = 2, $custom = array(), $phonenumber='', $salutation='') {
 
 		$success = false;
