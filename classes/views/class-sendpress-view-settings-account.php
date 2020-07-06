@@ -16,9 +16,9 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 
 		$options =  array();
 
-		if(isset($_POST['fromname'])){
-			$fromname= $_POST['fromname'];
-		}
+
+		$fromname = SPNL()->validate->_string('fromname');
+
 
 		// From email and name
 		// If we don't have a name from the input headers
@@ -26,9 +26,9 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 			$fromname = get_bloginfo('name');
 		}
 
-		if(isset($_POST['fromemail'])){
-			$fromemail= $_POST['fromemail'];
-		}
+
+		$fromemail = SPNL()->validate->_email('fromemail');
+
 
 
 		if ( !isset( $fromemail )  || $fromemail == '') {
@@ -46,14 +46,14 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 		SendPress_Option::set('fromname', $fromname );
 
 
-		$options['sendmethod'] = $_POST['sendpress-sender'];
+		$options['sendmethod'] = SPNL()->validate->_string('sendpress-sender');
 		// Provides: Hll Wrld f PHP
 		$chars = array(".", ",", " ", ":", ";", "$", "%", "*", "-", "=");
-		$options['emails-per-day'] =  str_replace($chars,"",$_POST['emails-per-day']);
-		$options['emails-per-hour'] = str_replace($chars,"",$_POST['emails-per-hour']);
-		$options['email-charset'] = $_POST['email-charset'];
-		$options['email-encoding'] = $_POST['email-encoding'];
-		$options['testemail'] = $_POST['testemail'];
+		$options['emails-per-day'] =  str_replace($chars,"",SPNL()->validate->_int('emails-per-day'));
+		$options['emails-per-hour'] = str_replace($chars,"",SPNL()->validate->_int('emails-per-hour'));
+		$options['email-charset'] = SPNL()->validate->_string('email-charset');
+		$options['email-encoding'] = SPNL()->validate->_string('email-encoding');
+		$options['testemail'] = SPNL()->validate->_email('testemail');
 		$options['phpmailer_error'] = '';
 		$options['last_test_debug'] = '';
 		SendPress_Option::set( $options );
@@ -67,7 +67,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 		}
 	   // }
 
-		if( isset($_POST['test'])){
+		if( SPNL()->validate->_isset('test')){
 			SendPress_Manager::send_test();
 		}
 
@@ -80,7 +80,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 		//$this->security_check();
 		$options = array();
 
-		$options['testemail'] = $_POST['testemail'];
+		$options['testemail'] = SPNL()->validate->_email('testemail');
 
 		SendPress_Option::set($options);
 		SendPress_Manager::send_test();

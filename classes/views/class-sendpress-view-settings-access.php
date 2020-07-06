@@ -44,55 +44,55 @@ class SendPress_View_Settings_Access extends SendPress_View_Settings {
 			if(false !== get_class($saverole)){
 
 				
-			if( isset($_POST[$role . "_edit"] )){
+			if( SPNL()->validate->_isset($role . "_edit") ){
 				$sp_view = true;
 				$saverole->add_cap( 'sendpress_email');
 			} else {
 				$saverole->remove_cap('sendpress_email');
 			}
 
-			if( isset($_POST[$role . "_send"] )){
+			if( SPNL()->validate->_isset($role . "_send") ){
 				$sp_view = true;
 				$saverole->add_cap('sendpress_email_send');
 			} else {
 				$saverole->remove_cap('sendpress_email_send');
 			}
 
-			if( isset($_POST[$role . "_reports"] )){
+			if( SPNL()->validate->_isset($role . "_reports") ){
 				$sp_view = true;
 				$saverole->add_cap('sendpress_reports');
 			} else {
 				$saverole->remove_cap('sendpress_reports');
 			}
 
-			if( isset($_POST[$role . "_subscribers"] )){
+			if( SPNL()->validate->_isset($role . "_subscribers") ){
 				$sp_view = true;
 				$saverole->add_cap('sendpress_subscribers');
 			} else {
 				$saverole->remove_cap('sendpress_subscribers');
 			}
 
-			if( isset($_POST[$role . "_settings"] )){
+			if( SPNL()->validate->_isset($role . "_settings") ){
 				$sp_view = true;
 				$saverole->add_cap('sendpress_settings');
 			} else {
 				$saverole->remove_cap('sendpress_settings');
 			}
 
-			if( isset($_POST[$role . "_settings_access"] )){
+			if( SPNL()->validate->_isset($role . "_settings_access" )){
 				$sp_view = true;
 				$saverole->add_cap('sendpress_settings_access');
 			} else {
 				$saverole->remove_cap('sendpress_settings_access');
 			}
 
-			if( isset($_POST[$role . "_addons"] )){
+			if( SPNL()->validate->_isset($role . "_addons" )){
 				$sp_view = true;
 				$saverole->add_cap('sendpress_addons');
 			} else {
 				$saverole->remove_cap('sendpress_addons');
 			}
-			if( isset($_POST[$role . "_queue"] )){
+			if( SPNL()->validate->_isset($role . "_queue" )){
 				$sp_view = true;
 				$saverole->add_cap('sendpress_queue');
 			} else {
