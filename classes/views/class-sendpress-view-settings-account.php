@@ -121,11 +121,11 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 			<?php $this->panel_start( '<span class="glyphicon glyphicon-user"></span> '. __('Sending Email','sendpress') ); ?>
 			<div class="form-group">
 				<label for="fromname"><?php _e('From Name','sendpress'); ?></label>
-				<input name="fromname" tabindex=1 type="text" id="fromname" value="<?php echo SendPress_Option::get('fromname'); ?>" class="form-control">
+				<input name="fromname" tabindex=1 type="text" id="fromname" value="<?php echo esc_attr( SendPress_Option::get('fromname')); ?>" class="form-control">
 			</div>
 			<div class="form-group">
 				<label for="fromemail"><?php _e('From Email','sendpress'); ?></label>
-				<input name="fromemail" tabindex=2 type="text" id="fromemail" value="<?php echo SendPress_Option::get('fromemail'); ?>" class="form-control">
+				<input name="fromemail" tabindex=2 type="text" id="fromemail" value="<?php echo esc_attr( SendPress_Option::get('fromemail')); ?>" class="form-control">
 			</div>
 
 			<?php $this->panel_end(); ?>
@@ -135,7 +135,7 @@ class SendPress_View_Settings_Account extends SendPress_View_Settings {
 
 			<div class="form-group">
 				<label for="testemail"><?php _e('Where to send Test Email','sendpress'); ?></label>
-				<input name="testemail" type="text" id="test-email-main" value="<?php echo SendPress_Option::get( 'testemail' ); ?>" class="form-control"/>
+				<input name="testemail" type="text" id="test-email-main" value="<?php echo esc_attr( SendPress_Option::get( 'testemail' )); ?>" class="form-control"/>
 			</div>
 			<div class="sp-row">
 				<div class="sp-50 sp-first">
@@ -386,7 +386,7 @@ wp_nonce_field( $this->_nonce_value );
 </form>
 <form method="post" id="post-test" class="form-inline">
 	<input type="hidden" name="action" value="send-test-email" />
-	<input name="testemail" type="hidden" id="test-email-form" value="<?php echo SendPress_Option::get( 'testemail' ); ?>" class="form-control"/>
+	<input name="testemail" type="hidden" id="test-email-form" value="<?php echo esc_attr( SendPress_Option::get( 'testemail' )); ?>" class="form-control"/>
 
 	<br class="clear">
 
