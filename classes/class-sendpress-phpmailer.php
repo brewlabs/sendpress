@@ -7,10 +7,27 @@ if ( !defined('SENDPRESS_VERSION') ) {
 	die;
 }	
 
-if(!class_exists('PHPMailer')){
-	require( ABSPATH . WPINC . '/class-phpmailer.php');
+
+
+
+global $wp_version;
+if ( version_compare( $wp_version, '5.5', '>=' ) ) {
+    if(!class_exists('PHPMailer\PHPMailer\PHPMailer')) {
+        require(ABSPATH . WPINC .'/PHPMailer/PHPMailer.php');
+        require(ABSPATH . WPINC . '/PHPMailer/SMTP.php');
+        require(ABSPATH . WPINC . '/PHPMailer/Exception.php');
+    }
+
+    class SendPress_PHPMailer extends PHPMailer\PHPMailer\PHPMailer {
+
+    }
+} else {
+    if(!class_exists('PHPMailer')) {
+        require(ABSPATH . WPINC . '/class-phpmailer.php');
+    }
+    class SendPress_PHPMailer extends PHPMailer {
+
+    }
 }
 
-class SendPress_PHPMailer extends PHPMailer {
 
-}
