@@ -44,6 +44,8 @@ class SendPress_Public_View_Email extends SendPress_Public_View{
 		$message = new SendPress_Email();
 	   	$message->id( $email_id );
 	   	$message->subscriber_id( $subscriber_id );
+	   	$message->open_tracker(false);
+	   	$message->link_tracker(false);
 	   	$message->list_id( 0 );
 	   	$body = $message->html();
 		
