@@ -179,6 +179,15 @@ class SendPress_Ajax_Loader {
 			if($first == null){
 				$first = '';
 			}
+            if (!empty($_REQUEST['sp_contact_me_by_fax_only']) && (bool) $_REQUEST['sp_contact_me_by_fax_only'] == TRUE) {
+                $r = array(
+                    'success'=>false,
+                    'trap'=>'true'
+                );
+                echo json_encode( $r );
+                die();
+                # treat as spambot
+            }
 
 //			$first  = $data->_string('sp_firstname');
 //			if($first == null) {

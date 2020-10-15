@@ -102,7 +102,9 @@ class SendPress_Pro_Manager {
 		    $sendpress_key_state = SendPress_Pro_Manager::try_check_key();
 			SendPress_Pro_Manager::set_pro_state($sendpress_key_state);
 			//set_transient( 'sendpress_key_state', $sendpress_key_state['state'], $sendpress_key_state['transient_time'] );
-			$state = $sendpress_key_state['state'];
+			if(is_array($sendpress_key_state)) {
+                $state = $sendpress_key_state['state'];
+            }
 		    
 		}
 		return $state;
@@ -257,7 +259,8 @@ class SendPress_Pro_Manager {
 		$check = array('state'=>'valid', 'transient_time'=>86400, 'sp_state'=>'failed');
 		foreach($pro_names as $name){
 			$check = SendPress_Pro_Manager::check_key($key,$name);
-			if( $check['sp_state'] === 'passed' ){
+
+			if(is_array($check) && $check['sp_state'] === 'passed' ){
 				return $check;
 			}
 		}

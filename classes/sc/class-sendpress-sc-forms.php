@@ -166,10 +166,11 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
 				<label><?php _e('Phone number','sendpress'); ?>:</label>
 				<input type="text" class="sp_phonenumber" placeholder="<?php _e('Phone number','sendpress'); ?>" value="<?php echo $sub->phonenumber; ?>" name="sp_phonenumber" />
-				
-				</div>
+               </div>
 				<div>
-				<?php 
+                    <input type="checkbox" name="sp_contact_me_by_fax_only" class="sp_contact_me_by_fax_only" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
+
+                    <?php
 				$fields = SPNL()->load('Customfields')->get_all();
 
 				//$custom_field_list = SendPress_Data::get_custom_fields_new();
@@ -477,9 +478,9 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 						<?php endif; ?>
 						<input type="text" class="sp_email required" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_email_label; ?>"<?php endif; ?> value="" name="sp_email" />
 					</p>
+                    <input type="checkbox" name="sp_contact_me_by_fax_only" class="sp_contact_me_by_fax_only" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
 
-
-					<?php
+                    <?php
 					//new custom field section
 					$custom_field_list = SendPress_Data::get_custom_fields_new();
 
@@ -552,6 +553,11 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 		$c = false;
 
 		if ( !empty($_POST) && check_admin_referer($_nonce_value) ){
+
+            if (!empty($_POST['sp_contact_me_by_fax_only']) && (bool) $_POST['sp_contact_me_by_fax_only'] == TRUE) {
+               return $c;
+            }
+
 			$args = array(
 			  'meta_key'=>'public',
 			  'meta_value'=> 1,

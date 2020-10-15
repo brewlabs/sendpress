@@ -26,7 +26,7 @@ class SendPress_REST_AutoCron_V1_Controller extends SendPress_REST_Base_v1 {
     		'methods' => WP_REST_Server::READABLE,
     		'callback' => array($this,'run_cron'),
 
-    		//'permission_callback' => array( $this, 'get_item_permissions_check' ),
+    		'permission_callback' => '__return_true'
     	));
 	}
 

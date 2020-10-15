@@ -150,8 +150,9 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 					<p name="extra_fields" class="signup-fields-bottom">
 						<?php do_action('sendpress_signup_form_bottom'); ?>
 					</p>
+                    <input type="checkbox" name="sp_contact_me_by_fax_only" class="sp_contact_me_by_fax_only" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
 
-					<p class="submit">
+                    <p class="submit">
 						<input value="<?php echo $button_text; ?>" class="sendpress-submit" type="submit"  id="submit" name="submit"><img class="ajaxloader" style="display:none;"  src="<?php echo SENDPRESS_URL; ?>/img/ajax-loader.gif" />
 					</p>
 				</div>

@@ -37,7 +37,7 @@
             signup['salutation'] = $form.find('.sp_salutation').val();
             signup['listid'] = "";//$form.find('.sp_list').val();
             signup['formid'] = $form.data('form-id');
-
+            signup['sp_contact_me_by_fax_only'] = $form.find('.sp_contact_me_by_fax_only:checked').val();
             $form.find("input:checkbox.sp_list:checked").each(function(){
                 signup['listid'] += $(this).val() +",";
             });
