@@ -13,6 +13,10 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 	function page_end(){}
 
 	function html() {
+        if (!empty($_POST['sp_contact_me_by_fax_only']) && (bool) $_POST['sp_contact_me_by_fax_only'] == TRUE) {
+            $this->default_page(false , true );
+            return;
+        }
 
 		if(isset($_POST['sp-shortcode']) && (strpos($_POST['sp-shortcode'], 'SC-') !== false )){
 			$cls = str_replace('-', '_',	trim($_POST['sp-shortcode']) );
@@ -55,19 +59,19 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			}
 
 			$data_error = false;
-			if( $user_info['status'] !== false ){
+			if( isset($user_info['status']) && $user_info['status'] !== false ){
 				$valid_user['status'] = SPNL()->validate->int( $user_info['status'] );
 			} else {
 				$valid_user['status'] = 2;
 			}
 
-			if( $user_info['email'] !== false && is_email( $user_info['email'] )){
+			if( isset($user_info['email']) && $user_info['email'] !== false && is_email( $user_info['email'] )){
 				$valid_user['email'] = $user_info['email'];
 			} else {
 				$data_error .= __('Invalid Email','sendpress');
 			}
 
-			if( $user_info['firstname'] !== false ){
+			if( isset($user_info['firstname']) && $user_info['firstname'] !== false ){
 				//is firstname a required field
 				if($options['_firstname_required'] == 'on' && strlen($user_info['firstname']) == 0){
 					$data_error .= "<br>". __('First name is required','sendpress');
@@ -78,7 +82,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 				$valid_user['firstname'] = '';
 			}
 			
-			if( $user_info['lastname'] !== false ){
+			if(isset($user_info['lastname']) && $user_info['lastname'] !== false ){
 				if($options['_lastname_required'] == 'on' && strlen($user_info['lastname']) == 0){
 					$data_error .= "<br>". __('Last name is required','sendpress');
 				}else{
@@ -88,8 +92,8 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 				$valid_user['lastname'] = '';
 			}
 
-			if( $user_info['salutation'] !== false ){
-				if($options['_salutation_required'] == 'on' && strlen($user_info['salutation']) == 0){
+			if(isset($user_info['salutation']) && $user_info['salutation'] !== false ){
+				if(isset($options['_salutation_required']) && $options['_salutation_required'] == 'on' && strlen($user_info['salutation']) == 0){
 					$data_error .= "<br>". __('Salutation is required','sendpress');
 				}else{
 					$valid_user['salutation'] =  sanitize_text_field( $user_info['salutation'] );
@@ -98,8 +102,8 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 				$valid_user['salutation'] = '';
 			}
 
-			if( $user_info['phonenumber'] !== false ){
-				if($options['_phonenumber_required'] == 'on' && strlen($user_info['phonenumber']) == 0){
+			if( isset($user_info['phonenumber'])  && $user_info['phonenumber'] !== false ){
+				if(isset($options['_phonenumber_required']) &&  $options['_phonenumber_required'] == 'on' && strlen($user_info['phonenumber']) == 0){
 					$data_error .= "<br>". __('Phone number is required','sendpress');
 				}else{
 					$valid_user['phonenumber'] =  sanitize_text_field( $user_info['phonenumber'] );
@@ -114,7 +118,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			foreach ($custom_field_list as $key => $value) {
 				$id = $value['id'];
 				$label = $value['custom_field_label'];
-				if($options['_custom_field_'.$id.'_required'] == 'on'){
+				if(isset($options['_custom_field_'.$id.'_required']) && $options['_custom_field_'.$id.'_required'] == 'on'){
 					$data_error .= "<br>". __($label . ' is required','sendpress');
 				}
 			}
@@ -157,7 +161,7 @@ class SendPress_Public_View_Post extends SendPress_Public_View{
 			if($post_responce == false){
 				$post_responce = 'default';
 			}
-			if($user_info['return'] != false){
+			if(isset($user_info['return']) && $user_info['return'] != false){
 				$post_responce = $user_info['return'];
 			}
 

@@ -256,7 +256,7 @@ class SendPress_Widget_Signup extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'list_label' ); ?>"><?php _e('Lists Label: multiple lists only', 'sendpress'); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'list_label' ); ?>" name="<?php echo $this->get_field_name( 'list_label' ); ?>" value="<?php echo $instance['list_label']; ?>" style="width:100%;" />
 		</p>
-		<p><b><?php __('Check off the lists you would like<br>users to subscribe to','sendpress') ?>.</b></p>
+		<p><b><?php _e('Check off the lists you would like<br>users to subscribe to','sendpress') ?>.</b></p>
 		<?php 
 		if( count($lists) === 0 ){
 			?><p><?php
