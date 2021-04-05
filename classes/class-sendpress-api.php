@@ -243,7 +243,7 @@ class SendPress_API {
 			define( 'SPNL_DOING_API', true );
 		}
 
-		ignore_user_abort(true);
+		//ignore_user_abort(true);
 
 		ini_set('max_execution_time',600);
 		
