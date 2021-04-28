@@ -11,10 +11,6 @@ Text Domain: sendpress
 Domain Path: /languages/
 
 */
-if ( ! defined( 'DB_NAME' ) ) {
-	header( 'HTTP/1.0 403 Forbidden' );
-	die;
-}
 global $blog_id;
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
