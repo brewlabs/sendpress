@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 4.4
-Tested up to: 5.7
-Stable tag: 1.21.4.5
+Tested up to: 5.8.3
+Stable tag: 1.22.1.20
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+= 1.22.1.20- 2022.1.20 =
+* Update/fixes for php 8
+
 = 1.21.4.5- 2021.4.5 =
 * Update for error in API
 
@@ -1200,6 +1203,9 @@ Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/se
 * First version on WordPress.org
 
 == Upgrade Notice ==
+
+= 1.22.1.20 =
+updates and fixes for php 8+
 
 = 1.10.6.18 =
 csv import fix
