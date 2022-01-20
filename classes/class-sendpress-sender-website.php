@@ -88,7 +88,7 @@ if(!class_exists('SendPress_Sender_Website')){
 		return $phpmailer;
 	}
 
-	function send_email($to, $subject, $html, $text, $istest = false, $sid , $list_id, $report_id,$fromname, $fromemail  ){
+	function send_email($to, $subject, $html, $text, $istest = false, $sid =0, $list_id=0, $report_id=0,$fromname='', $fromemail=''  ){
 		
 		$this->emailText = $text;
 		$this->sid = $sid;

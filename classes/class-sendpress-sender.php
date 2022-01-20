@@ -73,13 +73,13 @@ if(!class_exists('SendPress_Sender')){
 			return $domain;
 		}
 
-		function send_email_old($to, $subject, $html, $text, $istest = false, $sid, $list_id, $report_id ){
+		function send_email_old($to, $subject, $html, $text, $istest = false, $sid =0, $list_id=0, $report_id=0 ){
 
 			
 			return false;
 		}
 
-		function send_email_new($to, $subject, $html, $text, $istest = false, $sid, $list_id, $report_id, $fromname, $fromemail ){
+		function send_email_new($to, $subject, $html, $text, $istest = false, $sid=0, $list_id=0, $report_id=0, $fromname=0, $fromemail =0){
 			return false;
 		}
 

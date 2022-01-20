@@ -733,6 +733,11 @@ $HtmlCode = $cssToInlineStyles->convert();
                 $content = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'); // htmlspecialchars($content);
             }
             $dom->strictErrorChecking = false;
+            SendPress_Error::log("logger");
+            SendPress_Error::log($content);
+            if($content == ''){
+                return $content;
+            }
             @$dom->loadHtml($content);
             $aTags = $dom->getElementsByTagName('a');
             foreach ($aTags as $aElement) {

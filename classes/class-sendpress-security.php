@@ -248,7 +248,7 @@ class SendPress_Security{
 				$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_EMAIL); 
 			break;
 			case 'post_html':
-				$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_MAGIC_QUOTES);
+				$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_ADD_SLASHES);
 			break;
 			case 'post_url':
 				$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_URL);

@@ -39,7 +39,7 @@ For the best security we recommend <a href="https://wordpress.org/plugins/post-s
 
 
 
-	function send_email($to, $subject, $html, $text, $istest = false ,$sid , $list_id, $report_id, $fromname, $fromemail){
+	function send_email($to, $subject, $html, $text, $istest = false ,$sid =0, $list_id=0, $report_id=0,$fromname='', $fromemail=''  ){
 		
 		$phpmailer = new SendPress_PHPMailer;
 		/*
