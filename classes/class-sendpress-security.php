@@ -149,8 +149,7 @@ class SendPress_Security{
 	}
 
 	function _html($field){
-		$html = $this->secure($field,'html');
-		return $this->internal_html($html);
+		return $this->secure($field,'html');
 	}
 
 	function internal_html( $html ){
@@ -219,7 +218,7 @@ class SendPress_Security{
 
 			break;
 			case 'get_html':
-				$output = filter_input(INPUT_GET, $field, FILTER_SANITIZE_MAGIC_QUOTES);
+				$output = $this->internal_html($_GET[$field]);
 			break;
 			case 'get_email':
 				$output = $this->int( filter_input(INPUT_GET, $field, FILTER_SANITIZE_EMAIL) );
@@ -248,7 +247,7 @@ class SendPress_Security{
 				$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_EMAIL); 
 			break;
 			case 'post_html':
-				$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_ADD_SLASHES);
+				$output = $this->internal_html($_POST[$field]);
 			break;
 			case 'post_url':
 				$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_URL);
