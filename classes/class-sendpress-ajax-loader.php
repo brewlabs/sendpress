@@ -391,7 +391,7 @@ class SendPress_Ajax_Loader {
 			                                                                'firstname' => $user->first_name,
 			                                                                'lastname'  => $user->last_name
 			) );
-			$email_list[] = $email;
+			$email_list[] = esc_sql($email);
 		}
 		SendPress_Data::sync_emails_to_list( $listid, $email_list );
 

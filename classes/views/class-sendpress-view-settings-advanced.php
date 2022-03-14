@@ -216,7 +216,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 				<div class="panel-body">
 					<p><?php _e('Please take care when changing these settings. We have attempted to set these to work on almost all servers. If you have a faster server you may be able to increase the limits below or if you are having troubles you may need to decrease the settings','sendpress'); ?>.</p>
 					<hr>
-					<?php _e('Users to Sync per ajax call','sendpress'); ?>: <?php $this->select('sync-per-call',SendPress_Option::get('sync-per-call',250) ); ?> <?php _e('Default','sendpress'); ?>: 250
+					<?php _e('Users to Sync per ajax call','sendpress'); ?>: <?php $this->select('sync-per-call',SendPress_Option::get('sync-per-call',250) ,array(1,5,10,15,25,30,35,40,45,50,100,250) ); ?> <?php _e('Default','sendpress'); ?>: 250
 					<hr>
 					<?php _e('Emails sent per AutoCron execution','sendpress'); ?>: <?php $this->select('autocron-per-call',SendPress_Option::get('autocron-per-call',25), array(1,5,10,15,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100) ); ?> <?php _e('Default','sendpress'); ?>: 25<br>
 					<small><?php _e('If AutoCron errors it will shut itself off','sendpress'); ?>.</small>
