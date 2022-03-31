@@ -4,7 +4,7 @@ Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 4.4
 Tested up to: 5.9
-Stable tag: 1.22.3.14
+Stable tag: 1.22.3.31
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+= 1.22.3.31- 2022.3.31 =
+* Force unsubscribe to go to manage subscription page and not automatically unsubscribe
+
 = 1.22.3.14- 2022.3.14 =
 * Bug fix list sync not syncing all users
 
