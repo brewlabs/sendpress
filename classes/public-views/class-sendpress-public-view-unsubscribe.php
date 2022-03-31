@@ -14,7 +14,7 @@ class SendPress_Public_View_Unsubscribe extends SendPress_Public_View {
 
 		$r = (int) base64_decode($r);
 		$s = (int) base64_decode($s);
-
+        /*
 		if(is_numeric($r)){	
 			$lists =  get_post_meta($r,'_send_lists', true);
 			$lists = explode(",", $lists);
@@ -22,6 +22,7 @@ class SendPress_Public_View_Unsubscribe extends SendPress_Public_View {
 				SendPress_Data::unsubscribe_from_list( $s , $r, $list );
 			}
 		}
+        */
 
 			$link_data = array(
 				"id"=>$s,
@@ -38,7 +39,6 @@ class SendPress_Public_View_Unsubscribe extends SendPress_Public_View {
 				$page = SendPress_Option::get('unsubscribe-page-id');
 				if($page != false){
 					$plink = get_permalink($page);
-					error_log($plink);
 					if($plink != ""){
 						$link = $plink . '?spms='. $code;
 					}
