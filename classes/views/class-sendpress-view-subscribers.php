@@ -75,6 +75,12 @@ class SendPress_View_Subscribers extends SendPress_View {
 	function sub_menu(){
 		?>
 		<div class="navbar navbar-default" >
+            <div class="pull-right  top-action-buttons navbar-right btn-group">
+                <?php
+                if (SPNL()->validate->_string('view') === 'settings') {
+                    $this->view_buttons();
+                }?>
+            </div>
 			<div class="navbar-header">
 			  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
       <span class="sr-only"><?php _e('Toggle navigation','sendpress'); ?></span>
@@ -97,6 +103,9 @@ class SendPress_View_Subscribers extends SendPress_View {
 				  	<li <?php if(SPNL()->validate->_string('view') === 'custom'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Subscribers_Customfields'); ?>"><i class="icon-list "></i> <?php _e('Custom Fields','sendpress'); ?></a>
 				  	</li>
+                    <li <?php if(SPNL()->validate->_string('view') === 'settings'){ ?>class="active"<?php } ?> >
+                        <a href="<?php echo SendPress_Admin::link('Subscribers_Settings'); ?>"><i class="icon-user "></i> <?php _e('Settings','sendpress'); ?></a>
+                    </li>
 				</ul>
 			</div>
 		</div>
