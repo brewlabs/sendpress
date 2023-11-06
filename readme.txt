@@ -117,6 +117,9 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
+=1.23.11.6 - 2023.11.6 =
+Security fixes
+
 = 1.22.3.31- 2022.3.31 =
 * Force unsubscribe to go to manage subscription page and not automatically unsubscribe
 
