@@ -386,7 +386,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 						if( count($list_ids) > 1 || strlen($post_notifications_code) > 0) {
 							?>
 							<p>
-								<label for="list"><?php echo $_list_label; ?>:</label>
+								<label for="list"><?php echo esc_html($_list_label); ?>:</label>
 								<?php
 									foreach ($list_ids as $id) {
 										if($id !== $pnlistid){
@@ -474,9 +474,9 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 
 					<p>
 						<?php if( !$_display_labels_inside_fields ): ?>
-							<label for="sp_email">*<?php echo $_email_label; ?>:</label>
+							<label for="sp_email">*<?php echo esc_attr($_email_label); ?>:</label>
 						<?php endif; ?>
-						<input type="text" class="sp_email required" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo $_email_label; ?>"<?php endif; ?> value="" name="sp_email" />
+						<input type="text" class="sp_email required" <?php if( $_display_labels_inside_fields ): ?>placeholder="<?php echo esc_attr($_email_label); ?>"<?php endif; ?> value="" name="sp_email" />
 					</p>
                     <input type="checkbox" name="sp_contact_me_by_fax_only" class="sp_contact_me_by_fax_only" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
 
@@ -527,7 +527,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					</p>
 
 					<p class="submit">
-						<input value="<?php echo $_button_label; ?>" class="sendpress-submit" type="submit"  id="submit" name="submit"><img class="ajaxloader" style="display:none;" src="<?php echo SENDPRESS_URL; ?>/img/ajax-loader.gif" />
+						<input value="<?php echo esc_attr($_button_label); ?>" class="sendpress-submit" type="submit"  id="submit" name="submit"><img class="ajaxloader" style="display:none;" src="<?php echo SENDPRESS_URL; ?>/img/ajax-loader.gif" />
 					</p>
 				</div>
 			</form>

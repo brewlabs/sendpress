@@ -53,8 +53,8 @@ class SendPress_SC_Unsubscribe_Form extends SendPress_SC_Base {
 			<input type="hidden" name="sendpress" value="post" />
 			<input type="hidden" name="sp-shortcode" value="SC-Unsubscribe-Form" />
 			<input type="hidden" name="sp-current-page" value="<?php echo esc_url( $current_url ); ?>" />
-			<input type="text" name="sp-email" class="sp-input" placeholder="<?php echo $placeholder; ?>"/>
-			<input type="submit" value="<?php echo $btntxt; ?>" />
+			<input type="text" name="sp-email" class="sp-input" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+			<input type="submit" value="<?php echo esc_attr($btntxt); ?>" />
 			</form><?php
 		} else {
 			echo do_shortcode($content);

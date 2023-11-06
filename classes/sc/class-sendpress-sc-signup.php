@@ -95,7 +95,7 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 						if( count($list_ids) > 1 || strlen($post_notifications_code) > 0) {
 							?>
 							<p>
-								<label for="list"><?php echo $list_label; ?>:</label>
+								<label for="list"><?php echo esc_html($list_label); ?>:</label>
 								<?php
 									foreach ($list_ids as $id) {
 										?>
@@ -126,7 +126,7 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 					<?php if( filter_var($display_firstname, FILTER_VALIDATE_BOOLEAN)  ): ?>
 						<p name="firstname">
 							<?php if( !$label ): ?>
-								<label for="firstname"><?php echo $firstname_label; ?>:</label>
+								<label for="firstname"><?php echo esc_html($firstname_label); ?>:</label>
 							<?php endif; ?>
 							<input type="text" class="sp_firstname" <?php if($label){ echo 'placeholder="'.$firstname_label.'"';}?> value=""  name="sp_firstname" />
 						</p>
@@ -135,7 +135,7 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 					<?php if( filter_var($display_lastname, FILTER_VALIDATE_BOOLEAN) ): ?>
 						<p name="lastname">
 							<?php if( !$label ): ?>
-								<label for="lastname"><?php echo $lastname_label; ?>:</label>
+								<label for="lastname"><?php echo esc_html($lastname_label); ?>:</label>
 							<?php endif; ?>
 							<input type="text" class="sp_lastname" <?php if($label){ echo 'placeholder="'.$lastname_label.'"';}?>  value="" name="sp_lastname" />
 						</p>
@@ -143,9 +143,9 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 
 					<p name="email">
 						<?php if( !$label ): ?>
-							<label for="email"><?php echo $email_label; ?>:</label>
+							<label for="email"><?php echo esc_html($email_label); ?>:</label>
 						<?php endif; ?>
-						<input type="text" class="sp_email" <?php if($label){ echo 'placeholder="'.$email_label.'"';}?> value="" name="sp_email" />
+						<input type="text" class="sp_email" <?php if($label){ echo 'placeholder="'.esc_attr($email_label).'"';}?> value="" name="sp_email" />
 					</p>
 					<p name="extra_fields" class="signup-fields-bottom">
 						<?php do_action('sendpress_signup_form_bottom'); ?>
@@ -153,7 +153,7 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
                     <input type="checkbox" name="sp_contact_me_by_fax_only" class="sp_contact_me_by_fax_only" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
 
                     <p class="submit">
-						<input value="<?php echo $button_text; ?>" class="sendpress-submit" type="submit"  id="submit" name="submit"><img class="ajaxloader" style="display:none;"  src="<?php echo SENDPRESS_URL; ?>/img/ajax-loader.gif" />
+						<input value="<?php echo esc_attr($button_text); ?>" class="sendpress-submit" type="submit"  id="submit" name="submit"><img class="ajaxloader" style="display:none;"  src="<?php echo SENDPRESS_URL; ?>/img/ajax-loader.gif" />
 					</p>
 				</div>
 			</form>
