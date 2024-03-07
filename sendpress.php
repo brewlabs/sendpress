@@ -1195,7 +1195,7 @@ class SendPress {
 		$_title = 'file';
 
 		if ( isset( $_REQUEST['sp_title'] ) ) {
-			$_title = $_REQUEST['sp_title'];
+			$_title = SPNL()->validate->_string('sp_title');
 		} // End IF Statement
 		?>
 		<script type="text/javascript">
@@ -1207,7 +1207,7 @@ class SendPress {
 				$('h3.media-title').each(function () {
 					var current_title = $(this).html();
 
-					var new_title = current_title.replace('media file', '<?php echo $_title; ?>');
+					var new_title = current_title.replace('media file', '<?php echo esc_html($_title); ?>');
 
 					$(this).html(new_title)
 				});
