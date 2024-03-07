@@ -49,7 +49,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 		}
 
 		if(isset( $post['excerpt_more'] )){
-			SendPress_Option::set('excerpt_more',  $post['excerpt_more'] );
+			SendPress_Option::set('excerpt_more',  SPNL()->validate->_string('excerpt_more') );
 		} else {
 			SendPress_Option::set('excerpt_more', false );
 		}
@@ -181,7 +181,7 @@ class SendPress_View_Settings_Advanced extends SendPress_View_Settings {
 					$ctype ='';
 				}?>
 				<?php _e('Read More override','sendpress'); ?>.<br>
-				<input type="test" name="excerpt_more" value="<?php echo $ctype; ?>" /> 
+				<input type="test" name="excerpt_more" value="<?php echo esc_html($ctype); ?>" />
 				<br><br>
 
 				<?php $ctype = SendPress_Option::get('wped_sending'); ?>
