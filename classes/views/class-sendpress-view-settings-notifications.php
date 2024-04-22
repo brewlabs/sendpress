@@ -13,7 +13,7 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 		//$this->security_check();
 		$options = SendPress_Option::get('notification_options');
 
-		$options['email'] = $post['toemail'];
+		$options['email'] =  SPNL()->validate->_email('toemail');
 
         $options['notifications-enable'] = ( array_key_exists('notifications-enable', $post) ) ? true : false;
 
@@ -23,28 +23,6 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 
         	$options['send-to-admins'] = ( array_key_exists('send-to-admins', $post) ) ? true : false;
         }
-
-        $options['enable-hipchat'] = ( array_key_exists('enable-hipchat', $post) ) ? true : false;
-        $options['hipchat-api'] = $post['hipchat-api'];
-        if( strlen($options['hipchat-api']) > 0 ){
-
-    		$options['hipchat-rooms'] = array();
-
-    		if( !array_key_exists('hipchat-rooms', $post) ){
-    			$post['hipchat-rooms'] = array();
-    		}
-
-			global $hc;
-			$hc = new SendPress_HipChat($options['hipchat-api'], 'https://api.hipchat.com');
-
-			try{
-				foreach ($hc->get_rooms() as $room) {
-					$options['hipchat-rooms'][$room->room_id] = ( array_key_exists($room->room_id, $post['hipchat-rooms']) ) ? true : false;
-				}
-			}catch(Exception $e){
-				$options['hipchat-room'] = $post['hipchat-room'];
-			}
-    	}
 
         SendPress_Option::set('notification_options', $options );
         SendPress_Admin::redirect('Settings_Notifications');
@@ -100,46 +78,7 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 
 					</div>
 			   		<div class="sp-50">
-						<?php $this->panel_start( '<span class="glyphicon glyphicon-comment"></span> '. __('HipChat Notification','sendpress') ); ?>
 
-							<p>
-							<input class="form-control" type="checkbox" value="<?php echo $options['enable-hipchat']; ?>" name="enable-hipchat" id="enable-hipchat" <?php checked( $options['enable-hipchat'], true ); ?>/>
-							<?php _e('Enable HipChat Notification','sendpress'); ?><br>
-							</p>
-							<?php _e('API Key','sendpress'); ?>: <input class="form-control" style="width:80%; display:inline;" name="hipchat-api" tabindex=2 type="text" id="hipchat-api" value="<?php echo $options['hipchat-api']; ?>"><br><a style="display:inline-block; margin-left:50px;" href="https://sendpress.hipchat.com/admin/api" target="_blank"><?php _e('Where is my API key','sendpress'); ?>?</a><br>
-
-							<?php
-								if( strlen($options['hipchat-api']) > 0 ){
-									global $hc;
-									$hc = new SendPress_HipChat($options['hipchat-api'], 'https://api.hipchat.com');
-
-									try{
-										$rooms = $hc->get_rooms();
-										?>
-										<br>
-										<h5 class="nomargin"><?php _e('Select the rooms to send notifications to:','sendpress'); ?></h5>
-										<p style="margin-left:30px;">
-										<?php
-										foreach ($rooms as $room) {
-											?>
-											<input type="checkbox" class="form-control" value="<?php echo $options['hipchat-rooms'][$room->room_id]; ?>" name="hipchat-rooms[<?php echo $room->room_id; ?>]" id="hipchat-rooms[<?php echo $room->room_id; ?>]" <?php checked( $options['hipchat-rooms'][$room->room_id], true ); ?>/>
-											<?php echo $room->name; ?><br>
-											<?php
-										}
-										?>
-										</p>
-										<?php
-									}
-									catch (Exception $e){
-										?>
-										<?php _e('Room Name','sendpress'); ?>: <input class="form-control" name="hipchat-room" tabindex=2 type="text" id="hipchat-room" value="<?php echo $options['hipchat-room']; ?>">
-										<?php
-									}
-
-								}
-							?>
-
-						<?php $this->panel_end(); ?>
 			   		</div>
 			   	</div>
    				<?php do_action('sendpress_notification_settings_bottom'); ?>
