@@ -89,6 +89,7 @@ class SendPress_View_Queue extends SendPress_View {
 	}
 
 	function pause_queue(){
+        check_admin_referer('sp-queue-pause');
 		//$this->security_check();
 		$pause_sending = SendPress_Option::get('pause-sending','no');
 		//Stop Sending for now
@@ -160,7 +161,7 @@ class SendPress_View_Queue extends SendPress_View {
 		}
 	?>
 	<div class="btn-group">
-	<a class="btn btn-large btn-default " href="<?php echo SendPress_Admin::link('Queue'); ?>&action=pause-queue" ><i class="icon-repeat icon-white "></i> <?php echo $txt; ?></a>
+	<a class="btn btn-large btn-default " href="<?php echo wp_nonce_url(SendPress_Admin::link('Queue')."&action=pause-queue","sp-queue-pause"); ?>" ><i class="icon-repeat icon-white "></i> <?php echo $txt; ?></a>
 
 	<a id="send-now" class="btn btn-primary btn-large " data-toggle="modal" href="#sendpress-sending"   ><i class="icon-white icon-refresh"></i> <?php _e('Send Emails Now','sendpress');?></a>
 	</div>

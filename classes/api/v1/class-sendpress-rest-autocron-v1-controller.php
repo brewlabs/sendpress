@@ -21,13 +21,14 @@ class SendPress_REST_AutoCron_V1_Controller extends SendPress_REST_Base_v1 {
 
     		//'permission_callback' => array( $this, 'get_item_permissions_check' ),
     	));
-    	*/
+
     	register_rest_route( parent::get_api_base(), $this->controller . 'run' , array(
     		'methods' => WP_REST_Server::READABLE,
     		'callback' => array($this,'run_cron'),
 
     		'permission_callback' => '__return_true'
     	));
+		*/
 	}
 
 	function get_item_permissions_check($request){

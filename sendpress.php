@@ -1195,7 +1195,7 @@ class SendPress {
 		$_title = 'file';
 
 		if ( isset( $_REQUEST['sp_title'] ) ) {
-			$_title = SPNL()->validate->_string('sp_title');
+			$_title = sanitize_text_field(SPNL()->validate->_string('sp_title'));
 		} // End IF Statement
 		?>
 		<script type="text/javascript">

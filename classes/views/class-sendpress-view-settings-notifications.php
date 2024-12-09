@@ -13,13 +13,13 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 		//$this->security_check();
 		$options = SendPress_Option::get('notification_options');
 
-		$options['email'] =  SPNL()->validate->_email('toemail');
+		$options['email'] =  sanitize_email( SPNL()->validate->_email('toemail') );
 
         $options['notifications-enable'] = ( array_key_exists('notifications-enable', $post) ) ? true : false;
 
         if( $options['notifications-enable'] ){
-        	$options['subscribed'] = $post['subscribed'];
-        	$options['unsubscribed'] = $post['unsubscribed'];
+        	$options['subscribed'] = SPNL()->validate->_string('subscribed');
+        	$options['unsubscribed'] =  SPNL()->validate->_string('unsubscribed');
 
         	$options['send-to-admins'] = ( array_key_exists('send-to-admins', $post) ) ? true : false;
         }
