@@ -253,13 +253,13 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 					  	<?php
 
 					  		$checked = (isset($subscriber->statusid) && $subscriber->statusid == 2) ? 'checked' : '';
-							echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="2"></td>';
+							echo '<td><input type="radio" class="xbutton" data-list="' . intval( $list->ID ) . '" name="subscribe_' . intval( $list->ID ) . '" ' . esc_attr( $checked ) . ' value="2"></td>';
 							$checked = (isset($subscriber->statusid) && $subscriber->statusid == 3) ? 'checked' : '';
-							echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="3"></td>';
+							echo '<td><input type="radio" class="xbutton" data-list="' . intval( $list->ID ) . '" name="subscribe_' . intval( $list->ID ) . '" ' . esc_attr( $checked ) . ' value="3"></td>';
 					  	?>
-					  	<td><?php echo $list->post_title; ?></td>
-					  	<td class="hidden-phone"><span id="list_<?php echo $list->ID;?>"><?php 
-					  	if(isset($subscriber->updated)) { echo $subscriber->updated; } else {
+					  	<td><?php echo esc_html( $list->post_title ); ?></td>
+					  	<td class="hidden-phone"><span id="list_<?php echo intval( $list->ID );?>"><?php 
+					  	if(isset($subscriber->updated)) { echo esc_html( $subscriber->updated ); } else {
 							 	_e('Never Subscribed','sendpress');
 							 }
 							 ?></span>
@@ -268,7 +268,7 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 							<?php 
 								if( is_object($subscriber) ){
 									if($subscriber->statusid != 3 && $subscriber->statusid != 2){
-										echo $subscriber->status;
+										echo esc_html( $subscriber->status );
 									} 
 								}
 							?>
@@ -360,19 +360,21 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 	    ?>
 
 	    <div class="sendpress-signup-form">
-			<form id="sendpress_signup" method="POST" data-form-id="<?php echo $_settings_id; ?>" <?php if( !$widget_options['load_ajax'] ){ ?>class="sendpress-signup"<?php } else { ?>action="?sendpress=post"<?php } ?> >
+			<form id="sendpress_signup" method="POST" data-form-id="<?php echo esc_attr($_settings_id); ?>" <?php if( !$widget_options['load_ajax'] ){ ?>class="sendpress-signup"<?php } else { ?>action="?sendpress=post"<?php } ?> >
 				<?php
 					if( $widget_options['load_ajax'] ){
 						echo '<input type="hidden" name="action" value="signup-user" />';
+						// Add nonce for CSRF protection on non-AJAX form submission
+						wp_nonce_field( 'sendpress-form-post', 'sp' );
 					}
 					if(empty($_listids) && strlen($post_notifications_code) == 0 && isset($_settings_id)){
 						echo $no_list_error;
 					}
 					if($_thankyou_page != false && $_thankyou_page > 0){
-						echo '<input type="hidden" name="redirect" value="'.$_thankyou_page.'" />';
+						echo '<input type="hidden" name="redirect" value="' . esc_attr($_thankyou_page) . '" />';
 					}
 
-					echo '<input type="hidden" name="formid" value="'.$_settings_id.'" />';
+					echo '<input type="hidden" name="formid" value="' . esc_attr($_settings_id) . '" />';
 
 				?>
 				<div id="exists" style="display:none;"><?php echo $sendpress_signup_exists; ?></div>

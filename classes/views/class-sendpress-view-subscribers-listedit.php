@@ -51,10 +51,10 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
 	
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	   
-	    <input type="hidden" name="listID" value="<?php echo $listId; ?>" />
-	    <p><input type="text" class="form-control" name="name" value="<?php echo $listinfo->post_title; ?>" /></p>
-	    <p><input type="checkbox" class="edit-list-checkbox" name="public" value="<?php echo get_post_meta($listinfo->ID,'public',true); ?>" <?php if( get_post_meta($listinfo->ID,'public',true) == 1 ){ echo 'checked'; } ?> /><label for="public"><?php _e('Allow user to sign up to this list','sendpress'); ?></label></p>
-	     <p><input type="checkbox" class="edit-list-checkbox" name="test_list" value="<?php echo get_post_meta($listinfo->ID,'_test_list',true); ?>" <?php if( get_post_meta($listinfo->ID,'_test_list',true) == 1 ){ echo 'checked'; } ?> /><label for="public"><?php _e('Mark list as test. Adds <span class="label label-info">Test List</span> to list title every where.','sendpress'); ?></label></p>
+	    <input type="hidden" name="listID" value="<?php echo intval( $listId ); ?>" />
+	    <p><input type="text" class="form-control" name="name" value="<?php echo esc_attr( $listinfo->post_title ); ?>" /></p>
+	    <p><input type="checkbox" class="edit-list-checkbox" name="public" value="<?php echo esc_attr( get_post_meta($listinfo->ID,'public',true) ); ?>" <?php if( get_post_meta($listinfo->ID,'public',true) == 1 ){ echo 'checked'; } ?> /><label for="public"><?php _e('Allow user to sign up to this list','sendpress'); ?></label></p>
+	     <p><input type="checkbox" class="edit-list-checkbox" name="test_list" value="<?php echo esc_attr( get_post_meta($listinfo->ID,'_test_list',true) ); ?>" <?php if( get_post_meta($listinfo->ID,'_test_list',true) == 1 ){ echo 'checked'; } ?> /><label for="public"><?php _e('Mark list as test. Adds <span class="label label-info">Test List</span> to list title every where.','sendpress'); ?></label></p>
 	    <!-- Now we can render the completed list table -->
 	   	  	<p><H4><?php _e('Select List Type','sendpress'); ?></h4>
 	   		<?php _e('Pick SendPress list if you want to use SendPress to manage your subscribers. Pick a WordPress Role if you want to send emails to your users. <br>Synced lists can only have users that have a login to your WordPress site.','sendpress'); ?></p>
@@ -76,7 +76,7 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
 	   	 	if( $role_name == $roles ){
 	   	 		$d = 'checked';
 	   	 	} ?>
-    		<input type="radio" name="sync_role" value="<?php echo $role_name ?>" <?php echo $d; ?> /> <?php echo translate_user_role($role_info['name']); ?><br>
+    		<input type="radio" name="sync_role" value="<?php echo esc_attr( $role_name ); ?>" <?php echo esc_attr( $d ); ?> /> <?php echo esc_html( translate_user_role($role_info['name']) ); ?><br>
     		
        
 		<?php endforeach; ?>
@@ -90,15 +90,15 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
 
 		<input type="radio" name="sync_role" value="meta"  <?php echo $d; ?> /> <?php _e('User Meta Query - Advanced','sendpress'); ?> ( <?php _e('Use this to sync a list based on user meta data.','sendpress'); ?> )<br><br>
    		<label>Meta Key</label>
-			<input type="text" name="meta-key" value="<?php echo get_post_meta($listinfo->ID, 'meta-key', true); ?>" />
+			<input type="text" name="meta-key" value="<?php echo esc_attr( get_post_meta($listinfo->ID, 'meta-key', true) ); ?>" />
 		<?php $this->select('meta-compare', get_post_meta($listinfo->ID, 'meta-compare', true) , array( '=', '!=', '>', '>=', '<', '<=', 'LIKE', 'NOT LIKE', 'IN', 'NOT IN', 'EXISTS', 'NOT EXISTS') ); ?>
 
 		<label>Meta Value</label>
-		<input type="text" name="meta-value" value="<?php echo get_post_meta($listinfo->ID, 'meta-value', true); ?>" />
+		<input type="text" name="meta-value" value="<?php echo esc_attr( get_post_meta($listinfo->ID, 'meta-value', true) ); ?>" />
 
 		<br><br>
         <label>User Meta Field to get email from</label>
-        <input type="text" name="meta-custom-email" value="<?php echo get_post_meta($listinfo->ID, 'meta-custom-email', true); ?>" />
+        <input type="text" name="meta-custom-email" value="<?php echo esc_attr( get_post_meta($listinfo->ID, 'meta-custom-email', true) ); ?>" />
         <br><br>
 		<?php 
 
@@ -116,7 +116,7 @@ class SendPress_View_Subscribers_Listedit extends SendPress_View_Subscribers {
 				foreach ($optin_emails as $key => $email) {
 					
 					?>
-					<option value="<?php echo $email->ID; ?>"<?php if( intval($current_opt_in_id) === intval($email->ID) ){echo ' selected';} ?>><?php echo get_post_meta($email->ID, '_sendpress_subject', true);?></option>
+					<option value="<?php echo intval( $email->ID ); ?>"<?php if( intval($current_opt_in_id) === intval($email->ID) ){echo ' selected';} ?>><?php echo esc_html( get_post_meta($email->ID, '_sendpress_subject', true) );?></option>
 					<?php
 				}
 			?>

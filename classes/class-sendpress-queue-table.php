@@ -159,8 +159,8 @@ class SendPress_Queue_Table extends WP_List_Table {
         
         //Return the title contents
         return sprintf('%1$s <span style="color:silver">(subscriber id:%2$s)</span>%3$s',
-            /*$1%s*/ $item->to_email,
-            /*$2%s*/ $item->subscriberID,
+            /*$1%s*/ esc_html( $item->to_email ),
+            /*$2%s*/ intval( $item->subscriberID ),
             /*$3%s*/ $this->row_actions($actions)
         );
     }

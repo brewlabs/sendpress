@@ -153,11 +153,24 @@ class SendPress_API {
 				case 'tracker':
 				case 'system-check':
 				case 'elastic':
-				case 'bounce':
-				case 'cron':
 				case 'sendgrid':
 				case 'sparkpost':
 				case 'ses':
+					$this->is_valid_request = true;
+					$wp_query->set( 'key', 'public' );
+				break;
+				case 'bounce':
+				case 'cron':
+					// These endpoints require a webhook secret for security
+					$webhook_secret = SendPress_Option::get( 'webhook_secret' );
+					$provided_secret = isset( $wp_query->query_vars['token'] ) ? $wp_query->query_vars['token'] : '';
+					
+					// If webhook secret is configured, verify it
+					if ( ! empty( $webhook_secret ) && ! hash_equals( $webhook_secret, $provided_secret ) ) {
+						$this->invalid_auth();
+						return;
+					}
+					
 					$this->is_valid_request = true;
 					$wp_query->set( 'key', 'public' );
 				break;

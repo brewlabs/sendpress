@@ -28,12 +28,12 @@ class SendPress_View_Emails_Footer extends SendPress_View_Emails {
         //print_r( $postdata );
     ?>
     <form method="post" name="post" >
-    <input type="hidden" value="<?php echo $templateID;  ?>" name="templateID" />
+    <input type="hidden" value="<?php echo intval( $templateID );  ?>" name="templateID" />
      
    	<div class="pull-right">
-     <a href="<?php echo SendPress_Admin::link('Emails_Tempstyle', array('templateID' => $templateID  ) ); ?>"><?php _e('Back to Template','sendpress'); ?></a>&nbsp;&nbsp;&nbsp;<button class="btn btn-primary " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Save','sendpress'); ?></button>
+     <a href="<?php echo esc_url( SendPress_Admin::link('Emails_Tempstyle', array('templateID' => $templateID  ) ) ); ?>"><?php _e('Back to Template','sendpress'); ?></a>&nbsp;&nbsp;&nbsp;<button class="btn btn-primary " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Save','sendpress'); ?></button>
    	</div>
-   <h2><?php echo $postdata->post_title; ?> <?php _e('Template Footer','sendpress'); ?></h2><br>
+   <h2><?php echo esc_html( $postdata->post_title ); ?> <?php _e('Template Footer','sendpress'); ?></h2><br>
      <div class="tab-pane fade in active" id="home"><?php wp_editor( get_post_meta( $postdata->ID , '_footer_content' , true) , 'footer-content'); ?></div>
 
 		<?php SendPress_Data::nonce_field(); ?>

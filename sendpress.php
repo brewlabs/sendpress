@@ -1081,7 +1081,8 @@ class SendPress {
 				'invalidemail' => __( "Please enter your e-mail address", "sendpress" ),
 				'missingemail' => __( "Please enter your e-mail address", "sendpress" ),
 				'required' => __( "Please enter all the required fields. <br> Required fields are marked with an (*)", "sendpress" ),
-				'ajaxurl'      => admin_url( 'admin-ajax.php' )
+				'ajaxurl'      => admin_url( 'admin-ajax.php' ),
+				'nonce'        => wp_create_nonce( 'sendpress_public_subscribe' )
 			) );
 		}
 	}

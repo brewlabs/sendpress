@@ -90,13 +90,13 @@ $subject = SendPress_Option::get('current_send_subject_'.$post->ID ,true);
   </div>
 </div>
 <div id="sp-cancel-btn" style="float:right; ">
-<a class="btn btn-default" href="<?php echo '?page='.SPNL()->validate->page(). '&view=send&emailID='. $emailID ; ?>"><?php _e('Cancel Send','sendpress'); ?></a>&nbsp;
+<a class="btn btn-default" href="<?php echo '?page=' . esc_attr( SPNL()->validate->page() ) . '&view=send&emailID=' . intval( $emailID ); ?>"><?php _e('Cancel Send','sendpress'); ?></a>&nbsp;
 </div>
 <h2><?php _e('Confirm Send','sendpress'); ?></h2>
 <br>
 
 <input type="hidden" id="user-id" name="user_ID" value="<?php //echo $current_user->ID; ?>" />
-<input type="hidden" id="post_ID" name="post_ID" value="<?php echo $post->ID; ?>" />
+<input type="hidden" id="post_ID" name="post_ID" value="<?php echo intval( $post->ID ); ?>" />
 <div class="boxer">
 <div class="boxer-inner">
 <?php $this->panel_start('<span class="glyphicon glyphicon-inbox"></span> '. __('Subject','sendpress')); ?>
@@ -122,7 +122,7 @@ $this->panel_start('<span class="glyphicon glyphicon-list"></span> '. __('Lists'
 if( !empty($info['listIDS']) ){
     foreach($info['listIDS'] as $list_id){
         $list = SendPress_Data::get_list_details( $list_id );
-        echo $list->post_title. " <small>(".SendPress_Data::get_count_subscribers($list_id). ")</small><br>";      
+        echo esc_html( $list->post_title ) . " <small>(" . intval( SendPress_Data::get_count_subscribers($list_id) ) . ")</small><br>";      
 
     } 
 } else {
@@ -165,9 +165,9 @@ $url =  SendPress_Manager::public_url($code);
 $sep = strstr($url, '?') ? '&' : '?';
 $link = $url.$sep.'inline=true';
 ?>
-<iframe src="<?php echo $link; ?>" width="100%" height="600px"></iframe>
+<iframe src="<?php echo esc_url( $link ); ?>" width="100%" height="600px"></iframe>
 
-<small><?php _e('Displaying a 404? Please try saving your permalinks','sendpress'); ?> <a href="<?php echo admin_url('options-permalink.php'); ?>"><?php _e('here','sendpress'); ?></a>.</small>
+<small><?php _e('Displaying a 404? Please try saving your permalinks','sendpress'); ?> <a href="<?php echo esc_url( admin_url('options-permalink.php') ); ?>"><?php _e('here','sendpress'); ?></a>.</small>
 </div>
 <?php wp_nonce_field($this->_nonce_value); ?><br><br>
 </div>

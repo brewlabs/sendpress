@@ -58,13 +58,13 @@ foreach($lists as $list){
   	<?php
 
   		$checked = (isset($subscriber->statusid) && $subscriber->statusid == 2) ? 'checked' : '';
-		echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="2"></td>';
+		echo '<td><input type="radio" class="xbutton" data-list="' . intval( $list->ID ) . '" name="subscribe_' . intval( $list->ID ) . '" ' . esc_attr( $checked ) . ' value="2"></td>';
 		$checked = (isset($subscriber->statusid) && $subscriber->statusid == 3) ? 'checked' : '';
-		echo '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="3"></td>';
+		echo '<td><input type="radio" class="xbutton" data-list="' . intval( $list->ID ) . '" name="subscribe_' . intval( $list->ID ) . '" ' . esc_attr( $checked ) . ' value="3"></td>';
   	?>
-  	<td><?php echo $list->post_title; ?></td>
-  	<td class="hidden-phone"><span id="list_<?php echo $list->ID;?>"><?php 
-  	if(isset($subscriber->updated)) { echo $subscriber->updated; } else {
+  	<td><?php echo esc_html( $list->post_title ); ?></td>
+  	<td class="hidden-phone"><span id="list_<?php echo intval( $list->ID );?>"><?php 
+  	if(isset($subscriber->updated)) { echo esc_html( $subscriber->updated ); } else {
 		 	_e('Never Subscribed','sendpress');
 		 }
 		 ?></span>
@@ -73,7 +73,7 @@ foreach($lists as $list){
 		<?php 
 			if( is_object($subscriber) ){
 				if($subscriber->statusid != 3 && $subscriber->statusid != 2){
-					echo $subscriber->status;
+					echo esc_html( $subscriber->status );
 				} 
 			}
 		?>

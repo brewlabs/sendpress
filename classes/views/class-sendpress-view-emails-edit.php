@@ -101,7 +101,7 @@ class SendPress_View_Emails_Edit extends SendPress_View_Emails {
 
 		?>
      <form method="post" id="post" role="form">
-        <input type="hidden" name="post_ID" id="post_ID" value="<?php echo $post->ID; ?>" />
+        <input type="hidden" name="post_ID" id="post_ID" value="<?php echo intval( $post->ID ); ?>" />
         <input type="hidden" name="post_type" id="post_type" value="sp_newsletters" />
         <input type="hidden" name="action" id="action" value="save-email" />
        <div  >

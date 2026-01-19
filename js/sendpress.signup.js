@@ -93,7 +93,8 @@
             if(submit_ok){
                 $submit.attr("disabled", "disabled");
 
-
+                // Add nonce for CSRF protection
+                signup['spnonce'] = sendpress.nonce;
 
                 jQuery.post(sendpress.ajaxurl, signup, function(response){
                 
