@@ -1593,6 +1593,13 @@ class SendPress {
 			SendPress_Option::set( $update_options_sp );
 			unset( $update_options_sp );
 		}
+
+		// Generate webhook_secret for API security if not already set (for upgrades)
+		$existing_secret = SendPress_Option::get( 'webhook_secret' );
+		if ( empty( $existing_secret ) ) {
+			SendPress_Option::set( 'webhook_secret', wp_generate_password( 32, false, false ) );
+		}
+
 		SendPress_Option::base_set( 'version', SENDPRESS_VERSION );
 		SendPress_Option::set( 'version', SENDPRESS_VERSION );
 	}
