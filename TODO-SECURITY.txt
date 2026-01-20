@@ -47,6 +47,18 @@ HIGH:
     Issue: Deprecated in PHP 7.2, removed in PHP 8.0
 
 MEDIUM:
+[ ] Refactor admin URL building to use add_query_arg() + esc_url()
+    Files: 20+ instances across codebase
+    Issue: URLs built by string concatenation instead of proper WP functions
+    Example files:
+    - classes/views/class-sendpress-view-emails-send-confirm.php
+    - classes/class-sendpress-emails-table.php
+    - classes/class-sendpress-queue-table.php
+    - classes/class-sendpress-lists-table.php
+    - sendpress.php
+    Current: href="?page=' . esc_attr($page) . '&view=send&emailID=' . intval($id)
+    Should be: esc_url(add_query_arg(['page'=>$page, 'view'=>'send', 'emailID'=>$id], admin_url('admin.php')))
+
 [ ] Add esc_html() to form labels
     File: classes/sc/class-sendpress-sc-forms.php
     Lines: 444, 446, 453, 455, 462, 464, 471, 473
