@@ -106,6 +106,8 @@ abstract class SendPress_DB {
 		if ( ! $this->is_valid_column( $column ) ) {
 			return null;
 		}
+		// Sanitize for defense in depth
+		$column = sanitize_key( $column );
 		return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $this->table_name WHERE $column = %s LIMIT 1;", $row_id ) );
 	}
 
@@ -122,6 +124,8 @@ abstract class SendPress_DB {
 		if ( ! $this->is_valid_column( $column ) ) {
 			return null;
 		}
+		// Sanitize for defense in depth
+		$column = sanitize_key( $column );
 		return $wpdb->get_var( $wpdb->prepare( "SELECT $column FROM $this->table_name WHERE $this->primary_key = %d LIMIT 1;", $row_id ) );
 	}
 
@@ -138,6 +142,9 @@ abstract class SendPress_DB {
 		if ( ! $this->is_valid_column( $column ) || ! $this->is_valid_column( $column_where ) ) {
 			return null;
 		}
+		// Sanitize for defense in depth
+		$column = sanitize_key( $column );
+		$column_where = sanitize_key( $column_where );
 		return $wpdb->get_var( $wpdb->prepare( "SELECT $column FROM $this->table_name WHERE $column_where = %s LIMIT 1;", $column_value ) );
 	}
 
@@ -150,6 +157,8 @@ abstract class SendPress_DB {
 			if ( ! array_key_exists( $field, $valid_columns ) ) {
 				continue;
 			}
+			// Sanitize for defense in depth
+			$field = sanitize_key( $field );
 			$form = isset( $valid_columns[$field] ) ? $valid_columns[$field] : '%s';
 			$wheres[] = "`$field` = {$form}";
 		}
