@@ -3,8 +3,8 @@ Plugin URI: https://sendpress.com
 Contributors: brewlabs, joshl, jaredharbour, itdoug
 Tags: newsletter, newsletters, manager newsletter, newsletter signup, newsletter widget, subscribers, subscription, email marketing, email, emailing, smtp, sendpress, sendgrid, mandrill, mailchimp
 Requires at least: 4.4
-Tested up to: 6.6.1
-Stable tag: 1.24.8.19
+Tested up to: 6.7
+Stable tag: 1.26.1.20
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,7 +117,17 @@ Twitter: [@sendpress](http://twitter.com/sendpress)
 == Changelog ==
 
 Previous releases can be downloaded from [GitHub](https://github.com/brewlabs/sendpress/releases)
-=1.24.8.19 - 2024.8.19 =
+
+= 1.26.1.20 - 2026.1.20 =
+* Security: Fixed CSRF vulnerability in subscription forms (CVE reported via Patchstack)
+* Security: Fixed Broken Access Control in API bounce/cron endpoints
+* Security: Fixed Reflected XSS vulnerabilities
+* Security: Fixed stored XSS in form attributes
+* Security: Added nonce verification to all AJAX and form submissions
+* Security: Updated input sanitization for PHP 8.1+ compatibility
+* Security: 40+ additional XSS and SQL injection fixes across codebase
+
+= 1.24.8.19 - 2024.8.19 =
 Security fixes
 
 =1.23.11.6 - 2023.11.6 =
