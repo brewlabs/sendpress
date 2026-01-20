@@ -1,0 +1,249 @@
+================================================================================
+          SENDPRESS ADDITIONAL SECURITY AUDIT FINDINGS
+================================================================================
+
+Date: January 2025
+Status: REQUIRES REVIEW - Additional issues found beyond Patchstack fixes
+
+================================================================================
+CRITICAL ISSUES
+================================================================================
+
+1. UNSAFE DYNAMIC FUNCTION CALL (Critical - Potential RCE)
+   File: classes/public-views/class-sendpress-public-view-post.php
+   Lines: 21-23
+   
+   ISSUE:
+   User input directly controls which class method gets called:
+   
+   $cls = str_replace('-', '_', trim($_POST['sp-shortcode']));
+   call_user_func(array('SendPress_'. $cls, "form_post"), '');
+   
+   RISK:
+   An attacker could potentially call arbitrary methods by crafting 
+   sp-shortcode values. While limited to classes starting with "SendPress_",
+   this still poses significant risk.
+   
+   RECOMMENDATION:
+   Whitelist allowed shortcode classes:
+   
+   $allowed = array('SC_Forms', 'SC_Signup', 'SC_Unsubscribe_Form');
+   $cls = str_replace('-', '_', trim($_POST['sp-shortcode']));
+   $cls = str_replace('SC_', '', $cls);
+   if (!in_array($cls, $allowed)) {
+       return; // Invalid class
+   }
+
+
+2. DEPRECATED create_function() USAGE (Medium - PHP 7.2+ deprecated)
+   File: sendpress.php
+   Lines: 145, 148
+   
+   ISSUE:
+   create_function() is deprecated in PHP 7.2+ and removed in PHP 8.0+
+   
+   create_function('', 'return register_widget("SendPress_Widget_Forms");')
+   
+   RECOMMENDATION:
+   Replace with anonymous functions:
+   function() { return register_widget('SendPress_Widget_Forms'); }
+
+
+================================================================================
+HIGH PRIORITY ISSUES
+================================================================================
+
+3. UNSANITIZED DATA PASSED TO DATABASE (SQL Injection Risk)
+   File: classes/sc/class-sendpress-sc-forms.php
+   Lines: 580-600
+   
+   ISSUE:
+   Multiple $_POST values passed directly to database functions:
+   
+   SendPress_Data::update_subscriber_status($list_id, $_POST['subscriberid'], $_POST['subscribe_'.$list_id]);
+   SendPress_Data::update_subscriber($_POST['subscriberid'], $sub_data);
+   
+   where $sub_data contains unsanitized:
+   'firstname' => $_POST['sp_firstname'],
+   'lastname'  => $_POST['sp_lastname'],
+   'salutation'  => $_POST['sp_salutation'],
+   'phonenumber'  => $_POST['sp_phonenumber']
+   
+   RECOMMENDATION:
+   Sanitize all inputs before database operations:
+   
+   $subscriberId = absint($_POST['subscriberid']);
+   $sub_data = array(
+       'firstname' => sanitize_text_field($_POST['sp_firstname']),
+       'lastname'  => sanitize_text_field($_POST['sp_lastname']),
+       'salutation'  => sanitize_text_field($_POST['sp_salutation']),
+       'phonenumber'  => sanitize_text_field($_POST['sp_phonenumber'])
+   );
+
+
+4. POTENTIAL PHP OBJECT INJECTION (unserialize with user-controlled data)
+   File: classes/class-sendpress-option.php
+   Lines: 235-241
+   
+   ISSUE:
+   Direct unserialize() calls on data that may come from database:
+   
+   return unserialize($options[$sender."_temp"]);
+   $d = unserialize(self::_decrypt($options[$sender], SENDPRESS_SENDER_KEY));
+   
+   RISK:
+   If an attacker can inject serialized data into the database,
+   they could potentially achieve Remote Code Execution.
+   
+   RECOMMENDATION:
+   Use maybe_unserialize() or validate data before unserializing.
+
+
+================================================================================
+MEDIUM PRIORITY ISSUES
+================================================================================
+
+5. MISSING XSS ESCAPING IN FORM LABELS
+   File: classes/sc/class-sendpress-sc-forms.php
+   Lines: 444, 446, 453, 455, 462, 464, 471, 473
+   
+   ISSUE:
+   Label values echoed without escaping:
+   
+   <?php echo $_salutation_label; ?>
+   <?php echo $_firstname_label; ?>
+   <?php echo $_lastname_label; ?>
+   <?php echo $_phonenumber_label; ?>
+   
+   RECOMMENDATION:
+   Add esc_html() escaping:
+   <?php echo esc_html($_salutation_label); ?>
+
+
+6. MISSING DIRECT ACCESS PROTECTION
+   Multiple files missing defined() ABSPATH check:
+   
+   - inc/functions.php
+   - inc/forms/email-style.2.0.php
+   - inc/output.php
+   - inc/helpers/sendpress-help-tabs.php
+   - inc/helpers/sendpress-get-actions.php
+   - inc/helpers/sendpress-post-actions.php
+   - classes/class-sendpress-emails-table.php
+   - classes/class-sendpress-signup-shortcode-old.php
+   - classes/class-sendpress-security.php
+   - All files in classes/sc/
+   
+   Most use custom SENDPRESS_VERSION check which is acceptable,
+   but consistency with WordPress standards (ABSPATH) is recommended.
+
+
+7. SERVER INFORMATION DISCLOSURE
+   File: inc/output.php
+   Line: 51
+   
+   ISSUE:
+   Outputs server software information:
+   echo $_SERVER['SERVER_SOFTWARE']
+   
+   RECOMMENDATION:
+   This should only be visible to administrators and escaped:
+   echo esc_html($_SERVER['SERVER_SOFTWARE']);
+
+
+8. extract() USAGE WITH SHORTCODE ATTRIBUTES
+   Files:
+   - classes/class-sendpress-signup-shortcode-old.php:32
+   - classes/sc/class-sendpress-sc-forms.php:34, 99, 316
+   - classes/sc/class-sendpress-sc-signup.php:64
+   - classes/sc/class-sendpress-sc-recent-posts-by-user.php:43
+   - classes/sc/class-sendpress-sc-recent-posts.php:61
+   - classes/sc/class-sendpress-sc-unsubscribe-form.php:43
+   
+   ISSUE:
+   Using extract() can lead to variable injection if not careful.
+   
+   RECOMMENDATION:
+   WordPress shortcode_atts() already sanitizes, but consider using
+   array access instead of extract() for clearer code.
+
+
+================================================================================
+LOW PRIORITY / INFORMATIONAL
+================================================================================
+
+9. HARDCODED NONCE VALUES
+   Files:
+   - classes/class-sendpress-ajax-loader.php:13-14
+   
+   static $ajax_nonce = "love-me-some-sendpress-ajax-2012";
+   static $priv_ajax_nonce = "love-me-some-sendpress-ajax-2012";
+   
+   ISSUE:
+   Both public and private nonces use the same value.
+   
+   RECOMMENDATION:
+   Use different action names for public vs admin nonces.
+
+
+10. BASE64 ENCODING WITHOUT ADDITIONAL SECURITY
+    Files:
+    - classes/public-views/class-sendpress-public-view-unsubscribe.php:15-16
+    - classes/public-views/class-sendpress-public-view-email.php:28, 33
+    
+    ISSUE:
+    Base64 is used for obfuscation, not security. IDs are recoverable.
+    
+    RECOMMENDATION:
+    Consider HMAC signing for sensitive URLs to prevent tampering.
+
+
+================================================================================
+SECURITY TESTING RECOMMENDATIONS
+================================================================================
+
+1. STATIC ANALYSIS TOOLS
+   - PHPCS with WordPress-Extra and WPCS security sniffs
+   - PHPStan with phpstan-wordpress extension
+   - Psalm with security plugin
+   - SonarQube for comprehensive analysis
+
+2. DYNAMIC TESTING
+   - OWASP ZAP automated scanning
+   - Burp Suite professional for manual testing
+   - SQLMap for SQL injection testing
+
+3. WORDPRESS-SPECIFIC TOOLS
+   - WPScan CLI for known vulnerability database
+   - Plugin Check plugin for WordPress.org standards
+   - Theme Check (some checks apply to plugins)
+
+4. MANUAL TESTING AREAS
+   - All AJAX endpoints with and without authentication
+   - All form submissions (subscription, unsubscribe, settings)
+   - API endpoints with various payloads
+   - File upload functionality (CSV import)
+   - Email preview/rendering for XSS
+
+5. CODE REVIEW FOCUS AREAS
+   - All save() methods in view classes
+   - All AJAX handlers in class-sendpress-ajax-loader.php
+   - All public-facing shortcode handlers
+   - Database query construction in class-sendpress-data.php
+   - File operations in import/export functionality
+
+
+================================================================================
+PRIORITIZED FIX ORDER
+================================================================================
+
+1. [CRITICAL] Dynamic function call in public-view-post.php
+2. [HIGH] Sanitize $_POST data in handle_unsubscribes()
+3. [HIGH] Replace deprecated create_function() calls
+4. [MEDIUM] Add esc_html() to form labels
+5. [MEDIUM] Review unserialize() usage
+6. [LOW] Standardize direct access protection
+7. [LOW] Separate public/private nonce values
+
+
+================================================================================

@@ -157,8 +157,8 @@ AFTER (secure):
         $provided_secret = isset($wp_query->query_vars['token']) 
             ? $wp_query->query_vars['token'] : '';
         
-        // If webhook secret is configured, verify it
-        if (!empty($webhook_secret) && 
+        // Always require valid webhook secret - no unauthenticated access
+        if (empty($webhook_secret) || 
             !hash_equals($webhook_secret, $provided_secret)) {
             $this->invalid_auth();
             return;
@@ -168,15 +168,29 @@ AFTER (secure):
         $wp_query->set('key', 'public');
         break;
 
+Additionally, in sendpress.php plugin_install():
+    // Generate webhook_secret for API security if not already set
+    $existing_secret = SendPress_Option::get( 'webhook_secret' );
+    if ( empty( $existing_secret ) ) {
+        SendPress_Option::set( 'webhook_secret', wp_generate_password( 32, false, false ) );
+    }
+
 WORDPRESS SECURITY STANDARDS APPLIED:
 - hash_equals() - Timing-safe string comparison to prevent timing attacks
-- Optional webhook secret for backward compatibility
-- Returns 401 Unauthorized for invalid authentication
+- wp_generate_password() - Cryptographically secure random string generation
+- Secure by default - secret auto-generated on activation/upgrade
+- Returns 401 Unauthorized for invalid or missing authentication
 
-ADMINISTRATOR ACTION REQUIRED:
-To fully secure these endpoints, administrators should configure a webhook
-secret in SendPress settings. API calls must then include the token parameter:
+SECURE BY DEFAULT:
+A 32-character webhook_secret is automatically generated during plugin 
+activation. The bounce/cron endpoints ALWAYS require this token - there is 
+no unauthenticated fallback. Existing installations will have a secret 
+generated on next plugin update/reactivation.
+
+API calls must include the token parameter:
   /spnl-api/bounce/?email=test@example.com&token=YOUR_WEBHOOK_SECRET
+
+Administrators can find/change their webhook_secret in the SendPress options.
 
 
 ================================================================================
@@ -338,10 +352,12 @@ CSRF Protection Tests:
 [ ] Test non-AJAX form submission includes nonce field
 
 Broken Access Control Tests:
-[ ] Call /spnl-api/bounce/ without token (no webhook_secret set) - Should work
-[ ] Call /spnl-api/bounce/ without token (webhook_secret set) - Should fail 401
-[ ] Call /spnl-api/bounce/ with correct token - Should work
+[ ] Fresh install: webhook_secret is auto-generated in options
+[ ] Call /spnl-api/bounce/ without token - Should fail 401
+[ ] Call /spnl-api/bounce/ with incorrect token - Should fail 401
+[ ] Call /spnl-api/bounce/ with correct token - Should succeed
 [ ] Call /spnl-api/cron/ with same tests as above
+[ ] Plugin reactivation preserves existing webhook_secret
 
 XSS Prevention Tests:
 [ ] Enter <script>alert('xss')</script> in form fields - Should be escaped

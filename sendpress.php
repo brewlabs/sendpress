@@ -1832,6 +1832,11 @@ class SendPress {
 		flush_rewrite_rules();
 		*/
 		
+		// Generate webhook_secret for API security if not already set
+		$existing_secret = SendPress_Option::get( 'webhook_secret' );
+		if ( empty( $existing_secret ) ) {
+			SendPress_Option::set( 'webhook_secret', wp_generate_password( 32, false, false ) );
+		}
 
 		SendPress_Option::set( 'install_date', time() );
 		update_option('sendpress_flush_rewrite_rules', true);

@@ -165,8 +165,8 @@ class SendPress_API {
 					$webhook_secret = SendPress_Option::get( 'webhook_secret' );
 					$provided_secret = isset( $wp_query->query_vars['token'] ) ? $wp_query->query_vars['token'] : '';
 					
-					// If webhook secret is configured, verify it
-					if ( ! empty( $webhook_secret ) && ! hash_equals( $webhook_secret, $provided_secret ) ) {
+					// Always require valid webhook secret - no unauthenticated access
+					if ( empty( $webhook_secret ) || ! hash_equals( $webhook_secret, $provided_secret ) ) {
 						$this->invalid_auth();
 						return;
 					}
