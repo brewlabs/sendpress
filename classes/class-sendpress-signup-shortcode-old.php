@@ -59,7 +59,7 @@ class SendPress_Signup_Shortcode{
 				<?php 
 					if( $widget_options['load_ajax'] ){
 						echo '<input type="hidden" name="action" value="signup-user" />';
-						// Add nonce for CSRF protection on non-AJAX form submission
+						// Add nonce for CSRF protection
 						wp_nonce_field( 'sendpress-form-post', 'sp' );
 					}
 					if(empty($listids)){
