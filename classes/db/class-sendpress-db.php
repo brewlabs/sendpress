@@ -58,6 +58,19 @@ abstract class SendPress_DB {
 	}
 
 	/**
+	 * Validate that a column name exists in this table's schema
+	 *
+	 * @access  protected
+	 * @since   1.26.1.20
+	 * @param   string $column Column name to validate
+	 * @return  bool   True if valid column, false otherwise
+	 */
+	protected function is_valid_column( $column ) {
+		$valid_columns = $this->get_columns();
+		return array_key_exists( $column, $valid_columns );
+	}
+
+	/**
 	 * Default column values
 	 *
 	 * @access  public
@@ -77,7 +90,7 @@ abstract class SendPress_DB {
 	 */
 	public function get( $row_id ) {
 		global $wpdb;
-		return $wpdb->get_row( "SELECT * FROM $this->table_name WHERE $this->primary_key = $row_id LIMIT 1;" );
+		return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $this->table_name WHERE $this->primary_key = %d LIMIT 1;", $row_id ) );
 	}
 
 	/**
@@ -85,11 +98,17 @@ abstract class SendPress_DB {
 	 *
 	 * @access  public
 	 * @since   1.0.12.11
-	 * @return  object
+	 * @return  object|null
 	 */
 	public function get_by( $column, $row_id ) {
 		global $wpdb;
-		return $wpdb->get_row( "SELECT * FROM $this->table_name WHERE $column = '$row_id' LIMIT 1;" );
+		// Validate column against whitelist to prevent SQL injection
+		if ( ! $this->is_valid_column( $column ) ) {
+			return null;
+		}
+		// Sanitize for defense in depth
+		$column = sanitize_key( $column );
+		return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $this->table_name WHERE $column = %s LIMIT 1;", $row_id ) );
 	}
 
 	/**
@@ -97,11 +116,17 @@ abstract class SendPress_DB {
 	 *
 	 * @access  public
 	 * @since   1.0.12.11
-	 * @return  string
+	 * @return  string|null
 	 */
 	public function get_column( $column, $row_id ) {
 		global $wpdb;
-		return $wpdb->get_var( "SELECT $column FROM $this->table_name WHERE $this->primary_key = $row_id LIMIT 1;" );
+		// Validate column against whitelist to prevent SQL injection
+		if ( ! $this->is_valid_column( $column ) ) {
+			return null;
+		}
+		// Sanitize for defense in depth
+		$column = sanitize_key( $column );
+		return $wpdb->get_var( $wpdb->prepare( "SELECT $column FROM $this->table_name WHERE $this->primary_key = %d LIMIT 1;", $row_id ) );
 	}
 
 	/**
@@ -109,25 +134,32 @@ abstract class SendPress_DB {
 	 *
 	 * @access  public
 	 * @since   1.0.12.11
-	 * @return  string
+	 * @return  string|null
 	 */
 	public function get_column_by( $column, $column_where, $column_value ) {
 		global $wpdb;
-		return $wpdb->get_var( "SELECT $column FROM $this->table_name WHERE $column_where = '$column_value' LIMIT 1;" );
+		// Validate both columns against whitelist to prevent SQL injection
+		if ( ! $this->is_valid_column( $column ) || ! $this->is_valid_column( $column_where ) ) {
+			return null;
+		}
+		// Sanitize for defense in depth
+		$column = sanitize_key( $column );
+		$column_where = sanitize_key( $column_where );
+		return $wpdb->get_var( $wpdb->prepare( "SELECT $column FROM $this->table_name WHERE $column_where = %s LIMIT 1;", $column_value ) );
 	}
 
 
 	public function make_where( $where ) {
-		$where_format = $this->get_columns();
-		 $wheres = array();
-		$where_formats = $where_format = (array) $where_format;
+		$valid_columns = $this->get_columns();
+		$wheres = array();
 		foreach ( (array) array_keys( $where ) as $field ) {
-			if ( !empty( $where_format ) )
-				$form = ( $form = array_shift( $where_formats ) ) ? $form : $where_format[0];
-			elseif ( isset( $this->field_types[$field] ) )
-				$form = $this->field_types[$field];
-			else
-				$form = '%s';
+			// Validate field against whitelist to prevent SQL injection
+			if ( ! array_key_exists( $field, $valid_columns ) ) {
+				continue;
+			}
+			// Sanitize for defense in depth
+			$field = sanitize_key( $field );
+			$form = isset( $valid_columns[$field] ) ? $valid_columns[$field] : '%s';
 			$wheres[] = "`$field` = {$form}";
 		}
 

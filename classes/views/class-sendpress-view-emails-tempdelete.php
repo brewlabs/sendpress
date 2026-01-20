@@ -30,11 +30,11 @@ class SendPress_View_Emails_Tempdelete extends SendPress_View_Emails {
 
 		
 		
-		<h2><?php _e('You are about to delete template','sendpress'); ?>: <?php echo $template->post_title; ?></h2>
+		<h2><?php _e('You are about to delete template','sendpress'); ?>: <?php echo esc_html( $template->post_title ); ?></h2>
 		<br>
-				<a class="btn btn-danger" href="<?php echo SendPress_Admin::link('Emails_Temp',array('templateID'=>$t_id , 'action'=>'delete' )); ?>"><?php _e('Delete Template','sendpress'); ?></a>
+				<a class="btn btn-danger" href="<?php echo esc_url( SendPress_Admin::link('Emails_Temp',array('templateID'=>$t_id , 'action'=>'delete' )) ); ?>"><?php _e('Delete Template','sendpress'); ?></a>
 			
-				<a class="btn btn-default" href="<?php echo SendPress_Admin::link('Emails_Temp'); ?>"><?php _e('Cancel','sendpress'); ?></a>
+				<a class="btn btn-default" href="<?php echo esc_url( SendPress_Admin::link('Emails_Temp') ); ?>"><?php _e('Cancel','sendpress'); ?></a>
 			
 
 		

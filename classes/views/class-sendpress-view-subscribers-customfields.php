@@ -48,8 +48,8 @@ class SendPress_View_Subscribers_Customfields extends SendPress_View_Subscribers
 		$this->panel_start('Custom Fields');
 		?>
 
-		<form id="create-custom-field" method="post" role="form" data-newfield="<?php echo htmlspecialchars(SendPress_Data::custom_field_template());?>">
-       		<input type="hidden" name="post_ID" id="post_ID" value="<?php echo $post->ID; ?>" />
+		<form id="create-custom-field" method="post" role="form" data-newfield="<?php echo esc_attr( SendPress_Data::custom_field_template() );?>">
+       		<input type="hidden" name="post_ID" id="post_ID" value="<?php echo isset( $post->ID ) ? intval( $post->ID ) : ''; ?>" />
 
         <?php
 
@@ -65,10 +65,10 @@ class SendPress_View_Subscribers_Customfields extends SendPress_View_Subscribers
 			?>
 
 			<p>
-				<label class="custom-field-label" for="_salutation_label"><?php _e('Label ', 'sendpress'); ?>:</label><input type="text" class="widefat custom-field" data-field-id="<?php echo $field['id']; ?>" id="custom_field_label" name="custom_field_label" value="<?php echo $field['label'];?>" style="width:300px;" /> - Use <code>{spcf-<?php echo $field['slug']; ?>}</code> to output data.
+				<label class="custom-field-label" for="_salutation_label"><?php _e('Label ', 'sendpress'); ?>:</label><input type="text" class="widefat custom-field" data-field-id="<?php echo intval( $field['id'] ); ?>" id="custom_field_label" name="custom_field_label" value="<?php echo esc_attr( $field['label'] );?>" style="width:300px;" /> - Use <code>{spcf-<?php echo esc_html( $field['slug'] ); ?>}</code> to output data.
 
 				<div style="padding-left:60px; margin-bottom:20px;">
-					<input class="allow_edits" type="checkbox" data-field-id="<?php echo $field['id']; ?>" id="custom_field_allow_edit" <?php if($field['allow_edit'] == 1){ echo 'checked';}; ?>> Allow users to edit their data
+					<input class="allow_edits" type="checkbox" data-field-id="<?php echo intval( $field['id'] ); ?>" id="custom_field_allow_edit" <?php if($field['allow_edit'] == 1){ echo 'checked';}; ?>> Allow users to edit their data
 				</div>
 			</p>
 
@@ -99,7 +99,7 @@ class SendPress_View_Subscribers_Customfields extends SendPress_View_Subscribers
 
 		if(defined('SENDPRESS_PRO_VERSION')){
 			?>
-			<p><?php _e('You have SendPress Pro Version','sendpress'); ?> <?php echo SENDPRESS_PRO_VERSION; ?> <?php _e('this version does not support our new custom fields. You will need to update to the latest version','sendpress'); ?>.</p>
+			<p><?php _e('You have SendPress Pro Version','sendpress'); ?> <?php echo esc_html( SENDPRESS_PRO_VERSION ); ?> <?php _e('this version does not support our new custom fields. You will need to update to the latest version','sendpress'); ?>.</p>
 			<?php
 		} else {
 			?>

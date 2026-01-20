@@ -61,7 +61,7 @@ class SendPress_View_Subscribers_Subscribers extends SendPress_View_Subscribers 
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page() ?>" />
 	    <?php if($list_id_clean > 0 ){ ?>
-	    <input type="hidden" name="listID" value="<?php echo $list_id_clean; ?>" />
+	    <input type="hidden" name="listID" value="<?php echo intval( $list_id_clean ); ?>" />
 	    <?php  } ?>
 	    <input type="hidden" name="view" value="<?php echo esc_html(SPNL()->validate->_string('view')); ?>" />
 
@@ -74,7 +74,7 @@ class SendPress_View_Subscribers_Subscribers extends SendPress_View_Subscribers 
 		
 		<input type='hidden' value="unlink-lisk" name="action" />
 		<?php if(isset($list_id_clean )){ ?>
-		<input type='hidden' name="listid" value="<?php echo $list_id_clean ; ?>" />
+		<input type='hidden' name="listid" value="<?php echo intval( $list_id_clean ); ?>" />
 		<?php } ?>
 
 		<br>

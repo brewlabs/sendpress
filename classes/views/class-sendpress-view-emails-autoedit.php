@@ -66,7 +66,7 @@ class SendPress_View_Emails_Autoedit extends SendPress_View_Emails {
         
 		?>
      <form method="post" id="post" role="form">
-        <input type="hidden" name="post_ID" id="post_ID" value="<?php echo $post->ID; ?>" />
+        <input type="hidden" name="post_ID" id="post_ID" value="<?php echo intval( $post->ID ); ?>" />
         <input type="hidden" name="action" id="action" value="save-email" />
        <div>
        <div style="float:right;" class="btn-toolbar">

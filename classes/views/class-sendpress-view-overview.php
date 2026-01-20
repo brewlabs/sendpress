@@ -232,7 +232,7 @@ echo "<td >";
          echo "</td>";
            echo "<td align='right'>";
         if(is_object($d)){
-  			echo  $d->email ."<br>";
+  			echo  esc_html( $d->email ) ."<br>";
         }
         
        echo "</td>";
@@ -262,7 +262,7 @@ echo "<td >";
   			echo "<li>";
   			$d = 	SendPress_Data::get_subscriber($item->subscriber_id);
         if(is_object($d)){
-  		    echo  $d->email;
+  		    echo  esc_html( $d->email );
         }
   			echo "</li>";
       }

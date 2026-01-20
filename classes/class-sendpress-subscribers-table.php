@@ -115,14 +115,14 @@ class SendPress_Subscribers_Table extends WP_List_Table {
         $l = SPNL()->validate->_int('listID');
         //Build row actions
         $actions = array(
-            'edit'      => sprintf('<a href="?page=%s&view=%s&subscriberID=%s&listID=%s">Edit</a>',SPNL()->validate->page(),'subscriber',$item->subscriberID, $l ),
-            'delete'    => sprintf('<a href="?page=%s&action=%s&subscriberID=%s&listID=%s">Delete</a>',SPNL()->validate->page(),'delete-subscriber',$item->subscriberID, $l ),
+            'edit'      => sprintf('<a href="?page=%s&view=%s&subscriberID=%s&listID=%s">Edit</a>', esc_attr( SPNL()->validate->page() ), 'subscriber', intval( $item->subscriberID ), intval( $l ) ),
+            'delete'    => sprintf('<a href="?page=%s&action=%s&subscriberID=%s&listID=%s">Delete</a>', esc_attr( SPNL()->validate->page() ), 'delete-subscriber', intval( $item->subscriberID ), intval( $l ) ),
         );
         
         //Return the title contents
         return sprintf('%1$s <span style="color:silver">(id:%2$s)</span>%3$s',
-            /*$1%s*/ $item->email,
-            /*$2%s*/ $item->subscriberID,
+            /*$1%s*/ esc_html( $item->email ),
+            /*$2%s*/ intval( $item->subscriberID ),
             /*$3%s*/ $this->row_actions($actions)
         );
     }

@@ -19,7 +19,7 @@ class SendPress_View_Settings_Styles extends SendPress_View_Settings {
         $contenttext = SPNL()->validate->hex( $_POST['content_text']);
         $contentlink = SPNL()->validate->hex( $_POST['sp_content_link_color']);
         $contentborder = SPNL()->validate->hex( $_POST['content_border']);
-        $upload_image = $_POST['upload_image'];
+        $upload_image = esc_url_raw( wp_unslash( $_POST['upload_image'] ) );
 
         
         $headerbg = SPNL()->validate->hex( $_POST['header_bg'] );
@@ -30,7 +30,7 @@ class SendPress_View_Settings_Styles extends SendPress_View_Settings {
         
         $subheadertext = sanitize_text_field( $_POST['sub_header_text'] );
 
-        $activeHeader = $_POST['active_header'];
+        $activeHeader = sanitize_text_field( wp_unslash( $_POST['active_header'] ) );
 
         update_post_meta($saveid ,'upload_image', $upload_image );
 

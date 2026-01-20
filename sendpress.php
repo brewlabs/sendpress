@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: SendPress Newsletters
-Version: 1.24.8.19
+Version: 1.26.1.20
 Plugin URI: https://sendpress.com
 Description: Easy to manage Newsletters for WordPress.
 Author: SendPress
@@ -19,7 +19,7 @@ global $blog_id;
 defined( 'SENDPRESS_API_BASE' ) or define( 'SENDPRESS_API_BASE', 'http://api.sendpress.com' );
 define( 'SENDPRESS_API_VERSION', 1 );
 define( 'SENDPRESS_MINIMUM_WP_VERSION', '3.6' );
-define( 'SENDPRESS_VERSION', '1.24.8.19' );
+define( 'SENDPRESS_VERSION', '1.26.1.20' );
 define( 'SENDPRESS_URL', plugin_dir_url( __FILE__ ) );
 define( 'SENDPRESS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SENDPRESS_BASENAME', plugin_basename( __FILE__ ) );
@@ -1081,7 +1081,8 @@ class SendPress {
 				'invalidemail' => __( "Please enter your e-mail address", "sendpress" ),
 				'missingemail' => __( "Please enter your e-mail address", "sendpress" ),
 				'required' => __( "Please enter all the required fields. <br> Required fields are marked with an (*)", "sendpress" ),
-				'ajaxurl'      => admin_url( 'admin-ajax.php' )
+				'ajaxurl'      => admin_url( 'admin-ajax.php' ),
+				'nonce'        => wp_create_nonce( 'sendpress_public_subscribe' )
 			) );
 		}
 	}
@@ -1592,6 +1593,13 @@ class SendPress {
 			SendPress_Option::set( $update_options_sp );
 			unset( $update_options_sp );
 		}
+
+		// Generate webhook_secret for API security if not already set (for upgrades)
+		$existing_secret = SendPress_Option::get( 'webhook_secret' );
+		if ( empty( $existing_secret ) ) {
+			SendPress_Option::set( 'webhook_secret', wp_generate_password( 32, false, false ) );
+		}
+
 		SendPress_Option::base_set( 'version', SENDPRESS_VERSION );
 		SendPress_Option::set( 'version', SENDPRESS_VERSION );
 	}
@@ -1831,6 +1839,11 @@ class SendPress {
 		flush_rewrite_rules();
 		*/
 		
+		// Generate webhook_secret for API security if not already set
+		$existing_secret = SendPress_Option::get( 'webhook_secret' );
+		if ( empty( $existing_secret ) ) {
+			SendPress_Option::set( 'webhook_secret', wp_generate_password( 32, false, false ) );
+		}
 
 		SendPress_Option::set( 'install_date', time() );
 		update_option('sendpress_flush_rewrite_rules', true);

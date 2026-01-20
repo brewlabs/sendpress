@@ -177,11 +177,11 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
 
   for ($i=0; $i < $loop; $i++) {
     $line = '<tr>';
-    $line .="<td>$i</td>";
+    $line .="<td>" . intval($i) . "</td>";
     $cols = 0;
     foreach ($subscribers[$i] as $key => $value) {
       $cols ++;
-      $line .= "<td>$value</td>";
+      $line .= "<td>" . esc_html($value) . "</td>";
 
     }
     $line .="</tr>";
@@ -203,9 +203,9 @@ class SendPress_View_Subscribers_Csvprep extends SendPress_View_Subscribers {
         }
     }
     $line = '<tr>';
-    $line .="<td>$total</td>";
+    $line .="<td>" . intval($total) . "</td>";
     foreach ($last as $key => $value) {
-      $line .= "<td>$value</td>";
+      $line .= "<td>" . esc_html($value) . "</td>";
 
     }
      $line .="</tr>";

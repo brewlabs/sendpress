@@ -14,15 +14,15 @@ class SendPress_View_Emails_Social extends SendPress_View_Emails {
 		$links = array();
 		foreach ($icon_list as $key => $value) {
 			if( isset( $_POST["url-" . $key] )  && $_POST["url-" . $key] != "" ) {
-				$links[$key] = $_POST["url-" . $key];
+				$links[$key] = esc_url_raw( wp_unslash( $_POST["url-" . $key] ) );
 			}
 			if( isset( $_POST["image-" . $key] )  && $_POST["image-" . $key] != "" ) {
-				$links[$key . '-image'] = $_POST["image-" . $key];
+				$links[$key . '-image'] = esc_url_raw( wp_unslash( $_POST["image-" . $key] ) );
 			}
 		}
 	
 		SendPress_Option::set('socialicons', $links );
-		SendPress_Option::set('socialsize', $_POST['icon-view'] );
+		SendPress_Option::set('socialsize', sanitize_text_field( wp_unslash( $_POST['icon-view'] ) ) );
         //SendPress_Admin::redirect('Settings_Advanced');
 	}
 
@@ -88,16 +88,16 @@ class SendPress_View_Emails_Social extends SendPress_View_Emails {
 		<div class="well <?php echo $class; ?>">
 			<div class="form-group">
 			<?php echo "<span class='hidden-xs hidden-sm pull-right text-muted'>". $value . "</span>"; ?>
- 		<label for="url-<?php echo $key; ?>" class="control-label ">
+ 		<label for="url-<?php echo esc_attr( $key ); ?>" class="control-label ">
  		<?php if($imagexlink != ""){ ?>
- 			<img src="<?php echo $imagexlink;  ?>"  width="16px"/>
-			<img src="<?php echo $imagexlink;  ?>"  width="32px"/>
+ 			<img src="<?php echo esc_url( $imagexlink );  ?>"  width="16px"/>
+			<img src="<?php echo esc_url( $imagexlink );  ?>"  width="32px"/>
  		<?php }	else { ?>
-		<img src="<?php echo SENDPRESS_URL ."img/16px/". $key .".png" ;  ?>" />
-		<img src="<?php echo SENDPRESS_URL ."img/32px/". $key .".png" ;  ?>" />
+		<img src="<?php echo esc_url( SENDPRESS_URL ."img/16px/". $key .".png" );  ?>" />
+		<img src="<?php echo esc_url( SENDPRESS_URL ."img/32px/". $key .".png" );  ?>" />
 		<?php } ?>
 		<?php
-		echo $key ."</label>"; 
+		echo esc_html( $key ) ."</label>"; 
 		$xlink = "";
 		if(isset( $link[$key] )){
 			$xlink = $link[$key] ;
@@ -109,8 +109,8 @@ class SendPress_View_Emails_Social extends SendPress_View_Emails {
 
 		?>
 		 
-  </div><small>Link Url:</small><input type="text" name="url-<?php echo $key; ?>" value="<?php echo $xlink; ?>" class="form-control" placeholder="<?php echo $key; ?> URL: Please include http:// or https://" /><br><small>Custom Image Url:</small>
- <input type="text" name="image-<?php echo $key; ?>" value="<?php echo $imagexlink; ?>" class="form-control" placeholder="<?php echo $key; ?> Custom Image URL. https://www.sendpress.com/images/icon.png" />
+  </div><small>Link Url:</small><input type="text" name="url-<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $xlink ); ?>" class="form-control" placeholder="<?php echo esc_attr( $key ); ?> URL: Please include http:// or https://" /><br><small>Custom Image Url:</small>
+ <input type="text" name="image-<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $imagexlink ); ?>" class="form-control" placeholder="<?php echo esc_attr( $key ); ?> Custom Image URL. https://www.sendpress.com/images/icon.png" />
     </div>
 		<?php
 		
@@ -136,16 +136,16 @@ foreach ($secondhalf as $key => $value) {
 		<div class="well <?php echo $class; ?>">
 			<div class="form-group">
 			<?php echo "<span class='hidden-xs hidden-sm pull-right text-muted'>". $value . "</span>"; ?>
- 		<label for="url-<?php echo $key; ?>" class="control-label ">
+ 		<label for="url-<?php echo esc_attr( $key ); ?>" class="control-label ">
 		<?php if($imagexlink != ""){ ?>
- 			<img src="<?php echo $imagexlink;  ?>"  width="16px"/>
-			<img src="<?php echo $imagexlink;  ?>"  width="32px"/>
+ 			<img src="<?php echo esc_url( $imagexlink );  ?>"  width="16px"/>
+			<img src="<?php echo esc_url( $imagexlink );  ?>"  width="32px"/>
  		<?php }	else { ?>
-		<img src="<?php echo SENDPRESS_URL ."img/16px/". $key .".png" ;  ?>" />
-		<img src="<?php echo SENDPRESS_URL ."img/32px/". $key .".png" ;  ?>" />
+		<img src="<?php echo esc_url( SENDPRESS_URL ."img/16px/". $key .".png" );  ?>" />
+		<img src="<?php echo esc_url( SENDPRESS_URL ."img/32px/". $key .".png" );  ?>" />
 		<?php } ?>
 		<?php
-		echo $key ."</label>"; 
+		echo esc_html( $key ) ."</label>"; 
 		$xlink = "";
 		if(isset( $link[$key] )){
 			$xlink = $link[$key] ;
@@ -156,9 +156,9 @@ foreach ($secondhalf as $key => $value) {
 		}
 		?>
 		 
-  </div><small>Link Url:</small><input type="text" name="url-<?php echo $key; ?>" value="<?php echo $xlink; ?>" class="form-control" placeholder="<?php echo $key; ?> URL: Please include http:// or https://" />
+  </div><small>Link Url:</small><input type="text" name="url-<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $xlink ); ?>" class="form-control" placeholder="<?php echo esc_attr( $key ); ?> URL: Please include http:// or https://" />
   <br><small>Custom Image Url:</small>
- <input type="text" name="image-<?php echo $key; ?>" value="<?php echo $imagexlink; ?>" class="form-control" placeholder="<?php echo $key; ?> Custom Image URL. https://www.sendpress.com/images/icon.png" />
+ <input type="text" name="image-<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $imagexlink ); ?>" class="form-control" placeholder="<?php echo esc_attr( $key ); ?> Custom Image URL. https://www.sendpress.com/images/icon.png" />
     </div>
 
 

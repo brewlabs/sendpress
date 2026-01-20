@@ -1,0 +1,93 @@
+================================================================================
+                    SENDPRESS SECURITY TODO LIST
+================================================================================
+
+Created: January 2026
+Status: Patchstack fixes READY FOR RELEASE
+
+================================================================================
+PHASE 1: IMMEDIATE RELEASE (Patchstack Fixes) - COMPLETED ✅
+================================================================================
+
+[x] CSRF in subscribe_to_list() - Fixed with nonce verification
+[x] Broken Access Control (bounce/cron API) - Fixed with webhook secret
+[x] XSS in form attributes - Fixed with esc_attr() escaping
+[x] Nonce added to non-AJAX forms
+[x] Documentation created (PATCHSTACK-FIXES.txt)
+[x] All PHP syntax validated
+[x] Committed to branch: security/fix-xss-sqli-vulnerabilities
+
+RELEASE STEPS:
+[ ] Final testing on staging environment
+[ ] Merge branch to main/master
+[ ] Update plugin version number
+[ ] Create changelog entry
+[ ] Deploy to production / WordPress.org
+
+
+================================================================================
+PHASE 2: FUTURE SECURITY IMPROVEMENTS (Post-Release)
+================================================================================
+
+CRITICAL:
+[ ] Fix dynamic function call vulnerability
+    File: classes/public-views/class-sendpress-public-view-post.php
+    Lines: 21-23
+    Issue: call_user_func() with user-controlled class name
+    
+HIGH:
+[ ] Sanitize $_POST data in handle_unsubscribes()
+    File: classes/sc/class-sendpress-sc-forms.php
+    Lines: 580-600
+    Issue: Unsanitized data passed to database functions
+
+[ ] Replace deprecated create_function() calls
+    File: sendpress.php
+    Lines: 145, 148
+    Issue: Deprecated in PHP 7.2, removed in PHP 8.0
+
+MEDIUM:
+[ ] Refactor admin URL building to use add_query_arg() + esc_url()
+    Files: 20+ instances across codebase
+    Issue: URLs built by string concatenation instead of proper WP functions
+    Example files:
+    - classes/views/class-sendpress-view-emails-send-confirm.php
+    - classes/class-sendpress-emails-table.php
+    - classes/class-sendpress-queue-table.php
+    - classes/class-sendpress-lists-table.php
+    - sendpress.php
+    Current: href="?page=' . esc_attr($page) . '&view=send&emailID=' . intval($id)
+    Should be: esc_url(add_query_arg(['page'=>$page, 'view'=>'send', 'emailID'=>$id], admin_url('admin.php')))
+
+[ ] Add esc_html() to form labels
+    File: classes/sc/class-sendpress-sc-forms.php
+    Lines: 444, 446, 453, 455, 462, 464, 471, 473
+    
+[ ] Review unserialize() usage for object injection
+    File: classes/class-sendpress-option.php
+    Lines: 235-241
+
+LOW:
+[ ] Standardize direct access protection (ABSPATH checks)
+[ ] Separate public/private nonce values
+[ ] Add HMAC signing to sensitive URLs
+
+
+================================================================================
+NOTES
+================================================================================
+
+Branch with all fixes: security/fix-xss-sqli-vulnerabilities
+Files modified: 46 total (Patchstack + earlier WPScan fixes)
+
+Documentation files:
+- PATCHSTACK-FIXES.txt - Details on Patchstack vulnerability fixes
+- SECURITY-FIXES.md - Comprehensive security audit documentation  
+- SECURITY-AUDIT-ADDITIONAL.txt - Additional issues found for Phase 2
+
+Webhook Secret Configuration:
+After release, document how admins should set 'webhook_secret' option
+to secure bounce/cron API endpoints.
+
+
+================================================================================

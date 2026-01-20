@@ -39,14 +39,14 @@ class SendPress_View {
 		
 		?>
 		<div class="sp-footer">
-			<a href="<?php echo SendPress_Admin::link('Help_Whatsnew'); ?>"><?php _e("What's New","sendpress"); ?></a> | <a href="http://docs.sendpress.com/" target="_blank"><?php _e("Knowledge Base","sendpress"); ?></a> | <a href="http://sendpress.uservoice.com/" target="_blank"><?php _e("Feedback","sendpress"); ?></a> | <?php _e("SendPress Version","sendpress"); ?>: <?php echo SENDPRESS_VERSION; ?> | <?php _e("System","sendpress"); ?> <span id="sendpress-system-icon" class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+			<a href="<?php echo esc_url( SendPress_Admin::link('Help_Whatsnew') ); ?>"><?php _e("What's New","sendpress"); ?></a> | <a href="http://docs.sendpress.com/" target="_blank"><?php _e("Knowledge Base","sendpress"); ?></a> | <a href="http://sendpress.uservoice.com/" target="_blank"><?php _e("Feedback","sendpress"); ?></a> | <?php _e("SendPress Version","sendpress"); ?>: <?php echo esc_html( SENDPRESS_VERSION ); ?> | <?php _e("System","sendpress"); ?> <span id="sendpress-system-icon" class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
 		</div>
 		<?php
 			$url = home_url( '/' );
 		?>	
 		<script>
 			jQuery(function() {
-				jQuery.getJSON( "<?php echo $url ; ?>spnl-api/system-check", function( data ) {
+				jQuery.getJSON( "<?php echo esc_url( $url ); ?>spnl-api/system-check", function( data ) {
 					if(data.status){
 						if(data.status === "active"){
 							jQuery("#sendpress-system-icon").addClass("glyphicon-ok-sign").removeClass("glyphicon-remove-sign").css("color","#5cb85c");
@@ -276,7 +276,7 @@ class SendPress_View {
 	}
 
 	function select($id='sp-select', $value = 25 , $values=array(25,50,100,250,500,1000) ){
-		echo " <select id='$id' name='$id' >";
+		echo " <select id='" . esc_attr( $id ) . "' name='" . esc_attr( $id ) . "' >";
 		foreach ($values as $item) {
 			$active = '';
 			
@@ -284,12 +284,12 @@ class SendPress_View {
 				if($value == $item[0] ){
 				$active = 'selected';
 			}
-				echo "<option value='$item[0]' $active> $item[1]</option>";
+				echo "<option value='" . esc_attr( $item[0] ) . "' " . esc_attr( $active ) . "> " . esc_html( $item[1] ) . "</option>";
 			} else {
 				if($value == $item ){
 				$active = 'selected';
 			}
-			echo "<option value='$item' $active> $item</option>";
+			echo "<option value='" . esc_attr( $item ) . "' " . esc_attr( $active ) . "> " . esc_html( $item ) . "</option>";
 			}
 			# code...
 		}

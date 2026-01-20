@@ -51,7 +51,7 @@ class SendPress_View_Emails_Send_Queue extends SendPress_View_Emails
         <div id="taskbar" class="lists-dashboard rounded group"> 
 
     
-</div><input type="hidden" id="post_ID" name="post_ID" value="<?php echo $post->ID; ?>" /><input type="hidden" id="reporttoqueue" name="reporttoqueue" value="<?php echo $lists; ?>" />
+</div><input type="hidden" id="post_ID" name="post_ID" value="<?php echo intval( $post->ID ); ?>" /><input type="hidden" id="reporttoqueue" name="reporttoqueue" value="<?php echo esc_attr( $lists ); ?>" />
 <div class='well' id="confirm-queue-add">
     <h2><strong><?php
         _e('Adding Subscribers to Queue', 'sendpress'); ?></strong></h2><br>

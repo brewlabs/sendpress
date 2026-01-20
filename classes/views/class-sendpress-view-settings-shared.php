@@ -14,12 +14,12 @@ class SendPress_View_Settings_Shared extends SendPress_View_Settings {
 		$links = array();
 		foreach ($icon_list as $key => $value) {
 			if( isset( $_POST["url-" . $key] )  && $_POST["url-" . $key] != "" ) {
-				$links[$key] = $_POST["url-" . $key];
+				$links[$key] = esc_url_raw( wp_unslash( $_POST["url-" . $key] ) );
 			}
 		}
 	
 		SendPress_Option::set('socialicons', $links );
-		SendPress_Option::set('socialsize', $_POST['icon-view'] );
+		SendPress_Option::set('socialsize', sanitize_text_field( wp_unslash( $_POST['icon-view'] ) ) );
         //SendPress_Admin::redirect('Settings_Advanced');
 	}
 
@@ -92,7 +92,7 @@ class SendPress_View_Settings_Shared extends SendPress_View_Settings {
 
 		?>
 		 
-  </div><input type="text" name="url-<?php echo $key; ?>" value="<?php echo $xlink; ?>" class="form-control" placeholder="<?php echo $key; ?> URL: Please include http:// or https://" />
+  </div><input type="text" name="url-<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $xlink ); ?>" class="form-control" placeholder="<?php echo esc_attr( $key ); ?> URL: Please include http:// or https://" />
     </div>
 		<?php
 		
@@ -127,7 +127,7 @@ foreach ($secondhalf as $key => $value) {
 
 		?>
 		 
-  </div><input type="text" name="url-<?php echo $key; ?>" value="<?php echo $xlink; ?>" class="form-control" placeholder="<?php echo $key; ?> URL: Please include http:// or https://" />
+  </div><input type="text" name="url-<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $xlink ); ?>" class="form-control" placeholder="<?php echo esc_attr( $key ); ?> URL: Please include http:// or https://" />
     </div>
 		<?php
 	}

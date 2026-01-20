@@ -289,7 +289,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		}
 		?>
 		<div class="sp-row">
-			<h3><?php echo $settings['post_title'];?></h3>
+			<h3><?php echo esc_html( $settings['post_title'] ); ?></h3>
 		</div>
 		<div class="sp-row">
 			<div class="sp-50 sp-first">
@@ -297,47 +297,47 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 				<p>
 					<label for="_form_description"><?php _e('Description:', 'sendpress'); ?></label>
-					<textarea rows="5" type="text" class="widefat" id="_form_description" name="_form_description"><?php echo $settings['_form_description']; ?></textarea>
+					<textarea rows="5" type="text" class="widefat" id="_form_description" name="_form_description"><?php echo esc_textarea( $settings['_form_description'] ); ?></textarea>
 				</p>
 
 				<p>
 					<label for="_salutation_label"><?php _e('Salutation Label:', 'sendpress'); ?></label>
-					<input type="text" class="widefat" id="_salutation_label" name="_salutation_label" value="<?php echo $settings['_salutation_label']; ?>" style="width:100%;" />
+					<input type="text" class="widefat" id="_salutation_label" name="_salutation_label" value="<?php echo esc_attr( $settings['_salutation_label'] ); ?>" style="width:100%;" />
 				</p>
 
 				<p>
 					<label for="_firstname_label"><?php _e('First Name Label:', 'sendpress'); ?></label>
-					<input type="text" class="widefat" id="_firstname_label" name="_firstname_label" value="<?php echo $settings['_firstname_label']; ?>" style="width:100%;" />
+					<input type="text" class="widefat" id="_firstname_label" name="_firstname_label" value="<?php echo esc_attr( $settings['_firstname_label'] ); ?>" style="width:100%;" />
 				</p>
 
 				<p>
 					<label for="_lastname_label"><?php _e('Last Name Label:', 'sendpress'); ?></label>
-					<input type="text" class="widefat" id="_lastname_label" name="_lastname_label" value="<?php echo $settings['_lastname_label']; ?>" style="width:100%;" />
+					<input type="text" class="widefat" id="_lastname_label" name="_lastname_label" value="<?php echo esc_attr( $settings['_lastname_label'] ); ?>" style="width:100%;" />
 				</p>
 
 				<p>
 					<label for="_phonenumber_label"><?php _e('Phone Number Label:', 'sendpress'); ?></label>
-					<input type="text" class="widefat" id="_phonenumber_label" name="_phonenumber_label" value="<?php echo $settings['_phonenumber_label']; ?>" style="width:100%;" />
+					<input type="text" class="widefat" id="_phonenumber_label" name="_phonenumber_label" value="<?php echo esc_attr( $settings['_phonenumber_label'] ); ?>" style="width:100%;" />
 				</p>
 
 				<p>
 					<label for="_email_label"><?php _e('E-Mail Label:', 'sendpress'); ?></label>
-					<input type="text" class="widefat" id="_email_label" name="_email_label" value="<?php echo $settings['_email_label']; ?>" style="width:100%;" />
+					<input type="text" class="widefat" id="_email_label" name="_email_label" value="<?php echo esc_attr( $settings['_email_label'] ); ?>" style="width:100%;" />
 				</p>
 
 				<p>
 					<label for="_button_label"><?php _e('Button Text:', 'sendpress'); ?></label>
-					<input type="text" class="widefat" id="_button_label" name="_button_label" value="<?php echo $settings['_button_label']; ?>" style="width:100%;" />
+					<input type="text" class="widefat" id="_button_label" name="_button_label" value="<?php echo esc_attr( $settings['_button_label'] ); ?>" style="width:100%;" />
 				</p>
 
 				<p>
 					<label for="_list_label"><?php _e('Lists Label: multiple lists only', 'sendpress'); ?></label>
-					<input type="text" class="widefat" id="_list_label" name="_list_label" value="<?php echo $settings['_list_label']; ?>" style="width:100%;" />
+					<input type="text" class="widefat" id="_list_label" name="_list_label" value="<?php echo esc_attr( $settings['_list_label'] ); ?>" style="width:100%;" />
 				</p>
 
 				<p>
 					<label for="_thankyou_message"><?php _e('Thank you message:', 'sendpress'); ?></label>
-					<textarea rows="5" type="text" class="widefat" id="_thankyou_message" name="_thankyou_message"><?php echo $settings['_thankyou_message']; ?></textarea>
+					<textarea rows="5" type="text" class="widefat" id="_thankyou_message" name="_thankyou_message"><?php echo esc_textarea( $settings['_thankyou_message'] ); ?></textarea>
 				</p>
 
 				<?php $this->panel_end(); ?>
@@ -345,7 +345,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 			<div class="sp-50">
 				<?php $this->panel_start( __('Shortcode','sendpress') ); ?>
 					<p><?php _e('Use the shortcode below to insert this signup form into your posts and pages','sendpress'); ?>.</p>
-					<pre>[sp-form formid=<?php echo $settings['_settings_id']; ?>]</pre>
+					<pre>[sp-form formid=<?php echo intval( $settings['_settings_id'] ); ?>]</pre>
 				<?php $this->panel_end(); ?>
 
 				<?php $this->panel_start( __('Signup Settings','sendpress') ); ?>
@@ -438,8 +438,8 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 					foreach($lists as $list){
 						?>
 						<p>
-							<input class="checkbox" type="checkbox" <?php if(isset($settings['_list_'.$list->ID])){ checked( $settings['_list_'.$list->ID], 'on' ); } ?> id="_list_<?php echo $list->ID; ?>" name="_list_<?php echo $list->ID; ?>" />
-							<label for="_list_<?php echo $list->ID; ?>"><?php echo $list->post_title; ?></label>
+							<input class="checkbox" type="checkbox" <?php if(isset($settings['_list_'.$list->ID])){ checked( $settings['_list_'.$list->ID], 'on' ); } ?> id="_list_<?php echo intval( $list->ID ); ?>" name="_list_<?php echo intval( $list->ID ); ?>" />
+							<label for="_list_<?php echo intval( $list->ID ); ?>"><?php echo esc_html( $list->post_title ); ?></label>
 						</p>
 						<?php
 					}
@@ -457,7 +457,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 				<p>
 					<label for="_approval_label"><?php _e('Approval Label:', 'sendpress'); ?></label>
-					<input type="text" class="widefat" id="_approval_label" name="_approval_label" placeholder="<?php _e('I would like to subscribe to your newsletter.', 'sendpress') ?>" value="<?php echo $settings['_approval_label']; ?>" style="width:100%;" />
+					<input type="text" class="widefat" id="_approval_label" name="_approval_label" placeholder="<?php _e('I would like to subscribe to your newsletter.', 'sendpress') ?>" value="<?php echo esc_attr( $settings['_approval_label'] ); ?>" style="width:100%;" />
 				</p>
 
 				<?php $this->panel_end(); ?>
@@ -491,13 +491,13 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 						?>
 						<p>
-							<input class="checkbox custom-field" type="checkbox" <?php checked( $settings['_collect_custom_field_'.$value['id']], 'on' ); ?> id="_collect_custom_field_<?php echo $value['id']; ?>" name="_collect_custom_field_<?php echo $value['id']; ?>" />
-							<label for="_collect_custom_field_<?php echo $value['id']; ?>"><?php _e('Collect field')?> - <?php echo $custom_field_label; ?></label>
+							<input class="checkbox custom-field" type="checkbox" <?php checked( $settings['_collect_custom_field_'.$value['id']], 'on' ); ?> id="_collect_custom_field_<?php echo intval( $value['id'] ); ?>" name="_collect_custom_field_<?php echo intval( $value['id'] ); ?>" />
+							<label for="_collect_custom_field_<?php echo intval( $value['id'] ); ?>"><?php _e('Collect field')?> - <?php echo esc_html( $custom_field_label ); ?></label>
 
 							<br>
 
-							<input style="margin-left:30px;" class="checkbox" type="checkbox" <?php checked( $settings['_custom_field_'.$value['id'].'_required'], 'on' ); ?> id="<?php echo '_custom_field_'.$value['id'].'_required'; ?>" name="<?php echo '_custom_field_'.$value['id'].'_required'; ?>" />
-							<label for="<?php echo '_custom_field_'.$value['id'].'_required'; ?>"><?php echo $custom_field_label; ?> <?php _e('Required', 'sendpress'); ?></label>
+							<input style="margin-left:30px;" class="checkbox" type="checkbox" <?php checked( $settings['_custom_field_'.$value['id'].'_required'], 'on' ); ?> id="<?php echo '_custom_field_' . intval( $value['id'] ) . '_required'; ?>" name="<?php echo '_custom_field_' . intval( $value['id'] ) . '_required'; ?>" />
+							<label for="<?php echo '_custom_field_' . intval( $value['id'] ) . '_required'; ?>"><?php echo esc_html( $custom_field_label ); ?> <?php _e('Required', 'sendpress'); ?></label>
 
 						</p>
 
@@ -511,14 +511,14 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		</div>
 		<input type="hidden" name="_setting_type" id="setting_type" value="form" />
 		<input type="hidden" name="_form_type" id="form_type" value="signup_widget" />
-		<input type="hidden" name="_settings_id" id="sp_settings_id" value="<?php echo $settings['_settings_id']; ?>" />
+		<input type="hidden" name="_settings_id" id="sp_settings_id" value="<?php echo intval( $settings['_settings_id'] ); ?>" />
 		<?php
 	}
 
 	function manage_subscriptions($settings){
 		?>
 		<div class="sp-row">
-			<h3><?php echo $settings['post_title'];?></h3>
+			<h3><?php echo esc_html( $settings['post_title'] ); ?></h3>
 		</div>
 		<div class="sp-row">
 			<div class="sp-50 sp-first">
@@ -526,7 +526,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 
 				<p>
 					<label for="_form_description"><?php _e('Description:', 'sendpress'); ?></label>
-					<textarea placeholder="This text will show above the manage subscription form." rows="5" type="text" class="widefat" id="_form_description" name="_form_description"><?php echo $settings['_form_description']; ?></textarea>
+					<textarea placeholder="This text will show above the manage subscription form." rows="5" type="text" class="widefat" id="_form_description" name="_form_description"><?php echo esc_textarea( $settings['_form_description'] ); ?></textarea>
 				</p>
 
 				<?php $this->panel_end(); ?>
@@ -534,7 +534,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 			<div class="sp-50">
 				<?php $this->panel_start( __('Shortcode','sendpress') ); ?>
 					<p><?php _e('Use the shortcode below to insert this signup form into your posts and pages','sendpress'); ?>.</p>
-					<pre><tt>[sp-form formid=<?php echo $settings['_settings_id']; ?>]</tt></pre>
+					<pre><tt>[sp-form formid=<?php echo intval( $settings['_settings_id'] ); ?>]</tt></pre>
 				<?php $this->panel_end(); ?>
 			</div>
 
@@ -542,7 +542,7 @@ class SendPress_View_Settings_Widgets extends SendPress_View_Settings {
 		
 		<input type="hidden" name="_setting_type" id="setting_type" value="form" />
 		<input type="hidden" name="_form_type" id="form_type" value="manage_subscriptions" />
-		<input type="hidden" name="_settings_id" id="sp_settings_id" value="<?php echo $settings['_settings_id']; ?>" />
+		<input type="hidden" name="_settings_id" id="sp_settings_id" value="<?php echo intval( $settings['_settings_id'] ); ?>" />
 		<?php
 	}
 

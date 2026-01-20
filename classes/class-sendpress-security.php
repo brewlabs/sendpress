@@ -196,7 +196,7 @@ class SendPress_Security{
 		switch($action)
 		{
 			case 'get_string':
-				$output = filter_input(INPUT_GET, $field, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+				$output = isset($_GET[$field]) ? sanitize_text_field( wp_unslash( $_GET[$field] ) ) : null;
 			break;
 			case 'get_url':
 				$output = filter_input(INPUT_GET, $field, FILTER_SANITIZE_URL);
@@ -225,7 +225,7 @@ class SendPress_Security{
 			break;
 
 			case 'post_string':
-				$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES); 
+				$output = isset($_POST[$field]) ? sanitize_text_field( wp_unslash( $_POST[$field] ) ) : null;
 			break;
 			case 'post_int':
 				$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_NUMBER_INT); 

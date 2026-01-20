@@ -40,11 +40,11 @@ $t_id = SPNL()->validate->_int('templateID');
 				<input type="submit" value="<?php _e('Save & Next','sendpress'); ?>" class="btn btn-primary" />
 			</div>
 			<div id="sp-cancel-btn" style="float:right; ">
-				<a href="<?php echo SendPress_Admin::link('Emails_Templates'); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+				<a href="<?php echo esc_url( SendPress_Admin::link('Emails_Templates') ); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
 			</div>
 		</div>
 		
-		<h2><?php _e('Clone Template','sendpress'); ?> - <?php echo $postdata->post_title; ?></h2>
+		<h2><?php _e('Clone Template','sendpress'); ?> - <?php echo esc_html( $postdata->post_title ); ?></h2>
 		<br>
 	
 			<?php $this->panel_start('<span class="glyphicon glyphicon-list-alt"></span> '. __('Template Name','sendpress')); ?>

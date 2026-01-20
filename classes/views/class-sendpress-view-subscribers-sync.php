@@ -63,15 +63,15 @@ class SendPress_View_Subscribers_Sync extends SendPress_View_Subscribers {
 
 
 </div>
-<input type="hidden" id="post_ID" name="post_ID" value="<?php echo $list; ?>" />
+<input type="hidden" id="post_ID" name="post_ID" value="<?php echo intval( $list ); ?>" />
 <div class='well' id="sync-wordpress-roles">
-<h2><strong><?php _e('Syncing ','sendpress'); ?> <?php echo ucwords($role_to_sync); ?> <?php _e(' Role to List','sendpress'); ?>  <?php echo get_the_title($list); ?> </strong></h2>
+<h2><strong><?php _e('Syncing ','sendpress'); ?> <?php echo esc_html( ucwords($role_to_sync) ); ?> <?php _e(' Role to List','sendpress'); ?>  <?php echo esc_html( get_the_title($list) ); ?> </strong></h2>
 <br>
 
 <div class="progress progress-striped active">
 	<div class="progress-bar sp-queueit" style="width: 0%;"></div>
 </div>
-<span id="queue-total">0</span> of <span id="list-total"><?php echo $blogusers; ?></span>
+<span id="queue-total">0</span> of <span id="list-total"><?php echo intval( $blogusers ); ?></span>
 </div>
 <?php
 

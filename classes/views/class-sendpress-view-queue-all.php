@@ -83,9 +83,9 @@ class SendPress_View_Queue_All extends SendPress_View_Queue {
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	     <input type="hidden" name="page" value="<?php echo SPNL()->validate->page() ?>" /> 
 	       <?php if(SPNL()->validate->_int('listID') > 0 ){ ?>
-	    <input type="hidden" name="listID" value="<?php echo SPNL()->validate->_int('listID'); ?>" />
+	    <input type="hidden" name="listID" value="<?php echo intval( SPNL()->validate->_int('listID') ); ?>" />
 	    <?php  } ?>
-	    <input type="hidden" name="view" value="<?php echo esc_html( SPNL()->validate->_int('view') ); ?>" />
+	    <input type="hidden" name="view" value="<?php echo esc_attr( SPNL()->validate->_int('view') ); ?>" />
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display() ?>
 	    <?php wp_nonce_field($this->_nonce_value); ?>

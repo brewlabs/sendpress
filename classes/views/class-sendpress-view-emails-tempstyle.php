@@ -65,12 +65,12 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
 
         //print_r( $postdata );
     ?>
-    <h2><?php echo $postdata->post_title; ?></h2>
+    <h2><?php echo esc_html( $postdata->post_title ); ?></h2>
     <br><br>
     <form method="post">
     <div class="alert alert-danger visible-xs"><?php _e('Sorry the Styler does not support screens smaller then 768px.','sendpress'); ?></div>
     <div class="sp-row">
-        <input type="hidden" id="post_ID" name="post_ID" value="<?php echo $postdata->ID; ?>" />
+        <input type="hidden" id="post_ID" name="post_ID" value="<?php echo intval( $postdata->ID ); ?>" />
 
 
         <div class="sp-toolbar">
@@ -78,7 +78,7 @@ class SendPress_View_Emails_Tempstyle extends SendPress_View_Emails {
 
             <div class="btn-group btn-group-justified" id="code-edit-buttons" >
              
-            <a href="<?php echo SendPress_Admin::link('Emails_Temp'); ?>" id="cancel-update" class="btn btn-lg btn-default" data-toggle="tooltip" data-placement="top" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a>
+            <a href="<?php echo esc_url( SendPress_Admin::link('Emails_Temp') ); ?>" id="cancel-update" class="btn btn-lg btn-default" data-toggle="tooltip" data-placement="top" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a>
             <div class="btn-group">
                 <button class="btn btn-default btn-lg " type="submit" value="save" name="submit"  data-toggle="tooltip" data-placement="top" title="Save"><span class="glyphicon glyphicon-floppy-disk"></span></button></div>
             </div>

@@ -96,8 +96,8 @@ $post_type_object = get_post_type_object( $post_type );
 </div>
 </div>
 
-<input type="hidden" id="user-id" name="user_ID" value="<?php echo $current_user->ID; ?>" />
-<input type="hidden" id="post_ID" name="post_ID" value="<?php echo $post->ID; ?>" />
+<input type="hidden" id="user-id" name="user_ID" value="<?php echo intval( $current_user->ID ); ?>" />
+<input type="hidden" id="post_ID" name="post_ID" value="<?php echo intval( $post->ID ); ?>" />
 <input type="hidden" id="post_type" name="post_type" value="sp_newsletters" />
 
 <h2><?php _e('Send Email','sendpress'); ?></h2>
@@ -227,8 +227,8 @@ $url = SendPress_Manager::public_url($code);
 $sep = strstr($url, '?') ? '&' : '?';
 $link = $url . $sep . 'inline=true';
 ?>
-<iframe src="<?php echo $link; ?>" width="100%" height="600px"></iframe>
-<small><?php _e('Displaying a 404? Please try saving your permalinks','sendpress'); ?> <a href="<?php echo admin_url('options-permalink.php'); ?>"><?php _e('here','sendpress'); ?></a>.</small>
+<iframe src="<?php echo esc_url( $link ); ?>" width="100%" height="600px"></iframe>
+<small><?php _e('Displaying a 404? Please try saving your permalinks','sendpress'); ?> <a href="<?php echo esc_url( admin_url('options-permalink.php') ); ?>"><?php _e('here','sendpress'); ?></a>.</small>
 
 </div>
 </div>

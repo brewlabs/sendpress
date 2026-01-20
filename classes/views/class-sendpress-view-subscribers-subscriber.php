@@ -11,7 +11,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 	function status_select($status, $listid){
 		//$this->security_check();
         $info = SendPress_Data::get_statuses();
-        echo '<select name="'.$listid.'-status">';
+        echo '<select name="' . esc_attr( $listid ) . '-status">';
         echo "<option cls value='-1' >No Status</option>";
         foreach ($info as $list) {
             $cls = '';
@@ -19,7 +19,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
                 $cls = " selected='selected' ";
             }
 
-           echo "<option $cls value='".$list->statusid."'>".$list->status."</option>";
+           echo "<option " . esc_attr( $cls ) . " value='" . esc_attr( $list->statusid ) . "'>" . esc_html( $list->status ) . "</option>";
         }
 
         
@@ -33,7 +33,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
     	if(isset($pro_list['post_notifications']['id']) && $listid == $pro_list['post_notifications']['id'] ) {
 		$current = SendPress_Data::get_subscriber_meta($sub_id,'post_notifications',$listid);
 		$info = SendPress_Data::get_post_notification_types();				
-		echo '<select name="'.$listid.'-pn">';
+		echo '<select name="' . esc_attr( $listid ) . '-pn">';
         echo "<option cls value='-1' >No Status</option>";
         foreach ($info as $key => $value) {
 
@@ -42,7 +42,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
                 $cls = " selected='selected' ";
             }
 
-           echo "<option $cls value='".$key."'>".$value."</option>";
+           echo "<option " . esc_attr( $cls ) . " value='" . esc_attr( $key ) . "'>" . esc_html( $value ) . "</option>";
         }
 
         
@@ -150,13 +150,13 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 		</div>
 		<div class="media-body">
 	
-		<input type="hidden" name="listID" value="<?php echo SPNL()->validate->_int('listID'); ?>" />
-	    <input type="hidden" name="subscriberID" value="<?php echo SPNL()->validate->_int('subscriberID'); ?>" />
-	    <strong><?php _e('Email','sendpress'); ?></strong>: <input type="text" name="email" class="regular-text sp-text" value="<?php echo $sub->email; ?>" /><br><br>
-	    <strong><?php _e('Salutation','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="salutation" value="<?php echo $sub->salutation; ?>" /><br>
-	    <strong><?php _e('Firstname','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="firstname" value="<?php echo $sub->firstname; ?>" /><br><br>
-	    <strong><?php _e('Lastname','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="lastname" value="<?php echo $sub->lastname; ?>" /><br>
-	    <strong><?php _e('Phone Number','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="phonenumber" value="<?php echo $sub->phonenumber; ?>" /><br>
+		<input type="hidden" name="listID" value="<?php echo intval( SPNL()->validate->_int('listID') ); ?>" />
+	    <input type="hidden" name="subscriberID" value="<?php echo intval( SPNL()->validate->_int('subscriberID') ); ?>" />
+	    <strong><?php _e('Email','sendpress'); ?></strong>: <input type="text" name="email" class="regular-text sp-text" value="<?php echo esc_attr( $sub->email ); ?>" /><br><br>
+	    <strong><?php _e('Salutation','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="salutation" value="<?php echo esc_attr( $sub->salutation ); ?>" /><br>
+	    <strong><?php _e('Firstname','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="firstname" value="<?php echo esc_attr( $sub->firstname ); ?>" /><br><br>
+	    <strong><?php _e('Lastname','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="lastname" value="<?php echo esc_attr( $sub->lastname ); ?>" /><br>
+	    <strong><?php _e('Phone Number','sendpress'); ?></strong>: <input type="text" class="regular-text sp-text" name="phonenumber" value="<?php echo esc_attr( $sub->phonenumber ); ?>" /><br>
 
 	    <?php
 		    $custom_field_list = SendPress_Data::get_custom_fields_new();
@@ -172,7 +172,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 
 				//if(!empty($sub_value)){
 					?>
-					<strong><?php echo $value['custom_field_label']; ?></strong>: <input type="text" class="regular-text sp-text" id="<?php echo $value['custom_field_key']; ?>" name="<?php echo $value['custom_field_key']; ?>" value="<?php echo $sub_value;?>" /><br>
+					<strong><?php echo esc_html( $value['custom_field_label'] ); ?></strong>: <input type="text" class="regular-text sp-text" id="<?php echo esc_attr( $value['custom_field_key'] ); ?>" name="<?php echo esc_attr( $value['custom_field_key'] ); ?>" value="<?php echo esc_attr( $sub_value );?>" /><br>
 					<?php
 				//}
 
@@ -227,7 +227,7 @@ class SendPress_View_Subscribers_Subscriber extends SendPress_View_Subscribers {
 						
 
 
-						echo "<span class='badge $cls'>&nbsp;</span> ";
+						echo "<span class='badge " . esc_attr( $cls ) . "'>&nbsp;</span> ";
 						$this->status_select($info->statusid,$post->ID);
 						$this->pn_select( SPNL()->validate->_int('subscriberID') , $post->ID);
 

@@ -59,13 +59,14 @@ class SendPress_Signup_Shortcode{
 				<?php 
 					if( $widget_options['load_ajax'] ){
 						echo '<input type="hidden" name="action" value="signup-user" />';
-						//echo '<input type="hidden" name="redirect" value="'.get_permalink().'" />';
+						// Add nonce for CSRF protection
+						wp_nonce_field( 'sendpress-form-post', 'sp' );
 					}
 					if(empty($listids)){
 						echo $no_list_error;
 					}
 					if($redirect_page != false && $redirect_page > 0){
-						echo '<input type="hidden" name="redirect" value="'.$redirect_page.'" />';
+						echo '<input type="hidden" name="redirect" value="' . esc_attr($redirect_page) . '" />';
 					}
 
 				?>

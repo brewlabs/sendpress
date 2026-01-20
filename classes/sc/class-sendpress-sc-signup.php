@@ -75,12 +75,14 @@ class SendPress_SC_Signup extends SendPress_SC_Base {
 				<?php
 					if( $widget_options['load_ajax'] ){
 						echo '<input type="hidden" name="action" value="signup-user" />';
+						// Add nonce for CSRF protection
+						wp_nonce_field( 'sendpress-form-post', 'sp' );
 					}
 					if(empty($listids) && strlen($post_notifications_code) == 0){
 						echo $no_list_error;
 					}
 					if($redirect_page != false && $redirect_page > 0){
-						echo '<input type="hidden" name="redirect" value="'.$redirect_page.'" />';
+						echo '<input type="hidden" name="redirect" value="' . esc_attr($redirect_page) . '" />';
 					}
 
 				?>

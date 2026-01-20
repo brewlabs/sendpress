@@ -46,7 +46,7 @@ class SendPress_View_Settings_Notifications extends SendPress_View_Settings {
 							</p>
 
 							<h5 style="display:inline;" class="nomargin"><?php _e('To E-mail','sendpress'); ?>:</h5>
-							<input name="toemail" class="form-control" style="display:inline; width:80%;" tabindex=2 type="text" id="toemail" value="<?php echo $options['email']; ?>">
+							<input name="toemail" class="form-control" style="display:inline; width:80%;" tabindex=2 type="text" id="toemail" value="<?php echo esc_attr( $options['email'] ); ?>">
 							<br><br>
 
 							<p>

@@ -164,7 +164,13 @@ class SendPress_Ajax_Loader {
 	}
 
 	function subscribe_to_list() {
-		//$this->verify_ajax_call();
+		// Verify nonce for CSRF protection
+		$nonce = SPNL()->validate->_string('spnonce');
+		if ( ! wp_verify_nonce( $nonce, 'sendpress_public_subscribe' ) ) {
+			echo json_encode( array( 'success' => false, 'error' => __( 'Security check failed. Please refresh the page and try again.', 'sendpress' ) ) );
+			die();
+		}
+
 		global $wpdb;
 
 		// Create the response array

@@ -65,7 +65,7 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
 	   	 	if( $role_name == $roles ){
 	   	 		$d = 'checked';
 	   	 	} ?>
-    		<input type="radio" name="sync_role" value="<?php echo $role_name ?>" <?php echo $d; ?> /> <?php echo translate_user_role($role_info['name']); ?><br>
+    		<input type="radio" name="sync_role" value="<?php echo esc_attr( $role_name ); ?>" <?php echo esc_attr( $d ); ?> /> <?php echo esc_html( translate_user_role($role_info['name']) ); ?><br>
 
 
   		<?php endforeach; ?>
@@ -102,7 +102,7 @@ class SendPress_View_Subscribers_Listcreate extends SendPress_View_Subscribers {
 				foreach ($optin_emails as $key => $email) {
 
 					?>
-					<option value="<?php echo $email->ID; ?>"><?php echo get_post_meta($email->ID, '_sendpress_subject', true);?></option>
+					<option value="<?php echo intval( $email->ID ); ?>"><?php echo esc_html( get_post_meta($email->ID, '_sendpress_subject', true) );?></option>
 					<?php
 				}
 			?>

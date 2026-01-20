@@ -96,9 +96,9 @@ class SendPress_View_Emails_Systememailcreate extends SendPress_View_Emails {
 		
 		<input type="hidden" value="save-create" name="save-action" id="save-action" />
 		<input type="hidden" value="save-email" name="action" />
-		<input type="hidden" id="user-id" name="user_ID" value="<?php echo $current_user->ID; ?>" />
+		<input type="hidden" id="user-id" name="user_ID" value="<?php echo intval( $current_user->ID ); ?>" />
 		<input type="hidden" value="default" name="target-location" id="target-location" />
-		<input type="hidden" id="post_ID" name="post_ID" value="<?php echo $post->ID; ?>" />
+		<input type="hidden" id="post_ID" name="post_ID" value="<?php echo intval( $post->ID ); ?>" />
 		
 			<!--
 			<h2>Email Template Name</h2>
