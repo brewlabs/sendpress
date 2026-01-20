@@ -494,9 +494,13 @@ class SendPress_SC_Forms extends SendPress_SC_Base {
 								$label = $value['custom_field_label'];
 								$required = false;
 
-								if(filter_var(($options['_custom_field_'.$value['id'].'_required'] === 'on'), FILTER_VALIDATE_BOOLEAN) ){ 
+								if(array_key_exists('_custom_field_'.$value['id'].'_required', $options)) {
+									if(filter_var(($options['_custom_field_'.$value['id'].'_required'] === 'on'), FILTER_VALIDATE_BOOLEAN) ){
+
 									$label = '*'.$label;
 									$required = true;
+
+									}
 								}
 
 								?>
