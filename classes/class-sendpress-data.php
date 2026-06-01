@@ -1999,7 +1999,7 @@ class SendPress_Data extends SendPress_DB_Tables {
 
 	}
 
-	static function csv_to_array($csv_file_content , $rows_to_read = 0 , $delimiter = ',' , $enclosure = '' ){
+	static function csv_to_array($csv_file_content , $rows_to_read = 0 , $delimiter = ',' , $enclosure = '"' ){
         $data = array();
 
         $csv_data_array = explode( "\n" , $csv_file_content );
